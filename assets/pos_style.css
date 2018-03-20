@@ -1,0 +1,64 @@
+body {
+	padding: 0;
+	margin:0;
+}
+header {
+	height: 60px;
+	background: #2d2626;
+}
+
+.main {
+	padding: 0 20px 20px 20px;
+	border-radius: 5px;
+}
+
+.cart {
+	height: 300px;
+	padding: 10px;
+	border:solid 0.5px silver;
+
+}
+
+#cart-tbl {
+	height: 280px;
+	border-radius:10px;
+	background: #e3f2e4;
+	overflow: auto;
+}
+
+#total_amount {
+	float: right;
+}
+
+.input {
+	height: 200px;
+	border-collapse: collapse;
+}
+
+.input #left {
+	padding: 20px;
+	border:solid 0.5px silver;
+	min-height: 210px;
+}
+
+.input #right {
+	padding: 20px;
+	border:solid 0.5px silver;
+	min-height: 213px;
+
+} 
+
+#name {
+	font-size: 18px;
+	padding: 10px;
+}
+
+#prc {
+	font-size: 18px;
+	padding: 10px;
+}
+
+#description {
+	font-size: 18px;
+	padding: 10px;
+}

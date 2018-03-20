@@ -1,0 +1,137 @@
+body {
+  overflow-x: hidden;
+  margin-bottom: -20px;
+  border-collapse: collapse;
+}
+#side-menu {
+  min-height: 450px;
+  margin:0;
+  padding: 0;
+}
+
+#navbar {
+  margin:0;
+  padding-right: 12px;
+  background: #211d1d;
+  border-radius: 0 !important;
+  border:0;
+  border-bottom: solid 5px silver;
+}
+
+.navbar-brand {
+  color: white !important;
+}
+
+.list-side-menu {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+  border-collapse: collapse;
+
+}
+
+.list-side-menu li {
+
+  padding: 8px 0;
+  border: 0.5px silver solid;
+
+}
+
+.list-side-menu li a {
+  color: #428bca;
+  font-size: 16px;
+
+}
+
+#main {
+  background: white;
+  min-height: 564px;
+  padding: 0;
+  border-top: solid 0.5px silver;
+}
+
+#content {
+  border:solid 0.5px silver;
+  min-height: 564px;
+  height: inherit;
+  width: 100%;
+  padding: 10px;
+
+}
+
+#content-new-item {
+  padding: 15px;
+  border:solid 0.5px silver;
+}
+
+.active-link {
+  text-decoration: underline;
+
+}
+#footer {
+   background: white;
+   padding-top: 50px;
+   margin:0;
+}
+
+footer {
+  text-align: center;
+  background: #2d2626;
+}
+
+footer div p {
+  padding: 28px 0 10px 0;
+  color: white;
+}
+
+#category_tbl {
+  border: solid 0.5px silver;
+  padding: 10px;
+}
+
+#new_category {
+  margin-top: 10px;
+}
+
+.table-wrapper {
+  overflow:hidden;
+  min-height: 564px;
+}
+
+#item_tbl td {
+  max-width: 150px;
+}
+
+#item_info {
+
+}
+
+.item_info {
+  background: white;
+  padding: 0;
+}
+
+.glyphicon {
+  font-size: 50px;
+  color:  #428bca;
+}
+
+.fa-big {
+  font-size: 50px;
+  color:  #428bca;
+}
+
+#sales-nav {
+  list-style-type: none;
+   margin: 0;
+   padding: 0;
+   border-collapse: collapse;
+}
+
+#sales-nav li {
+  display: inline-block;
+  padding:20px;
+  border:solid 0.5px silver;
+  margin-left: -4px;
+
+}
