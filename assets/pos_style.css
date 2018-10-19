@@ -2,6 +2,10 @@ body {
 	padding: 0;
 	margin:0;
 }
+
+.pos-btn-singout {
+  float: right; margin-top: 6px; margin-right: 20px;
+}
 header {
 	height: 60px;
 	background: #2d2626;

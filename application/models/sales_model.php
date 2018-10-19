@@ -1,13 +1,13 @@
 <?php
 class Sales_model extends CI_Model {
+
 	public function insert_sales($records) {
+
 		$this->load->database();
+		
 		date_default_timezone_set("Asia/Manila");
-		$year = date('Y');
-		$month = date('m');
-		$week = date('W');
-		$date = date('Y-m-d');
-		$data = json_decode($records,true);
+		 
+		$data = json_decode($records,true); 
 		$id = '00' + rand();
 		foreach ($data as $sale) {
 			
@@ -15,16 +15,14 @@ class Sales_model extends CI_Model {
 			$sub_total = trim($sale[4], '₱');
 			$arr = array(
 				'sale_id' => "$id",
-				'item_id' => "$sale[0]",
-				'item_name' => "$sale[1]",
-				'item_price' => "$item_price",
+				'item_id' => "$sale[0]", 
 				'quantity' => "$sale[2]",
-				'sub_total' => "$sub_total",
-				'date' => $date,
-				'month' => $month,
-				'year' => $year,
-				'week' => $week
+				'sub_total' => "$sub_total", 
+				'price_id' => $sale[5],
+				'customer_id' => 1
+
 			);
+
 			$insert = $this->db->insert('sales',$arr);
 		}
 
@@ -41,7 +39,7 @@ class Sales_model extends CI_Model {
 		foreach ($data as $stock) {
 			$id = $stock[0];
 			$quantity = $stock[2];
-			$this->db->query("UPDATE items SET quantities = quantities - $quantity WHERE id = $id");
+			$this->db->query("UPDATE ordering_level SET quantity = quantity - $quantity WHERE item_id = $id");
 		}
 
 
@@ -49,30 +47,33 @@ class Sales_model extends CI_Model {
 	public function daily_sales_report() {
 		$date = date('Y-m-d');
 		$this->load->database();
-		$sql = $this->db->where('date',$date)->get('sales');
+		$sql = $this->db->where('DATE_FORMAT(date_time,"%Y-%m-%d")',$date)->get('sales');
 		return $sql->result();
 	}
 
 	public function weekly_sales_report() {
-		$week = date('W');
-		$year = date('Y');
+		$monday = date('d.m.Y',strtotime('last monday'));
+		$sunday = date('d.m.Y',strtotime('next sunday'));
+	 
 		$this->load->database();
-		$sql = $this->db->where('week',$week)->where('year',$year)->get('sales');
+		$sql = $this->db->where('DATE_FORMAT(date_time,"%d.%m.%Y") BETWEEN "'. $monday .'" AND "'.$sunday.'"')->get('sales');
+		
 		return $sql->result();
 	}
-
+	
 	public function monthly_sales_report() {
-		$month = date('m');
-		$year = date('Y');
+		$firstDayOfMonth = date('01-m-Y');
+		$lastDayOfMonth = date('t-m-Y');
+
 		$this->load->database();
-		$sql = $this->db->where('month',$month)->where('year',$year)->get('sales');
+		$sql = $this->db->where('DATE_FORMAT(date_time,"%d.%m.%Y") BETWEEN "'. $firstDayOfMonth .'" AND "'.$lastDayOfMonth.'"')->get('sales');
 		return $sql->result();
 	}
 
 	public function yearly_sales_report() {
 		$year= date('Y');
 		$this->load->database();
-		$sql = $this->db->where('year',$year)->get('sales');
+		$sql = $this->db->where('DATE_FORMAT(date_time,"%Y")', $year)->get('sales');
 		return $sql->result();
 	}
 }

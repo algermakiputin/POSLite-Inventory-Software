@@ -4,9 +4,42 @@ body {
   border-collapse: collapse;
 }
 #side-menu {
-  min-height: 450px;
-  margin:0;
-  padding: 0;
+    min-height: 650px;
+    margin:0;
+    padding: 0;
+    background: #f8f8f8;
+    border-right:solid 1px #e7e7e7;
+}
+
+
+
+#main-header {
+  background: #f8f8f8;
+  color: #000;
+  
+  border-bottom:solid 1px #e7e7e7;
+  padding: 17px 15px;
+}
+
+#main-header h2 {
+  font-size: 17.5px;
+  margin: 0;
+  color: #333;
+
+}
+
+.vertical-center {
+ /* Fallback for browsers do NOT support vh unit */
+/* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+#main-header p {
+  margin: 0;
+  font-size: 16.5px;
+  color: #333;
 }
 
 #navbar {
@@ -22,13 +55,7 @@ body {
   color: white !important;
 }
 
-.list-side-menu {
-  list-style: none;
-  padding: 0;
-  text-align: center;
-  border-collapse: collapse;
 
-}
 
 .list-side-menu li {
 
@@ -45,14 +72,26 @@ body {
 
 #main {
   background: white;
-  min-height: 564px;
+  padding: 0 25px;
+
+}
+
+#main .page-title {
+  margin-bottom: 30px;
+  border-bottom: solid 1px #eee;
+  padding-bottom: 10px;
+  font-size: 27px;
+  margin-top: 40px;
+}
+
+.#ui-id-1 {
+  list-style-type: none;
   padding: 0;
-  border-top: solid 0.5px silver;
 }
 
 #content {
-  border:solid 0.5px silver;
-  min-height: 564px;
+
+  min-height: 650px;
   height: inherit;
   width: 100%;
   padding: 10px;
@@ -61,31 +100,47 @@ body {
 
 #content-new-item {
   padding: 15px;
-  border:solid 0.5px silver;
+ 
 }
 
 .active-link {
-  text-decoration: underline;
+  background: #eeeeee;
 
 }
+
+#side-menu .nav .nav-item .nav-link {
+  border-bottom: solid 1px #e7e7e7;
+}
+
+#side-menu .nav .nav-item .nav-link i {
+    width: 10px;
+    font-size: 15px;
+}
+
+#side-menu .nav .nav-item .nav-link span {
+    font-size: 15px;
+    padding-left: 10px;
+}
+
+
+
 #footer {
-   background: white;
+
    padding-top: 50px;
    margin:0;
 }
 
 footer {
   text-align: center;
-  background: #2d2626;
+  background: #f8f8f8;
 }
 
 footer div p {
   padding: 28px 0 10px 0;
-  color: white;
+  color: #777;
 }
 
 #category_tbl {
-  border: solid 0.5px silver;
   padding: 10px;
 }
 
@@ -111,6 +166,13 @@ footer div p {
   padding: 0;
 }
 
+nav ul li:before {
+    content:'';
+    height:100%;
+    display:inline-block;
+    vertical-align: middle;
+}
+
 .glyphicon {
   font-size: 50px;
   color:  #428bca;
@@ -122,16 +184,32 @@ footer div p {
 }
 
 #sales-nav {
-  list-style-type: none;
+    list-style-type: none;
    margin: 0;
    padding: 0;
    border-collapse: collapse;
+ 
+   border:solid 1px #eee;
 }
 
 #sales-nav li {
-  display: inline-block;
-  padding:20px;
-  border:solid 0.5px silver;
-  margin-left: -4px;
+  float: left;
+ 
+
 
 }
+
+#sales-nav li a{
+    padding: 13px 20px;
+    display: inline-block;
+    border-right: solid 1px #ddd;
+}
+
+#sales-nav li a.active {
+  background: #eee;
+}
+#sales-nav li a:hover {
+  text-decoration: none;
+  background: #eee;
+}
+

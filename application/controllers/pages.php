@@ -9,11 +9,25 @@ class Pages extends CI_Controller {
 	}
 	public function inventory () {
 		$this->load->model('database');
+		$this->load->model('PriceModel');
+		$this->load->model('OrderingLevelModel');
 		$data['items'] = $this->database->itemList();
 		$data['page'] = 'inventory';
+		$data['price'] = $this->PriceModel;
+		$data['orderingLevel'] = $this->OrderingLevelModel;
 		$this->load->view('header',$data);
 		$this->load->view('side_menu');
-		$this->load->view('main',$data);
+		$this->load->view('items/items_view',$data);
+		$this->load->view('footer');
+	}
+
+	public function new_item() {
+		$this->load->model('categories_model');
+		$data['category'] = $this->categories_model->getCategoriesName();
+		$data['page'] = 'new_item';
+		$this->load->view('header',$data);
+		$this->load->view('side_menu');
+		$this->load->view('items/new',$data);
 		$this->load->view('footer');
 	}
 
@@ -25,23 +39,13 @@ class Pages extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function new_item() {
-		$this->load->model('categories_model');
-		$data['category'] = $this->categories_model->getCategoriesName();
-		$data['page'] = 'new_item';
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('main',$data);
-		$this->load->view('footer');
-	}
-
 	public function categories() {
 		$this->load->model('categories_model');
 		$data['categoryList'] = $this->categories_model->getCategories();
 		$data['page'] = 'categories';
 		$this->load->view('header',$data);
 		$this->load->view('side_menu');
-		$this->load->view('main',$data);
+		$this->load->view('categories/index',$data);
 		$this->load->view('footer');
 	}
 

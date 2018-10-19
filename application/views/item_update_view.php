@@ -4,11 +4,13 @@
 	<input type="hidden" name="current_name" value="<?php echo $item->name ?>">
 	<input type="hidden" name="current_category" value="<?php echo $item->category ?>" >
 	<input type="hidden" name="current_description" value="<?php echo $item->description ?>">
-	<input type="hidden" name="current_price" value="<?php echo $item->price ?>">
+	<!-- <input type="hidden" name="current_price" value="<?php echo $price->getPrice($item->price_id); ?>"> -->
+
 	<div class="form-group">
 		<label>Item Name</label>
 		<input type="text" name="update_name" placeholder="Item Name" class="form-control" value="<?php echo $item->name; ?>">
 	</div>
+	
 	<div class="form-group">
 		<label>Category</label>
 		<select class="form-control" name="update_category">
@@ -24,7 +26,7 @@
 	</div>
 	<div class="form-group">
 		<label>Price</label>
-		<input type="text" name="update_price" placeholder="Item Name" class="form-control" value="<?php echo $item->price; ?>">
+		<input type="text" name="update_price" placeholder="Item Name" class="form-control" value="<?php echo $price->getPrice($item->id); ?>">
 	</div>
 	<div class="form-group">
 		<label>Description</label>

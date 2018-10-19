@@ -8,21 +8,22 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style.css')?>">
 </head>
 <body>
-<header style="height: 60px; background: #2d2626; color: white;" class="">
-	<?php
-		$cur_date = date('l, F Y');
-		if ($this->session->userdata('log_in')) {
-			?>
-			<p class="lead" style="float: right; padding-right: 15px; margin-top: 11px;"><?php echo $cur_date ?> | <?php echo $this->session->userdata('username') ?></p>
-			<?php
-		}
-	?>
-	
-	<div style="padding-left: 20px; padding-top: 2px;">
-		<h2 style="margin: 0">POS Sales and Inventory System</h2>
-		<p style="margin: 0;">By: Alger Makiputin</p>
-	</div>
-</header>
+<?php if ( $this->uri->segment(1) !== "login"): ?>
+	<header id="main-header">
+		<div class="row">
+			<div class="col-lg-10">
+				<h2>POS Sales And Inventory Management System</h2>
+			</div>
+			<div class="col-lg-2 text-right">
+				<p>
+					<?php echo date('M d, Y') ?>
+				</p>
+			</div>
+		
+	</header>
+<?php endif; ?>
+
+
 <div class="row" style="margin-bottom: -10px;">
 <div class="container-fluid main-content" >
 

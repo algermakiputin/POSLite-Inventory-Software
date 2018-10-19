@@ -10,20 +10,20 @@
 		$(document).ready(function() {
 			var total = sessionStorage.getItem('total');
 			var cart = sessionStorage.getItem('cart');
-			$('#amount_due').val('₱' +total);
+			$('#amount_due').val('₱' + total);
 			$("#cart").val(cart);
 			$("#t").val(total);
-			console.log($("#cart").val());
-			console.log(total);
+		 
 			$('#payment').on('change paste keyup propertychange',function() {
-				payment = $("#payment").val();
+				var payment = parseFloat($("#payment").val());
+				var change = 0.0;
 				if (isNaN(payment) || payment === undefined) {
 					$("#message").html('<div class="alert alert-danger">Please Enter Numbers Only</div>');
 				}
-				else if (parseInt(payment) < parseInt(total)) { 
+				else if ((payment) < (total)) { 
 					$("#message").html('<div class="alert alert-danger">Insufficient Amount</div>');
-				}else if (parseInt(payment) > parseInt(total)) {
-					change = parseInt(payment) - parseInt(total);
+				}else if ((payment) > (total)) {
+					change = (payment) - (total);
 					$("#message").html('<div class="alert alert-success">Good</div>');
 					$("#c").val(change);
 					$("#change").val('₱' + change);

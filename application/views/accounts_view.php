@@ -3,7 +3,7 @@
 <?php echo $this->session->flashdata('errorMessage');?>
 <?php echo $this->session->flashdata('successMessage');?>
 <?php echo form_open('accounts_con/register_account'); ?>
-<?php echo form_fieldset('<h1 class="text-danger">Register Account</h1>'); ?>
+<?php echo '<h1 class="page-title">Register Account</h1>'; ?>
 <div class="form-group">
 	<label for='Username'>Username</label>
 	<input type="text" name="Username" class="form-control">
@@ -31,7 +31,7 @@
 </div>
 <div class="col-sm-8">
 
-	<?php echo form_fieldset('<h1 class="text-danger">Registed Accounts</h1>'); ?>
+	<?php echo '<h1 class="page-title">Registed Accounts</h1>'; ?>
 	<table class="table table-striped table-hover table-responsive">
 		<tr>
 			<th>ID</th>

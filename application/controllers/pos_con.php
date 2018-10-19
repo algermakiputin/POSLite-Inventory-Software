@@ -10,7 +10,15 @@ class Pos_con extends CI_Controller {
 	}
 	public function pos(){
 		$this->load->model('item_model');
-		$data['names'] = $this->item_model->get_all_item();
+		$names = $this->item_model->get_all_item();
+		$data['names'] = [];
+
+		foreach ($names as $name) {
+			array_push($data['names'], $name['name']);
+		}
+
+	
+
 		$this->load->view('pos_view',$data);
 	}
 }

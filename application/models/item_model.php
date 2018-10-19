@@ -1,64 +1,72 @@
 <?php
 class Item_model extends CI_Model {
-	public function insertItem($name, $category, $description, $date_time, $creator, $quantity, $price) 
+
+	public function insertItem($name, $category, $description, $date_time) 
 	{
-		$data = array(
-			'name' => "$name",
-			'category' => "$category",
-			'description' => "$description",
-			'date_time' => "$date_time",
-			'creator' => "$creator",
-			'quantities' => "$quantity",
-			'price' =>	"$price"
-			);
 		$this->load->database();
+
+		$data = array(
+			'name' => $name,
+			'category' => $category,
+			'description' => $description,
+			'date_time' => $date_time, 
+			'supplier_id' => 1  
+
+			);
+		
 		$sql = $this->db->insert('items', $data);
+
 		if ($sql) {
-			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>');
-			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added Successfully </div>');
-			redirect(base_url('inventory'));
+			return $this->db->insert_id();
 		}
 	}
 
 	public function deleteItem($id) {
+
 		$this->load->database();
-		$sql = $this->db->where('id', $id)
-						->delete('items');
+		$sql = $this->db->where('id', $id)->delete('items');
 		return $sql;
 		
 	}
 
-	public function add_stocks($itemName,$stocks) {
+	public function getDetails($id) {
+
+		return $this->db->where('id', $id)->get('items')->row();
+	}
+
+
+
+	public function add_stocks($id,$stocks) {
 		$this->load->database();
-		$sql = $this->db->query("UPDATE items SET quantities = quantities + ".$this->db->escape($stocks)." WHERE name = ".$this->db->escape($itemName)."");
-		return $sql;
+		
+
+		return $this->db->where('item_id', $id)->update('ordering_level',['quantity' => $stocks]);
 
 	}
 
-	public function item_info($itemName) {
+	public function item_info($id) {
+
 		$this->load->database();
-		$sql = $this->db->where('name', urldecode($itemName))->get('items');
+		$sql = $this->db->where('id', $id)->get('items');
 		return $sql->row();
 
 	}
 
-	public function update_item($id,$name,$category,$description,$price) {
+	public function update_item($id,$name,$category,$description,$price_id) {
 		$this->load->database();
 		$data = array(
-			'name' => "$name",
-			'category' => "$category",
-			'description' => "$description",
-			'price' => "$price"
+			'name' => $name,
+			'category' => $category,
+			'description' => $description, 
 			);
 
-		$this->db->where('id',$id);
-		return $this->db->update('items',$data);
+		return $this->db->where('id',$id)->update('items',$data);
 	}
 
 	public function get_all_item() {
 		$this->load->database();
 		$items = $this->db->select('name')->get('items');
-		return json_encode($items->result_array());
+		return $items->result_array();
 	}
 
 }

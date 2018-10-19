@@ -60,8 +60,15 @@ $route['accounts'] = 'pages/accounts';
 $route['lagout'] = 'pages/lagout';
 $route['localhost/sais'] = 'localhost/sais/inventory';
 $route['pos'] = 'pos_con/pos';
-$route['daily_sales_report'] = 'sales_con/daily_sales_report';
-$route['weekly_sales_report'] = 'sales_con/weekly_sales_report';
-$route['monthly_sales_report'] = 'sales_con/monthly_sales_report';
-$route['yearly_sales_report'] = 'sales_con/yearly_sales_report';
-$route['login'] = 'login_con/login';
+$route['sales/daily'] = 'sales_con/daily_sales_report';
+$route['sales/weekly'] = 'sales_con/weekly_sales_report';
+$route['sales/monthly'] = 'sales_con/monthly_sales_report';
+$route['sales/yearly'] = 'sales_con/yearly_sales_report';
+
+$route['customers'] = "CustomersController/index";
+
+$route['suppliers'] = "SuppliersController/index";
+
+$route['delivery'] = "DeliveriesController/index";
+
+$route['login'] = 'LoginController/login';

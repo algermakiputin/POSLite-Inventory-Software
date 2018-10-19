@@ -3,26 +3,53 @@
 	<?php
 	$total = 0;
 	?>
-	<?php echo form_fieldset('<h1 class="text-danger">Sales Report</h1>'); ?>
-		<nav>
+	<?php echo '<h1 class="page-title">Sales Report</h1>'; ?>
+			<?php 
+				$currentPage = $this->uri->segment(2);
+			?>
 			<ul id="sales-nav">
 				<li>
-				<i class="fa fa-calendar" aria-hidden="true">1</i>
-				<a href="<?php echo base_url('daily_sales_report') ?>">Today's Sales</a></li>
+				
+					<a href="<?php echo base_url('sales/daily') ?>" <?php
+						if ($currentPage == "daily")
+							echo "class='active'"
+					 ?> >
+						1 <i class="fa fa-calendar" aria-hidden="true"></i> 
+						 Today's Sales
+					</a>
+				</li>
+
 				<li>
-				<i class="fa fa-calendar" aria-hidden="true">7</i>
-				<a href="<?php echo base_url('weekly_sales_report') ?>">This Week</a></li>
+					<a href="<?php echo base_url('sales/weekly') ?>" <?php
+						if ($currentPage == "weekly")
+							echo "class='active'"
+					 ?> >
+						7 <i class="fa fa-calendar" aria-hidden="true"></i> This Week
+					</a>
+				</li>
+				
 				<li>
-				<i class="fa fa-calendar" aria-hidden="true">30</i>
-				<a href="<?php echo base_url('monthly_sales_report') ?>">Monthly Sales</a></li>
+					<a href="<?php echo base_url('sales/monthly') ?>" <?php
+						if ($currentPage == "monthly")
+							echo "class='active'"
+					 ?>>
+						30 <i class="fa fa-calendar" aria-hidden="true"></i> Monthly Sales
+					</a>
+				</li>
 				<li>
-				<i class="fa fa-calendar" aria-hidden="true">1Y</i>
-				<a href="<?php echo base_url('yearly_sales_report') ?>">Annual Sales</a></li>
+					<a href="<?php echo base_url('sales/yearly') ?>" <?php
+						if ($currentPage == "yearly")
+							echo "class='active'"
+					 ?>>
+						1Y <i class="fa fa-calendar" aria-hidden="true"></i> Annual Sales
+					</a>
+				</li>
+				<div class="clearfix"></div>
 			</ul>
-		</nav>
-		<br><br>
-		<?php echo form_fieldset("<h1 class='text-danger'>$title</h1>"); ?>
-		<table class="table table-striped">
+			
+		<br>
+	
+		<table class="table table-striped table-bordered">
 <tr>
 	<th>Date/Time</th>
 	<th>Item Name</th>
@@ -30,29 +57,33 @@
 	<th>Quantity</th>
 	<th>Subtotal</th>
 </tr>
-	<?php foreach ($reports as $report) :?>
-		<tr>
-			<td><?php echo $report->date_time ?></td>
-			<td><?php echo $report->item_name ?></td>
-			<td><?php echo $report->item_price ?></td>
-			<td><?php echo $report->quantity ?></td>
-			<td><?php echo $report->sub_total ?></td>
-		</tr>
-		<?php 
+	<?php if($reports) : ?>
+		<?php foreach ($reports as $report) :?>
+			<tr>
+				<td><?php echo $report->date_time ?></td>
+				<td><?php echo $model->getDetails($report->item_id)->name ?> </td>
+				<td><?php echo $price->getPrice($report->price_id) ?></td>
+				<td><?php echo $report->quantity ?></td>
+				<td><?php echo $report->sub_total ?></td>
+			</tr>
+			<?php 
 
-		$total = $total + $report->sub_total;
-		
-		?>
-	<?php endforeach ?>
+			$total = $total + $report->sub_total;
+			
+			?>
+		<?php endforeach ?>
+	<?php endif; ?>
 </table>
 <p style="border-top: 0.5px silver solid; padding-top: 5px;">
-<label class="lead">Total Sales Today: 
+ 
 <?php
 	if($total > 0) {
-		echo '₱'.$total;
+		echo "<label class='lead'>Total Sales:" .'₱'.$total . "</label>";
+	}else {
+		echo "<label class='lead'>Nothing to show...</label>";
 	}
 ?>	
-</label>
+
 </p>
 	</div>
 </div>

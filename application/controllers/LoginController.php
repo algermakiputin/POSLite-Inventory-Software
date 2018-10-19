@@ -1,5 +1,5 @@
 <?php 
-class Login_con extends CI_Controller {
+class LoginController extends CI_Controller {
 
 	public function login() {
 		$data['page_name'] = "Login";
