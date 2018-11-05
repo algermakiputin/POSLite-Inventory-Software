@@ -58,7 +58,7 @@
 				'class' => 'form-signin'
 				);
 				?>
-				<?php echo form_open('LoginController/login_validation',$attributes )?>     
+				<?php echo form_open('AuthController/login_validation',$attributes )?>     
       <legend class=" text-center">Member login<br></legend>
       <br>
       <div class="input-group form-group">

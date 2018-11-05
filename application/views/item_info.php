@@ -15,14 +15,15 @@
 				<td><?php echo $item_info->category; ?></td>
 			</tr>
 			<tr>
-				<td>Description:</td>
-				<td><?php echo $item_info->description; ?></td>
-			</tr>
-			<tr>
 				<td>Quantities:</td>
 				<td><?php echo $orderingLevel->getQuantity($item_info->id)->quantity ?></td>
 				
 			</tr>
+			<tr>
+				<td>Description:</td>
+				<td><?php echo $item_info->description; ?></td>
+			</tr>
+			
 			<tr>
 				<td>Price:</td>
 				<td><?php echo $price->getPrice($item_info->id) ?></td>

@@ -27,13 +27,24 @@
 
 		echo $this->session->flashdata('errorMessage');
 		echo $this->session->flashdata('successMessage');
-		echo form_open('item/item_con');
+		echo form_open('items/insert');
 		echo '<h1 class="page-title">Register Item </h1>';
 		echo '<div class="row">';
 		echo '<div class="col-lg-6">';
 		echo '<div class="form-group">';
 		echo form_label('Item Name');
 		echo form_input($nameAttr);
+		echo '</div>';
+		echo '<div class="form-group">';
+		echo form_label('Supplier');
+		echo "<select class='form-control' name='category'>";
+		echo '<option value="" selected="selected">Select Supplier</option>';
+		foreach ($suppliers as $supplier) {
+			?>
+			<option value="<?php echo $supplier->id; ?>"><?php echo $supplier->name; ?></option>
+			<?php
+		}
+		echo "</select>";
 		echo '</div>';
 		echo '<div class="form-group">';
 		echo form_label('Category');

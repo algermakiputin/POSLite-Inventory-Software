@@ -1,16 +1,15 @@
 <?php
 class Item_model extends CI_Model {
 
-	public function insertItem($name, $category, $description, $date_time) 
+	public function insertItem($name, $category, $description,$supplier_id) 
 	{
 		$this->load->database();
 
 		$data = array(
 			'name' => $name,
 			'category' => $category,
-			'description' => $description,
-			'date_time' => $date_time, 
-			'supplier_id' => 1  
+			'description' => $description, 
+			'supplier_id' => $supplier_id
 
 			);
 		
@@ -24,6 +23,8 @@ class Item_model extends CI_Model {
 	public function deleteItem($id) {
 
 		$this->load->database();
+		$this->db->where('item_id', $id)->delete('ordering_level');
+		$this->db->where('item_id', $id)->delete('prices');
 		$sql = $this->db->where('id', $id)->delete('items');
 		return $sql;
 		
@@ -40,7 +41,7 @@ class Item_model extends CI_Model {
 		$this->load->database();
 		
 
-		return $this->db->where('item_id', $id)->update('ordering_level',['quantity' => $stocks]);
+		return $this->db->where('item_id', $id)->update('ordering_level',['quantity' => 'quantity +' . $stocks]);
 
 	}
 

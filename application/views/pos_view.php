@@ -9,7 +9,7 @@
 <body>
 	<header style="height: 60px; background: #2d2626; color: white;" class="">
 
-		<a href="<?php echo base_url('logout/out') ?>"><button class="btn btn-primary btn-lg pos-btn-singout" >Sign Out</button></a>
+		<a href="<?php echo base_url('logout') ?>"><button class="btn btn-primary btn-lg pos-btn-singout" >Sign Out</button></a>
 		<div style="padding-left: 20px; padding-top: 2px;">
 			<h2 style="margin: 0">POS Sales and Inventory System</h2>
 			<p style="margin: 0;">By: Alger Makiputin</p>

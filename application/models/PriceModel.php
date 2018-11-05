@@ -8,7 +8,6 @@ class PriceModel extends CI_Model {
 				'price' => $price,
 				'item_id' => $item_id
 			);
-
 		$this->db->insert('prices', $data);
 		return $this->db->insert_id();
 	}

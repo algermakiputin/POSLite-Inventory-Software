@@ -1,5 +1,6 @@
 <?php
-class Accounts_con extends CI_Controller {
+class UsersController extends CI_Controller {
+
 	public function __construct() {
 		parent::__construct();
 		if (!$this->session->userdata('log_in')) {
@@ -43,4 +44,16 @@ class Accounts_con extends CI_Controller {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps... Something Went Wrong Please Try Again.</div>' );
 		}
 	}
+
+	public function users () {
+		$data['page'] = 'accounts';
+		$this->load->model('UsersModel');
+		$data['accountsList'] = $this->UsersModel->display_accounts();
+		$this->load->view('header',$data);
+		$this->load->view('side_menu');
+		$this->load->view('accounts_view',$data);
+		$this->load->view('footer');
+	}
+
+	
 }

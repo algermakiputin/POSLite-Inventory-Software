@@ -1,7 +1,7 @@
 <?php
 class Sales_model extends CI_Model {
 
-	public function insert_sales($records) {
+	public function insert_sales($records,$customer_id) {
 
 		$this->load->database();
 		
@@ -19,7 +19,7 @@ class Sales_model extends CI_Model {
 				'quantity' => "$sale[2]",
 				'sub_total' => "$sub_total", 
 				'price_id' => $sale[5],
-				'customer_id' => 1
+				'customer_id' => $customer_id
 
 			);
 

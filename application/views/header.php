@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/bootstrap/css/bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/font-awesome-4.7.0/css/font-awesome.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style.css')?>">
+	<meta name="base_url" content="<?php echo base_url() ?>">
 </head>
 <body>
 <?php if ( $this->uri->segment(1) !== "login"): ?>

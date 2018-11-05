@@ -52,23 +52,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'pages/inventory';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['inventory'] = 'pages/inventory';
-$route['sales'] = 'pages/sales';
-$route['new_item'] = 'pages/new_item';
-$route['categories'] = 'pages/categories';
-$route['accounts'] = 'pages/accounts';
-$route['lagout'] = 'pages/lagout';
-$route['localhost/sais'] = 'localhost/sais/inventory';
+
+$route['sales'] = 'SalesController/sales';
+$route['sales/daily'] = 'SalesController/daily';
+$route['sales/weekly'] = 'SalesController/weekly';
+$route['sales/monthly'] = 'SalesController/monthly';
+$route['sales/yearly'] = 'SalesController/yearly';
+
+$route['items'] = 'ItemController/items';
+$route['items/new'] = 'ItemController/new';
+$route['items/insert'] = 'ItemController/insert';
+
+$route['categories'] = 'CategoriesController/categories';
+$route['users'] = 'UsersController/accounts';
+$route['logout'] = 'AuthController/logout';
 $route['pos'] = 'pos_con/pos';
-$route['sales/daily'] = 'sales_con/daily_sales_report';
-$route['sales/weekly'] = 'sales_con/weekly_sales_report';
-$route['sales/monthly'] = 'sales_con/monthly_sales_report';
-$route['sales/yearly'] = 'sales_con/yearly_sales_report';
+
 
 $route['customers'] = "CustomersController/index";
+$route['customers/insert'] = "CustomersController/insert";
+$route['customers/delete/(:any)'] = "CustomersController/destroy/$1";
+$route['customers/find'] = "CustomersController/find";
+$route['customers/update'] = "CustomersController/update";
 
 $route['suppliers'] = "SuppliersController/index";
+$route['suppliers/insert'] = "SuppliersController/insert";
+$route['suppliers/delete/(:any)'] = "SuppliersController/destroy/$1";
+$route['suppliers/find'] = "SuppliersController/find";
+$route['suppliers/update'] = "SuppliersController/update";
 
-$route['delivery'] = "DeliveriesController/index";
+$route['deliveries'] = "DeliveriesController/deliveries";
+$route['new-delivery'] = "DeliveriesController/index";
+$route['delivery/insert'] = "DeliveriesController/insert";
 
-$route['login'] = 'LoginController/login';
+$route['users'] = "UsersController/users";
+
+$route['login'] = 'AuthController/login';

@@ -1,5 +1,5 @@
 <?php
-class Item extends CI_Controller {
+class ItemController extends CI_Controller {
 	
 	public function __construct() {
 		parent::__construct();
@@ -10,44 +10,64 @@ class Item extends CI_Controller {
 	
 	}
 
-	public function item_con() {
+	public function items () {
+		$this->load->model('database');
+		$this->load->model('PriceModel');
+		$this->load->model('OrderingLevelModel');
+		$data['items'] = $this->database->itemList();
+		$data['page'] = 'inventory';
+		$data['price'] = $this->PriceModel;
+		$data['orderingLevel'] = $this->OrderingLevelModel;
+		$this->load->view('header',$data);
+		$this->load->view('side_menu');
+		$this->load->view('items/items_view',$data);
+		$this->load->view('footer');
+	}
+
+	public function new() {
+		$this->load->database();
+		$this->load->model('categories_model');
+		$data['category'] = $this->categories_model->getCategoriesName();
+		$data['suppliers'] = $this->db->get('supplier')->result();
+		$data['page'] = 'new_item';
+		$this->load->view('header',$data);
+		$this->load->view('side_menu');
+		$this->load->view('items/new',$data);
+		$this->load->view('footer');
+	}
+
+	public function insert() {
 
 		if ($this->input->post('submit_item')) {
 			$this->load->model('PriceModel');
-
-			date_default_timezone_set('Asia/Manila');
-			$datestring = '%Y-%m-%d %h:%i:%s %a';
-			$time = time();
-			$date_time = mdate($datestring, $time);
 			$name = $this->input->post('item_name');
 			$category = $this->input->post('category');
 			$description = $this->input->post('description');
+			$supplier_id = $this->input->post('supplier_id');
 			$quantity = 0;
-
 			$price = $this->input->post('price');
 			
 			if( $this->new_item_validation() == FALSE) {
 
 				$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">'.validation_errors() . '</div>');
-				redirect('new_item');
+				redirect('items/new');
 
 			}else if ($category === '') {
 				$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Please Select A Category </div>');
-				redirect(base_url('new_item'));
+				redirect(base_url('items/new'));
 			}else {
 				$this->load->model('item_model');
 				$this->load->model('OrderingLevelModel');
-				$item_id = $this->item_model->insertItem($name, $category, $description, $date_time);
-
+				$item_id = $this->item_model->insertItem($name, $category, $description,$supplier_id);
 				$this->PriceModel->insert($price, $item_id);
 				$this->OrderingLevelModel->insert($item_id);
 				$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>');
 				$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added Successfully </div>');
-				redirect(base_url('inventory'));
+				redirect(base_url('items'));
 			}
 
 		}else {
-			redirect(base_url('new_item'));
+			redirect(base_url('items/new'));
 		}
 		 
 	}

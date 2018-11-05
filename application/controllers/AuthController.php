@@ -1,5 +1,5 @@
 <?php 
-class LoginController extends CI_Controller {
+class AuthController extends CI_Controller {
 
 	public function login() {
 		$data['page_name'] = "Login";
@@ -17,8 +17,8 @@ class LoginController extends CI_Controller {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' . validation_errors() . '</div>');
 			redirect(base_url('login'));
 		}else {
-			$this->load->model('accounts_model');
-			$verify_login = $this->accounts_model->login($username);
+			$this->load->model('UsersModel');
+			$verify_login = $this->UsersModel->login($username);
 			if ($verify_login) {
 				$hash_password = $verify_login->password;
 				$hash = password_verify($password,$hash_password);
@@ -34,9 +34,9 @@ class LoginController extends CI_Controller {
 					if ($this->session->userdata('account_type') == "Cashier") {
 						redirect(base_url('pos'));
 					}else if ($this->session->userdata('account_type') == "Admin") {
-						redirect(base_url('inventory'));
+						redirect(base_url('items'));
 					}else if ($this->session->userdata('account_type') == "Clerk") {
-						redirect(base_url('inventory'));
+						redirect(base_url('items'));
 					}
 				}else {
 					$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Incorrect Login Name Or Password</div>');
@@ -47,6 +47,13 @@ class LoginController extends CI_Controller {
 				redirect(base_url('login'));
 			}
 		}
+	}
+
+	public function logout() {
+		$data = array('id','username','log_in','account_type');
+		$this->session->unset_userdata($data);
+		$this->session->set_flashdata('successMessage','<div class="alert alert-success">Lagout Successfully</div>');
+		redirect(base_url('login'));
 	}
 }
 

@@ -1,5 +1,6 @@
 <?php
-class Category Extends CI_Controller {
+class CategoriesController Extends CI_Controller {
+
 	public function __construct() {
 		parent::__construct();
 		if (!$this->session->userdata('log_in')) {
@@ -7,6 +8,17 @@ class Category Extends CI_Controller {
 			redirect(base_url('login'));
 		}
 	}
+
+	public function categories() {
+		$this->load->model('categories_model');
+		$data['categoryList'] = $this->categories_model->getCategories();
+		$data['page'] = 'categories';
+		$this->load->view('header',$data);
+		$this->load->view('side_menu');
+		$this->load->view('categories/index',$data);
+		$this->load->view('footer');
+	}
+
 	public function index() {
 		$category = $this->input->post('category');
 		if (empty($category)) {

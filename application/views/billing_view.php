@@ -51,6 +51,15 @@
 	
 </div>
 <div class="form-group">
+	<label>Select Customer:</label>
+	<select class="form-control input-lg" name="customer_id" required="required">
+		<option value="">Select Customer</option>
+		<?php foreach($customers as $customer): ?>
+			<option value="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
+		<?php endforeach; ?>
+	</select>
+</div>
+<div class="form-group">
 	<label>Total Amount:</label><br>
 	<input id="amount_due" type="text" name="" disabled="" class="form-control input-lg">
 </div>

@@ -1,5 +1,5 @@
 <?php
-class Sales_con extends CI_Controller {
+class SalesController extends CI_Controller {
 	public function __construct() {
 		
 		parent::__construct();
@@ -8,7 +8,16 @@ class Sales_con extends CI_Controller {
 			redirect(base_url('login'));
 		}
 	}
-	public function daily_sales_report() {
+
+	public function sales () {
+		$data['page'] = 'sales';
+		$this->load->view('header',$data);
+		$this->load->view('side_menu');
+		$this->load->view('sales_report_nav_view');
+		$this->load->view('footer');
+	}
+
+	public function daily() {
 		$this->load->model('item_model');
 		$this->load->model('sales_model');
 		$this->load->model('PriceModel');
@@ -25,7 +34,7 @@ class Sales_con extends CI_Controller {
 	
 	}
 
-	public function weekly_sales_report() {
+	public function weekly() {
 		$this->load->model('sales_model');
 		$this->load->model('item_model');
 		$this->load->model('PriceModel');
@@ -39,7 +48,7 @@ class Sales_con extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function monthly_sales_report() {
+	public function monthly() {
 		$this->load->model('sales_model');
 		$this->load->model('item_model');
 		$this->load->model('PriceModel');
@@ -53,7 +62,7 @@ class Sales_con extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function yearly_sales_report() {
+	public function yearly() {
 		$this->load->model('PriceModel');
 		$this->load->model('sales_model');
 		$this->load->model('item_model');
