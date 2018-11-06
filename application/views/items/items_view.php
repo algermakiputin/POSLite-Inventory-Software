@@ -33,9 +33,9 @@
 					 
 					$stocks <= 0 ? '<span class="label label-danger">Stock Out</span>' : ($stocks <= 5 ? '<span class="label label-warning ">Needs restock</span>' : '<span class="label label-success ">Available</span>'),
 				 
-					"<a href='".base_url("item/stock_in/$item->id")."'><button title='Stock In' class='btn btn-primary btn-sm'>Stock In</button></a> 
-					<a href='".base_url("item/update/$item->id")."'><button title='Edit' class='btn btn-info btn-sm'>Edit</button></a> 
-					<a href='".base_url("item/delete/$item->id")."'><button title='Delete' class='btn btn-info btn-warning btn-sm'>Delete</button></a>");
+					"<a href='".base_url("items/stock-in/$item->id")."'><button title='Stock In' class='btn btn-primary btn-sm'>Stock In</button></a> 
+					<a href='".base_url("ItemController/update/$item->id")."'><button title='Edit' class='btn btn-info btn-sm'>Edit</button></a> 
+					<a href='".base_url("ItemController/delete/$item->id")."'><button title='Delete' class='btn btn-info btn-warning btn-sm'>Delete</button></a>");
 			}
 			echo $this->table->generate($item_table);
 			echo '</div>';

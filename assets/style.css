@@ -11,7 +11,21 @@ body {
     border-right:solid 1px #e7e7e7;
 }
 
+.dataTables_filter {
+  float: right;
+}
+ 
+.dataTables_filter input{
+  border:solid 1px #ddd;
+}
 
+.dataTables_length {
+  float: left;
+}
+
+.dataTables_length select {
+  border:solid 1px #ddd;
+}
 
 #main-header {
   background: #f8f8f8;
@@ -80,8 +94,7 @@ body {
   margin-bottom: 30px;
   border-bottom: solid 1px #eee;
   padding-bottom: 10px;
-  font-size: 27px;
-  margin-top: 40px;
+  font-size: 27px; 
 }
 
 .#ui-id-1 {

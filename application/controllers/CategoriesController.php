@@ -19,7 +19,7 @@ class CategoriesController Extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function index() {
+	public function insert() {
 		$category = $this->input->post('category');
 		if (empty($category)) {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Category Is Empty!</div>');

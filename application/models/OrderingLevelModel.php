@@ -18,4 +18,14 @@ class OrderingLevelModel extends CI_Model {
 
 		return $this->db->where('item_id', $id)->get('ordering_level')->row();
 	}
+
+	public function addStocks($id, $stocks) {
+		
+		 
+		$o = $this->db->where('item_id', $id)->get('ordering_level')->row();
+		$quantity = (int) $o->quantity + $stocks;
+		$this->load->database();
+		return $this->db->where('item_id', $id)
+					->update('ordering_level', ['quantity' => $quantity]);
+	}
 }

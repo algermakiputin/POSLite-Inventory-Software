@@ -19,7 +19,10 @@
 							<?php endforeach; ?>
 						</select>
 					</div>
-
+					<div class="form-group">
+						<label>Expiry Date</label>
+						<input type="date"  name="expiry_date" class="form-control" required="required">
+					</div>
 					<div class="form-group">
 						<label>Item Name</label>
 						<input type="text" name="item_name" class="form-control" required="required">

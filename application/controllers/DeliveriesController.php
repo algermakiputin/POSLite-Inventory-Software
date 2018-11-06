@@ -10,7 +10,7 @@ class DeliveriesController extends CI_Controller
 	 
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
- 
+ 	
 		$this->load->view('header',$data);
 		$this->load->view('side_menu');
 		$this->load->view('delivery/index',$data);
@@ -23,8 +23,8 @@ class DeliveriesController extends CI_Controller
 		$this->load->database();
 
 		$data = array(
-			'supplier_id' => $this->input->post('supplier_id')
-
+			'supplier_id' => $this->input->post('supplier_id'),
+			'expiry_date' => date('Y-m-d', strtotime($this->input->post('expiry_date')))
 			);
 
 		$this->db->insert('delivery',$data);
@@ -59,7 +59,8 @@ class DeliveriesController extends CI_Controller
 					'supplier_name' => $this->db->where('id', $delivery->supplier_id)->get('supplier')->row()->name,
 					'item' => $delivery_details->item,
 					'price' => $delivery_details->price,
-					'quantity' => $delivery_details->quantity
+					'quantity' => $delivery_details->quantity,
+					'expiry_date' => $delivery->expiry_date
 				];
 			}
 		}

@@ -3,7 +3,7 @@ class Item_model extends CI_Model {
 
 	public function insertItem($name, $category, $description,$supplier_id) 
 	{
-		$this->load->database();
+	 
 
 		$data = array(
 			'name' => $name,
@@ -35,19 +35,8 @@ class Item_model extends CI_Model {
 		return $this->db->where('id', $id)->get('items')->row();
 	}
 
-
-
-	public function add_stocks($id,$stocks) {
-		$this->load->database();
-		
-
-		return $this->db->where('item_id', $id)->update('ordering_level',['quantity' => 'quantity +' . $stocks]);
-
-	}
-
 	public function item_info($id) {
 
-		$this->load->database();
 		$sql = $this->db->where('id', $id)->get('items');
 		return $sql->row();
 

@@ -1,8 +1,10 @@
 <div class="col-sm-10" id="main">
-	<?php
-		echo '<div class="table-wrapper">';
+	<h1 class="page-title">Register Item</h1> 
+	
+		<div class="table-wrapper">
 	 
-		echo '<div id="content-new-item">';
+		<div>
+	<?php
 		$nameAttr = array(
 			'class' => 'form-control',
 			'type' => 'text',
@@ -28,7 +30,7 @@
 		echo $this->session->flashdata('errorMessage');
 		echo $this->session->flashdata('successMessage');
 		echo form_open('items/insert');
-		echo '<h1 class="page-title">Register Item </h1>';
+		
 		echo '<div class="row">';
 		echo '<div class="col-lg-6">';
 		echo '<div class="form-group">';

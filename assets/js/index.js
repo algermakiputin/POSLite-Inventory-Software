@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
-	 
+	
+	$("#supplier_table").DataTable();
 	$("#supplier_table").on('click','.edit',function() {
 		var id = $(this).data('id');
 		$("#supplier_id").val(id);
@@ -19,7 +20,11 @@ $(document).ready(function() {
 
 		});
 	});
-
+	$("#item_tbl").DataTable();
+	$("#users_table").DataTable();
+	$("#categories_table").DataTable();
+	$("#deliveries_table").DataTable();
+	$("#customer_table").DataTable();
 	$("#customer_table").on('click','.edit',function() {
 		var id = $(this).data('id');
 		 $("#customer_id").val(id);

@@ -86,56 +86,52 @@ class ItemController extends CI_Controller {
 		$del_item = $this->item_model->deleteItem($id);
 		if ($del_item) {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Deleted</div>');
-			redirect(base_url('inventory'));
+			redirect(base_url('items'));
 		}else {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong</div>');
-			redirect(base_url('inventory'));
+			redirect(base_url('items'));
 		}
 	}
 
-	public function stock_in($item_name) {
+	public function stock_in($id) {
 		
 		$this->load->model('item_model');
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 
-		$data['item_info'] = $this->item_model->item_info(urldecode($item_name));
-		$data['item_name'] = $item_name;
+		$data['item_info'] = $this->item_model->item_info(urldecode($id));
+		$data['item_id'] = $id;
 		$data['price'] = $this->PriceModel;
 		$data['orderingLevel'] = $this->OrderingLevelModel;
 
 		$this->load->view('header');
 		$this->load->view('side_menu');
 		$this->load->view('stock_in_view',$data);
-		$this->load->view('item_info',$data);
 		$this->load->view('footer');
 	}
 
 	public function add_stocks() {
-		if ($this->input->post('submit_stocks')) {
-			if ($this->input->post('item_name')) { 
-				$itemName = $this->input->post('item_name');
-				$stocks = $this->input->post('stocks');
-				$this->form_validation->set_rules('stocks','Stocks','required|integer');
-				if($this->form_validation->run() === FALSE) {
-					$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' .validation_errors() . '</div>');
-					redirect(base_url("item/stock_in/$itemName"));
-				}else {
-					$name = urldecode($itemName);
-					$this->load->model('item_model');
-					$update = $this->item_model->add_stocks($name,$stocks);
-					if ($update) {
-						$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
-						redirect(base_url('inventory'));
-						
-					}else {
-						$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
-						redirect(base_url('inventory'));
-					}
-				}
-			}
+		$itemID = $this->input->post('item_id');
+		 
+		$stocks = $this->input->post('stocks');
+		$this->form_validation->set_rules('stocks','Stocks','required|integer');
+
+		if($this->form_validation->run() === FALSE) {
+			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' .validation_errors() . '</div>');
+			redirect(base_url("items/stock-in/$itemID"));
 		}else {
-			redirect(base_url('inventory'));
+			 
+			$this->load->model('OrderingLevelModel');
+			$update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
+
+			if ($update) {
+				$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
+				redirect(base_url('items'));
+				
+			}else {
+				$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
+				redirect(base_url('items'));
+			}
 		}
 	}
 
@@ -173,11 +169,11 @@ class ItemController extends CI_Controller {
 
 		if ($current_name === $updated_name && $current_category === $updated_category && $current_price === $updated_price && $current_description === $updated_desc) {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-info">No Changes</div>');
-					redirect(base_url('inventory'));
+					redirect(base_url('items'));
 		}else {
 			if ($this->form_validation->run() == FALSE) {
 				$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opss Something Went Wrong Updating The Item. Please Try Again.</div>');
-					redirect(base_url('inventory'));
+					redirect(base_url('items'));
 			}else {
 				$this->load->model('item_model');
 				$this->load->model('PriceModel');
@@ -189,7 +185,7 @@ class ItemController extends CI_Controller {
 
 				if ($update) {
 					$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
-					redirect(base_url('inventory'));
+					redirect(base_url('items'));
 				}
 			}
 		}		

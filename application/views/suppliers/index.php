@@ -1,7 +1,7 @@
 <div class="col-sm-10" id="main">
 	<div class="table-wrapper">
-		<h1 class="page-title">Suppliers</h1>
-		<button class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Supplier</button>
+		<h1 class="page-title">Suppliers <button class="pull-right btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button></h1>
+		
 		<hr>
     <?php if ($this->session->flashdata('success')): ?>
       <div class="alert alert-success">
@@ -9,25 +9,29 @@
       </div>
     <?php endif; ?> 
     <table class="table table-striped table-bordered table-hover table-responsive" id="supplier_table">
-     <tr>
-      <th width="25%">Name</th>
-      <th width="30%">Address</th>
-      <th width="25%">Contact</th> 
-      <th width="20%">Actions</th>
-    </tr>
-    <?php foreach($suppliers as $supplier): ?>
-      <tr>
-       <td><?php echo $supplier->name; ?></td>
-       <td><?php echo $supplier->address; ?></td>
-       <td><?php echo $supplier->contact; ?></td>
-       <td>
-       <button class="btn btn-info btn-sm edit" data-toggle="modal" data-target="#edit-supplier" data-id="<?php echo $supplier->id ?>">Edit</button>
-        <a class="btn btn-danger btn-sm" href="<?php echo base_url('suppliers/delete/' . $supplier->id ) ?>">Delete</a>
-      </td>
-    </tr>
-  <?php endforeach; ?>
-</table>
-</div>
+      <thead>
+        <tr>
+          <th width="25%">Name</th>
+          <th width="30%">Address</th>
+          <th width="25%">Contact</th> 
+          <th width="20%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($suppliers as $supplier): ?>
+          <tr>
+           <td><?php echo $supplier->name; ?></td>
+           <td><?php echo $supplier->address; ?></td>
+           <td><?php echo $supplier->contact; ?></td>
+           <td>
+             <button class="btn btn-info btn-sm edit" data-toggle="modal" data-target="#edit-supplier" data-id="<?php echo $supplier->id ?>">Edit</button>
+             <a class="btn btn-danger btn-sm" href="<?php echo base_url('suppliers/delete/' . $supplier->id ) ?>">Delete</a>
+           </td>
+         </tr>
+       <?php endforeach; ?>
+      </tbody>
+   </table>
+ </div>
 
 </div>
 <div class="clearfix"></div>

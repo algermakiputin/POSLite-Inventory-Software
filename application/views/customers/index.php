@@ -1,42 +1,46 @@
 <div class="col-sm-10" id="main">
 	<div class="table-wrapper">
-		<h1 class="page-title">Customers</h1>
-		<button class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Customer</button>
-		<hr>
+		<h1 class="page-title">Customers <button class="pull-right btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button></h1>
+		
+		
 		<?php if ($this->session->flashdata('success')): ?>
 			<div class="alert alert-success">
 				<p><?php echo $this->session->flashdata('success') ?></p>
 			</div>
 		<?php endif; ?> 
 		<table class="table table-striped table-bordered table-hover table-responsive" id="customer_table">
-			<tr>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Gender</th> 
-				<th>Address</th>
-				<th>City</th>
-				<th>State</th>
-				<th>Zip Code</th>
-				<th>Mobile Number</th>
-				<th>Action</th>
-			</tr>
-			<?php foreach($customers as $customer): ?>
+			<thead>
 				<tr>
-					<td><?php echo $customer->name ?></td>
-					<td><?php echo $customer->email ?></td>
-					<td><?php echo $customer->gender ?></td>
-					<td><?php echo $customer->address ?></td>
-					<td><?php echo $customer->city ?></td>
-					<td><?php echo $customer->state ?></td>
-					<td><?php echo $customer->zipcode ?></td>
-					<td><?php echo $customer->mobileNumber ?></td>
-					<td> 
-						<button class="btn btn-info edit" data-toggle="modal" data-target="#customer-edit" data-id="<?php echo $customer->id ?>">Edit</button>
-						<a class="btn btn-danger btn-sm" href="<?php echo base_url('customers/delete/' . $customer->id) ?>">Delete</a>
-					</td>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Gender</th> 
+					<th>Address</th>
+					<th>City</th>
+					<th>State</th>
+					<th>Zip Code</th>
+					<th>Mobile Number</th>
+					<th>Action</th>
 				</tr>
-			<?php endforeach; ?>
-			 
+			</thead>
+			<tbody>
+				<?php foreach($customers as $customer): ?>
+					<tr>
+						<td><?php echo $customer->name ?></td>
+						<td><?php echo $customer->email ?></td>
+						<td><?php echo $customer->gender ?></td>
+						<td><?php echo $customer->address ?></td>
+						<td><?php echo $customer->city ?></td>
+						<td><?php echo $customer->state ?></td>
+						<td><?php echo $customer->zipcode ?></td>
+						<td><?php echo $customer->mobileNumber ?></td>
+						<td> 
+							<button class="btn btn-info edit" data-toggle="modal" data-target="#customer-edit" data-id="<?php echo $customer->id ?>">Edit</button>
+							<a class="btn btn-danger btn-sm" href="<?php echo base_url('customers/delete/' . $customer->id) ?>">Delete</a>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+			
 		</table>
 	</div>
 

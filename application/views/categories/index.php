@@ -1,4 +1,5 @@
 <div class="col-sm-10" id="main">
+ 
 	<?php
 		echo '<div class="table-wrapper">';
 		 
@@ -11,7 +12,7 @@
 			'id' => 'category_form'
 			);
 		echo '<div id="new_category">';
-		echo form_open('category',$formAttr);
+		echo form_open('categories/insert',$formAttr);
 		echo ('<h1  class="page-title">New Category</h1>');
 		echo '<div class="form-group">';
 		echo form_label('Category Name');
@@ -31,7 +32,7 @@
 			echo '<div>';
 			echo '<h1 class="page-title">Category List</h1>';
 			$template = array(
-				'table_open' => '<table class="table table-responsive table-striped table-hover table-bordered">',
+				'table_open' => '<table class="table table-responsive table-striped table-hover table-bordered" id="categories_table">',
 
 				);
 			$category_tbl = $this->table->set_template($template);

@@ -1,5 +1,5 @@
 <div class="col-sm-10" id="main" style="padding: 20px;">
-	<?php echo form_open("item/item_update/$item->id");?>
+	<?php echo form_open("ItemController/item_update/$item->id");?>
 	<?php echo form_fieldset('<h3 class="text-info">Update Item</h3>');	?>
 	<input type="hidden" name="current_name" value="<?php echo $item->name ?>">
 	<input type="hidden" name="current_category" value="<?php echo $item->category ?>" >
