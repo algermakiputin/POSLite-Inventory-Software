@@ -1,6 +1,13 @@
 <?php
 class Item_model extends CI_Model {
 
+	public function itemList () {
+		$this->load->database();
+		$sql = $this->db->order_by('id','DESC')->where('status', 1)->get('items');
+		$result = $sql->result();
+		return $result;
+	}
+
 	public function insertItem($name, $category, $description,$supplier_id) 
 	{
 	 
@@ -9,7 +16,8 @@ class Item_model extends CI_Model {
 			'name' => $name,
 			'category' => $category,
 			'description' => $description, 
-			'supplier_id' => $supplier_id
+			'supplier_id' => $supplier_id,
+			'status' => 1
 
 			);
 		
@@ -21,12 +29,8 @@ class Item_model extends CI_Model {
 	}
 
 	public function deleteItem($id) {
-
-		$this->load->database();
-		$this->db->where('item_id', $id)->delete('ordering_level');
-		$this->db->where('item_id', $id)->delete('prices');
-		$sql = $this->db->where('id', $id)->delete('items');
-		return $sql;
+ 
+		return $this->db->where('id', $id)->update('items', ['status' => 0]);
 		
 	}
 

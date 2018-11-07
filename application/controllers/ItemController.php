@@ -11,10 +11,10 @@ class ItemController extends CI_Controller {
 	}
 
 	public function items () {
-		$this->load->model('database');
+		$this->load->model('item_model');
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
-		$data['items'] = $this->database->itemList();
+		$data['items'] = $this->item_model->itemList();
 		$data['page'] = 'inventory';
 		$data['price'] = $this->PriceModel;
 		$data['orderingLevel'] = $this->OrderingLevelModel;
@@ -37,13 +37,13 @@ class ItemController extends CI_Controller {
 	}
 
 	public function insert() {
-
+	 
 		if ($this->input->post('submit_item')) {
 			$this->load->model('PriceModel');
 			$name = $this->input->post('item_name');
 			$category = $this->input->post('category');
 			$description = $this->input->post('description');
-			$supplier_id = $this->input->post('supplier_id');
+			$supplier_id = $this->input->post('supplier');
 			$quantity = 0;
 			$price = $this->input->post('price');
 			

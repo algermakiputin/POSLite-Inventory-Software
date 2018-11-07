@@ -1,20 +1,6 @@
 <?php
 
 class Database extends CI_Model {
-	public function itemList () {
-		$this->load->database();
-		$sql = $this->db->order_by('id','DESC')->get('items');
-		$result = $sql->result();
-		$this->db->close();
-		// $tableAttr = array(
-		// 	'table_open' => '<table class="table">'
-		// 	);
-		// $item_table = $this->table->set_heading('id','Name','Category','Description', 'Date/Time Added','Created By', 'Quantity', 'Price');
-		// $item_table = $this->table->set_template($tableAttr);
-		// $item_table = $this->table->generate($sql);
-
-		return $result;
-	}
 
 	public function getDateTime() {
 		date_default_timezone_set('Asia/Manila');

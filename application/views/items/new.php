@@ -40,7 +40,7 @@
 		echo '<div class="form-group">';
 		echo form_label('Supplier');
 		echo "<select class='form-control' name='category'>";
-		echo '<option value="" selected="selected">Select Supplier</option>';
+		echo '<option value="" name="supplier" selected="selected">Select Supplier</option>';
 		foreach ($suppliers as $supplier) {
 			?>
 			<option value="<?php echo $supplier->id; ?>"><?php echo $supplier->name; ?></option>

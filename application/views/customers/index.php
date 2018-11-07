@@ -11,15 +11,14 @@
 		<table class="table table-striped table-bordered table-hover table-responsive" id="customer_table">
 			<thead>
 				<tr>
-					<th>Name</th>
+					<th width="15%">Name</th>
 					<th>Email</th>
 					<th>Gender</th> 
 					<th>Address</th>
 					<th>City</th>
-					<th>State</th>
-					<th>Zip Code</th>
+					<th>State</th> 
 					<th>Mobile Number</th>
-					<th>Action</th>
+					<th width="10%">Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,12 +29,11 @@
 						<td><?php echo $customer->gender ?></td>
 						<td><?php echo $customer->address ?></td>
 						<td><?php echo $customer->city ?></td>
-						<td><?php echo $customer->state ?></td>
-						<td><?php echo $customer->zipcode ?></td>
+						<td><?php echo $customer->state ?></td> 
 						<td><?php echo $customer->mobileNumber ?></td>
 						<td> 
-							<button class="btn btn-info edit" data-toggle="modal" data-target="#customer-edit" data-id="<?php echo $customer->id ?>">Edit</button>
-							<a class="btn btn-danger btn-sm" href="<?php echo base_url('customers/delete/' . $customer->id) ?>">Delete</a>
+							<button class="fa fa-edit btn-primary btn edit btn-sm" data-toggle="modal" data-target="#customer-edit" data-id="<?php echo $customer->id ?>"></button>
+							<a class="btn btn-danger fa fa-trash btn-sm" href="<?php echo base_url('customers/delete/' . $customer->id) ?>"></a>
 						</td>
 					</tr>
 				<?php endforeach; ?>
