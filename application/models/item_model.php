@@ -8,16 +8,15 @@ class Item_model extends CI_Model {
 		return $result;
 	}
 
-	public function insertItem($name, $category, $description,$supplier_id) 
+	public function insertItem($name, $category, $description,$supplier_id,$barcode) 
 	{
-	 
-
 		$data = array(
 			'name' => $name,
-			'category' => $category,
+			'category_id' => $category,
 			'description' => $description, 
 			'supplier_id' => $supplier_id,
-			'status' => 1
+			'status' => 1,
+			'barcode' => $barcode
 
 			);
 		
@@ -50,7 +49,7 @@ class Item_model extends CI_Model {
 		$this->load->database();
 		$data = array(
 			'name' => $name,
-			'category' => $category,
+			'category_id' => $category,
 			'description' => $description, 
 			);
 

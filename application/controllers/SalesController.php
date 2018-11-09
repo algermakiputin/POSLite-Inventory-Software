@@ -9,71 +9,93 @@ class SalesController extends CI_Controller {
 		}
 	}
 
+	public function index() {
+		
+	}
+
 	public function sales () {
-		$data['page'] = 'sales';
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('sales_report_nav_view');
-		$this->load->view('footer');
+		$data['content'] = "sales/index";
+		$this->load->view('master',$data);;
+		 
 	}
 
-	public function daily() {
-		$this->load->model('item_model');
-		$this->load->model('sales_model');
-		$this->load->model('PriceModel');
+	public function insert() {
+		$data = [];
+		$sales = $this->input->post('sales');
+		$this->db->trans_begin();
+		
+		foreach ($sales as $sale) {
+			$data[] = [
+				'item_id' => $sale[0],
+				'quantity' => $sale[1],
+				'price' => $sale[2],
+				'sub_total' => $sale[3],
+				'customer_id' => $sale[4]
+			];
 
-		$data['title'] = 'Today\'s Report';				
-		$data['reports'] = $this->sales_model->daily_sales_report();
- 		$data['model'] = $this->item_model;
- 		$data['price'] = $this->PriceModel;
- 		
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('sales_report_nav_view',$data);
-		$this->load->view('footer');
-	
+			$this->db->set('quantity', "quantity -$sale[1]" , false);
+			$this->db->where('item_id', $sale[0]);
+			$this->db->update('ordering_level');
+		}
+ 
+
+		$this->db->insert_batch('sales', $data);
+
+		if ($this->db->trans_status() === FALSE)
+		{
+		        $this->db->trans_rollback();
+		}
+		else
+		{
+		        $this->db->trans_commit();
+		}
+
+		return 0;
 	}
 
-	public function weekly() {
-		$this->load->model('sales_model');
-		$this->load->model('item_model');
-		$this->load->model('PriceModel');
-		$data['title'] = 'This Week Report';
-		$data['price'] = $this->PriceModel;
-		$data['model'] = $this->item_model;
-		$data['reports'] = $this->sales_model->weekly_sales_report();
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('sales_report_nav_view',$data);
-		$this->load->view('footer');
-	}
+	public function reports() {
 
-	public function monthly() {
-		$this->load->model('sales_model');
-		$this->load->model('item_model');
-		$this->load->model('PriceModel');
-		$data['title'] = 'This Month Report';
-		$data['model'] = $this->item_model;
-		$data['price'] = $this->PriceModel;
-		$data['reports'] = $this->sales_model->monthly_sales_report();
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('sales_report_nav_view',$data);
-		$this->load->view('footer');
-	}
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$datasets = [];
+		$totalSales = 0;
+		$from = $this->input->post('columns[0][search][value]');
+		$to = $this->input->post('columns[1][search][value]');
+		
+		if ($from && $to) {
+			$sales = $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+						->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+						->get('sales', $start, $limit)->result();
 
-	public function yearly() {
-		$this->load->model('PriceModel');
-		$this->load->model('sales_model');
-		$this->load->model('item_model');
-		$data['title'] = 'This Year Report';
-		$data['model'] = $this->item_model;
-		$data['price'] = $this->PriceModel;
-		$data['reports'] = $this->sales_model->yearly_sales_report();
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('sales_report_nav_view',$data);
-		$this->load->view('footer');
+
+		}else {
+			$date = date('Y-m-d');
+			$sales = $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") =', $date)
+						->get('sales', $start, $limit)->result();
+		}
+
+		$count = count($sales);
+		foreach ($sales as $sale) {
+			$totalSales += $sale->sub_total;
+			$datasets[] = [
+				$sale->date_time,
+				$sale->item_id,
+				$this->db->where('id', $sale->item_id)->get('items')->row()->name,
+				$sale->quantity,
+				$sale->sub_total
+			];
+		}
+
+		echo json_encode([
+				'draw' => $this->input->post('draw'),
+				'recordsTotal' => $count,
+				'recordsFiltered' => $count,
+				'data' => $datasets,
+				'total_sales' => number_format($totalSales),
+				'from' => $from,
+				'to' => $to
+			]);
+
 	}
 }
 ?>

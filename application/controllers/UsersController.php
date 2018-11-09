@@ -49,10 +49,9 @@ class UsersController extends CI_Controller {
 		$data['page'] = 'accounts';
 		$this->load->model('UsersModel');
 		$data['accountsList'] = $this->UsersModel->display_accounts();
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('accounts_view',$data);
-		$this->load->view('footer');
+		$data['content'] = "users/index";
+		$this->load->view('master',$data);
+		 
 	}
 
 	

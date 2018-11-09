@@ -11,12 +11,11 @@ class CategoriesController Extends CI_Controller {
 
 	public function categories() {
 		$this->load->model('categories_model');
-		$data['categoryList'] = $this->categories_model->getCategories();
+		$data['categoryList'] = $this->db->get('categories')->result();
 		$data['page'] = 'categories';
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('categories/index',$data);
-		$this->load->view('footer');
+		$data['content'] = "categories/index";
+		$this->load->view('master',$data);
+		 
 	}
 
 	public function insert() {
@@ -27,10 +26,9 @@ class CategoriesController Extends CI_Controller {
 		}else if (strlen($category) > 50) {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Category Must Not More Than 50 Characters!</div>');
 			redirect(base_url('categories'));
-		}else {
-			$creator = 'admin';
+		}else { 
 			$this->load->model('database');
-			$this->database->insertCategory($category, $creator);
+			$this->database->insertCategory($category);
 		}
 	}
 }

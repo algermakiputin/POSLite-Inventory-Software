@@ -7,11 +7,8 @@ class CustomersController Extends CI_Controller {
 		$this->load->database();
 		$data['page'] = "Suppliers";
 		$data['customers'] = $this->db->order_by('id','DESC')->get('customers')->result();
- 
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('customers/index',$data);
-		$this->load->view('footer');
+ 		$data['content'] = "customers/index";
+		$this->load->view('master',$data);
 
 	}
 

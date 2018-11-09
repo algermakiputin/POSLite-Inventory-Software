@@ -9,16 +9,16 @@ class Pos_con extends CI_Controller {
 		}
 	}
 	public function pos(){
-		$this->load->model('item_model');
-		$names = $this->item_model->get_all_item();
-		$data['names'] = [];
+		$this->load->model('item_model'); 
+		$this->load->model('PriceModel');
+		$this->load->model('OrderingLevelModel');
+		$this->load->model('categories_model');
+ 
+		$data['price'] = $this->PriceModel;
+		$data['categoryModel'] = $this->categories_model;
+		$data['orderingLevel'] = $this->OrderingLevelModel;  
+ 		$data['customers'] = $this->db->get('customers')->result();
 
-		foreach ($names as $name) {
-			array_push($data['names'], $name['name']);
-		}
-
-	
-
-		$this->load->view('pos_view',$data);
+		$this->load->view('pos/index',$data);
 	}
 }

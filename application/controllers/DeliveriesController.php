@@ -4,17 +4,15 @@ class DeliveriesController extends CI_Controller
 
 {
 
-	public function index() {
+	public function new() {
 		$this->load->database();
 		$this->load->model('PriceModel');
 	 
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
- 	
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('delivery/index',$data);
-		$this->load->view('footer');
+ 		$data['content'] = "deliveries/new";
+		$this->load->view('master',$data);
+		 
 	}
 
 
@@ -45,7 +43,7 @@ class DeliveriesController extends CI_Controller
 		}
 	}
 
-	public function deliveries() {
+	public function index() {
 		$this->load->database();
 		
 		$dataSet = [];
@@ -69,10 +67,9 @@ class DeliveriesController extends CI_Controller
 
 		$data['page'] = "Deliveries"; 
  		$data['dataSet'] = $dataSet;
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('delivery/deliveries',$data);
-		$this->load->view('footer');
+ 		$data['content'] = "deliveries/index";
+		$this->load->view('master',$data);
+		 
 	}
 
 }

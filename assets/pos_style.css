@@ -11,20 +11,63 @@ header {
 	background: #2d2626;
 }
 
+
+#panel2 {
+	display: none;
+}
+
+#loader {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: rgb(0,0,0,0.2);
+	z-index: 999;
+	display: none;
+}
+
+#loader .fa {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	font-size: 36px;
+	z-index: 1;
+	color: #ddd;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+	background: inherit !important;
+}
+
+#item-table tr:hover {
+	cursor: pointer;
+}
+
+#item-details {
+	padding: 20px 0;
+
+}
+#item-details tr td:first-child {
+	width: 20%;
+}
+.table > tbody > tr > td {
+	border: none !important;
+}
+
 .main {
 	padding: 0 20px 20px 20px;
 	border-radius: 5px;
 }
 
 .cart {
-	height: 300px;
+	min-height: 300px;
 	padding: 10px;
 	border:solid 0.5px silver;
 
 }
 
 #cart-tbl {
-	height: 280px;
+	min-height: 280px;
 	border-radius:10px;
 	background: #e3f2e4;
 	overflow: auto;
@@ -43,11 +86,16 @@ header {
 	padding: 20px;
 	border:solid 0.5px silver;
 	min-height: 210px;
+	border-top: 0;
+
 }
 
+ 
 .input #right {
 	padding: 20px;
 	border:solid 0.5px silver;
+	border-top: 0;
+	border-left: 0;
 	min-height: 213px;
 
 } 
@@ -61,8 +109,4 @@ header {
 	font-size: 18px;
 	padding: 10px;
 }
-
-#description {
-	font-size: 18px;
-	padding: 10px;
-}
+ 

@@ -7,11 +7,9 @@ class SuppliersController Extends CI_Controller {
 		$this->load->database();
 		$data['page'] = "Suppliers";
 		$data['suppliers'] = $this->db->order_by('id','DESC')->get('supplier')->result();
-
-		$this->load->view('header',$data);
-		$this->load->view('side_menu');
-		$this->load->view('suppliers/index',$data);
-		$this->load->view('footer');
+		$data['content'] = "suppliers/index";
+		$this->load->view('master',$data);
+		 
 	}
 
 	public function find() {

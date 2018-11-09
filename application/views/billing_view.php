@@ -35,18 +35,13 @@
 	</script>
 </head>
 <body>
-<header style="margin-bottom: 40px;color: white;">
-<div style="padding-left: 20px; padding-top: 2px;">
-		<h2 style="margin: 0">POS Sales and Inventory System</h2>
-		<p style="margin: 0;">By: Alger Makiputin</p>
-	</div>
-</header>
-<div class="main">
+ 
+<div class="main" style="padding: 30px;">
 
 <div class="col-sm-6 col-sm-offset-3">
 <?php echo $this->session->flashdata('errorMessage'); ?>
 <?php echo form_open('billing/complete'); ?>
-<?php echo form_fieldset('<h1 class="text-info">Payment</h1>'); ?>
+<?php echo form_fieldset('<h1 class="text-info text-center">Payment</h1>'); ?>
 <div id="message">
 	
 </div>

@@ -3,10 +3,11 @@ class AuthController extends CI_Controller {
 
 	public function login() {
 		$data['page_name'] = "Login";
-		$this->load->view('header',$data);
+		$this->load->view('template/header',$data);
 		$this->load->view('login');
-		$this->load->view('footer');
+		$this->load->view('template/footer');
 	}
+ 
 
 	public function login_validation() {
 		$username = $this->input->post('username');

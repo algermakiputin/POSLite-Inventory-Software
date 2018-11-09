@@ -1,14 +1,23 @@
-<div class="col-sm-10" id="main">
-	<div class="table-wrapper">
-		<h1 class="page-title">Customers <button class="pull-right btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button></h1>
-		
-		
-		<?php if ($this->session->flashdata('success')): ?>
-			<div class="alert alert-success">
-				<p><?php echo $this->session->flashdata('success') ?></p>
-			</div>
-		<?php endif; ?> 
-		<table class="table table-striped table-bordered table-hover table-responsive" id="customer_table">
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">Customers <button class="pull-right btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button></h1>
+	</div>
+<!-- /.col-lg-12 -->
+</div>
+<div class="row">
+ <div class="col-lg-12">
+     <div class="panel panel-default">
+         <div class="panel-heading">
+             Customers List
+         </div>
+         <!-- /.panel-heading -->
+         <div class="panel-body">
+         		<?php if ($this->session->flashdata('success')): ?>
+				<div class="alert alert-success">
+					<p><?php echo $this->session->flashdata('success') ?></p>
+				</div>
+			<?php endif; ?> 
+             <table class="table table-striped table-bordered table-hover table-responsive" id="customer_table">
 			<thead>
 				<tr>
 					<th width="15%">Name</th>
@@ -40,10 +49,13 @@
 			</tbody>
 			
 		</table>
-	</div>
-
+         </div>
+         <!-- /.panel-body -->
+     </div>
+     <!-- /.panel -->
+ </div>
+ <!-- /.col-lg-12 -->
 </div>
-<div class="clearfix"></div>
 
 <div id="myModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">

@@ -1,6 +1,45 @@
 $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
+	$('.date-range-filter').datepicker();
+
+	var sales_table = $("#sales_table").DataTable({
+		searching : true,
+		ordering : false,
+		bLengthChange :false,
+		serverSide : true,
+		info : false,
+		processing : true,
+		bsearchable : true,
+		dom : 'lrtip',
+		ajax : {
+			url : base_url + 'sales/report',
+			type : 'POST'
+		},
+		initComplete : function(settings, json) {
+			$("#total-sales").text('₱' + json.total_sales);
+			$("#max-date").change(function() {
+				$(this).datepicker('hide');
+				var to = $(this).val();
+				var from = $("#min-date").val();
+				
+				if (from) {
+					sales_table.columns(0).search(from);
+					sales_table.columns(1).search(to).draw();
+					$("#range").text(to + ' - ' + from);
+				}else {
+					alert('Select from date');
+				}
+			})
+		},
+		drawCallback : function (setting) {
+			var data = setting.json;
+			$("#total-sales").text('₱' + data.total_sales);
+		}
+	});
+
 	
+
+
 	$("#supplier_table").DataTable();
 	$("#supplier_table").on('click','.edit',function() {
 		var id = $(this).data('id');

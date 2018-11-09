@@ -1,82 +1,75 @@
-<div class="col-sm-10" id="main">
-	<h1 class="page-title">Register Item</h1> 
-	
-		<div class="table-wrapper">
-	 
-		<div>
-	<?php
-		$nameAttr = array(
-			'class' => 'form-control',
-			'type' => 'text',
-			'placeholder' => 'Item Name',
-			'name' => 'item_name'
-			);
-		$categoryAttr = array(
-			'class' => 'form-control input-lg',
-			'name' => 'category'
-			);
-		$priceAttr = array(
-			'class' => 'form-control',
-			'name' => 'price',
-			'placeholder' => 'Item Price'
-			);
-		$submitAttr = array(
-			'class' => 'btn btn-primary',
-			'name' => 'submit_item',
-			'type' => 'submit',
-			'value' => 'Register Item'
-			);
-
-		echo $this->session->flashdata('errorMessage');
-		echo $this->session->flashdata('successMessage');
-		echo form_open('items/insert');
-		
-		echo '<div class="row">';
-		echo '<div class="col-lg-6">';
-		echo '<div class="form-group">';
-		echo form_label('Item Name');
-		echo form_input($nameAttr);
-		echo '</div>';
-		echo '<div class="form-group">';
-		echo form_label('Supplier');
-		echo "<select class='form-control' name='category'>";
-		echo '<option value="" name="supplier" selected="selected">Select Supplier</option>';
-		foreach ($suppliers as $supplier) {
-			?>
-			<option value="<?php echo $supplier->id; ?>"><?php echo $supplier->name; ?></option>
-			<?php
-		}
-		echo "</select>";
-		echo '</div>';
-		echo '<div class="form-group">';
-		echo form_label('Category');
-		echo "<select class='form-control' name='category'>";
-		echo '<option value="" selected="selected">Select Any</option>';
-		foreach ($category as $cat) {
-			?>
-			<option value="<?php echo $cat->category; ?>"><?php echo $cat->category; ?></option>
-			<?php
-		}
-		echo "</select>";
-		echo '</div>';
-		echo '<div class="form-group">';
-		echo form_label('Price');
-		echo form_input($priceAttr);
-		echo '</div>';
-	
-		echo '<div class="form-group">';
-		echo form_label('Description');
-		echo '<textarea name="description" class="form-control" rows="5" placeholder="Item Description"></textarea>';
-		echo '</div>';
-		echo '<div class="form-group">';
-		echo form_input($submitAttr);
-		echo '</div>';
-		echo "</div>";
-		echo "</div>";
-		echo '</div>';
-		echo form_close();
-		echo '</div>';
-		 
-	?>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">Items</h1>
+	</div>
+	<!-- /.col-lg-12 -->
 </div>
-<div class="clearfix"></div>
+<!-- /.row -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Register Item
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<form method="POST" action="<?php echo base_url('items/insert') ?>">
+						<div class="col-lg-8">
+							<div class="form-group"> 					 
+								<input type="text" placeholder="Item Name" name="name" class="form-control">
+								<input type="hidden" name="barcode" value="<?php echo $barcode ?>">
+							</div>
+							<div class="form-group">  
+								<select name="category" class="form-control">
+									<option value="">Select Category</option>
+									<?php foreach ($category as $cat): ?>
+										<option value="<?php echo $cat->id ?>"> <?php echo $cat->name ?> </option>
+									<?php endforeach; ?>
+								</select>
+							</div>
+							<div class="form-group">  
+								<input type="text" placeholder="Price" name="price" class="form-control">
+							</div>
+							<div class="form-group">  
+								<select name="supplier" class="form-control">
+									<option value="">Select Supplier</option>
+									<?php foreach ($suppliers as $supplier): ?>
+										<option value="<?php echo $supplier->id ?>">
+											<?php echo $supplier->name ?>
+										</option>
+									<?php endforeach; ?>
+								</select>
+							</div>
+							<div class="form-group">  
+								<textarea rows="5" placeholder="Description" class="form-control" name="description"></textarea>
+							</div>
+							<div class="form-group"> 
+								<button class="btn btn-primary">Register Item</button>
+							</div>
+							
+						</div>
+						<div class="col-md-4">
+							<div class="form-group ">
+								<label>Bar Code</label>
+								<div>
+									<?php 
+									echo $code;
+									?>
+								</div>
+
+							</div>
+							<div class="form-group">
+								<button class="btn btn-default">Print</button>
+								<button class="btn btn-default">PNG</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- /.row (nested) -->
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-12 -->
+</div>  

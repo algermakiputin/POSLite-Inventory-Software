@@ -52,17 +52,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'ItemController/items';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['test'] = 'AuthController/test';
 
 $route['sales'] = 'SalesController/sales';
-$route['sales/daily'] = 'SalesController/daily';
-$route['sales/weekly'] = 'SalesController/weekly';
-$route['sales/monthly'] = 'SalesController/monthly';
-$route['sales/yearly'] = 'SalesController/yearly';
+$route['sales/report'] ='SalesController/reports';
+ 
 
 $route['items'] = 'ItemController/items';
 $route['items/new'] = 'ItemController/new';
 $route['items/insert'] = 'ItemController/insert';
 $route['items/stock-in/(:any)'] = 'ItemController/stock_in/$1';
+$route['items/update'] = "ItemController/update";
+$route['items/data'] = "ItemController/data";
 
 $route['categories'] = 'CategoriesController/categories';
 $route['categories/insert'] = 'CategoriesController/insert';
@@ -83,8 +84,8 @@ $route['suppliers/delete/(:any)'] = "SuppliersController/destroy/$1";
 $route['suppliers/find'] = "SuppliersController/find";
 $route['suppliers/update'] = "SuppliersController/update";
 
-$route['deliveries'] = "DeliveriesController/deliveries";
-$route['new-delivery'] = "DeliveriesController/index";
+$route['deliveries'] = "DeliveriesController/index";
+$route['new-delivery'] = "DeliveriesController/new";
 $route['delivery/insert'] = "DeliveriesController/insert";
 
 $route['users'] = "UsersController/users";

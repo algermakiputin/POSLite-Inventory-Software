@@ -9,18 +9,15 @@ class Database extends CI_Model {
 		return mdate($datestring, $time);
 	}
 
-	public function insertCategory ($categoryName, $creator) {
+	public function insertCategory ($categoryName) {
 		$this->load->database();
-		$this->load->model('database');
-		$creator = 'admin';
+		$this->load->model('database'); 
 		$date_time = $this->getDateTime();
 
-		$data = array(
-			'date_time' => "$date_time",
-			'category' => "$categoryName",
-			'creator' => "$creator"
+		$data = array( 
+			'name' => "$categoryName"
 			);
-		$sql = $this->db->insert('category', $data);
+		$sql = $this->db->insert('categories', $data);
 		if ($sql) {
 			$this->session->set_flashdata('successMessage',  '<br><div class="alert alert-success">New Category Has Been Added</div>');
 			$this->db->close();
