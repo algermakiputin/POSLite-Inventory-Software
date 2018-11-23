@@ -13,8 +13,6 @@ class PriceModel extends CI_Model {
 	}
 
 	public function getPrice($id) {
-
-		$this->load->database();
 		 
 		return $this->db->where('item_id',$id)->get('prices')->row()->price;
 	}

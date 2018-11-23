@@ -56,7 +56,7 @@ $route['test'] = 'AuthController/test';
 
 $route['sales'] = 'SalesController/sales';
 $route['sales/report'] ='SalesController/reports';
- 
+$route['sales/graph-filter'] = 'SalesController/graphFilter';
 
 $route['items'] = 'ItemController/items';
 $route['items/new'] = 'ItemController/new';
@@ -69,8 +69,10 @@ $route['categories'] = 'CategoriesController/categories';
 $route['categories/insert'] = 'CategoriesController/insert';
 $route['users'] = 'UsersController/accounts';
 $route['logout'] = 'AuthController/logout';
+$route['users/history'] = 'UsersController/history';
 $route['pos'] = 'pos_con/pos';
 
+$route['categories/get'] = 'CategoriesController/get';
 
 $route['customers'] = "CustomersController/index";
 $route['customers/insert'] = "CustomersController/insert";

@@ -2,9 +2,7 @@
 class Categories_model extends CI_Model {
 	
 	public function getCategories() {
-		$this->load->database();
-		$sql = $this->db->order_by('id','DESC')->get('category');
- 
+		$sql = $this->db->order_by('id','DESC')->get('category'); 
 		return $sql->result();
 	}
 

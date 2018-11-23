@@ -9,17 +9,23 @@ class CategoriesController Extends CI_Controller {
 		}
 	}
 
-	public function categories() {
-		$this->load->model('categories_model');
-		$data['categoryList'] = $this->db->get('categories')->result();
+	public function categories() { 
+		$data['categoryList'] = $this->db->order_by('id','DESC')->get('categories')->result();
 		$data['page'] = 'categories';
 		$data['content'] = "categories/index";
 		$this->load->view('master',$data);
 		 
 	}
 
+	public function get() {
+		$categories = $this->db->get('categories')->result();
+
+		echo json_encode($categories);
+	}
+
 	public function insert() {
 		$category = $this->input->post('category');
+		$this->load->model('HistoryModel');
 		if (empty($category)) {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Category Is Empty!</div>');
 			redirect(base_url('categories'));
@@ -28,7 +34,29 @@ class CategoriesController Extends CI_Controller {
 			redirect(base_url('categories'));
 		}else { 
 			$this->load->model('database');
+			$this->HistoryModel->insert('Register Category: '. $category);
 			$this->database->insertCategory($category);
+
+		}
+	}
+
+	public function destroy($id) {
+		if(empty($id)) {
+			redirect(base_url('categories'));
+		}else {
+			$this->load->model('categories_model');
+			$this->load->model('HistoryModel');
+			$categoryName = $this->categories_model->getName($id);
+			$del = $this->categories_model->deleteCategory($id);
+			 
+			if ($del) {
+				$this->HistoryModel->insert('Deleted Category: ' . $categoryName);
+				$this->session->set_flashdata('successMessage','<br><div class="alert alert-success">Category Deleted</div>');
+				redirect(base_url('categories'));
+			}else {
+
+				$this->session->set_flashdata('errorMessage', '<br><div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div>');
+			}
 		}
 	}
 }

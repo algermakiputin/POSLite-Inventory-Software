@@ -9,6 +9,7 @@ class Pos_con extends CI_Controller {
 		}
 	}
 	public function pos(){
+		 
 		$this->load->model('item_model'); 
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');

@@ -54,5 +54,17 @@ class UsersController extends CI_Controller {
 		 
 	}
 
+	public function history() {
+
+		$data['history'] = $this->db->order_by('id','DESC')
+						->select('users.account_type, users.username, history.*')
+						->from('history')
+						->join('users', 'users.id = history.user_id')
+						->get()->result();
+	 
+		$data['content'] = "users/history";
+		$this->load->view('master',$data);
+	}
+
 	
 }

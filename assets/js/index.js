@@ -1,7 +1,44 @@
 $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
-	$('.date-range-filter').datepicker();
+	var currency = '₱';
 
+	$('.date-range-filter').datepicker();
+	$("#history_table").DataTable({
+		'bLengthChange' : false,
+		'searching' : false,
+		'ordering' : false,
+
+	});
+
+	$("#graph-menu button").click(function() {
+		$('#graph-menu button').removeClass('active');
+		$(this).addClass('active');
+		var type = $(this).data('id');
+		$.ajax({
+			type : 'POST',
+			url : base_url + 'sales/graph-filter',
+			data : {
+				type : type
+			},
+			success : function(data) {
+
+				var result = JSON.parse(data);
+			
+				if (type == "week")
+					myChart.data.datasets[0].label = "Sales for the last 7 Days";
+				else if (type == "month")
+					myChart.data.datasets[0].label = "Monthly Sales";
+				else if (type == "year")
+					myChart.data.datasets[0].label = "Yearly Sales";
+
+				myChart.data.labels = Object.keys(result);
+				myChart.data.datasets.data = Object.values(result);
+				myChart.data.datasets[0].data = Object.values(result);
+				myChart.update();
+
+			}
+		});
+	});
 	var sales_table = $("#sales_table").DataTable({
 		searching : true,
 		ordering : false,
@@ -10,6 +47,7 @@ $(document).ready(function() {
 		info : false,
 		processing : true,
 		bsearchable : true,
+		paging : false,
 		dom : 'lrtip',
 		ajax : {
 			url : base_url + 'sales/report',
@@ -26,6 +64,7 @@ $(document).ready(function() {
 					sales_table.columns(0).search(from);
 					sales_table.columns(1).search(to).draw();
 					$("#range").text(to + ' - ' + from);
+ 					 
 				}else {
 					alert('Select from date');
 				}
@@ -34,10 +73,47 @@ $(document).ready(function() {
 		drawCallback : function (setting) {
 			var data = setting.json;
 			$("#total-sales").text('₱' + data.total_sales);
+
 		}
 	});
 
-	
+	$("#sales_table").on('click','.view', function() {
+		var id = $(this).data('id');
+		var row = $(this).parents('tr');
+		var total = row.find('td').eq(2).text();
+		 
+		$.ajax({
+			type : 'POST',
+			data : {
+				id : id
+			},
+			url : base_url + 'SalesController/details',
+			success : function(data) {
+				var description = JSON.parse(data);
+				$("#sales-description-table tbody").empty();
+				$.each(description, function(key,value) {
+					$("#sales-description-table tbody").append(
+							'<tr>' +
+								'<td>' +value[0]+'</td>' + 
+								'<td>' +value[1]+'</td>' + 
+								'<td>'+ currency +value[2]+'</td>' + 
+								'<td>' +value[3]+'</td>' +
+								'<td>'+ currency +value[4]+'</td>' +
+							'</tr>'
+						);
+				});
+
+				$("#sales-description-table tbody").append(
+						'<tr>' +
+							'<td colspan="4" class="text-right">Total:</td>' +
+							'<td>'+ currency + total+'</td>' +
+						'</tr>'
+					);	
+				$("#sale-id").text(id);
+			}
+		});
+		$("#modal").modal('toggle');
+	})
 
 
 	$("#supplier_table").DataTable();
@@ -59,9 +135,34 @@ $(document).ready(function() {
 
 		});
 	});
-	$("#item_tbl").DataTable();
+	var itemTable = $("#item_tbl").DataTable({
+		initComplete : function() { 
+			$("#item_tbl_length").append("&nbsp;<select id='cat' class='form-control'>" +
+						'<option value="">Select Category</option>' +
+					"</select>"
+				);
+			$.ajax({
+				method : 'GET',
+				url : base_url + 'categories/get',
+				success : function(data) {
+					result = JSON.parse(data);
+					$.each(result, function(key, value) {
+						$("#cat").append("<option value='"+value.name+"'>"+value.name+"</option>");
+					});
+				}
+
+			});
+			
+			$("#cat").change(function() {
+				category = $(this).val();
+				itemTable.search(category).draw();
+			})
+		}
+	});
 	$("#users_table").DataTable();
-	$("#categories_table").DataTable();
+	$("#categories_table").DataTable({
+		ordering : false
+	});
 	$("#deliveries_table").DataTable();
 	$("#customer_table").DataTable();
 	$("#customer_table").on('click','.edit',function() {
@@ -88,5 +189,53 @@ $(document).ready(function() {
 
 		});
 	})
- 
+
+	$("#btn-group-menu .btn").click(function() {
+		$('.btn-group .btn').removeClass('active');
+		$(this).addClass('active');
+		if ($(this).data('id') == "table") {
+			$("#table_view").show();
+			$("#graph").hide();
+			$("#table-menu").show();
+			$("#graph-menu").hide();
+		}else {
+			$("#table_view").hide();
+			$("#graph").show();
+			$("#table-menu").hide();
+			$("#graph-menu").show();
+		}
+	})
+	var ctx = document.getElementById("myChart");
+	var myChart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: labels,
+	        datasets: [{
+	            label: 'Sales for the Last 7 Days',
+	            data: totalSales,
+	            fillColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	            ],
+	            strokeColor: [
+	                'rgba(255,99,132,1)',
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true,
+	                    callback : function(value, index, values) {
+	                    	return '₱' + (value);
+
+	                    }
+	                }
+	            }]
+	        }
+	    }
+	}); 
 })
+
+

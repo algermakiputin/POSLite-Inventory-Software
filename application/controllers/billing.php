@@ -10,8 +10,6 @@ class Billing extends CI_Controller {
 	public function index() {
 		$this->load->database();
 		$data['customers'] = $this->db->get('customers')->result();
-
-
 		$this->load->view('billing_view',$data);
 
 	}
@@ -25,23 +23,24 @@ class Billing extends CI_Controller {
 
 		$this->form_validation->set_rules('payment','Payment','required');
 
-		if($this->form_validation->run() == FALSE) {
-			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' . validation_errors() . '</div>');
-			redirect(base_url('billing'));
-
-		}else {
+		if($this->form_validation->run() == TRUE) {
 			$data['payment'] = $payment;
 			$data['total'] = $total;
 			$data['change'] = $change;
 
 			$this->load->model('sales_model');
+			
+			
 			$insert_sales = $this->sales_model->insert_sales($cart,$customer_id);
-
+			
 			if ($insert_sales) {
 				$this->sales_model->updateStocks($cart);
 				$this->load->view('complete',$data);
 			}
-		}
+
+		} 
+			
+		 
 		
 
 	}

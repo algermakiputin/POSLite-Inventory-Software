@@ -19,17 +19,23 @@ class AuthController extends CI_Controller {
 			redirect(base_url('login'));
 		}else {
 			$this->load->model('UsersModel');
+
 			$verify_login = $this->UsersModel->login($username);
+			
 			if ($verify_login) {
 				$hash_password = $verify_login->password;
-				$hash = password_verify($password,$hash_password);
-				if ($hash) {
+				$verifyPassword = password_verify($password,$hash_password);
+				if ($verifyPassword) {
 					$userdata = array( 
 						'id' => "$verify_login->id",
 						'username' => "$verify_login->username",
 						'log_in' => true,
 						'account_type' => "$verify_login->account_type"
 						);
+					$this->db->insert('history', [
+							'user_id' => $userdata['id'],
+							'action' => 'Log in',
+						]);
 					$this->session->set_userdata($userdata);
 					$this->session->set_flashdata('successMessage','<div class="alert alert-success">Login Successfully, Welcome '.$this->session->userdata['username'].'</div>');
 					if ($this->session->userdata('account_type') == "Cashier") {
@@ -51,10 +57,18 @@ class AuthController extends CI_Controller {
 	}
 
 	public function logout() {
+		$this->inserLoginHistory();
 		$data = array('id','username','log_in','account_type');
 		$this->session->unset_userdata($data);
 		$this->session->set_flashdata('successMessage','<div class="alert alert-success">Lagout Successfully</div>');
 		redirect(base_url('login'));
+	}
+
+	public function inserLoginHistory() {
+		$this->db->insert('history', [
+							'user_id' => $this->session->userdata('id'),
+							'action' => 'Log out',
+						]);
 	}
 }
 

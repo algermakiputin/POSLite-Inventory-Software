@@ -4,7 +4,10 @@ $(document).ready(function() {
 	var transactionComplete = false;
 	var currency = '₱';
 	
-	 
+	var dHeight = ($(document).height());
+	dHeight -= ($("#left").height() + $(".navbar").height() + 140);
+	$("#cart-tbl").css('height', dHeight + 'px')
+
 	var item_table = $("#item-table").DataTable({
 			processing : true,
 			serverSide : true,
@@ -18,8 +21,6 @@ $(document).ready(function() {
 		$("#modal").modal('toggle');
 
 		item_table.clear().draw();
-
-		
 		
 	})
 
@@ -89,7 +90,9 @@ $(document).ready(function() {
 			$("#complete-transaction").prop('disabled',true);
 		}
 
-	});
+	}); 
+
+
 
 	$("#complete-transaction").click(function() {
 		var row = $("#cart tbody tr").length;
@@ -107,10 +110,24 @@ $(document).ready(function() {
 					r.eq(2).text(),
 					r.eq(3).text().substring(1),
 					r.eq(4).text().substring(1),
-					customer_id
+					customer_id,
+					r.eq(1).text(),
 				];
 			sales.push(arr);
 		}
+		//Receipt Items
+		$("#r-items-table tbody").empty();
+		$.each(sales, function(key, value) {
+			$("#r-items-table tbody").append(
+					'<tr>' +
+						'<td>'+value[0]+'</td>' +
+						'<td>'+value[5]+'</td>' +
+						'<td>'+value[2]+'</td>' +
+						'<td>'+value[1]+'</td>' +
+						'<td>'+value[3]+'</td>' +
+					'</tr>'
+				);
+		});
 
 		$.ajax({
 			type : 'POST',
@@ -118,15 +135,25 @@ $(document).ready(function() {
 				sales : sales
 			},
 			url : base_url + 'SalesController/insert',
-			success : function() {
+			success : function(data) { 
  				transactionComplete = true;
 				$("#loader").hide();
+				//Transaction Summary
 				$("#summary-due").text(total_amount);
 				$("#summary-payment").text( currency + payment);
 				$("#summary-change").text( currency + change);
+				//Fill In Receipt
+				$("#r-due").text(total_amount);
+				$("#r-payment").text( currency + payment);
+				$("#r-change").text( currency + change);
+				$("#r-cashier").text($("#user").text());
+				$("#r-date").text(moment().format('YY/MM/DD'));
+				$("#r-time").text(moment().format('h:mm:ss a'));
+				$("#r-id").text(data);
+				totalAmountDue = 0; 
+				$("#payment .modal-dialog").addClass('modal-lg');
 				$("#panel1").hide();
 				$("#panel2").show();
-				totalAmountDue = 0;
 			}
 		})
 	})
@@ -140,9 +167,30 @@ $(document).ready(function() {
 			$("#total-amount-due").val('');
 			$("#amount-pay").val('');
 			$("#change").val('');
-			$("#amount-due").text('');
-
+			$("#amount-due").text(''); 
 	  		transactionComplete = false;
+	  		$("#payment .modal-dialog").removeClass('modal-lg');
 	  	}
 	})
+
+	$("#print").click(function(){
+		$("#receipt").print({
+	        	globalStyles: true,
+	        	mediaPrint: false,
+	        	stylesheet: base_url + 'assets/receipt.css',
+	        	noPrintSelector: ".no-print",
+	        	iframe: true,
+	        	append: null,
+	        	prepend: null,
+	        	manuallyCopyFormValues: true,
+	        	deferred: $.Deferred(),
+	        	timeout: 500,
+	        	title: 'Receipt',
+	        	doctype: '<!doctype html>'
+		});
+	})
+
+
 })
+
+ 

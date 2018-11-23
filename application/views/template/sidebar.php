@@ -40,7 +40,16 @@
                 <a href="<?php echo base_url('categories') ?>"><i class="glyphicon glyphicon glyphicon-tags fa-fw"></i> Categories</a>
             </li>
             <li>
-                <a href="<?php echo base_url('users') ?>"><i class="fa fa-user fa-fw"></i> Users</a>
+                <a href="#"><i class="fa fa-users fa-fw"></i> Users<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('users') ?>">View Users</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('users/history') ?>">History</a>
+                    </li>
+                     
+                </ul>
             </li>
             <li>
                 <a href="<?php echo base_url("logout") ?>"><i class="glyphicon glyphicon glyphicon-log-out fa-fw"></i> Log Out</a>

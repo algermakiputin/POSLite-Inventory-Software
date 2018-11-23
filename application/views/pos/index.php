@@ -4,6 +4,7 @@
 	<title>POS - Sales And Inventory Management System</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/bootstrap/css/bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/pos_style.css') ?>">
+
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
@@ -13,9 +14,11 @@
 <body>
 	<div style="background-color: #333;padding: 0 20px;">
 		<nav class="navbar" style="margin: 0;color: #fff ">
-			<p class="navbar-text" style="color: #ddd;">Current User:  <?php echo $this->session->userdata['username'] ?>
+			<p class="navbar-text" style="color: #ddd;">Current User:  <span id="user"><?php echo $this->session->userdata['username'] ?></span>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
+					<?php if ($this->session->userdata('account_type') !== "Cashier" ): ?> 
+						<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
+					<?php endif; ?>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -70,8 +73,12 @@
 							</div>
 						</div>
 						<div class="col-sm-4" style="padding-top: 0px;">
-							<input style="width: 100%; margin-bottom: 5px;" id="add-cart" type="button" name="enter" class=" btn btn-info input-lg" value="ADD TO CART">
-							<input style="width: 100%;" id="process" type="button" name="process" class=" btn btn-success input-lg" value="PROCESS">
+							<button style="width: 100%; margin-bottom: 5px;font-weight: bold;" id="add-cart" type="button" name="enter" class=" btn btn-default input-lg">
+								<i class="fa fa-shopping-cart"></i> Add To Cart
+							</button>
+							<button style="width: 100%;font-weight: bold;" id="process" type="button" name="process" class=" btn btn-info input-lg">
+								<i class="fa fa-refresh"></i> Process
+							</button>
 						</div>
 					</form>
 
@@ -174,7 +181,53 @@
 						<h5 class="modal-title">Transaction Complete</h5>
 					</div>
 					<div class="modal-body">
-						<div class="col-md-6 col-md-offset-3">
+						<div class="col-md-7">
+							<div id="receipt">
+								<div class="r-header text-center">
+									<h3>Receipt</h3>
+									<div class="row">
+										<div class="col-md-4 text-left">
+										<div>ID:</div>
+										<div>Date: <span></span></div>
+										<div>Time:</div>
+										<div>Cashier:</div>
+
+									</div>
+									<div class="col-md-8 text-left">
+										<div id="r-id">005250</div>
+										<div id="r-date">10/10/1995</div>
+										<div id="r-cashier">Cashier</div>
+										<div id="r-time">14:50 PM</div> 
+									</div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								<div class="r-body">
+									<table class="table table-striped" id="r-items-table">
+										<thead>
+											<th>ID</th>
+											<th>Item Name</th>
+											<th>Price</th>
+											<th>Quantity</th>
+											<th>Sub Total</th>
+										</thead>
+										<tbody>
+											 
+										</tbody>
+									</table>
+									<hr>
+									<div class="text-right">
+										<div>Total: <span id="r-due"></span></div>
+										<div>Payment: <span id="r-payment"></span></div>
+										<div>Change: <span id="r-change"></span></div>
+									</div>
+								</div>
+								<div class="r-footer">
+									<p>Thank you for shopping at our store</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-5">
 							<h4 class="">Transaction Summary</h3> 
 							<table class="table table-condensed ">
 								<tr>
@@ -190,7 +243,7 @@
 									<td id="summary-change"></td>
 								</tr>
 							</table>
-							<button class="btn btn-default btn-sm">Print Receipt</button>
+							<button class="btn btn-default btn-sm" id="print">Print Receipt</button>
 						</div>
 							 
 						<div class="clearfix"></div>
@@ -207,10 +260,12 @@
 
 	<script type="text/javascript" src="<?php echo base_url('assets/jquery.js') ?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/jquery-ui/jquery-ui.js') ?>"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
 	<script src="<?php echo base_url('assets/vendor/datatables/js/jquery.dataTables.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.min.js'); ?>"></script>
 	<script src="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.js'); ?>"></script>
+	<script src="<?php echo base_url('assets/js/print.js') ?>"></script>
 	<script src="<?php echo base_url('assets/js/pos.js') ?>"></script>
 </body>
 </html>

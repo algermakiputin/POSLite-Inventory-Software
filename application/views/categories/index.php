@@ -44,7 +44,7 @@
 						 				<td><?php echo $category->id ?></td>
 						 				<td><?php echo $category->name ?></td>
 						 				<td>
-						 					<a class="btn btn-danger" href="<?php echo base_url('delete/category/'.$category->id.'') ?>">Delete</a>
+						 					<a class="btn btn-danger" href="<?php echo base_url('CategoriesController/destroy/'.$category->id.'') ?>">Delete</a>
 						 				</td>
 						 			</tr>
 						 		<?php endforeach; ?>
