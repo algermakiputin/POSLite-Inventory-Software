@@ -6,14 +6,14 @@
 </div>
 <!-- /.row -->
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-lg-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				New Category
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-lg-4">
+					<div class="col-lg-12">
 						<?php 
 						echo form_open('categories/insert');  
 						echo $this->session->flashdata('errorMessage');
@@ -29,7 +29,21 @@
 						</div>
 						<?php echo form_close(); ?>
 					</div>
-					<div class="col-lg-8">
+				 
+				</div>
+			</div>
+				<!-- /.row (nested) -->
+		</div>
+			<!-- /.panel-body -->
+	</div>
+	<div class="col-lg-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Categories List
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-lg-12">
 						 <table class="table table-responsive table-striped table-hover table-bordered" id="categories_table">
 						 	<thead>
 						 		<tr>
@@ -44,7 +58,7 @@
 						 				<td><?php echo $category->id ?></td>
 						 				<td><?php echo $category->name ?></td>
 						 				<td>
-						 					<a class="btn btn-danger" href="<?php echo base_url('CategoriesController/destroy/'.$category->id.'') ?>">Delete</a>
+						 					<a class="btn btn-danger btn-sm" href="<?php echo base_url('CategoriesController/destroy/'.$category->id.'') ?>">Delete</a>
 						 				</td>
 						 			</tr>
 						 		<?php endforeach; ?>

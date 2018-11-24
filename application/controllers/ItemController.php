@@ -33,7 +33,15 @@ class ItemController extends CI_Controller {
 		$price = $this->PriceModel;
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
-		$items = $this->db->where('status', 1)->get('items', $start, $limit)->result();
+		$search = $this->input->post('search[value]'); 
+		if ($search != "") {
+			$items = $this->db->where('status', 1)
+							->like('name',$search, 'BOTH')
+							->get('items', $start, $limit)
+							->result();
+		}else 
+			$items = $this->db->where('status', 1)->get('items', $start, $limit)->result();
+		
 		$count = count($items);
 		$datasets = [];
 

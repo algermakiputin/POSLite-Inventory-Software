@@ -5,10 +5,10 @@
             <a href="#"><i class="glyphicon glyphicon-folder-close fa-fw"></i> Items<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="<?php echo base_url('items') ?>">View Items</a>
+                        <a href="<?php echo base_url('items') ?>"><i class="fa fa-circle-o"></i> View Items</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url('items/new') ?>">Register Item</a>
+                        <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Item</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -24,10 +24,10 @@
                 <a href="#"><i class="fa fa-truck fa-fw"></i> Deliveries<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="<?php echo base_url('deliveries') ?>">View Deliveries</a>
+                        <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Deliveries</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url('new-delivery') ?>">New Delivery</a>
+                        <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Delivery</a>
                     </li>
                      
                 </ul>
@@ -43,10 +43,10 @@
                 <a href="#"><i class="fa fa-users fa-fw"></i> Users<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="<?php echo base_url('users') ?>">View Users</a>
+                        <a href="<?php echo base_url('users') ?>"><i class="fa fa-circle-o"></i> View Users</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url('users/history') ?>">History</a>
+                        <a href="<?php echo base_url('users/history') ?>"><i class="fa fa-circle-o"></i> History</a>
                     </li>
                      
                 </ul>

@@ -7,9 +7,13 @@
 	}
 
 	.form-signin {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
 		max-width: 400px;
 		padding: 15px 35px 45px;
-		margin: 0 auto;
+	 
 		background-color: #fff;
 		
 

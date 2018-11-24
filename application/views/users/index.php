@@ -38,7 +38,7 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<input type="submit" name="submit_account" class="btn btn-success" value="Register">
+							<input type="submit" name="submit_account" class="btn btn-sm btn-success" value="Register">
 						</div>
 						<?php echo form_close(); ?>
 					</div>
@@ -66,7 +66,7 @@
 										<td><?php echo $account->username ?></td>
 										<td><?php echo $account->account_type ?></td>
 										<td><?php echo $account->date_created ?></td>
-										<td><a href="<?php echo base_url("UsersController/delete/$id"); ?>" class="btn btn-danger">Delete</a></td>
+										<td><a href="<?php echo base_url("UsersController/delete/$id"); ?>" class="btn btn-danger btn-sm">Delete</a></td>
 									</tr>
 								<?php endforeach;?>
 							</tbody>
