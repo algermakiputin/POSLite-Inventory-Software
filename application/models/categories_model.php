@@ -12,8 +12,9 @@ class Categories_model extends CI_Model {
 
 	public function deleteCategory($id) {
 		$this->load->database();
-		$sql = $this->db->where('id',$id)
-					->delete('categories');
+		$sql = $this->db->set('active', 0)
+					->where('id',$id)
+					->update('categories');
 		return $sql;
 	}
 }

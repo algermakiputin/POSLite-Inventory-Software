@@ -10,7 +10,10 @@ class CategoriesController Extends CI_Controller {
 	}
 
 	public function categories() { 
-		$data['categoryList'] = $this->db->order_by('id','DESC')->get('categories')->result();
+		$data['categoryList'] = $this->db->order_by('id','DESC')
+									->where('active',1)
+									->get('categories')
+									->result();
 		$data['page'] = 'categories';
 		$data['content'] = "categories/index";
 		$this->load->view('master',$data);

@@ -14,7 +14,16 @@
 			<div class="panel-body">
 				<div class="row">
 					<form method="POST" action="<?php echo base_url('items/insert') ?>">
-						<div class="col-lg-8">
+						<div class="col-lg-6 col-md-offset-3">
+							<div class="form-group ">
+								<label>Bar Code: <?php echo $barcode ?></label>
+								<div>
+									<?php 
+									echo $code;
+									?>
+								</div>
+
+							</div>
 							<div class="form-group"> 					 
 								<input type="text" placeholder="Item Name" name="name" class="form-control">
 								<input type="hidden" name="barcode" value="<?php echo $barcode ?>">
@@ -49,19 +58,8 @@
 							
 						</div>
 						<div class="col-md-4">
-							<div class="form-group ">
-								<label>Bar Code</label>
-								<div>
-									<?php 
-									echo $code;
-									?>
-								</div>
-
-							</div>
-							<div class="form-group">
-								<button class="btn btn-default">Print</button>
-								<button class="btn btn-default">PNG</button>
-							</div>
+							
+							 
 						</div>
 					</form>
 				</div>
