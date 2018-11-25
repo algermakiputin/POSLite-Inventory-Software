@@ -44,10 +44,11 @@
 				<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 					<thead>
 						<tr>
-							<th>Transaction ID</th>
-							<th>Date Time</th>
-							<th>Total</th> 
-							<th>Action</th>
+							<th>Date</th>
+							<th>Item Barcode</th>
+							<th>Item Name</th> 
+							<th>Quantity</th>
+							<th>Total</th>  
 						</tr>
 					</thead>
 					<tbody></tbody>

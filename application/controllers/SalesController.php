@@ -194,14 +194,14 @@ class SalesController extends CI_Controller {
 				$item = $this->db->where('id', $desc->item_id)->get('items')->row();
 				$price = $this->db->where('item_id', $desc->item_id)->get('prices')->row()->price;
 				$sub_total += ((int)$desc->quantity * (int) $price);
+				$datasets[] = [ 
+					date('Y-m-d h:i:s a', strtotime($sale->date_time)), 
+					$item->barcode,
+					$item->name,
+					$desc->quantity,
+					'₱'. (int)$desc->quantity * (int)$price
+				];
 			}
-
-			$datasets[] = [
-				$sale->id,
-				$sale->date_time, 
-				$sub_total,
-				'<button class="btn btn-primary btn-sm view" data-id="'.$sale->id.'">view</button>'
-			];
 
 			$totalSales += $sub_total;
 			
