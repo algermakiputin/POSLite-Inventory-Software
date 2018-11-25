@@ -116,7 +116,12 @@ $(document).ready(function() {
 	})
 
 
-	$("#supplier_table").DataTable();
+	$("#supplier_table").DataTable({
+		ordering : false,
+		initComplete : function() {
+			$("#supplier_table_length").append('&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
+		}
+	});
 	$("#supplier_table").on('click','.edit',function() {
 		var id = $(this).data('id');
 		$("#supplier_id").val(id);
@@ -164,7 +169,12 @@ $(document).ready(function() {
 		ordering : false
 	});
 	$("#deliveries_table").DataTable();
-	$("#customer_table").DataTable();
+	$("#customer_table").DataTable({
+		ordering : false,
+		initComplete : function() {
+			$("#customer_table_length").append('&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
+		}
+	});
 	$("#customer_table").on('click','.edit',function() {
 		var id = $(this).data('id');
 		 $("#customer_id").val(id);

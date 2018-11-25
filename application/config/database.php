@@ -70,7 +70,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-$active_group = 'default';
+if (base_url() == "http://localhost/sais/")
+	$active_group = "default";
+else 
+	$active_group = 'server';
+
 $query_builder = TRUE;
 
 $db['default'] = array(
@@ -79,6 +83,29 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => '',
 	'database' => 'sais',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+
+$db['server'] = array(
+	'dsn'	=> '',
+	'hostname' => 'us-cdbr-iron-east-01.cleardb.net',
+	'username' => 'befe19588980f5',
+	'password' => '13b6d097 ',
+	'database' => 'heroku_1de500005284802',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
-  <h1 class="page-header">Suppliers <button class="pull-right btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button></h1>
+  <h1 class="page-header">Suppliers </h1>
   </div>
   <!-- /.col-lg-12 -->
 </div>
