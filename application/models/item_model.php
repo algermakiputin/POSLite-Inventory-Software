@@ -1,4 +1,5 @@
 <?php
+
 class Item_model extends CI_Model {
 
 	public function itemList () {
