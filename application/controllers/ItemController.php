@@ -77,6 +77,11 @@ class ItemController extends CI_Controller {
 		require 'vendor/autoload.php';
 		$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
 		$code = substr(uniqid(), 0, 7);
+		$codeExist = $this->db->where('barcode', $code)->get('items')->row();
+		while ($codeExist) {
+			$code = substr(uniqid(), 0, 7);
+		}
+		 
 		$data['category'] = $this->db->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'new_item';

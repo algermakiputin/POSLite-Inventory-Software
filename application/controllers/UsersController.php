@@ -4,13 +4,9 @@ class UsersController extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		
-		
-		if (!$this->session->userdata('log_in')) {
-			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
-			redirect(base_url('login'));
-		}
 	}
 	public function register_account( ) {
+		$this->checkLogin();
 		$this->form_validation->set_rules('Username', 'Username', 'required|min_length[5]');
 		$this->form_validation->set_rules('Password', 'Password', 'required|min_length[8]');
 		$this->form_validation->set_rules('repeat_password', 'Repeat Password', 'required|matches[Password]');
@@ -37,6 +33,7 @@ class UsersController extends CI_Controller {
 	}
 
 	public function delete($id){
+		$this->checkLogin();
 		$this->load->model('UsersModel');
 		$exec = $this->UsersModel->delete_account($id);
 		if ($exec) {
@@ -48,6 +45,7 @@ class UsersController extends CI_Controller {
 	}
 
 	public function users () {
+		$this->checkLogin();
 		$data['page'] = 'accounts';
 		$this->load->model('UsersModel');
 		$data['accountsList'] = $this->UsersModel->display_accounts();
@@ -57,7 +55,7 @@ class UsersController extends CI_Controller {
 	}
 
 	public function history() {
-
+		$this->checkLogin();
 		$data['history'] = $this->db->order_by('id','DESC')
 						->select('users.account_type, users.username, history.*')
 						->from('history')
@@ -66,6 +64,13 @@ class UsersController extends CI_Controller {
 	 
 		$data['content'] = "users/history";
 		$this->load->view('master',$data);
+	}
+
+	public function checkLogin() {
+		if (!$this->session->userdata('log_in')) {
+			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
+			redirect(base_url('login'));
+		}
 	}
 
 	
