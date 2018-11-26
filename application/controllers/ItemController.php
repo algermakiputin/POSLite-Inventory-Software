@@ -11,11 +11,11 @@ class ItemController extends CI_Controller {
 	}
 
 	public function items () {
-		$this->load->model('item_model');
+		$this->load->model('Item_model');
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('categories_model');
-		$data['items'] = $this->item_model->itemList();
+		$data['items'] = $this->Item_model->itemList();
 		$data['page'] = 'inventory';
 		$data['price'] = $this->PriceModel;
 		$data['categoryModel'] = $this->categories_model;
@@ -96,10 +96,10 @@ class ItemController extends CI_Controller {
 		$quantity = 0;
 		$price = $this->input->post('price');
 
-		$this->load->model('item_model');
+		$this->load->model('Item_model');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('HistoryModel');
-		$item_id = $this->item_model->insertItem($name, $category, $description,$supplier_id,$barcode);
+		$item_id = $this->Item_model->insertItem($name, $category, $description,$supplier_id,$barcode);
 		$this->HistoryModel->insert('Register new item: ' . $name);
 		$this->PriceModel->insert($price, $item_id);
 		$this->OrderingLevelModel->insert($item_id);
@@ -111,10 +111,10 @@ class ItemController extends CI_Controller {
 
 	public function delete($id){
 
-		$this->load->model('item_model');
+		$this->load->model('Item_model');
 		$this->load->model('HistoryModel');
-		$del_item = $this->item_model->deleteItem($id);
-		$item = $this->item_model->item_info($id);
+		$del_item = $this->Item_model->deleteItem($id);
+		$item = $this->Item_model->item_info($id);
 		if ($del_item) {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Deleted</div>');
 			$this->HistoryModel->insert('Delete Item: ' . $item->name);
@@ -127,12 +127,12 @@ class ItemController extends CI_Controller {
 
 	public function stock_in($id) {
 		
-		$this->load->model('item_model');
+		$this->load->model('Item_model');
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('categories_model');
 
-		$data['item_info'] = $this->item_model->item_info(urldecode($id));
+		$data['item_info'] = $this->Item_model->item_info(urldecode($id));
 		$data['item_id'] = $id;
 		$data['price'] = $this->PriceModel;
 		$data['orderingLevel'] = $this->OrderingLevelModel;
@@ -170,7 +170,7 @@ class ItemController extends CI_Controller {
 	public function edit($id) {
 
 		$this->load->model('PriceModel');
-		$this->load->model('item_model');
+		$this->load->model('Item_model');
 		$data['item'] = $this->db->where('id', $id)->get('items')->row();
 		$data['price'] = $this->PriceModel;
 		$data['categories'] = $this->db->get('categories')->result();
@@ -181,7 +181,7 @@ class ItemController extends CI_Controller {
 	}
 
 	public function update() {
-		$this->load->model('item_model');
+		$this->load->model('Item_model');
 		$this->form_validation->set_rules('name', 'Item Name', 'required');
 		$this->form_validation->set_rules('category', 'Item Name', 'required');
 		$this->form_validation->set_rules('description', 'Item Name', 'required');
@@ -192,7 +192,7 @@ class ItemController extends CI_Controller {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opss Something Went Wrong Updating The Item. Please Try Again.</div>');
 				redirect(base_url('items'));
 		}else {
-			$this->load->model('item_model');
+			$this->load->model('Item_model');
 			$this->load->model('PriceModel');
 			$this->load->model('HistoryModel');
 			$this->load->model('categories_model');
@@ -205,7 +205,7 @@ class ItemController extends CI_Controller {
 			$currentPrice = $this->PriceModel->getPrice($id);
 
 			$price_id = $this->PriceModel->update($updated_price, $id);
-			$update = $this->item_model->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id);
+			$update = $this->Item_model->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id);
 
 			if ($update) {
 				
