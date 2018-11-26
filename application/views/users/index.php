@@ -13,9 +13,13 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
+					<?php if($this->session->flashdata('errorMessage')): ?>
+					<div class="col-lg-12">
+						<?php echo $this->session->flashdata('errorMessage');?> 
+					</div>
+					<?php endif; ?>
 					<div class="col-lg-4">
-						<?php echo $this->session->flashdata('errorMessage');?>
-						<?php echo $this->session->flashdata('successMessage');?>
+						
 						<?php echo form_open('UsersController/register_account'); ?> 
 						<div class="form-group">
 							<label for='Username'>Username</label>

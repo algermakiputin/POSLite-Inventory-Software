@@ -65,6 +65,11 @@
 	<?php echo form_open('AuthController/login_validation',$attributes )?>     
 	<legend  class=" text-center">Member login<br></legend>
 	<br>
+	<?php if($this->session->flashdata('errorMessage')): ?>
+	<div class="form-group">
+		<?php echo ($this->session->flashdata('errorMessage'))?>
+	</div>
+	<?php endif; ?>
 	<div class="input-group form-group">
 		<span class="input-group-addon"><i class="fa fa-user " aria-hidden="true"></i></span>
 		<input autocomplete="off" id="username" type="text" class="form-control input-md" name="username" placeholder="Username">

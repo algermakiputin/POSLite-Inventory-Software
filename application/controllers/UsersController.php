@@ -16,9 +16,9 @@ class UsersController extends CI_Controller {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger"> '.validation_errors() . '</div>');
 			redirect(base_url('users'));
 		}else {
-			$this->load->model('database');
+		 
 			$this->load->model('UsersModel');
-			$date_created = $this->database->getDateTime();
+			$date_created = date('Y-m-d h:i:s a');
 			$username = $this->input->post('Username');
 			$password = $this->input->post('Password');
 			$account_type = $this->input->post('account_type');
