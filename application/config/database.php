@@ -70,11 +70,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-if (base_url() == "http://localhost/sais/")
-	$active_group = "default";
-else 
-	$active_group = 'server';
+ 
 
+$active_group = 'server';
 $query_builder = TRUE;
 
 $db['default'] = array(
