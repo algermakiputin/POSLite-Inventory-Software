@@ -19,31 +19,33 @@
 					</div>
 					<?php endif; ?>
 					<div class="col-lg-4">
-						
+						 
 						<?php echo form_open('UsersController/register_account'); ?> 
-						<div class="form-group">
-							<label for='Username'>Username</label>
-							<input type="text" name="Username" class="form-control">
-						</div>
-						<div class="form-group">
-							<label for='Password'>Password</label>
-							<input type="password" name="Password" class="form-control">
-						</div>
-						<div class="form-group">
-							<label for='repeat_password'>Repeat Password</label>
-							<input type="password" name="repeat_password" class="form-control">
-						</div>
-						<div class="form-group">
-							<label for='account_type'>Account Type</label>
-							<select name="account_type" class="form-control">
-								<option>Admin</option>
-								<option>Cashier</option>
-								<option>Clerk</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<input type="submit" name="submit_account" class="btn btn-sm btn-success" value="Register">
-						</div>
+						<fieldset <?php echo SITE_LIVE ? 'disabled' : '' ?>>
+							<div class="form-group">
+								<label for='Username'>Username</label>
+								<input type="text" name="Username" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for='Password'>Password</label>
+								<input type="password" name="Password" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for='repeat_password'>Repeat Password</label>
+								<input type="password" name="repeat_password" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for='account_type'>Account Type</label>
+								<select name="account_type" class="form-control">
+									<option>Admin</option>
+									<option>Cashier</option>
+									<option>Clerk</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="submit" name="submit_account" class="btn btn-sm btn-success" value="Register">
+							</div>
+						</fieldset>
 						<?php echo form_close(); ?>
 					</div>
 					<div class="col-lg-8"> 
@@ -70,7 +72,7 @@
 										<td><?php echo $account->username ?></td>
 										<td><?php echo $account->account_type ?></td>
 										<td><?php echo $account->date_created ?></td>
-										<td><a href="<?php echo base_url("UsersController/delete/$id"); ?>" class="btn btn-danger btn-sm">Delete</a></td>
+										<td><a href="<?php echo base_url("UsersController/delete/$id"); ?>" class="btn btn-danger btn-sm" <?php echo SITE_LIVE ? 'disabled onclick="return false;"' : '' ?>>Delete</a></td>
 									</tr>
 								<?php endforeach;?>
 							</tbody>

@@ -4,6 +4,11 @@ class DeliveriesController extends CI_Controller
 
 {
 
+	public function __construct() {
+		parent::__construct();
+	 
+	}
+
 	public function new() {
 		$this->load->database();
 		$this->load->model('PriceModel');
