@@ -65,9 +65,9 @@
 	<?php echo form_open('AuthController/login_validation',$attributes )?>     
 	<legend  class=" text-center">Member login<br></legend>
 	<br>
-	<?php if($this->session->flashdata('errorMessage')): ?>
+	<?php if($this->session->flashdata('error')): ?>
 	<div class="form-group">
-		<?php echo ($this->session->flashdata('errorMessage'))?>
+		<?php echo ($this->session->flashdata('error'))?>
 	</div>
 	<?php endif; ?>
 	<div class="input-group form-group">

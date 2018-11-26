@@ -16,7 +16,7 @@ class AuthController extends CI_Controller {
 		$this->form_validation->set_rules('password','Password', 'required');
 		if ($this->form_validation->run() == FALSE) {
 			 
-			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' . validation_errors() . '</div>');
+			$this->session->set_flashdata('error','<div class="alert alert-danger">' . validation_errors() . '</div>');
 			redirect(base_url('login'));
 		}else {
 			$this->load->model('UsersModel');
