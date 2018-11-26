@@ -7,7 +7,7 @@ class Pos_con extends CI_Controller {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));
 		}
-	}
+	}s
 	public function pos(){
 		 
 		$this->load->model('item_model'); 
