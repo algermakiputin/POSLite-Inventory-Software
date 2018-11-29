@@ -1,0 +1,15 @@
+After downloading the sais.zip and database.sql
+Requirement is PHP7 and up just download the latest version of xampp
+
+1. Go to localhost/phpmyadmin
+2. Click import
+3 select file "database sql" and scroll down to bottom click "GO"
+
+4.  extract saiz.zip
+5 open extracted saiz.zip folder
+6 inside sais folder there is another sais folder, copy that folder
+7 and paste to htdocs
+8 To open the application type in your browser URL: localhost/sais
+
+username: admin
+pass: admin123

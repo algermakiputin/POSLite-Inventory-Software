@@ -223,11 +223,11 @@ $(document).ready(function() {
 	        datasets: [{
 	            label: 'Sales for the Last 7 Days',
 	            data: totalSales,
-	            fillColor: [
-	                'rgba(255, 99, 132, 0.2)',
+	            backgroundColor: [
+	                '#337ab7',
 	            ],
 	            strokeColor: [
-	                'rgba(255,99,132,1)',
+	                '#337ab7',
 	            ],
 	            borderWidth: 1
 	        }]
