@@ -89,6 +89,8 @@ class SalesController extends CI_Controller {
 		    	}else {
 		    		$datasets[$date->format($format)][] = 0;
 		    	}
+
+		    	$total = 0;
 		}
 
 		return $datasets;
