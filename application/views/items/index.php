@@ -15,8 +15,8 @@
              <table class="table table-responsive table-striped table-hover table-bordered" id="item_tbl">
              		<thead>
              			<tr>
-             				<th>No.</th>
-             				<th>Name</th>
+ 
+             				<th>Item Name</th>
              				<th>Quantity</th>
              				<th>Category</th>
              				<th>Description</th>
@@ -29,9 +29,9 @@
              			<?php foreach ($items as $key => $item): ?>
              				<?php $stocks = $orderingLevel->getQuantity($item->id)->quantity; ?>
                             <tr>
-                 				<td><?php echo $key + 1; ?></td>
+                 	 
                  				<td><?php echo $item->name ?></td>
-                 				<td><?php echo $orderingLevel->getQuantity($item->id)->quantity; ?></td>
+                 				<td><?php echo $orderingLevel->getQuantity($item->id)->quantity ? $orderingLevel->getQuantity($item->id)->quantity : 'Out of stock'; ?></td>
                  				<td><?php echo $categoryModel->getName($item->category_id); ?></td>
                  				<td><?php echo $item->description ?></td>
                  				<td><?php echo '₱'. $price->getPrice($item->id) ?></td>
