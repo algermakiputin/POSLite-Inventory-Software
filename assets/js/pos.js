@@ -19,7 +19,6 @@ $(document).ready(function() {
 
 	$("#item").click(function() {
 		$("#modal").modal('toggle');
-
 		item_table.clear().draw();
 		
 	})
@@ -27,6 +26,7 @@ $(document).ready(function() {
 	$("#item-table").on('click', 'tbody tr', function() {
 		var id = $(this).find('td').eq(0).text();
 		var name = $(this).find('td').eq(1).text();
+		var stocks = $(this).find('td').eq(3).text();
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
 		$("#item-id").val(id) 
@@ -35,37 +35,62 @@ $(document).ready(function() {
 		$("#price").text(price);
 		$("#description").text(description);
 		$("#modal").modal('toggle');
+
+		var quantity = 1;
+	 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+	 	totalAmountDue += parseFloat(subtotal);
+		$("#cart tbody").append(
+				'<tr>' +
+					'<td>'+ $("#item-id").val() +'</td>' +
+					'<td>'+ $("#item-name").text() +'</td>' +
+					'<td><input data-stocks="'+stocks+'" type="text" value="'+quantity+'" class="quantity-box"> &nbsp;* </td>' +
+					'<td>'+ $("#price").text() +'</td>' +
+					'<td>₱'+ subtotal +'</td>' + 
+					'<td><i class="fa fa-trash remove" title="Remove Item"></i></td>' +
+				'</tr>'
+			);
+		$("#amount-due").text("₱" + totalAmountDue);
+		
 	})
 
-	$("#add-cart").click(function() {
+	$("#cart").on('click', '.fa.remove',function() {
+		$(this).parents('tr').remove();
+		recount();
+	})
 
-		if ($("#quantity").val !== "" && $("#price").text() !== ""){
-			var quantity = $("#quantity").val();
-		 	var subtotal = parseInt(quantity) * parseInt($("#price").text().substring(1));
-		 	totalAmountDue += subtotal;
-			$("#cart tbody").append(
-					'<tr>' +
-						'<td>'+ $("#item-id").val() +'</td>' +
-						'<td>'+ $("#item-name").text() +'</td>' +
-						'<td>'+ quantity +'</td>' +
-						'<td>'+ $("#price").text() +'</td>' +
-						'<td>₱'+ subtotal +'</td>' + 
-					'</tr>'
-				);
+ 	$("#cart").on('input', '.quantity-box', function() {
 
-			$("#amount-due").text("₱" + totalAmountDue);
+		var quantity = parseInt($(this).val());
+		var currentStocks = $(this).data('stocks');
 
-			$("#item-id").val('') 
-			$("#item").val('');
-			$("#item-name").text('');
-			$("#price").text('');
-			$("#quantity").val('');
-			$("#description").text(''); 
-		}else {
-			alert('Please select an item and enter quantity before adding to cart');
+		if (isNaN(quantity)) {
+			quantity = 1;
+			 
+		}else if (!isNaN(quantity) && quantity != 0) {
+			if (quantity <= parseInt(currentStocks)) {
+				var row = $(this).parents("tr");
+				var priceCol = row.find('td').eq(3);
+				var price = priceCol.text().substring(1);
+				var subtotal = parseInt(quantity) * parseFloat(price);
+				row.find('td').eq('4').text("₱" + subtotal);
+				recount();
+			}else {
+				alert('Not enough stocks only ' + currentStocks + ' remaining.');
+				$(this).val(1);
+			}
 		}
-		
 
+		
+	})
+
+	$("#cart").on("blur", ".quantity-box", function() {
+		if ($(this).val() == "" || isNaN(parseInt($(this).val()))) {
+			$(this).val(1);
+		}
+	});
+	$("#cart").on('focus', '.quantity-box', function() {
+	 
+		$(this).val('');
 	})
 
 	$("#process").click(function() {
@@ -75,24 +100,44 @@ $(document).ready(function() {
 			$("#payment").modal('toggle');
 			var totalAmountDue = $("#amount-due").text().substring(1);
 			$("#total-amount-due").val('₱' + totalAmountDue);
+		}else {
+			alert('Please add some items');
 		}
 
 	})
 
+	$("#reset").click(function() {
+		$("#cart tbody").empty();
+		$("#item").val('');
+		$("#item-name").text('');
+		$("#description").text('');
+		$("#price").text('');
+		$("#amount-due").text('');
+	})
+
 	$("#amount-pay").keyup(function() {
-		var payment = parseInt($(this).val());
-		var totalAmountDue = parseInt($("#total-amount-due").val().substring(1));
+		var payment = parseFloat($(this).val());
+		var totalAmountDue = parseFloat($("#total-amount-due").val().substring(1));
 
 		if (payment >= totalAmountDue) {
 			$("#complete-transaction").prop('disabled',false);
-			$("#change").val(payment - totalAmountDue);
+			$("#change").val((payment - totalAmountDue).toFixed(2));
 		}else {
 			$("#complete-transaction").prop('disabled',true);
 		}
 
 	}); 
 
+	function recount() {
+		var row = $("#cart tbody tr").length;
+		var total = 0;
+		for (i = 0; i < row; i++) {
+			var r = $("#cart tbody tr").eq(i).find('td');
+			total += parseFloat(r.eq(4).text().substring(1));
+		}
 
+		$("#amount-due").text("₱" + total);
+	}
 
 	$("#complete-transaction").click(function() {
 		var row = $("#cart tbody tr").length;
@@ -105,10 +150,11 @@ $(document).ready(function() {
 		$("#loader").show();
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
+
 			var arr = [
 					r.eq(0).text(), 
-					r.eq(2).text(),
-					r.eq(3).text().substring(1),
+					r.eq(2).find('input').val(),
+					r.eq(3).text(),
 					r.eq(4).text().substring(1),
 					customer_id,
 					r.eq(1).text(),
@@ -125,6 +171,7 @@ $(document).ready(function() {
 						'<td>'+value[2]+'</td>' +
 						'<td>'+value[1]+'</td>' +
 						'<td>'+value[3]+'</td>' +
+
 					'</tr>'
 				);
 		});
@@ -154,6 +201,11 @@ $(document).ready(function() {
 				$("#payment .modal-dialog").addClass('modal-lg');
 				$("#panel1").hide();
 				$("#panel2").show();
+
+				$("#item").val('');
+				$("#item-name").text('');
+				$("#description").text('');
+				$("#price").text('');
 			}
 		})
 	})

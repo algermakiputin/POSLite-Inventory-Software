@@ -44,15 +44,16 @@
 					<table class="table table-hover table-striped" id="cart">
 						<thead style="background: #f5f5f5;">
 							<tr>
-								<th>Item ID</th>
-								<th>Item Name</th>
-								<th>Quantity</th>
-								<th>Price</th>
-								<th>Sub Total</th>	
+								<th width="20%">Item ID</th>
+								<th width="20%">Item Name</th>
+								<th width="20%">Quantity</th>
+								<th width="20%">Price</th>
+								<th width="17%">Sub Total</th>
+								<th width="3%"></th>	
 							</tr>
 						</thead>
 						<tbody>
-							
+						 
 						</tbody>
 					</table>
 				</div>
@@ -63,21 +64,16 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label>Choose Item</label>
-								<input id="item" autocomplete="off" type="text" name="item" placeholder="Click to choose item" class="form-control">
+								<input id="item" autocomplete="off" type="text" name="item" placeholder="Click to choose item" class="form-control ">
 							</div>
 						</div>
-						<div class="col-sm-8">
-							<div class="form-group">
-								<label>Quantity</label>
-								<input id="quantity" autocomplete="off" type="text" name="quantity" placeholder="Enter Quantity" class="form-control">
-							</div>
-						</div>
-						<div class="col-sm-4" style="padding-top: 0px;">
-							<button style="width: 100%; margin-bottom: 5px;font-weight: bold;" id="add-cart" type="button" name="enter" class=" btn btn-default input-lg">
-								<i class="fa fa-shopping-cart"></i> Add To Cart
+						 
+						<div class="col-sm-12" style="padding-top: 0px;">
+							 <button style="font-weight: bold;" id="reset" type="button" name="process" class=" btn btn-default input-lg">
+								<i class="fa fa-refresh"></i> Reset
 							</button>
-							<button style="width: 100%;font-weight: bold;" id="process" type="button" name="process" class=" btn btn-info input-lg">
-								<i class="fa fa-refresh"></i> Process
+							<button style="font-weight: bold;" id="process" type="button" name="process" class=" btn btn-info input-lg">
+								<i class="fa fa-money"></i> Process
 							</button>
 						</div>
 					</form>

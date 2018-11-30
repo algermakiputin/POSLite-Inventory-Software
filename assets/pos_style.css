@@ -4,6 +4,10 @@ body {
 	margin:0;
 }
 
+.fa.remove:hover {
+	cursor: pointer;
+}
+
 .pos-btn-singout {
   float: right; margin-top: 6px; margin-right: 20px;
 }
@@ -61,6 +65,11 @@ header {
 	color: #ddd;
 }
 
+#left .btn {
+	width: 28%;
+	border-radius: 0;
+}
+
 .table-striped > tbody > tr:nth-of-type(even) {
 	background: inherit !important;
 }
@@ -92,6 +101,11 @@ header {
 
 }
 
+#cart tr td {
+	background: #fff;
+	border-bottom: solid 1px #eee !important;
+}
+
 #cart-tbl {
 	min-height: 280px;
 	border-radius:10px;
@@ -108,14 +122,19 @@ header {
 	border-collapse: collapse;
 }
 
+
+
 .input #left {
-	padding: 20px;
+	padding: 25px 20px;
 	border:solid 0.5px silver;
-	min-height: 210px;
+	min-height: 213px;
 	border-top: 0;
 
 }
 
+.quantity-box {
+	border: solid 1px #eee;
+}
  
 .input #right {
 	padding: 20px;
