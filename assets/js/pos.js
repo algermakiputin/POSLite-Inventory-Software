@@ -30,7 +30,6 @@ $(document).ready(function() {
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
 		$("#item-id").val(id) 
-		$("#item").val(name);
 		$("#item-name").text(name);
 		$("#price").text(price);
 		$("#description").text(description);
