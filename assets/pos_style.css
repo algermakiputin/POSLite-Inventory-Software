@@ -3,8 +3,10 @@ body {
 	padding: 0;
 	margin:0;
 }
-
-.fa.remove:hover {
+.remove {
+	font-size: 13px;
+}
+.remove:hover {
 	cursor: pointer;
 }
 
@@ -70,9 +72,8 @@ header {
 	border-radius: 0;
 }
 
-.table-striped > tbody > tr:nth-of-type(even) {
-	background: inherit !important;
-}
+
+
 
 #item-table tr:hover {
 	cursor: pointer;
@@ -108,8 +109,9 @@ header {
 
 #cart-tbl {
 	min-height: 280px;
-	border-radius:10px;
-	background: #e3f2e4;
+
+	background: #f9f9f9;
+	border:solid 1px #ddd;
 	overflow: auto;
 }
 
@@ -127,7 +129,7 @@ header {
 .input #left {
 	padding: 25px 20px;
 	border:solid 0.5px silver;
-	min-height: 213px;
+	min-height: 210px;
 	border-top: 0;
 
 }
@@ -141,7 +143,7 @@ header {
 	border:solid 0.5px silver;
 	border-top: 0;
 	border-left: 0;
-	min-height: 213px;
+	min-height: 210px;
 
 } 
 

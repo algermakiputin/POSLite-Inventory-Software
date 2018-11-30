@@ -41,7 +41,7 @@
 			<div class="clearfix"></div>
 			<div class="cart">
 				<div id="cart-tbl">
-					<table class="table table-hover table-striped" id="cart">
+					<table class="table table-striped" id="cart">
 						<thead style="background: #f5f5f5;">
 							<tr>
 								<th width="20%">Item ID</th>

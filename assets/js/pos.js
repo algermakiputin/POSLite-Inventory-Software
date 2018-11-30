@@ -42,17 +42,17 @@ $(document).ready(function() {
 				'<tr>' +
 					'<td>'+ $("#item-id").val() +'</td>' +
 					'<td>'+ $("#item-name").text() +'</td>' +
-					'<td><input data-stocks="'+stocks+'" type="text" value="'+quantity+'" class="quantity-box"> &nbsp;* </td>' +
+					'<td><input data-stocks="'+stocks+'" type="text" value="'+quantity+'" class="quantity-box"></td>' +
 					'<td>'+ $("#price").text() +'</td>' +
 					'<td>₱'+ subtotal +'</td>' + 
-					'<td><i class="fa fa-trash remove" title="Remove Item"></i></td>' +
+					'<td><span class="remove">Remove</span></td>' +
 				'</tr>'
 			);
 		$("#amount-due").text("₱" + totalAmountDue);
 		
 	})
 
-	$("#cart").on('click', '.fa.remove',function() {
+	$("#cart").on('click', '.remove',function() {
 		$(this).parents('tr').remove();
 		recount();
 	})
