@@ -35,6 +35,7 @@ class ItemController extends CI_Controller {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
+
 		if ($search != "") {
 			$items = $this->db->where('status', 1)
 							->like('name',$search, 'BOTH')
@@ -43,7 +44,7 @@ class ItemController extends CI_Controller {
 		}else 
 			$items = $this->db->where('status', 1)->get('items', $start, $limit)->result();
 		
-		$count = count($items);
+		
 		$datasets = [];
 
 		foreach ($items as $item) {
@@ -62,6 +63,8 @@ class ItemController extends CI_Controller {
 				continue;
 
 		}
+
+		$count = count($datasets);
 	 
 		echo json_encode([
 				'draw' => $this->input->post('draw'),

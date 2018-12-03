@@ -35,7 +35,7 @@
                  				<td><?php echo $categoryModel->getName($item->category_id); ?></td>
                  				<td><?php echo $item->description ?></td>
                  				<td><?php echo '₱'. $price->getPrice($item->id) ?></td>
-                 				<td><?php echo $stocks <= 0 ? '<span class="label label-danger">Stock Out</span>' : ($stocks <= 10 ? '<span class="label label-warning ">Needs restock</span>' : '<span class="label label-success ">Available</span>') ?></td>
+                 				<td><?php echo $stocks <= 0 ? '<span >Stock Out</span>' : ($stocks <= 10 ? '<span>Needs restock</span>' : '<span>Available</span>') ?></td>
                  				<td>
                                     <a href='<?php echo base_url("items/stock-in/$item->id") ?>'><button title='Stock In' class='btn btn-primary btn-sm'>Stock In</button></a> 
     				                <a href='<?php echo base_url("ItemController/edit/$item->id") ?>'><button title='Edit' class='btn btn-info btn-sm'>Edit</button></a> 

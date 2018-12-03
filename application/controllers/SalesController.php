@@ -85,7 +85,7 @@ class SalesController extends CI_Controller {
 						
 					}	
 				}
-				$datasets[$date->format($format)][] = $total;
+				$datasets[$date->format($format)][] = round($total,2);
 		    	}else {
 		    		$datasets[$date->format($format)][] = 0;
 		    	}
@@ -138,14 +138,15 @@ class SalesController extends CI_Controller {
 		$this->db->trans_begin();
 		
 		foreach ($sales as $sale) {
+
 			$data[] = [
-				'item_id' => $sale[0],
-				'quantity' => $sale[1],
+				'item_id' => $sale['id'],
+				'quantity' => $sale['quantity'],
 				'sales_id' => $sales_id
 			];
 
-			$this->db->set('quantity', "quantity -$sale[1]" , false);
-			$this->db->where('item_id', $sale[0]);
+			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
+			$this->db->where('item_id', $sale['id']);
 			$this->db->update('ordering_level');
 		}
  

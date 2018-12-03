@@ -3,25 +3,23 @@ $(document).ready(function() {
 	var totalAmountDue = 0;
 	var transactionComplete = false;
 	var currency = '₱';
-	
-	var dHeight = ($(document).height());
-	dHeight -= ($("#left").height() + $(".navbar").height() + 140);
-	$("#cart-tbl").css('height', dHeight + 'px')
 
+	var dHeight = parseInt($(document).height());
+ 
+	dHeight = dHeight - 75;
+	$(".header .box").css('height', dHeight + 'px');
+	$("#cart-tbl").css('height', (dHeight - (75 + 20 + 231)) + 'px');
+	$("#cart-tbl").css('max-height', (dHeight - (75 + 20 + 231)) + 'px');
 	var item_table = $("#item-table").DataTable({
-			processing : true,
-			serverSide : true,
-			ajax : {
-				url : base_url + 'items/data',
-				type : 'POST'
-			}
-		});
+		processing : true,
+		serverSide : true,
+		ajax : {
+			url : base_url + 'items/data',
+			type : 'POST'
+		}
+	});
 
-	$("#item").click(function() {
-		$("#modal").modal('toggle');
-		item_table.clear().draw();
-		
-	})
+ 
 
 	$("#item-table").on('click', 'tbody tr', function() {
 		var id = $(this).find('td').eq(0).text();
@@ -29,27 +27,118 @@ $(document).ready(function() {
 		var stocks = $(this).find('td').eq(3).text();
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
-		$("#item-id").val(id) 
-		$("#item-name").text(name);
-		$("#price").text(price);
-		$("#description").text(description);
-		$("#modal").modal('toggle');
-
+  
 		var quantity = 1;
 	 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
 	 	totalAmountDue += parseFloat(subtotal);
 		$("#cart tbody").append(
 				'<tr>' +
-					'<td>'+ $("#item-id").val() +'</td>' +
-					'<td>'+ $("#item-name").text() +'</td>' +
+					'<input name="id" type="hidden" value="'+ id +'">' +
+					'<td>'+ name +'</td>' +
 					'<td><input data-stocks="'+stocks+'" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-					'<td>'+ $("#price").text() +'</td>' +
-					'<td>₱'+ subtotal +'</td>' + 
-					'<td><span class="remove">Remove</span></td>' +
+					'<td>'+ price +'</td>' +
+		 
+					'<td><span class="remove" style="font-size:12px;">Remove</span></td>' +
 				'</tr>'
 			);
-		$("#amount-due").text("₱" + totalAmountDue);
+		recount();
+		$("payment").val('');
+		$("change").val('');
+	})
+
+	$("#process-form").submit(function(e) {
+		e.preventDefault();
+		var row = $("#cart tbody tr").length;
+		var sales = [];
+		var customer_id = $("#customer-id").val();
+		var total_amount = $("#amount-due").text();
+		var payment = $("#payment").val();
+		var change = $("#change").val();
+ 		
+ 		if (row) {
+ 			$("#btn").button('loading');
+ 			for (i = 0; i < row; i++) {
+				var r = $("#cart tbody tr").eq(i).find('td');
+				var quantity = r.eq(1).find('input').val();
+				var price = r.eq(2).text().substring(1);
+				var arr = {
+						id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
+						quantity : quantity, 
+						price : price,
+						name : r.eq(0).text(),
+						subtotal : parseFloat(price) * parseInt(quantity)
+					};
+				sales.push(arr);
+			}
+		 
+			// Receipt Items
+			$("#r-items-table tbody").empty();
+			$.each(sales, function(key, value) {
+		 
+				$("#r-items-table tbody").append(
+						'<tr>' +
+							'<td>'+value.id +'</td>' +
+							'<td>'+value.name +'</td>' +
+							'<td>'+value.price +'</td>' +
+							'<td>'+value.quantity+'</td>' +
+							'<td>'+value.subtotal+'</td>' +
+
+						'</tr>'
+					);
+			});
+
+			$.ajax({
+				type : 'POST',
+				data : {
+					sales : sales
+				},
+				url : base_url + 'SalesController/insert',
+				success : function(data) { 
+	 				transactionComplete = true;
+	 				$("#payment-modal").modal('toggle');
+					$("#loader").hide();
+					//Transaction Summary 
+					$("#summary-due").text(total_amount);
+					$("#summary-payment").text( currency + payment);
+					$("#summary-change").text( currency + change);
+					//Fill In Receipt
+					$("#r-due").text(total_amount);
+					$("#r-payment").text( currency + parseFloat(payment));
+					$("#r-change").text( currency + change);
+					$("#r-cashier").text($("#user").text());
+					$("#r-date").text(moment().format('YY/MM/DD'));
+					$("#r-time").text(moment().format('h:mm:ss a'));
+					$("#r-id").text(data);
+					totalAmountDue = 0;  
+				 	$("#cart tbody").empty();
+				 	$("#payment").val('');
+				 	$("#change").val('');
+				 	$("#amount-due").text('');
+				 	item_table.clear().draw();
+				 	$("#btn").button('reset');
+				}
+			})
+ 		}else {
+ 			alert('Please add some items');
+ 		}
 		
+	})
+
+	$("#payment").keyup(function() {
+
+		var payment = parseInt($(this).val());
+		var cart = $("#cart tbody tr").length;
+		if (cart) {
+			var totalAmountDue = parseFloat($("#amount-due").text().substring(1));
+	 
+			if (payment >= totalAmountDue) {
+		 	
+				$("#change").val((payment - totalAmountDue).toFixed(2));
+			} 
+		}else {
+			$(this).val('');
+		}
+
 	})
 
 	$("#cart").on('click', '.remove',function() {
@@ -68,10 +157,10 @@ $(document).ready(function() {
 		}else if (!isNaN(quantity) && quantity != 0) {
 			if (quantity <= parseInt(currentStocks)) {
 				var row = $(this).parents("tr");
-				var priceCol = row.find('td').eq(3);
+				var priceCol = row.find('td').eq(2);
 				var price = priceCol.text().substring(1);
 				var subtotal = parseInt(quantity) * parseFloat(price);
-				row.find('td').eq('4').text("₱" + subtotal);
+			
 				recount();
 			}else {
 				alert('Not enough stocks only ' + currentStocks + ' remaining.');
@@ -99,9 +188,9 @@ $(document).ready(function() {
 			$("#payment").modal('toggle');
 			var totalAmountDue = $("#amount-due").text().substring(1);
 			$("#total-amount-due").val('₱' + totalAmountDue);
-		}else {
-			alert('Please add some items');
-		}
+			}else {
+				alert('Please add some items');
+			}
 
 	})
 
@@ -114,28 +203,16 @@ $(document).ready(function() {
 		$("#amount-due").text('');
 	})
 
-	$("#amount-pay").keyup(function() {
-		var payment = parseFloat($(this).val());
-		var totalAmountDue = parseFloat($("#total-amount-due").val().substring(1));
-
-		if (payment >= totalAmountDue) {
-			$("#complete-transaction").prop('disabled',false);
-			$("#change").val((payment - totalAmountDue).toFixed(2));
-		}else {
-			$("#complete-transaction").prop('disabled',true);
-		}
-
-	}); 
-
 	function recount() {
 		var row = $("#cart tbody tr").length;
 		var total = 0;
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
-			total += parseFloat(r.eq(4).text().substring(1));
+			var quantity = parseInt(r.eq(1).find('input').val());
+			total += parseFloat(r.eq(2).text().substring(1)) * quantity;
 		}
 
-		$("#amount-due").text("₱" + total);
+		$("#amount-due").text("₱" + total.toFixed(2));
 	}
 
 	$("#complete-transaction").click(function() {
