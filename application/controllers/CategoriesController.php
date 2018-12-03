@@ -37,9 +37,13 @@ class CategoriesController Extends CI_Controller {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Category Must Not More Than 50 Characters!</div>');
 			redirect(base_url('categories'));
 		}else { 
-			$this->load->model('database');
+		 
 			$this->HistoryModel->insert('Register Category: '. $category);
-			$this->database->insertCategory($category);
+		 	$this->db->insert('categories', [
+		 			'name' => $category,
+		 			'active' => 1
+		 		]);
+		 	redirect(base_url('categories'));
 
 		}
 	}
