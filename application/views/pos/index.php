@@ -14,36 +14,36 @@
 <body>
 
 	<div style=" ">
-		<div class="container-fluid">
-		 
-				<div class="col-md-12" style="padding: 0 5px;">
-					<nav class="navbar">
-					<span class="navbar-text">Current User:  <span id="user"><?php echo $this->session->userdata['username'] ?></span>
-					</span>
-							<ul class="nav navbar-nav navbar-right">
-								<?php if ($this->session->userdata('account_type') !== "Cashier" ): ?> 
-									<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
-								<?php endif; ?>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="<?php echo base_url('logout') ?>">Sign Out</a></li> 
-									</ul>
-								</li>
+	<div class="">
+	 
+		<div class="col-md-12" style="padding: 0">
+			<nav class="navbar">
+			<span class="navbar-text">Current User:  <span id="user"><?php echo $this->session->userdata['username'] ?></span>
+			</span>
+					<ul class="nav navbar-nav navbar-right">
+						<?php if ($this->session->userdata('account_type') !== "Cashier" ): ?> 
+							<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
+						<?php endif; ?>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url('logout') ?>">Sign Out</a></li> 
 							</ul>
-						</nav>
-					</div>
-				</div>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</div>
+	</div>
+		 
 
-		<div class="main">
-			<div class="container-fluid">
-				<div class="row header">
+		<div class="">
+			<div class="">
+				<div class=" header">
 					<div class="col-sm-8 box rightnone">
-						<div class="row">
-							<h3>List of Items</h3>
-						</div>
+					 
+						<h3>List of Items</h3>
+						 
 						<div class="content">
 							<label>Select Item</label>
 							<table style="width: 100%" class="table table-bordered table-hover table-striped" id="item-table">
@@ -63,9 +63,9 @@
 
 					</div>
 					<div class="col-sm-4 box">
-						<div class="row">
+					 
 							<h3>Order Details</h3>
-						</div>
+					 
 						<div class="content">
 							<div id="cart-tbl">
 								<table class="table" id="cart">
@@ -83,24 +83,24 @@
 								</table>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-12" style="border-bottom: solid 1px;padding: 15px 25px;">
-								Total Due:<span id="amount-due" class="pull-right"></span>
-							</div>
-							<div class="col-md-12" style="padding: 15px 25px;">
-								<form id="process-form">
-									<div class="form-group">
-										<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off">
-									</div>
-									<div class="form-group">
-										<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
-									</div>
-									<div class="form-group">
-										<input type="submit" class="btn btn-primary form-control" name="" value="Process" id="btn" >
-									</div>
-								</form>
-							</div>
+					 
+						<div class="col-md-12" style="border-bottom: solid 1px;padding: 15px 25px;">
+							Total Due:<span id="amount-due" class="pull-right"></span>
 						</div>
+						<div class="col-md-12" style="padding: 15px 25px;">
+							<form id="process-form">
+								<div class="form-group">
+									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off">
+								</div>
+								<div class="form-group">
+									<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-primary form-control" name="" value="Process" id="btn" >
+								</div>
+							</form>
+						</div>
+						 
 
 					</div>
 				</div>

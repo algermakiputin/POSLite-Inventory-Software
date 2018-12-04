@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 	var dHeight = parseInt($(document).height());
  
-	dHeight = dHeight - 75;
+	dHeight = dHeight - 55;
 	$(".header .box").css('height', dHeight + 'px');
 	$("#cart-tbl").css('height', (dHeight - (75 + 20 + 231)) + 'px');
 	$("#cart-tbl").css('max-height', (dHeight - (75 + 20 + 231)) + 'px');
@@ -18,8 +18,6 @@ $(document).ready(function() {
 			type : 'POST'
 		}
 	});
-
- 
 
 	$("#item-table").on('click', 'tbody tr', function() {
 		var id = $(this).find('td').eq(0).text();
@@ -164,16 +162,20 @@ $(document).ready(function() {
 				recount();
 			}else {
 				alert('Not enough stocks only ' + currentStocks + ' remaining.');
+
 				$(this).val(1);
+				recount();
 			}
 		}
 
 		
 	})
 
-	$("#cart").on("blur", ".quantity-box", function() {
+	$("#cart").on("blur focusout", ".quantity-box", function() {
+
 		if ($(this).val() == "" || isNaN(parseInt($(this).val()))) {
 			$(this).val(1);
+			recount();
 		}
 	});
 	$("#cart").on('focus', '.quantity-box', function() {

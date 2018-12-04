@@ -2,7 +2,12 @@
 	<div class="col-lg-12">
 		<h1 class="page-header">Items</h1>
 	</div>
-<!-- /.col-lg-12 -->
+    <div class="col-md-12">
+        <?php 
+        echo $this->session->flashdata('errorMessage');
+        echo $this->session->flashdata('successMessage');
+        ?>
+    </div>
 </div>
 <div class="row">
  <div class="col-lg-12">
@@ -10,6 +15,7 @@
          <div class="panel-heading">
              Items List
          </div>
+
          <!-- /.panel-heading -->
          <div class="panel-body">
              <table class="table table-responsive table-striped table-hover table-bordered" id="item_tbl">

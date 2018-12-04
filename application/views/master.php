@@ -26,15 +26,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">POS Sales & Inventory Management System</a>
+                <a class="navbar-brand" href="index.html"><i class="fa fa-cube"></i> POS Sales & Inventory Management System</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
                
                 <!-- /.dropdown -->
+                <?php if ($count = noStocks()->num_rows()) : ?>
                 <li>
-                    <a href="<?php echo base_url('pos') ?>">Go to POS</a>
+                    <a href="<?php echo base_url('out-of-stocks') ?>">Out of Stock <span style="margin-top: -10px;" class="badge badge-error"><?php echo $count ?></span></a>
+                </li>
+                <?php endif; ?>
+                <li>
+                    <a href="<?php echo base_url('pos') ?>">POS</a>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
