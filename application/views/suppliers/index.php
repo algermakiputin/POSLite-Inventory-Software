@@ -21,9 +21,10 @@
         <thead>
           <tr>
             <th width="25%">Name</th>
-            <th width="30%">Address</th>
-            <th width="25%">Contact</th> 
-            <th width="20%">Actions</th>
+            <th width="20%">Address</th>
+            <th width="20%">Contact</th> 
+            <th width="20%">Email Address</th>
+            <th width="15%">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +33,7 @@
              <td><?php echo $supplier->name; ?></td>
              <td><?php echo $supplier->address; ?></td>
              <td><?php echo $supplier->contact; ?></td>
+             <td><?php echo $supplier->email; ?></td>
              <td>
                <button class="btn btn-info btn-sm edit" data-toggle="modal" data-target="#edit-supplier" data-id="<?php echo $supplier->id ?>">Edit</button>
                <a class="btn btn-danger btn-sm" href="<?php echo base_url('suppliers/delete/' . $supplier->id ) ?>">Delete</a>
@@ -70,6 +72,9 @@
         	<div class="form-group">
         		<input type="text" class="form-control" name="contact" placeholder="Contact">
         	</div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="email" placeholder="Email Address">
+          </div>
         	<div class="form-group">
         		<button class="btn btn-success">Save</button>
         	</div>
@@ -91,7 +96,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">New Supplier</h4>
+        <h4 class="modal-title">Edit Supplier</h4>
       </div>
       <div class="modal-body">
         <form method="POST" action="<?php echo base_url('suppliers/update') ?>" id="edit-supplier-form">
@@ -104,6 +109,9 @@
           </div>
           <div class="form-group">
             <input type="text" class="form-control" name="contact" placeholder="Contact">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="email" placeholder="Email Address">
           </div>
           <div class="form-group">
             <button class="btn btn-success">Save</button>

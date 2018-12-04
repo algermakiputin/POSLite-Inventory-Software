@@ -1,13 +1,16 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Sales Report</h1>
+		<h1 class="page-header">Reports</h1>
 	</div>
 <!-- /.col-lg-12 -->
 </div>
 <div class="row">
  <div class="col-lg-12">
      <div class="panel panel-default">
-        	 
+        	<div class="panel-heading">
+             Sales Reports
+         </div>
+
          <!-- /.panel-heading -->
          <div class="panel-body">
          		<div class="col-md-3">
@@ -16,7 +19,8 @@
 				  <button type="button" class="btn btn-default" data-id="table">Table View</button> 
 				</div>
          		</div>
-         		<div class="col-md-6" style="display: none;" id="table-menu">
+         		<div style="display: none;" id="table-menu">
+         		<div class="col-md-6" >
 			 
 			    <div class="input-group input-daterange">
 
@@ -27,6 +31,12 @@
 			      <input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
 
 			    </div>
+
+
+			</div>
+			<div class="col-md-3 text-right">
+				 <button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
+			</div>
 			</div>
 			<div class="col-md-6" id="graph-menu">
 			    	<div class="btn-group pull-center" role="group" aria-label="Basic example">
@@ -48,6 +58,7 @@
 							<th>Item Barcode</th>
 							<th>Item Name</th> 
 							<th>Quantity</th>
+							<th>Price</th>
 							<th>Total</th>  
 						</tr>
 					</thead>

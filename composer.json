@@ -12,7 +12,12 @@
 	},
 	"require": {
 		"php": ">=5.3.7",
-		"picqer/php-barcode-generator": "^0.2.2"
+		"picqer/php-barcode-generator": "^0.2.2",
+		"dompdf/dompdf": "^0.8.2",
+		"mailgun/mailgun-php": "^2.6",
+		"php-http/curl-client": "^1.7",
+		"guzzlehttp/psr7": "^1.5",
+		"phpmailer/phpmailer": "^6.0"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

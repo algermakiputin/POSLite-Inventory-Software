@@ -76,21 +76,21 @@ class CI_Email {
 	 *
 	 * @var	string
 	 */
-	public $smtp_host	= '';
+	public $smtp_host	= 'smtp.mailgun.org';
 
 	/**
 	 * SMTP Username
 	 *
 	 * @var	string
 	 */
-	public $smtp_user	= '';
+	public $smtp_user	= 'postmaster@sandbox8dbb9e90cfd640b78778d23fa420ca5d.mailgun.org';
 
 	/**
 	 * SMTP Password
 	 *
 	 * @var	string
 	 */
-	public $smtp_pass	= '';
+	public $smtp_pass	= '63b79024fe531978e12958959b933ee0-52cbfb43-b74d55aa';
 
 	/**
 	 * SMTP Server port
