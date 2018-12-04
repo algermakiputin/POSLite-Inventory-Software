@@ -26,6 +26,13 @@ class ItemController extends CI_Controller {
 
 	}
 
+	public function outOfStocks() {
+ 	 
+ 		$data['content'] = "items/stockout";
+ 		$data['items'] = noStocks()->result();
+		$this->load->view('master', $data);
+	}
+
 	public function data() {
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('PriceModel');
@@ -151,9 +158,12 @@ class ItemController extends CI_Controller {
 	}
 
 	public function add_stocks() {
+	
 		$itemID = $this->input->post('item_id');
 		$itemName = $this->input->post('item_name');
 		$stocks = $this->input->post('stocks');
+
+
 		$this->form_validation->set_rules('stocks','Stocks','required|integer');
 
 		if($this->form_validation->run() === FALSE) {

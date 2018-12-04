@@ -85,6 +85,7 @@ $route['suppliers/insert'] = "SuppliersController/insert";
 $route['suppliers/delete/(:any)'] = "SuppliersController/destroy/$1";
 $route['suppliers/find'] = "SuppliersController/find";
 $route['suppliers/update'] = "SuppliersController/update";
+$route['out-of-stocks'] = "ItemController/outOfStocks";
 
 $route['deliveries'] = "DeliveriesController/index";
 $route['new-delivery'] = "DeliveriesController/new";

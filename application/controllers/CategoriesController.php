@@ -22,7 +22,7 @@ class CategoriesController Extends CI_Controller {
 	}
 
 	public function get() {
-		$categories = $this->db->get('categories')->result();
+		$categories = $this->db->where('status', 1)->get('categories')->result();
 
 		echo json_encode($categories);
 	}
