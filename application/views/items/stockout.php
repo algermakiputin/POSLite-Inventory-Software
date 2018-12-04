@@ -13,6 +13,10 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
+					<div class="col-md-12">
+						<button>Send Email to Supplier</button>
+						<hr>
+					</div>
 				 	<?php foreach ($items as $item): ?>
 						<form method="POST" action="<?php echo base_url('ItemController/add_stocks') ?>">
 							<div class="col-md-6 form-group">

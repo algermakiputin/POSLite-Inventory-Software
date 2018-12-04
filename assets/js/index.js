@@ -10,6 +10,18 @@ $(document).ready(function() {
 
 	});
 
+	$("#export").click(function(e) {
+		e.preventDefault();
+		var start = $("#min-date").val();
+		var end = $("#max-date").val();
+
+		if (start && end) {
+			window.location.href = base_url + "SalesController/export?start=" + start + "&end=" + end;
+		}else {
+			alert("Please select date");
+		}
+	})
+
 	$("#graph-menu button").click(function() {
 		$('#graph-menu button').removeClass('active');
 		$(this).addClass('active');
@@ -136,6 +148,7 @@ $(document).ready(function() {
 				$("#edit-supplier-form input[name='name']").val(supplier.name);
 				$("#edit-supplier-form input[name='address']").val(supplier.address);
 				$("#edit-supplier-form input[name='contact']").val(supplier.contact);
+				$("#edit-supplier-form input[name='email']").val(supplier.email);
 			}
 
 		});

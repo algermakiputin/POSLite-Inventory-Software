@@ -16,11 +16,81 @@ class SalesController extends CI_Controller {
 	}
 
 	public function sales () {
-
+	 	
 		$data['dataset'] = $this->graphSales();
 		$data['content'] = "sales/index";
 		$this->load->view('master',$data);;
 		 
+	}
+
+	public function export() {
+		$dompdf = new Dompdf\Dompdf;
+
+		$html = "";
+		$from = $this->input->get('start');
+		$to = $this->input->get('end');
+		$totalSales = 0;
+		$tbody = "";
+		$sales = $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+					->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+					->order_by('id', 'DESC')
+					->get('sales')->result();
+		foreach ($sales as $sale) {
+			$sales_description = $this->db->where('sales_id', $sale->id)->get('sales_description')->result();
+			$sub_total = 0;
+		 
+			foreach ($sales_description as $desc) {
+				$item = $this->db->where('id', $desc->item_id)->get('items')->row();
+				$price = $this->db->where('item_id', $desc->item_id)->get('prices')->row()->price;
+				$sub_total += ((float)$desc->quantity * (float) $price);
+				
+				if ($desc) {
+					$tbody .= "<tr>
+						<td>".date('Y-m-d h:i:s a', strtotime($sale->date_time))."</td>
+						<td>".ucwords($item->name)."</td>
+						<td>".$desc->quantity."</td>
+						<td>".('<span class="sign">&#x20b1;</span>'. $price)."</td>
+						<td>".('&#x20b1;'. number_format((float)$desc->quantity * (float)$price))."</td>
+						</tr>
+					";
+				}	
+				 
+			}
+
+			$totalSales += $sub_total;
+			
+		}
+
+		$html .= "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+				<link type='text/css' href='".base_url('assets/print.css')."'>
+			";
+		$html .= "<h1 class='text-center'>Sales Reports</h1>";
+		$html .= "<div class='left'><h4>Date:</h4>";
+		$html .= "<div class='date'>From: " . $from . "</div>";
+		$html .= "<div class='date'>To: " . $to . "</div></div>";
+		$html .= "<div class='right'><h4>Total Sales:</h4><div>₱".number_format($totalSales)."</div></div>";
+		$html .= "<div class='clearfix'></div>";
+		$html .= "<br>";
+		$html .= "<table class='table table-striped'>";
+		$html .= "<thead><tr>";
+		$html .= "<th>DateTime</th> <th>Item Name</th> <th>Quantity</th><th>Price</th><th>Sub Total</th>";
+		$html .= "</tr></thead>";
+		
+		$html .= "<tbody>";
+		$html .= $tbody;
+		$html .= "</tbody>";
+		$html .= "</table>";
+	 
+		$dompdf->loadHtml($html);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper('A4', 'portraite');
+
+		 
+		$dompdf->render();
+
+		 
+		$dompdf->stream();
 	}
 
 	public function graphSales($range = "week") {
@@ -198,13 +268,14 @@ class SalesController extends CI_Controller {
 			foreach ($sales_description as $desc) {
 				$item = $this->db->where('id', $desc->item_id)->get('items')->row();
 				$price = $this->db->where('item_id', $desc->item_id)->get('prices')->row()->price;
-				$sub_total += ((int)$desc->quantity * (int) $price);
+				$sub_total += ((float)$desc->quantity * (float) $price);
 				$datasets[] = [ 
 					date('Y-m-d h:i:s a', strtotime($sale->date_time)), 
 					$item->barcode,
 					$item->name,
 					$desc->quantity,
-					'₱'. (int)$desc->quantity * (int)$price
+					'₱' . (float)$price,
+					'₱'. (float)$desc->quantity * (float)$price
 				];
 			}
 
