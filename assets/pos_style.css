@@ -63,13 +63,14 @@ header {
 	margin: 0;
 	padding: 15px;
 	text-align: center;
-	border-bottom: solid 1px #000;
-	background: #c2d69b;
+	border-bottom: solid 1px #ddd;
+	/*background: #c2d69b;*/
+	background-color: #b1cfe9;
 	color: #ffffff;
 }
 
 .header .box {
-	border: solid 1px;
+	border: solid 1px #ddd;
 	padding: 0;
 
 }
@@ -175,6 +176,6 @@ header {
 	background: #ffffff;
 }
 
-#process-form .btn-primary {
+/*#process-form .btn-primary {
 	background-color: #00b050;
-}
+}*/

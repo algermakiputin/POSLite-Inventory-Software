@@ -12,7 +12,7 @@ class CategoriesController Extends CI_Controller {
 
 	public function categories() { 
 		$data['categoryList'] = $this->db->order_by('id','DESC')
-									->where('active',1)
+									->where('status',1)
 									->get('categories')
 									->result();
 		$data['page'] = 'categories';
