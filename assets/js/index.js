@@ -1,7 +1,8 @@
 $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var currency = '₱';
-
+	$("form").parsley();
+	
 	$('.date-range-filter').datepicker();
 	$("#history_table").DataTable({
 		'bLengthChange' : false,
@@ -9,6 +10,29 @@ $(document).ready(function() {
 		'ordering' : false,
 
 	});
+
+	$("#mail").click(function() {
+		var button = $(this);
+		$.ajax({
+			type : 'GET',
+			url : base_url + 'SuppliersController/mail',
+			beforeSend : function() {
+				button.button('loading');
+			},
+			success : function(data) {
+				
+				if (data == 1) 
+					$("#message").show();
+				else 
+					alert("Opps! Something went wrong please try again later");
+				button.button('reset');
+			},
+			error : function() {
+				alert('Opps! Something went wrong we cannot send your email');
+				button.button('reset');
+			}
+		});
+	})
 
 	$("#export").click(function(e) {
 		e.preventDefault();

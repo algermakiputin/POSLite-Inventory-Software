@@ -17,7 +17,7 @@
 </div>
 <p>Hello we run out of stocks, please delivering the following items.</p>
 <br> 
-<table width="100%" class="table text-center">
+<table width="100%" class="table" style="text-align: left;">
 	<thead>
 		<tr >
 			<th>Item Name</th>

@@ -13,7 +13,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<form method="POST" action="<?php echo base_url('items/insert') ?>">
+					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate>
 						<div class="col-lg-6 col-md-offset-3">
 							<div class="form-group ">
 								<label>Bar Code: <?php echo $barcode ?></label>
@@ -25,14 +25,14 @@
 
 							</div>
 							<div class="form-group"> 					 
-								<input type="text" placeholder="Item Name" name="name" class="form-control">
-								<input type="hidden" name="barcode" value="<?php echo $barcode ?>">
+								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
+								<input type="hidden" required="required" name="barcode" value="<?php echo $barcode ?>">
 							</div>
 							<div class="form-group">  
-								<select name="category" class="form-control">
+								<select name="category" class="form-control" required="required">
 									<option value="">Select Category</option>
 									<?php foreach ($category as $cat): ?>
-										<option value="<?php echo $cat->id ?>"> <?php echo $cat->name ?> </option>
+										<option value="<?php echo $cat->id ?>"> <?php echo ucwords($cat->name) ?> </option>
 									<?php endforeach; ?>
 								</select>
 							</div>
@@ -40,17 +40,20 @@
 								<input type="text" placeholder="Price" name="price" class="form-control">
 							</div>
 							<div class="form-group">  
-								<select name="supplier" class="form-control">
+								<select name="supplier" class="form-control" required="required"> 
 									<option value="">Select Supplier</option>
 									<?php foreach ($suppliers as $supplier): ?>
 										<option value="<?php echo $supplier->id ?>">
-											<?php echo $supplier->name ?>
+											<?php echo ucwords($supplier->name) ?>
 										</option>
 									<?php endforeach; ?>
 								</select>
 							</div>
 							<div class="form-group">  
-								<textarea rows="5" placeholder="Description" class="form-control" name="description"></textarea>
+								<input type="number" placeholder="Critical Level" name="critical_level" class="form-control" required="required">
+							</div>
+							<div class="form-group">  
+								<textarea rows="5" placeholder="Description" class="form-control" name="description" required="required"></textarea>
 							</div>
 							<div class="form-group"> 
 								<button class="btn btn-primary">Register Item</button>

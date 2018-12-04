@@ -92,7 +92,7 @@ class ItemController extends CI_Controller {
 			$code = substr(uniqid(), 0, 7);
 		}
 		 
-		$data['category'] = $this->db->get('categories')->result();
+		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'new_item';
 		$data['content'] = "items/new";
@@ -111,11 +111,13 @@ class ItemController extends CI_Controller {
 		$barcode = $this->input->post('barcode');
 		$quantity = 0;
 		$price = $this->input->post('price');
+		$criticalLevel = $this->input->post('critical_level');
 
 		$this->load->model('ItemModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('HistoryModel');
-		$item_id = $this->ItemModel->insertItem($name, $category, $description,$supplier_id,$barcode);
+		$item_id = $this->ItemModel->insertItem($name, $category, $description,$supplier_id,$barcode,$criticalLevel);
+		
 		$this->HistoryModel->insert('Register new item: ' . $name);
 		$this->PriceModel->insert($price, $item_id);
 		$this->OrderingLevelModel->insert($item_id);

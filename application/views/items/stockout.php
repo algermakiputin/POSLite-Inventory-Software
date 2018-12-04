@@ -14,7 +14,15 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-12">
-						<button>Send Email to Supplier</button>
+						<div class="form-group">
+							<button class="btn btn-primary" id="mail" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Sending Email...">Mail Order</button>
+						</div>
+
+						<div id="message" style="display: none;">
+							<div class="alert alert-success">
+								An email order has been sent to your suppliers.
+							</div>
+						</div>
 						<hr>
 					</div>
 				 	<?php foreach ($items as $item): ?>

@@ -7,53 +7,43 @@ class SuppliersController Extends CI_Controller {
 	}
 
 	public function mail() {
-		 
-		$this->load->library('email');
-		$this->email->from('algerzxc@gmail.com', 'Your Name');
-		$this->email->to('algerapudmakiputin@gmail.com'); 
-		$this->email->subject('Email Test');
-		$this->email->message('Testing the email class.');
-		if ($this->email->send()) {
-			echo "test";
-		}else {
-			echo $this->email->print_debugger();
-		}
-		// $suppliers = $this->db->order_by('id','DESC')->get('supplier')->result();
-		// $mg = new Mailgun\Mailgun;
-		// $mg = $mg::create('key-1a55a06248fee1734ffb5958ffbb3cf9');
-		// foreach ($suppliers as $supplier) {
-			 
 
-		// 	$outOfStocks = $this->db->select("items.id, items.name, ordering_level.quantity,items.description")
-		// 		->from("items")
-		// 		->join("ordering_level", "ordering_level.item_id = items.id", "left")
-		// 		->where('items.status', 1)
-		// 		->where('supplier_id', $supplier->id)
-		// 		->where('ordering_level.quantity <=', 0)
-		// 		->get();
+		$suppliers = $this->db->order_by('id','DESC')->get('supplier')->result();
+	 
+		foreach ($suppliers as $supplier) {
+
+			$outOfStocks = $this->db->select("items.id, items.name, ordering_level.quantity,items.description")
+				->from("items")
+				->join("ordering_level", "ordering_level.item_id = items.id", "left")
+				->where('items.status', 1)
+				->where('supplier_id', $supplier->id)
+				->where('ordering_level.quantity <=', 0)
+				->get();
 		 	 
-		// 	if ($outOfStocks) {
+			if ($outOfStocks) {
 				
-		// 		$data['items'] = $outOfStocks->result();
-		// 		$data['name'] = $supplier->name;
-		// 		$html = $this->load->view('email/order', $data, true);
-		// 		$data = [
-		// 			'from' => 'algerzxc@gmail.com.com',
-		// 			'to' => 'algerapudmakiputin@gmail.com',
-		// 			'subject' => 'Delivery Order',
-		// 			'html' => $html,
-		// 			'text' => 'Hello we run out of stock, please delivery now'
-		// 		];
-		// 		if ($mg->messages()->send('sandbox8dbb9e90cfd640b78778d23fa420ca5d.mailgun.org', $data)) {
-		// 			echo "sent";
-		// 		}
+				$data['items'] = $outOfStocks->result();
+				$data['name'] = $supplier->name;
+				$html = $this->load->view('email/order', $data, true);
+				$this->load->library('email');
+				$this->email->from('algerzxc@gmail.com', 'POS Sales and Inventory System Email');
+				$this->email->to('algerapudmakiputin@gmail.com'); 
+				$this->email->subject('Re order stocks');
+				$this->email->message($html);
+				$this->email->set_mailtype('html');
 
-		// 		die();	
+				if ($this->email->send()) {
+					echo 1;
+					return;
+				}
+
+				echo 0;
+				return;
 				 
-		// 	}
+			}
 
 
-		// }
+		}
 
 
 	  

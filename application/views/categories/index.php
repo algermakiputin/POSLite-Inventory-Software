@@ -26,7 +26,7 @@
 						?>
 						<div class="form-group"> 
 							<label>Category Name:</label>
-							<input type="text" name="category" class="form-control" placeholder="Category">
+							<input required="required" type="text" name="category" class="form-control" placeholder="Category">
 							 
 						</div>
 						<div class="form-group"> 

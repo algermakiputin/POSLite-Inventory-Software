@@ -85,7 +85,8 @@
 						</div>
 					 
 						<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 15px 25px;">
-							Total Due:<span id="amount-due" class="pull-right"></span>
+							<div>Total Due:<span id="amount-due" class="pull-right"></span></div>
+							<div>Vat:<span id="amount-vat" class="pull-right"></span></div>
 						</div>
 						<div class="col-md-12" style="padding: 15px 25px;">
 							<form id="process-form">
@@ -151,7 +152,9 @@
 									</table>
 									<hr>
 									<div class="text-right">
-										<div>Total: <span id="r-due"></span></div>
+										<div>Sub Total: <span id="r-due"></span></div>
+										<div>Vat: <span id="r-vat"></span></div>
+										<div>Total Amount <span id="r-total-amount"></span></div>
 										<div>Payment: <span id="r-payment"></span></div>
 										<div>Change: <span id="r-change"></span></div>
 									</div>
@@ -165,8 +168,16 @@
 							<h4 class="">Transaction Summary</h3> 
 								<table class="table table-condensed ">
 									<tr>
-										<td>Total Amount:</td>
+										<td>Sub Total:</td>
 										<td id="summary-due"></td>
+									</tr>
+									<tr>
+										<td>Vat:</td>
+										<td id="summary-vat"></td>
+									</tr>
+									<tr>
+										<td>Total Amount:</td>
+										<td id="summary-total"></td>
 									</tr>
 									<tr>
 										<td>Payment:</td>

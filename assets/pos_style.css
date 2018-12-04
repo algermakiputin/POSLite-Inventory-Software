@@ -1,10 +1,17 @@
 
 body {
 	margin:0;
+	overflow: hidden;
 }
 
 .navbar {
-	margin: 0;color: #fff;background-color: #5a5a5a;padding: 0 20px;border-radius: 0;border: solid 0 1px 0 1px #000;
+	/*background-color: #5a5a5a;*/
+	background: #333;
+	border-radius: 0;
+	border: solid 0 1px 0 1px #000;
+	color: #fff;
+	margin: 0;
+	padding: 0 20px;
 }
 .navbar .navbar-text {
 	color: #ddd;
@@ -65,8 +72,9 @@ header {
 	text-align: center;
 	border-bottom: solid 1px #ddd;
 	/*background: #c2d69b;*/
-	background-color: #b1cfe9;
-	color: #ffffff;
+	/*background-color: #b1cfe9;
+	color: #ffffff;*/
+	color: #000000;
 }
 
 .header .box {
@@ -76,7 +84,7 @@ header {
 }
 
 .box .content {
-	padding: 15px 10px;
+	padding: 20px;
 }
 
 .header .box.rightnone {
@@ -116,7 +124,7 @@ header {
 }
 
 #cart-tbl {
-	min-height: 280px;
+
 	overflow: auto;
 }
 

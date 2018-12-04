@@ -9,7 +9,7 @@ class ItemModel extends CI_Model {
 		return $result;
 	}
 
-	public function insertItem($name, $category, $description,$supplier_id,$barcode) 
+	public function insertItem($name, $category, $description,$supplier_id,$barcode, $criticalLevel) 
 	{
 
 		$data = array(
@@ -18,7 +18,8 @@ class ItemModel extends CI_Model {
 			'description' => $description, 
 			'supplier_id' => $supplier_id,
 			'status' => 1,
-			'barcode' => $barcode
+			'barcode' => $barcode,
+			'critical_level' => $criticalLevel
 
 			);
 		

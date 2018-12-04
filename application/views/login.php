@@ -70,14 +70,23 @@
 		<?php echo ($this->session->flashdata('error'))?>
 	</div>
 	<?php endif; ?>
-	<div class="input-group form-group">
-		<span class="input-group-addon"><i class="fa fa-user " aria-hidden="true"></i></span>
-		<input autocomplete="off" id="username" type="text" class="form-control input-md" name="username" placeholder="Username">
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon"><i class="fa fa-user " aria-hidden="true"></i></span>
+			<input autocomplete="off" id="username" type="text" class="form-control input-md" name="username" placeholder="Username" required="required" data-parsley-errors-container="#username-error">
+			<div class="clearfix"></div>
+
+		</div>
+		<span id="username-error"></span>
 	</div>
-	<div class="input-group form-group">
-		<span class="input-group-addon"><i class="fa fa-key " aria-hidden="true"></i></span>
-		<input autocomplete="off" id="password" type="password" class="form-control input-md" name="password" placeholder="Password">
-	</div>      
+	<div class="form-group">
+		<div class="input-group ">
+			<span class="input-group-addon"><i class="fa fa-key " aria-hidden="true"></i></span>
+			<input autocomplete="off" id="password" type="password" class="form-control input-md" name="password" placeholder="Password" required="required" data-parsley-errors-container="#password-error">
+		</div>      
+		<span id="password-error"></span>
+	</div>
+	
 	
 	<div class="form-group">
 		<button class="btn btn-md btn-primary btn-block" type="submit">Login</button>  
