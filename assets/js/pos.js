@@ -5,11 +5,13 @@ $(document).ready(function() {
 	var currency = '₱';
 
 	var dHeight = parseInt($(document).height());
- 
+ 	
 	dHeight = dHeight - 55;
 	$(".header .box").css('height', dHeight + 'px');
-	$("#cart-tbl").css('height', (dHeight - (75 + 20 + 231)) + 'px');
-	$("#cart-tbl").css('max-height', (dHeight - (75 + 20 + 231)) + 'px');
+
+	$("#cart-tbl").css('min-height', (dHeight - (75 + 231 + 25)) + 'px');
+	$("#cart-tbl").css('max-height', (dHeight - (75 + 150 + 231)) + 'px');
+	 
 	var item_table = $("#item-table").DataTable({
 		processing : true,
 		serverSide : true,
@@ -49,10 +51,11 @@ $(document).ready(function() {
 		var row = $("#cart tbody tr").length;
 		var sales = [];
 		var customer_id = $("#customer-id").val();
-		var total_amount = $("#amount-due").text();
+		var total_amount = 0;
+
 		var payment = $("#payment").val();
 		var change = $("#change").val();
- 		
+ 		var vat = 0;
  		if (row) {
  			$("#btn").button('loading');
  			for (i = 0; i < row; i++) {
@@ -66,6 +69,7 @@ $(document).ready(function() {
 						name : r.eq(0).text(),
 						subtotal : parseFloat(price) * parseInt(quantity)
 					};
+				total_amount += parseFloat(price) * parseInt(quantity);
 				sales.push(arr);
 			}
 		 
@@ -77,9 +81,9 @@ $(document).ready(function() {
 						'<tr>' +
 							'<td>'+value.id +'</td>' +
 							'<td>'+value.name +'</td>' +
-							'<td>'+value.price +'</td>' +
+							'<td>'+currency+value.price +'</td>' +
 							'<td>'+value.quantity+'</td>' +
-							'<td>'+value.subtotal+'</td>' +
+							'<td>'+currency+value.subtotal+'</td>' +
 
 						'</tr>'
 					);
@@ -93,17 +97,23 @@ $(document).ready(function() {
 				url : base_url + 'SalesController/insert',
 				success : function(data) { 
 	 				transactionComplete = true;
+	 				var total = parseFloat(total_amount);
+	 				vat = parseFloat((total / 1.2) * 0.12);
 	 				$("#payment-modal").modal('toggle');
 					$("#loader").hide();
 					//Transaction Summary 
-					$("#summary-due").text(total_amount);
+					$("#summary-due").text(currency + total_amount);
 					$("#summary-payment").text( currency + payment);
 					$("#summary-change").text( currency + change);
+					$("#summary-vat").text( currency + vat.toFixed(2) );
+					$("#summary-total").text( currency + (vat + total).toFixed(2) )
 					//Fill In Receipt
-					$("#r-due").text(total_amount);
+					$("#r-due").text(currency + total_amount);
 					$("#r-payment").text( currency + parseFloat(payment));
 					$("#r-change").text( currency + change);
 					$("#r-cashier").text($("#user").text());
+					$("#r-vat").text( currency + vat.toFixed(2) );
+					$("#r-total-amount").text( currency + (vat + total).toFixed(2) )
 					$("#r-date").text(moment().format('YY/MM/DD'));
 					$("#r-time").text(moment().format('h:mm:ss a'));
 					$("#r-id").text(data);
@@ -112,6 +122,7 @@ $(document).ready(function() {
 				 	$("#payment").val('');
 				 	$("#change").val('');
 				 	$("#amount-due").text('');
+				 	$("#amount-vat").text('');
 				 	item_table.clear().draw();
 				 	$("#btn").button('reset');
 				}
@@ -208,13 +219,15 @@ $(document).ready(function() {
 	function recount() {
 		var row = $("#cart tbody tr").length;
 		var total = 0;
+		var vat = 0;
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
 			var quantity = parseInt(r.eq(1).find('input').val());
 			total += parseFloat(r.eq(2).text().substring(1)) * quantity;
 		}
-
-		$("#amount-due").text("₱" + total.toFixed(2));
+		vat = parseFloat((total / 1.2) * 0.12);
+		$("#amount-vat").text(currency + vat.toFixed(2));
+		$("#amount-due").text("₱" + (total + vat).toFixed(2));
 	}
 
 	$("#complete-transaction").click(function() {
@@ -284,6 +297,7 @@ $(document).ready(function() {
 				$("#item-name").text('');
 				$("#description").text('');
 				$("#price").text('');
+				$("#amount-vat").text('');
 			}
 		})
 	})

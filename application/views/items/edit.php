@@ -17,12 +17,12 @@
 						<form method="POST" action="<?php echo base_url('items/update') ?>">
 							<div class="form-group"> 
 								<label>Item Name:</label>
-								<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control">
+								<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control" required="required">
 								<input type="hidden" name="id" value="<?php echo $item->id ?>">
 							</div>
 							<div class="form-group"> 
 								<label>Category:</label>
-								<select name="category" class="form-control">
+								<select name="category" class="form-control" required="required">
 									<option value="">Select Category</option>
 									<?php foreach ($categories as $cat): ?>
 										<option value="<?php echo $cat->id ?>" <?php echo $cat->id == $item->category_id ? "selected" : '' ?>> <?php echo $cat->name ?> </option>
@@ -36,7 +36,7 @@
 
 							<div class="form-group"> 
 								<label>Description:</label>
-								<textarea rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
+								<textarea required="required" rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
 							</div>
 							<div class="form-group"> 
 								<button class="btn btn-primary">Update</button>

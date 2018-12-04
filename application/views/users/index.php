@@ -24,19 +24,20 @@
 						<fieldset <?php echo SITE_LIVE ? 'disabled' : '' ?>>
 							<div class="form-group">
 								<label for='Username'>Username</label>
-								<input type="text" name="Username" class="form-control">
+								<input required="required" type="text" name="Username" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for='Password'>Password</label>
-								<input type="password" name="Password" class="form-control">
+								<input required="required" type="password" name="Password" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for='repeat_password'>Repeat Password</label>
-								<input type="password" name="repeat_password" class="form-control">
+								<input required="required" type="password" name="repeat_password" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for='account_type'>Account Type</label>
-								<select name="account_type" class="form-control">
+								<select required="required" name="account_type" class="form-control">
+									<option value="">Select Account Type</option>
 									<option>Admin</option>
 									<option>Cashier</option>
 									<option>Clerk</option>

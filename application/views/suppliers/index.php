@@ -64,16 +64,16 @@
       <div class="modal-body">
         <form method="POST" action="<?php echo base_url('suppliers/insert') ?>">
         	<div class="form-group">
-        		<input type="text" class="form-control" name="name" placeholder="Name">
+        		<input required="required" type="text" class="form-control" name="name" placeholder="Name">
         	</div>
         	<div class="form-group">
-        		<input type="text" class="form-control" name="address" placeholder="Address">
+        		<input required="required" type="text" class="form-control" name="address" placeholder="Address">
         	</div>
         	<div class="form-group">
-        		<input type="text" class="form-control" name="contact" placeholder="Contact">
+        		<input required="required" type="text" class="form-control" name="contact" placeholder="Contact">
         	</div>
           <div class="form-group">
-            <input type="text" class="form-control" name="email" placeholder="Email Address">
+            <input required="required" type="text" class="form-control" name="email" placeholder="Email Address">
           </div>
         	<div class="form-group">
         		<button class="btn btn-success">Save</button>
@@ -102,16 +102,16 @@
         <form method="POST" action="<?php echo base_url('suppliers/update') ?>" id="edit-supplier-form">
           <input type="hidden" name="id" id="supplier_id">
           <div class="form-group">
-            <input type="text" class="form-control" name="name" placeholder="Name">
+            <input required="required" type="text" class="form-control" name="name" placeholder="Name">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" name="address" placeholder="Address">
+            <input required="required" type="text" class="form-control" name="address" placeholder="Address">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" name="contact" placeholder="Contact">
+            <input required="required" type="text" class="form-control" name="contact" placeholder="Contact">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" name="email" placeholder="Email Address">
+            <input required="required" type="text" class="form-control" name="email" placeholder="Email Address">
           </div>
           <div class="form-group">
             <button class="btn btn-success">Save</button>

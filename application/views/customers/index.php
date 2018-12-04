@@ -69,10 +69,10 @@
 			<div class="modal-body">
 				<form action="<?php echo base_url('customers/insert') ?>" method="POST">
 					<div class="form-group">
-						<input type="text" class="form-control" name="name" placeholder="Name">
+						<input required="required" type="text" class="form-control" name="name" placeholder="Name">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" name="email" placeholder="Email">
+						<input type="email" required="required" class="form-control" name="email" placeholder="Email">
 					</div>
 					<div class="form-group">
 						<label>Gender</label>
@@ -85,19 +85,19 @@
 					</div>
 
 					<div class="form-group">
-						<input type="text" class="form-control" name="address" placeholder="Address">
+						<input type="text" required="required" class="form-control" name="address" placeholder="Address">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="city" placeholder="City">
+						<input type="text" required="required" class="form-control" name="city" placeholder="City">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="state" placeholder="State">
+						<input type="text" required="required" class="form-control" name="state" placeholder="State">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="zipcode" placeholder="Zip Code">
+						<input type="text" required="required" class="form-control" name="zipcode" placeholder="Zip Code">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="mobileNumber" placeholder="Mobile Number">
+						<input type="text" required="required" class="form-control" name="mobileNumber" placeholder="Mobile Number">
 					</div>
 					<div class="form-group">
 						<button class="btn btn-success">Save</button>

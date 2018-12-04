@@ -42,7 +42,7 @@ class AuthController extends CI_Controller {
 					if ($this->session->userdata('account_type') == "Cashier") {
 						redirect(base_url('pos'));
 					}else if ($this->session->userdata('account_type') == "Admin") {
-						redirect(base_url('items'));
+						redirect(base_url('sales'));
 					}else if ($this->session->userdata('account_type') == "Clerk") {
 						redirect(base_url('items'));
 					}
