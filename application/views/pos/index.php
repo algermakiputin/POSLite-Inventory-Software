@@ -84,7 +84,7 @@
 							</div>
 						</div>
 					 
-						<div class="col-md-12" style="border-bottom: solid 1px;padding: 15px 25px;">
+						<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 15px 25px;">
 							Total Due:<span id="amount-due" class="pull-right"></span>
 						</div>
 						<div class="col-md-12" style="padding: 15px 25px;">
