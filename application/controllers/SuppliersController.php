@@ -9,7 +9,14 @@ class SuppliersController Extends CI_Controller {
 	public function mail() {
 
 		$suppliers = $this->db->order_by('id','DESC')->get('supplier')->result();
-	 
+	 	
+	 	echo $this->sendEmailToSupplier($suppliers);
+		
+		
+	}
+
+	public function sendEmailToSupplier($suppliers) {
+
 		foreach ($suppliers as $supplier) {
 
 			$outOfStocks = $this->db->select("items.id, items.name, ordering_level.quantity,items.description")
@@ -27,27 +34,20 @@ class SuppliersController Extends CI_Controller {
 				$html = $this->load->view('email/order', $data, true);
 				$this->load->library('email');
 				$this->email->from('algerzxc@gmail.com', 'POS Sales and Inventory System Email');
-				$this->email->to('algerapudmakiputin@gmail.com'); 
+				$this->email->to($supplier->email); 
 				$this->email->subject('Re order stocks');
 				$this->email->message($html);
 				$this->email->set_mailtype('html');
 
-				if ($this->email->send()) {
-					echo 1;
-					return;
-				}
-
-				echo 0;
-				return;
+				if (!$this->email->send()) 
+					return 0;
 				 
 			}
 
 
 		}
 
-
-	  
-		
+		return 1;
 	}
 	public function index() {
 		$this->load->database();
