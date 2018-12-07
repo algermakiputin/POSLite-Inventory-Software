@@ -84,14 +84,9 @@ class ItemController extends CI_Controller {
 	public function new() {
 		$this->load->database();
 		$this->load->model('categories_model');
-		require 'vendor/autoload.php';
 		$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
-		$code = substr(uniqid(), 0, 7);
-		$codeExist = $this->db->where('barcode', $code)->get('items')->row();
-		while ($codeExist) {
-			$code = substr(uniqid(), 0, 7);
-		}
-		 
+		$code = $this->generateBarcode();
+
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'new_item';
@@ -99,6 +94,17 @@ class ItemController extends CI_Controller {
 		$data['barcode'] = $code;
 		$data['code'] = $generator->getBarcode($code, $generator::TYPE_CODE_128);
 		$this->load->view('master', $data);
+	}
+
+	public function generateBarcode() { 
+		
+		$code = substr(uniqid(), 0, 7);
+		$codeExist = $this->db->where('barcode', $code)->get('items')->row();
+		while ($codeExist) {
+			$code = substr(uniqid(), 0, 7);
+		}
+
+		return $code;
 	}
 
 	public function insert() {
@@ -121,8 +127,7 @@ class ItemController extends CI_Controller {
 		$this->HistoryModel->insert('Register new item: ' . $name);
 		$this->PriceModel->insert($price, $item_id);
 		$this->OrderingLevelModel->insert($item_id);
-		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>');
-		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added Successfully </div>');
+		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		redirect(base_url('items'));
 
 	}
