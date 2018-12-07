@@ -85,8 +85,9 @@
 						</div>
 					 
 						<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 15px 25px;">
-							<div>Total Due:<span id="amount-due" class="pull-right"></span></div>
+							<div>Sub Total:<span id="amount-due" class="pull-right"></span></div>
 							<div>Vat:<span id="amount-vat" class="pull-right"></span></div>
+							<div>Total Amount:<span id="amount-total" class="pull-right"></span></div>
 						</div>
 						<div class="col-md-12" style="padding: 15px 25px;">
 							<form id="process-form">

@@ -6,11 +6,11 @@ $(document).ready(function() {
 
 	var dHeight = parseInt($(document).height());
  	
-	dHeight = dHeight - 55;
+	dHeight = dHeight - 60;
 	$(".header .box").css('height', dHeight + 'px');
 
-	$("#cart-tbl").css('min-height', (dHeight - (75 + 231 + 25)) + 'px');
-	$("#cart-tbl").css('max-height', (dHeight - (75 + 150 + 231)) + 'px');
+	$("#cart-tbl").css('min-height', (dHeight - (90 + 231 + 25)) + 'px');
+	$("#cart-tbl").css('max-height', (dHeight - (90 + 150 + 231)) + 'px');
 	 
 	var item_table = $("#item-table").DataTable({
 		processing : true,
@@ -57,76 +57,86 @@ $(document).ready(function() {
 		var change = $("#change").val();
  		var vat = 0;
  		if (row) {
- 			$("#btn").button('loading');
- 			for (i = 0; i < row; i++) {
-				var r = $("#cart tbody tr").eq(i).find('td');
-				var quantity = r.eq(1).find('input').val();
-				var price = r.eq(2).text().substring(1);
-				var arr = {
-						id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
-						quantity : quantity, 
-						price : price,
-						name : r.eq(0).text(),
-						subtotal : parseFloat(price) * parseInt(quantity)
-					};
-				total_amount += parseFloat(price) * parseInt(quantity);
-				sales.push(arr);
-			}
-		 
-			// Receipt Items
-			$("#r-items-table tbody").empty();
-			$.each(sales, function(key, value) {
-		 
-				$("#r-items-table tbody").append(
-						'<tr>' +
-							'<td>'+value.id +'</td>' +
-							'<td>'+value.name +'</td>' +
-							'<td>'+currency+value.price +'</td>' +
-							'<td>'+value.quantity+'</td>' +
-							'<td>'+currency+value.subtotal+'</td>' +
 
-						'</tr>'
-					);
-			});
-
-			$.ajax({
-				type : 'POST',
-				data : {
-					sales : sales
-				},
-				url : base_url + 'SalesController/insert',
-				success : function(data) { 
-	 				transactionComplete = true;
-	 				var total = parseFloat(total_amount);
-	 				vat = parseFloat((total / 1.2) * 0.12);
-	 				$("#payment-modal").modal('toggle');
-					$("#loader").hide();
-					//Transaction Summary 
-					$("#summary-due").text(currency + total_amount);
-					$("#summary-payment").text( currency + payment);
-					$("#summary-change").text( currency + change);
-					$("#summary-vat").text( currency + vat.toFixed(2) );
-					$("#summary-total").text( currency + (vat + total).toFixed(2) )
-					//Fill In Receipt
-					$("#r-due").text(currency + total_amount);
-					$("#r-payment").text( currency + parseFloat(payment));
-					$("#r-change").text( currency + change);
-					$("#r-cashier").text($("#user").text());
-					$("#r-vat").text( currency + vat.toFixed(2) );
-					$("#r-total-amount").text( currency + (vat + total).toFixed(2) )
-					$("#r-date").text(moment().format('YY/MM/DD'));
-					$("#r-time").text(moment().format('h:mm:ss a'));
-					$("#r-id").text(data);
-					totalAmountDue = 0;  
-				 	$("#cart tbody").empty();
-				 	$("#payment").val('');
-				 	$("#change").val('');
-				 	$("#amount-due").text('');
-				 	$("#amount-vat").text('');
-				 	item_table.clear().draw();
-				 	$("#btn").button('reset');
+ 			var totalAmountDue = parseFloat($("#amount-total").text().substring(1));
+	 
+			if (parseFloat(payment) >= parseFloat(totalAmountDue)) {
+		 		$("#btn").button('loading');
+	 			for (i = 0; i < row; i++) {
+					var r = $("#cart tbody tr").eq(i).find('td');
+					var quantity = r.eq(1).find('input').val();
+					var price = r.eq(2).text().substring(1);
+					var arr = {
+							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
+							quantity : quantity, 
+							price : price,
+							name : r.eq(0).text(),
+							subtotal : parseFloat(price) * parseInt(quantity)
+						};
+					total_amount += parseFloat(price) * parseInt(quantity);
+					sales.push(arr);
 				}
-			})
+			 
+				// Receipt Items
+				$("#r-items-table tbody").empty();
+				$.each(sales, function(key, value) {
+			 
+					$("#r-items-table tbody").append(
+							'<tr>' +
+								'<td>'+value.id +'</td>' +
+								'<td>'+value.name +'</td>' +
+								'<td>'+currency+value.price +'</td>' +
+								'<td>'+value.quantity+'</td>' +
+								'<td>'+currency+value.subtotal+'</td>' +
+
+							'</tr>'
+						);
+				});
+
+				$.ajax({
+					type : 'POST',
+					data : {
+						sales : sales
+					},
+					url : base_url + 'SalesController/insert',
+					success : function(data) { 
+		 				transactionComplete = true;
+		 				var total = parseFloat(total_amount);
+		 				vat = parseFloat((total / 1.2) * 0.12);
+		 				$("#payment-modal").modal('toggle');
+						$("#loader").hide();
+						//Transaction Summary 
+						$("#summary-due").text(currency + total_amount);
+						$("#summary-payment").text( currency + payment);
+						$("#summary-change").text( currency + change);
+						$("#summary-vat").text( currency + vat.toFixed(2) );
+						$("#summary-total").text( currency + (vat + total).toFixed(2) )
+						//Fill In Receipt
+						$("#r-due").text(currency + total_amount);
+						$("#r-payment").text( currency + parseFloat(payment));
+						$("#r-change").text( currency + change);
+						$("#r-cashier").text($("#user").text());
+						$("#r-vat").text( currency + vat.toFixed(2) );
+						$("#r-total-amount").text( currency + (vat + total).toFixed(2) )
+						$("#r-date").text(moment().format('YY/MM/DD'));
+						$("#r-time").text(moment().format('h:mm:ss a'));
+						$("#r-id").text(data);
+						totalAmountDue = 0;  
+					 	$("#cart tbody").empty();
+					 	$("#payment").val('');
+					 	$("#change").val('');
+					 	$("#amount-due").text('');
+					 	$("#amount-vat").text('');
+					 	$("#amount-total").text('');
+					 	item_table.clear().draw();
+					 	$("#btn").button('reset');
+					}
+				})
+			
+			} else {
+				alert("Insufficient Amount");
+			}
+ 			
  		}else {
  			alert('Please add some items');
  		}
@@ -138,7 +148,7 @@ $(document).ready(function() {
 		var payment = parseInt($(this).val());
 		var cart = $("#cart tbody tr").length;
 		if (cart) {
-			var totalAmountDue = parseFloat($("#amount-due").text().substring(1));
+			var totalAmountDue = parseFloat($("#amount-total").text().substring(1));
 	 
 			if (payment >= totalAmountDue) {
 		 	
@@ -227,7 +237,8 @@ $(document).ready(function() {
 		}
 		vat = parseFloat((total / 1.2) * 0.12);
 		$("#amount-vat").text(currency + vat.toFixed(2));
-		$("#amount-due").text("₱" + (total + vat).toFixed(2));
+		$("#amount-due").text("₱" + (total).toFixed(2));
+		$("#amount-total").text("₱" + (total + vat).toFixed(2));
 	}
 
 	$("#complete-transaction").click(function() {
