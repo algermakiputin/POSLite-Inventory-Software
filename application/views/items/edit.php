@@ -25,7 +25,9 @@
 								<select name="category" class="form-control" required="required">
 									<option value="">Select Category</option>
 									<?php foreach ($categories as $cat): ?>
-										<option value="<?php echo $cat->id ?>" <?php echo $cat->id == $item->category_id ? "selected" : '' ?>> <?php echo $cat->name ?> </option>
+										<option value="<?php echo $cat->id ?>" <?php echo $cat->id == $item->category_id ? "selected" : '' ?>> 
+											<?php echo ucwords($cat->name) ?> 
+										</option>
 									<?php endforeach; ?>
 								</select>
 							</div>

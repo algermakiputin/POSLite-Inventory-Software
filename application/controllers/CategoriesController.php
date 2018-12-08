@@ -49,23 +49,23 @@ class CategoriesController Extends CI_Controller {
 	}
 
 	public function destroy($id) {
-		if(empty($id)) {
-			redirect(base_url('categories'));
-		}else {
-			$this->load->model('categories_model');
-			$this->load->model('HistoryModel');
-			$categoryName = $this->categories_model->getName($id);
-			$del = $this->categories_model->deleteCategory($id);
-			 
-			if ($del) {
-				$this->HistoryModel->insert('Deleted Category: ' . $categoryName);
-				$this->session->set_flashdata('successMessage','<br><div class="alert alert-success">Category Deleted</div>');
-				redirect(base_url('categories'));
-			}else {
+		if(empty($id))  
+			return redirect(base_url('categories'));
+		  
+		$this->load->model('categories_model');
+		$this->load->model('HistoryModel');
+		$categoryName = $this->categories_model->getName($id);
+		$del = $this->categories_model->deleteCategory($id);
+		 
+		if ($del) {
+			$this->HistoryModel->insert('Deleted Category: ' . $categoryName);
+			$this->session->set_flashdata('successMessage','<br><div class="alert alert-success">Category Deleted</div>');
+			return redirect(base_url('categories'));
+		} 
 
-				$this->session->set_flashdata('errorMessage', '<br><div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div>');
-			}
-		}
+		$this->session->set_flashdata('errorMessage', '<br><div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div>');
+		return redirect(base_url('categories')); 
+		 
 	}
 }
 ?>
