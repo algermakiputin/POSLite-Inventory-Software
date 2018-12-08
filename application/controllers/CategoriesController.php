@@ -29,35 +29,32 @@ class CategoriesController Extends CI_Controller {
 
 	public function insert() {
 		$category = $this->input->post('category');
-		$this->load->model('HistoryModel');
-		if (empty($category)) {
-			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Category Is Empty!</div>');
-			redirect(base_url('categories'));
-		}else if (strlen($category) > 50) {
-			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Category Must Not More Than 50 Characters!</div>');
-			redirect(base_url('categories'));
-		}else { 
-		 
+		$this->form_validation->set_rules('category', 'Category', 'required');
+
+		if ($this->form_validation->run()) {
+
+			$this->load->model('HistoryModel');
 			$this->HistoryModel->insert('Register Category: '. $category);
 		 	$this->db->insert('categories', [
 		 			'name' => $category,
 		 			'active' => 1
 		 		]);
-		 	redirect(base_url('categories'));
-
-		}
+		 	$this->session->set_flashdata('success','Category has been added successfully');
+		 	return redirect(base_url('categories'));
+		
+		} 	
+		 
 	}
 
 	public function destroy($id) {
 		if(empty($id))  
 			return redirect(base_url('categories'));
-		  
+		
 		$this->load->model('categories_model');
 		$this->load->model('HistoryModel');
 		$categoryName = $this->categories_model->getName($id);
-		$del = $this->categories_model->deleteCategory($id);
-		 
-		if ($del) {
+	 
+		if ( $this->db->where('id', $id)->delete('categories') ) {
 			$this->HistoryModel->insert('Deleted Category: ' . $categoryName);
 			$this->session->set_flashdata('successMessage','<br><div class="alert alert-success">Category Deleted</div>');
 			return redirect(base_url('categories'));

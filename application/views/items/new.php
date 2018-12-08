@@ -37,7 +37,7 @@
 								</select>
 							</div>
 							<div class="form-group">  
-								<input type="text" placeholder="Price" name="price" class="form-control">
+								<input type="text" required="required" placeholder="Price" name="price" class="form-control">
 							</div>
 							<div class="form-group">  
 								<select name="supplier" class="form-control" required="required"> 

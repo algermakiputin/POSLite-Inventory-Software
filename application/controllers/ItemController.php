@@ -42,32 +42,21 @@ class ItemController extends CI_Controller {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
-
-		if ($search != "") {
-			$items = $this->db->where('status', 1)
-							->like('name',$search, 'BOTH')
-							->get('items', $start, $limit)
-							->result();
-		}else 
-			$items = $this->db->where('status', 1)->get('items', $start, $limit)->result();
-		
-		
+		$items = $this->dataFilter($search, $start, $limit);
 		$datasets = [];
 
 		foreach ($items as $item) {
-
 			$quantity = (int)$orderingLevel->getQuantity($item->id)->quantity;
-			
-			if ($quantity) {
-				$datasets[] = [
+			if (!$quantity)
+				continue;
+
+			$datasets[] = [
 					$item->id,
 					ucwords($item->name),
 					ucfirst($item->description),
 					$quantity,
 					'₱'. $price->getPrice($item->id)
-				];
-			}else 
-				continue;
+				];			
 
 		}
 
@@ -79,6 +68,18 @@ class ItemController extends CI_Controller {
 				'recordsFiltered' => $count,
 				'data' => $datasets
 			]);
+	}
+
+	public function dataFilter($search, $start, $limit) {
+
+		if ($search != "") {
+			return $this->db->where('status', 1)
+						->like('name',$search, 'BOTH')
+						->get('items', $start, $limit)
+						->result();
+		} 
+		
+		return $this->db->where('status', 1)->get('items', $start, $limit)->result();
 	}
 
 	public function new() {
@@ -103,32 +104,46 @@ class ItemController extends CI_Controller {
 		while ($codeExist) {
 			$code = substr(uniqid(), 0, 7);
 		}
-
 		return $code;
 	}
 
 	public function insert() {
-
-		$this->load->model('PriceModel');
 		$name = $this->input->post('name');
 		$category = $this->input->post('category');
 		$description = $this->input->post('description');
 		$supplier_id = $this->input->post('supplier');
 		$barcode = $this->input->post('barcode');
-		$quantity = 0;
 		$price = $this->input->post('price');
-		$criticalLevel = $this->input->post('critical_level');
 
-		$this->load->model('ItemModel');
-		$this->load->model('OrderingLevelModel');
-		$this->load->model('HistoryModel');
-		$item_id = $this->ItemModel->insertItem($name, $category, $description,$supplier_id,$barcode,$criticalLevel);
+		$this->form_validation->set_rules('name', 'Item Name', 'required');
+		$this->form_validation->set_rules('category', 'Category', 'required');
+		$this->form_validation->set_rules('description', 'Description', 'required');
+		$this->form_validation->set_rules('barcode', 'Barcode', 'required');
+		$this->form_validation->set_rules('supplier', 'Supplier', 'required');
+		$this->form_validation->set_rules('price', 'Price', 'required');
+		$this->form_validation->set_rules('critical_level', 'Crital Level', 'required');
 		
-		$this->HistoryModel->insert('Register new item: ' . $name);
-		$this->PriceModel->insert($price, $item_id);
-		$this->OrderingLevelModel->insert($item_id);
-		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
-		redirect(base_url('items'));
+		if ( $this->form_validation->run() ) {
+			$this->load->model('PriceModel');
+			$quantity = 0;
+			
+			$criticalLevel = $this->input->post('critical_level');
+
+			$this->load->model('ItemModel');
+			$this->load->model('OrderingLevelModel');
+			$this->load->model('HistoryModel');
+			$item_id = $this->ItemModel->insertItem($name, $category, $description,$supplier_id,$barcode,$criticalLevel);
+			
+			$this->HistoryModel->insert('Register new item: ' . $name);
+			$this->PriceModel->insert($price, $item_id);
+			$this->OrderingLevelModel->insert($item_id);
+			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
+			return redirect(base_url('items'));
+		}
+
+		$this->session->set_flashdata('errorMessage', 
+				'<div class="alert alert-success">'.validation_errors().'</div>'); 
+		return redirect(base_url('items'));
 
 	}
 
@@ -136,16 +151,17 @@ class ItemController extends CI_Controller {
 
 		$this->load->model('ItemModel');
 		$this->load->model('HistoryModel');
-		$del_item = $this->ItemModel->deleteItem($id);
 		$item = $this->ItemModel->item_info($id);
-		if ($del_item) {
+		
+		if ($this->ItemModel->deleteItem($id)) {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Deleted</div>');
 			$this->HistoryModel->insert('Delete Item: ' . $item->name);
-			redirect(base_url('items'));
-		}else {
-			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong</div>');
-			redirect(base_url('items'));
+			return redirect(base_url('items'));
 		}
+		
+		$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong</div>');
+		return redirect(base_url('items'));
+		
 	}
 
 	public function stock_in($id) {
@@ -169,7 +185,6 @@ class ItemController extends CI_Controller {
 		$itemID = $this->input->post('item_id');
 		$itemName = $this->input->post('item_name');
 		$stocks = $this->input->post('stocks');
-
 
 		$this->form_validation->set_rules('stocks','Stocks','required|integer');
 

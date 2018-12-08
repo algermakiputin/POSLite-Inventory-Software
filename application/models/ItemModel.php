@@ -31,8 +31,10 @@ class ItemModel extends CI_Model {
 	}
 
 	public function deleteItem($id) {
- 
-		return $this->db->where('id', $id)->update('items', ['status' => 0]);
+ 		
+ 		$this->db->where('item_id', $id)->delete('ordering_level');
+		$this->db->where('item_id', $id)->delete('prices');
+		return $this->db->where('id', $id)->delete('items');
 		
 	}
 

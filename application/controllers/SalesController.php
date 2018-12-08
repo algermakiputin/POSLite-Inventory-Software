@@ -144,8 +144,8 @@ class SalesController extends CI_Controller {
 			    		$description = $this->getSalesDescription($sale->id);
 			    		
 					foreach ( $description as $descr) {
-						$price = $this->db->where('item_id', $descr->item_id)->get('prices')->row()->price;
-						$total += $price * $descr->quantity;
+	
+						$total += $descr->price * $descr->quantity;
 						
 					}	
 				}
@@ -191,19 +191,18 @@ class SalesController extends CI_Controller {
 	public function insert() {
 		$data = [];
 		$sales = $this->input->post('sales');
-		 
+			 
+		$this->db->trans_begin();
 		$this->db->insert('sales',[
 				'id' => null 
 			]);
-
 		$sales_id = $this->db->insert_id();
-			 
-		$this->db->trans_begin();
 		
 		foreach ($sales as $sale) {
 
 			$data[] = [
-				'item_id' => $sale['id'],
+				'item_name' => $sale['name'],
+				'price' => $sale['price'],
 				'quantity' => $sale['quantity'],
 				'sales_id' => $sales_id
 			];
@@ -231,27 +230,13 @@ class SalesController extends CI_Controller {
 
 	public function reports() {
 
-		$start = $this->input->post('start');
-		$limit = $this->input->post('length');
+		$this->start = $this->input->post('start');
+		$this->limit = $this->input->post('length');
 		$datasets = [];
 		$totalSales = 0;
 		$from = $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]');
-		
-		if ($from && $to) {
-			$sales = $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
-						->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
-						->order_by('id', 'DESC')
-						->get('sales', $start, $limit)->result();
-
-
-		}else {
-			$date = date('Y-m-d');
-			$sales = $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") =', $date)
-						->order_by('id', 'DESC')
-						->get('sales', $start, $limit)->result();
-		}
-
+		$sales = $this->filterReports($from, $to);
 		$count = count($sales);
 		
 		foreach ($sales as $sale) {
@@ -259,16 +244,15 @@ class SalesController extends CI_Controller {
 			$sub_total = 0;
 			
 			foreach ($sales_description as $desc) {
-				$item = $this->db->where('id', $desc->item_id)->get('items')->row();
-				$price = $this->db->where('item_id', $desc->item_id)->get('prices')->row()->price;
-				$sub_total += ((float)$desc->quantity * (float) $price);
+		 
+				$sub_total += ((float)$desc->quantity * (float) $desc->price);
 				$datasets[] = [ 
+					$desc->sales_id,
 					date('Y-m-d h:i:s a', strtotime($sale->date_time)), 
-					$item->barcode,
-					$item->name,
+					$desc->item_name,
 					$desc->quantity,
-					'₱' . (float)$price,
-					'₱'. (float)$desc->quantity * (float)$price
+					'₱' . (float)$desc->price,
+					'₱'. (float)$desc->quantity * (float)$desc->price
 				];
 			}
 
@@ -286,6 +270,23 @@ class SalesController extends CI_Controller {
 				'to' => $to
 			]);
 
+	}
+
+	public function filterReports($from, $to) {
+		if ($from && $to) {
+			return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+						->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+						->order_by('id', 'DESC')
+						->get('sales', $this->start, $this->limit)->result();
+
+
+		} 
+		
+		$date = date('Y-m-d');
+		return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") =', $date)
+					->order_by('id', 'DESC')
+					->get('sales', $this->start, $this->limit)->result();
+		 
 	}
 
 	public function details() {

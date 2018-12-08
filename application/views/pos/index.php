@@ -35,8 +35,7 @@
 			</div>
 		</div>
 	</div>
-		 
-
+		
 		<div class="">
 			<div class="">
 				<div class=" header">
@@ -206,7 +205,7 @@
 		</div>
 		<script type="text/javascript" src="<?php echo base_url('assets/jquery.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo base_url('assets/jquery-ui/jquery-ui.js') ?>"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> -->
 		<script type="text/javascript" src="<?php echo base_url('assets/vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
 		<script src="<?php echo base_url('assets/vendor/datatables/js/jquery.dataTables.min.js'); ?>"></script>
 		<script src="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.min.js'); ?>"></script>
