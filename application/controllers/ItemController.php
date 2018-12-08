@@ -175,22 +175,24 @@ class ItemController extends CI_Controller {
 
 		if($this->form_validation->run() === FALSE) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' .validation_errors() . '</div>');
-			redirect(base_url("items/stock-in/$itemID"));
-		}else {
-			$this->load->model('HistoryModel'); 
-			$this->load->model('OrderingLevelModel');
-
-			$update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
-			$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
-			if ($update) {
-				$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
-				redirect(base_url('items'));
-				
-			}else {
-				$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
-				redirect(base_url('items'));
-			}
+			return redirect(base_url("items/stock-in/$itemID"));
 		}
+
+		$this->load->model('HistoryModel'); 
+		$this->load->model('OrderingLevelModel');
+
+		$update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
+		$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
+		if ($update) {
+			$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
+			return redirect(base_url('items'));
+			
+		}
+
+		$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
+		return redirect(base_url('items'));
+		
+		 
 	}
 
 	public function edit($id) {
@@ -199,7 +201,7 @@ class ItemController extends CI_Controller {
 		$this->load->model('ItemModel');
 		$data['item'] = $this->db->where('id', $id)->get('items')->row();
 		$data['price'] = $this->PriceModel;
-		$data['categories'] = $this->db->get('categories')->result();
+		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
 
 		$data['content'] = "items/edit";
 		$this->load->view('master', $data);
@@ -216,41 +218,41 @@ class ItemController extends CI_Controller {
  
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opss Something Went Wrong Updating The Item. Please Try Again.</div>');
-				redirect(base_url('items'));
-		}else {
-			$this->load->model('ItemModel');
-			$this->load->model('PriceModel');
-			$this->load->model('HistoryModel');
-			$this->load->model('categories_model');
-	 		$updated_name = $this->input->post('name');
-			$updated_category = $this->input->post('category');
-			$updated_desc = strtolower($this->input->post('description'));
-			$updated_price = $this->input->post('price');
-			$id = $this->input->post('id');
-			$item = $this->db->where('id', $id)->get('items')->row();
-			$currentPrice = $this->PriceModel->getPrice($id);
+				return redirect(base_url('items'));
+		} 
 
-			$price_id = $this->PriceModel->update($updated_price, $id);
-			$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id);
+		$this->load->model('ItemModel');
+		$this->load->model('PriceModel');
+		$this->load->model('HistoryModel');
+		$this->load->model('categories_model');
+ 		$updated_name = $this->input->post('name');
+		$updated_category = $this->input->post('category');
+		$updated_desc = strtolower($this->input->post('description'));
+		$updated_price = $this->input->post('price');
+		$id = $this->input->post('id');
+		$item = $this->db->where('id', $id)->get('items')->row();
+		$currentPrice = $this->PriceModel->getPrice($id);
 
-			if ($update) {
-				
-				$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
+		$price_id = $this->PriceModel->update($updated_price, $id);
+		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id);
 
-				
-				if ($item->name != $updated_name)
-					$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
-				 
-				if ($item->description != $updated_desc)
-					$this->HistoryModel->insert('Change '.$item->name.' Description: ' . $item->description . ' to ' . $updated_desc);
-				if ($currentPrice != $updated_price) 
- 					$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
- 				if ($item->category_id != $updated_category) 
- 					$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
+		if ($update) {
+			
+			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
+			
+			if ($item->name != $updated_name)
+				$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
+			 
+			if ($item->description != $updated_desc)
+				$this->HistoryModel->insert('Change '.$item->name.' Description: ' . $item->description . ' to ' . $updated_desc);
+			if ($currentPrice != $updated_price) 
+					$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
+				if ($item->category_id != $updated_category) 
+					$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
 
-				redirect(base_url('items'));
-			}
+			return redirect(base_url('items'));
 		}
+	 
 		 		
 	}
 

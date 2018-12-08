@@ -25,7 +25,6 @@ class SalesController extends CI_Controller {
 
 	public function export() {
 		$dompdf = new Dompdf\Dompdf;
-
 		$html = "";
 		$from = $this->input->get('start');
 		$to = $this->input->get('end');
@@ -82,14 +81,9 @@ class SalesController extends CI_Controller {
 		$html .= "</table>";
 	 
 		$dompdf->loadHtml($html);
-
 		// (Optional) Setup the paper size and orientation
 		$dompdf->setPaper('A4', 'portraite');
-
-		 
 		$dompdf->render();
-
-		 
 		$dompdf->stream();
 	}
 
@@ -174,7 +168,6 @@ class SalesController extends CI_Controller {
 
 	public function hasSales($sales, $date) {
 		foreach ($sales as $sale) {
-
 			$saleDate = date('Y-m-d', strtotime($sale->date_time));
 			if (!$saleDate == $date)
 				continue;
