@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var currency = '₱';
+
 	$("form").parsley();
 	
 	$('.date-range-filter').datepicker();
@@ -237,7 +238,7 @@ $(document).ready(function() {
 		});
 	})
 
-	$("#btn-group-menu .btn").click(function() {
+		$("#btn-group-menu .btn").click(function() {
 		$('.btn-group .btn').removeClass('active');
 		$(this).addClass('active');
 		if ($(this).data('id') == "table") {
@@ -252,37 +253,41 @@ $(document).ready(function() {
 			$("#graph-menu").show();
 		}
 	})
-	var ctx = document.getElementById("myChart");
-	var myChart = new Chart(ctx, {
-	    type: 'line',
-	    data: {
-	        labels: labels,
-	        datasets: [{
-	            label: 'Sales for the Last 7 Days',
-	            data: totalSales,
-	            backgroundColor: [
-	                '#337ab7',
-	            ],
-	            strokeColor: [
-	                '#337ab7',
-	            ],
-	            borderWidth: 1
-	        }]
-	    },
-	    options: {
-	        scales: {
-	            yAxes: [{
-	                ticks: {
-	                    beginAtZero:true,
-	                    callback : function(value, index, values) {
-	                    	return '₱' + (value);
 
-	                    }
-	                }
-	            }]
-	        }
-	    }
-	}); 
+ 	if ($(location).attr('href').split('/')[4] == "sales") {
+ 		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+		    type: 'line',
+		    data: {
+		        labels: labels,
+		        datasets: [{
+		            label: 'Sales for the Last 7 Days',
+		            data: totalSales,
+		            backgroundColor: [
+		                '#337ab7',
+		            ],
+		            strokeColor: [
+		                '#337ab7',
+		            ],
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true,
+		                    callback : function(value, index, values) {
+		                    	return '₱' + (value);
+
+		                    }
+		                }
+		            }]
+		        }
+		    }
+		}); 
+ 	}
+	
 })
 
 
