@@ -65,9 +65,10 @@ else
 {
     //Live enviroment.
     define('SITE_LIVE', TRUE);
+    define('ENVIRONMENT', 'development');
 }
 
-define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
