@@ -1,4 +1,4 @@
-$(document).ready(function() {
+	$(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var totalAmountDue = 0;
 	var transactionComplete = false;
@@ -61,7 +61,7 @@ $(document).ready(function() {
  			var totalAmountDue = parseFloat($("#amount-total").text().substring(1));
 	 
 			if (parseFloat(payment) >= parseFloat(totalAmountDue)) {
-		 		$("#btn").button('loading');
+		 		
 	 			for (i = 0; i < row; i++) {
 					var r = $("#cart tbody tr").eq(i).find('td');
 					var quantity = r.eq(1).find('input').val();
@@ -99,6 +99,9 @@ $(document).ready(function() {
 						sales : sales
 					},
 					url : base_url + 'SalesController/insert',
+					beforeSend : function() {
+						$("#btn").button('loading');
+					},
 					success : function(data) { 
 		 				transactionComplete = true;
 		 				var total = parseFloat(total_amount);
@@ -118,8 +121,6 @@ $(document).ready(function() {
 						$("#r-cashier").text($("#user").text());
 						$("#r-vat").text( currency + vat.toFixed(2) );
 						$("#r-total-amount").text( currency + (vat + total).toFixed(2) )
-						$("#r-date").text(moment().format('YY/MM/DD'));
-						$("#r-time").text(moment().format('h:mm:ss a'));
 						$("#r-id").text(data);
 						totalAmountDue = 0;  
 					 	$("#cart tbody").empty();
@@ -130,16 +131,19 @@ $(document).ready(function() {
 					 	$("#amount-total").text('');
 					 	item_table.clear().draw();
 					 	$("#btn").button('reset');
+					 	
 					}
 				})
+				return;
+			}  
 			
-			} else {
-				alert("Insufficient Amount");
-			}
+			return alert("Insufficient Amount");
+		 
  			
- 		}else {
- 			alert('Please add some items');
  		}
+ 		
+ 		return alert('Please add some items');
+ 		
 		
 	})
 
@@ -172,23 +176,21 @@ $(document).ready(function() {
 		var quantity = parseInt($(this).val());
 		var currentStocks = $(this).data('stocks');
 
-		if (isNaN(quantity)) {
-			quantity = 1;
-			 
-		}else if (!isNaN(quantity) && quantity != 0) {
+		if (isNaN(quantity))
+			return quantity = 1;
+
+		if (!isNaN(quantity) && quantity != 0) {
 			if (quantity <= parseInt(currentStocks)) {
 				var row = $(this).parents("tr");
 				var priceCol = row.find('td').eq(2);
 				var price = priceCol.text().substring(1);
 				var subtotal = parseInt(quantity) * parseFloat(price);
-			
-				recount();
-			}else {
-				alert('Not enough stocks only ' + currentStocks + ' remaining.');
-
-				$(this).val(1);
-				recount();
+				return recount();
 			}
+			
+			alert('Not enough stocks only ' + currentStocks + ' remaining.');
+			$(this).val(1);
+			return recount();
 		}
 
 		
@@ -198,35 +200,13 @@ $(document).ready(function() {
 
 		if ($(this).val() == "" || isNaN(parseInt($(this).val()))) {
 			$(this).val(1);
-			recount();
+			return recount();
 		}
 	});
 	$("#cart").on('focus', '.quantity-box', function() {
-	 
 		$(this).val('');
 	})
 
-	$("#process").click(function() {
-		var row = $("#cart tbody tr").length;
-		
-		if (row) {
-			$("#payment").modal('toggle');
-			var totalAmountDue = $("#amount-due").text().substring(1);
-			$("#total-amount-due").val('₱' + totalAmountDue);
-			}else {
-				alert('Please add some items');
-			}
-
-	})
-
-	$("#reset").click(function() {
-		$("#cart tbody").empty();
-		$("#item").val('');
-		$("#item-name").text('');
-		$("#description").text('');
-		$("#price").text('');
-		$("#amount-due").text('');
-	})
 
 	function recount() {
 		var row = $("#cart tbody tr").length;
@@ -243,92 +223,6 @@ $(document).ready(function() {
 		$("#amount-total").text("₱" + (total + vat).toFixed(2));
 	}
 
-	$("#complete-transaction").click(function() {
-		var row = $("#cart tbody tr").length;
-		var sales = [];
-		var customer_id = $("#customer-id").val();
-		var total_amount = $("#total-amount-due").val();
-		var payment = $("#amount-pay").val();
-		var change = $("#change").val();
-
-		$("#loader").show();
-		for (i = 0; i < row; i++) {
-			var r = $("#cart tbody tr").eq(i).find('td');
-
-			var arr = [
-					r.eq(0).text(), 
-					r.eq(2).find('input').val(),
-					r.eq(3).text(),
-					r.eq(4).text().substring(1),
-					customer_id,
-					r.eq(1).text(),
-				];
-			sales.push(arr);
-		}
-		//Receipt Items
-		$("#r-items-table tbody").empty();
-		$.each(sales, function(key, value) {
-			$("#r-items-table tbody").append(
-					'<tr>' +
-						'<td>'+value[0]+'</td>' +
-						'<td>'+value[5]+'</td>' +
-						'<td>'+value[2]+'</td>' +
-						'<td>'+value[1]+'</td>' +
-						'<td>'+value[3]+'</td>' +
-
-					'</tr>'
-				);
-		});
-
-		$.ajax({
-			type : 'POST',
-			data : {
-				sales : sales
-			},
-			url : base_url + 'SalesController/insert',
-			success : function(data) { 
- 				transactionComplete = true;
-				$("#loader").hide();
-				//Transaction Summary
-				$("#summary-due").text(total_amount);
-				$("#summary-payment").text( currency + payment);
-				$("#summary-change").text( currency + change);
-				//Fill In Receipt
-				$("#r-due").text(total_amount);
-				$("#r-payment").text( currency + payment);
-				$("#r-change").text( currency + change);
-				$("#r-cashier").text($("#user").text());
-				$("#r-date").text(moment().format('YY/MM/DD'));
-				$("#r-time").text(moment().format('h:mm:ss a'));
-				$("#r-id").text(data);
-				totalAmountDue = 0; 
-				$("#payment .modal-dialog").addClass('modal-lg');
-				$("#panel1").hide();
-				$("#panel2").show();
-
-				$("#item").val('');
-				$("#item-name").text('');
-				$("#description").text('');
-				$("#price").text('');
-				$("#amount-vat").text('');
-			}
-		})
-	})
-
-	$('#payment').on('hidden.bs.modal', function () {
-	  	if (transactionComplete) {
-	  		$("#cart tbody").empty();
-	  		$("#panel1").show();
-	  		$("#panel2").hide();
-	  		$("#customer-id").val('');
-			$("#total-amount-due").val('');
-			$("#amount-pay").val('');
-			$("#change").val('');
-			$("#amount-due").text(''); 
-	  		transactionComplete = false;
-	  		$("#payment .modal-dialog").removeClass('modal-lg');
-	  	}
-	})
 
 	$("#print").click(function(){
 		$("#receipt").print({

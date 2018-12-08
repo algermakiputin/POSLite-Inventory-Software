@@ -7,10 +7,11 @@
 <!-- /.row -->
 <div class="row">
 	<div class="col-md-12">
-		<?php 
-		echo $this->session->flashdata('errorMessage');
-		echo $this->session->flashdata('successMessage');
-		?>
+		<?php if ( $this->session->flashdata('success') ) : ?>
+			<div class="alert alert-success">
+				<?php echo $this->session->flashdata('success'); ?>
+			</div>
+		<?php endif; ?>
 	</div>
 	<div class="col-lg-4">
 		<div class="panel panel-default">

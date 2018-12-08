@@ -54,8 +54,8 @@
 				<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 					<thead>
 						<tr>
+							<th>Sales ID</th>
 							<th>Date</th>
-							<th>Item Barcode</th>
 							<th>Item Name</th> 
 							<th>Quantity</th>
 							<th>Price</th>
