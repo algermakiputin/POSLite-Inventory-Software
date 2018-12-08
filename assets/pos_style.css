@@ -1,12 +1,11 @@
 
 body {
 	margin:0;
-	overflow: hidden;
-	padding: 0 30px;
+	overflow: hidden; 
 }
 
 .navbar {
-	/*background-color: #5a5a5a;*/
+	background-color: #5a5a5a;
 	background: #333;
 	border-radius: 0;
 	border: solid 0 1px 0 1px #000;
@@ -73,9 +72,9 @@ header {
 	text-align: center;
 	border-bottom: solid 1px #ddd;
 	/*background: #c2d69b;*/
-	/*background-color: #b1cfe9;
-	color: #ffffff;*/
-	color: #000000;
+	background-color: #b1cfe9;
+	color: #ffffff;
+	/*color: #000000;*/
 }
 
 .header .box {
