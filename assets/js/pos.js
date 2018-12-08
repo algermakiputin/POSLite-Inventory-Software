@@ -149,14 +149,16 @@ $(document).ready(function() {
 		var cart = $("#cart tbody tr").length;
 		if (cart) {
 			var totalAmountDue = parseFloat($("#amount-total").text().substring(1));
-	 
 			if (payment >= totalAmountDue) {
 		 	
-				$("#change").val((payment - totalAmountDue).toFixed(2));
+				return $("#change").val((payment - totalAmountDue).toFixed(2));
 			} 
-		}else {
-			$(this).val('');
-		}
+
+			return $("#change").val('Insufficient Amount');
+		} 
+		
+		return $(this).val('');
+		 
 
 	})
 
