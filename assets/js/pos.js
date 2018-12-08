@@ -9,8 +9,8 @@
 	dHeight = dHeight - 60;
 	$(".header .box").css('height', dHeight + 'px');
 
-	$("#cart-tbl").css('min-height', (dHeight - (90 + 231 + 25)) + 'px');
-	$("#cart-tbl").css('max-height', (dHeight - (90 + 150 + 231)) + 'px');
+	$("#cart-tbl").css('min-height', (dHeight - (95 + 231 + 25)) + 'px');
+	$("#cart-tbl").css('max-height', (dHeight - (95 + 150 + 231)) + 'px');
 	 
 	var item_table = $("#item-table").DataTable({
 		processing : true,
