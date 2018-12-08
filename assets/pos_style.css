@@ -6,7 +6,7 @@ body {
 
 .navbar {
 	background-color: #5a5a5a;
-	background: #333;
+/*	background: #333;*/
 	border-radius: 0;
 	border: solid 0 1px 0 1px #000;
 	color: #fff;
@@ -70,9 +70,9 @@ header {
 	margin: 0;
 	padding: 15px;
 	text-align: center;
-	border-bottom: solid 1px #777;
-	/*background: #c2d69b;*/
-	background-color: #b1cfe9;
+	border-bottom: solid 1px #000;
+	background: #c2d69b;
+	/*background-color: #b1cfe9;*/
 	color: #ffffff;
 	/*color: #000000;*/
 }
