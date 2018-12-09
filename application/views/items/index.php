@@ -30,6 +30,7 @@
              				<th>Category</th>
              				<th>Description</th>
              				<th>Price</th>
+                            <th>Supplier</th>
              				<th>Status</th>
              				<th>Action</th>
              			</tr>
@@ -48,6 +49,7 @@
                  				<td><?php echo $categoryModel->getName($item->category_id); ?></td>
                  				<td><?php echo $item->description ?></td>
                  				<td><?php echo '₱'. $item_price ?></td>
+                                <td><?php echo $item->supplier_name; ?></td>
                  				<td><?php echo $stocks <= 0 ? '<span >Stock Out</span>' : ($stocks <= $item->critical_level ? '<span>Needs restock</span>' : '<span>Available</span>') ?></td>
                  				<td>
                                     <div class="dropdown">

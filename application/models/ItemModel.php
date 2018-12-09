@@ -3,10 +3,12 @@
 class ItemModel extends CI_Model {
 
 	public function itemList () {
-		$this->load->database();
-		$sql = $this->db->order_by('id','DESC')->where('status', 1)->get('items');
-		$result = $sql->result();
-		return $result;
+		return $this->db->select("items.*, supplier.name as supplier_name")
+					->from("items")
+					->join("supplier", "supplier.id = items.supplier_id", "both")
+					->get()
+					->result();
+
 	}
 
 	public function insertItem($name, $category, $description,$supplier_id,$barcode, $criticalLevel) 
