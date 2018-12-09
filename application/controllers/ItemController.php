@@ -16,6 +16,7 @@ class ItemController extends CI_Controller {
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('categories_model');
+		
 		$data['items'] = $this->ItemModel->itemList();
 		$data['page'] = 'inventory';
 		$data['price'] = $this->PriceModel;
@@ -114,6 +115,8 @@ class ItemController extends CI_Controller {
 		$supplier_id = $this->input->post('supplier');
 		$barcode = $this->input->post('barcode');
 		$price = $this->input->post('price');
+		$retail_price = $this->input->post('retail_price');
+		$criticalLevel = $this->input->post('critical_level');
 
 		$this->form_validation->set_rules('name', 'Item Name', 'required');
 		$this->form_validation->set_rules('category', 'Category', 'required');
@@ -122,17 +125,28 @@ class ItemController extends CI_Controller {
 		$this->form_validation->set_rules('supplier', 'Supplier', 'required');
 		$this->form_validation->set_rules('price', 'Price', 'required');
 		$this->form_validation->set_rules('critical_level', 'Crital Level', 'required');
+		$this->form_validation->set_rules('retail_price', 'Retail Price', 'required');
 		
 		if ( $this->form_validation->run() ) {
 			$this->load->model('PriceModel');
 			$quantity = 0;
-			
-			$criticalLevel = $this->input->post('critical_level');
 
 			$this->load->model('ItemModel');
 			$this->load->model('OrderingLevelModel');
 			$this->load->model('HistoryModel');
-			$item_id = $this->ItemModel->insertItem($name, $category, $description,$supplier_id,$barcode,$criticalLevel);
+			$data = array(
+				'name' => $name,
+				'category_id' => $category,
+				'description' => $description, 
+				'supplier_id' => $supplier_id,
+				'status' => 1,
+				'barcode' => $barcode,
+				'critical_level' => $criticalLevel,
+				'retail_price' => $retail_price
+			);
+
+			$this->db->insert('items', $data);
+			$item_id = $this->db->insert_id();
 			
 			$this->HistoryModel->insert('Register new item: ' . $name);
 			$this->PriceModel->insert($price, $item_id);
@@ -230,6 +244,7 @@ class ItemController extends CI_Controller {
 		$this->form_validation->set_rules('description', 'Item Name', 'required');
 		$this->form_validation->set_rules('price', 'Item Name', 'required');
 		$this->form_validation->set_rules('id', 'required');
+		$this->form_validation->set_rules('retail_price', 'required');
  
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opss Something Went Wrong Updating The Item. Please Try Again.</div>');
@@ -244,12 +259,13 @@ class ItemController extends CI_Controller {
 		$updated_category = $this->input->post('category');
 		$updated_desc = strtolower($this->input->post('description'));
 		$updated_price = $this->input->post('price');
+		$retail_price = $this->input->post('retail_price');
 		$id = $this->input->post('id');
 		$item = $this->db->where('id', $id)->get('items')->row();
 		$currentPrice = $this->PriceModel->getPrice($id);
 
 		$price_id = $this->PriceModel->update($updated_price, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id);
+		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $retail_price);
 
 		if ($update) {
 			
