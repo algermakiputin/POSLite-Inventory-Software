@@ -16,8 +16,9 @@ class ItemController extends CI_Controller {
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('categories_model');
-		
+
 		$data['items'] = $this->ItemModel->itemList();
+		 
 		$data['page'] = 'inventory';
 		$data['price'] = $this->PriceModel;
 		$data['categoryModel'] = $this->categories_model;
