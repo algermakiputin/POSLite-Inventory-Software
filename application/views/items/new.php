@@ -15,15 +15,7 @@
 				<div class="row">
 					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate>
 						<div class="col-lg-6 col-md-offset-3">
-							<div class="form-group ">
-								<label>Bar Code: <?php echo $barcode ?></label>
-								<div>
-									<?php 
-									echo $code;
-									?>
-								</div>
-
-							</div>
+							
 							<div class="form-group"> 					 
 								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
 								<input type="hidden" required="required" name="barcode" value="<?php echo $barcode ?>">
@@ -38,6 +30,9 @@
 							</div>
 							<div class="form-group">  
 								<input type="text" required="required" placeholder="Price" name="price" class="form-control">
+							</div>
+							<div class="form-group">  
+								<input type="text" required="required" placeholder="Retail Price" name="retail_price" class="form-control">
 							</div>
 							<div class="form-group">  
 								<select name="supplier" class="form-control" required="required"> 
@@ -60,8 +55,16 @@
 							</div>
 							
 						</div>
-						<div class="col-md-4">
-							
+						<div class="col-md-3">
+							<div class="form-group ">
+								<label>Bar Code: <?php echo $barcode ?></label>
+								<div>
+									<?php 
+									echo $code;
+									?>
+								</div>
+
+							</div>
 							 
 						</div>
 					</form>

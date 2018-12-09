@@ -50,13 +50,14 @@ class ItemModel extends CI_Model {
 
 	}
 
-	public function update_item($id,$name,$category,$description,$price_id) {
+	public function update_item($id,$name,$category,$description,$price_id, $retail_price) {
 		$item = $this->db->where('id',$id)->get('items')->row();
 
 		$data = array(
 			'name' => $name,
 			'category_id' => $category,
 			'description' => $description, 
+			'retail_price' => $retail_price
 			);
 
 		return $this->db->where('id',$id)->update('items',$data);

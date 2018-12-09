@@ -1,11 +1,14 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Items</h1>
+		<h1 class="page-header">Items
+        <span class="pull-right">Inventory Total: ₱<span id="total"></span></span>
+        </h1> 
 	</div>
     <div class="col-md-12">
         <?php 
         echo $this->session->flashdata('errorMessage');
         echo $this->session->flashdata('successMessage');
+        $total = 0;
         ?>
     </div>
 </div>
@@ -33,19 +36,34 @@
              		</thead>
              		<tbody>
              			<?php foreach ($items as $key => $item): ?>
-             				<?php $stocks = $orderingLevel->getQuantity($item->id)->quantity; ?>
+             				<?php 
+                                $stocks = $orderingLevel->getQuantity($item->id)->quantity; 
+                                $item_price = $price->getPrice($item->id);
+                                $total += $item_price;
+                            ?>
                             <tr>
                  	 
                  				<td><?php echo $item->name ?></td>
                  				<td><?php echo $orderingLevel->getQuantity($item->id)->quantity ? $orderingLevel->getQuantity($item->id)->quantity : 'Out of stock'; ?></td>
                  				<td><?php echo $categoryModel->getName($item->category_id); ?></td>
                  				<td><?php echo $item->description ?></td>
-                 				<td><?php echo '₱'. $price->getPrice($item->id) ?></td>
+                 				<td><?php echo '₱'. $item_price ?></td>
                  				<td><?php echo $stocks <= 0 ? '<span >Stock Out</span>' : ($stocks <= $item->critical_level ? '<span>Needs restock</span>' : '<span>Available</span>') ?></td>
                  				<td>
-                                    <a href='<?php echo base_url("items/stock-in/$item->id") ?>'><button title='Stock In' class='btn btn-primary btn-sm'>Stock In</button></a> 
-    				                <a href='<?php echo base_url("ItemController/edit/$item->id") ?>'><button title='Edit' class='btn btn-info btn-sm'>Edit</button></a> 
-    				                <a href='<?php echo base_url("ItemController/delete/$item->id") ?>'><button title='Delete' class='btn btn-info btn-warning btn-sm'>Delete</button></a>
+                                    <div class="dropdown">
+                                        <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                            <a href='<?php echo base_url("items/stock-in/$item->id") ?>'>
+                                            <i class="fa fa-plus"></i> Stock In</a></li>
+                                            <li><a href='<?php echo base_url("ItemController/edit/$item->id") ?>'><i class="fa fa-edit"></i> Edit</a> </li>
+                                            <li>
+                                                <a href='<?php echo base_url("ItemController/delete/$item->id") ?>'>
+                                                <i class="fa fa-trash"></i>
+                                                Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                  			<?php endforeach; ?>
                             </tr>
@@ -59,4 +77,6 @@
  <!-- /.col-lg-12 -->
 </div>
  
- 
+ <script type="text/javascript">
+     document.querySelector("#total").innerText = "<?php echo number_format($total) ?>";
+ </script>
