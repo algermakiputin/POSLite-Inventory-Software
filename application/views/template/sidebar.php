@@ -37,6 +37,9 @@
                 <a href="<?php echo base_url('sales') ?>"><i class="glyphicon glyphicon glyphicon-list-alt fa-fw"></i> Sales</a>
             </li>
             <li>
+                <a href="<?php echo base_url('accounting') ?>"><i class="fa fa-book fa-fw"></i> Accounting</a>
+            </li>
+            <li>
                 <a href="<?php echo base_url('categories') ?>"><i class="glyphicon glyphicon glyphicon-tags fa-fw"></i> Categories</a>
             </li>
             <li>

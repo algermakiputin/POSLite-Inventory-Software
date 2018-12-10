@@ -179,6 +179,7 @@ $(document).ready(function() {
 		});
 	});
 	var itemTable = $("#item_tbl").DataTable({
+		sort : false,
 		initComplete : function() { 
 			$("#item_tbl_length").append("&nbsp;<select id='cat' class='form-control'>" +
 						'<option value="">Select Category</option>' +

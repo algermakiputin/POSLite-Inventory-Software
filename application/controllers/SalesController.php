@@ -19,7 +19,7 @@ class SalesController extends CI_Controller {
 	 	
 		$data['dataset'] = $this->graphSales();
 		$data['content'] = "sales/index";
-		$this->load->view('master',$data);;
+		$this->load->view('master',$data);
 		 
 	}
 
@@ -191,7 +191,7 @@ class SalesController extends CI_Controller {
 	public function insert() {
 		$data = [];
 		$sales = $this->input->post('sales');
-			 
+		$this->load->model("PriceModel");
 		$this->db->trans_begin();
 		$this->db->insert('sales',[
 				'id' => null 
@@ -202,9 +202,10 @@ class SalesController extends CI_Controller {
 
 			$data[] = [
 				'item_name' => $sale['name'],
-				'price' => $sale['price'],
+				'price' => $this->PriceModel->getPrice($sale['id']),
+				'retail_price' => $sale['price'],
 				'quantity' => $sale['quantity'],
-				'sales_id' => $sales_id
+				'sales_id' => $sales_id, 
 			];
 
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);

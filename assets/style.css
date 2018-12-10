@@ -3,6 +3,11 @@ body {
   margin-bottom: -20px;
   border-collapse: collapse;
 }
+
+table td {
+  vertical-align: middle !important;
+
+}
 #side-menu {
     min-height: 650px;
     margin:0;

@@ -54,6 +54,8 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['test'] = 'AuthController/test';
 
+$route['accounting'] = "AccountingController/index";
+
 $route['sales'] = 'SalesController/sales';
 $route['sales/report'] ='SalesController/reports';
 $route['sales/graph-filter'] = 'SalesController/graphFilter';
@@ -64,6 +66,7 @@ $route['items/insert'] = 'ItemController/insert';
 $route['items/stock-in/(:any)'] = 'ItemController/stock_in/$1';
 $route['items/update'] = "ItemController/update";
 $route['items/data'] = "ItemController/data";
+$route['items/edit/(:any)'] = "ItemController/edit/$1";
 
 $route['categories'] = 'CategoriesController/categories';
 $route['categories/insert'] = 'CategoriesController/insert';

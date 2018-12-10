@@ -26,7 +26,7 @@
 					<th>Address</th>
 					<th>City</th>
 					<th>State</th> 
-					<th>Mobile Number</th>
+					<th>Mobile</th>
 					<th width="10%">Action</th>
 				</tr>
 			</thead>

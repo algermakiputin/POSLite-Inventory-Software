@@ -1,14 +1,14 @@
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Items
-        <span class="pull-right">Inventory Total: ₱<span id="total"></span></span>
+        <span class="pull-right">Inventory Total: ₱<span id="total"><?php echo $total; ?></span></span>
         </h1> 
 	</div>
     <div class="col-md-12">
         <?php 
         echo $this->session->flashdata('errorMessage');
         echo $this->session->flashdata('successMessage');
-        $total = 0;
+    
         ?>
     </div>
 </div>
@@ -25,14 +25,14 @@
              		<thead>
              			<tr>
  
-             				<th>Item Name</th>
-             				<th>Quantity</th>
-             				<th>Category</th>
-             				<th>Description</th>
-             				<th>Price</th>
-                            <th>Supplier</th>
-             				<th>Status</th>
-             				<th>Action</th>
+             				<th width="20%">Item Name</th>
+             				<th width="10%">Quantity</th>
+             				<th width="13%">Category</th> 
+             				<th width="12%">Retail Price</th>
+                            <th width="12%">Capital</th>
+                            <th width="13%">Supplier</th>
+             				<th width="10%">Status</th>
+             				<th width="10%">Action</th>
              			</tr>
              		</thead>
              		<tbody>
@@ -40,15 +40,15 @@
              				<?php 
                                 $stocks = $orderingLevel->getQuantity($item->id)->quantity; 
                                 $item_price = $price->getPrice($item->id);
-                                $total += $item_price;
+                                $capital = $item_price * $stocks;
                             ?>
                             <tr>
                  	 
                  				<td><?php echo $item->name ?></td>
                  				<td><?php echo $orderingLevel->getQuantity($item->id)->quantity ? $orderingLevel->getQuantity($item->id)->quantity : 'Out of stock'; ?></td>
-                 				<td><?php echo $categoryModel->getName($item->category_id); ?></td>
-                 				<td><?php echo $item->description ?></td>
-                 				<td><?php echo '₱'. $item_price ?></td>
+                 				<td><?php echo $categoryModel->getName($item->category_id); ?></td> 
+                 				<td><?php echo '₱'. number_format($item->retail_price,2) ?></td>
+                                <td><?php echo '₱'. number_format($capital,2) ?></td>
                                 <td><?php echo $item->supplier_name; ?></td>
                  				<td><?php echo $stocks <= 0 ? '<span >Stock Out</span>' : ($stocks <= $item->critical_level ? '<span>Needs restock</span>' : '<span>Available</span>') ?></td>
                  				<td>
@@ -58,7 +58,7 @@
                                             <li>
                                             <a href='<?php echo base_url("items/stock-in/$item->id") ?>'>
                                             <i class="fa fa-plus"></i> Stock In</a></li>
-                                            <li><a href='<?php echo base_url("ItemController/edit/$item->id") ?>'><i class="fa fa-edit"></i> Edit</a> </li>
+                                            <li><a href='<?php echo base_url("items/edit/$item->id") ?>'><i class="fa fa-edit"></i> Edit</a> </li>
                                             <li>
                                                 <a href='<?php echo base_url("ItemController/delete/$item->id") ?>'>
                                                 <i class="fa fa-trash"></i>
@@ -79,6 +79,3 @@
  <!-- /.col-lg-12 -->
 </div>
  
- <script type="text/javascript">
-     document.querySelector("#total").innerText = "<?php echo number_format($total) ?>";
- </script>
