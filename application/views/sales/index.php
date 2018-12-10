@@ -50,7 +50,7 @@
 				<canvas id="myChart" width="400" height="150"></canvas>
 			</div>
 			<div class="col-lg-12" style="display: none;" id="table_view">
-				<h5><span id="range">Today Sales Report </span><span class="pull-right">Total Sales: <span id="total-sales"></span></span></h5>
+				<h5><span id="range">Today Sales Report </span><span class="pull-right">Sales Revenue: <span id="total-sales"></span></span></h5>
 				<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 					<thead>
 						<tr>

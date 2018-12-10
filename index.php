@@ -59,13 +59,13 @@ if ($_SERVER['SERVER_NAME'] == 'localhost')
 {
     //Development enviroment.
     define('SITE_LIVE', FALSE);
-    define('ENVIRONMENT', 'production');
+    define('ENVIRONMENT', 'development');
 }
 else
 {
     //Live enviroment.
     define('SITE_LIVE', TRUE);
-    define('ENVIRONMENT', 'development');
+    define('ENVIRONMENT', 'production');
 }
 
 

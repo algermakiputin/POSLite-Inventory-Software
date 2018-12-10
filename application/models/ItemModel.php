@@ -71,6 +71,16 @@ class ItemModel extends CI_Model {
 		return $items->result_array();
 	}
 
+	public function total() {
+
+		return $this->db->select("SUM(prices.price * ordering_level.quantity) as total")
+					->from("items")
+					->join("prices", "prices.item_id = items.id", "both")
+					->join("ordering_level", "ordering_level.item_id = items.id", "both")
+					->get()
+					->row();
+	}
+
 }
 
 ?>
