@@ -14,15 +14,15 @@
            <!-- /.panel-heading -->
         <div class="panel-body">
                 <div class="col-md-3">
-                    <div class="btn-group" id="btn-group-menu" role="group">
+                  <!--   <div class="btn-group" id="btn-group-menu" role="group">
                         <button type="button" class="btn btn-default active" data-id="graph">Graph</button>
                         <button type="button" class="btn btn-default" data-id="table">Inventory</button> 
-                    </div>
+                    </div> -->
                     
                 </div>
                 <div class="col-md-6" >
              
-                    <div class="input-group input-daterange">
+                    <div class="input-group input-daterange" id="accounting-filter">
 
                       <input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
 
@@ -39,8 +39,10 @@
                     <canvas id="profit" width="400" height="150"></canvas>
                 </div>
                 <div class="col-md-12" id="table_view">
-                    <h5>Inventory Summary <span class="pull-right">Total Profit: 500</span></h5>
-                    <table class="table table-bordered table-striped">
+                    <h5>Today's Report <span class="pull-right">Total Profit: ₱
+                    <span id="total-profit"><?php echo number_format($profit,2) ?></span>
+                    </span></h5>
+                    <table class="table table-bordered table-striped" id="profit_table">
                         <thead>
                             <tr>
                                 <th width="20%">Item Name</th>
@@ -51,7 +53,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if ($items): ?>
+                           <!--  <?php if ($items): ?>
                                 <?php foreach( $items as $item ):  ?>
                                     <tr>
                                         <td><?php echo $item['name'] ?></td>
@@ -61,7 +63,7 @@
                                         <td><?php echo '₱' . $item['profit'] ?></td>
                                     </tr>
                                 <?php endforeach; ?>
-                            <?php endif;?>
+                            <?php endif;?> -->
                         </tbody>
                     </table>
                 </div>

@@ -8,8 +8,21 @@ class AccountingController extends CI_Controller {
 		$data['graph'] = $this->graph();
 		$data['items'] = $this->table();
 		$data['content'] = "accounting/index";
+		$data['profit'] = $this->totalProfit;
 		$this->load->view('master',$data);;
 
+	}
+
+	public function data() {
+
+		$data = $this->table();
+		$count = count($data);
+		echo json_encode([
+				'draw' => $this->input->post('draw'),
+				'recordsTotal' => $count,
+				'recordsFiltered' => $count,
+				'data' => $data
+			]);
 	}
 
 	public function graph() {
@@ -43,34 +56,44 @@ class AccountingController extends CI_Controller {
 	 
 	}
 
-	public function table() {
+	public function table($from = null, $to = null) {
+		$this->totalProfit = 0;
+		$from = $from ? $from : date('Y-m-d');
+		$to = $to ? $to : date('Y-m-d');
+
 		$datasets = [];
 		$items = $this->db->get("items")->result();
 		foreach ($items as $item) {
 			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
-			$sales = $this->db->where('item_id', $item->id)->get("sales_description")->result();
+			$sales = $this->db->where('item_id', $item->id)
+							->where('DATE_FORMAT(created_at,"%Y-%m-%d") >=', $from)
+							->where('DATE_FORMAT(created_at,"%Y-%m-%d") <=', $to)
+							->get("sales_description")->result();
 			$stocks = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
 			$sold = 0;
-			$capital = 0;
+			$capital = (float)$stocks * (float) $price;
 			$revenue = 0;
 			$profit = 0;
 			$sub = 0;
+		 	
+
 			foreach ($sales as $sale) {
 				$sold++;
-				$capital += (float)$stocks * (float) $price;
+				 
 				$revenue += (float)$sale->quantity * (float) $item->retail_price;
 				$sub += (float) $sale->quantity * (float) $price;
+
 			}
 
 			$datasets[] = [
-					'name' => $item->name,
-					'sold' => $sold,
-					'capital' => number_format($capital,2),
-					'revenue' => number_format($revenue,2),
-					'profit' => number_format($revenue - $sub,2)
+					$item->name,
+					$sold,
+					number_format($capital,2),
+					number_format($revenue,2),
+					number_format($revenue - $sub,2)
 				];
 
-
+			$this->totalProfit += $revenue - $sub;
 		}
 
 		return ($datasets);

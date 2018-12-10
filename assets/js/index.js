@@ -3,6 +3,28 @@ $(document).ready(function() {
 	var currency = '₱';
 
 	$("form").parsley();
+
+	$("#accounting-filter input").change(function() {
+		var start = $("#min-date").val();
+		var end = $("#max-date").val();
+
+		if (start && $end) {
+			profit_table.columns(0).search(start);
+			profit_table.columns(1).search(end).draw();
+		}
+	})
+
+	var profit_table = $("#profit_table").DataTable({
+		searching : false,
+		bLengthChange : false,
+		ordering : false,
+		paging : false,
+		serverSide : true,
+		ajax : {
+			type : "POST",
+			url : base_url + "AccountingController/data"
+		}
+	});
 	
 	$('.date-range-filter').datepicker();
 	$("#history_table").DataTable({
