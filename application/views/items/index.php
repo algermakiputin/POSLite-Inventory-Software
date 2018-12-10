@@ -29,7 +29,7 @@
              				<th width="10%">Quantity</th>
              				<th width="13%">Category</th> 
              				<th width="12%">Retail Price</th>
-                            <th width="12%">Capital</th>
+                            <th width="12%">Total</th>
                             <th width="13%">Supplier</th>
              				<th width="10%">Status</th>
              				<th width="10%">Action</th>
