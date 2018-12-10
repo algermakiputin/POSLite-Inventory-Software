@@ -144,8 +144,9 @@ class SalesController extends CI_Controller {
 			    		$description = $this->getSalesDescription($sale->id);
 			    		
 					foreach ( $description as $descr) {
-	
-						$total += $descr->price * $descr->quantity;
+						$item = $this->db->where('id', $descr->item_id)->get('items')->row();
+		 				 
+						$total += $item->retail_price * $descr->quantity;
 						
 					}	
 				}
@@ -200,10 +201,8 @@ class SalesController extends CI_Controller {
 		
 		foreach ($sales as $sale) {
 
-			$data[] = [
-				'item_name' => $sale['name'],
-				'price' => $this->PriceModel->getPrice($sale['id']),
-				'retail_price' => $sale['price'],
+			$data[] = [ 
+				'item_id' => $sale['id'],
 				'quantity' => $sale['quantity'],
 				'sales_id' => $sales_id, 
 			];
@@ -245,15 +244,16 @@ class SalesController extends CI_Controller {
 			$sub_total = 0;
 			
 			foreach ($sales_description as $desc) {
-		 
-				$sub_total += ((float)$desc->quantity * (float) $desc->price);
+		 		$item = $this->db->where('id', $desc->item_id)->get('items')->row();
+		 		$price = $this->db->where('item_id', $desc->item_id)->get('prices')->row()->price;
+				$sub_total += ((float)$desc->quantity * (float) $item->retail_price);
 				$datasets[] = [ 
 					$desc->sales_id,
 					date('Y-m-d h:i:s a', strtotime($sale->date_time)), 
-					$desc->item_name,
+					$item->name,
 					$desc->quantity,
-					'₱' . (float)$desc->price,
-					'₱'. (float)$desc->quantity * (float)$desc->price
+					'₱' . (float)$item->retail_price,
+					'₱'. (float)$desc->quantity * (float)$item->retail_price
 				];
 			}
 

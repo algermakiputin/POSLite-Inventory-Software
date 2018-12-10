@@ -105,11 +105,42 @@
 		</div>
 	</div>
 </div>
-
+<script src="<?php echo base_url('assets/vendor/chart.min.js') ?>"></script>
 <script type="text/javascript">
 	var labels = JSON.parse('<?php echo json_encode(array_keys($dataset)) ?>');
  	var totalSales = JSON.parse('<?php echo json_encode(array_values($dataset)) ?>');
-  
+  	
+  	var ctx = document.getElementById("myChart");
+	var myChart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: labels,
+	        datasets: [{
+	            label: 'Sales for the Last 7 Days',
+	            data: totalSales,
+	            backgroundColor: [
+	                '#337ab7',
+	            ],
+	            strokeColor: [
+	                '#337ab7',
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true,
+	                    callback : function(value, index, values) {
+	                    	return '₱' + (value);
+
+	                    }
+	                }
+	            }]
+	        }
+	    }
+	}); 
 </script>
  
 

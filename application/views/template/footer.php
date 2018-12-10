@@ -10,6 +10,6 @@
 <script src="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.js'); ?>"></script>
-<script src="<?php echo base_url('assets/vendor/chart.min.js') ?>"></script>
+
 <script src="<?php echo base_url('assets/vendor/parsley.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/index.js') ?>"></script> 

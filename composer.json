@@ -16,7 +16,8 @@
 		"dompdf/dompdf": "^0.8.2",
 		"php-http/curl-client": "^1.7",
 		"guzzlehttp/psr7": "^1.5",
-		"phpmailer/phpmailer": "^6.0"
+		"phpmailer/phpmailer": "^6.0",
+		"nesbot/carbon": "^1.36"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
