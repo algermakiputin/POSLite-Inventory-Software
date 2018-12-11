@@ -9,8 +9,8 @@
 	dHeight = dHeight - 60;
 	$(".header .box").css('height', dHeight + 'px');
 
-	$("#cart-tbl").css('min-height', (dHeight - (95 + 231 + 25)) + 'px');
-	$("#cart-tbl").css('max-height', (dHeight - (95 + 150 + 231)) + 'px');
+	$("#cart-tbl").css('min-height', (dHeight - (113 + 231 + 25)) + 'px');
+	$("#cart-tbl").css('max-height', (dHeight - (113 + 150 + 231)) + 'px');
 	 
 	var item_table = $("#item-table").DataTable({
 		processing : true,
@@ -150,7 +150,12 @@
 	$("#discount-enter").click(function(e) {
 		e.preventDefault();
 		var discount = $("[name='discount']").val();
-		alert(discount);
+		if (parseInt(discount)) {
+			$("#discount-container").show();
+			$("#amount-discount").text(currency +discount);
+			recount();
+			$("#discount-modal").modal("toggle");
+		}
 	})
 
 	$("#payment").keyup(function() {
@@ -218,15 +223,22 @@
 		var row = $("#cart tbody tr").length;
 		var total = 0;
 		var vat = 0;
+		var discount = parseInt($("#amount-discount").text().substring(1));
+	 	
+	 	if (isNaN(discount))
+	 		discount = 0;
+
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
 			var quantity = parseInt(r.eq(1).find('input').val());
 			total += parseFloat(r.eq(2).text().substring(1)) * quantity;
 		}
 		vat = parseFloat((total / 1.2) * 0.12);
+
 		$("#amount-vat").text(currency + vat.toFixed(2));
 		$("#amount-due").text("₱" + (total).toFixed(2));
-		$("#amount-total").text("₱" + (total + vat).toFixed(2));
+		$("#amount-discount").text(currency + discount.toFixed(2));
+		$("#amount-total").text("₱" + (total + vat - discount).toFixed(2));
 	}
 
 
