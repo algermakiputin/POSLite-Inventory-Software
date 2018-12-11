@@ -8,6 +8,12 @@ table td {
   vertical-align: middle !important;
 
 }
+
+.dt-buttons {
+  width: 50%;
+  float: left;
+  padding: 3px 0;
+}
 #side-menu {
     min-height: 650px;
     margin:0;

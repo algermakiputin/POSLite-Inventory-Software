@@ -39,10 +39,10 @@
                     <canvas id="profit" width="400" height="150"></canvas>
                 </div>
                 <div class="col-md-12" id="table_view">
-                    <h5>Today's Report <span class="pull-right">Total Profit: ₱
+                    <h5><span id="range">Today's Report</span> <span class="pull-right">Total Profit: ₱
                     <span id="total-profit"><?php echo number_format($profit,2) ?></span>
                     </span></h5>
-                    <table class="table table-bordered table-striped" id="profit_table">
+                    <table width="100%" class="table table-bordered table-striped" id="profit_table">
                         <thead>
                             <tr>
                                 <th width="20%">Item Name</th>
