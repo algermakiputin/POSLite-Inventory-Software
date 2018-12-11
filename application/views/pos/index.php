@@ -86,7 +86,7 @@
 						<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 15px 25px;">
 							<div>Sub Total:<span id="amount-due" class="pull-right"></span></div>
 							<div>Vat:<span id="amount-vat" class="pull-right"></span></div>
-							<div id="discount-container">Discount:<span id="amount-discount" class="pull-right"></span></div>
+							<!-- <div id="discount-container">Discount:<span id="amount-discount" class="pull-right"></span></div> -->
 							<div style="">Total Amount:<span id="amount-total" class="pull-right"></span></div>
 							
 						</div>
@@ -95,13 +95,13 @@
 								<div class="form-group">
 									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off">
 								</div>
-								<div class="form-group row">
-									<div class="col-md-8">
-										<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
-									</div>
-									<div class="col-md-4">
+								<div class="form-group">
+									 
+									<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
+									 
+									<!-- <div class="col-md-4">
 										<button type="button" style="border-radius: 0" class="btn btn-success form-control" data-toggle="modal" data-target="#discount-modal">Discount</button>
-									</div>
+									</div> -->
 								</div>
 								<div class="form-group">
 									<input type="submit" class="btn btn-primary form-control" name="" value="Process" id="btn" >
@@ -178,7 +178,7 @@
 									<div class="text-right">
 										<div>Sub Total: <span id="r-due"></span></div>
 										<div>Vat: <span id="r-vat"></span></div>
-										<div>Discount: <span id="r-discount"></span></div>
+										<!-- <div>Discount: <span id="r-discount"></span></div> -->
 										<div>Total Amount <span id="r-total-amount"></span></div>
 										<div>Payment: <span id="r-payment"></span></div>
 										<div>Change: <span id="r-change"></span></div>
@@ -200,10 +200,10 @@
 										<td>Total Vat:</td>
 										<td id="summary-vat"></td>
 									</tr>
-									<tr>
+									<!-- <tr>
 										<td>Discount Amount:</td>
 										<td id="summary-discount"></td>
-									</tr>
+									</tr> -->
 									<tr>
 										<td>Total Amount:</td>
 										<td id="summary-total"></td>
