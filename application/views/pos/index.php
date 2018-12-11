@@ -178,6 +178,7 @@
 									<div class="text-right">
 										<div>Sub Total: <span id="r-due"></span></div>
 										<div>Vat: <span id="r-vat"></span></div>
+										<div>Discount: <span id="r-discount"></span></div>
 										<div>Total Amount <span id="r-total-amount"></span></div>
 										<div>Payment: <span id="r-payment"></span></div>
 										<div>Change: <span id="r-change"></span></div>
@@ -190,14 +191,18 @@
 						</div>
 						<div class="col-md-5">
 							<h4 class="">Transaction Summary</h3> 
-								<table class="table table-condensed ">
+								<table class="table">
 									<tr>
 										<td>Sub Total:</td>
 										<td id="summary-due"></td>
 									</tr>
 									<tr>
-										<td>Vat:</td>
+										<td>Total Vat:</td>
 										<td id="summary-vat"></td>
+									</tr>
+									<tr>
+										<td>Discount Amount:</td>
+										<td id="summary-discount"></td>
 									</tr>
 									<tr>
 										<td>Total Amount:</td>
