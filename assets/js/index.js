@@ -5,12 +5,12 @@ $(document).ready(function() {
 	$("form").parsley();
 
 	var profit_table = $("#profit_table").DataTable({
-		 
+		processing : true,
 		bLengthChange : false,
 		ordering : false,
 		paging : false,
 		serverSide : true,
-		dom : '',
+		dom : 'r',
 		ajax : {
 			type : "POST",
 			url : base_url + "AccountingController/data"
