@@ -14,14 +14,17 @@ class AccountingController extends CI_Controller {
 	}
 
 	public function data() {
+		$start = $this->input->post("columns[0][search][value]");
+		$end = $this->input->post("columns[1][search][value]");
 
-		$data = $this->table();
+		$data = $this->table($start, $end);
 		$count = count($data);
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
 				'recordsTotal' => $count,
 				'recordsFiltered' => $count,
-				'data' => $data
+				'data' => $data,
+				'profit' => $this->totalProfit
 			]);
 	}
 

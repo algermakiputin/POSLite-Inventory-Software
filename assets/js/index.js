@@ -4,25 +4,34 @@ $(document).ready(function() {
 
 	$("form").parsley();
 
-	$("#accounting-filter input").change(function() {
-		var start = $("#min-date").val();
-		var end = $("#max-date").val();
-
-		if (start && $end) {
-			profit_table.columns(0).search(start);
-			profit_table.columns(1).search(end).draw();
-		}
-	})
-
 	var profit_table = $("#profit_table").DataTable({
-		searching : false,
+		 
 		bLengthChange : false,
 		ordering : false,
 		paging : false,
 		serverSide : true,
+		dom : '',
 		ajax : {
 			type : "POST",
 			url : base_url + "AccountingController/data"
+		},
+		initComplete : function() {
+			$("#accounting-filter input").change(function() {
+				var start = $("#min-date").val();
+				var end = $("#max-date");
+
+				if (start && end.val()) {
+					end.datepicker('hide');
+					profit_table.columns(0).search(start);
+					profit_table.columns(1).search(end).draw();
+					$("#range").text('Date: ' + start + ' - ' + end.val());
+				}
+			})
+		},
+		drawCallback : function (setting) {
+			var data = setting.json;
+			$("#total-profit").text('₱' + data.profit);
+
 		}
 	});
 	
@@ -122,7 +131,7 @@ $(document).ready(function() {
 				if (from) {
 					sales_table.columns(0).search(from);
 					sales_table.columns(1).search(to).draw();
-					$("#range").text(to + ' - ' + from);
+					$("#range").text('Date: ' +to + ' - ' + from);
  					 
 				}else {
 					alert('Select from date');
@@ -202,6 +211,41 @@ $(document).ready(function() {
 	});
 	var itemTable = $("#item_tbl").DataTable({
 		sort : false,
+		dom : "lfrtBp",
+		buttons: [
+	        {
+                extend: 'copyHtml5',
+                filename : 'Inventory Report',
+                title : 'Inventory',
+                messageTop : 'Inventory Report',
+                className : "btn btn-default btn-sm",
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3,4,5,6 ]
+                },
+            },
+            {
+                extend: 'excelHtml5',
+                filename : 'Inventory',
+                title : 'Inventory Report',
+                messageTop : 'Inventory Report',
+                className : "btn btn-default btn-sm",
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3,4,5,6 ]
+                },
+            },
+            {
+                extend: 'pdfHtml5',
+                filename : 'Inventory Report',
+                title : 'Inventory',
+                messageTop : 'Inventory Report',
+                className : "btn btn-default btn-sm",
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3,4,5,6 ]
+                },
+
+            },
+	    ],
+
 		initComplete : function() { 
 			$("#item_tbl_length").append("&nbsp;<select id='cat' class='form-control'>" +
 						'<option value="">Select Category</option>' +
@@ -225,6 +269,7 @@ $(document).ready(function() {
 			})
 		}
 	});
+
 	$("#users_table").DataTable();
 	$("#categories_table").DataTable({
 		ordering : false
