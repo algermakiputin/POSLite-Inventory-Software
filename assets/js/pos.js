@@ -52,7 +52,7 @@
 		var sales = [];
 		var customer_id = $("#customer-id").val();
 		var total_amount = 0;
-
+		var discount = $("#amount-discount").text();
 		var payment = $("#payment").val();
 		var change = $("#change").val();
  		var vat = 0;
@@ -76,7 +76,8 @@
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);
 				}
-			 
+			 	
+			 	total_amount -= parseInt(discount.substring(1));
 				// Receipt Items
 				$("#r-items-table tbody").empty();
 				$.each(sales, function(key, value) {
@@ -114,9 +115,11 @@
 						$("#summary-change").text( currency + change);
 						$("#summary-vat").text( currency + vat.toFixed(2) );
 						$("#summary-total").text( currency + (vat + total).toFixed(2) )
+						$("#summary-discount").text(discount);
 						//Fill In Receipt
 						$("#r-due").text(currency + total_amount);
 						$("#r-payment").text( currency + parseFloat(payment));
+						$("#r-discount").text(discount);
 						$("#r-change").text( currency + change);
 						$("#r-cashier").text($("#user").text());
 						$("#r-vat").text( currency + vat.toFixed(2) );
