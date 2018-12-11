@@ -147,6 +147,12 @@
 		
 	})
 
+	$("#discount-enter").click(function(e) {
+		e.preventDefault();
+		var discount = $("[name='discount']").val();
+		alert(discount);
+	})
+
 	$("#payment").keyup(function() {
 
 		var payment = parseInt($(this).val());

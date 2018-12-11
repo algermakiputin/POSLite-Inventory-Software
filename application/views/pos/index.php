@@ -93,8 +93,13 @@
 								<div class="form-group">
 									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off">
 								</div>
-								<div class="form-group">
-									<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
+								<div class="form-group row">
+									<div class="col-md-8">
+										<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
+									</div>
+									<div class="col-md-4">
+										<button type="button" style="border-radius: 0" class="btn btn-success form-control" data-toggle="modal" data-target="#discount-modal">Discount</button>
+									</div>
 								</div>
 								<div class="form-group">
 									<input type="submit" class="btn btn-primary form-control" name="" value="Process" id="btn" >
@@ -108,7 +113,24 @@
 			</div>
 			<div class="clearfix"></div>
 		</div>
-
+		<div class="modal fade" id="discount-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-sm" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h3 class="modal-title" id="exampleModalLabel">Discount</h3> 
+		      </div>
+		      <div class="modal-body">
+		     	<div class="form-group">
+		     		<input type="text" class="form-control" name="discount" placeholder="Enter Discount Amount">
+		     	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+		        <button id="discount-enter" type="button" class="btn btn-primary" >Enter Discount</button> 
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<div class="modal" tabindex="-1" role="dialog" id="payment-modal">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
