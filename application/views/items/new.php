@@ -13,7 +13,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate>
+					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate id="item-form">
 						<div class="col-lg-6 col-md-offset-3">
 							
 							<div class="form-group"> 					 
@@ -44,9 +44,7 @@
 									<?php endforeach; ?>
 								</select>
 							</div>
-							<div class="form-group">  
-								<input type="number" placeholder="Critical Level" name="critical_level" class="form-control" required="required">
-							</div>
+
 							<div class="form-group">  
 								<textarea rows="5" placeholder="Description" class="form-control" name="description" required="required"></textarea>
 							</div>

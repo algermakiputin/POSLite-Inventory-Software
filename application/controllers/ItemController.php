@@ -117,16 +117,14 @@ class ItemController extends CI_Controller {
 		$supplier_id = $this->input->post('supplier');
 		$barcode = $this->input->post('barcode');
 		$price = $this->input->post('price');
-		$retail_price = $this->input->post('retail_price');
-		$criticalLevel = $this->input->post('critical_level');
+		$retail_price = $this->input->post('retail_price'); 
 
 		$this->form_validation->set_rules('name', 'Item Name', 'required');
 		$this->form_validation->set_rules('category', 'Category', 'required');
 		$this->form_validation->set_rules('description', 'Description', 'required');
 		$this->form_validation->set_rules('barcode', 'Barcode', 'required');
 		$this->form_validation->set_rules('supplier', 'Supplier', 'required');
-		$this->form_validation->set_rules('price', 'Price', 'required');
-		$this->form_validation->set_rules('critical_level', 'Crital Level', 'required');
+		$this->form_validation->set_rules('price', 'Price', 'required'); 
 		$this->form_validation->set_rules('retail_price', 'Retail Price', 'required');
 		
 		if ( $this->form_validation->run() ) {
@@ -142,8 +140,7 @@ class ItemController extends CI_Controller {
 				'description' => $description, 
 				'supplier_id' => $supplier_id,
 				'status' => 1,
-				'barcode' => $barcode,
-				'critical_level' => $criticalLevel,
+				'barcode' => $barcode, 
 				'retail_price' => $retail_price
 			);
 
