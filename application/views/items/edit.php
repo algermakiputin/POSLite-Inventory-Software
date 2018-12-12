@@ -14,7 +14,7 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-lg-6 col-md-offset-3">
-						<form method="POST" action="<?php echo base_url('items/update') ?>">
+						<form method="POST" action="<?php echo base_url('items/update') ?>" id="item-form">
 							<div class="form-group"> 
 								<label>Item Name:</label>
 								<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control" required="required">

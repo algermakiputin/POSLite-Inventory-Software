@@ -50,7 +50,7 @@
                  				<td><?php echo '₱'. number_format($item->retail_price,2) ?></td>
                                 <td><?php echo '₱'. number_format($capital,2) ?></td>
                                 <td><?php echo $item->supplier_name; ?></td>
-                 				<td><?php echo $stocks <= 0 ? '<span >Stock Out</span>' : ($stocks <= $item->critical_level ? '<span>Needs restock</span>' : '<span>Available</span>') ?></td>
+                 				<td><?php echo $stocks <= 0 ? '<span >Stock Out</span>' : ($stocks <= 10 ? '<span>Needs restock</span>' : '<span>Available</span>') ?></td>
                  				<td>
                                     <div class="dropdown">
                                         <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>

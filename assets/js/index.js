@@ -3,6 +3,16 @@ $(document).ready(function() {
 	var currency = '₱';
 
 	$("form").parsley();
+	
+	$("#item-form").submit(function(e) {
+		var price = $("[name='price']").val();
+		var retail = $("[name='retail_price']").val();
+
+		if (parseInt(price) > retail) {
+			alert("Retail price must be greather or equal to price");
+			e.preventDefault();
+		}
+	})
 
 	var profit_table = $("#profit_table").DataTable({
 		processing : true,
