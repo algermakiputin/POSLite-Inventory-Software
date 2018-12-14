@@ -116,16 +116,14 @@ class ItemController extends CI_Controller {
 		$description = $this->input->post('description');
 		$supplier_id = $this->input->post('supplier');
 		$barcode = $this->input->post('barcode');
-		$price = $this->input->post('price');
-		$retail_price = $this->input->post('retail_price'); 
+		$price = $this->input->post('price'); 
 
 		$this->form_validation->set_rules('name', 'Item Name', 'required');
 		$this->form_validation->set_rules('category', 'Category', 'required');
 		$this->form_validation->set_rules('description', 'Description', 'required');
 		$this->form_validation->set_rules('barcode', 'Barcode', 'required');
 		$this->form_validation->set_rules('supplier', 'Supplier', 'required');
-		$this->form_validation->set_rules('price', 'Price', 'required'); 
-		$this->form_validation->set_rules('retail_price', 'Retail Price', 'required');
+		$this->form_validation->set_rules('price', 'Price', 'required');  
 		
 		if ( $this->form_validation->run() ) {
 			$this->load->model('PriceModel');
@@ -140,8 +138,7 @@ class ItemController extends CI_Controller {
 				'description' => $description, 
 				'supplier_id' => $supplier_id,
 				'status' => 1,
-				'barcode' => $barcode, 
-				'retail_price' => $retail_price
+				'barcode' => $barcode,  
 			);
 
 			$this->db->insert('items', $data);
@@ -242,8 +239,7 @@ class ItemController extends CI_Controller {
 		$this->form_validation->set_rules('category', 'Item Name', 'required');
 		$this->form_validation->set_rules('description', 'Item Name', 'required');
 		$this->form_validation->set_rules('price', 'Item Name', 'required');
-		$this->form_validation->set_rules('id', 'required');
-		$this->form_validation->set_rules('retail_price', 'required');
+		$this->form_validation->set_rules('id', 'required'); 
  
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opss Something Went Wrong Updating The Item. Please Try Again.</div>');
@@ -257,14 +253,13 @@ class ItemController extends CI_Controller {
  		$updated_name = $this->input->post('name');
 		$updated_category = $this->input->post('category');
 		$updated_desc = strtolower($this->input->post('description'));
-		$updated_price = $this->input->post('price');
-		$retail_price = $this->input->post('retail_price');
+		$updated_price = $this->input->post('price'); 
 		$id = $this->input->post('id');
 		$item = $this->db->where('id', $id)->get('items')->row();
 		$currentPrice = $this->PriceModel->getPrice($id);
 
 		$price_id = $this->PriceModel->update($updated_price, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $retail_price);
+		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id);
 
 		if ($update) {
 			

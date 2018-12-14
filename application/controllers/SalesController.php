@@ -205,6 +205,7 @@ class SalesController extends CI_Controller {
 				'item_id' => $sale['id'],
 				'quantity' => $sale['quantity'],
 				'sales_id' => $sales_id, 
+				'price' => $sale['price']
 			];
 
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
@@ -238,28 +239,47 @@ class SalesController extends CI_Controller {
 		$to = $this->input->post('columns[1][search][value]');
 		$sales = $this->filterReports($from, $to);
 		$count = count($sales);
-		
+		$totalExpenses = 0;
+
+		$expenses = $this->db->select("SUM(cost) as total")
+							->where('date >=', $from)
+							->where('date <=', $to)
+							->get('expenses')
+							->row();
+
+		if ($expenses) {
+			$totalExpenses = $expenses->total;
+		}
+
 		foreach ($sales as $sale) {
 			$sales_description = $this->db->where('sales_id', $sale->id)->get('sales_description')->result();
 			$sub_total = 0;
 			
 			foreach ($sales_description as $desc) {
 		 		$item = $this->db->where('id', $desc->item_id)->get('items')->row();
-		 		$price = $this->db->where('item_id', $desc->item_id)->get('prices')->row()->price;
-				$sub_total += ((float)$desc->quantity * (float) $item->retail_price);
+		 		 
+				$sub_total += ((float)$desc->quantity * (float) $desc->price);
 				$datasets[] = [ 
 					$desc->sales_id,
 					date('Y-m-d h:i:s a', strtotime($sale->date_time)), 
 					$item->name,
 					$desc->quantity,
-					'₱' . (float)$item->retail_price,
-					'₱'. (float)$desc->quantity * (float)$item->retail_price
+					'₱' . (float)$desc->price,
+					'₱'. (float)$desc->quantity * (float)$desc->price
 				];
 			}
 
 			$totalSales += $sub_total;
 			
 		}
+
+		$profit = 0;
+		$lost = 0;
+		if ($this->input->post('draw') != 1)
+			$profit = $totalSales - $totalExpenses;
+
+		if ($profit < 0)
+			$lost = abs($profit);
 
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
@@ -268,7 +288,9 @@ class SalesController extends CI_Controller {
 				'data' => $datasets,
 				'total_sales' => number_format($totalSales),
 				'from' => $from,
-				'to' => $to
+				'to' => $to,
+				'profit' => number_format($profit ? $profit : 0),
+				'lost' => number_format($lost)
 			]);
 
 	}

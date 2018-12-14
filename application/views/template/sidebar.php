@@ -34,11 +34,22 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="<?php echo base_url('sales') ?>"><i class="glyphicon glyphicon glyphicon-list-alt fa-fw"></i> Sales</a>
+                <a href="#"><i class="fa fa-money fa-fw"></i> Expenses<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('expenses') ?>"><i class="fa fa-circle-o"></i> View Expenses</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('expenses/new') ?>"><i class="fa fa-circle-o"></i> New Expenses</a>
+                    </li>
+                     
+                </ul>
+                <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="<?php echo base_url('accounting') ?>"><i class="fa fa-book fa-fw"></i> Accounting</a>
+                <a href="<?php echo base_url('sales') ?>"><i class="glyphicon glyphicon glyphicon-list-alt fa-fw"></i> Sales</a>
             </li>
+            
             <li>
                 <a href="<?php echo base_url('categories') ?>"><i class="glyphicon glyphicon glyphicon-tags fa-fw"></i> Categories</a>
             </li>

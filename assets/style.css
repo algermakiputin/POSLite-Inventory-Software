@@ -9,6 +9,19 @@ table td {
 
 }
 
+.sale-widget {
+  padding: 10px;
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  margin: 15px 0;
+
+}
+
+#table_view {
+  margin-top: 15px;
+}
+
+
 .dt-buttons {
   width: 50%;
   float: left;

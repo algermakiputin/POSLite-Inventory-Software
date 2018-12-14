@@ -28,7 +28,7 @@
              				<th width="20%">Item Name</th>
              				<th width="10%">Quantity</th>
              				<th width="13%">Category</th> 
-             				<th width="12%">Retail Price</th>
+             				<th width="12%">Price</th>
                             <th width="12%">Total</th>
                             <th width="13%">Supplier</th>
              				<th width="10%">Status</th>
@@ -47,7 +47,7 @@
                  				<td><?php echo $item->name ?></td>
                  				<td><?php echo $orderingLevel->getQuantity($item->id)->quantity ? $orderingLevel->getQuantity($item->id)->quantity : 'Out of stock'; ?></td>
                  				<td><?php echo $categoryModel->getName($item->category_id); ?></td> 
-                 				<td><?php echo '₱'. number_format($item->retail_price,2) ?></td>
+                 				<td><?php echo '₱'. number_format($item_price,2) ?></td>
                                 <td><?php echo '₱'. number_format($capital,2) ?></td>
                                 <td><?php echo $item->supplier_name; ?></td>
                  				<td><?php echo $stocks <= 0 ? '<span >Stock Out</span>' : ($stocks <= 10 ? '<span>Needs restock</span>' : '<span>Available</span>') ?></td>
