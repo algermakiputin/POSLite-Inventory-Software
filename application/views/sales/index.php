@@ -37,8 +37,8 @@
          <div class="panel-body">
          		<div class="col-md-3">
          			<div class="btn-group" id="btn-group-menu" role="group" aria-label="Basic example">
-				  <button type="button" class="btn btn-default active" data-id="graph">Graphical View</button>
-				  <button type="button" class="btn btn-default" data-id="table">Table View</button> 
+				  <button type="button" class="btn btn-default " data-id="graph">Graphical View</button>
+				  <button type="button" class="btn btn-default active" data-id="table">Table View</button> 
 				</div>
          		</div>
          		<div  id="table-menu">
