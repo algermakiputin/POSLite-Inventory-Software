@@ -146,7 +146,7 @@ class SalesController extends CI_Controller {
 					foreach ( $description as $descr) {
 						$item = $this->db->where('id', $descr->item_id)->get('items')->row();
 		 				 
-						$total += $item->retail_price * $descr->quantity;
+						$total += $descr->price * $descr->quantity;
 						
 					}	
 				}
