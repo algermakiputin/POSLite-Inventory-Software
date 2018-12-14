@@ -278,8 +278,10 @@ class SalesController extends CI_Controller {
 		if ($this->input->post('draw') != 1)
 			$profit = $totalSales - $totalExpenses;
 
-		if ($profit < 0)
+		if ($profit < 0) {
 			$lost = abs($profit);
+			$profit = 0;
+		}
 
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
