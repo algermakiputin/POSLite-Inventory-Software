@@ -53,12 +53,13 @@ class ItemController extends CI_Controller {
 			if (!$quantity)
 				continue;
 
+			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price
 			$datasets[] = [
 					$item->id,
 					ucwords($item->name),
 					ucfirst($item->description),
 					$quantity,
-					'₱'. number_format($item->retail_price,2)
+					'₱'. number_format($price,2)
 				];			
 
 		}
