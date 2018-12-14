@@ -151,7 +151,8 @@ $(document).ready(function() {
 		drawCallback : function (setting) {
 			var data = setting.json;
 			$("#total-sales").text('₱' + data.total_sales);
-
+			$("#total-profit").text('₱' + data.profit);
+			$("#total-lost").text('₱' + data.lost);
 		}
 	});
 
@@ -324,7 +325,9 @@ $(document).ready(function() {
 			$("#graph").hide();
 			$("#table-menu").show();
 			$("#graph-menu").hide();
+			$("#widgets").show();
 		}else {
+			$("#widgets").hide();
 			$("#table_view").hide();
 			$("#graph").show();
 			$("#table-menu").hide();

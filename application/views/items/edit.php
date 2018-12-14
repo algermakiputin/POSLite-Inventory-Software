@@ -34,11 +34,7 @@
 							<div class="form-group"> 
 								<label>Price:</label>
 								<input value="<?php echo $price->getPrice($item->id); ?>" type="text" name="price" class="form-control" required="required">
-							</div>
-							<div class="form-group"> 
-								<label>Retail Price:</label>
-								<input value="<?php echo $item->retail_price; ?>" type="text" name="retail_price" class="form-control" required="required">
-							</div>
+							</div> 
 
 							<div class="form-group"> 
 								<label>Description:</label>

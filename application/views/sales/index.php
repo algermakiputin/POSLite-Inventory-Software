@@ -5,6 +5,28 @@
 <!-- /.col-lg-12 -->
 </div>
 <div class="row">
+ 
+		<div id="widgets">
+			<div class="col-md-4">
+			<div class="sale-widget text-center">
+				Total Sales<br>
+				<b><span id="total-sales"></span></b>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="sale-widget text-center">
+				Profit<br>
+				<b><span id="total-profit"></span></b>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="sale-widget text-center">
+				Loss<br>
+				<b><span id="total-lost"></span></b>
+			</div>
+		</div>
+		</div>
+	 
  <div class="col-lg-12">
      <div class="panel panel-default">
         	<div class="panel-heading">
@@ -19,7 +41,7 @@
 				  <button type="button" class="btn btn-default" data-id="table">Table View</button> 
 				</div>
          		</div>
-         		<div style="display: none;" id="table-menu">
+         		<div  id="table-menu">
          		<div class="col-md-6" >
 			 
 			    <div class="input-group input-daterange">
@@ -33,24 +55,24 @@
 			    </div>
 
 
+				</div>
+				<div class="col-md-3 text-right">
+					 <button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
+				</div>
 			</div>
-			<div class="col-md-3 text-right">
-				 <button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
-			</div>
-			</div>
-			<div class="col-md-6" id="graph-menu">
+			<div class="col-md-6" id="graph-menu" style="display: none;">
 			    	<div class="btn-group pull-center" role="group" aria-label="Basic example">
 				  <button type="button" class="btn btn-default active" data-id="week">Last 7 Days</button>
 				  <button type="button" class="btn btn-default" data-id="month">Monthly</button> 
 				  <button type="button" class="btn btn-default" data-id="year">Yearly</button>
 				</div>
 			</div>
-			<div class="col-lg-12" id="graph">
+			<div class="col-lg-12" id="graph" style="display: none;">
 
 				<canvas id="myChart" width="400" height="150"></canvas>
 			</div>
-			<div class="col-lg-12" style="display: none;" id="table_view">
-				<h5><span id="range">Today Sales Report </span><span class="pull-right">Sales Revenue: <span id="total-sales"></span></span></h5>
+			<div class="col-lg-12"  id="table_view">
+				
 				<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 					<thead>
 						<tr>

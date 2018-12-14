@@ -30,10 +30,7 @@
 							</div>
 							<div class="form-group">  
 								<input type="text" required="required" placeholder="Price" name="price" class="form-control">
-							</div>
-							<div class="form-group">  
-								<input type="text" required="required" placeholder="Retail Price" name="retail_price" class="form-control">
-							</div>
+							</div> 
 							<div class="form-group">  
 								<select name="supplier" class="form-control" required="required"> 
 									<option value="">Select Supplier</option>
