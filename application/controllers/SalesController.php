@@ -205,7 +205,8 @@ class SalesController extends CI_Controller {
 				'item_id' => $sale['id'],
 				'quantity' => $sale['quantity'],
 				'sales_id' => $sales_id, 
-				'price' => $sale['price']
+				'price' => $sale['price'],
+				'name' => $sale['name']
 			];
 
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
@@ -262,7 +263,7 @@ class SalesController extends CI_Controller {
 				$datasets[] = [ 
 					$desc->sales_id,
 					date('Y-m-d h:i:s a', strtotime($sale->date_time)), 
-					$item->name,
+					$desc->name,
 					$desc->quantity,
 					'₱' . (float)$desc->price,
 					'₱'. (float)$desc->quantity * (float)$desc->price
