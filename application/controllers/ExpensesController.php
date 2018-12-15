@@ -14,13 +14,21 @@ class ExpensesController extends CI_Controller {
 	}
 
 	public function insert() {
-		$this->db->insert('expenses', [
+		$this->form_validation->set_rules("type",'Name' , "required|max_length[100]");
+		$this->form_validation->set_rules("cost", 'Cost' ,"required|max_length[50000]");
+		$this->form_validation->set_rules("date", 'Date' ,"required|max_length[100]");
+
+		if ($this->form_validation->run()) {
+			$this->db->insert('expenses', [
 				'type' => $this->input->post('type'),
 				'cost' => $this->input->post('cost'),
 				'date' => $this->input->post('date'),
 
 			]);
-		$this->session->set_flashdata("success", "Expense added successfully");
+			$this->session->set_flashdata("success", "Expense added successfully");
+		}
+
+	 
 		return redirect(base_url("expenses/new"));
 	}
 }

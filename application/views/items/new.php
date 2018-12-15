@@ -29,7 +29,7 @@
 								</select>
 							</div>
 							<div class="form-group">  
-								<input type="text" required="required" placeholder="Price" name="price" class="form-control">
+								<input type="text" required="required" placeholder="Price" name="price" class="form-control" max="500000">
 							</div> 
 							<div class="form-group">  
 								<select name="supplier" class="form-control" required="required"> 
@@ -43,7 +43,7 @@
 							</div>
 
 							<div class="form-group">  
-								<textarea rows="5" placeholder="Description" class="form-control" name="description" required="required"></textarea>
+								<textarea rows="5" maxlength="150" placeholder="Description" class="form-control" name="description" required="required"></textarea>
 							</div>
 							<div class="form-group"> 
 								<button class="btn btn-primary">Register Item</button>
