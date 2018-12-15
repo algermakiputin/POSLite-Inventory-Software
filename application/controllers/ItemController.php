@@ -120,12 +120,12 @@ class ItemController extends CI_Controller {
 		$barcode = $this->input->post('barcode');
 		$price = $this->input->post('price'); 
 
-		$this->form_validation->set_rules('name', 'Item Name', 'required');
+		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
 		$this->form_validation->set_rules('category', 'Category', 'required');
-		$this->form_validation->set_rules('description', 'Description', 'required');
+		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]');
 		$this->form_validation->set_rules('barcode', 'Barcode', 'required');
 		$this->form_validation->set_rules('supplier', 'Supplier', 'required');
-		$this->form_validation->set_rules('price', 'Price', 'required');  
+		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]');  
 		
 		if ( $this->form_validation->run() ) {
 			$this->load->model('PriceModel');
@@ -237,10 +237,10 @@ class ItemController extends CI_Controller {
 
 	public function update() {
 		$this->load->model('ItemModel');
-		$this->form_validation->set_rules('name', 'Item Name', 'required');
-		$this->form_validation->set_rules('category', 'Item Name', 'required');
-		$this->form_validation->set_rules('description', 'Item Name', 'required');
-		$this->form_validation->set_rules('price', 'Item Name', 'required');
+		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
+		$this->form_validation->set_rules('category', 'Item Name', 'required|max_length[150]');
+		$this->form_validation->set_rules('description', 'Item Name', 'required|max_length[150]');
+		$this->form_validation->set_rules('price', 'Item Name', 'required|max_length[500000]');
 		$this->form_validation->set_rules('id', 'required'); 
  
 		if ($this->form_validation->run() == FALSE) {

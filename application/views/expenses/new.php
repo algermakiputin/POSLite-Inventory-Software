@@ -22,6 +22,9 @@
 						 			</div>
 						 		</div>
 						 	<?php endif; ?>
+						 	<div class="form-group">
+						 		<?php echo validation_errors(); ?>
+						 	</div>
 							<div class="form-group">  
 								<input type="text" required="required" placeholder="Expense Name" name="type" class="form-control">
 							</div>
