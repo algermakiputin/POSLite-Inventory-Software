@@ -93,7 +93,7 @@
 						<div class="col-md-12" style="padding: 15px 25px;">
 							<form id="process-form">
 								<div class="form-group">
-									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off">
+									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off" max="500000" maxlength="6">
 								</div>
 								<div class="form-group">
 									 
