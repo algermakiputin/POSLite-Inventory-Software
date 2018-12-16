@@ -15,7 +15,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
-							<button class="btn btn-primary" id="mail" disabled="disabled"> data-loading-text="<i class='fa fa-spinner fa-spin'></i> Sending Email...">Mail Order</button>
+							<button class="btn btn-primary" id="mail" disabled="disabled" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Sending Email...">Mail Order</button>
 						</div>
 
 						<div id="message" style="display: none;">
