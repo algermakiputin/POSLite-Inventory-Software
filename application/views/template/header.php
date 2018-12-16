@@ -11,5 +11,11 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/vendor/morrisjs/morris.css") ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style.css')?>"> 
 <meta name="base_url" content="<?php echo base_url() ?>">
- 
+ <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-4118987136087583",
+          enable_page_level_ads: true
+     });
+</script>
 
