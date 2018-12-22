@@ -1,4 +1,4 @@
-<?php header('Access-Control-Allow-Origin: *'); ?>g
+<?php header('Access-Control-Allow-Origin: *'); ?>
 <title><?php if(isset($page_name)) {echo $page_name .' - Sales And Inventory System';} else echo "Dashboard - POS SALES AND INVENTORY SYSTEM" ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css'); ?>">
