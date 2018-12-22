@@ -11,5 +11,5 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/vendor/morrisjs/morris.css") ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style.css')?>"> 
 <meta name="base_url" content="<?php echo base_url() ?>">
- 
+<?php header('Access-Control-Allow-Origin: *'); ?>
 
