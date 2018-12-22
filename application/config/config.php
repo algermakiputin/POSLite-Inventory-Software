@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if (SITE_LIVE)
 	$config['base_url'] = getenv('base_url');
 else 
-	$config['base_url'] = 'http://localhost/sais';
+	$config['base_url'] = 'http://localhost/poslite';
 
 
 /*
