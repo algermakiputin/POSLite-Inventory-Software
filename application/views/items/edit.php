@@ -33,7 +33,7 @@
 							</div>
 							<div class="form-group"> 
 								<label>Price:</label>
-								<input value="<?php echo $price->getPrice($item->id); ?>" type="text" name="price" class="form-control" required="required">
+								<input value="<?php echo $price->getPrice($item->id); ?>" max="500000" type="text" name="price" class="form-control" required="required">
 							</div> 
 
 							<div class="form-group"> 
