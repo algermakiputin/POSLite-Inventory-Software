@@ -34,12 +34,15 @@
 									<input type="hidden" name="item_name" value="<?php echo $item->name ?>">
 								</div>
 								<div class="col-md-8">
-									<div class="input-group">
-								      <input type="text" autocomplete="off" name="stocks" class="form-control" placeholder="Stocks to add">
-								      <span class="input-group-btn">
+
+                                        <div class="input-group">
+                                            <input type="number" max="500" data-parsley-errors-container="#error<?php echo $item->id ?>" required autocomplete="off" name="stocks" class="form-control" placeholder="Stocks to add">
+                                            <span class="input-group-btn">
 								        <button class="btn btn-default" type="submit">Stock-in</button>
 								      </span>
-								    </div>
+                                        </div>
+
+                                    <div id="error<?php echo $item->id ?>"></div>
 								</div>
 								 
 							</div>
