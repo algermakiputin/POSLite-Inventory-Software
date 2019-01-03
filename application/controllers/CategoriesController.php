@@ -53,15 +53,17 @@ class CategoriesController Extends CI_Controller {
 		$this->load->model('categories_model');
 		$this->load->model('HistoryModel');
 		$categoryName = $this->categories_model->getName($id);
+		$this->db->where('id', $id)->delete('categories');
+ 
+	 	if ($this->db->error()['code'] === 1451) {
+	 		$this->session->set_flashdata('error', 'Cannot Delete Category Associated with Item');
+			return redirect(base_url('categories')); 
+	 	}
 	 
-		if ( $this->db->where('id', $id)->delete('categories') ) {
-			$this->HistoryModel->insert('Deleted Category: ' . $categoryName);
-			$this->session->set_flashdata('successMessage','<br><div class="alert alert-success">Category Deleted</div>');
+	 	$this->HistoryModel->insert('Deleted Category: ' . $categoryName);
+			$this->session->set_flashdata('success','Category deleted successfully');
 			return redirect(base_url('categories'));
-		} 
-
-		$this->session->set_flashdata('errorMessage', '<br><div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div>');
-		return redirect(base_url('categories')); 
+		
 		 
 	}
 }

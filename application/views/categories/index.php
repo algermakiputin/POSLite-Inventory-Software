@@ -12,6 +12,11 @@
 				<?php echo $this->session->flashdata('success'); ?>
 			</div>
 		<?php endif; ?>
+		<?php if ( $this->session->flashdata('error') ) : ?>
+			<div class="alert alert-danger">
+				<?php echo $this->session->flashdata('error'); ?>
+			</div>
+		<?php endif; ?>
 	</div>
 	<div class="col-lg-4">
 		<div class="panel panel-default">
