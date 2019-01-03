@@ -10,13 +10,7 @@
     <meta name="author" content="">
 
     <?php $this->load->view('template/header') ?>  
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-4118987136087583",
-          enable_page_level_ads: true
-     });
-</script>
+
 </head>
 
 <body>

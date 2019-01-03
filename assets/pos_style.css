@@ -5,7 +5,7 @@ body {
 }
 
 .navbar {
-	background-color: #5a5a5a;
+	background-color: #333;
 /*	background: #333;*/
 	border-radius: 0;
 	border: solid 0 1px 0 1px #000;
@@ -70,8 +70,7 @@ header {
 	margin: 0;
 	padding: 15px;
 	text-align: center;
-	border-bottom: solid 1px #000;
-	background: #c2d69b;
+	background: #337ab7;
 	/*background-color: #b1cfe9;*/
 	color: #ffffff;
 	/*color: #000000;*/
@@ -124,7 +123,8 @@ header {
 }
 
 #cart-tbl {
-
+    background-color: #f4f4f5;
+    border: solid 1px #eee;
 	overflow: auto;
 }
 

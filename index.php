@@ -53,20 +53,25 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	
+
+
+
 	
 if ($_SERVER['SERVER_NAME'] == 'localhost')
 {
     //Development enviroment.
     define('SITE_LIVE', FALSE);
     define('ENVIRONMENT', 'development');
+
 }
 else
 {
     //Live enviroment.
     define('SITE_LIVE', TRUE);
     define('ENVIRONMENT', 'production');
+
 }
+
 
 
 /*
@@ -327,3 +332,7 @@ switch (ENVIRONMENT)
  * And away we go...
  */
 require_once BASEPATH.'core/CodeIgniter.php';
+
+
+
+ 

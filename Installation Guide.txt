@@ -1,15 +1,18 @@
-After downloading the sais.zip and database.sql
-Requirement is PHP7 and up just download the latest version of xampp
+The software requires Xampp
+Step 1  - Go to https://www.apachefriends.org/download.html
+	- Download the version 7.3.0 / PHP 7.3.0 for your operating system
+	- After download run and follow the installation. Install xampp in Local Disk C to avoid problems
 
-1. Go to localhost/phpmyadmin
+After downloading xampp, Open xampp control panel and run Apache and Mysql.
+
+Step 2 
+Download the Source code
+extract poslite.zip and copy the extracted folder to C:/xampp/htdocs
+
+1. Go to http://localhost/phpmyadmin
 2. Click import
 3 select file "database sql" and scroll down to bottom click "GO"
-
-4.  extract saiz.zip
-5 open extracted saiz.zip folder
-6 inside sais folder there is another sais folder, copy that folder
-7 and paste to htdocs
-8 To open the application type in your browser URL: localhost/sais
+4 To open the application type in your browser URL: localhost/poslite
 
 username: admin
 pass: admin123
