@@ -266,7 +266,10 @@ class SalesController extends CI_Controller {
 					$desc->name,
 					$desc->quantity,
 					'₱' . (float)$desc->price,
-					'₱'. (float)$desc->quantity * (float)$desc->price
+					'₱'. (float)$desc->quantity * (float)$desc->price,
+					'
+						<a class="btn btn-danger" href="'.base_url('SalesController/destroy/') . $desc->id.'">Delete</a>
+					'
 				];
 			}
 
@@ -296,6 +299,12 @@ class SalesController extends CI_Controller {
 				'lost' => number_format($lost)
 			]);
 
+	}
+
+	public function destroy($id) {
+		$this->db->where('id', $id)->delete('sales_description');
+		$this->session->set_flashdata('success', 'Sale deleted successfully');
+		return redirect('sales');
 	}
 
 	public function filterReports($from, $to) {

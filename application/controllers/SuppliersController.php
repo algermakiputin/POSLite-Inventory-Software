@@ -97,10 +97,12 @@ class SuppliersController Extends CI_Controller {
 	}
 
 	public function destroy($id) {
-		$this->load->database();
+	 
 
-		$this->db->delete('supplier', array('id' => $id));
+		if (!$this->db->delete('supplier', array('id' => $id))) {
+			$this->session->set_flashdata('error', 'Cannot delete this supplier. There is an item associated with this supplier.');
+		}
 
-		return redirect($_SERVER['HTTP_REFERER']);
+		return redirect('suppliers');
 	}
 }
