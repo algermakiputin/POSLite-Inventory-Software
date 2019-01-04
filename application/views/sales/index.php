@@ -79,16 +79,21 @@
 					<canvas id="myChart" width="400" height="150"></canvas>
 				</div>
 				<div class="col-lg-12"  id="table_view">
-
+					<?php if ($this->session->flashdata('success')): ?>
+                <div class="alert alert-success">
+                    <?php echo $this->session->flashdata('success') ?>
+                </div>
+            <?php endif; ?>
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
 								<th width="15%">Sales ID</th>
 								<th width="20%">Date</th>
 								<th width="20%">Item Name</th> 
-								<th width="15%">Quantity</th>
-								<th width="15%">Price</th>
+								<th width="10%">Quantity</th>
+								<th width="10%">Price</th>
 								<th width="15%">Total</th>  
+								<th width="10%">Action</th>
 							</tr>
 						</thead>
 						<tbody></tbody>

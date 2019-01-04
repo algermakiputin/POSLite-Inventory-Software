@@ -5,6 +5,12 @@ class ExpensesController extends CI_Controller {
 	public function index() {
 		$data['expenses'] = $this->db->get('expenses')->result();
 		$data['content'] = "expenses/index";
+		$data['allTime'] = $this->db->select_sum('cost')->from('expenses')->get()->result();
+ 		$data['thisMonth'] = $this->db->select_sum('cost')->from('expenses')
+ 								->where('DATE_FORMAT(date, "%m") =', Date('m'))
+ 								->get()->result();
+
+ 
 		$this->load->view('master', $data);
 	}
 
@@ -31,4 +37,10 @@ class ExpensesController extends CI_Controller {
 	 
 		return redirect(base_url("expenses/new"));
 	}
-}
+
+	public function destroy($id) {
+		$this->db->where('id', $id)->delete('expenses');
+		$this->session->set_flashdata('success', 'Deleted successfully');
+		return redirect('expenses');
+	}
+} 

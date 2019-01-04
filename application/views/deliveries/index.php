@@ -11,8 +11,12 @@
              Deliveries List
          </div>
          <!-- /.panel-heading -->
-         <div class="panel-body">
- 
+         <div class="panel-body">	
+ 			<?php if ($this->session->flashdata('success')): ?>
+ 				<div class="alert alert-success">
+ 					<?php echo $this->session->flashdata('success') ?>
+ 				</div>
+ 			<?php endif; ?>
              <table class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
 				<thead>
 					<tr>
@@ -21,6 +25,7 @@
 						<th>Price</th> 
 						<th>Quantity</th>
 						<th>Expirty Date</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 
@@ -32,6 +37,7 @@
 							<td><?php echo $data['price'] ?></td>
 							<td><?php echo $data['quantity'] ?></td>
 							<td><?php echo $data['expiry_date'] ?></td>
+							<td><a href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $data['id'] ?>" class="btn btn-danger btn-sm">Delete</a></td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>

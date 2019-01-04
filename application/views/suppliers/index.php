@@ -17,6 +17,11 @@
           <p><?php echo $this->session->flashdata('success') ?></p>
         </div>
       <?php endif; ?> 
+      <?php if ($this->session->flashdata('error')): ?>
+                <div class="alert alert-danger">
+                    <?php echo $this->session->flashdata('error') ?>
+                </div>
+            <?php endif; ?>
       <table class="table table-striped table-bordered table-hover table-responsive" id="supplier_table">
         <thead>
           <tr>

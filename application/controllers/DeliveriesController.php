@@ -63,7 +63,8 @@ class DeliveriesController extends CI_Controller
 					'item' => $delivery_details->item,
 					'price' => $delivery_details->price,
 					'quantity' => $delivery_details->quantity,
-					'expiry_date' => $delivery->expiry_date
+					'expiry_date' => $delivery->expiry_date,
+					'id' => $delivery->id
 				];
 			}
 		}
@@ -75,6 +76,13 @@ class DeliveriesController extends CI_Controller
  		$data['content'] = "deliveries/index";
 		$this->load->view('master',$data);
 		 
+	}
+
+	public function destroy($id) {
+		$this->db->where('delivery_id', $id)->delete('delivery_details');
+		$this->db->where('id', $id)->delete('delivery');
+		$this->session->set_flashdata('success', "Delivery deleted successfully");
+		return redirect(deliveries);
 	}
 
 }
