@@ -302,7 +302,11 @@ class SalesController extends CI_Controller {
 	}
 
 	public function destroy($id) {
+		$sale = $this->db->where('id', $id)->get('sales_description')->row();
+		$this->load->model('OrderingLevelModel');
+		$this->OrderingLevelModel->addStocks($sale->item_id, $sale->quantity);
 		$this->db->where('id', $id)->delete('sales_description');
+
 		$this->session->set_flashdata('success', 'Sale deleted successfully');
 		return redirect('sales');
 	}
