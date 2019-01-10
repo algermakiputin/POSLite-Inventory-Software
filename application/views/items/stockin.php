@@ -22,7 +22,7 @@
 						<div class="form-group"> 
 							<label>Add Stocks:</label>
 							<input type="hidden" name="item_name" value="<?php echo $item_info->name; ?>">
-							<input type="number" max="500" name="stocks" class="form-control" placeholder="Enter Stocks To Add">
+							<input type="number" <?php if(SITE_LIVE) echo 'max="500"'; ?> name="stocks" class="form-control" placeholder="Enter Stocks To Add">
 							<input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
 						</div>
 						 
