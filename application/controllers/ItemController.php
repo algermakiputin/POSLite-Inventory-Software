@@ -198,12 +198,14 @@ class ItemController extends CI_Controller {
 		$itemName = $this->input->post('item_name');
 		$stocks = $this->input->post('stocks');
 
-		$this->form_validation->set_rules('stocks','Stocks','required|integer|max_length[500]');
+		if (SITE_LIVE) {
+			$this->form_validation->set_rules('stocks','Stocks','required|integer|max_length[500]');
 
 
-		if($this->form_validation->run() === FALSE) {
-			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' .validation_errors() . '</div>');
-			return redirect(base_url("items/stock-in/$itemID"));
+			if($this->form_validation->run() === FALSE) {
+				$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' .validation_errors() . '</div>');
+				return redirect(base_url("items/stock-in/$itemID"));
+			}
 		}
 
 		$this->load->model('HistoryModel'); 
