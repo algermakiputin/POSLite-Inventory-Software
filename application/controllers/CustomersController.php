@@ -65,7 +65,7 @@ class CustomersController Extends CI_Controller {
 					'expiry_date' => Carbon\Carbon::parse($this->input->post('date_open'))->addYears(3)->format('Y-m-d')
 				]);
 		$this->db->where('id', $this->input->post('customer_id'))->update('customers',['membership' => 1]);
-		$this->session->set_flashdata('success', 'Membership open Successfully');
+		$this->session->set_flashdata('success', 'Membership opened Successfully');
 		return redirect('customers');
 	}
 
@@ -77,7 +77,7 @@ class CustomersController Extends CI_Controller {
 						'date_open' => date('Y-m-d')
 
 					]);
-			$this->session->set_flashdata('success','Membership renew Successfully');
+			$this->session->set_flashdata('success','Membership renewed Successfully');
 			return redirect('customers');
 		}
 	}
