@@ -126,7 +126,8 @@ class ItemController extends CI_Controller {
 		$this->form_validation->set_rules('barcode', 'Barcode', 'required');
 		$this->form_validation->set_rules('supplier', 'Supplier', 'required');
 		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]');  
-		
+		$this->form_validation->set_rules('reorder', 'Price', 'required|max_length[500000]');
+
 		if ( $this->form_validation->run() ) {
 			$this->load->model('PriceModel');
 			$quantity = 0;
@@ -141,6 +142,7 @@ class ItemController extends CI_Controller {
 				'supplier_id' => $supplier_id,
 				'status' => 1,
 				'barcode' => $barcode,  
+				'reorder_level' => $this->input->post('reorder')
 			);
 
 			$this->db->insert('items', $data);
@@ -241,9 +243,10 @@ class ItemController extends CI_Controller {
 	public function update() {
 		$this->load->model('ItemModel');
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
-		$this->form_validation->set_rules('category', 'Item Name', 'required|max_length[150]');
-		$this->form_validation->set_rules('description', 'Item Name', 'required|max_length[150]');
-		$this->form_validation->set_rules('price', 'Item Name', 'required|max_length[500000]');
+		$this->form_validation->set_rules('category', 'Category', 'required|max_length[150]');
+		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]');
+		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]');
+		$this->form_validation->set_rules('reorder', 'Re Order Level', 'required|max_length[500000]');
 		$this->form_validation->set_rules('id', 'required'); 
  
 		if ($this->form_validation->run() == FALSE) {
@@ -262,9 +265,10 @@ class ItemController extends CI_Controller {
 		$id = $this->input->post('id');
 		$item = $this->db->where('id', $id)->get('items')->row();
 		$currentPrice = $this->PriceModel->getPrice($id);
+		$reorder = $this->input->post('reorder');
 
 		$price_id = $this->PriceModel->update($updated_price, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id);
+		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $reorder);
 
 		if ($update) {
 			

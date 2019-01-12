@@ -17,32 +17,86 @@
 					<p><?php echo $this->session->flashdata('success') ?></p>
 				</div>
 			<?php endif; ?> 
+
              <table class="table table-striped table-bordered table-hover table-responsive" id="customer_table">
 			<thead>
 				<tr>
-					<th width="15%">Name</th>
-					<th>Email</th>
-					<th>Gender</th> 
-					<th>Address</th>
-					<th>City</th>
-					<th>State</th> 
-					<th>Mobile</th>
+					<th width="10%">Name</th>
+					<th width="10%">Gender</th>
+					<th width="10%">Home Address</th> 
+					<th width="10%">Outlet Location</th>
+					<th width="10%">Outlet Address</th>
+					<th width="10%">Date Open</th> 
+					<th width="10%"> Expiration</th>
+					<th width="10%">Membership</th>
+					<th width="10%">Contact Number</th>
 					<th width="10%">Action</th>
 				</tr>
 			</thead>
 			<tbody>
 				<?php foreach($customers as $customer): ?>
+					<?php 
+						$renewable = false;
+						$membership = "Not Open";
+
+						if ($customer->membership) {
+
+							$membership = "<span class='text-success'>Active</span>";
+							if ( Carbon\Carbon::now()->gte(Carbon\Carbon::parse($controller->getExpiration($customer->id) )) ) {
+								$membership = "<span class='text-danger'>Expired</span>";
+								$renewable = true;
+							}
+							else if (Carbon\Carbon::parse($controller->getExpiration($customer->id))->gt(Carbon\Carbon::now()) && Carbon\Carbon::parse($controller->getExpiration($customer->id))->lt(Carbon\Carbon::now()->addDays(30)) ) {
+								$membership = "<span class='text-warning'>Needs Renewal</span>";
+								$renewable = true;
+						 
+							}  
+							
+						}
+							
+
+					?>
 					<tr>
+
 						<td><?php echo $customer->name ?></td>
-						<td><?php echo $customer->email ?></td>
 						<td><?php echo $customer->gender ?></td>
-						<td><?php echo $customer->address ?></td>
-						<td><?php echo $customer->city ?></td>
-						<td><?php echo $customer->state ?></td> 
-						<td><?php echo $customer->mobileNumber ?></td>
+						<td><?php echo $customer->home_address ?></td>
+						<td><?php echo $customer->outlet_location ?></td>
+						<td><?php echo $customer->outlet_address ?></td>
+						<td><?php echo $customer->membership == 0 ? '--' : $controller->getDateOpen($customer->id) ?></td> 
+						<td><?php echo $customer->membership == 0 ? '--' : Carbon\Carbon::parse($controller->getExpiration($customer->id))->format('Y-m-d'); ?></td>
+						<td><?php echo $membership; ?></td>
+						<td><?php echo $customer->contact_number ?></td>
 						<td> 
-							<button class="fa fa-edit btn-primary btn edit btn-sm" data-toggle="modal" data-target="#customer-edit" data-id="<?php echo $customer->id ?>"></button>
-							<a class="btn btn-danger fa fa-trash btn-sm" href="<?php echo base_url('customers/delete/' . $customer->id) ?>"></a>
+							<div class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                   <?php if ($renewable): ?>
+										<li>
+											<a title="Renew Membership" class="renew"  href="#" data-id="<?php echo $customer->id ?>"><i class="fa fa-user "></i> Renew</a>
+										</li>
+									<?php endif; ?>
+									<?php if ($customer->membership == 0): ?>
+										<li>
+											<a title="Open Membership" href="<?php echo base_url('customers/open/' . $customer->id) ?>">
+												<i class="fa fa-user">Open</i>
+
+											</a>
+										</li>
+									<?php endif; ?>
+										<li>
+											<a title="Edit Info" class="pointer edit" data-toggle="modal" data-target="#customer-edit" data-id="<?php echo $customer->id ?>"> 
+												<i class="fa fa-edit"> Edit</i>
+											</a>
+										</li>
+										<li>
+											<a title="Delete Customer"  href="<?php echo base_url('customers/delete/' . $customer->id) ?>">
+												<i class="fa fa-trash"></i> Delete
+											</a>
+										</li>
+                                </ul>
+                            </div>
+							
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -70,10 +124,7 @@
 				<form action="<?php echo base_url('customers/insert') ?>" method="POST">
 					<div class="form-group">
 						<input required="required" type="text" class="form-control" name="name" placeholder="Name">
-					</div>
-					<div class="form-group">
-						<input type="email" required="required" class="form-control" name="email" placeholder="Email">
-					</div>
+					</div> 
 					<div class="form-group">
 						<label>Gender</label>
 						<div class="radio">
@@ -85,19 +136,16 @@
 					</div>
 
 					<div class="form-group">
-						<input type="text" required="required" class="form-control" name="address" placeholder="Address">
+						<input type="text" required="required" class="form-control" name="home_address" placeholder="Home Address">
 					</div>
 					<div class="form-group">
-						<input type="text" required="required" class="form-control" name="city" placeholder="City">
+						<input type="text" required="required" class="form-control" name="outlet_location" placeholder="Outlet Location">
 					</div>
 					<div class="form-group">
-						<input type="text" required="required" class="form-control" name="state" placeholder="State">
-					</div>
+						<input type="text" required="required" class="form-control" name="outlet_address" placeholder="Outlet Address">
+					</div> 
 					<div class="form-group">
-						<input type="text" required="required" class="form-control" name="zipcode" placeholder="Zip Code">
-					</div>
-					<div class="form-group">
-						<input type="text" required="required" class="form-control" name="mobileNumber" placeholder="Mobile Number">
+						<input type="text" required="required" class="form-control" name="mobileNumber" placeholder="Contact Number">
 					</div>
 					<div class="form-group">
 						<button class="btn btn-success">Save</button>
@@ -126,11 +174,9 @@
 				<form action="<?php echo base_url('customers/update') ?>" method="POST">
 					<input type="hidden" name="customer_id" id="customer_id">
 					<div class="form-group">
+						<label>Name</label>
 						<input type="text" class="form-control" name="name" placeholder="Name">
-					</div>
-					<div class="form-group">
-						<input type="email" class="form-control" name="email" placeholder="Email">
-					</div>
+					</div> 
 					<div class="form-group">
 						<label>Gender</label>
 						<div class="radio">
@@ -142,19 +188,21 @@
 					</div>
 
 					<div class="form-group">
-						<input type="text" class="form-control" name="address" placeholder="Address">
+						<label>Home Address:</label>
+						<input type="text" class="form-control" name="home_address" placeholder="Home Address">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="city" placeholder="City">
+						<label>Outlet Location</label>
+						<input type="text" class="form-control" name="outlet_location" placeholder="Outlet Location">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" name="state" placeholder="State">
+						<label>Outlet Address</label>
+						<input type="text" class="form-control" name="outlet_address" placeholder="Outlet Address">
 					</div>
+					 
 					<div class="form-group">
-						<input type="text" class="form-control" name="zipcode" placeholder="Zip Code">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" name="mobileNumber" placeholder="Mobile Number">
+						<label>Contact Number</label>
+						<input type="text" class="form-control" name="contact_number" placeholder="Contact Number">
 					</div>
 					<div class="form-group">
 						<button class="btn btn-success">Save</button>
@@ -168,4 +216,26 @@
 		</div>
 
 	</div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="renew-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      	<form method="POST" action="<?php echo base_url('CustomersController/renewMembership') ?>">
+      		<div class="modal-header">
+	        <h4 class="modal-title">Renew Membership</h4> 
+	      </div>
+	      <div class="modal-body">
+	      	<input type="hidden" name="customer_id" id="customer-id">
+	        <p>Date Open: <b><span id="date-open"></span></b></p>
+	        <p>Renew Date: <b><span id="renew-date"></span></b></p>
+	        <p>New Expiration Date: <b><span id="new-expiration"></span></b></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="submit" class="btn btn-primary">Confirm</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	      </div>
+      	</form>
+    </div>
+  </div>
 </div>

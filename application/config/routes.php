@@ -86,8 +86,10 @@ $route['categories/get'] = 'CategoriesController/get';
 $route['customers'] = "CustomersController/index";
 $route['customers/insert'] = "CustomersController/insert";
 $route['customers/delete/(:any)'] = "CustomersController/destroy/$1";
+$route['customers/open/(:any)'] = "CustomersController/open/$1";
 $route['customers/find'] = "CustomersController/find";
 $route['customers/update'] = "CustomersController/update";
+$route['customers/open-membership'] = "CustomersController/openMembership";
 
 $route['suppliers'] = "SuppliersController/index";
 $route['suppliers/insert'] = "SuppliersController/insert";

@@ -37,6 +37,11 @@
 							</div> 
 
 							<div class="form-group"> 
+								<label>Re Order Level:</label>
+								<input value="<?php echo $item->reorder_level ?>" max="500000" type="text" name="reorder" class="form-control" required="required">
+							</div> 
+
+							<div class="form-group"> 
 								<label>Description:</label>
 								<textarea required="required" rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
 							</div>
