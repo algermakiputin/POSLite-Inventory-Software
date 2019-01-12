@@ -84,8 +84,7 @@
 						</div>
 					 
 						<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 15px 25px;">
-							<div>Sub Total:<span id="amount-due" class="pull-right"></span></div>
-							<div>Vat:<span id="amount-vat" class="pull-right"></span></div>
+							<div>Sub Total:<span id="amount-due" class="pull-right"></span></div> 
 							<!-- <div id="discount-container">Discount:<span id="amount-discount" class="pull-right"></span></div> -->
 							<div style="">Total Amount:<span id="amount-total" class="pull-right"></span></div>
 							
@@ -176,8 +175,7 @@
 									</table>
 									<hr>
 									<div class="text-right">
-										<div>Sub Total: <span id="r-due"></span></div>
-										<div>Vat: <span id="r-vat"></span></div>
+										<div>Sub Total: <span id="r-due"></span></div> 
 										<!-- <div>Discount: <span id="r-discount"></span></div> -->
 										<div>Total Amount <span id="r-total-amount"></span></div>
 										<div>Payment: <span id="r-payment"></span></div>
@@ -195,11 +193,7 @@
 									<tr>
 										<td>Sub Total:</td>
 										<td id="summary-due"></td>
-									</tr>
-									<tr>
-										<td>Total Vat:</td>
-										<td id="summary-vat"></td>
-									</tr>
+									</tr> 
 									<!-- <tr>
 										<td>Discount Amount:</td>
 										<td id="summary-discount"></td>
