@@ -14,6 +14,28 @@ $(document).ready(function() {
 		}
 	})
 
+	$("#customer_table").on('click', '.renew', function() {
+		var id = $(this).data('id');
+		if (id) {
+			$.ajax({
+				type : 'POST',
+				url : base_url + '/CustomersController/getMembership',
+				data : {
+					id : id
+				},
+				success : function(data) {
+					var result = JSON.parse(data);
+					console.log(result)
+					$("#date-open").text((result.date_open));
+					$("#renew-date").text(moment().format('YYYY-MM-DD'));
+					$("#new-expiration").text(moment().add(3,'years').format('YYYY-MM-DD'));
+					$("#customer-id").val(result.customer_id);
+				}
+			})
+		}
+		$("#renew-modal").modal('toggle');
+	})
+
 	var profit_table = $("#profit_table").DataTable({
 		processing : true,
 		bLengthChange : false,
@@ -101,7 +123,7 @@ $(document).ready(function() {
 			success : function(data) {
 
 				var result = JSON.parse(data);
-			
+
 				if (type == "week")
 					myChart.data.datasets[0].label = "Sales for the last 7 Days";
 				else if (type == "month")
@@ -142,7 +164,8 @@ $(document).ready(function() {
 					sales_table.columns(0).search(from);
 					sales_table.columns(1).search(to).draw();
 					$("#range").text('Date: ' +to + ' - ' + from);
- 					 
+					$("#widgets").show();
+
 				}else {
 					alert('Select from date');
 				}
@@ -160,7 +183,7 @@ $(document).ready(function() {
 		var id = $(this).data('id');
 		var row = $(this).parents('tr');
 		var total = row.find('td').eq(2).text();
-		 
+
 		$.ajax({
 			type : 'POST',
 			data : {
@@ -172,21 +195,21 @@ $(document).ready(function() {
 				$("#sales-description-table tbody").empty();
 				$.each(description, function(key,value) {
 					$("#sales-description-table tbody").append(
-							'<tr>' +
-								'<td>' +value[0]+'</td>' + 
-								'<td>' +value[1]+'</td>' + 
-								'<td>'+ currency +value[2]+'</td>' + 
-								'<td>' +value[3]+'</td>' +
-								'<td>'+ currency +value[4]+'</td>' +
-							'</tr>'
+						'<tr>' +
+						'<td>' +value[0]+'</td>' + 
+						'<td>' +value[1]+'</td>' + 
+						'<td>'+ currency +value[2]+'</td>' + 
+						'<td>' +value[3]+'</td>' +
+						'<td>'+ currency +value[4]+'</td>' +
+						'</tr>'
 						);
 				});
 
 				$("#sales-description-table tbody").append(
-						'<tr>' +
-							'<td colspan="4" class="text-right">Total:</td>' +
-							'<td>'+ currency + total+'</td>' +
-						'</tr>'
+					'<tr>' +
+					'<td colspan="4" class="text-right">Total:</td>' +
+					'<td>'+ currency + total+'</td>' +
+					'</tr>'
 					);	
 				$("#sale-id").text(id);
 			}
@@ -224,43 +247,43 @@ $(document).ready(function() {
 		sort : false,
 		dom : "lfrtBp",
 		buttons: [
-	        {
-                extend: 'copyHtml5',
-                filename : 'Inventory Report',
-                title : 'Inventory',
-                messageTop : 'Inventory Report',
-                className : "btn btn-default btn-sm",
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3,4,5,6 ]
-                },
-            },
-            {
-                extend: 'excelHtml5',
-                filename : 'Inventory',
-                title : 'Inventory Report',
-                messageTop : 'Inventory Report',
-                className : "btn btn-default btn-sm",
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3,4,5,6 ]
-                },
-            },
-            {
-                extend: 'pdfHtml5',
-                filename : 'Inventory Report',
-                title : 'Inventory',
-                messageTop : 'Inventory Report',
-                className : "btn btn-default btn-sm",
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3,4,5,6 ]
-                },
+		{
+			extend: 'copyHtml5',
+			filename : 'Inventory Report',
+			title : 'Inventory',
+			messageTop : 'Inventory Report',
+			className : "btn btn-default btn-sm",
+			exportOptions: {
+				columns: [ 0, 1, 2, 3,4,5,6 ]
+			},
+		},
+		{
+			extend: 'excelHtml5',
+			filename : 'Inventory',
+			title : 'Inventory Report',
+			messageTop : 'Inventory Report',
+			className : "btn btn-default btn-sm",
+			exportOptions: {
+				columns: [ 0, 1, 2, 3,4,5,6 ]
+			},
+		},
+		{
+			extend: 'pdfHtml5',
+			filename : 'Inventory Report',
+			title : 'Inventory',
+			messageTop : 'Inventory Report',
+			className : "btn btn-default btn-sm",
+			exportOptions: {
+				columns: [ 0, 1, 2, 3,4,5,6 ]
+			},
 
-            },
-	    ],
+		},
+		],
 
 		initComplete : function() { 
 			$("#item_tbl_length").append("&nbsp;<select id='cat' class='form-control'>" +
-						'<option value="">Select Category</option>' +
-					"</select>"
+				'<option value="">Select Category</option>' +
+				"</select>"
 				);
 			$.ajax({
 				method : 'GET',
@@ -286,16 +309,29 @@ $(document).ready(function() {
 		ordering : false
 	});
 	$("#deliveries_table").DataTable();
-	$("#customer_table").DataTable({
+	var customer_table = $("#customer_table").DataTable({
 		ordering : false,
 		initComplete : function() {
-			$("#customer_table_length").append('&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
+			$("#customer_table_length").append( '&nbsp;&nbsp;<select class="form-control" id="member-status"><option value="">Membership Status</option>'+
+									'<option value="Active">Active</option>' + 
+									'<option value="Expired">Expired</option>' + 
+									'<option value="Needs Renewal">Needs Renewal</option>' + 
+									'<option value="Not Open">Not Open</option>' + 
+								'</select>'
+					 +'&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
+			
+			$("#member-status").change(function() {
+				customer_table.columns(7).search($(this).val()).draw();
+			})
 		}
+
 	});
+
+
 	$("#customer_table").on('click','.edit',function() {
 		var id = $(this).data('id');
-		 $("#customer_id").val(id);
-		 $.ajax({
+		$("#customer_id").val(id);
+		$.ajax({
 			type : 'POST',
 			url : base_url + 'customers/find',
 			data : {
@@ -304,20 +340,18 @@ $(document).ready(function() {
 			success : function(data) {
 				var customer = JSON.parse(data);
 				console.log(customer); 
-				$("#customer-edit input[name='name']").val(customer.name);
-				$("#customer-edit input[name='email']").val(customer.email);
+				$("#customer-edit input[name='name']").val(customer.name); 
 				$("#customer-edit input[name='gender']").val(customer.gender);
-				$("#customer-edit input[name='address']").val(customer.address);
-				$("#customer-edit input[name='city']").val(customer.city);
-				$("#customer-edit input[name='state']").val(customer.state); 
-				$("#customer-edit input[name='zipcode']").val(customer.zipcode);
-				$("#customer-edit input[name='mobileNumber']").val(customer.mobileNumber);
+				$("#customer-edit input[name='home_address']").val(customer.home_address);
+				$("#customer-edit input[name='outlet_location']").val(customer.outlet_location);
+				$("#customer-edit input[name='outlet_address']").val(customer.outlet_address);  
+				$("#customer-edit input[name='contact_number']").val(customer.contact_number);
 			}
 
 		});
 	})
 
-		$("#btn-group-menu .btn").click(function() {
+	$("#btn-group-menu .btn").click(function() {
 		$('.btn-group .btn').removeClass('active');
 		$(this).addClass('active');
 		if ($(this).data('id') == "table") {

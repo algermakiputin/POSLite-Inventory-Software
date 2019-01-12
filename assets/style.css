@@ -17,7 +17,9 @@ table td {
 
 }
 
-
+.pointer:hover {
+  cursor: pointer;
+}
 
 
 .dt-buttons {

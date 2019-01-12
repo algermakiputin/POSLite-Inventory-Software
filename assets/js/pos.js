@@ -27,7 +27,7 @@
 		var stocks = $(this).find('td').eq(3).text();
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
-  
+  	 
 		var quantity = 1;
 	 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
 	 	totalAmountDue += parseFloat(subtotal);
@@ -65,7 +65,7 @@
 	 			for (i = 0; i < row; i++) {
 					var r = $("#cart tbody tr").eq(i).find('td');
 					var quantity = r.eq(1).find('input').val();
-					var price = r.eq(2).text().substring(1);
+					var price = r.eq(2).text().substring(1).replace(',','');
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
@@ -81,14 +81,14 @@
 				// Receipt Items
 				$("#r-items-table tbody").empty();
 				$.each(sales, function(key, value) {
-			 
+			 		console.log(value)
 					$("#r-items-table tbody").append(
 							'<tr>' +
 								'<td>'+value.id +'</td>' +
 								'<td>'+value.name +'</td>' +
 								'<td>'+currency+value.price +'</td>' +
 								'<td>'+value.quantity+'</td>' +
-								'<td>'+currency+value.subtotal+'</td>' +
+								'<td>'+currency+value.subtotal.toFixed(2)+'</td>' +
 
 							'</tr>'
 						);
@@ -234,7 +234,10 @@
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
 			var quantity = parseInt(r.eq(1).find('input').val());
-			total += parseFloat(r.eq(2).text().substring(1)) * quantity;
+			var price = r.eq(2).text().substring(1).replace(',','');
+
+			total += parseInt(price) * quantity;
+		
 		}
 		vat = parseFloat((total / 1.2) * 0.12);
 

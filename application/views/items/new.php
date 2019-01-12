@@ -32,6 +32,9 @@
 								<input type="text" required="required" placeholder="Price" name="price" class="form-control" max="500000">
 							</div> 
 							<div class="form-group">  
+								<input type="text" required="required" placeholder="Re Order Level" name="reorder" class="form-control" max="500000">
+							</div> 
+							<div class="form-group">  
 								<select name="supplier" class="form-control" required="required"> 
 									<option value="">Select Supplier</option>
 									<?php foreach ($suppliers as $supplier): ?>

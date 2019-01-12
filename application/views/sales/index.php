@@ -46,7 +46,7 @@
 
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-				<div id="widgets">
+				<div id="widgets" style="display: none;">
 					<div class="col-md-4">
 						<div class="sale-widget text-center">
 							Total Sales<br>
