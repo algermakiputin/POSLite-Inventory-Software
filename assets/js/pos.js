@@ -9,8 +9,8 @@
 	dHeight = dHeight - 60;
 	$(".header .box").css('height', dHeight + 'px');
 
-	$("#cart-tbl").css('min-height', (dHeight - (105 + 231 + 25)) + 'px');
-	$("#cart-tbl").css('max-height', (dHeight - (105 + 150 + 231)) + 'px');
+	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
+	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
 	 
 	var item_table = $("#item-table").DataTable({
 		processing : true,
@@ -55,10 +55,10 @@
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val();
 		var change = $("#change").val();
- 		var vat = 0;
+ 	 
  		if (row) {
 
- 			var totalAmountDue = parseFloat($("#amount-total").text().substring(1));
+ 			var totalAmountDue = parseFloat($("#amount-total").text().substring(1).replace(',',''));
 	 
 			if (parseFloat(payment) >= parseFloat(totalAmountDue)) {
 		 		
@@ -81,7 +81,7 @@
 				// Receipt Items
 				$("#r-items-table tbody").empty();
 				$.each(sales, function(key, value) {
-			 		console.log(value)
+			 	 
 					$("#r-items-table tbody").append(
 							'<tr>' +
 								'<td>'+value.id +'</td>' +
@@ -106,31 +106,29 @@
 					success : function(data) { 
 		 				transactionComplete = true;
 		 				var total = parseFloat(total_amount);
-		 				vat = parseFloat((total / 1.2) * 0.12);
+		 			 
 		 				$("#payment-modal").modal('toggle');
 						$("#loader").hide();
 						//Transaction Summary 
 						$("#summary-due").text(currency + total_amount);
 						$("#summary-payment").text( currency + payment);
 						$("#summary-change").text( currency + change);
-						$("#summary-vat").text( currency + vat.toFixed(2) );
-						$("#summary-total").text( currency + (vat + total).toFixed(2) )
+					 
+						$("#summary-total").text( currency + (total).toFixed(2) )
 						
 						//Fill In Receipt
 						$("#r-due").text(currency + total_amount);
 						$("#r-payment").text( currency + parseFloat(payment));
 					
 						$("#r-change").text( currency + change);
-						$("#r-cashier").text($("#user").text());
-						$("#r-vat").text( currency + vat.toFixed(2) );
-						$("#r-total-amount").text( currency + (vat + total).toFixed(2) )
+						$("#r-cashier").text($("#user").text()); 
+						$("#r-total-amount").text( currency + (total).toFixed(2) )
 						$("#r-id").text(data);
 						totalAmountDue = 0;  
 					 	$("#cart tbody").empty();
 					 	$("#payment").val('');
 					 	$("#change").val('');
-					 	$("#amount-due").text('');
-					 	$("#amount-vat").text('');
+					 	$("#amount-due").text(''); 
 					 	$("#amount-total").text('');
 					 	item_table.clear().draw();
 					 	$("#btn").button('reset');
@@ -166,7 +164,7 @@
 		var payment = parseInt($(this).val());
 		var cart = $("#cart tbody tr").length;
 		if (cart) {
-			var totalAmountDue = parseFloat($("#amount-total").text().substring(1));
+			var totalAmountDue = parseFloat($("#amount-total").text().substring(1).replace(',',''));
 			if (payment >= totalAmountDue) {
 		 	
 				return $("#change").val((payment - totalAmountDue).toFixed(2));
@@ -225,7 +223,7 @@
 	function recount() {
 		var row = $("#cart tbody tr").length;
 		var total = 0;
-		var vat = 0;
+	 
 		var discount = parseInt($("#amount-discount").text().substring(1));
 	 	
 	 	if (isNaN(discount))
@@ -236,15 +234,11 @@
 			var quantity = parseInt(r.eq(1).find('input').val());
 			var price = r.eq(2).text().substring(1).replace(',','');
 
-			total += parseInt(price) * quantity;
+			total += parseFloat(price) * quantity;
 		
 		}
-		vat = parseFloat((total / 1.2) * 0.12);
-
-		$("#amount-vat").text(currency + vat.toFixed(2));
-		$("#amount-due").text("₱" + (total).toFixed(2));
-		$("#amount-discount").text(currency + discount.toFixed(2));
-		$("#amount-total").text("₱" + (total + vat - discount).toFixed(2));
+		$("#amount-due").text("₱" + (number_format(total)));
+		$("#amount-total").text("₱" + number_format(total));
 	}
 
 
@@ -269,3 +263,33 @@
 })
 
  
+
+function number_format(number, decimals, dec_point, thousands_point) {
+
+    if (number == null || !isFinite(number)) {
+        throw new TypeError("number is not valid");
+    }
+
+    if (!decimals) {
+        var len = number.toString().split('.').length;
+        decimals = len > 1 ? len : 0;
+    }
+
+    if (!dec_point) {
+        dec_point = '.';
+    }
+
+    if (!thousands_point) {
+        thousands_point = ',';
+    }
+
+    number = parseFloat(number).toFixed(decimals);
+
+    number = number.replace(".", dec_point);
+
+    var splitNum = number.split(dec_point);
+    splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_point);
+    number = splitNum.join(dec_point);
+
+    return number;
+}
