@@ -237,8 +237,8 @@
 			total += parseFloat(price) * quantity;
 		
 		}
-		$("#amount-due").text("₱" + (number_format(total)));
-		$("#amount-total").text("₱" + number_format(total));
+		$("#amount-due").text("₱" + (number_format(total.toFixed(2))));
+		$("#amount-total").text("₱" + number_format(total.toFixed(2)));
 	}
 
 
