@@ -311,6 +311,40 @@ $(document).ready(function() {
 	$("#deliveries_table").DataTable();
 	var customer_table = $("#customer_table").DataTable({
 		ordering : false,
+		dom : "lfrtBp",
+		buttons: [
+			{
+				extend: 'copyHtml5',
+				filename : 'Inventory Report',
+				title : 'Inventory',
+				messageTop : 'Inventory Report',
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0, 1, 2, 3,4,5,6 ]
+				},
+			},
+			{
+				extend: 'excelHtml5',
+				filename : 'Inventory',
+				title : 'Inventory Report',
+				messageTop : 'Inventory Report',
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0, 1, 2, 3,4,5,6 ]
+				},
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'Inventory Report',
+				title : 'Inventory',
+				messageTop : 'Inventory Report',
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0, 1, 2, 3,4,5,6 ]
+				},
+
+			},
+		],
 		initComplete : function() {
 			$("#customer_table_length").append( '&nbsp;&nbsp;<select class="form-control" id="member-status"><option value="">Membership Status</option>'+
 									'<option value="Active">Active</option>' + 
