@@ -43,7 +43,9 @@ class ItemController extends CI_Controller {
 		$orderingLevel = $this->OrderingLevelModel;
 		$price = $this->PriceModel;
 		$start = $this->input->post('start');
+
 		$limit = $this->input->post('length');
+
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
 		$datasets = [];
@@ -66,7 +68,7 @@ class ItemController extends CI_Controller {
 		}
 
 		$count = count($datasets);
-	 
+ 
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
 				'recordsTotal' => $count,
@@ -77,14 +79,18 @@ class ItemController extends CI_Controller {
 
 	public function dataFilter($search, $start, $limit) {
 
+		$this->db->limit($limit, $start);
 		if ($search != "") {
 			return $this->db->where('status', 1)
 						->like('name',$search, 'BOTH')
-						->get('items', $start, $limit)
+						->get('items')
+		 
 						->result();
 		} 
 		
-		return $this->db->where('status', 1)->get('items', $start, $limit)->result();
+		return $this->db->where('status', 1)
+						->get('items')
+						->result();
 	}
 
 	public function new() {
