@@ -15,10 +15,11 @@
 	var item_table = $("#item-table").DataTable({
 		processing : true,
 		serverSide : true,
+		pageLength : 10, 
 		ajax : {
 			url : base_url + 'items/data',
 			type : 'POST'
-		}
+		},
 	});
 
 	$("#item-table").on('click', 'tbody tr', function() {
