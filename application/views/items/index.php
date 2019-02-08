@@ -21,7 +21,7 @@
 
          <!-- /.panel-heading -->
          <div class="panel-body">
-             <table class="table table-responsive table-striped table-hover table-bordered" id="item_tbl">
+             <table class="table table-responsive table-hover table-bordered" id="item_tbl">
              		<thead>
              			<tr>
  

@@ -11,6 +11,21 @@ class ItemController extends CI_Controller {
 	
 	}
 
+	public function find() {
+		$this->load->model('OrderingLevelModel');
+		$this->load->model('PriceModel');
+		$code = $this->input->post('code');
+		$item = $this->db->where('barcode', $code)->get('items')->row();
+		$quantity = (int)$this->OrderingLevelModel->getQuantity($item->id)->quantity;
+		$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
+		echo json_encode([
+				'name' => $item->name,
+				'price' => '₱' . $price,
+				'quantity' => $quantity,
+				'id' => $item->id
+			]) ;
+	}
+
 	public function items () {
 		$this->load->model('ItemModel');
 		$this->load->model('PriceModel');

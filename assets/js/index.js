@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var currency = '₱';
-
 	$("form").parsley();	
 	$("#expenses_table").DataTable();
 	$("#item-form").submit(function(e) {

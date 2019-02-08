@@ -73,6 +73,7 @@ $route['items/stock-in/(:any)'] = 'ItemController/stock_in/$1';
 $route['items/update'] = "ItemController/update";
 $route['items/data'] = "ItemController/data";
 $route['items/edit/(:any)'] = "ItemController/edit/$1";
+$route['items/find'] = "ItemController/find";
 
 $route['categories'] = 'CategoriesController/categories';
 $route['categories/insert'] = 'CategoriesController/insert';
