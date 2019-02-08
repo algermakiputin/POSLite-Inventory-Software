@@ -12,6 +12,40 @@
 	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
 	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
 	 
+	$(document).pos();
+	$(document).on('scan.pos.barcode', function(event){
+
+		$.ajax({
+			type : 'POST',
+			url : base_url + 'items/find',
+			data : {
+				code : event.code
+			},
+
+			success : function(data) {
+				var result = JSON.parse(data);
+				var quantity = 1;
+			 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+			 	totalAmountDue += parseFloat(subtotal);
+				$("#cart tbody").append(
+						'<tr>' +
+							'<input name="id" type="hidden" value="'+ result.id +'">' +
+							'<td>'+ result.name +'</td>' +
+							'<td><input data-stocks="'+result.stocks+'" type="text" value="'+result.quantity+'" class="quantity-box"></td>' +
+							'<td>'+ result.price +'</td>' +
+				 
+							'<td><span class="remove" style="font-size:12px;">Remove</span></td>' +
+						'</tr>'
+					);
+				recount();
+				$("payment").val('');
+				$("change").val('');
+			 
+			}
+		})
+
+	});
+
 	var item_table = $("#item-table").DataTable({
 		processing : true,
 		serverSide : true,
@@ -242,6 +276,7 @@
 		$("#amount-total").text("₱" + number_format(total.toFixed(2)));
 	}
 
+ 
 
 	$("#print").click(function(){
 		$("#receipt").print({
