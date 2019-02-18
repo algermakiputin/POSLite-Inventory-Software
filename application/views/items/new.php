@@ -15,10 +15,12 @@
 				<div class="row">
 					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate id="item-form">
 						<div class="col-lg-6 col-md-offset-3">
-							
+							<div class="form-group">
+								<input type="text" placeholder="Item Barcode" required="required" class="form-control" name="barcode" value="">
+							</div>
 							<div class="form-group"> 					 
 								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
-								<input type="hidden" required="required" name="barcode" value="<?php echo $barcode ?>">
+								
 							</div>
 							<div class="form-group">  
 								<select name="category" class="form-control" required="required">
@@ -52,19 +54,7 @@
 								<button class="btn btn-primary">Register Item</button>
 							</div>
 							
-						</div>
-						<div class="col-md-3">
-							<div class="form-group ">
-								<label>Bar Code: <?php echo $barcode ?></label>
-								<div>
-									<?php 
-									echo $code;
-									?>
-								</div>
-
-							</div>
-							 
-						</div>
+						</div> 
 					</form>
 				</div>
 				<!-- /.row (nested) -->

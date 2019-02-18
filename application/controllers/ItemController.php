@@ -16,14 +16,21 @@ class ItemController extends CI_Controller {
 		$this->load->model('PriceModel');
 		$code = $this->input->post('code');
 		$item = $this->db->where('barcode', $code)->get('items')->row();
-		$quantity = (int)$this->OrderingLevelModel->getQuantity($item->id)->quantity;
-		$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
-		echo json_encode([
-				'name' => $item->name,
-				'price' => '₱' . $price,
-				'quantity' => $quantity,
-				'id' => $item->id
-			]) ;
+		
+		if ($item) {
+			$quantity = (int)$this->OrderingLevelModel->getQuantity($item->id)->quantity;
+			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
+			echo json_encode([
+					'name' => $item->name,
+					'price' => '₱' . $price,
+					'quantity' => $quantity,
+					'id' => $item->id
+				]) ;
+
+			return;
+		}
+
+		return;
 	}
 
 	public function items () {
@@ -110,16 +117,12 @@ class ItemController extends CI_Controller {
 
 	public function new() {
 		$this->load->database();
-		$this->load->model('categories_model');
-		$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
-		$code = $this->generateBarcode();
+		$this->load->model('categories_model'); 
 
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'new_item';
-		$data['content'] = "items/new";
-		$data['barcode'] = $code;
-		$data['code'] = $generator->getBarcode($code, $generator::TYPE_CODE_128);
+		$data['content'] = "items/new";  
 		$this->load->view('master', $data);
 	}
 
