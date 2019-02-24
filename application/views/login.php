@@ -86,11 +86,17 @@
 		</div>      
 		<span id="password-error"></span>
 	</div>
+	<div></div>
 	
 	
 	<div class="form-group">
 		<button class="btn btn-md btn-primary btn-block" type="submit">Login</button>  
 	</div> 
+	<?php if (SITE_LIVE): ?>
+		<div class="form-group text-center">
+			<b>Username:</b> admin <b>Password:</b> admin123
+		</div>
+	<?php endif; ?>
 	<p class="text-center" style="color: #777">&copy; 2018 All Rights Reserved <br> Developed by: <a href="https://algermakiputin.com">Alger Makiputin</a></p>
 	<?php echo form_close() ?>
 </div>
