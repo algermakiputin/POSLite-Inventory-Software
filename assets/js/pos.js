@@ -57,13 +57,13 @@
 		},
 	});
 
-	$("#item-table").on('click', 'tbody tr', function() {
+	$("#item-table").on('click', 'tbody tr', function(event) {
 		var id = $(this).find('td').eq(0).text();
 		var name = $(this).find('td').eq(1).text();
 		var stocks = $(this).find('td').eq(3).text();
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
-  	 
+  	 	itemExist(id);
 		var quantity = 1;
 	 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
 	 	totalAmountDue += parseFloat(subtotal);
@@ -71,7 +71,7 @@
 				'<tr>' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<td>'+ name +'</td>' +
-					'<td><input data-stocks="'+stocks+'" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+					'<td><input data-stocks="'+stocks+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
 					'<td>'+ price +'</td>' +
 		 
 					'<td><span class="remove" style="font-size:12px;">Remove</span></td>' +
@@ -81,6 +81,26 @@
 		$("payment").val('');
 		$("change").val('');
 	})
+
+	function itemExist(itemID) {
+		var table = $("#cart-tbl tbody tr");
+	 
+		$.each(table, function(index) {
+			id = ($(this).find('[name="id"]').val());
+
+			if (id == itemID) {
+				qtyCol = $(this).find('[name="qty"]');
+				qty = parseInt(qtyCol.val());
+
+				qtyCol.val(qty + 1);
+				qtyCol.data(qty + 1);
+				return false;
+			}
+		})
+
+		
+
+	}
 
 	$("#process-form").submit(function(e) {
 		e.preventDefault();
