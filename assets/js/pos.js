@@ -63,28 +63,31 @@
 		var stocks = $(this).find('td').eq(3).text();
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
-  	 	itemExist(id);
-		var quantity = 1;
-	 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-	 	totalAmountDue += parseFloat(subtotal);
-		$("#cart tbody").append(
-				'<tr>' +
-					'<input name="id" type="hidden" value="'+ id +'">' +
-					'<td>'+ name +'</td>' +
-					'<td><input data-stocks="'+stocks+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-					'<td>'+ price +'</td>' +
-		 
-					'<td><span class="remove" style="font-size:12px;">Remove</span></td>' +
-				'</tr>'
-			);
-		recount();
-		$("payment").val('');
-		$("change").val('');
+	 
+  	 	if (itemExist(id) == false) {
+  	 		var quantity = 1;
+		 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+		 	totalAmountDue += parseFloat(subtotal);
+			$("#cart tbody").append(
+					'<tr>' +
+						'<input name="id" type="hidden" value="'+ id +'">' +
+						'<td>'+ name +'</td>' +
+						'<td><input data-stocks="'+stocks+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+						'<td>'+ price +'</td>' +
+			 
+						'<td><span class="remove" style="font-size:12px;">Remove</span></td>' +
+					'</tr>'
+				);
+			recount();
+			$("payment").val('');
+			$("change").val('');
+  	 	}
+		
 	})
 
 	function itemExist(itemID) {
 		var table = $("#cart-tbl tbody tr");
-	 
+	 	var exist = false;
 		$.each(table, function(index) {
 			id = ($(this).find('[name="id"]').val());
 
@@ -93,11 +96,13 @@
 				qty = parseInt(qtyCol.val());
 
 				qtyCol.val(qty + 1);
-				qtyCol.data(qty + 1);
-				return false;
+			 	recount();
+				exist = true;
+
 			}
 		})
 
+		return exist;
 		
 
 	}
