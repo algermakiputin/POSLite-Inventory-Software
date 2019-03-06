@@ -8,7 +8,7 @@
         <?php 
         echo $this->session->flashdata('errorMessage');
         echo $this->session->flashdata('successMessage');
-    
+      
         ?>
     </div>
 </div>
@@ -50,7 +50,7 @@
                                 <td><?php echo $orderingLevel->getQuantity($item->id)->quantity ? $orderingLevel->getQuantity($item->id)->quantity : 'Out of stock'; ?></td>
                                 <td><?php echo '₱'. number_format($capital,2) ?></td>
                                 <td><?php echo $item->supplier_name; ?></td>
-                 				<td><?php echo $stocks <= 0 ? '<span >Stock Out</span>' : ($stocks <= $item->reorder_level ? '<span>Needs restock</span>' : '<span>Available</span>') ?></td>
+                 				<td><?php echo $stocks <= 0 ? '<span class="text-danger">Stock Out</span>' : ($stocks <= $item->reorder_level ? '<span class="text-warning">Needs restock</span>' : '<span class="text-success">Available</span>') ?></td>
                  				<td>
                                     <div class="dropdown">
                                         <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
@@ -60,7 +60,7 @@
                                             <i class="fa fa-plus"></i> Stock In</a></li>
                                             <li><a href='<?php echo base_url("items/edit/$item->id") ?>'><i class="fa fa-edit"></i> Edit</a> </li>
                                             <li>
-                                                <a href='<?php echo base_url("ItemController/delete/$item->id") ?>'>
+                                                <a class="delete-item" href='#' data-link="<?php echo base_url('ItemController/delete/') ?>" data-id="<?php echo $item->id; ?>">
                                                 <i class="fa fa-trash"></i>
                                                 Delete</a>
                                             </li>

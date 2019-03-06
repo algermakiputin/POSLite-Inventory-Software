@@ -144,44 +144,46 @@ class ItemController extends CI_Controller {
 		$barcode = $this->input->post('barcode');
 		$price = $this->input->post('price'); 
 
-		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
-		$this->form_validation->set_rules('category', 'Category', 'required');
-		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]');
-		$this->form_validation->set_rules('barcode', 'Barcode', 'required');
-		$this->form_validation->set_rules('supplier', 'Supplier', 'required');
-		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]');  
-		$this->form_validation->set_rules('reorder', 'Price', 'required|max_length[500000]');
-
-		if ( $this->form_validation->run() ) {
-			$this->load->model('PriceModel');
-			$quantity = 0;
-
-			$this->load->model('ItemModel');
-			$this->load->model('OrderingLevelModel');
-			$this->load->model('HistoryModel');
-			$data = array(
-				'name' => $name,
-				'category_id' => $category,
-				'description' => $description, 
-				'supplier_id' => $supplier_id,
-				'status' => 1,
-				'barcode' => $barcode,  
-				'reorder_level' => $this->input->post('reorder')
-			);
-
-			$this->db->insert('items', $data);
-			$item_id = $this->db->insert_id();
-			
-			$this->HistoryModel->insert('Register new item: ' . $name);
-			$this->PriceModel->insert($price, $item_id);
-			$this->OrderingLevelModel->insert($item_id);
-			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
-			return redirect(base_url('items'));
+		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim');
+		$this->form_validation->set_rules('category', 'Category', 'required|trim');
+		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]|trim');
+		$this->form_validation->set_rules('barcode', 'Barcode', 'required|is_unique[items.barcode]|trim');
+		$this->form_validation->set_rules('supplier', 'Supplier', 'required|trim');
+		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]|trim');  
+		$this->form_validation->set_rules('reorder', 'Price', 'required|max_length[500000]|trim');
+ 
+		if ( $this->form_validation->run() == FALSE ) {
+			$this->session->set_flashdata('errorMessage', 
+					'<div class="alert alert-danger">'.validation_errors().'</div>'); 
+			return redirect(base_url('items/new'));
 		}
 
-		$this->session->set_flashdata('errorMessage', 
-				'<div class="alert alert-success">'.validation_errors().'</div>'); 
+		$this->load->model('PriceModel');
+		$quantity = 0;
+
+		$this->load->model('ItemModel');
+		$this->load->model('OrderingLevelModel');
+		$this->load->model('HistoryModel');
+		$data = array(
+			'name' => $name,
+			'category_id' => $category,
+			'description' => $description, 
+			'supplier_id' => $supplier_id,
+			'status' => 1,
+			'barcode' => $barcode,  
+			'reorder_level' => $this->input->post('reorder')
+		);
+
+		$this->db->insert('items', $data);
+		$item_id = $this->db->insert_id();
+		
+		$this->HistoryModel->insert('Register new item: ' . $name);
+		$this->PriceModel->insert($price, $item_id);
+		$this->OrderingLevelModel->insert($item_id);
+		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
+
+		
 
 	}
 
@@ -190,9 +192,9 @@ class ItemController extends CI_Controller {
 		$this->load->model('ItemModel');
 		$this->load->model('HistoryModel');
 		$item = $this->ItemModel->item_info($id);
-		
-		if ($this->ItemModel->deleteItem($id)) {
-			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Deleted</div>');
+ 
+		if ($this->ItemModel->deleteItem($id) != false) {
+			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Deleted Successfully</div>');
 			$this->HistoryModel->insert('Delete Item: ' . $item->name);
 			return redirect(base_url('items'));
 		}
