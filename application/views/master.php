@@ -26,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><i class="fa fa-cube"></i> POS Sales & Inventory Management System</a>
+                <a class="navbar-brand" href="#"><i class="fa fa-cube"></i> POS Sales & Inventory Management System</a>
             </div>
             <!-- /.navbar-header -->
 

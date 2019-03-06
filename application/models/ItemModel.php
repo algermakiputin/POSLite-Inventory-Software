@@ -3,6 +3,7 @@
 class ItemModel extends CI_Model {
 
 	public function itemList () {
+
 		return $this->db->select("items.*, supplier.name as supplier_name")
 					->from("items")
 					->join("supplier", "supplier.id = items.supplier_id", "both")
@@ -33,10 +34,17 @@ class ItemModel extends CI_Model {
 	}
 
 	public function deleteItem($id) {
- 		
+ 		$this->db->trans_start();
  		$this->db->where('item_id', $id)->delete('ordering_level');
 		$this->db->where('item_id', $id)->delete('prices');
-		return $this->db->where('id', $id)->delete('items');
+		$this->db->where('id', $id)->delete('items');
+
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
+			return false;
+		}
+
+		return $this->db->trans_commit();
 		
 	}
 

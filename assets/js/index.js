@@ -13,6 +13,18 @@ $(document).ready(function() {
 		}
 	})
 
+ 	$("body").on('click', '.delete-item', function() {
+ 		var c = confirm('Delete Item?')
+        var id = $(this).data('id');
+        var link = $(this).data('link');
+        if (c == false) {
+     
+            return false;
+        }
+
+        window.location = link + id;
+ 	})
+
 	$("#customer_table").on('click', '.renew', function() {
 		var id = $(this).data('id');
 		if (id) {
