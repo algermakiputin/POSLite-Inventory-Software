@@ -74,7 +74,7 @@ class ItemController extends CI_Controller {
 
 		foreach ($items as $item) {
 			$quantity = (int)$orderingLevel->getQuantity($item->id)->quantity;
-			if (!$quantity)
+			if ($quantity <= 0)
 				continue;
 
 			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;

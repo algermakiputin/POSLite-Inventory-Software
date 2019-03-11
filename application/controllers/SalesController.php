@@ -61,7 +61,7 @@ class SalesController extends CI_Controller {
 				<link type='text/css' href='".base_url('assets/print.css')."'>
 			";
 		$html .= "<h1 class='text-center'>Sales Reports</h1>";
-		$html .= "<div class='left'><h4>Date:</h4>";
+		$html .= "<div class='date'><h4>Date:</h4>";
 		$html .= "<div class='date'>From: " . $from . "</div>";
 		$html .= "<div class='date'>To: " . $to . "</div></div>";
 		$html .= "<div class='right'><h4>Total Sales:</h4><div>₱".number_format($totalSales)."</div></div>";
