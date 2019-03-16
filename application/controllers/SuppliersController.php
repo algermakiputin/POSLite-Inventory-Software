@@ -98,8 +98,8 @@ class SuppliersController Extends CI_Controller {
 
 	public function destroy($id) {
 	 
-
-		if (!$this->db->delete('supplier', array('id' => $id))) {
+		$this->db->where('id', $id)->delete('supplier');
+		if ($this->db->error()['code'] === 1451) {
 			$this->session->set_flashdata('error', 'Cannot delete this supplier. There is an item associated with this supplier.');
 		}
 

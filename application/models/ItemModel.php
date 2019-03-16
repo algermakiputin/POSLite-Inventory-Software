@@ -34,6 +34,7 @@ class ItemModel extends CI_Model {
 	}
 
 	public function deleteItem($id) {
+		
  		$this->db->trans_start();
  		$this->db->where('item_id', $id)->delete('ordering_level');
 		$this->db->where('item_id', $id)->delete('prices');
