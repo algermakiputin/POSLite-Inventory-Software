@@ -14,37 +14,40 @@
 	 
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
-		$.ajax({
-			type : 'POST',
-			url : base_url + 'items/find',
-			data : {
-				code : event.code
-			},
-			success : function(data) {
-				if (data) {
-					var result = JSON.parse(data);
-					var quantity = 1;
-				 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-				 	totalAmountDue += parseFloat(subtotal);
-					$("#cart tbody").append(
-							'<tr>' +
-								'<input name="id" type="hidden" value="'+ result.id +'">' +
-								'<td>'+ result.name +'</td>' +
-								'<td><input data-stocks="'+result.stocks+'" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-								'<td>'+ result.price +'</td>' +
-					 
-								'<td><span class="remove" style="font-size:12px;">Remove</span></td>' +
-							'</tr>'
-						);
-					recount();
-					$("payment").val('');
-					$("change").val('');
-				}else 
-					alert('No item found in the database');
-			 
-			}
-		})
 
+		if (event.code.length > 5) {
+			$.ajax({
+				type : 'POST',
+				url : base_url + 'items/find',
+				data : {
+					code : event.code
+				},
+				success : function(data) {
+					if (data) {
+						var result = JSON.parse(data);
+						var quantity = 1;
+					 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+					 	totalAmountDue += parseFloat(subtotal);
+						$("#cart tbody").append(
+								'<tr>' +
+									'<input name="id" type="hidden" value="'+ result.id +'">' +
+									'<td>'+ result.name +'</td>' +
+									'<td><input data-stocks="'+result.stocks+'" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+									'<td>'+ result.price +'</td>' +
+						 
+									'<td><span class="remove" style="font-size:12px;">Remove</span></td>' +
+								'</tr>'
+							);
+						recount();
+						$("payment").val('');
+						$("change").val('');
+					}else 
+						alert('No item found in the database');
+				 
+				}
+			})
+		}
+	
 	});
 
 	var item_table = $("#item-table").DataTable({
@@ -64,7 +67,7 @@
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
 	 
-  	 	if (itemExist(id) == false) {
+  	 	if (itemExist(id,stocks) == false) {
   	 		var quantity = 1;
 		 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
 		 	totalAmountDue += parseFloat(subtotal);
@@ -85,18 +88,22 @@
 		
 	})
 
-	function itemExist(itemID) {
+	function itemExist(itemID,stocks) {
 		var table = $("#cart-tbl tbody tr");
 	 	var exist = false;
 		$.each(table, function(index) {
 			id = ($(this).find('[name="id"]').val());
-
 			if (id == itemID) {
 				qtyCol = $(this).find('[name="qty"]');
 				qty = parseInt(qtyCol.val());
 
-				qtyCol.val(qty + 1);
-			 	recount();
+				if (qty == stocks) {
+					alert('Not enought stocks')
+				}else {
+					qtyCol.val(qty + 1);
+			 		recount();
+				}
+				
 				exist = true;
 
 			}
@@ -244,7 +251,12 @@
 		recount();
 	})
 
- 	$("#cart").on('input', '.quantity-box', function() {
+ 	$("#cart").on('input', '.quantity-box', function(e) {
+
+ 		if (e.which == 13) {
+ 			e.stopPropagation();
+ 			return false;
+ 		}
 
 		var quantity = parseInt($(this).val());
 		var currentStocks = $(this).data('stocks');
@@ -268,6 +280,7 @@
 
 		
 	})
+
 
 	$("#cart").on("blur focusout", ".quantity-box", function() {
 
