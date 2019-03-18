@@ -1,6 +1,7 @@
 	$(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var totalAmountDue = 0;
+	var totalDiscount = 0;
 	var transactionComplete = false;
 	var currency = '₱';
 
@@ -35,7 +36,7 @@
 									'<td><input data-stocks="'+result.stocks+'" type="text" value="'+quantity+'" class="quantity-box"></td>' +
 									'<td>'+ result.price +'</td>' +
 						 
-									'<td><span class="remove" style="font-size:12px;">Remove</span></td>' +
+									'<td><span class="remove" style="font-size:12px;">X</span></td>' +
 								'</tr>'
 							);
 						recount();
@@ -77,9 +78,10 @@
 							'<input name="id" type="hidden" value="'+ id +'">' +
 							'<td>'+ name +'</td>' +
 							'<td><input data-stocks="'+stocks+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+							'<td> <input type="text" value="0" placeholder="Discount" class="discount-input"></td>' +
 							'<td>'+ price +'</td>' +
-				 
-							'<td><span class="remove" style="font-size:12px;">Remove</span></td>' +
+				 			
+							'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
 						'</tr>'
 					);
 				recount();
@@ -135,7 +137,7 @@
 	 			for (i = 0; i < row; i++) {
 					var r = $("#cart tbody tr").eq(i).find('td');
 					var quantity = r.eq(1).find('input').val();
-					var price = r.eq(2).text().substring(1).replace(',','');
+					var price = r.eq(3).text().substring(1).replace(',','');
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
@@ -146,8 +148,8 @@
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);
 				}
-			 	
-			 	// total_amount -= parseInt(discount.substring(1));
+
+				total_amount -= totalDiscount;
 				// Receipt Items
 				$("#r-items-table tbody").empty();
 				$.each(sales, function(key, value) {
@@ -180,28 +182,30 @@
 		 				$("#payment-modal").modal('toggle');
 						$("#loader").hide();
 						//Transaction Summary 
-						$("#summary-due").text(currency + total_amount);
+		
 						$("#summary-payment").text( currency + payment);
 						$("#summary-change").text( currency + change);
-					 
-						$("#summary-total").text( currency + (total).toFixed(2) )
+					 	$("#summary-discount").text(currency + totalDiscount.toFixed(2));
+						$("#summary-total").text( currency + (total_amount).toFixed(2) )
 						
-						//Fill In Receipt
-						$("#r-due").text(currency + total_amount);
+						//Fill In Receipt 
 						$("#r-payment").text( currency + parseFloat(payment));
-					
 						$("#r-change").text( currency + change);
 						$("#r-cashier").text($("#user").text()); 
-						$("#r-total-amount").text( currency + (total).toFixed(2) )
+						$("#r-total-amount").text( currency + (total_amount).toFixed(2) )
+						$("#r-discount").text(currency + totalDiscount.toFixed(2));
 						$("#r-id").text(data);
-						totalAmountDue = 0;  
+
 					 	$("#cart tbody").empty();
 					 	$("#payment").val('');
 					 	$("#change").val('');
 					 	$("#amount-due").text(''); 
 					 	$("#amount-total").text('');
+					 	$("#amount-discount").text('');
 					 	item_table.clear().draw();
 					 	$("#btn").button('reset');
+					 	totalAmountDue = 0;  
+						totalDiscount = 0
 					 	
 					}
 				})
@@ -248,10 +252,29 @@
 
 	})
 
+
+
 	$("#cart").on('click', '.remove',function() {
 		$(this).parents('tr').remove();
 		recount();
 	})
+
+	$("#cart").on('input, change, keyup', '.discount-input', function(e) {
+		if (e.which == 13) {
+			e.stopPropagation();
+			return false;
+		}
+		
+		var discount = parseInt($(this).val());
+
+		if (discount != "") {
+			recount();
+		}else {
+			$(this).val('');
+		}
+
+	})
+
 
  	$("#cart").on('input', '.quantity-box', function(e) {
 
@@ -267,6 +290,7 @@
 			return quantity = 1;
 
 		if (!isNaN(quantity) && quantity != 0) {
+
 			if (quantity <= parseInt(currentStocks)) {
 				var row = $(this).parents("tr");
 				var priceCol = row.find('td').eq(2);
@@ -299,22 +323,23 @@
 	function recount() {
 		var row = $("#cart tbody tr").length;
 		var total = 0;
-	 
-		var discount = parseInt($("#amount-discount").text().substring(1));
-	 	
-	 	if (isNaN(discount))
-	 		discount = 0;
+		var discountAmount = 0;
 
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
 			var quantity = parseInt(r.eq(1).find('input').val());
-			var price = r.eq(2).text().substring(1).replace(',','');
-
+			var price = r.eq(3).text().substring(1).replace(',','');
+			var discount = parseInt(r.eq(2).find('input').val());
 			total += parseFloat(price) * quantity;
-		
+
+			discountAmount += isNaN(discount) == true ? 0 : discount ;
+			
 		}
-		$("#amount-due").text("₱" + (number_format(total.toFixed(2))));
-		$("#amount-total").text("₱" + number_format(total.toFixed(2)));
+		totalDiscount = discountAmount;
+		totalAmountDue = total - discountAmount;
+		
+		$("#amount-discount").text(currency + totalDiscount.toFixed(2));
+		$("#amount-total").text("₱" + number_format(totalAmountDue.toFixed(2)));
 	}
 
  
