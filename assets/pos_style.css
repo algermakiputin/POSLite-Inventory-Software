@@ -155,6 +155,11 @@ header {
 	border: none;
 	max-width: 50px;
 }
+
+.discount-input {
+	border: none;
+	max-width: 55px;
+}
  
 .input #right {
 	padding: 20px;

@@ -39,7 +39,7 @@
 		<div class="">
 			<div class="">
 				<div class=" header">
-					<div class="col-sm-8 box rightnone">
+					<div class="col-sm-7 box rightnone">
 					 
 						<h3>List of Items</h3>
 						 
@@ -61,7 +61,7 @@
 						</div>
 
 					</div>
-					<div class="col-sm-4 box">
+					<div class="col-sm-5 box">
 					 
 							<h3>Order Details</h3>
 					 
@@ -70,10 +70,11 @@
 								<table class="table" id="cart">
 									<thead>
 										<tr>			
-											<th width="30%">Product Name</th>
+											<th width="50%">Product Name</th>
 											<th width="15%">Quantity</th>
-											<th width="10%">Price</th>
-											<th width="3%"></th>	
+											<th width="15%">Discount</th>
+											<th width="15%">Price</th>
+											<th width="5%"></th>	
 										</tr>
 									</thead>
 									<tbody>
@@ -84,9 +85,8 @@
 						</div>
 					 
 						<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 15px 25px;">
-							<div>Sub Total:<span id="amount-due" class="pull-right"></span></div> 
-							<!-- <div id="discount-container">Discount:<span id="amount-discount" class="pull-right"></span></div> -->
-							<div style="">Total Amount:<span id="amount-total" class="pull-right"></span></div>
+							<div>Total Discount: <span id="amount-discount" class="pull-right">00.00</span></div> 
+							<div style="">Grand Total:<span id="amount-total" class="pull-right">00.00</span></div>
 							
 						</div>
 						<div class="col-md-12" style="padding: 15px 25px;">
@@ -98,9 +98,6 @@
 									 
 									<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
 									 
-									<!-- <div class="col-md-4">
-										<button type="button" style="border-radius: 0" class="btn btn-success form-control" data-toggle="modal" data-target="#discount-modal">Discount</button>
-									</div> -->
 								</div>
 								<div class="form-group">
 									<input type="submit" class="btn btn-primary form-control" name="" value="Process" id="btn" >
@@ -174,10 +171,9 @@
 										</tbody>
 									</table>
 									<hr>
-									<div class="text-right">
-										<div>Sub Total: <span id="r-due"></span></div> 
-										<!-- <div>Discount: <span id="r-discount"></span></div> -->
-										<div>Total Amount <span id="r-total-amount"></span></div>
+									<div class="text-right"> 
+										<div>Discount: <span id="r-discount"></span></div>
+										<div>Grand Total <span id="r-total-amount"></span></div>
 										<div>Payment: <span id="r-payment"></span></div>
 										<div>Change: <span id="r-change"></span></div>
 									</div>
@@ -189,17 +185,13 @@
 						</div>
 						<div class="col-md-5">
 							<h4 class="">Transaction Summary</h3> 
-								<table class="table">
+								<table class="table"> 
 									<tr>
-										<td>Sub Total:</td>
-										<td id="summary-due"></td>
-									</tr> 
-									<!-- <tr>
 										<td>Discount Amount:</td>
 										<td id="summary-discount"></td>
-									</tr> -->
+									</tr>
 									<tr>
-										<td>Total Amount:</td>
+										<td>Grand Amount:</td>
 										<td id="summary-total"></td>
 									</tr>
 									<tr>
