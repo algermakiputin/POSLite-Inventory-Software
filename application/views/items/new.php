@@ -61,7 +61,7 @@
 							</div>
 
 							<div class="form-group"> 
-								<label>Barcode:</label> 
+								<label>Description:</label> 
 								<textarea rows="5" maxlength="150" placeholder="Description" class="form-control" name="description" required="required"></textarea>
 							</div>
 							<div class="form-group"> 
