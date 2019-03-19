@@ -78,7 +78,7 @@
 							'<input name="id" type="hidden" value="'+ id +'">' +
 							'<td>'+ name +'</td>' +
 							'<td><input data-stocks="'+stocks+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-							'<td> <input type="text" value="0" placeholder="Discount" class="discount-input"></td>' +
+							'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
 							'<td>'+ price +'</td>' +
 				 			
 							'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
@@ -114,8 +114,6 @@
 		})
 
 		return exist;
-		
-
 	}
 
 	$("#process-form").submit(function(e) {
@@ -143,7 +141,8 @@
 							quantity : quantity, 
 							price : price,
 							name : r.eq(0).text(),
-							subtotal : parseFloat(price) * parseInt(quantity)
+							subtotal : parseFloat(price) * parseInt(quantity),
+							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val()
 						};
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);
@@ -161,7 +160,6 @@
 								'<td>'+currency+value.price +'</td>' +
 								'<td>'+value.quantity+'</td>' +
 								'<td>'+currency+value.subtotal.toFixed(2)+'</td>' +
-
 							'</tr>'
 						);
 				});
@@ -213,8 +211,6 @@
 			}  
 			
 			return alert("Insufficient Amount");
-		 
- 			
  		}
  		
  		return alert('Please add some items');
@@ -252,8 +248,6 @@
 
 	})
 
-
-
 	$("#cart").on('click', '.remove',function() {
 		$(this).parents('tr').remove();
 		recount();
@@ -264,11 +258,19 @@
 			e.stopPropagation();
 			return false;
 		}
-		
-		var discount = parseInt($(this).val());
 
+		var row = $(this).parents('tr');
+		var total = parseInt(row.find('input[name="qty"]').val()) * parseFloat(row.find('td').eq(3).text().substring(1));
+		var discount = parseInt($(this).val());
+	 
 		if (discount != "") {
+			if (total <= discount) {
+				alert('Discount cannot be greater or equal than the item total value');
+				$(this).val(0);
+			} 
+
 			recount();
+
 		}else {
 			$(this).val('');
 		}
