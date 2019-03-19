@@ -23,13 +23,16 @@
 					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate id="item-form">
 						<div class="col-lg-6 col-md-offset-3">
 							<div class="form-group">
+								<label>Barcode:</label>
 								<input type="text" placeholder="Item Barcode" required="required" class="form-control" name="barcode" value="">
 							</div>
-							<div class="form-group"> 					 
+							<div class="form-group"> 
+								<label>Item Name:</label>					 
 								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
 								
 							</div>
-							<div class="form-group">  
+							<div class="form-group"> 
+								<label>Category:</label> 
 								<select name="category" class="form-control" required="required">
 									<option value="">Select Category</option>
 									<?php foreach ($category as $cat): ?>
@@ -38,12 +41,15 @@
 								</select>
 							</div>
 							<div class="form-group">  
+									<label>Price:</label>
 								<input type="text" required="required" placeholder="Price" name="price" class="form-control" max="500000">
 							</div> 
-							<div class="form-group">  
+							<div class="form-group"> 
+								<label>Re-Ordering Level:</label> 
 								<input type="text" required="required" placeholder="Re Order Level" name="reorder" class="form-control" max="500000">
 							</div> 
 							<div class="form-group">  
+									<label>Supplier:</label>
 								<select name="supplier" class="form-control" required="required"> 
 									<option value="">Select Supplier</option>
 									<?php foreach ($suppliers as $supplier): ?>
@@ -54,7 +60,8 @@
 								</select>
 							</div>
 
-							<div class="form-group">  
+							<div class="form-group"> 
+								<label>Barcode:</label> 
 								<textarea rows="5" maxlength="150" placeholder="Description" class="form-control" name="description" required="required"></textarea>
 							</div>
 							<div class="form-group"> 

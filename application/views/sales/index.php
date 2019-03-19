@@ -87,12 +87,14 @@
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
-								<th width="15%">Sales ID</th>
-								<th width="20%">Date</th>
-								<th width="20%">Item Name</th> 
+								<th width="10%">Sales ID</th>
+								<th width="10%">Staff</th>
+								<th width="15%">Date</th>
+								<th width="15%">Item Name</th> 
 								<th width="10%">Quantity</th>
 								<th width="10%">Price</th>
-								<th width="15%">Total</th>  
+								<th width="10">Discount</th>
+								<th width="10%">Total</th>  
 								<th width="10%">Action</th>
 							</tr>
 						</thead>

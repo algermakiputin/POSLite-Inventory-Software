@@ -203,7 +203,9 @@ class SalesController extends CI_Controller {
 				'quantity' => $sale['quantity'],
 				'sales_id' => $sales_id, 
 				'price' => $sale['price'],
-				'name' => $sale['name']
+				'name' => $sale['name'],
+				'discount' => $sale['discount'],
+				'user_id' => $this->session->userdata('id')
 			];
 
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
@@ -255,17 +257,20 @@ class SalesController extends CI_Controller {
 			
 			foreach ($sales_description as $desc) {
 		 		$item = $this->db->where('id', $desc->item_id)->get('items')->row();
-		 		 
-				$sub_total += ((float)$desc->quantity * (float) $desc->price);
+		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
+		 		$staff = $user ? $user->username : 'Not found';
+				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
 				$datasets[] = [ 
 					$desc->sales_id,
+					$staff,
 					date('Y-m-d h:i:s a', strtotime($sale->date_time)), 
 					$desc->name,
 					$desc->quantity,
-					'₱' . (float)$desc->price,
-					'₱'. (float)$desc->quantity * (float)$desc->price,
+					'₱' . number_format((float)$desc->price),
+					'₱' . number_format($desc->discount),
+					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount),
 					'
-						<a class="btn btn-danger" href="'.base_url('SalesController/destroy/') . $desc->id.'">Delete</a>
+						<a class="btn btn-sm btn-danger" href="'.base_url('SalesController/destroy/') . $desc->id.'">Delete</a>
 					'
 				];
 			}
