@@ -218,17 +218,6 @@
 		
 	})
 
-	$("#discount-enter").click(function(e) {
-		e.preventDefault();
-		var discount = $("[name='discount']").val();
-		if (parseInt(discount)) {
-			$("#discount-container").show();
-			$("#amount-discount").text(currency +discount);
-			recount();
-			$("#discount-modal").modal("toggle");
-		}
-	})
-
 	$("#payment").keyup(function() {
 
 		var payment = parseInt($(this).val());
@@ -256,14 +245,17 @@
 	$("#cart").on('input, change, keyup', '.discount-input', function(e) {
 		if (e.which == 13) {
 			e.stopPropagation();
+			e.preventDefault();
 			return false;
 		}
 
 		var row = $(this).parents('tr');
-		var total = parseInt(row.find('input[name="qty"]').val()) * parseFloat(row.find('td').eq(3).text().substring(1));
+
+		var total = parseInt(row.find('input[name="qty"]').val()) * parseFloat(row.find('td').eq(3).text().substring(1).replace(',',''));
 		var discount = parseInt($(this).val());
 	 
 		if (discount != "") {
+	 
 			if (total <= discount) {
 				alert('Discount cannot be greater or equal than the item total value');
 				$(this).val(0);
