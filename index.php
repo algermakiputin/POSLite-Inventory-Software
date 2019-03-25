@@ -57,7 +57,7 @@
 
 
 	
-if ($_SERVER['SERVER_NAME'] == 'localhost')
+if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1')
 {
     //Development enviroment.
     define('SITE_LIVE', FALSE);
