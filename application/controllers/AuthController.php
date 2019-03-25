@@ -2,6 +2,11 @@
 class AuthController extends CI_Controller {
 
 	public function login() {
+
+		$this->load->dbutil();
+		if (!$this->dbutil->database_exists('poslitew')) {
+			return $this->load->view('buy');
+		}
 		$data['page_name'] = "Login";
 		$this->load->view('template/header',$data);
 		$this->load->view('login');
