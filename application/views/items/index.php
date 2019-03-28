@@ -28,7 +28,7 @@
              				<th width="20%">Item Name</th>
              				<th width="13%">Category</th> 
              				<th width="12%">Price</th>
-                            <th width="10%">Quantity</th>
+                            <th width="10%">Stocks</th>
                             <th width="12%">Total</th>
                             <th width="13%">Supplier</th>
              				<th width="10%">Status</th>
