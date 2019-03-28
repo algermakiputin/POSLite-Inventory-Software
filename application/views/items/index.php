@@ -44,8 +44,8 @@
                             ?>
                             <tr>
                  	 
-                 				<td><?php echo $item->name ?></td>
-                 				<td><?php echo $categoryModel->getName($item->category_id); ?></td> 
+                 				<td><?php echo ucwords($item->name) ?></td>
+                 				<td><?php echo ucwords($categoryModel->getName($item->category_id)); ?></td> 
                  				<td><?php echo '₱'. number_format($item_price,2) ?></td>
                                 <td><?php echo $orderingLevel->getQuantity($item->id)->quantity ? $orderingLevel->getQuantity($item->id)->quantity : 'Out of stock'; ?></td>
                                 <td><?php echo '₱'. number_format($capital,2) ?></td>
