@@ -47,19 +47,25 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<div id="widgets" style="display: none;">
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="sale-widget text-center">
 							Total Sales<br>
 							<b><span id="total-sales"></span></b>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
+						<div class="sale-widget text-center">
+							Total Expenses<br>
+							<b><span id="total-expense"></span></b>
+						</div>
+					</div>
+					<div class="col-md-3">
 						<div class="sale-widget text-center">
 							Profit<br>
 							<b><span id="total-profit"></span></b>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="sale-widget text-center">
 							Loss<br>
 							<b><span id="total-lost"></span></b>
@@ -80,10 +86,10 @@
 				</div>
 				<div class="col-lg-12"  id="table_view">
 					<?php if ($this->session->flashdata('success')): ?>
-                <div class="alert alert-success">
-                    <?php echo $this->session->flashdata('success') ?>
-                </div>
-            <?php endif; ?>
+						<div class="alert alert-success">
+							<?php echo $this->session->flashdata('success') ?>
+						</div>
+					<?php endif; ?>
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>

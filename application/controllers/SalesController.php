@@ -298,7 +298,8 @@ class SalesController extends CI_Controller {
 				'from' => $from,
 				'to' => $to,
 				'profit' => number_format($profit ? $profit : 0),
-				'lost' => number_format($lost)
+				'lost' => number_format($lost),
+				'expenses' => number_format($totalExpenses)
 			]);
 
 	}

@@ -187,6 +187,7 @@ $(document).ready(function() {
 			$("#total-sales").text('₱' + data.total_sales);
 			$("#total-profit").text('₱' + data.profit);
 			$("#total-lost").text('₱' + data.lost);
+			$("#total-expense").text('₱' + data.expenses);
 		}
 	});
 
