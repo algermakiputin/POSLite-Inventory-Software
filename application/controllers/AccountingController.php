@@ -1,4 +1,5 @@
 <?php 
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class AccountingController extends CI_Controller {
 	public $totalProfit = 0;

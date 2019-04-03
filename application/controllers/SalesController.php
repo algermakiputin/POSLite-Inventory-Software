@@ -1,4 +1,5 @@
 <?php
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class SalesController extends CI_Controller {
 
 	public function __construct() {
@@ -191,11 +192,14 @@ class SalesController extends CI_Controller {
 		$sales = $this->input->post('sales');
 		$this->load->model("PriceModel");
 		$this->db->trans_begin();
+
 		$this->db->insert('sales',[
 				'id' => null 
 			]);
+
 		$sales_id = $this->db->insert_id();
-		
+		$sales = $this->security->xss_clean($sales);
+
 		foreach ($sales as $sale) {
 
 			$data[] = [ 
@@ -207,7 +211,7 @@ class SalesController extends CI_Controller {
 				'discount' => $sale['discount'],
 				'user_id' => $this->session->userdata('id')
 			];
-
+			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
 			$this->db->where('item_id', $sale['id']);
 			$this->db->update('ordering_level');
@@ -219,12 +223,10 @@ class SalesController extends CI_Controller {
 		if ($this->db->trans_status() === FALSE)
 		{
 		        $this->db->trans_rollback();
+		        return false;
 		}
-		else
-		{
-		        $this->db->trans_commit();
-		}
-
+		 
+		$this->db->trans_commit(); 
 		echo $sales_id;
 		return;
 	}

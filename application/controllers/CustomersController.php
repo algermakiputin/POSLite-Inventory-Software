@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class CustomersController Extends CI_Controller {
 
 	public function __construct() {

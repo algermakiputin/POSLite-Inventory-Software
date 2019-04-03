@@ -20,6 +20,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
+					<?php echo form_open('items/insert', array('data-parsley-validate' => 'true', 'id' => 'item-form', 'method' => 'POST')) ?>
 					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate id="item-form">
 						<div class="col-lg-6 col-md-offset-3">
 							<div class="form-group">
@@ -69,7 +70,7 @@
 							</div>
 							
 						</div> 
-					</form>
+					<?php echo form_close(); ?>
 				</div>
 				<!-- /.row (nested) -->
 			</div>

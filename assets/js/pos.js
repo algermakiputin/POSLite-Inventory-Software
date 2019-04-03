@@ -15,7 +15,6 @@
 	 
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
-
 		if (event.code.length > 5) {
 			$.ajax({
 				type : 'POST',
@@ -57,6 +56,9 @@
 		pageLength : 10, 
 		ajax : {
 			url : base_url + 'items/data',
+			data : {
+				csrfName : csrfHash
+			},
 			type : 'POST'
 		},
 	});
