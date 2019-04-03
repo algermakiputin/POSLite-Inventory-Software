@@ -3,10 +3,10 @@ class UsersController extends CI_Controller {
  
 	public function __construct() {
 		parent::__construct();
-		
+		$this->checkLogin();
 	}
 	public function register_account( ) {
-		$this->checkLogin();
+		
 		$this->form_validation->set_rules('Username', 'Username', 'required|min_length[5]');
 		$this->form_validation->set_rules('Password', 'Password', 'required|min_length[8]');
 		$this->form_validation->set_rules('repeat_password', 'Repeat Password', 'required|matches[Password]');
@@ -22,6 +22,7 @@ class UsersController extends CI_Controller {
 		$password = $this->input->post('Password');
 		$account_type = $this->input->post('account_type');
 		$created_by = 'admin';
+
 		$exec = $this->UsersModel->insert_account($username,$password,$account_type,$date_created,$created_by);
 		if ($exec) {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Account Created Successfully</div>');
@@ -36,7 +37,7 @@ class UsersController extends CI_Controller {
 	}
 
 	public function delete($id){
-		$this->checkLogin();
+ 
 		$this->load->model('UsersModel');
 		$exec = $this->UsersModel->delete_account($id);
 		if ($exec) {
@@ -46,6 +47,7 @@ class UsersController extends CI_Controller {
 		$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps... Something Went Wrong Please Try Again.</div>' );
 		return redirect(base_url('users'));
 	}
+
 
 	public function users () {
 		$this->checkLogin();

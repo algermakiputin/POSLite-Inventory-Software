@@ -174,6 +174,7 @@ class ItemController extends CI_Controller {
 			'reorder_level' => $this->input->post('reorder')
 		);
 
+		$data = $this->security->xss_clean($data);
 		$this->db->insert('items', $data);
 		$item_id = $this->db->insert_id();
 		

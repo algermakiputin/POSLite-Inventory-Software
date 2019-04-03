@@ -11,7 +11,7 @@ class UsersModel extends CI_Model {
 			'date_created' => "$date_created",
 			'created_by' => "$created_by"
 			);
-		$this->load->database();
+		$data = $this->security->xss_clean($data);
 		return $this->db->insert('users', $data);
 	}
 
@@ -23,7 +23,7 @@ class UsersModel extends CI_Model {
 	}
 
 	public function delete_account($id) {
-	
+		$id = $this->security->xss_clean($id);
 		$this->db->where('id',$id);
 		$del = $this->db->delete('users');
 		return $del;
