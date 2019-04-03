@@ -38,7 +38,7 @@ class ItemController extends CI_Controller {
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('categories_model');
-
+		die();
 		$data['items'] = $this->ItemModel->itemList();
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
 
