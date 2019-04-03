@@ -13,7 +13,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<form method="POST" action="<?php echo base_url('expenses/insert') ?>" data-parsley-validate>
+					<?php echo form_open('expenses/insert', ['method' => 'POST']) ?> 
 						<div class="col-lg-6 col-md-offset-3">
 						 	<?php if ($this->session->flashdata('success')): ?>
 						 		<div class="form-group"> 
@@ -40,8 +40,7 @@
 								<input type="submit" name="" value="Save" class="btn btn-primary">
 							</div>
 						</div>
-						 
-					</form>
+					<?php echo form_close(); ?>
 				</div>
 				<!-- /.row (nested) -->
 			</div>
