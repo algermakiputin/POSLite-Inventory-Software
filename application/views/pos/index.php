@@ -218,6 +218,10 @@
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+	        var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
+	        var csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
+	    </script>
 		<script type="text/javascript" src="<?php echo base_url('assets/jquery.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo base_url('assets/jquery-ui/jquery-ui.js') ?>"></script>
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> -->

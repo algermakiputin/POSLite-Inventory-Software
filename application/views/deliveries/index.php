@@ -34,7 +34,7 @@
 						<tr>
 							<td><?php echo $data['supplier_name'] ?></td>
 							<td><?php echo $data['item'] ?></td>
-							<td><?php echo $data['price'] ?></td>
+							<td>₱<?php echo number_format($data['price']) ?></td>
 							<td><?php echo $data['quantity'] ?></td>
 							<td><?php echo $data['expiry_date'] ?></td>
 							<td><a href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $data['id'] ?>" class="btn btn-danger btn-sm">Delete</a></td>

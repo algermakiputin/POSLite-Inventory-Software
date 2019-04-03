@@ -233,7 +233,7 @@ $(document).ready(function() {
 	$("#supplier_table").DataTable({
 		ordering : false,
 		initComplete : function() {
-			$("#supplier_table_length").append('&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
+			$("#supplier_table_length").append('&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
 		}
 	});
 	$("#supplier_table").on('click','.edit',function() {
@@ -364,7 +364,7 @@ $(document).ready(function() {
 									'<option value="Needs Renewal">Needs Renewal</option>' + 
 									'<option value="Not Open">Not Open</option>' + 
 								'</select>'
-					 +'&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
+					 +'&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
 			
 			$("#member-status").change(function() {
 				customer_table.columns(7).search($(this).val()).draw();

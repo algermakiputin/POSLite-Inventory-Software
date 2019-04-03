@@ -18,7 +18,7 @@
 						<hr>
 					</div>
 				 	<?php foreach ($items as $item): ?>
-						<form method="POST" action="<?php echo base_url('ItemController/add_stocks') ?>">
+				 		<?php echo form_open('ItemController/add_stocks', ['methods' => 'POST']) ?> 
 							<div class="col-md-6 form-group">
 								<div class="col-md-4">
 									<?php echo ucwords($item->name) ?>:
@@ -38,7 +38,7 @@
 								</div>
 								 
 							</div>
-						</form>
+						<?php form_close() ?>
 					<?php endforeach; ?>
 				</div>
 				<!-- /.row (nested) -->

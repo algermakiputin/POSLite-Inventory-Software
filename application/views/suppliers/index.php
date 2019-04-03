@@ -67,6 +67,7 @@
         <h4 class="modal-title">New Supplier</h4>
       </div>
       <div class="modal-body">
+        <?php echo form_open('suppliers/insert', ['method' => 'POST']) ?>
         <form method="POST" action="<?php echo base_url('suppliers/insert') ?>">
         	<div class="form-group">
         		<input required="required" type="text" class="form-control" name="name" placeholder="Name">
@@ -83,8 +84,7 @@
         	<div class="form-group">
         		<button class="btn btn-success">Save</button>
         	</div>
-        </form>
-
+        <?php echo form_close(); ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -104,7 +104,7 @@
         <h4 class="modal-title">Edit Supplier</h4>
       </div>
       <div class="modal-body">
-        <form method="POST" action="<?php echo base_url('suppliers/update') ?>" id="edit-supplier-form">
+        <?php echo form_open('suppliers/update', ['method' => 'POST']) ?>
           <input type="hidden" name="id" id="supplier_id">
           <div class="form-group">
             <input required="required" type="text" class="form-control" name="name" placeholder="Name">
@@ -121,7 +121,7 @@
           <div class="form-group">
             <button class="btn btn-success">Save</button>
           </div>
-        </form>
+        <?php echo form_close() ?>
 
       </div>
       <div class="modal-footer">

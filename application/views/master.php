@@ -68,7 +68,10 @@
         <!-- /#page-wrapper -->
 
     </div>
-    
+    <script type="text/javascript">
+        var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
+        var csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
+    </script>
     <?php $this->load->view('template/footer') ?> 
 
 </body>

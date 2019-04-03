@@ -14,7 +14,7 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-lg-6 col-md-offset-3">
-						<form method="POST" action="<?php echo base_url('items/update') ?>" id="item-form">
+						<?php echo form_open('items/update', array('method' => 'post', 'id' => 'item-form')) ?>
 							<div class="form-group"> 
 								<label>Barcode:</label>
 								<input type="text" value="<?php echo $item->barcode; ?>" name="name" class="form-control" required="required"> 
@@ -52,7 +52,7 @@
 							<div class="form-group"> 
 								<button class="btn btn-primary">Update</button>
 							</div>
-						</form>
+						<?php echo form_close(); ?>
 					</div>
 					<!-- /.col-lg-6 (nested) -->
 					
