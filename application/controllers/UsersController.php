@@ -5,9 +5,13 @@ class UsersController extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->checkLogin();
+		
 	}
 	public function register_account( ) {
 		
+		if (SITE_LIVE) 
+			return redirect('users');
+
 		$this->form_validation->set_rules('Username', 'Username', 'required|min_length[5]');
 		$this->form_validation->set_rules('Password', 'Password', 'required|min_length[8]');
 		$this->form_validation->set_rules('repeat_password', 'Repeat Password', 'required|matches[Password]');
@@ -38,7 +42,9 @@ class UsersController extends CI_Controller {
 	}
 
 	public function delete($id){
- 
+ 		if (SITE_LIVE) 
+			return redirect('users');
+		
 		$this->load->model('UsersModel');
 		$exec = $this->UsersModel->delete_account($id);
 		if ($exec) {
