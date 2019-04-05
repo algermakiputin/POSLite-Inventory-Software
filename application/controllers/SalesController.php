@@ -37,14 +37,14 @@ class SalesController extends CI_Controller {
 			$sub_total = 0;
 		 
 			foreach ($sales_description as $desc) {
-				$item = $this->db->where('id', $desc->item_id)->get('items')->row();
-				$price = $this->db->where('item_id', $desc->item_id)->get('prices')->row()->price;
+	 			
+				$price = $desc->price;
 				$sub_total += ((float)$desc->quantity * (float) $price);
 				
 				if ($desc) {
 					$tbody .= "<tr>
 						<td>".date('Y-m-d h:i:s a', strtotime($sale->date_time))."</td>
-						<td>".ucwords($item->name)."</td>
+						<td>".ucwords($desc->name)."</td>
 						<td>".$desc->quantity."</td>
 						<td>".('<span class="sign">&#x20b1;</span>'. $price)."</td>
 						<td>".('&#x20b1;'. number_format((float)$desc->quantity * (float)$price))."</td>
