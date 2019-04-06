@@ -65,9 +65,13 @@
             <?php $this->load->view($content) ?>
 
         </div>
+         <footer style="z-index: 100;position: absolute;bottom: 0;width: 100%;text-align: right;padding: 3px 10px;font-size: 12px;">
+            <p style="color: #333">Developed By: <a href="https://algermakiputin.com">Alger Makiputin</a></p>
+        </footer>
         <!-- /#page-wrapper -->
-
+       
     </div>
+
     <script type="text/javascript">
         var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
         var csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
