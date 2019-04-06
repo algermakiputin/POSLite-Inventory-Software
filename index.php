@@ -56,7 +56,7 @@
 
 
 
-echo $_SERVER['SERVER_NAME'];
+ 
 if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1')
 {
     //Development enviroment.
@@ -64,7 +64,7 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
     define('ENVIRONMENT', 'development');
 
 }
-else
+else if ($_SERVER['SERVER_NAME'] == 'poslite.herokuapp.com')
 {
     //Live enviroment.
     define('SITE_LIVE', TRUE);
