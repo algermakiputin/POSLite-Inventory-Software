@@ -13,8 +13,8 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-lg-6 col-md-offset-3">
-						<?php echo form_open('items/update', array('method' => 'post', 'id' => 'item-form')) ?>
+					<?php echo form_open_multipart('items/update', array('method' => 'post', 'id' => 'item-form')) ?>
+						<div class="col-lg-6 col-md-offset-2">
 							<div class="form-group"> 
 								<label>Barcode:</label>
 								<input type="text" value="<?php echo $item->barcode; ?>" name="name" class="form-control" required="required"> 
@@ -36,14 +36,13 @@
 								</select>
 							</div>
 							<div class="form-group"> 
+								<label>Capital/Unit:</label>
+								<input value="<?php echo $price->getCapital($item->id); ?>" max="500000" type="text" name="capital" class="form-control" required="required">
+							</div> 
+							<div class="form-group"> 
 								<label>Price:</label>
 								<input value="<?php echo $price->getPrice($item->id); ?>" max="500000" type="text" name="price" class="form-control" required="required">
-							</div> 
-
-							<div class="form-group"> 
-								<label>Re Order Level:</label>
-								<input value="<?php echo $item->reorder_level ?>" max="500000" type="text" name="reorder" class="form-control" required="required">
-							</div> 
+							</div>  
 
 							<div class="form-group"> 
 								<label>Description:</label>
@@ -52,8 +51,21 @@
 							<div class="form-group"> 
 								<button class="btn btn-primary">Update</button>
 							</div>
-						<?php echo form_close(); ?>
-					</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<div class="productImage" id="imagePreview">
+									<?php if ($item->image && file_exists('./uploads/' . $item->image)): ?>
+										<img style="width: inherit;height: inherit;" src="<?php echo base_url('uploads/' . $item->image) ?>">
+									<?php endif; ?>
+								</div>
+								<label>Product Image
+									<input type="file" name="productImage" id="productImage">
+								</label>
+							</div>
+						</div>
+					<?php echo form_close(); ?>
+					
 					<!-- /.col-lg-6 (nested) -->
 					
 					<!-- /.col-lg-6 (nested) -->

@@ -201,7 +201,7 @@ class SalesController extends CI_Controller {
 		$sales = $this->security->xss_clean($sales);
 
 		foreach ($sales as $sale) {
-
+			$transactionProfit = $this->db->where('item_id', $sale['id'])->get('prices')->row()->capital;
 			$data[] = [ 
 				'item_id' => $sale['id'],
 				'quantity' => $sale['quantity'],
@@ -209,6 +209,7 @@ class SalesController extends CI_Controller {
 				'price' => $sale['price'],
 				'name' => $sale['name'],
 				'discount' => $sale['discount'],
+				'profit' => $transactionProfit,
 				'user_id' => $this->session->userdata('id')
 			];
 			
@@ -242,7 +243,7 @@ class SalesController extends CI_Controller {
 		$sales = $this->filterReports($from, $to);
 		$count = count($sales);
 		$totalExpenses = 0;
-
+		$transactionProfit = 0;
 		$expenses = $this->db->select("SUM(cost) as total")
 							->where('date >=', $from)
 							->where('date <=', $to)
@@ -262,10 +263,12 @@ class SalesController extends CI_Controller {
 		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
 		 		$staff = $user ? $user->username : 'Not found';
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
+				$saleProfit = (float)$desc->profit * (int)$desc->quantity;
+				$transactionProfit += $saleProfit;
 				$datasets[] = [ 
-					$desc->sales_id,
+					date('Y-m-d', strtotime($sale->date_time)), 
+					'₱' . number_format($saleProfit),
 					$staff,
-					date('Y-m-d h:i:s a', strtotime($sale->date_time)), 
 					$desc->name,
 					$desc->quantity,
 					'₱' . number_format((float)$desc->price),
@@ -284,7 +287,7 @@ class SalesController extends CI_Controller {
 		$profit = 0;
 		$lost = 0;
 		if ($this->input->post('draw') != 1)
-			$profit = $totalSales - $totalExpenses;
+			$profit = $transactionProfit;
 
 		if ($profit < 0) {
 			$lost = abs($profit);
@@ -299,8 +302,7 @@ class SalesController extends CI_Controller {
 				'total_sales' => number_format($totalSales),
 				'from' => $from,
 				'to' => $to,
-				'profit' => number_format($profit ? $profit : 0),
-				'lost' => number_format($lost),
+				'profit' => number_format($profit ? $profit : 0), 
 				'expenses' => number_format($totalExpenses)
 			]);
 

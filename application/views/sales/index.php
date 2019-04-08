@@ -47,30 +47,24 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<div id="widgets" style="display: none;">
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<div class="sale-widget text-center">
 							Total Sales<br>
 							<b><span id="total-sales"></span></b>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<div class="sale-widget text-center">
 							Total Expenses<br>
 							<b><span id="total-expense"></span></b>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<div class="sale-widget text-center">
 							Profit<br>
 							<b><span id="total-profit"></span></b>
 						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="sale-widget text-center">
-							Loss<br>
-							<b><span id="total-lost"></span></b>
-						</div>
-					</div>
+					</div> 
 				</div>
 
 				<div class="col-md-6" id="graph-menu" style="display: none;">
@@ -93,9 +87,9 @@
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
-								<th width="10%">Sales ID</th>
+								<th width="10%">Date</th>
+								<th width="15%">Transaction Profit</th>
 								<th width="10%">Staff</th>
-								<th width="15%">Date</th>
 								<th width="15%">Item Name</th> 
 								<th width="10%">Quantity</th>
 								<th width="10%">Price</th>

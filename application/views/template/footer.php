@@ -19,5 +19,5 @@
 <script src="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.js'); ?>"></script>
 
 <script src="<?php echo base_url('assets/vendor/parsley.min.js') ?>"></script>
-
+<script src="<?php echo base_url('assets/js/preview-image.js') ?>"></script> 
 <script src="<?php echo base_url('assets/js/index.js') ?>"></script> 

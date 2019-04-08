@@ -4,10 +4,25 @@ body {
   border-collapse: collapse;
 }
 
+.productImage {
+  background: #eee;
+  background-size: cover;
+  background-size: 300px 300px;
+  background-repeat: no-repeat;
+  border: solid 1px #ddd;
+  height: 300px;
+  width: 300px;
+}
+
+.product-thumbnail {
+  width: 45px;height: 45px;background: #eee;margin: auto ;text-align: center;display: flex;justify-content: center;align-content: center;flex-direction: column;">
+                                
+}
+
 table td {
   vertical-align: middle !important;
 
-}
+} 
 
 .sale-widget {
   padding: 10px;
