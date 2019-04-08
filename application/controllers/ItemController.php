@@ -196,14 +196,14 @@ class ItemController extends CI_Controller {
 				'status' => 1,
 				'barcode' => $barcode 
 			);
-		$data = $this->security->xss_clean($data);
+		
 		if ($productImage) {
 			$upload = $this->do_upload('productImage');
 			if (array_key_exists('upload_data', $upload)) 
 				$data['image'] = $upload['upload_data']['file_name'];
-
 		}
 		
+		$data = $this->security->xss_clean($data);
 		$this->db->insert('items', $data);
 		$item_id = $this->db->insert_id();
 		$this->HistoryModel->insert('Register new item: ' . $name);

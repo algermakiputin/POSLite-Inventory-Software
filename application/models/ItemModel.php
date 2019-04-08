@@ -12,7 +12,7 @@ class ItemModel extends CI_Model {
 
 	}
 
-	public function insertItem($name, $category, $description,$supplier_id,$barcode, $criticalLevel) 
+	public function insertItem($name, $category, $description,$supplier_id,$barcode) 
 	{
 
 		$data = array(
@@ -21,9 +21,7 @@ class ItemModel extends CI_Model {
 			'description' => $description, 
 			'supplier_id' => $supplier_id,
 			'status' => 1,
-			'barcode' => $barcode,
-			'critical_level' => $criticalLevel
-
+			'barcode' => $barcode 
 			);
 		
 		$sql = $this->db->insert('items', $data);
@@ -69,7 +67,7 @@ class ItemModel extends CI_Model {
 			'category_id' => $category,
 			'description' => $description,
 			);
-
+		$data = $this->security->xss_clean($data);
 		if ($image != '')
 			$data['image'] = $image;
  
