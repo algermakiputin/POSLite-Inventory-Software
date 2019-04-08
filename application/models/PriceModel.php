@@ -29,8 +29,6 @@ class PriceModel extends CI_Model {
 
 	public function update($price,$capital, $item_id) {
 
-		$this->load->database();
-
 		return $this->db->where('item_id', $item_id)->update('prices',[
 				'price' => $price,
 				'capital' => $capital,

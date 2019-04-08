@@ -15,12 +15,12 @@ $(document).ready(function() {
 
 	$.previewImage(
 	   {
-	   	'xOffset': 10,  // x-offset from cursor
-	   'yOffset': 10,  // y-offset from cursor
+	   	'xOffset': 30,  // x-offset from cursor
+	   'yOffset': -270,  // y-offset from cursor
 	   'fadeIn': 1000, // delay in ms. to display the preview
 	   'css': {        // the following css will be used when rendering the preview image.
-	      'padding': '20px',
-	      'border': '5px solid black'
+	    
+	      'border': '2px solid black', 
 	   }
 	   }
 	);

@@ -37,9 +37,9 @@ class ItemController extends CI_Controller {
 	}
 
    public function do_upload($file)
-    {
+    { 
         $config['upload_path']          = './uploads/';
-        $config['allowed_types']        = 'gif|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|jpeg';
         $config['max_size']             = 2000;
         $config['max_width']            = 2000;
         $config['max_height']           = 2000;
@@ -160,6 +160,7 @@ class ItemController extends CI_Controller {
 	}
 
 	public function insert() {
+		$this->demoRestriction();
 		$name = $this->input->post('name');
 		$category = $this->input->post('category');
 		$description = $this->input->post('description');
@@ -168,7 +169,6 @@ class ItemController extends CI_Controller {
 		$price = $this->input->post('price'); 
 		$capital = $this->input->post('capital');
 		$productImage = $_FILES['productImage'];
-		
 	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
@@ -188,40 +188,35 @@ class ItemController extends CI_Controller {
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('HistoryModel');
 		$quantity = 0;
-		
-
+		$data = array(
+				'name' => $name,
+				'category_id' => $category,
+				'description' => $description, 
+				'supplier_id' => $supplier_id,
+				'status' => 1,
+				'barcode' => $barcode 
+			);
 		$data = $this->security->xss_clean($data);
-		
 		if ($productImage) {
 			$upload = $this->do_upload('productImage');
-			if (array_key_exists('upload_data', $upload)) {
-				$data = array(
-					'name' => $name,
-					'category_id' => $category,
-					'description' => $description, 
-					'supplier_id' => $supplier_id,
-					'status' => 1,
-					'barcode' => $barcode,   
-					'image' => $upload['upload_data']['file_name']
-				);
-				$this->db->insert('items', $data);
-				$item_id = $this->db->insert_id();
-			}
+			if (array_key_exists('upload_data', $upload)) 
+				$data['image'] = $upload['upload_data']['file_name'];
 
 		}
 		
+		$this->db->insert('items', $data);
+		$item_id = $this->db->insert_id();
 		$this->HistoryModel->insert('Register new item: ' . $name);
 		$this->PriceModel->insert($price,$capital, $item_id);
 		$this->OrderingLevelModel->insert($item_id);
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
 
-		
 
 	}
 
 	public function delete($id){
-
+		$this->demoRestriction();
 		$this->load->model('ItemModel');
 		$this->load->model('HistoryModel');
 		$item = $this->ItemModel->item_info($id);
@@ -235,6 +230,11 @@ class ItemController extends CI_Controller {
 		$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong</div>');
 		return redirect(base_url('items'));
 		
+	}
+
+	public function demoRestriction() {
+		$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">You cannot Add, Modify or Delete data in Demo Version.</div>');
+		return redirect(base_url('items'));
 	}
 
 	public function stock_in($id) {
@@ -300,18 +300,10 @@ class ItemController extends CI_Controller {
 	}
 
 	public function update() {
+		$this->demoRestriction();
+		//validation Form
+		$this->updateFormValidation();
 		$this->load->model('ItemModel');
-		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
-		$this->form_validation->set_rules('category', 'Category', 'required|max_length[150]');
-		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]');
-		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]'); 
-		$this->form_validation->set_rules('id', 'required'); 
- 
-		if ($this->form_validation->run() == FALSE) {
-			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opss Something Went Wrong Updating The Item. Please Try Again.</div>');
-				return redirect(base_url('items'));
-		} 
-
 		$this->load->model('ItemModel');
 		$this->load->model('PriceModel');
 		$this->load->model('HistoryModel');
@@ -328,11 +320,14 @@ class ItemController extends CI_Controller {
 		$productImage = $_FILES['productImage'];
 
 		if ($productImage['name']) {
-			$currentImagePath = './uploads/' . $this->db->where('id', $id)->get('items')->row()->image;
-		
-			unlink($currentImagePath);
+			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
+			$currentImagePath = './uploads/' . $fileName;
+			//Delete Current Image
+			if ($fileName) 
+				unlink($currentImagePath);
+			//Then Upload and save the image filename to database
 			$upload = $this->do_upload('productImage');
-			
+			 
 		}
 		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
 		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name']);
@@ -353,8 +348,20 @@ class ItemController extends CI_Controller {
 
 			return redirect(base_url('items'));
 		}
-	 
-		 		
+	 		
+	}
+
+	public function updateFormValidation() {
+		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
+		$this->form_validation->set_rules('category', 'Category', 'required|max_length[150]');
+		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]');
+		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]'); 
+		$this->form_validation->set_rules('id', 'required'); 
+ 
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opss Something Went Wrong Updating The Item. Please Try Again.</div>');
+				return redirect(base_url('items'));
+		} 
 	}
 
 }
