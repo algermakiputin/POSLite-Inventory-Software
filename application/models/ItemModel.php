@@ -63,14 +63,16 @@ class ItemModel extends CI_Model {
 
 	public function update_item($id,$name,$category,$description,$price_id, $image) {
 		$item = $this->db->where('id',$id)->get('items')->row();
-
+	
 		$data = array(
 			'name' => $name,
 			'category_id' => $category,
 			'description' => $description,
-			'image' => $image
 			);
 
+		if ($image != '')
+			$data['image'] = $image;
+ 
 		return $this->db->where('id',$id)->update('items',$data);
 	}
 
