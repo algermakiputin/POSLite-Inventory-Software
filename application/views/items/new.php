@@ -20,9 +20,9 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<?php echo form_open('items/insert', array('data-parsley-validate' => 'true', 'id' => 'item-form', 'method' => 'POST')) ?>
+					<?php echo form_open_multipart('items/insert', array('data-parsley-validate' => 'true', 'id' => 'item-form', 'method' => 'POST')) ?>
 					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate id="item-form">
-						<div class="col-lg-6 col-md-offset-3">
+						<div class="col-lg-6 col-md-offset-2 ">
 							<div class="form-group">
 								<label>Barcode:</label>
 								<input type="text" placeholder="Item Barcode" required="required" class="form-control" name="barcode" value="">
@@ -42,13 +42,13 @@
 								</select>
 							</div>
 							<div class="form-group">  
-									<label>Price:</label>
+									<label>Capital/Unit:</label>
+								<input type="text" required="required" placeholder="Capital Per Unit" name="capital" class="form-control" max="500000">
+							</div>
+							<div class="form-group">  
+									<label>Selling Price:</label>
 								<input type="text" required="required" placeholder="Price" name="price" class="form-control" max="500000">
-							</div> 
-							<div class="form-group"> 
-								<label>Re-Ordering Level:</label> 
-								<input type="text" required="required" placeholder="Re Order Level" name="reorder" class="form-control" max="500000">
-							</div> 
+							</div>  
 							<div class="form-group">  
 									<label>Supplier:</label>
 								<select name="supplier" class="form-control" required="required"> 
@@ -70,6 +70,16 @@
 							</div>
 							
 						</div> 
+						<div class="col-lg-4">
+							<div class="form-group">
+								<div class="productImage" id="imagePreview">
+									
+								</div>
+								<label>Product Image
+									<input type="file" name="productImage" id="productImage">
+								</label>
+							</div>
+						</div>
 					<?php echo form_close(); ?>
 				</div>
 				<!-- /.row (nested) -->

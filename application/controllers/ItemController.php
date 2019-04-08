@@ -36,6 +36,27 @@ class ItemController extends CI_Controller {
 		return;
 	}
 
+   public function do_upload($file)
+    {
+        $config['upload_path']          = './uploads/';
+        $config['allowed_types']        = 'gif|jpg|png';
+        $config['max_size']             = 2000;
+        $config['max_width']            = 2000;
+        $config['max_height']           = 2000;
+        $config['encrypt_name'] 		= TRUE;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+
+        if ( ! $this->upload->do_upload($file))
+        {
+        	return $error = array('error' => $this->upload->display_errors());
+        }
+         
+        return $data = array('upload_data' => $this->upload->data());
+
+
+    }
+
 	public function items () {
 		$this->load->model('ItemModel');
 		$this->load->model('PriceModel');
@@ -119,9 +140,8 @@ class ItemController extends CI_Controller {
 	}
 
 	public function new() {
-		$this->load->database();
+		 
 		$this->load->model('categories_model'); 
-
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'new_item';
@@ -146,14 +166,16 @@ class ItemController extends CI_Controller {
 		$supplier_id = $this->input->post('supplier');
 		$barcode = $this->input->post('barcode');
 		$price = $this->input->post('price'); 
-
+		$capital = $this->input->post('capital');
+		$productImage = $_FILES['productImage'];
+		
+	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
 		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]|trim');
 		$this->form_validation->set_rules('barcode', 'Barcode', 'required|is_unique[items.barcode]|trim');
 		$this->form_validation->set_rules('supplier', 'Supplier', 'required|trim');
-		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]|trim');  
-		$this->form_validation->set_rules('reorder', 'Price', 'required|max_length[500000]|trim');
+		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]|trim');   
  
 		if ( $this->form_validation->run() == FALSE ) {
 			$this->session->set_flashdata('errorMessage', 
@@ -162,27 +184,34 @@ class ItemController extends CI_Controller {
 		}
 
 		$this->load->model('PriceModel');
-		$quantity = 0;
-
 		$this->load->model('ItemModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('HistoryModel');
-		$data = array(
-			'name' => $name,
-			'category_id' => $category,
-			'description' => $description, 
-			'supplier_id' => $supplier_id,
-			'status' => 1,
-			'barcode' => $barcode,  
-			'reorder_level' => $this->input->post('reorder')
-		);
+		$quantity = 0;
+		
 
 		$data = $this->security->xss_clean($data);
-		$this->db->insert('items', $data);
-		$item_id = $this->db->insert_id();
+		
+		if ($productImage) {
+			$upload = $this->do_upload('productImage');
+			if (array_key_exists('upload_data', $upload)) {
+				$data = array(
+					'name' => $name,
+					'category_id' => $category,
+					'description' => $description, 
+					'supplier_id' => $supplier_id,
+					'status' => 1,
+					'barcode' => $barcode,   
+					'image' => $upload['upload_data']['file_name']
+				);
+				$this->db->insert('items', $data);
+				$item_id = $this->db->insert_id();
+			}
+
+		}
 		
 		$this->HistoryModel->insert('Register new item: ' . $name);
-		$this->PriceModel->insert($price, $item_id);
+		$this->PriceModel->insert($price,$capital, $item_id);
 		$this->OrderingLevelModel->insert($item_id);
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
@@ -275,8 +304,7 @@ class ItemController extends CI_Controller {
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
 		$this->form_validation->set_rules('category', 'Category', 'required|max_length[150]');
 		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]');
-		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]');
-		$this->form_validation->set_rules('reorder', 'Re Order Level', 'required|max_length[500000]');
+		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]'); 
 		$this->form_validation->set_rules('id', 'required'); 
  
 		if ($this->form_validation->run() == FALSE) {
@@ -292,13 +320,22 @@ class ItemController extends CI_Controller {
 		$updated_category = $this->input->post('category');
 		$updated_desc = strtolower($this->input->post('description'));
 		$updated_price = $this->input->post('price'); 
+		$capital = $this->input->post('capital');
 		$id = $this->input->post('id');
 		$item = $this->db->where('id', $id)->get('items')->row();
 		$currentPrice = $this->PriceModel->getPrice($id);
 		$reorder = $this->input->post('reorder');
+		$productImage = $_FILES['productImage'];
 
-		$price_id = $this->PriceModel->update($updated_price, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $reorder);
+		if ($productImage['name']) {
+			$currentImagePath = './uploads/' . $this->db->where('id', $id)->get('items')->row()->image;
+		
+			unlink($currentImagePath);
+			$upload = $this->do_upload('productImage');
+			
+		}
+		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
+		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name']);
 
 		if ($update) {
 			
