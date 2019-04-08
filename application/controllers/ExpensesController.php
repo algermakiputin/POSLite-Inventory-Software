@@ -9,8 +9,6 @@ class ExpensesController extends CI_Controller {
  		$data['thisMonth'] = $this->db->select_sum('cost')->from('expenses')
  								->where('DATE_FORMAT(date, "%m") =', Date('m'))
  								->get()->result();
-
- 
 		$this->load->view('master', $data);
 	}
 
@@ -25,12 +23,13 @@ class ExpensesController extends CI_Controller {
 		$this->form_validation->set_rules("date", 'Date' ,"required|max_length[100]");
 
 		if ($this->form_validation->run()) {
-			$this->db->insert('expenses', [
+			$data = $this->security->xss_clean([
 				'type' => $this->input->post('type'),
 				'cost' => $this->input->post('cost'),
 				'date' => $this->input->post('date'),
 
 			]);
+			$this->db->insert('expenses', $data);
 			$this->session->set_flashdata("success", "Expense added successfully");
 		}
 
@@ -39,6 +38,7 @@ class ExpensesController extends CI_Controller {
 	}
 
 	public function destroy($id) {
+		$id = $this->security->xss_clean($id);
 		$this->db->where('id', $id)->delete('expenses');
 		$this->session->set_flashdata('success', 'Deleted successfully');
 		return redirect('expenses');

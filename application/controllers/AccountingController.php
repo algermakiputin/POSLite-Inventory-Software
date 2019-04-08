@@ -11,13 +11,11 @@ class AccountingController extends CI_Controller {
 		$data['content'] = "accounting/index";
 		$data['profit'] = $this->totalProfit;
 		$this->load->view('master',$data);;
-
 	}
 
 	public function data() {
 		$start = $this->input->post("columns[0][search][value]");
 		$end = $this->input->post("columns[1][search][value]");
-
 		$data = $this->table($start, $end);
 		$count = count($data);
 		echo json_encode([

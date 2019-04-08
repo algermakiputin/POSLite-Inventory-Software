@@ -12,27 +12,9 @@ class ItemModel extends CI_Model {
 
 	}
 
-	public function insertItem($name, $category, $description,$supplier_id,$barcode) 
-	{
-
-		$data = array(
-			'name' => $name,
-			'category_id' => $category,
-			'description' => $description, 
-			'supplier_id' => $supplier_id,
-			'status' => 1,
-			'barcode' => $barcode 
-			);
-		
-		$sql = $this->db->insert('items', $data);
-
-		if ($sql) {
-			return $this->db->insert_id();
-		}
-	}
 
 	public function deleteItem($id) {
-		
+		$id = $this->security->xss_clean($id);
  		$this->db->trans_start();
  		$this->db->where('item_id', $id)->delete('ordering_level');
 		$this->db->where('item_id', $id)->delete('prices');
@@ -48,12 +30,12 @@ class ItemModel extends CI_Model {
 	}
 
 	public function getDetails($id) {
-
+		$id = $this->security->xss_clean($id);
 		return $this->db->where('id', $id)->get('items')->row();
 	}
 
 	public function item_info($id) {
-
+		$id = $this->security->xss_clean($id);
 		$sql = $this->db->where('id', $id)->get('items');
 		return $sql->row();
 
@@ -75,13 +57,11 @@ class ItemModel extends CI_Model {
 	}
 
 	public function get_all_item() {
-		$this->load->database();
 		$items = $this->db->select('name')->get('items');
 		return $items->result_array();
 	}
 
 	public function total() {
-
 		return $this->db->select("SUM(prices.price * ordering_level.quantity) as total")
 					->from("items")
 					->join("prices", "prices.item_id = items.id", "both")

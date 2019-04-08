@@ -24,7 +24,6 @@ class CategoriesController Extends CI_Controller {
 
 	public function get() {
 		$categories = $this->db->where('active', 1)->get('categories')->result();
-
 		echo json_encode($categories);
 	}
 
@@ -37,7 +36,7 @@ class CategoriesController Extends CI_Controller {
 			$this->load->model('HistoryModel');
 			$this->HistoryModel->insert('Register Category: '. $category);
 		 	$this->db->insert('categories', [
-		 			'name' => $category,
+		 			'name' => $this->security->xss_clean($category),
 		 			'active' => 1
 		 		]);
 		 	$this->session->set_flashdata('success','Category has been added successfully');
@@ -51,6 +50,7 @@ class CategoriesController Extends CI_Controller {
 		if(empty($id))  
 			return redirect(base_url('categories'));
 		
+		$id = $this->security->xss_clean($id);
 		$this->load->model('categories_model');
 		$this->load->model('HistoryModel');
 		$categoryName = $this->categories_model->getName($id);
