@@ -10,9 +10,7 @@ class DeliveriesController extends CI_Controller
 	}
 
 	public function new() {
-		$this->load->database();
 		$this->load->model('PriceModel');
-	 
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
  		$data['content'] = "deliveries/new";
@@ -22,14 +20,11 @@ class DeliveriesController extends CI_Controller
 
 
 	public function insert() {
-	 
-		$this->load->database();
-
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
 			'expiry_date' => date('Y-m-d', strtotime($this->input->post('expiry_date')))
 			);
-
+		$data = $this->security->xss_clean($data);
 		$this->db->insert('delivery',$data);
 		
 		$delivery_id = $this->db->insert_id();
@@ -49,7 +44,6 @@ class DeliveriesController extends CI_Controller
 	}
 
 	public function index() {
-		$this->load->database();
 		
 		$dataSet = [];
 		$deliveries = $this->db->get('delivery')->result();
@@ -68,9 +62,6 @@ class DeliveriesController extends CI_Controller
 				];
 			}
 		}
-
-	  
-
 		$data['page'] = "Deliveries"; 
  		$data['dataSet'] = $dataSet;
  		$data['content'] = "deliveries/index";
@@ -79,6 +70,7 @@ class DeliveriesController extends CI_Controller
 	}
 
 	public function destroy($id) {
+		$id = $this->security->xss_clean($id);
 		$this->db->where('delivery_id', $id)->delete('delivery_details');
 		$this->db->where('id', $id)->delete('delivery');
 		$this->session->set_flashdata('success', "Delivery deleted successfully");

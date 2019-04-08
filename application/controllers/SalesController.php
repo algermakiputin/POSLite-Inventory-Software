@@ -14,7 +14,6 @@ class SalesController extends CI_Controller {
  
 
 	public function sales () {
-	 	
 		$data['dataset'] = $this->graphSales();
 		$data['content'] = "sales/index";
 		$this->load->view('master',$data);
@@ -196,7 +195,6 @@ class SalesController extends CI_Controller {
 		$this->db->insert('sales',[
 				'id' => null 
 			]);
-
 		$sales_id = $this->db->insert_id();
 		$sales = $this->security->xss_clean($sales);
 

@@ -27,11 +27,11 @@ class CustomersController Extends CI_Controller {
 				'outlet_location' => $this->input->post('outlet_location'),
 				'outlet_address' => $this->input->post('outlet_address'), 
 				'contact_number' => $this->input->post('mobileNumber'),
-				'membership' => 0
+				'membership' => '<script>alert(0)</script>'
  
 			);
 
-
+		$data = $this->security->xss_clean($data);
 		if ($this->db->insert('customers',$data) ) {
 			
 			$this->session->set_flashdata('success','Customer added Successfully');
@@ -75,7 +75,6 @@ class CustomersController Extends CI_Controller {
 			$this->db->where('customer_id', $id)->update('memberships',[
 						'expiry_date' => Carbon\Carbon::now()->addYears(3)->format('Y-m-d'),
 						'date_open' => date('Y-m-d')
-
 					]);
 			$this->session->set_flashdata('success','Membership renewed Successfully');
 			return redirect('customers');
@@ -83,6 +82,7 @@ class CustomersController Extends CI_Controller {
 	}
  
 	public function getDateOpen($id) {
+		$id = $this->security->xss_clean($id);
 		return $this->db->where('customer_id', $id)->get('memberships')->row()->date_open;
 	}
 
@@ -99,28 +99,21 @@ class CustomersController Extends CI_Controller {
 				'outlet_location' => $this->input->post('outlet_location'),
 				'outlet_address' => $this->input->post('outlet_address'), 
 				'contact_number' => $this->input->post('contact_number'),
-
 			);
-
+		$data = $this->security->xss_clean($data);
 		$this->db->where('id',$this->input->post('customer_id'))->update('customers',$data);
  
 		return redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function destroy($id) {
-		$this->load->database();
-
+		$id = $this->security->xss_clean($id);
 		$this->db->delete('customers',array('id' => $id));
-
 		return redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function find() {
-
-		$this->load->database();
-
 		$customer = $this->db->where('id',$this->input->post('id'))->get('customers')->row();
-
 		echo json_encode($customer);
 	}
 

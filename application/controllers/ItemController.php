@@ -89,9 +89,7 @@ class ItemController extends CI_Controller {
 		$orderingLevel = $this->OrderingLevelModel;
 		$price = $this->PriceModel;
 		$start = $this->input->post('start');
-
 		$limit = $this->input->post('length');
-
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
 		$datasets = [];
@@ -238,7 +236,7 @@ class ItemController extends CI_Controller {
 	}
 
 	public function stock_in($id) {
-		
+		$id = $this->security->xss_clean($id);
 		$this->load->model('ItemModel');
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
@@ -261,8 +259,6 @@ class ItemController extends CI_Controller {
 
 		if (SITE_LIVE) {
 			$this->form_validation->set_rules('stocks','Stocks','required|integer|max_length[500]');
-
-
 			if($this->form_validation->run() === FALSE) {
 				$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' .validation_errors() . '</div>');
 				return redirect(base_url("items/stock-in/$itemID"));
@@ -277,7 +273,6 @@ class ItemController extends CI_Controller {
 		if ($update) {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
 			return redirect(base_url('items'));
-			
 		}
 
 		$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
@@ -287,13 +282,12 @@ class ItemController extends CI_Controller {
 	}
 
 	public function edit($id) {
-
+		$id = $this->security->xss_clean($id);
 		$this->load->model('PriceModel');
 		$this->load->model('ItemModel');
 		$data['item'] = $this->db->where('id', $id)->get('items')->row();
 		$data['price'] = $this->PriceModel;
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
-
 		$data['content'] = "items/edit";
 		$this->load->view('master', $data);
 
