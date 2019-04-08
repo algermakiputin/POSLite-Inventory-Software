@@ -231,8 +231,10 @@ class ItemController extends CI_Controller {
 	}
 
 	public function demoRestriction() {
-		$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">You cannot Add, Modify or Delete data in Demo Version.</div>');
-		return redirect(base_url('items'));
+		if (SITE_LIVE) {
+			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">You cannot Add, Modify or Delete data in Demo Version.</div>');
+			return redirect(base_url('items'));
+		}
 	}
 
 	public function stock_in($id) {
