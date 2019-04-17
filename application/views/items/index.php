@@ -14,7 +14,8 @@
 </div>
 <div class="row">
     <div class="col-lg-12" style="padding-bottom: 10px;">
-        <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#filter-options">
+        <div style="background: #eee;padding: 10px;border:solid 1px #ddd;border-radius: 0.5em">
+            <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#filter-options">
             <i class="fa fa-cog"></i> Filter Options
         </button>
         <a class="pull-right btn btn-default" href="<?php echo base_url('items/new') ?>">
@@ -64,6 +65,7 @@
                     <button style="margin-top: 5px" class="btn btn-info" id="clear-filter">Clear Filter</button>
                 </div>
             </div>
+        </div>
         </div>
 
     </div>
