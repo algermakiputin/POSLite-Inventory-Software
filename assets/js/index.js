@@ -2,6 +2,86 @@ $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var currency = '₱';
 	$("form").parsley();	
+
+	(function() {
+		var itemTable;
+		var items = {
+			
+			init : function() {
+				this.dataTable();
+				this.dataTableFilter();
+				this.clearDataTableFilter();
+			},
+			dataTable : function() {
+				itemTable = $("#item_tbl").DataTable({
+					processing : true,
+					serverSide : true,
+					ajax : {
+						url : base_url + 'ItemController/dataTable',
+						type : 'POST'
+					},
+					dom : "lfrtBp",
+					buttons: [
+						{
+							extend: 'copyHtml5',
+							filename : 'Inventory Report',
+							title : 'Inventory',
+							messageTop : 'Inventory Report',
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0, 1, 2, 3,4,5 ]
+							},
+						},
+						{
+							extend: 'excelHtml5',
+							filename : 'Inventory',
+							title : 'Inventory Report',
+							messageTop : 'Inventory Report',
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0, 1, 2, 3,4,5 ]
+							},
+						},
+						{
+							extend: 'pdfHtml5',
+							filename : 'Inventory Report',
+							title : 'Inventory',
+							messageTop : 'Inventory Report',
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0, 1, 2, 3,4,5 ]
+							},
+
+						},
+					] 
+				})
+			},
+			dataTableFilter : function() {
+				$(".filter-items").change(function() {
+					let column = $(this).data('column');
+					if (column == 4)
+						itemTable.columns(5).search('');
+					if (column == 5)
+						itemTable.columns(4).search('');
+					itemTable.columns(column).search(this.value).draw();
+				})
+			},
+			clearDataTableFilter : function() {
+				$("#clear-filter").click(function(e) {
+					$(".filter-items").each(function() {
+						$(this).val('');
+						itemTable.columns($(this).data('column')).search('');
+					})
+
+					itemTable.draw();
+				})
+			}
+		}
+
+		items.init();
+	})();
+
+	
 	$("#expenses_table").DataTable();
 	$("#item-form").submit(function(e) {
 		var price = $("[name='price']").val();
@@ -13,48 +93,22 @@ $(document).ready(function() {
 		}
 	})
 
-	$.previewImage(
-	   {
-	   	'xOffset': 30,  // x-offset from cursor
-	   'yOffset': -270,  // y-offset from cursor
-	   'fadeIn': 1000, // delay in ms. to display the preview
-	   'css': {        // the following css will be used when rendering the preview image.
-	    
-	      'border': '2px solid black', 
-	   }
-	   }
-	);
-
-	function readURL(input) {
-
-	  if (input.files && input.files[0]) {
-	    var reader = new FileReader();
-
-	    reader.onload = function(e) {
-	    
-	      $('#imagePreview').css('background-image', "url("+e.target.result+")");
-	      $("#imagePreview img").hide();
-	    }
-
-	    reader.readAsDataURL(input.files[0]);
-	  }
-	}
 
 	$("#productImage").change(function() {
-	  readURL(this);
+		readURL(this);
 	});
 
- 	$("body").on('click', '.delete-item', function() {
- 		var c = confirm('Delete Item?')
-        var id = $(this).data('id');
-        var link = $(this).data('link');
-        if (c == false) {
-     
-            return false;
-        }
+	$("body").on('click', '.delete-item', function() {
+		var c = confirm('Delete Item?')
+		var id = $(this).data('id');
+		var link = $(this).data('link');
+		if (c == false) {
 
-        window.location = link + id;
- 	})
+			return false;
+		}
+
+		window.location = link + id;
+	})
 
 	$("#customer_table").on('click', '.renew', function() {
 		var id = $(this).data('id');
@@ -260,34 +314,49 @@ $(document).ready(function() {
 		$("#modal").modal('toggle');
 	})
 
-
-	$("#supplier_table").DataTable({
-		ordering : false,
-		initComplete : function() {
-			$("#supplier_table_length").append('&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
-		}
-	});
-	$("#supplier_table").on('click','.edit',function() {
-		var id = $(this).data('id');
-		$("#supplier_id").val(id);
-		$.ajax({
-			type : 'POST',
-			url : base_url + 'suppliers/find',
-			data : {
-				id : id
-			},
-			success : function(data) {
-				var supplier = JSON.parse(data);
-				$("#edit-supplier-form input[name='name']").val(supplier.name);
-				$("#edit-supplier-form input[name='address']").val(supplier.address);
-				$("#edit-supplier-form input[name='contact']").val(supplier.contact);
-				$("#edit-supplier-form input[name='email']").val(supplier.email);
+	var  suppliers = {
+		dataTable : $("#supplier_table").DataTable({
+			ordering : false,
+			initComplete : function() {
+				$("#supplier_table_length").append('&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
 			}
+		}),
+		edit : $("#supplier_table").on('click','.edit',function() {
+			var id = $(this).data('id');
+			$("#supplier_id").val(id);
+			$.ajax({
+				type : 'POST',
+				url : base_url + 'suppliers/find',
+				data : {
+					id : id
+				},
+				success : function(data) {
+					var supplier = JSON.parse(data);
 
-		});
+					$("#edit-supplier input[name='name']").val(supplier.name);
+					$("#edit-supplier input[name='address']").val(supplier.address);
+					$("#edit-supplier input[name='contact']").val(supplier.contact);
+					$("#edit-supplier input[name='email']").val(supplier.email);
+				}
+
+			});
+		}),
+	}
+	
+
+	
+
+	
+	
+
+	$("#users_table").DataTable();
+	$("#categories_table").DataTable({
+		ordering : false
 	});
-	var itemTable = $("#item_tbl").DataTable({
-		sort : false,
+	$("#deliveries_table").DataTable();
+
+	var customer_table = $("#customer_table").DataTable({
+		ordering : false,
 		dom : "lfrtBp",
 		buttons: [
 		{
@@ -297,7 +366,7 @@ $(document).ready(function() {
 			messageTop : 'Inventory Report',
 			className : "btn btn-default btn-sm",
 			exportOptions: {
-				columns: [ 0, 1, 2, 3,4,5 ]
+				columns: [ 0, 1, 2, 3,4,5,6 ]
 			},
 		},
 		{
@@ -307,7 +376,7 @@ $(document).ready(function() {
 			messageTop : 'Inventory Report',
 			className : "btn btn-default btn-sm",
 			exportOptions: {
-				columns: [ 0, 1, 2, 3,4,5 ]
+				columns: [ 0, 1, 2, 3,4,5,6 ]
 			},
 		},
 		{
@@ -317,85 +386,19 @@ $(document).ready(function() {
 			messageTop : 'Inventory Report',
 			className : "btn btn-default btn-sm",
 			exportOptions: {
-				columns: [ 0, 1, 2, 3,4,5 ]
+				columns: [ 0, 1, 2, 3,4,5,6 ]
 			},
 
 		},
 		],
-
-		initComplete : function() { 
-			$("#item_tbl_length").append("&nbsp;<select id='cat' class='form-control'>" +
-				'<option value="">Select Category</option>' +
-				"</select>"
-				);
-			$.ajax({
-				method : 'GET',
-				url : base_url + 'categories/get',
-				success : function(data) {
-					result = JSON.parse(data);
-					$.each(result, function(key, value) {
-						$("#cat").append("<option value='"+value.name+"'>"+value.name+"</option>");
-					});
-				}
-
-			});
-			
-			$("#cat").change(function() {
-				category = $(this).val();
-				itemTable.search(category).draw();
-			})
-		}
-	});
-
-	$("#users_table").DataTable();
-	$("#categories_table").DataTable({
-		ordering : false
-	});
-	$("#deliveries_table").DataTable();
-	var customer_table = $("#customer_table").DataTable({
-		ordering : false,
-		dom : "lfrtBp",
-		buttons: [
-			{
-				extend: 'copyHtml5',
-				filename : 'Inventory Report',
-				title : 'Inventory',
-				messageTop : 'Inventory Report',
-				className : "btn btn-default btn-sm",
-				exportOptions: {
-					columns: [ 0, 1, 2, 3,4,5,6 ]
-				},
-			},
-			{
-				extend: 'excelHtml5',
-				filename : 'Inventory',
-				title : 'Inventory Report',
-				messageTop : 'Inventory Report',
-				className : "btn btn-default btn-sm",
-				exportOptions: {
-					columns: [ 0, 1, 2, 3,4,5,6 ]
-				},
-			},
-			{
-				extend: 'pdfHtml5',
-				filename : 'Inventory Report',
-				title : 'Inventory',
-				messageTop : 'Inventory Report',
-				className : "btn btn-default btn-sm",
-				exportOptions: {
-					columns: [ 0, 1, 2, 3,4,5,6 ]
-				},
-
-			},
-		],
 		initComplete : function() {
 			$("#customer_table_length").append( '&nbsp;&nbsp;<select class="form-control" id="member-status"><option value="">Membership Status</option>'+
-									'<option value="Active">Active</option>' + 
-									'<option value="Expired">Expired</option>' + 
-									'<option value="Needs Renewal">Needs Renewal</option>' + 
-									'<option value="Not Open">Not Open</option>' + 
-								'</select>'
-					 +'&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
+				'<option value="Active">Active</option>' + 
+				'<option value="Expired">Expired</option>' + 
+				'<option value="Needs Renewal">Needs Renewal</option>' + 
+				'<option value="Not Open">Not Open</option>' + 
+				'</select>'
+				+'&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
 			
 			$("#member-status").change(function() {
 				customer_table.columns(7).search($(this).val()).draw();
@@ -445,6 +448,32 @@ $(document).ready(function() {
 			$("#graph-menu").show();
 		}
 	})
+
+	$.previewImage(
+	{
+	   	'xOffset': 30,  // x-offset from cursor
+	   'yOffset': -270,  // y-offset from cursor
+	   'fadeIn': 1000, // delay in ms. to display the preview
+	   'css': {        // the following css will be used when rendering the preview image.
+	   	
+	   	'border': '2px solid black', 
+	   }
+	}
+	);
 })
 
 
+function readURL(input) {
+
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function(e) {
+			
+			$('#imagePreview').css('background-image', "url("+e.target.result+")");
+			$("#imagePreview img").hide();
+		}
+
+		reader.readAsDataURL(input.files[0]);
+	}
+}

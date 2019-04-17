@@ -4,8 +4,7 @@
 <script src="<?php echo base_url('assets/vendor/metisMenu/metisMenu.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/vendor/raphael/raphael.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/vendor/morrisjs/morris.min.js'); ?>"></script> 
-<script src="<?php echo base_url('assets/dist/js/sb-admin-2.min.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/sequenceListener.js') ?>"></script>
+<script src="<?php echo base_url('assets/dist/js/sb-admin-2.min.js'); ?>"></script> 
 <script src="<?php echo base_url('assets/vendor/datatables/js/jquery.dataTables.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/dataTables.buttons.min.js'); ?>"></script>
