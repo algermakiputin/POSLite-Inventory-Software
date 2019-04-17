@@ -6,7 +6,10 @@ class ItemController extends CI_Controller {
 	
 	public function __construct() {
 		parent::__construct();
- 
+ 		$this->load->model('categories_model');
+		$this->load->model('PriceModel');
+		$this->load->model('OrderingLevelModel');
+		$this->load->model('ItemModel');
 		if (!$this->session->userdata('log_in')) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));
@@ -15,11 +18,8 @@ class ItemController extends CI_Controller {
 	}
 
 	public function find() {
-		$this->load->model('OrderingLevelModel');
-		$this->load->model('PriceModel');
-		$code = $this->input->post('code');
-		$item = $this->db->where('barcode', $code)->get('items')->row();
-		
+		$barcode = $this->input->post('code');
+		$item = $this->db->where('barcode', $barcode)->get('items')->row();
 		if ($item) {
 			$quantity = (int)$this->OrderingLevelModel->getQuantity($item->id)->quantity;
 			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
@@ -54,38 +54,137 @@ class ItemController extends CI_Controller {
          
         return $data = array('upload_data' => $this->upload->data());
 
-
     }
 
 	public function items () {
-		$this->load->model('ItemModel');
-		$this->load->model('PriceModel');
-		$this->load->model('OrderingLevelModel');
-		$this->load->model('categories_model');
-	 
 		$data['items'] = $this->ItemModel->itemList();
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
-
+		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'inventory';
 		$data['price'] = $this->PriceModel;
 		$data['categoryModel'] = $this->categories_model;
+		$data['categories'] = $this->categories_model->getCategories();
 		$data['orderingLevel'] = $this->OrderingLevelModel;
 		$data['content'] = "items/index";
 		$this->load->view('master', $data);
 
 	}
 
+	public function dataTable() {
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+		$items = $this->dataFilter($search, $start, $limit);
+		$filterCategory = $this->input->post('columns[2][search][value]');
+		$filterSupplier = $this->input->post('columns[7][search][value]');
+		$sortPrice = $this->input->post('columns[4][search][value]');
+		$sortStocks = $this->input->post('columns[5][search][value]');
+
+		if ($filterCategory) {
+			$sortPrice = NULL;
+			$sortStocks = NULL;
+			$this->db->select('items.*,categories.id as cat_id');
+			$this->db->from('items');
+			$this->db->join('categories', 'categories.id = items.category_id', 'left');
+			$this->db->where('categories.name', $filterCategory);
+			if ($filterSupplier) {
+				$this->db->join('supplier', 'supplier.id = items.supplier_id', 'left');
+				$this->db->where('supplier.name', $filterSupplier);
+			}
+			$items = $this->db->get()->result();
+		}
+
+		if ($filterSupplier) {
+			$sortPrice = NULL;
+			$sortStocks = NULL;
+			$this->db->select('items.*,supplier.id as cat_id');
+			$this->db->from('items');
+			$this->db->join('supplier', 'supplier.id = items.supplier_id', 'left');
+			$this->db->where('supplier.name', $filterSupplier);
+			if ($filterCategory) {
+				$this->db->join('categories', 'categories.id = items.category_id', 'left');
+				$this->db->where('categories.name', $filterCategory);
+			}
+			$items = $this->db->get()->result();
+		}
+
+		if ($sortPrice) {
+			$sortStocks = NULL;
+			$items = $this->db->select('items.*')
+					->from('items')
+					->join('prices', 'prices.item_id = items.id')
+					->order_by('prices.price',$sortPrice)
+					->get()
+					->result();
+		}
+
+		if ($sortStocks) {
+			$sortPrice = NULL;
+			$items = $this->db->select('items.*')
+					->from('items')
+					->join('ordering_level', 'ordering_level.item_id = items.id')
+					->order_by('ordering_level.quantity',$sortStocks)
+					->get()
+					->result();
+		}
+
+		$datasets = [];
+		foreach ($items as $item) {
+			$itemPrice = $this->PriceModel->getPrice($item->id);
+			$itemCapital = $this->PriceModel->getCapital($item->id);
+			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity;
+			$itemSupplier = $this->db->where('id', $item->supplier_id)->get('supplier')->row()->name;
+			$datasets[] = [
+				$this->disPlayItemImage($item->image),
+				$item->name,
+				$this->categories_model->getName($item->category_id),
+				'₱' . number_format($itemCapital),
+				'₱' . number_format($itemPrice),
+				$stocksRemaining . ' pcs',
+				$item->name,
+				$itemSupplier,
+				'<div class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    	<li>
+                            <a href="' . base_url("items/stock-in/$item->id") .'">
+                                <i class="fa fa-plus"></i> Stock In</a>
+                        </li>
+                        <li>
+                        	<a href="'.base_url("items/edit/$item->id").'"><i class="fa fa-edit"></i> Edit</a> 
+                        </li>
+                        <li>
+					        <a class="delete-item" href="#" data-link="'.base_url('ItemController/delete/').'" data-id="'.$item->id.'">
+					            <i class="fa fa-trash"></i>
+					        Delete</a>
+					    </li>
+                    </ul>
+                </div>'
+			];
+		}	
+
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => count($datasets),
+			'recordsFiltered' => count($datasets),
+			'data' => $datasets
+		]);
+	}
+
+	public function disPlayItemImage($image) {
+		if ($image && file_exists('./uploads/' . $image)) {
+			return "<div class='product-thumbnail'><img src='".base_url('uploads/' . $image)."' data-preview='".base_url('uploads/' . $image)."'> </div>";
+		}
+		return '<div class="product-thumbnail"><span style="color: rgba(0,0,0,0.4);font-size: 11px;">No Image</span></div>';
+	}
+
 	public function outOfStocks() {
- 	 
  		$data['content'] = "items/stockout";
  		$data['items'] = noStocks()->result();
 		$this->load->view('master', $data);
 	}
 
 	public function data() {
-		$this->load->model('OrderingLevelModel');
-		$this->load->model('PriceModel');
-
 		$orderingLevel = $this->OrderingLevelModel;
 		$price = $this->PriceModel;
 		$start = $this->input->post('start');

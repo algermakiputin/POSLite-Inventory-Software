@@ -2,12 +2,11 @@
 class Categories_model extends CI_Model {
 	
 	public function getCategories() {
-		$sql = $this->db->order_by('id','DESC')->get('category'); 
-		return $sql->result();
+		return $this->db->get('categories')->result(); 
 	}
 
 	public function getName($id) {
-		return $this->db->where('id', $id)->get('categories')->row()->name;
+		return $this->db->where('id', $id)->get('categories')->row()->name ?? '';
 	}
 
 }

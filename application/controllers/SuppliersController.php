@@ -9,9 +9,7 @@ class SuppliersController Extends CI_Controller {
 	public function mail() {
 
 		$suppliers = $this->db->order_by('id','DESC')->get('supplier')->result();
-	 	
 	 	echo $this->sendEmailToSupplier($suppliers);
-		
 		
 	}
 
