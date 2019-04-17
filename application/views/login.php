@@ -90,7 +90,7 @@
 	
 	
 	<div class="form-group">
-		<button class="btn btn-md btn-primary btn-block" type="submit">Login</button>  
+		<button class="btn btn-md btn-primary btn-block" type="submit" style="border-radius: 1em;">Login</button>  
 	</div> 
 	<?php if (SITE_LIVE): ?>
 		<div class="form-group text-center">
