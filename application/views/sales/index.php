@@ -1,38 +1,40 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Reports</h1>
+		<h1 class="page-header">Sales Reports</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
 <div class="row">
-	<div class="col-md-3">
-		<div class="form-group">
-			<div class="btn-group" id="btn-group-menu" role="group" aria-label="Basic example">
-				<button type="button" class="btn btn-default " data-id="graph">Graphical View</button>
-				<button type="button" class="btn btn-default active" data-id="table">Table View</button> 
-			</div>
-		</div>
-	</div>
-	<div  id="table-menu">
-		<div class="col-md-6" >
-
-			<div class="form-group">
-				<div class="input-group input-daterange">
-
-					<input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-
-					<div class="input-group-addon">to</div>
-
-					<input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:">
-
+	<div class="col-md-12" >
+		<div class="col-md-12 sales-menu-wrapper">
+			<div class="col-md-3">
+				<div class="form-group">
+					<div class="btn-group" id="btn-group-menu" role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-default " data-id="graph">Graphical View</button>
+						<button type="button" class="btn btn-default active" data-id="table">Table View</button> 
+					</div>
 				</div>
 			</div>
+			<div  id="table-menu">
+				<div class="col-md-6" >
 
+					<div class="form-group">
+						<div class="input-group input-daterange">
 
-		</div>
-		<div class="col-md-3 text-right">
-			<div class="form-group">
-				<button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
+							<input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+
+							<div class="input-group-addon">to</div>
+
+							<input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:" data-date-min-date="2019-04-18" >
+
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 text-right">
+					<div class="form-group">
+						<button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

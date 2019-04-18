@@ -3,6 +3,7 @@ body {
 	margin:0;
 	overflow: hidden; 
 	font-size: 14px;
+	font-family: arial;
 }
 
 .navbar {
