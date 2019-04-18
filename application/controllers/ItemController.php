@@ -384,25 +384,19 @@ class ItemController extends CI_Controller {
 
 	public function edit($id) {
 		$id = $this->security->xss_clean($id);
-		$this->load->model('PriceModel');
-		$this->load->model('ItemModel');
 		$data['item'] = $this->db->where('id', $id)->get('items')->row();
 		$data['price'] = $this->PriceModel;
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
+		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['content'] = "items/edit";
 		$this->load->view('master', $data);
-
 	}
 
 	public function update() {
 		$this->demoRestriction();
 		//validation Form
 		$this->updateFormValidation();
-		$this->load->model('ItemModel');
-		$this->load->model('ItemModel');
-		$this->load->model('PriceModel');
 		$this->load->model('HistoryModel');
-		$this->load->model('categories_model');
  		$updated_name = $this->input->post('name');
 		$updated_category = $this->input->post('category');
 		$updated_desc = strtolower($this->input->post('description'));
@@ -413,6 +407,7 @@ class ItemController extends CI_Controller {
 		$currentPrice = $this->PriceModel->getPrice($id);
 		$reorder = $this->input->post('reorder');
 		$productImage = $_FILES['productImage'];
+		$supplier_id = $this->input->post('supplier');
 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
@@ -425,12 +420,11 @@ class ItemController extends CI_Controller {
 			 
 		}
 		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name']);
+		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id);
 
 		if ($update) {
 			
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
-			
 			if ($item->name != $updated_name)
 				$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
 			 

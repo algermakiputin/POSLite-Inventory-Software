@@ -41,13 +41,14 @@ class ItemModel extends CI_Model {
 
 	}
 
-	public function update_item($id,$name,$category,$description,$price_id, $image) {
+	public function update_item($id,$name,$category,$description,$price_id, $image, $supplier_id) {
 		$item = $this->db->where('id',$id)->get('items')->row();
 	
 		$data = array(
 			'name' => $name,
 			'category_id' => $category,
 			'description' => $description,
+			'supplier_id' => $supplier_id
 			);
 		$data = $this->security->xss_clean($data);
 		if ($image != '')

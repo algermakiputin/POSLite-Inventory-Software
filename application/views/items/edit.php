@@ -43,7 +43,16 @@
 								<label>Price:</label>
 								<input value="<?php echo $price->getPrice($item->id); ?>" max="500000" type="text" name="price" class="form-control" required="required">
 							</div>  
-
+							<div class="form-group">
+								<label>Supplier:</label>
+								<select name="supplier" class="form-control">
+									<?php foreach ($suppliers as $supplier): ?>
+										<option value="<?php echo $supplier->id; ?>" <?php echo $item->id == $supplier->id ? 'Selected' : '' ?>>
+											<?php echo $supplier->name ?>
+										</option>
+									<?php endforeach; ?>
+								</select>
+							</div>
 							<div class="form-group"> 
 								<label>Description:</label>
 								<textarea required="required" rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
