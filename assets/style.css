@@ -1,3 +1,6 @@
+* {
+  font-family: sans-serif;
+}
 body {
   overflow-x: hidden;
   margin-bottom: -20px;
@@ -7,6 +10,14 @@ body {
 .product-thumbnail img {
   height: inherit;
   width: inherit;
+}
+
+.sales-menu-wrapper {
+  background: #eee;
+  border:solid 1px #ddd; 
+  border-radius: 0.5em;
+  padding: 15px 0 0 0;
+  margin-bottom: 10px;
 }
 
 .btn-orange {

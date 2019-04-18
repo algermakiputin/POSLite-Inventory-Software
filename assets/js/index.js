@@ -163,7 +163,21 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('.date-range-filter').datepicker();
+	$('.date-range-filter').datepicker({
+		useCurrent : false
+	});
+
+	 $("#datetimepicker6").on("dp.change", function (e) {
+        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+    });
+    $("#datetimepicker7").on("dp.change", function (e) {
+        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+    });
+
+	$("#min-date").change(function(e){
+
+		$("#max-date").datepicker({startDate : new Date()})
+	})
 	$("#history_table").DataTable({
 		'bLengthChange' : false,
 		'searching' : false,
