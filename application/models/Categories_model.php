@@ -9,6 +9,8 @@ class Categories_model extends CI_Model {
 		return $this->db->where('id', $id)->get('categories')->row()->name ?? '';
 	}
 
+	
+
 }
 
 ?>
