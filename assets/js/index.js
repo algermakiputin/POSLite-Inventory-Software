@@ -53,7 +53,20 @@ $(document).ready(function() {
 							},
 
 						},
-					] 
+					],
+					initComplete : function() {
+						$.previewImage(
+						{
+						   	'xOffset': 30,  // x-offset from cursor
+						   'yOffset': -270,  // y-offset from cursor
+						   'fadeIn': 1000, // delay in ms. to display the preview
+						   'css': {        // the following css will be used when rendering the preview image.
+						   	
+						   	'border': '2px solid black', 
+						   }
+						}
+						);
+					} 
 				})
 			},
 			dataTableFilter : function() {
@@ -463,17 +476,7 @@ $(document).ready(function() {
 		}
 	})
 
-	$.previewImage(
-	{
-	   	'xOffset': 30,  // x-offset from cursor
-	   'yOffset': -270,  // y-offset from cursor
-	   'fadeIn': 1000, // delay in ms. to display the preview
-	   'css': {        // the following css will be used when rendering the preview image.
-	   	
-	   	'border': '2px solid black', 
-	   }
-	}
-	);
+	
 })
 
 

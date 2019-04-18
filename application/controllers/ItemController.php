@@ -57,7 +57,6 @@ class ItemController extends CI_Controller {
     }
 
 	public function items () {
-		$data['items'] = $this->ItemModel->itemList();
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'inventory';
@@ -173,7 +172,7 @@ class ItemController extends CI_Controller {
 
 	public function disPlayItemImage($image) {
 		if ($image && file_exists('./uploads/' . $image)) {
-			return "<div class='product-thumbnail'><img src='".base_url('uploads/' . $image)."' data-preview='".base_url('uploads/' . $image)."'> </div>";
+			return "<div class='product-thumbnail'><img src='".base_url('uploads/' . $image)."' data-preview-image='".base_url('uploads/' . $image)."'> </div>";
 		}
 		return '<div class="product-thumbnail"><span style="color: rgba(0,0,0,0.4);font-size: 11px;">No Image</span></div>';
 	}
