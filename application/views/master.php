@@ -39,7 +39,7 @@
                 </li>
                 <?php endif; ?>
                 <li>
-                    <a href="<?php echo base_url('pos') ?>">POS</a>
+                    <a href="<?php echo base_url('pos') ?>">Go to POS</a>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
