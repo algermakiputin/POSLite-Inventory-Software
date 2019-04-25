@@ -255,13 +255,13 @@ class SalesController extends CI_Controller {
 		foreach ($sales as $sale) {
 			$sales_description = $this->db->where('sales_id', $sale->id)->get('sales_description')->result();
 			$sub_total = 0;
-			
+			$transactionProfit = 0;
 			foreach ($sales_description as $desc) {
 		 		$item = $this->db->where('id', $desc->item_id)->get('items')->row();
 		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
 		 		$staff = $user ? $user->username : 'Not found';
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
-				$saleProfit = (float)$desc->profit * (int)$desc->quantity;
+				$saleProfit = ((float)$desc->price - (float)$desc->profit ) * (int)$desc->quantity;
 				$transactionProfit += $saleProfit;
 				$datasets[] = [ 
 					date('Y-m-d', strtotime($sale->date_time)), 
@@ -282,15 +282,7 @@ class SalesController extends CI_Controller {
 			
 		}
 
-		$profit = 0;
-		$lost = 0;
-		if ($this->input->post('draw') != 1)
-			$profit = $transactionProfit;
-
-		if ($profit < 0) {
-			$lost = abs($profit);
-			$profit = 0;
-		}
+	 
 
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
@@ -300,7 +292,7 @@ class SalesController extends CI_Controller {
 				'total_sales' => number_format($totalSales),
 				'from' => $from,
 				'to' => $to,
-				'profit' => number_format($profit ? $profit : 0), 
+				'profit' => number_format($transactionProfit), 
 				'expenses' => number_format($totalExpenses)
 			]);
 
