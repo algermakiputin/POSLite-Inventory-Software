@@ -296,6 +296,7 @@ $(document).ready(function() {
 		},
 		drawCallback : function (setting) {
 			var data = setting.json;
+			console.log(data);
 			$("#total-sales").text('₱' + data.total_sales);
 			$("#total-profit").text('₱' + data.profit);
 			$("#total-lost").text('₱' + data.lost);
