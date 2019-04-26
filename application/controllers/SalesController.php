@@ -255,7 +255,6 @@ class SalesController extends CI_Controller {
 		foreach ($sales as $sale) {
 			$sales_description = $this->db->where('sales_id', $sale->id)->get('sales_description')->result();
 			$sub_total = 0;
-			$transactionProfit = 0;
 			foreach ($sales_description as $desc) {
 		 		$item = $this->db->where('id', $desc->item_id)->get('items')->row();
 		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
@@ -282,7 +281,6 @@ class SalesController extends CI_Controller {
 			
 		}
 
-	 
 
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
