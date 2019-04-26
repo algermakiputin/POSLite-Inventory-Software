@@ -464,7 +464,8 @@ $config['csrf_exclude_uris'] = array(
 									'SalesController/insert',
 									'sales/graph-filter',
 									'suppliers/find',
-									'ItemController/dataTable'
+									'ItemController/dataTable',
+									'SalesController/destroy'
 								);
 
 /*

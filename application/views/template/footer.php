@@ -18,5 +18,6 @@
 <script src="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.js'); ?>"></script>
 
 <script src="<?php echo base_url('assets/vendor/parsley.min.js') ?>"></script>
-<script src="<?php echo base_url('assets/js/preview-image.js') ?>"></script> 
+<script src="<?php echo base_url('assets/js/preview-image.js') ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script> 
 <script src="<?php echo base_url('assets/js/index.js') ?>"></script> 
