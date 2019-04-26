@@ -91,10 +91,58 @@ $(document).ready(function() {
 			}
 		}
 
+		var sales = {
+			init : function() {
+				this.deletePurchaseItem();
+			},
+			deletePurchaseItem : function() {
+
+				$("body").on('click', '.delete-sale', function(e) {
+					var row = $(this).parents('tr');
+					var sales_description_id = $(this).data('id');
+					e.preventDefault();
+					jQueryConfirm.deleteConfimation('Confirmation', 'Are you sure you want to delete that sales purchase?', function(e) {
+						$.ajax({
+							type : 'GET',
+							url : base_url + 'SalesController/Destroy/' + sales_description_id, 
+							success : function(data) {
+								if (data == 1) {
+									row.remove();
+									alert("Sale deleted successfully! Stocks has been restored");
+									sales_table.draw();
+								}
+							}
+						});
+					})
+					
+
+				})
+			}
+		}
+
+		var jQueryConfirm = {
+			deleteConfimation : function(title,content, callbackFunction) {
+				$.confirm({
+				    title: title,
+				    content: content,
+				    buttons: {
+				        confirm: {
+				        	text : 'Delete',
+				        	btnClass : 'btn btn-danger',
+				        	action : callbackFunction
+				        },
+				        cancel: function () {
+				            $.alert('Canceled!');
+				        } 
+				    }
+				});
+			}
+		}
+
 		items.init();
+		sales.init();
 	})();
 
-	
 	$("#expenses_table").DataTable();
 	$("#item-form").submit(function(e) {
 		var price = $("[name='price']").val();

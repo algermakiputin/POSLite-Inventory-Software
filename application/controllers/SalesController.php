@@ -272,16 +272,12 @@ class SalesController extends CI_Controller {
 					'₱' . number_format($desc->discount),
 					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount),
 					'
-						<a class="btn btn-sm btn-danger" href="'.base_url('SalesController/destroy/') . $desc->id.'">Delete</a>
+						<a class="btn btn-sm btn-danger delete-sale" data-id="'.$desc->id.'" href="'.base_url('SalesController/destroy/') . $desc->id.'">Delete</a>
 					'
 				];
 			}
-
 			$totalSales += $sub_total;
-			
 		}
-
-
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
 				'recordsTotal' => $count,
@@ -299,11 +295,24 @@ class SalesController extends CI_Controller {
 	public function destroy($id) {
 		$sale = $this->db->where('id', $id)->get('sales_description')->row();
 		$this->load->model('OrderingLevelModel');
+		
+		$this->db->trans_start();
 		$this->OrderingLevelModel->addStocks($sale->item_id, $sale->quantity);
 		$this->db->where('id', $id)->delete('sales_description');
 
-		$this->session->set_flashdata('success', 'Sale deleted successfully');
-		return redirect('sales');
+		if ($this->db->trans_status() === FALSE)
+		{
+		        $this->db->trans_rollback();
+		        echo "0";
+		        return;
+		}
+		else
+		{
+				echo "1";
+		        return $this->db->trans_commit();
+		}
+
+ 
 	}
 
 	public function filterReports($from, $to) {
