@@ -193,7 +193,8 @@ class SalesController extends CI_Controller {
 		$this->db->trans_begin();
 
 		$this->db->insert('sales',[
-				'id' => null 
+				'id' => null ,
+				'date_time' => date('Y-m-d h:i:s')
 			]);
 		$sales_id = $this->db->insert_id();
 		$sales = $this->security->xss_clean($sales);
