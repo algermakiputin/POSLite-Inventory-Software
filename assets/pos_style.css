@@ -1,9 +1,10 @@
+@import url("fonts/font.css");
  
 body {
 	margin:0;
 	overflow: hidden; 
 	font-size: 14px;
-	font-family: arial;
+	font-family: "Roboto";
 }
 
 .navbar {
