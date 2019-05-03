@@ -1,10 +1,9 @@
-* {
-  font-family: sans-serif;
-}
+@import url("fonts/font.css");
 body {
   overflow-x: hidden;
   margin-bottom: -20px;
   border-collapse: collapse;
+  font-family: "Roboto";
 }
 
 .product-thumbnail img {
