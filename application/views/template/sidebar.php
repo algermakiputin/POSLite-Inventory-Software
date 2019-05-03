@@ -2,13 +2,13 @@
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
             <li>
-            <a href="#"><i class="glyphicon glyphicon-folder-close fa-fw"></i> Items<span class="fa arrow"></span></a>
+            <a href="#"><i class="glyphicon glyphicon-folder-close fa-fw"></i> Products<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="<?php echo base_url('items') ?>"><i class="fa fa-circle-o"></i> View Items</a>
+                        <a href="<?php echo base_url('items') ?>"><i class="fa fa-circle-o"></i> View Products</a>
                     </li>
                     <li>
-                        <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Item</a>
+                        <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Product</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
