@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Items
+		<h1 class="page-header">Products
             <span class="pull-right">Inventory Value: ₱<span id="total"><?php echo $total; ?></span></span>
         </h1> 
     </div>
