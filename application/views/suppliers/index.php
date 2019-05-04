@@ -66,9 +66,9 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">New Supplier</h4>
       </div>
+      <?php echo form_open('suppliers/insert', ['method' => 'POST']) ?>
       <div class="modal-body">
-        <?php echo form_open('suppliers/insert', ['method' => 'POST']) ?>
-        <form method="POST" action="<?php echo base_url('suppliers/insert') ?>">
+         
         	<div class="form-group">
         		<input required="required" type="text" class="form-control" name="name" placeholder="Name">
         	</div>
@@ -80,15 +80,14 @@
         	</div>
           <div class="form-group">
             <input required="required" type="text" class="form-control" name="email" placeholder="Email Address">
-          </div>
-        	<div class="form-group">
-        		<button class="btn btn-success">Save</button>
-        	</div>
-        <?php echo form_close(); ?>
+          </div>  
       </div>
       <div class="modal-footer">
+        <button class="btn btn-success" type="submit">Save</button>
+        <button class="btn btn-info" type="reset">Clear</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
+      <?php echo form_close(); ?>
     </div>
 
   </div>

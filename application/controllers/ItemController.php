@@ -1,5 +1,4 @@
 <?php
-
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class ItemController extends CI_Controller {
@@ -10,6 +9,7 @@ class ItemController extends CI_Controller {
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('ItemModel');
+		
 		if (!$this->session->userdata('log_in')) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));

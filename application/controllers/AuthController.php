@@ -1,7 +1,12 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 class AuthController extends CI_Controller {
 
+	public function __construct() {
+		parent::__construct();
+		if ($this->session->userdata('log_in')) redirect(base_url('items'));
+	}
 	public function login() {
 
 		$this->load->dbutil();

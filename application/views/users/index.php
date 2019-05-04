@@ -44,7 +44,8 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<input type="submit" name="submit_account" class="btn btn-sm btn-success" value="Register">
+								<input type="submit" name="submit_account" class="btn btn-success" value="Register">
+								<button class="btn btn-info" type="reset">Reset</button>
 							</div>
 						</fieldset>
 						<?php echo form_close(); ?>

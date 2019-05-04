@@ -67,6 +67,7 @@
 							</div>
 							<div class="form-group"> 
 								<button class="btn btn-primary">Register Item</button>
+								<button class="btn btn-info" type="reset">Clear</button>
 							</div>
 							
 						</div> 
