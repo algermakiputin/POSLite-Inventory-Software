@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/dist/css/sb-admin-2.css") ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css") ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/vendor/morrisjs/morris.css") ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/introjs.css') ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style.css')?>"> 
 
 

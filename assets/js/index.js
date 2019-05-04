@@ -2,6 +2,17 @@ $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var currency = '₱';
 	$("form").parsley();	
+ 
+ 	if (!sessionStorage.getItem("demo")) {
+ 		introJs().start().oncomplete(endDemo)
+						.onskip(endDemo)
+						.onexit(endDemo);
+ 	}
+ 
+
+	function endDemo() {
+		sessionStorage.setItem("demo", false);
+	}
 
 	(function() {
 		var itemTable;

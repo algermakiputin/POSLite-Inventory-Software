@@ -48,7 +48,8 @@
 								<input type="text" name="quantity" class="form-control" required="required">
 							</div>
 							<div class="form-group">
-								<input type="submit" name="" class="btn btn-primary" required="required">					 
+								<input type="submit" name="" class="btn btn-primary" required="required">			
+								<button type="reset" class="btn btn-info">Clear</button>
 							</div>
 		 
 						</form>

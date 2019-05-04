@@ -38,6 +38,7 @@
 							</div>
 							<div class="form-group">
 								<input type="submit" name="" value="Save" class="btn btn-primary">
+								<button type="reset" class="btn btn-info">Reset</button>
 							</div>
 						</div>
 					<?php echo form_close(); ?>

@@ -38,7 +38,10 @@
                     <a href="<?php echo base_url('out-of-stocks') ?>">Out of Stock <span style="margin-top: -10px;" class="badge badge-error"><?php echo $count ?></span></a>
                 </li>
                 <?php endif; ?>
-                <li>
+                <li >
+                    <a href="#" onclick="event.preventDefault(); javascript:introJs().start()">Start Demo</a>
+                </li>
+                <li data-step="10" data-intro="This Link takes you to POS Screen where you can process purchases.">
                     <a href="<?php echo base_url('pos') ?>">Go to POS</a>
                 </li>
                 <li class="dropdown">
@@ -65,7 +68,7 @@
             <?php $this->load->view($content) ?>
 
         </div>
-         <footer style="z-index: 100;position: absolute;bottom: 0;width: 100%;text-align: right;padding: 3px 10px;font-size: 12px;">
+         <footer style="z-index: 100;position: fixed;bottom: 0;width: 100%;text-align: right;padding: 3px 10px;font-size: 12px;">
             <p style="color: #333">Developed By: <a href="https://algermakiputin.com">Alger Makiputin</a></p>
         </footer>
         <!-- /#page-wrapper -->
