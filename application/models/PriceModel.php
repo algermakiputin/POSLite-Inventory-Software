@@ -16,12 +16,12 @@ class PriceModel extends CI_Model {
 
 	public function getPrice($id) {
 		 
-		return $this->db->where('item_id',$id)->get('prices')->row()->price;
+		return $this->db->where('item_id',$id)->get('prices')->row()->price ?? 0;
 	}
 
 	public function getCapital($id) {
 		 
-		return $this->db->where('item_id',$id)->get('prices')->row()->capital;
+		return $this->db->where('item_id',$id)->get('prices')->row()->capital ?? 0;
 	}
 
 	public function setId($id,$item_id) {

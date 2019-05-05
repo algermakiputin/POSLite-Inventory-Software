@@ -9,6 +9,7 @@ class ItemController extends CI_Controller {
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('ItemModel');
+		$this->load->model('HistoryModel');
 		
 		if (!$this->session->userdata('log_in')) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
@@ -78,7 +79,7 @@ class ItemController extends CI_Controller {
 		$filterSupplier = $this->input->post('columns[7][search][value]');
 		$sortPrice = $this->input->post('columns[4][search][value]');
 		$sortStocks = $this->input->post('columns[5][search][value]');
-
+		
 		if ($filterCategory) {
 			$sortPrice = NULL;
 			$sortStocks = NULL;
@@ -127,13 +128,12 @@ class ItemController extends CI_Controller {
 					->result();
 		}
 
-		$datasets = [];
-		foreach ($items as $item) {
+		$datasets = array_map(function($item) {
 			$itemPrice = $this->PriceModel->getPrice($item->id);
 			$itemCapital = $this->PriceModel->getCapital($item->id);
-			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity;
-			$itemSupplier = $this->db->where('id', $item->supplier_id)->get('supplier')->row()->name;
-			$datasets[] = [
+			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
+			$itemSupplier = $this->db->where('id', $item->supplier_id)->get('supplier')->row()->name ?? '';
+			return [
 				$this->disPlayItemImage($item->image),
 				$item->name,
 				$this->categories_model->getName($item->category_id),
@@ -160,7 +160,8 @@ class ItemController extends CI_Controller {
                     </ul>
                 </div>'
 			];
-		}	
+
+		}, $items);
 
 		echo json_encode([
 			'draw' => $this->input->post('draw'),
@@ -190,27 +191,25 @@ class ItemController extends CI_Controller {
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
-		$datasets = [];
 
-		foreach ($items as $item) {
+		$datasets = array_map(function($item){
 			$quantity = (int)$orderingLevel->getQuantity($item->id)->quantity;
 			if ($quantity <= 0)
-				continue;
+				return;
 
 			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
 			
-			$datasets[] = [
-					$item->id,
-					ucwords($item->name),
-					ucfirst($item->description),
-					$quantity,
-					'₱'. number_format($price,2)
-				];			
-
-		}
+			return [
+				$item->id,
+				ucwords($item->name),
+				ucfirst($item->description),
+				$quantity,
+				'₱'. number_format($price,2)
+			];
+		}, $items);
 
 		$count = count($datasets);
- 
+
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
 				'recordsTotal' => $count,
@@ -220,7 +219,6 @@ class ItemController extends CI_Controller {
 	}
 
 	public function dataFilter($search, $start, $limit) {
-
 		$this->db->limit($limit, $start);
 		if ($search != "") {
 			return $this->db->where('status', 1)
@@ -279,11 +277,6 @@ class ItemController extends CI_Controller {
 			return redirect(base_url('items/new'));
 		}
 
-		$this->load->model('PriceModel');
-		$this->load->model('ItemModel');
-		$this->load->model('OrderingLevelModel');
-		$this->load->model('HistoryModel');
-		$quantity = 0;
 		$data = array(
 				'name' => $name,
 				'category_id' => $category,
