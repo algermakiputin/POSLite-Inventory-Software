@@ -2,7 +2,7 @@
 	<div class="col-lg-12">
 		<h1 class="page-header">Expenses</h1>
 	</div> 
-    
+
 
     <div class="col-md-12">
         <?php if ($this->session->flashdata('success')): ?>
@@ -11,18 +11,18 @@
             </div>
         <?php endif; ?>
     </div>
-  
+    
 </div>
 <div class="row">
 
-   <div class="col-lg-12">
-       <div class="panel panel-default">
-           <div class="panel-heading">
-               Expenses List
-           </div>
+ <div class="col-lg-12">
+     <div class="panel panel-default">
+         <div class="panel-heading">
+             Expenses List
+         </div>
 
-           <!-- /.panel-heading -->
-           <div class="panel-body">
+         <!-- /.panel-heading -->
+         <div class="panel-body">
             <div class="row">
                 <div id="widgets">
                     <div class="col-md-6">
@@ -41,15 +41,15 @@
                 </div>
             </div>
             <table class="table table-responsive table-striped table-hover table-bordered" id="expenses_table">
-             <thead>
+               <thead>
                 <tr>
-                   <th width="25%">Expense Name</th>
-                   <th width="25%">Cost</th>
-                   <th width="25%">Date</th> 
-                   <th width="25%">Action</th>
-               </tr>
-           </thead>
-           <tbody>
+                 <th width="25%">Expense Name</th>
+                 <th width="25%">Cost</th>
+                 <th width="25%">Date</th> 
+                 <th width="25%">Action</th>
+             </tr>
+         </thead>
+         <tbody>
             <?php foreach ($expenses as $expense): ?>
                 <tr>
                     <td><?php echo $expense->type; ?></td>
@@ -61,10 +61,10 @@
         </tbody>
     </table>
 </div>
-<!-- /.panel-body -->
+
 </div>
-<!-- /.panel -->
+
 </div>
-<!-- /.col-lg-12 -->
+
 </div>
 
