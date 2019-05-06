@@ -66,31 +66,39 @@
 	$("#item-table").on('click', 'tbody tr', function(event) {
 		var id = $(this).find('td').eq(0).text();
 		var name = $(this).find('td').eq(1).text();
-		var stocks = $(this).find('td').eq(3).text();
+		var stockCol = $(this).find('td').eq(3);
+		var stocks = stockCol.text();
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
-	 
-  	 	if (id && name && stocks && price && description) {
-  	 		if (itemExist(id,stocks) == false) {
-	  	 		var quantity = 1;
-			 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-			 	totalAmountDue += parseFloat(subtotal);
-				$("#cart tbody").append(
-						'<tr>' +
-							'<input name="id" type="hidden" value="'+ id +'">' +
-							'<td>'+ name +'</td>' +
-							'<td><input data-stocks="'+stocks+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-							'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-							'<td>'+ price +'</td>' +
-				 			
-							'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
-						'</tr>'
-					);
-				recount();
-				$("payment").val('');
-				$("change").val('');
+	 	
+	 	if ( parseInt(stocks) > 0 ) {
+	 		if (id && name && stocks && price && description) {
+	  	 		if (itemExist(id,stocks) == false) {
+		  	 		var quantity = 1;
+				 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+				 	totalAmountDue += parseFloat(subtotal);
+					$("#cart tbody").append(
+							'<tr>' +
+								'<input name="id" type="hidden" value="'+ id +'">' +
+								'<td>'+ name +'</td>' +
+								'<td><input data-stocks="'+stocks+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+								'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+								'<td>'+ price +'</td>' +
+					 			
+								'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
+							'</tr>'
+						);
+					recount();
+					$("payment").val('');
+					$("change").val('');
+
+		  	 	}
+		  	 	stockCol.text(parseInt(stocks - 1));
 	  	 	}
-  	 	}
+	 	}else {
+	 		alert("Not enough stocks remaining");
+	 	}
+  	 	
 		
 	})
 

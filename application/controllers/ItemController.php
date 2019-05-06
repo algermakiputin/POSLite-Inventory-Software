@@ -192,11 +192,8 @@ class ItemController extends CI_Controller {
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
 
-		$datasets = array_map(function($item){
+		$datasets = array_map(function($item) use ($orderingLevel){
 			$quantity = (int)$orderingLevel->getQuantity($item->id)->quantity;
-			if ($quantity <= 0)
-				return;
-
 			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
 			
 			return [
