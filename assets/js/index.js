@@ -1,12 +1,16 @@
 $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var currency = '₱';
+	var site_live = $("meta[name='site_live']").attr('content');
 	$("form").parsley();	
  
- 	if (!sessionStorage.getItem("demo")) {
- 		introJs().start().oncomplete(endDemo)
-						.onskip(endDemo)
-						.onexit(endDemo);
+ 	 
+ 	if (site_live == 1) {
+ 		if (!sessionStorage.getItem("demo")) {
+	 		introJs().start().oncomplete(endDemo)
+							.onskip(endDemo)
+							.onexit(endDemo);
+	 	}
  	}
  
 

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <meta name="site_live" content="<?php echo SITE_LIVE ? 1 : 0 ?>">
     <?php $this->load->view('template/header') ?>  
 
 </head>
