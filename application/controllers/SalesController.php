@@ -244,8 +244,7 @@ class SalesController extends CI_Controller {
 		$totalExpenses = 0;
 		$transactionProfit = 0;
 		$expenses = $this->db->select("SUM(cost) as total")
-							->where('date >=', $from)
-							->where('date <=', $to)
+							->where('date', date('Y-m-d'))
 							->get('expenses')
 							->row();
 
