@@ -340,7 +340,9 @@ $(document).ready(function() {
 			type : 'POST'
 		},
 		initComplete : function(settings, json) {
+			
 			$("#total-sales").text('₱' + json.total_sales);
+			$("#total-expenses").text('₱' + json.expenses);
 			$("#max-date").change(function() {
 				$(this).datepicker('hide');
 				var to = $(this).val();
