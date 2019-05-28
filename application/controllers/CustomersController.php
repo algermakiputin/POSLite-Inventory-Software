@@ -27,7 +27,7 @@ class CustomersController Extends CI_Controller {
 				'outlet_location' => $this->input->post('outlet_location'),
 				'outlet_address' => $this->input->post('outlet_address'), 
 				'contact_number' => $this->input->post('mobileNumber'),
-				'membership' => '<script>alert(0)</script>'
+				'membership' => ''
  
 			);
 
@@ -101,6 +101,7 @@ class CustomersController Extends CI_Controller {
 				'contact_number' => $this->input->post('contact_number'),
 			);
 		$data = $this->security->xss_clean($data);
+		
 		$this->db->where('id',$this->input->post('customer_id'))->update('customers',$data);
  
 		return redirect($_SERVER['HTTP_REFERER']);
