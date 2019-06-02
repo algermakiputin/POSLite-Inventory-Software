@@ -3,6 +3,7 @@
 application/cache/*
 !application/cache/index.html
 !application/cache/.htaccess
+assets/poslite.sql
 
 application/logs/*
 !application/logs/index.html
