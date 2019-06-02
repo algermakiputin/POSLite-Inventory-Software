@@ -5,14 +5,15 @@ class AuthController extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		if ($this->session->userdata('log_in')) redirect(base_url('items'));
+		
 	}
 	public function login() {
-
+		if ($this->session->userdata('log_in')) redirect(base_url('items'));
 		$this->load->dbutil();
 		if (!$this->dbutil->database_exists('poslite') && !SITE_LIVE) {
 			return $this->load->view('buy');
 		}
+
 		$data['page_name'] = "Login";
 		$this->load->view('template/header',$data);
 		$this->load->view('login');
@@ -37,7 +38,9 @@ class AuthController extends CI_Controller {
 		
 		if ($verify_login) {
 			$hash_password = $verify_login->password;
+
 			$verifyPassword = password_verify($password,$hash_password);
+			
 			if ($verifyPassword) {
 				$userdata = array( 
 					'id' => "$verify_login->id",
@@ -81,9 +84,13 @@ class AuthController extends CI_Controller {
 	}
 
 	public function logout() {
-		$this->inserLoginHistory();
+
 		$data = array('id','username','log_in','account_type');
+		
 		$this->session->unset_userdata($data);
+		$this->session->sess_destroy();
+		$this->inserLoginHistory();
+ 
 		$this->session->set_flashdata('successMessage','<div class="alert alert-success">Lagout Successfully</div>');
 		redirect(base_url('login'));
 	}
