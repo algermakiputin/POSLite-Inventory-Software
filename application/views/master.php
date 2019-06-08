@@ -9,6 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="site_live" content="<?php echo SITE_LIVE ? 1 : 0 ?>">
+    <meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
+    <meta name="csrfHash" content="<?php echo $this->security->get_csrf_hash(); ?>">
+   
     <?php $this->load->view('template/header') ?>  
 
 </head>
@@ -74,11 +77,7 @@
         <!-- /#page-wrapper -->
        
     </div>
-
-    <script type="text/javascript">
-        var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
-        var csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
-    </script>
+ 
     <?php $this->load->view('template/footer') ?> 
 
 </body>

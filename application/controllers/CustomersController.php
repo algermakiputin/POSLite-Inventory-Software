@@ -21,12 +21,12 @@ class CustomersController Extends CI_Controller {
 	public function insert() {
 
 		$data = array(
-				'name' =>	$this->input->post('name'), 
-				'gender' => $this->input->post('gender'),
-				'home_address' => $this->input->post('home_address'),
-				'outlet_location' => $this->input->post('outlet_location'),
-				'outlet_address' => $this->input->post('outlet_address'), 
-				'contact_number' => $this->input->post('mobileNumber'),
+				'name' =>	strip_tags($this->input->post('name')), 
+				'gender' => strip_tags($this->input->post('gender')),
+				'home_address' => strip_tags($this->input->post('home_address')),
+				'outlet_location' => strip_tags($this->input->post('outlet_location')),
+				'outlet_address' => strip_tags($this->input->post('outlet_address')), 
+				'contact_number' => strip_tags($this->input->post('mobileNumber')),
 				'membership' => ''
  
 			);
@@ -93,17 +93,17 @@ class CustomersController Extends CI_Controller {
 	public function update() {
 
 		$data = array(
-				'name' =>	$this->input->post('name'), 
-				'gender' => $this->input->post('gender'),
-				'home_address' => $this->input->post('home_address'),
-				'outlet_location' => $this->input->post('outlet_location'),
-				'outlet_address' => $this->input->post('outlet_address'), 
-				'contact_number' => $this->input->post('contact_number'),
+				'name' =>	strip_tags($this->input->post('name')), 
+				'gender' => strip_tags($this->input->post('gender')),
+				'home_address' => strip_tags($this->input->post('home_address')),
+				'outlet_location' => strip_tags($this->input->post('outlet_location')),
+				'outlet_address' => strip_tags($this->input->post('outlet_address')), 
+				'contact_number' => strip_tags($this->input->post('contact_number')),
 			);
+
 		$data = $this->security->xss_clean($data);
-		
 		$this->db->where('id',$this->input->post('customer_id'))->update('customers',$data);
- 
+		success("Customer updated Successfully");
 		return redirect($_SERVER['HTTP_REFERER']);
 	}
 

@@ -18,3 +18,8 @@
 
 		return $outOfStocks;
 	}
+
+	function success($message) {
+		$CI =& get_instance();
+		$CI->session->set_flashdata('success', $message);
+	}
