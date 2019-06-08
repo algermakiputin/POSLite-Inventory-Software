@@ -97,7 +97,7 @@
 			<b>Username:</b> admin <b>Password:</b> admin123
 		</div>
 	<?php endif; ?>
-	<p class="text-center" style="color: #777">&copy; 2018 All Rights Reserved <br> Developed by: <a href="https://algermakiputin.com">Alger Makiputin</a></p>
+	<p class="text-center" style="color: #777">&copy; <?php echo date('Y-m-d') ?> All Rights Reserved <br> Developed by: <a href="https://algermakiputin.com">Alger Makiputin</a></p>
 	<?php echo form_close() ?>
 </div>
 	
