@@ -154,7 +154,7 @@
 											<div id="r-id">005250</div>
 											<div id="r-date"><?php echo date('m/d/Y') ?></div>
 											<div id="r-cashier">Cashier</div>
-											<div id="r-time">14:50 PM</div> 
+											<div id="r-time"><?php echo date('h:i a') ?></div> 
 										</div>
 									</div>
 									<div class="clearfix"></div>
