@@ -261,12 +261,12 @@ class ItemController extends CI_Controller {
 		$capital = $this->input->post('capital');
 		$productImage = $_FILES['productImage'];
 	 
-		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim');
+		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
-		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]|trim');
-		$this->form_validation->set_rules('barcode', 'Barcode', 'required|is_unique[items.barcode]|trim');
-		$this->form_validation->set_rules('supplier', 'Supplier', 'required|trim');
-		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]|trim');   
+		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]|trim|strip_tags');
+		$this->form_validation->set_rules('barcode', 'Barcode', 'required|is_unique[items.barcode]|trim|strip_tags');
+		$this->form_validation->set_rules('supplier', 'Supplier', 'required|trim|strip_tags');
+		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]|trim|strip_tags');   
  
 		if ( $this->form_validation->run() == FALSE ) {
 			$this->session->set_flashdata('errorMessage', 
@@ -385,12 +385,13 @@ class ItemController extends CI_Controller {
 		//validation Form
 		$this->updateFormValidation();
 		$this->load->model('HistoryModel');
- 		$updated_name = $this->input->post('name');
-		$updated_category = $this->input->post('category');
-		$updated_desc = strtolower($this->input->post('description'));
-		$updated_price = $this->input->post('price'); 
-		$capital = $this->input->post('capital');
-		$id = $this->input->post('id');
+ 		$updated_name = strip_tags($this->input->post('name'));
+		$updated_category = strip_tags($this->input->post('category'));
+		$updated_desc = strip_tags(strtolower($this->input->post('description')));
+		$updated_price = strip_tags($this->input->post('price')); 
+		$capital = strip_tags($this->input->post('capital'));
+		$id = strip_tags($this->input->post('id'));
+
 		$item = $this->db->where('id', $id)->get('items')->row();
 		$currentPrice = $this->PriceModel->getPrice($id);
 		$reorder = $this->input->post('reorder');
@@ -422,7 +423,6 @@ class ItemController extends CI_Controller {
 					$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
 				if ($item->category_id != $updated_category) 
 					$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
-
 			return redirect(base_url('items'));
 		}
 	 		
