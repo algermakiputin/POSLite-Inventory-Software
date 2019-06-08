@@ -10,6 +10,8 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/jquery-ui/jquery-ui.css') ?>">
 	<meta name="base_url" content="<?php echo base_url() ?>">
+	<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
+    <meta name="csrfHash" content="<?php echo $this->security->get_csrf_hash(); ?>">
 </head>
 <body>
 
