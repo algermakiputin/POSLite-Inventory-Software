@@ -20,6 +20,8 @@
 							</div>
 						<?php endif; ?> 
 						<form action="<?php echo base_url('delivery/insert') ?>" method="POST">
+							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>"
+												value="<?php echo $this->security->get_csrf_hash(); ?>">
 							<div class="form-group">
 								<label>Select Supplier</label>
 								<select class="form-control" name="supplier_id" required="required">
