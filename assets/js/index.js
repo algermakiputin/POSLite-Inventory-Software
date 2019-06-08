@@ -2,9 +2,11 @@ $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var currency = '₱';
 	var site_live = $("meta[name='site_live']").attr('content');
+	var csrfName = $("meta[name='csrfName']").attr('content');
+	var csrfHash = $("meta[name='csrfHash']").attr("content");
+	
 	$("form").parsley();	
- 
- 	 
+
  	if (site_live == 1) {
  		if (!sessionStorage.getItem("demo")) {
 	 		introJs().start().oncomplete(endDemo)
@@ -12,8 +14,6 @@ $(document).ready(function() {
 							.onexit(endDemo);
 	 	}
  	}
- 
-
 	function endDemo() {
 		sessionStorage.setItem("demo", false);
 	}
@@ -26,6 +26,7 @@ $(document).ready(function() {
 				this.dataTable();
 				this.dataTableFilter();
 				this.clearDataTableFilter();
+				this.deleteItem();
 			},
 			dataTable : function() {
 				itemTable = $("#item_tbl").DataTable({
@@ -103,6 +104,19 @@ $(document).ready(function() {
 
 					itemTable.draw();
 				})
+			},
+			deleteItem : function() {
+				$("body").on('click', '.delete-item', function() {
+					var c = confirm('Delete Item?')
+					var id = $(this).data('id');
+					var link = $(this).data('link');
+					if (c == false) {
+
+						return false;
+					}
+
+					window.location = link + id;
+				})
 			}
 		}
 
@@ -154,37 +168,62 @@ $(document).ready(function() {
 			}
 		}
 
+		var customers = {
+			init : function() {
+				this.edit();
+			},
+
+			edit : function() {
+				$("#customer_table").on('click','.edit',function() {
+					var id = $(this).data('id');
+					$("#customer_id").val(id);
+					/*
+						Set Data
+						1 - csrfname and token
+						2 - customer ID
+					*/
+					var data = {};
+					data[csrfName] = csrfHash,
+					data['id'] = id;
+					$.ajax({
+						type : 'POST',
+						url : base_url + 'customers/find',
+						data : data,
+						success : function(data) {
+							var customer = JSON.parse(data);
+							console.log(customer); 
+							$("#customer-edit input[name='name']").val(customer.name); 
+							$("#customer-edit input[name='gender']").val(customer.gender);
+							$("#customer-edit input[name='home_address']").val(customer.home_address);
+							$("#customer-edit input[name='outlet_location']").val(customer.outlet_location);
+							$("#customer-edit input[name='outlet_address']").val(customer.outlet_address);  
+							$("#customer-edit input[name='contact_number']").val(customer.contact_number);
+						}
+
+					});
+				})
+			}
+
+		}
+
 		items.init();
 		sales.init();
+		customers.init();
 	})();
 
 	$("#expenses_table").DataTable();
 	$("#item-form").submit(function(e) {
 		var price = $("[name='price']").val();
 		var retail = $("[name='retail_price']").val();
-
 		if (parseInt(price) > retail) {
 			alert("Retail price must be greather or equal to price");
 			e.preventDefault();
 		}
 	})
 
-
 	$("#productImage").change(function() {
 		readURL(this);
 	});
-
-	$("body").on('click', '.delete-item', function() {
-		var c = confirm('Delete Item?')
-		var id = $(this).data('id');
-		var link = $(this).data('link');
-		if (c == false) {
-
-			return false;
-		}
-
-		window.location = link + id;
-	})
 
 	$("#customer_table").on('click', '.renew', function() {
 		var id = $(this).data('id');
@@ -499,30 +538,6 @@ $(document).ready(function() {
 		}
 
 	});
-
-
-	$("#customer_table").on('click','.edit',function() {
-		var id = $(this).data('id');
-		$("#customer_id").val(id);
-		$.ajax({
-			type : 'POST',
-			url : base_url + 'customers/find',
-			data : {
-				id : id
-			},
-			success : function(data) {
-				var customer = JSON.parse(data);
-				console.log(customer); 
-				$("#customer-edit input[name='name']").val(customer.name); 
-				$("#customer-edit input[name='gender']").val(customer.gender);
-				$("#customer-edit input[name='home_address']").val(customer.home_address);
-				$("#customer-edit input[name='outlet_location']").val(customer.outlet_location);
-				$("#customer-edit input[name='outlet_address']").val(customer.outlet_address);  
-				$("#customer-edit input[name='contact_number']").val(customer.contact_number);
-			}
-
-		});
-	})
 
 	$("#btn-group-menu .btn").click(function() {
 		$('.btn-group .btn').removeClass('active');

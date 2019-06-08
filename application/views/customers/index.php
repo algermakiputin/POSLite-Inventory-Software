@@ -122,7 +122,9 @@
 			</div>
 			<?php echo form_open('customers/insert', ['method' => 'POST']) ?> 
 			<div class="modal-body">
-				
+					<input type="hidden" 
+						name="<?php echo $this->security->get_csrf_token_name(); ?>"
+						value="<?php echo $this->security->get_csrf_hash(); ?>">
 					<div class="form-group">
 						<input required="required" type="text" class="form-control" name="name" placeholder="Name">
 					</div> 
@@ -168,10 +170,10 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">New Customer</h4>
+				<h4 class="modal-title">Update Customer Information</h4>
 			</div>
 			<div class="modal-body">
-				<?php echo form_open('customer/update', ['method' => 'POST']) ?> 
+				<?php echo form_open('customers/update', ['method' => 'POST']) ?> 
 					<input type="hidden" name="customer_id" id="customer_id">
 					<div class="form-group">
 						<label>Name</label>
