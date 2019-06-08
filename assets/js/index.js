@@ -20,8 +20,7 @@ $(document).ready(function() {
 
 	(function() {
 		var itemTable;
-		var items = {
-			
+		var items = {		
 			init : function() {
 				this.dataTable();
 				this.dataTableFilter();
@@ -230,6 +229,7 @@ $(document).ready(function() {
 			init : function() {
 				this.edit();
 				this.graphSales();
+				this.customerDatatable();
 			},
 			edit : function() {
 				$("#customer_table").on('click','.edit',function() {
