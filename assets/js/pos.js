@@ -1,5 +1,7 @@
 	$(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
+	var csrfName = $("meta[name='csrfName']").attr('content');
+	var csrfHash = $("meta[name='csrfHash']").attr('content');
 	var totalAmountDue = 0;
 	var totalDiscount = 0;
 	var transactionComplete = false;
@@ -50,15 +52,15 @@
 	
 	});
 
+	data = {};
+	data[csrfName] = csrfHash;
 	var item_table = $("#item-table").DataTable({
 		processing : true,
 		serverSide : true,
 		pageLength : 10, 
 		ajax : {
 			url : base_url + 'items/data',
-			data : {
-				csrfName : csrfHash
-			},
+			data : data,
 			type : 'POST'
 		},
 	});
@@ -174,11 +176,13 @@
 						);
 				});
 
+
+				var data = {};
+				data['sales'] = sales;
+				data[csrfName] = csrfHash;
 				$.ajax({
 					type : 'POST',
-					data : {
-						sales : sales
-					},
+					data : data,
 					url : base_url + 'SalesController/insert',
 					beforeSend : function() {
 						$("#btn").button('loading');

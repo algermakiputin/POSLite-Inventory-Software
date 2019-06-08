@@ -27,14 +27,23 @@ $(document).ready(function() {
 				this.dataTableFilter();
 				this.clearDataTableFilter();
 				this.deleteItem();
+				this.changeImage();
+			},
+			changeImage : function() {
+				$("#productImage").change(function() {
+					readURL(this);
+				});
 			},
 			dataTable : function() {
+				data = {};
+				data[csrfName] = csrfHash;
 				itemTable = $("#item_tbl").DataTable({
 					processing : true,
 					serverSide : true,
 					ajax : {
 						url : base_url + 'ItemController/dataTable',
-						type : 'POST'
+						type : 'POST',
+						data : data
 					},
 					dom : "lfrtBp",
 					buttons: [
@@ -123,6 +132,7 @@ $(document).ready(function() {
 		var sales = {
 			init : function() {
 				this.deletePurchaseItem();
+				this.salesDataTable();
 			},
 			deletePurchaseItem : function() {
 
@@ -146,6 +156,54 @@ $(document).ready(function() {
 					
 
 				})
+			},
+			salesDataTable : function() {
+				data = {};
+				data[csrfName] = csrfHash;
+				var sales_table = $("#sales_table").DataTable({
+					searching : true,
+					ordering : false,
+					bLengthChange :false,
+					serverSide : true,
+					info : false,
+					processing : true,
+					bsearchable : true,
+					paging : false,
+					dom : 'lrtip',
+					ajax : {
+						url : base_url + 'sales/report',
+						type : 'POST',
+						data : data
+					},
+					initComplete : function(settings, json) {
+						
+						$("#total-sales").text('₱' + json.total_sales);
+						$("#total-expenses").text('₱' + json.expenses);
+						$("#max-date").change(function() {
+							$(this).datepicker('hide');
+							var to = $(this).val();
+							var from = $("#min-date").val();
+							
+							if (from) {
+								sales_table.columns(0).search(from);
+								sales_table.columns(1).search(to).draw();
+								$("#range").text('Date: ' +to + ' - ' + from);
+								$("#widgets").show();
+
+							}else {
+								alert('Select from date');
+							}
+						})
+					},
+					drawCallback : function (setting) {
+						var data = setting.json;
+						console.log(data);
+						$("#total-sales").text('₱' + data.total_sales);
+						$("#total-profit").text('₱' + data.profit);
+						$("#total-lost").text('₱' + data.lost);
+						$("#total-expense").text('₱' + data.expenses);
+					}
+				});
 			}
 		}
 
@@ -171,8 +229,8 @@ $(document).ready(function() {
 		var customers = {
 			init : function() {
 				this.edit();
+				this.graphSales();
 			},
-
 			edit : function() {
 				$("#customer_table").on('click','.edit',function() {
 					var id = $(this).data('id');
@@ -183,7 +241,7 @@ $(document).ready(function() {
 						2 - customer ID
 					*/
 					var data = {};
-					data[csrfName] = csrfHash,
+					data[csrfName] = csrfHash;
 					data['id'] = id;
 					$.ajax({
 						type : 'POST',
@@ -202,13 +260,137 @@ $(document).ready(function() {
 
 					});
 				})
-			}
+			},
+			graphSales : function() {
+				$("#graph-menu button").click(function() {
+				$('#graph-menu button').removeClass('active');
+				$(this).addClass('active');
+				var type = $(this).data('id');
+				var data = {};
+				data[csrfName] = csrfHash;
+				data['type'] = type;
+				$.ajax({
+						type : 'POST',
+						url : base_url + 'sales/graph-filter',
+						data : data,
+						success : function(data) {
 
+							var result = JSON.parse(data);
+
+							if (type == "week")
+								myChart.data.datasets[0].label = "Sales for the last 7 Days";
+							else if (type == "month")
+								myChart.data.datasets[0].label = "Monthly Sales";
+							else if (type == "year")
+								myChart.data.datasets[0].label = "Yearly Sales";
+
+							myChart.data.labels = Object.keys(result);
+							myChart.data.datasets.data = Object.values(result);
+							myChart.data.datasets[0].data = Object.values(result);
+							myChart.update();
+
+						}
+					});
+				});
+			},
+			customerDatatable() {
+				var customer_table = $("#customer_table").DataTable({
+					ordering : false,
+					dom : "lfrtBp",
+					buttons: [
+					{
+						extend: 'copyHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory',
+						messageTop : 'Inventory Report',
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0, 1, 2, 3,4,5,6 ]
+						},
+					},
+					{
+						extend: 'excelHtml5',
+						filename : 'Inventory',
+						title : 'Inventory Report',
+						messageTop : 'Inventory Report',
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0, 1, 2, 3,4,5,6 ]
+						},
+					},
+					{
+						extend: 'pdfHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory',
+						messageTop : 'Inventory Report',
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0, 1, 2, 3,4,5,6 ]
+						},
+
+					},
+					],
+					initComplete : function() {
+						$("#customer_table_length").append( '&nbsp;&nbsp;<select class="form-control" id="member-status"><option value="">Membership Status</option>'+
+							'<option value="Active">Active</option>' + 
+							'<option value="Expired">Expired</option>' + 
+							'<option value="Needs Renewal">Needs Renewal</option>' + 
+							'<option value="Not Open">Not Open</option>' + 
+							'</select>'
+							+'&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
+						
+						$("#member-status").change(function() {
+							customer_table.columns(7).search($(this).val()).draw();
+						})
+					}
+				});
+			}
+		}
+
+		var suppliers = {
+			init : function() {
+				this.dataTable();
+				this.edit();
+			},
+			dataTable : function(){
+				$("#supplier_table").DataTable({
+					ordering : false,
+					initComplete : function() {
+						$("#supplier_table_length").append('&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
+					}
+				})
+
+			},
+			edit : function(){
+		 
+				$("#supplier_table").on('click','.edit',function() {
+					var id = $(this).data('id');
+					var data = {};
+					$("#supplier_id").val(id);
+					data['id'] = id;
+					data[csrfName] = csrfHash;
+					$.ajax({
+						type : 'POST',
+						url : base_url + 'suppliers/find',
+						data : data,
+						success : function(data) {
+							var supplier = JSON.parse(data);
+							$("#edit-supplier input[name='name']").val(supplier.name);
+							$("#edit-supplier input[name='address']").val(supplier.address);
+							$("#edit-supplier input[name='contact']").val(supplier.contact);
+							$("#edit-supplier input[name='email']").val(supplier.email);
+						}
+
+					});
+				})
+			} 
 		}
 
 		items.init();
 		sales.init();
 		customers.init();
+		suppliers.init();
+	 
 	})();
 
 	$("#expenses_table").DataTable();
@@ -220,10 +402,6 @@ $(document).ready(function() {
 			e.preventDefault();
 		}
 	})
-
-	$("#productImage").change(function() {
-		readURL(this);
-	});
 
 	$("#customer_table").on('click', '.renew', function() {
 		var id = $(this).data('id');
@@ -335,79 +513,6 @@ $(document).ready(function() {
 		}
 	})
 
-	$("#graph-menu button").click(function() {
-		$('#graph-menu button').removeClass('active');
-		$(this).addClass('active');
-		var type = $(this).data('id');
-		$.ajax({
-			type : 'POST',
-			url : base_url + 'sales/graph-filter',
-			data : {
-				type : type
-			},
-			success : function(data) {
-
-				var result = JSON.parse(data);
-
-				if (type == "week")
-					myChart.data.datasets[0].label = "Sales for the last 7 Days";
-				else if (type == "month")
-					myChart.data.datasets[0].label = "Monthly Sales";
-				else if (type == "year")
-					myChart.data.datasets[0].label = "Yearly Sales";
-
-				myChart.data.labels = Object.keys(result);
-				myChart.data.datasets.data = Object.values(result);
-				myChart.data.datasets[0].data = Object.values(result);
-				myChart.update();
-
-			}
-		});
-	});
-	var sales_table = $("#sales_table").DataTable({
-		searching : true,
-		ordering : false,
-		bLengthChange :false,
-		serverSide : true,
-		info : false,
-		processing : true,
-		bsearchable : true,
-		paging : false,
-		dom : 'lrtip',
-		ajax : {
-			url : base_url + 'sales/report',
-			type : 'POST'
-		},
-		initComplete : function(settings, json) {
-			
-			$("#total-sales").text('₱' + json.total_sales);
-			$("#total-expenses").text('₱' + json.expenses);
-			$("#max-date").change(function() {
-				$(this).datepicker('hide');
-				var to = $(this).val();
-				var from = $("#min-date").val();
-				
-				if (from) {
-					sales_table.columns(0).search(from);
-					sales_table.columns(1).search(to).draw();
-					$("#range").text('Date: ' +to + ' - ' + from);
-					$("#widgets").show();
-
-				}else {
-					alert('Select from date');
-				}
-			})
-		},
-		drawCallback : function (setting) {
-			var data = setting.json;
-			console.log(data);
-			$("#total-sales").text('₱' + data.total_sales);
-			$("#total-profit").text('₱' + data.profit);
-			$("#total-lost").text('₱' + data.lost);
-			$("#total-expense").text('₱' + data.expenses);
-		}
-	});
-
 	$("#sales_table").on('click','.view', function() {
 		var id = $(this).data('id');
 		var row = $(this).parents('tr');
@@ -446,98 +551,12 @@ $(document).ready(function() {
 		$("#modal").modal('toggle');
 	})
 
-	var  suppliers = {
-		dataTable : $("#supplier_table").DataTable({
-			ordering : false,
-			initComplete : function() {
-				$("#supplier_table_length").append('&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
-			}
-		}),
-		edit : $("#supplier_table").on('click','.edit',function() {
-			var id = $(this).data('id');
-			$("#supplier_id").val(id);
-			$.ajax({
-				type : 'POST',
-				url : base_url + 'suppliers/find',
-				data : {
-					id : id
-				},
-				success : function(data) {
-					var supplier = JSON.parse(data);
-
-					$("#edit-supplier input[name='name']").val(supplier.name);
-					$("#edit-supplier input[name='address']").val(supplier.address);
-					$("#edit-supplier input[name='contact']").val(supplier.contact);
-					$("#edit-supplier input[name='email']").val(supplier.email);
-				}
-
-			});
-		}),
-	}
 	
-
-	
-
-	
-	
-
 	$("#users_table").DataTable();
 	$("#categories_table").DataTable({
 		ordering : false
 	});
 	$("#deliveries_table").DataTable();
-
-	var customer_table = $("#customer_table").DataTable({
-		ordering : false,
-		dom : "lfrtBp",
-		buttons: [
-		{
-			extend: 'copyHtml5',
-			filename : 'Inventory Report',
-			title : 'Inventory',
-			messageTop : 'Inventory Report',
-			className : "btn btn-default btn-sm",
-			exportOptions: {
-				columns: [ 0, 1, 2, 3,4,5,6 ]
-			},
-		},
-		{
-			extend: 'excelHtml5',
-			filename : 'Inventory',
-			title : 'Inventory Report',
-			messageTop : 'Inventory Report',
-			className : "btn btn-default btn-sm",
-			exportOptions: {
-				columns: [ 0, 1, 2, 3,4,5,6 ]
-			},
-		},
-		{
-			extend: 'pdfHtml5',
-			filename : 'Inventory Report',
-			title : 'Inventory',
-			messageTop : 'Inventory Report',
-			className : "btn btn-default btn-sm",
-			exportOptions: {
-				columns: [ 0, 1, 2, 3,4,5,6 ]
-			},
-
-		},
-		],
-		initComplete : function() {
-			$("#customer_table_length").append( '&nbsp;&nbsp;<select class="form-control" id="member-status"><option value="">Membership Status</option>'+
-				'<option value="Active">Active</option>' + 
-				'<option value="Expired">Expired</option>' + 
-				'<option value="Needs Renewal">Needs Renewal</option>' + 
-				'<option value="Not Open">Not Open</option>' + 
-				'</select>'
-				+'&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
-			
-			$("#member-status").change(function() {
-				customer_table.columns(7).search($(this).val()).draw();
-			})
-		}
-
-	});
 
 	$("#btn-group-menu .btn").click(function() {
 		$('.btn-group .btn').removeClass('active');
