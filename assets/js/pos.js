@@ -83,7 +83,7 @@
 							'<tr>' +
 								'<input name="id" type="hidden" value="'+ id +'">' +
 								'<td>'+ name +'</td>' +
-								'<td><input data-stocks="'+stocks+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+								'<td><input data-stocks="'+stocks+'" data-remaining="'+stocks+'" data-id="'+id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
 								'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
 								'<td>'+ price +'</td>' +
 					 			
@@ -252,7 +252,11 @@
 	})
 
 	$("#cart").on('click', '.remove',function() {
-		$(this).parents('tr').remove();
+		var row = $(this).parents('tr');
+		var remainingStocks = row.find('.quantity-box').data('stocks');
+		var itemID = row.find('.quantity-box').data('id');
+		calculateRemainingStocks(remainingStocks, itemID);
+		row.remove();
 		recount();
 	})
 
@@ -291,24 +295,34 @@
  			return false;
  		}
 
+
+
 		var quantity = parseInt($(this).val());
 		var currentStocks = $(this).data('stocks');
+		var itemID = $(this).data('id');
+		var remaining = $(this).data('stocks') - quantity;
 
-		if (isNaN(quantity))
+		$(this).data('remaining', remaining);
+		if (isNaN(quantity)) {
 			return quantity = 1;
+			alert(0)
+		}
 
-		if (!isNaN(quantity) && quantity != 0) {
+		if (!isNaN(quantity) && quantity != 0 || $(this).val() == "") {
+			var row = $("#item-table").find('td').text() == itemID;
 
 			if (quantity <= parseInt(currentStocks)) {
 				var row = $(this).parents("tr");
 				var priceCol = row.find('td').eq(2);
 				var price = priceCol.text().substring(1);
 				var subtotal = parseInt(quantity) * parseFloat(price);
+				calculateRemainingStocks(remaining,itemID);
 				return recount();
 			}
 			
 			alert('Not enough stocks only ' + currentStocks + ' remaining.');
 			$(this).val(1);
+			calculateRemainingStocks(currentStocks - 1,itemID);
 			return recount();
 		}
 
@@ -316,17 +330,30 @@
 	})
 
 
-	$("#cart").on("blur focusout", ".quantity-box", function() {
+	$("#cart").on("blur focusout focus", ".quantity-box", function() {
 
 		if ($(this).val() == "" || isNaN(parseInt($(this).val()))) {
 			$(this).val(1);
+			var quantity = parseInt(1);
+			var currentStocks = $(this).data('stocks');
+			var itemID = $(this).data('id'); 
+			calculateRemainingStocks(currentStocks - quantity,itemID);
+
 			return recount();
 		}
-	});
-	$("#cart").on('focus', '.quantity-box', function() {
-		$(this).val('');
-	})
+	}); 
 
+
+	function calculateRemainingStocks(remaining, itemID) {
+		var table = $("#item-table > tbody > tr");
+		$.each(table, function(key, value) {
+			var val = $(value);
+			var id = val.find('td').eq(0).text();
+			if (id == itemID) {
+				return val.find('td').eq(3).text(remaining);
+			} 
+		});
+	}
 
 	function recount() {
 		var row = $("#cart tbody tr").length;
