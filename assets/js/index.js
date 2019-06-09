@@ -468,7 +468,6 @@ $(document).ready(function() {
     });
 
 	$("#min-date").change(function(e){
-
 		$("#max-date").datepicker({startDate : new Date()})
 	})
 	$("#history_table").DataTable({

@@ -102,6 +102,7 @@ $route['out-of-stocks'] = "ItemController/outOfStocks";
 $route['deliveries'] = "DeliveriesController/index";
 $route['new-delivery'] = "DeliveriesController/new";
 $route['delivery/insert'] = "DeliveriesController/insert";
+$route['license'] = "LicenseController/index";
 
 $route['users'] = "UsersController/users";
 
