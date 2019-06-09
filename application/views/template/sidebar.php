@@ -70,6 +70,11 @@
                     </li>
                 </ul>
             </li>
+            <?php if (!SITE_LIVE): ?>
+                <li>
+                    <a href="<?php echo base_url('license') ?>"><i class="fa fa-legal"></i> License</a>
+                </li>
+            <?php endif; ?>
             <li data-step="9" data-intro="Logout takes you out of the system.">
                 <a href="<?php echo base_url("logout") ?>"><i class="glyphicon glyphicon glyphicon-log-out fa-fw"></i> Log Out</a>
             </li>
