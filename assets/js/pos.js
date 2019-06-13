@@ -30,16 +30,36 @@
 						var quantity = 1;
 					 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
 					 	totalAmountDue += parseFloat(subtotal);
-						$("#cart tbody").append(
-								'<tr>' +
-									'<input name="id" type="hidden" value="'+ result.id +'">' +
-									'<td>'+ result.name +'</td>' +
-									'<td><input data-stocks="'+result.stocks+'" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-									'<td>'+ result.price +'</td>' +
-						 
-									'<td><span class="remove" style="font-size:12px;">X</span></td>' +
-								'</tr>'
-							);
+
+					 	if ( parseInt(result.quantity) > 0 ) {
+					 		 
+				  	 		if (itemExist(result.id,result.quantity) == false) {
+					  	 		var quantity = 1;
+							 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
+							 	totalAmountDue += parseFloat(result.subtotal);
+								$("#cart tbody").append(
+										'<tr>' +
+											'<input name="id" type="hidden" value="'+ result.id +'">' +
+											'<td>'+ result.name +'</td>' +
+											'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+											'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+											'<td>'+ result.price +'</td>' +
+								 			
+											'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
+										'</tr>'
+									);
+								recount();
+								$("payment").val('');
+								$("change").val('');
+
+					  	 	}
+					  	 	stockCol.text(parseInt(stocks - 1));
+					  	  
+					 	}else {
+					 		alert("Not enough stocks remaining");
+					 	}
+			 
+
 						recount();
 						$("payment").val('');
 						$("change").val('');
@@ -55,9 +75,10 @@
 	data = {};
 	data[csrfName] = csrfHash;
 	var item_table = $("#item-table").DataTable({
-		processing : true,
+		processing : true, 
 		serverSide : true,
-		pageLength : 10, 
+		 "bPaginate": true,
+		pagin:true,
 		ajax : {
 			url : base_url + 'items/data',
 			data : data,
@@ -93,7 +114,6 @@
 					recount();
 					$("payment").val('');
 					$("change").val('');
-
 		  	 	}
 		  	 	stockCol.text(parseInt(stocks - 1));
 	  	 	}

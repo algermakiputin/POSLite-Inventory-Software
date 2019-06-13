@@ -79,7 +79,8 @@ class ItemController extends CI_Controller {
 		$filterSupplier = $this->input->post('columns[7][search][value]');
 		$sortPrice = $this->input->post('columns[4][search][value]');
 		$sortStocks = $this->input->post('columns[5][search][value]');
-		
+		$itemCount = $this->db->get('items')->num_rows();
+
 		if ($filterCategory) {
 			$sortPrice = NULL;
 			$sortStocks = NULL;
@@ -137,8 +138,8 @@ class ItemController extends CI_Controller {
 				$this->disPlayItemImage($item->image),
 				$item->name,
 				$this->categories_model->getName($item->category_id),
-				'₱' . number_format($itemCapital),
-				'₱' . number_format($itemPrice),
+				'₱' . number_format($itemCapital,2),
+				'₱' . number_format($itemPrice,2),
 				$stocksRemaining . ' pcs',
 				$item->name,
 				$itemSupplier,
@@ -166,7 +167,7 @@ class ItemController extends CI_Controller {
 		echo json_encode([
 			'draw' => $this->input->post('draw'),
 			'recordsTotal' => count($datasets),
-			'recordsFiltered' => count($datasets),
+			'recordsFiltered' => $itemCount,
 			'data' => $datasets
 		]);
 	}
@@ -191,6 +192,7 @@ class ItemController extends CI_Controller {
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
+		$itemCount = $this->db->get('items')->num_rows();
 
 		$datasets = array_map(function($item) use ($orderingLevel){
 			$quantity = (int)$orderingLevel->getQuantity($item->id)->quantity;
@@ -210,7 +212,7 @@ class ItemController extends CI_Controller {
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
 				'recordsTotal' => $count,
-				'recordsFiltered' => $count,
+				'recordsFiltered' => $itemCount,
 				'data' => $datasets
 			]);
 	}
