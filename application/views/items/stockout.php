@@ -38,7 +38,7 @@
 								</div>
 								 
 							</div>
-						<?php form_close() ?>
+						<?php echo form_close() ?>
 					<?php endforeach; ?>
 				</div>
 				<!-- /.row (nested) -->
