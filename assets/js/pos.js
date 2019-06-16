@@ -254,10 +254,12 @@
 
 	$("#payment").keyup(function() {
 
-		var payment = parseInt($(this).val());
+		var payment = parseFloat($(this).val());
+
 		var cart = $("#cart tbody tr").length;
 		if (cart) {
 			var totalAmountDue = parseFloat($("#amount-total").text().substring(1).replace(',',''));
+
 			if (payment >= totalAmountDue) {
 		 	
 				return $("#change").val((payment - totalAmountDue).toFixed(2));
