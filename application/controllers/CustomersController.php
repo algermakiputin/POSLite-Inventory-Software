@@ -4,7 +4,7 @@ class CustomersController Extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		
+		$this->load->config('license');
 	}
 	
 	public function index() {
@@ -18,8 +18,8 @@ class CustomersController Extends CI_Controller {
 
 	}
 
-	public function insert() {
-
+	public function insert() { 
+		
 		$data = array(
 				'name' =>	strip_tags($this->input->post('name')), 
 				'gender' => strip_tags($this->input->post('gender')),

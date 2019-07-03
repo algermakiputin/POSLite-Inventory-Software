@@ -11,10 +11,10 @@
  	
 	dHeight = dHeight - 60;
 	$(".header .box").css('height', dHeight + 'px');
-
+	$(".header .box").css('overflow-y', 'auto');
 	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
 	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
-	 
+
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
 		if (event.code.length > 5) {

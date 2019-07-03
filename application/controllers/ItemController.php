@@ -10,6 +10,7 @@ class ItemController extends CI_Controller {
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('ItemModel');
 		$this->load->model('HistoryModel');
+		$this->load->config('license');
 		
 		if (!$this->session->userdata('log_in')) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
@@ -253,6 +254,7 @@ class ItemController extends CI_Controller {
 	}
 
 	public function insert() {
+		license('items');
 		$this->demoRestriction();
 		$name = $this->input->post('name');
 		$category = $this->input->post('category');

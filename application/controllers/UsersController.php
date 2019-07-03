@@ -5,9 +5,11 @@ class UsersController extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->checkLogin();
+		$this->load->config('license');
 		
 	}
 	public function register_account( ) {
+		license('users');
 		
 		if (SITE_LIVE) 
 			return redirect('users');
