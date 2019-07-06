@@ -1,9 +1,10 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-class ItemController extends CI_Controller {
+require_once(APPPATH."controllers/AppController.php");
+class ItemController extends AppController {
 	
 	public function __construct() {
+
 		parent::__construct();
  		$this->load->model('categories_model');
 		$this->load->model('PriceModel');
@@ -306,12 +307,14 @@ class ItemController extends CI_Controller {
 	}
 
 	public function delete($id){
+
 		$this->demoRestriction();
 		$this->load->model('ItemModel');
 		$this->load->model('HistoryModel');
 		$item = $this->ItemModel->item_info($id);
  
 		if ($this->ItemModel->deleteItem($id) != false) {
+
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Deleted Successfully</div>');
 			$this->HistoryModel->insert('Delete Item: ' . $item->name);
 			return redirect(base_url('items'));
@@ -323,13 +326,16 @@ class ItemController extends CI_Controller {
 	}
 
 	public function demoRestriction() {
+
 		if (SITE_LIVE) {
+
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">You cannot Add, Modify or Delete data in Demo Version.</div>');
 			return redirect(base_url('items'));
 		}
 	}
 
 	public function stock_in($id) {
+
 		$id = $this->security->xss_clean($id);
 		$this->load->model('ItemModel');
 		$this->load->model('PriceModel');
@@ -351,6 +357,7 @@ class ItemController extends CI_Controller {
 		$stocks = $this->input->post('stocks');
 
 		if (SITE_LIVE) {
+
 			$this->form_validation->set_rules('stocks','Stocks','required|integer|max_length[500]');
 			if($this->form_validation->run() === FALSE) {
 				$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' .validation_errors() . '</div>');
@@ -433,6 +440,7 @@ class ItemController extends CI_Controller {
 	}
 
 	public function updateFormValidation() {
+		
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
 		$this->form_validation->set_rules('category', 'Category', 'required|max_length[150]');
 		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]');

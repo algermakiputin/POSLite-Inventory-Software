@@ -23,9 +23,7 @@
 			<span class="navbar-text">Current User:  <span id="user"><?php echo $this->session->userdata['username'] ?></span>
 			</span>
 					<ul class="nav navbar-nav navbar-right">
-						<?php if ($this->session->userdata('account_type') !== "Cashier" ): ?> 
-							<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
-						<?php endif; ?>
+						<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span class="caret"></span></a>
 							<ul class="dropdown-menu">
