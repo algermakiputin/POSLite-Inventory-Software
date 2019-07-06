@@ -7,9 +7,11 @@
                     <li>
                         <a href="<?php echo base_url('items') ?>"><i class="fa fa-circle-o"></i> View Products</a>
                     </li>
-                    <li>
+                    <?php if ($this->session->userdata('account_type') != "Clerk"): ?>
+                        <li>
                         <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Product</a>
                     </li>
+                    <?php endif; ?>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
@@ -20,45 +22,57 @@
             <li data-step="3" data-intro="This menu will takes you to the suppliers page where you can manage your suppliers.">
                 <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-industry fa-fw"></i> Suppliers</a>
             </li>
-            <li data-step="4" data-intro="If you have products delivered, you can save it here.">
-                <a href="#"><i class="fa fa-truck fa-fw"></i> Deliveries<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Deliveries</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Delivery</a>
-                    </li>
-                     
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-            <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
-                <a href="#"><i class="fa fa-money fa-fw"></i> Expenses<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="<?php echo base_url('expenses') ?>"><i class="fa fa-circle-o"></i> View Expenses</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('expenses/new') ?>"><i class="fa fa-circle-o"></i> New Expenses</a>
-                    </li>
-                     
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-            <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
-               <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
-                    </li>
-                </ul>
-            </li>
-
+            
+            <?php if ($this->session->userdata('account_type') == "Admin"): ?>
+                <li data-step="4" data-intro="If you have products delivered, you can save it here.">
+                    <a href="#"><i class="fa fa-truck fa-fw"></i> Deliveries<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Deliveries</a>
+                        </li>
+                        
+                        <?php if ($this->session->userdata('account_type') == "Admin"): ?>
+                            <li>
+                                    <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Delivery</a>
+                                </li>
+                        <?php endif; ?>
+                         
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+            <?php endif; ?>
+            <?php if ($this->session->userdata('account_type') == "Admin"): ?>
+                <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
+                    <a href="#"><i class="fa fa-money fa-fw"></i> Expenses<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?php echo base_url('expenses') ?>"><i class="fa fa-circle-o"></i> View Expenses</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('expenses/new') ?>"><i class="fa fa-circle-o"></i> New Expenses</a>
+                        </li>
+                         
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+            <?php endif; ?>
+            <?php if ($this->session->userdata('account_type') == "Admin" ||
+                        $this->session->userdata('account_type') == "Cashier"
+                ): ?>
+                <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
+                   <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
+                        </li>
+                    </ul>
+                </li>
+            <?php endif; ?>
             <li data-step="7" data-intro="To organize your inventory you can manage your inventory categories.">
                 <a href="<?php echo base_url('categories') ?>"><i class="glyphicon glyphicon glyphicon-tags fa-fw"></i> Categories</a>
             </li>
 
+            <?php if ($this->session->userdata('account_type') == "Admin"): ?>
             <li data-step="8" data-intro="Here you can add users like cashier">
                 <a href="#"><i class="fa fa-users fa-fw"></i> Users<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -70,6 +84,8 @@
                     </li>
                 </ul>
             </li>
+            <?php endif; ?>
+
             <?php if (!SITE_LIVE): ?>
                 <li>
                     <a href="<?php echo base_url('license') ?>"><i class="fa fa-legal"></i> License</a>

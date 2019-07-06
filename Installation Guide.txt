@@ -6,8 +6,8 @@ Step 1  - Go to https://www.apachefriends.org/download.html
 After downloading xampp, Open xampp control panel and run Apache and Mysql.
 
 Step 2 
-Download the Source code
-extract poslite.zip and copy the extracted folder to C:/xampp/htdocs
+Download the Files
+extract poslite.zip and copy the extracted folder to C:/xampp/htdocs/poslite
 
 1. Go to http://localhost/phpmyadmin
 2. Click import

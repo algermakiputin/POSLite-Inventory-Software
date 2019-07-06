@@ -71,14 +71,15 @@
             <?php $this->load->view($content) ?>
 
         </div>
-         <footer style="z-index: 100;position: fixed;bottom: 0;width: 100%;text-align: right;padding: 3px 10px;font-size: 12px;">
-            <p style="color: #333">Developed By: <a href="https://algermakiputin.com">Alger Makiputin</a></p>
-        </footer>
+         
         <!-- /#page-wrapper -->
        
     </div>
  
     <?php $this->load->view('template/footer') ?> 
+    <footer style="text-align: right;padding: 3px 10px;font-size: 12px;">
+        <p style="color: #333">Developed By: <a href="https://algermakiputin.com">Alger Makiputin</a></p>
+    </footer>
 
 </body>
 

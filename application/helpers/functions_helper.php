@@ -33,6 +33,12 @@
 				'customers' => 500
 			];
 
+		$data['bronze'] = [
+				'items' => 1500,
+				'users' => 5,
+				'customers' => 3000
+			];
+
 		$license = $CI->config->item('license');
 		$count = $CI->db->get($table)->num_rows();
 		 
