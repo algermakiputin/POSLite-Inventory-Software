@@ -123,7 +123,7 @@ $(document).ready(function() {
 						return false;
 					}
 
-					window.location = link + id;
+					$(this).next("form").submit();
 				})
 			}
 		}

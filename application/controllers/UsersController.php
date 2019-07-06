@@ -1,16 +1,21 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class UsersController extends CI_Controller {
+require_once(APPPATH."controllers/AppController.php");
+class UsersController extends AppController {
  
 	public function __construct() {
 		parent::__construct();
 		$this->checkLogin();
 		$this->load->config('license');
+
+		if ($this->session->userdata('account_type') != "Admin") {
+			return redirect('/');
+		}
 		
 	}
 	public function register_account( ) {
 		license('users');
-		
+	
 		if (SITE_LIVE) 
 			return redirect('users');
 

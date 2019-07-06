@@ -12,7 +12,7 @@ class ItemController extends AppController {
 		$this->load->model('ItemModel');
 		$this->load->model('HistoryModel');
 		$this->load->config('license');
-		
+
 		if (!$this->session->userdata('log_in')) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));
@@ -32,8 +32,6 @@ class ItemController extends AppController {
 					'quantity' => $quantity,
 					'id' => $item->id
 				]) ;
-
-			return;
 		}
 
 		return;
@@ -156,9 +154,14 @@ class ItemController extends AppController {
                         	<a href="'.base_url("items/edit/$item->id").'"><i class="fa fa-edit"></i> Edit</a> 
                         </li>
                         <li>
-					        <a class="delete-item" href="#" data-link="'.base_url('ItemController/delete/').'" data-id="'.$item->id.'">
+                        	<a onclick="(this).nextSibling.submit()" class="delete-item" href="#">
 					            <i class="fa fa-trash"></i>
 					        Delete</a>
+                        	'.form_open("items/delete").'
+                        		<input type="hidden" name="id" value="'.$item->id.'">
+
+                        	'.form_close().'
+                        	</form> 
 					    </li>
                     </ul>
                 </div>'
@@ -235,7 +238,7 @@ class ItemController extends AppController {
 	}
 
 	public function new() {
-		 
+		$this->userAccess('new');
 		$this->load->model('categories_model'); 
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
@@ -306,8 +309,8 @@ class ItemController extends AppController {
 
 	}
 
-	public function delete($id){
-
+	public function delete(){
+		$id = $this->input->post('id');
 		$this->demoRestriction();
 		$this->load->model('ItemModel');
 		$this->load->model('HistoryModel');
@@ -382,6 +385,7 @@ class ItemController extends AppController {
 	}
 
 	public function edit($id) {
+		$this->userAccess('edit');
 		$id = $this->security->xss_clean($id);
 		$data['item'] = $this->db->where('id', $id)->get('items')->row();
 		$data['price'] = $this->PriceModel;
