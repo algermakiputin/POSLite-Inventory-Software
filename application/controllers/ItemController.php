@@ -134,16 +134,22 @@ class ItemController extends AppController {
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
 			$itemSupplier = $this->db->where('id', $item->supplier_id)->get('supplier')->row()->name ?? '';
-			return [
-				$this->disPlayItemImage($item->image),
-				$item->name,
-				$this->categories_model->getName($item->category_id),
-				'₱' . number_format($itemCapital,2),
-				'₱' . number_format($itemPrice,2),
-				$stocksRemaining . ' pcs',
-				$item->name,
-				$itemSupplier,
-				'<div class="dropdown">
+			$deleteAction = "";
+			if ($this->session->userdata('account_type') == "Admin") {
+
+				$deleteAction = '<li>
+                        	<a onclick="(this).nextSibling.submit()" class="delete-item" href="#">
+					            <i class="fa fa-trash"></i>
+					        Delete</a>
+                        	'.form_open("items/delete").'
+                        		<input type="hidden" name="id" value="'.$item->id.'">
+
+                        	'.form_close().'
+                        	</form> 
+					    </li>';
+			}
+
+			$actions = '<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     	<li>
@@ -153,18 +159,20 @@ class ItemController extends AppController {
                         <li>
                         	<a href="'.base_url("items/edit/$item->id").'"><i class="fa fa-edit"></i> Edit</a> 
                         </li>
-                        <li>
-                        	<a onclick="(this).nextSibling.submit()" class="delete-item" href="#">
-					            <i class="fa fa-trash"></i>
-					        Delete</a>
-                        	'.form_open("items/delete").'
-                        		<input type="hidden" name="id" value="'.$item->id.'">
-
-                        	'.form_close().'
-                        	</form> 
-					    </li>
+                        '.$deleteAction.'
                     </ul>
-                </div>'
+                </div>';
+
+			return [
+				$this->disPlayItemImage($item->image),
+				$item->name,
+				$this->categories_model->getName($item->category_id),
+				'₱' . number_format($itemCapital,2),
+				'₱' . number_format($itemPrice,2),
+				$stocksRemaining . ' pcs',
+				$item->name,
+				$itemSupplier,
+				$actions
 			];
 
 		}, $items);
