@@ -47,7 +47,7 @@
 							</div>
 							<div class="form-group">  
 								<label>Retail Price:</label>
-								<input type="text" required="required" placeholder="Price" name="price" class="form-control" data-parsley-gte-message="Retail Price Must be greather or equal to capital" max="500000" id="selling-price" data-parsley-gt="#capital">
+								<input type="text" required="required" placeholder="Price" name="price" class="form-control" data-parsley-gte-message="Retail Price Must be greather or equal to capital" max="500000" id="selling-price" data-parsley-gte="#capital">
 							</div>  
 							<div class="form-group">  
 									<label>Supplier:</label>
