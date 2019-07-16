@@ -1,3 +1,6 @@
+ <meta name="site_live" content="<?php echo SITE_LIVE ? 1 : 0 ?>">
+<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
+<meta name="csrfHash" content="<?php echo $this->security->get_csrf_hash(); ?>">
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <title><?php if(isset($page_name)) {echo $page_name .' - Sales And Inventory System';} else echo "Dashboard - POS SALES AND INVENTORY SYSTEM" ?></title>
 <meta name="base_url" content="<?php echo base_url() ?>">
@@ -6,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/metisMenu/metisMenu.min.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/font-awesome-4.7.0/css/font-awesome.min.css') ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/jquery-confirm.min.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/dist/css/sb-admin-2.css") ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css") ?>">

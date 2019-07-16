@@ -7,6 +7,15 @@
 		die();
 	}
 
+	function profile() {
+		return file("./profile.txt", FILE_IGNORE_NEW_LINES);
+	}
+
+	function serial() {
+		$serial =  shell_exec('c:\Windows\System32\wbem\wmic.exe DISKDRIVE GET SerialNumber 2>&1');
+		return trim(str_replace('SerialNumber','', $serial));
+	}
+
 	function noStocks() {
 		$CI =& get_instance();
 		$outOfStocks = $CI->db->select("items.id, items.name, ordering_level.quantity")
