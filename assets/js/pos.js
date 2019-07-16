@@ -309,6 +309,13 @@
 
 	})
 
+	$("#cart").on('focusout','.quantity-box',function(e) {
+		var quantity = parseInt($(this).val()); 
+		if (isNaN(quantity) || quantity < 0) {
+			$(this).val(1);
+			return quantity = 1; 
+		}
+	})
 
  	$("#cart").on('input', '.quantity-box', function(e) {
 
@@ -317,17 +324,14 @@
  			return false;
  		}
 
-
-
 		var quantity = parseInt($(this).val());
 		var currentStocks = $(this).data('stocks');
 		var itemID = $(this).data('id');
 		var remaining = $(this).data('stocks') - quantity;
 
 		$(this).data('remaining', remaining);
-		if (isNaN(quantity)) {
-			return quantity = 1;
-			alert(0)
+		if (isNaN(quantity) || quantity < 0) {
+			return quantity = 1; 
 		}
 
 		if (!isNaN(quantity) && quantity != 0 || $(this).val() == "") {

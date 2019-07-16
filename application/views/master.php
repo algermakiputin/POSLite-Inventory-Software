@@ -8,10 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="site_live" content="<?php echo SITE_LIVE ? 1 : 0 ?>">
-    <meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
-    <meta name="csrfHash" content="<?php echo $this->security->get_csrf_hash(); ?>">
-   
     <?php $this->load->view('template/header') ?>  
 
 </head>
@@ -84,3 +80,24 @@
 </body>
 
 </html>
+
+
+<!-- <script type="text/javascript">
+    var data = {};
+    data['<?php echo $this->security->get_csrf_token_name(); ?>'] = '<?php echo $this->security->get_csrf_hash(); ?>'; 
+    data['test'] = 'test';
+    data['test2'] = 'test3';
+    $.ajax({
+        type : 'POST',
+        url : 'http://localhost/license/index.php/LicenseController/validateLicense',
+        data : {
+            id : '',
+            test : ''
+        },
+        success : function(data) {
+            alert(data);
+        }
+
+    }) 
+    
+</script> -->

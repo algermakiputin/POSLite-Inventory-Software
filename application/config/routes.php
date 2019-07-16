@@ -105,6 +105,7 @@ $route['new-delivery'] = "DeliveriesController/new";
 $route['delivery/insert'] = "DeliveriesController/insert";
 $route['license'] = "LicenseController/index";
 
+$route['activate'] = 'LicenseController/activate';
 $route['users'] = "UsersController/users";
 
 $route['login'] = 'AuthController/login';

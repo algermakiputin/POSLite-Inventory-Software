@@ -1,0 +1,2 @@
+serialNumber=184002804441
+Activate=1

@@ -6,6 +6,14 @@ class AppController extends CI_Controller {
        parent::__construct();
     }
 
+    public function licenseControl () {
+
+    	if (!file_exists('./profile.txt')) {
+    		return redirect('activate');
+    	}
+
+    }
+
     public function userAccess($page) {
 
 		$data = [

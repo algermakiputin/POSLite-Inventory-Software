@@ -575,6 +575,40 @@ $(document).ready(function() {
 		}
 	})
 
+
+	$("#activation-form").submit(function(e) {
+		e.preventDefault();
+		var key = $(this).find('[name=key]').val();
+		var jsonData = {};
+		jsonData[csrfName] = csrfHash;
+
+		if (key) {
+			$.ajax({
+				type : 'POST',
+				url : 'http://localhost/license/index.php/LicenseController/validateLicense',
+				data : {
+					key : key
+				},
+				success : function(data) {
+					if (data ) {
+						var result = JSON.parse(data);
+						jsonData['data'] = result;
+						console.log(result);
+						$.ajax({
+							type : 'POST',
+							url : base_url + 'LicenseController/activateLicense',
+							data : jsonData,
+							success : function(data) {
+								alert(data);
+							}
+						})
+					}	
+					 
+				}
+			})
+		}
+	})
+
 	
 })
 

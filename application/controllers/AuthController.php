@@ -1,10 +1,12 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-class AuthController extends CI_Controller {
+require_once(APPPATH."controllers/AppController.php");
+class AuthController extends AppController {
 
 	public function __construct() {
 		parent::__construct();
+		$this->load->helper('file'); 
+		$this->licenseControl();
 		
 	}
 	public function login() {
