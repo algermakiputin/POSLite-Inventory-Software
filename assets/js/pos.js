@@ -363,12 +363,17 @@
 			var currentStocks = $(this).data('stocks');
 			var itemID = $(this).data('id'); 
 			calculateRemainingStocks(currentStocks - quantity,itemID);
-
 			return recount();
 		}
 	}); 
 
 
+	/*
+		1. Accepts Two Arguments
+			A. The remaining stocks from Quantity Box Data
+			B. The Item ID
+		2. Find the item with ID in the table and update the remaining Quantity
+	*/
 	function calculateRemainingStocks(remaining, itemID) {
 		var table = $("#item-table > tbody > tr");
 		$.each(table, function(key, value) {
@@ -380,6 +385,11 @@
 		});
 	}
 
+
+	/*
+		Function Loop through the cart table
+		To calculate the total amount
+	*/
 	function recount() {
 		var row = $("#cart tbody tr").length;
 		var total = 0;
