@@ -7,10 +7,11 @@ class LicenseController extends CI_Controller {
 	{
 
 		$data['content'] = "license/index";
-		$this->load->view('master',$data);;
+		$this->load->view('master',$data);
 	}
 
 	public function activate() {
+
 		$data['page_name'] = "Activate";
 		$this->load->view('template/header',$data); 
 		$this->load->view('license/activate');
@@ -18,14 +19,24 @@ class LicenseController extends CI_Controller {
 	}
 
 	public function activateLicense() {
+
 		$data = $this->input->post('data');
 		
-		$profile = profile();
+		// $profile = profile();
 		$serial = serial();
-	 
-		if (file_put_contents('./profile.txt', "serialNumber=".$serial."\nActivate=" . 1)) {
-			return redirect('/');
+	 	
+	 	$activate = base64_encode("serialNumber=".$serial.",Activate=" . 1);
+
+		if (file_put_contents('./profile.txt', $activate)) {
+			$this->session->set_flashdata('successMessage','<div class="alert alert-success">Activated Successfully</div>');
+			echo base_url('/');
+			return;
 		}
+
+
+		return "";
+
+
 	}
 
 }

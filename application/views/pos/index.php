@@ -160,11 +160,13 @@
 								<div class="r-body">
 									<table class="table table-striped" id="r-items-table">
 										<thead>
-											<th>ID</th>
-											<th>Item Name</th>
-											<th>Price</th>
-											<th>Quantity</th>
-											<th>Sub Total</th>
+											<tr>
+												<th>ID</th>
+												<th>Item Name</th>
+												<th>Price</th>
+												<th>Quantity</th>
+												<th>Sub Total</th>
+											</tr>
 										</thead>
 										<tbody>
 
@@ -177,10 +179,12 @@
 										<div>Payment: <span id="r-payment"></span></div>
 										<div>Change: <span id="r-change"></span></div>
 									</div>
+
+									<div class="r-footer">
+										<p>Thank you for shopping at our store</p>
+									</div>
 								</div>
-								<div class="r-footer">
-									<p>Thank you for shopping at our store</p>
-								</div>
+								
 							</div>
 						</div>
 						<div class="col-md-5">

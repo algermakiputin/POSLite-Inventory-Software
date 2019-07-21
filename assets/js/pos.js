@@ -15,62 +15,62 @@
 	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
 	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
 
-	// $(document).pos();
-	// $(document).on('scan.pos.barcode', function(event){
-	// 	if (event.code.length > 5) {
-	// 		$.ajax({
-	// 			type : 'POST',
-	// 			url : base_url + 'items/find',
-	// 			data : {
-	// 				code : event.code
-	// 			},
-	// 			success : function(data) {
-	// 				if (data) {
-	// 					var result = JSON.parse(data);
-	// 					var quantity = 1;
-	// 				 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-	// 				 	totalAmountDue += parseFloat(subtotal);
+	$(document).pos();
+	$(document).on('scan.pos.barcode', function(event){
+		if (event.code.length > 5) {
+			$.ajax({
+				type : 'POST',
+				url : base_url + 'items/find',
+				data : {
+					code : event.code
+				},
+				success : function(data) {
+					if (data) {
+						var result = JSON.parse(data);
+						var quantity = 1;
+					 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+					 	totalAmountDue += parseFloat(subtotal);
 
-	// 				 	if ( parseInt(result.quantity) > 0 ) {
+					 	if ( parseInt(result.quantity) > 0 ) {
 					 		 
-	// 			  	 		if (itemExist(result.id,result.quantity) == false) {
-	// 				  	 		var quantity = 1;
-	// 						 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
-	// 						 	totalAmountDue += parseFloat(result.subtotal);
-	// 							$("#cart tbody").append(
-	// 									'<tr>' +
-	// 										'<input name="id" type="hidden" value="'+ result.id +'">' +
-	// 										'<td>'+ result.name +'</td>' +
-	// 										'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-	// 										'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-	// 										'<td>'+ result.price +'</td>' +
+				  	 		if (itemExist(result.id,result.quantity) == false) {
+					  	 		var quantity = 1;
+							 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
+							 	totalAmountDue += parseFloat(result.subtotal);
+								$("#cart tbody").append(
+										'<tr>' +
+											'<input name="id" type="hidden" value="'+ result.id +'">' +
+											'<td>'+ result.name +'</td>' +
+											'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+											'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+											'<td>'+ result.price +'</td>' +
 								 			
-	// 										'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
-	// 									'</tr>'
-	// 								);
-	// 							recount();
-	// 							$("payment").val('');
-	// 							$("change").val('');
+											'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
+										'</tr>'
+									);
+								recount();
+								$("payment").val('');
+								$("change").val('');
 
-	// 				  	 	}
-	// 				  	 	stockCol.text(parseInt(stocks - 1));
+					  	 	}
+					  	 	stockCol.text(parseInt(stocks - 1));
 					  	  
-	// 				 	}else {
-	// 				 		alert("Not enough stocks remaining");
-	// 				 	}
+					 	}else {
+					 		alert("Not enough stocks remaining");
+					 	}
 			 
 
-	// 					recount();
-	// 					$("payment").val('');
-	// 					$("change").val('');
-	// 				}else 
-	// 					alert('No item found in the database');
+						recount();
+						$("payment").val('');
+						$("change").val('');
+					}else 
+						alert('No item found in the database');
 				 
-	// 			}
-	// 		})
-	// 	}
+				}
+			})
+		}
 	
-	// });
+	});
 
 	data = {};
 	data[csrfName] = csrfHash;
