@@ -79,7 +79,7 @@
 	</div>
 	<div></div>
 	<div class="form-group">
-		<button class="btn btn-md btn-primary btn-block" type="submit" style="border-radius: 1em;">Enter Key</button>  
+		<button class="btn btn-md btn-primary btn-block" id="key-submit" type="submit" style="border-radius: 1em;">Enter Key</button>  
 	</div> 
 	<?php if (SITE_LIVE): ?>
 		<div class="form-group text-center">

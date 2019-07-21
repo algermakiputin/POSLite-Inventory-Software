@@ -8,7 +8,7 @@
 	}
 
 	function profile() {
-		return file("./profile.txt", FILE_IGNORE_NEW_LINES);
+		return explode(',', base64_decode(file_get_contents("./profile.txt")));
 	}
 
 	function serial() {

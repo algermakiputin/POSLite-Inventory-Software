@@ -7,11 +7,22 @@ class AppController extends CI_Controller {
     }
 
     public function licenseControl () {
+    	
+    	if (!SITE_LIVE) {
+    		if (!file_exists('./profile.txt')) {
+	    		return redirect('activate');
+	    	}
 
-    	if (!file_exists('./profile.txt')) {
-    		return redirect('activate');
+	    	$content = profile(); 
+
+	    	$serial = (str_replace('serialNumber=', '', $content[0]));
+	    	
+	    	if ($serial != serial()) {
+
+	    		return redirect('activate');
+	    	}
     	}
-
+    	
     }
 
     public function userAccess($page) {

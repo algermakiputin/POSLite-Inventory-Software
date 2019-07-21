@@ -70,6 +70,11 @@
 		<?php echo ($this->session->flashdata('errorMessage'))?>
 	</div>
 	<?php endif; ?>
+	<?php if($this->session->flashdata('successMessage')): ?>
+	<div class="form-group">
+		<?php echo ($this->session->flashdata('successMessage'))?>
+	</div>
+	<?php endif; ?>
 	<div class="form-group">
 		<div class="input-group">
 			<span class="input-group-addon"><i class="fa fa-user " aria-hidden="true"></i></span>

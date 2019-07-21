@@ -589,25 +589,35 @@ $(document).ready(function() {
 		if (key) {
 			$.ajax({
 				type : 'POST',
-				url : 'http://localhost/license/index.php/LicenseController/validateLicense',
+				url : 'https://poslite-license.herokuapp.com/index.php/LicenseController/validateLicense',
 				data : {
 					key : key
 				},
+				beforeSend : function() {
+					$("#key-submit").button('loading');
+				},
 				success : function(data) {
+					 
 					if (data ) {
 						var result = JSON.parse(data);
 						jsonData['data'] = result;
-						console.log(result);
+						
 						$.ajax({
 							type : 'POST',
 							url : base_url + 'LicenseController/activateLicense',
 							data : jsonData,
 							success : function(data) {
-								alert(data);
+								 window.location.href = data;
 							}
 						})
-					}	
-					 
+					} else {
+					 	alert('Invalid License Key');
+					}
+
+					$("#key-submit").button('reset');
+				},
+				error : function() {
+					$("#key-submit").button('reset');
 				}
 			})
 		}
