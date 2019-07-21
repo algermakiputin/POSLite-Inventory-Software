@@ -4,6 +4,7 @@ $(document).ready(function() {
 	var site_live = $("meta[name='site_live']").attr('content');
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr("content");
+	var api_key = $("meta[name='api_key']").attr('content');
 	
 	$("form").parsley();	
 
@@ -584,15 +585,16 @@ $(document).ready(function() {
 		e.preventDefault();
 		var key = $(this).find('[name=key]').val();
 		var jsonData = {};
+		var ajaxData = {};
+		ajaxData['api_key'] = api_key;
+		ajaxData['key'] = key;
 		jsonData[csrfName] = csrfHash;
 
 		if (key) {
 			$.ajax({
 				type : 'POST',
 				url : 'https://poslite-license.herokuapp.com/index.php/LicenseController/validateLicense',
-				data : {
-					key : key
-				},
+				data : ajaxData,
 				beforeSend : function() {
 					$("#key-submit").button('loading');
 				},

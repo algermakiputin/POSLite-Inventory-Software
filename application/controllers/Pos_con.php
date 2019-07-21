@@ -1,10 +1,11 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Pos_con extends CI_Controller {
+require_once(APPPATH."controllers/AppController.php");
+class Pos_con extends AppController {
 
 	public function __construct() {
 		parent::__construct();
-		
+		$this->licenseControl();
  
 		if (!$this->session->userdata('log_in')) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');

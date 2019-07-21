@@ -30,6 +30,7 @@ else
 	$config['base_url'] = 'http://localhost/poslite';
 
 
+$config['api_key'] = 'svGej7aKEgBqSEVdXQoDi20JSr5i0O4u';
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -41,6 +42,7 @@ else
 |
 */
 $config['index_page'] = '';
+
 
 /*
 |--------------------------------------------------------------------------
