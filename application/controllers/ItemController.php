@@ -12,6 +12,7 @@ class ItemController extends AppController {
 		$this->load->model('ItemModel');
 		$this->load->model('HistoryModel');
 		$this->load->config('license');
+		$this->licenseControl();
 
 		if (!$this->session->userdata('log_in')) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');

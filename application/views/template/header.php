@@ -1,6 +1,8 @@
- <meta name="site_live" content="<?php echo SITE_LIVE ? 1 : 0 ?>">
+ 
+<meta name="site_live" content="<?php echo SITE_LIVE ? 1 : 0 ?>">
 <meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
 <meta name="csrfHash" content="<?php echo $this->security->get_csrf_hash(); ?>">
+<meta name="api_key" content="<?php echo $this->config->config['api_key'] ?>">
 <?php header('Access-Control-Allow-Origin: *'); ?>
 <title><?php if(isset($page_name)) {echo $page_name .' - Sales And Inventory System';} else echo "Dashboard - POS SALES AND INVENTORY SYSTEM" ?></title>
 <meta name="base_url" content="<?php echo base_url() ?>">

@@ -29,7 +29,7 @@ class LicenseController extends CI_Controller {
 
 		if (file_put_contents('./profile.txt', $activate)) {
 			$this->session->set_flashdata('successMessage','<div class="alert alert-success">Activated Successfully</div>');
-			echo base_url('/');
+			echo base_url('login');
 			return;
 		}
 
