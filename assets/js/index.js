@@ -139,7 +139,6 @@ $(document).ready(function() {
 				this.salesDataTable();
 			},
 			deletePurchaseItem : function() {
-
 				$("body").on('click', '.delete-sale', function(e) {
 					var row = $(this).parents('tr');
 					var sales_description_id = $(this).data('id');
@@ -391,6 +390,17 @@ $(document).ready(function() {
 			} 
 		}
 
+		var credits = {
+			init : function() {
+				this.loadCredits();
+			},
+			loadCredits : function() {
+				$("#credits-tbl").DataTable();
+			}
+
+		}
+
+		credits.init();
 		items.init();
 		sales.init();
 		customers.init();

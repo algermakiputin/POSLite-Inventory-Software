@@ -65,6 +65,9 @@
                         <li>
                             <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url('account/receivables') ?>"><i class="fa fa-circle-o"></i> Account Receivables</a>
+                        </li>
                     </ul>
                 </li>
             <?php endif; ?>

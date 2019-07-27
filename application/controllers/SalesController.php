@@ -189,13 +189,17 @@ class SalesController extends CI_Controller {
 	public function insert() {
 		$data = [];
 		$sales = $this->input->post('sales');
+		$details = $this->input->post('details');
+		
 		$this->load->model("PriceModel");
 		$this->db->trans_begin();
 
 		$this->db->insert('sales',[
 				'id' => null ,
-				'date_time' => date('Y-m-d h:i:s')
+				'date_time' => date('Y-m-d h:i:s'),
+				'paid' => $details['type'] == "cash" ? 1 : 0
 			]);
+
 		$sales_id = $this->db->insert_id();
 		$sales = $this->security->xss_clean($sales);
 
@@ -215,6 +219,15 @@ class SalesController extends CI_Controller {
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
 			$this->db->where('item_id', $sale['id']);
 			$this->db->update('ordering_level');
+		}
+
+		if ($details['type'] == "credit") {
+			$this->db->insert('credits', [
+					'customer_id' => $details['customer_id'],
+					'sales_id' => $sales_id,
+					'date' => date('Y-m-d'),
+					'paid' => 0
+				]);
 		}
  
 
@@ -261,7 +274,10 @@ class SalesController extends CI_Controller {
 		 		$staff = $user ? $user->username : 'Not found';
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
 				$saleProfit = (((float)$desc->price - $desc->discount) - (float)$desc->profit ) * (int)$desc->quantity;
-				$transactionProfit += $saleProfit;
+
+
+
+				$transactionProfit += $saleProfit > 0 ? $saleProfit : 0;
 				$datasets[] = [ 
 					date('Y-m-d', strtotime($sale->date_time)), 
 					'₱' . number_format($saleProfit),
@@ -278,6 +294,7 @@ class SalesController extends CI_Controller {
 			}
 			$totalSales += $sub_total;
 		}
+
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
 				'recordsTotal' => $count,
@@ -319,15 +336,15 @@ class SalesController extends CI_Controller {
 		if ($from && $to) {
 			return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
 						->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+						->where('paid', 1)
 						->order_by('id', 'DESC')
 						->get('sales', $this->start, $this->limit)->result();
-
-
 		} 
 		
 		$date = date('Y-m-d');
 		return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") =', $date)
 					->order_by('id', 'DESC')
+					->where('paid', 1)
 					->get('sales', $this->start, $this->limit)->result();
 		 
 	}

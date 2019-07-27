@@ -15,61 +15,12 @@
 	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
 	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
 
-	$(document).pos();
-	$(document).on('scan.pos.barcode', function(event){
-		if (event.code.length > 5) {
-			$.ajax({
-				type : 'POST',
-				url : base_url + 'items/find',
-				data : {
-					code : event.code
-				},
-				success : function(data) {
-					if (data) {
-						var result = JSON.parse(data);
-						var quantity = 1;
-					 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-					 	totalAmountDue += parseFloat(subtotal);
-
-					 	if ( parseInt(result.quantity) > 0 ) {
-					 		 
-				  	 		if (itemExist(result.id,result.quantity) == false) {
-					  	 		var quantity = 1;
-							 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
-							 	totalAmountDue += parseFloat(result.subtotal);
-								$("#cart tbody").append(
-										'<tr>' +
-											'<input name="id" type="hidden" value="'+ result.id +'">' +
-											'<td>'+ result.name +'</td>' +
-											'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-											'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-											'<td>'+ result.price +'</td>' +
-								 			
-											'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
-										'</tr>'
-									);
-								recount();
-								$("payment").val('');
-								$("change").val('');
-
-					  	 	}
-					  	 	stockCol.text(parseInt(stocks - 1));
-					  	  
-					 	}else {
-					 		alert("Not enough stocks remaining");
-					 	}
-			 
-
-						recount();
-						$("payment").val('');
-						$("change").val('');
-					}else 
-						alert('No item found in the database');
-				 
-				}
-			})
+	$("#type").change(function(e) { 
+		if ($(this).val() == "credit") {
+			$("#select-customer").fadeIn();
+		}else {
+			$("#select-customer").fadeOut();
 		}
-	
 	});
 
 	data = {};
@@ -154,12 +105,22 @@
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val();
 		var change = $("#change").val();
+		var type = $("#type").val();
+		var customer_id = $("#customer").val();
+
+		if (type == "credit") {
+
+			if (customer_id == "") {
+				alert("Please select customer");
+				return false;
+			}
+		}
  	 
  		if (row) {
 
  			var totalAmountDue = parseFloat($("#amount-total").text().substring(1).replace(',',''));
 	 
-			if (parseFloat(payment) >= parseFloat(totalAmountDue)) {
+			if (parseFloat(payment) >= parseFloat(totalAmountDue) || type == "credit") {
 		 		
 	 			for (i = 0; i < row; i++) {
 					var r = $("#cart tbody tr").eq(i).find('td');
@@ -196,6 +157,10 @@
 
 				var data = {};
 				data['sales'] = sales;
+				data['details'] = {
+					'customer_id' : customer_id,
+					'type' : type
+				};
 				data[csrfName] = csrfHash;
 				$.ajax({
 					type : 'POST',
@@ -430,6 +395,64 @@
 	        	doctype: '<!doctype html>'
 		});
 	})
+
+
+	$(document).pos();
+	$(document).on('scan.pos.barcode', function(event){
+		if (event.code.length > 5) {
+			$.ajax({
+				type : 'POST',
+				url : base_url + 'items/find',
+				data : {
+					code : event.code
+				},
+				success : function(data) {
+					if (data) {
+						var result = JSON.parse(data);
+						var quantity = 1;
+					 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+					 	totalAmountDue += parseFloat(subtotal);
+
+					 	if ( parseInt(result.quantity) > 0 ) {
+					 		 
+				  	 		if (itemExist(result.id,result.quantity) == false) {
+					  	 		var quantity = 1;
+							 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
+							 	totalAmountDue += parseFloat(result.subtotal);
+								$("#cart tbody").append(
+										'<tr>' +
+											'<input name="id" type="hidden" value="'+ result.id +'">' +
+											'<td>'+ result.name +'</td>' +
+											'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+											'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+											'<td>'+ result.price +'</td>' +
+								 			
+											'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
+										'</tr>'
+									);
+								recount();
+								$("payment").val('');
+								$("change").val('');
+
+					  	 	}
+					  	 	stockCol.text(parseInt(stocks - 1));
+					  	  
+					 	}else {
+					 		alert("Not enough stocks remaining");
+					 	}
+			 
+
+						recount();
+						$("payment").val('');
+						$("change").val('');
+					}else 
+						alert('No item found in the database');
+				 
+				}
+			})
+		}
+	});
+
 
 
 })

@@ -91,21 +91,45 @@
 						</div>
 						<div class="col-md-12" style="padding: 15px 25px;">
 							<form id="process-form">
-								<div class="form-group">
-									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off" max="500000" maxlength="6">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<select name="type" id="type" class="form-control"> 
+												<option value="cash">Cash</option>
+												<option value="credit">Credit</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6"> 
+										<div class="form-group" id="select-customer" style="display: none;">
+											<select name="customer" id="customer" class="form-control"> 
+												<option value="">Select Customer</option>
+												<?php foreach ($customers as $customer): ?>
+													<option value="<?php echo $customer->id ?>">
+														<?php echo $customer->name ?>
+													</option>
+												<?php endforeach; ?>
+											</select>
+										</div>
+									</div>
 								</div>
-								<div class="form-group">
-									 
-									<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
-									 
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off" max="500000" maxlength="6">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
+										</div>
+									</div>
 								</div>
 								<div class="form-group">
 									<input type="submit" class="btn btn-primary form-control" name="" value="Process" id="btn" >
 								</div>
 							</form>
 						</div>
-						 
-
 					</div>
 				</div>
 			</div>
