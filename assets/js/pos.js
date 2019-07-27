@@ -18,8 +18,10 @@
 	$("#type").change(function(e) { 
 		if ($(this).val() == "credit") {
 			$("#select-customer").fadeIn();
+			$("#payment").prop('disabled', true);
 		}else {
 			$("#select-customer").fadeOut();
+			$("#payment").prop('disabled',false);
 		}
 	});
 
@@ -105,6 +107,9 @@
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val();
 		var change = $("#change").val();
+		payment = payment == "" ? 0 : payment;
+		change = change == "" ? 0 : change;
+
 		var type = $("#type").val();
 		var customer_id = $("#customer").val();
 
@@ -198,6 +203,8 @@
 					 	$("#amount-discount").text('');
 					 	item_table.clear().draw();
 					 	$("#btn").button('reset');
+					 	$("#customer").val("");
+					 	$("#type").val("cash");
 					 	totalAmountDue = 0;  
 						totalDiscount = 0
 					 	

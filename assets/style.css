@@ -5,7 +5,7 @@ body {
   overflow-x: hidden;
   margin-bottom: -20px;
   border-collapse: collapse;
-  font-family: "Roboto";
+  font-family: "Roboto" Arial serif sans-serif;
 }
 
 .product-thumbnail img {
