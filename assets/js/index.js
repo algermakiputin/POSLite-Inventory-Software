@@ -271,6 +271,7 @@ $(document).ready(function() {
 				$('#graph-menu button').removeClass('active');
 				$(this).addClass('active');
 				var type = $(this).data('id');
+				var btn = $(this).button('loading');
 				var data = {};
 				data[csrfName] = csrfHash;
 				data['type'] = type;
@@ -293,6 +294,7 @@ $(document).ready(function() {
 							myChart.data.datasets.data = Object.values(result);
 							myChart.data.datasets[0].data = Object.values(result);
 							myChart.update();
+							btn.button("reset");
 
 						}
 					});
