@@ -188,7 +188,10 @@ class ItemController extends AppController {
 
 	public function disPlayItemImage($image) {
 		if ($image && file_exists('./uploads/' . $image)) {
-			return "<div class='product-thumbnail'><img src='".base_url('uploads/' . $image)."' data-preview-image='".base_url('uploads/' . $image)."'> </div>";
+			$type = pathinfo('./uploads/' . $image, PATHINFO_EXTENSION);
+
+			$image = "data:image/". $type . ";base64," .(base64_encode(file_get_contents('./uploads/' . $image)));
+			return "<div class='product-thumbnail'> <img src='$image'></div>";
 		}
 		return '<div class="product-thumbnail"><span style="color: rgba(0,0,0,0.4);font-size: 11px;">No Image</span></div>';
 	}
