@@ -43,11 +43,11 @@
 							</div>
 							<div class="form-group">  
 									<label>Capital/Unit:</label>
-								<input type="text" required="required" placeholder="Capital Per Unit" name="capital" class="form-control" max="500000">
+								<input type="text" required="required" placeholder="Capital Per Unit" name="capital" class="form-control" max="500000" id="capital">
 							</div>
 							<div class="form-group">  
-									<label>Selling Price:</label>
-								<input type="text" required="required" placeholder="Price" name="price" class="form-control" max="500000">
+								<label>Retail Price:</label>
+								<input type="text" required="required" placeholder="Price" name="price" class="form-control" data-parsley-gte-message="Retail Price Must be greather or equal to capital" max="500000" id="selling-price" data-parsley-gte="#capital">
 							</div>  
 							<div class="form-group">  
 									<label>Supplier:</label>

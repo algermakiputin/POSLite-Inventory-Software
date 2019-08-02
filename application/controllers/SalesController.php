@@ -34,7 +34,7 @@ class SalesController extends CI_Controller {
 		foreach ($sales as $sale) {
 			$sales_description = $this->db->where('sales_id', $sale->id)->get('sales_description')->result();
 			$sub_total = 0;
-		 
+		 	
 			foreach ($sales_description as $desc) {
 	 			
 				$price = $desc->price;
@@ -271,9 +271,9 @@ class SalesController extends CI_Controller {
 					'₱' . number_format((float)$desc->price),
 					'₱' . number_format($desc->discount),
 					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount),
-					'
+					$this->session->userdata('account_type') == 'Admin' ? '
 						<a class="btn btn-sm btn-danger delete-sale" data-id="'.$desc->id.'" href="'.base_url('SalesController/destroy/') . $desc->id.'">Delete</a>
-					'
+					' : 'No Action'
 				];
 			}
 			$totalSales += $sub_total;
@@ -302,31 +302,25 @@ class SalesController extends CI_Controller {
 
 		if ($this->db->trans_status() === FALSE)
 		{
-		        $this->db->trans_rollback();
-		        echo "0";
-		        return;
+	        $this->db->trans_rollback();
+	        echo "0";
+	        return;
 		}
 		else
 		{
-				echo "1";
-		        return $this->db->trans_commit();
+			echo "1";
+	        return $this->db->trans_commit();
 		}
 
  
 	}
 
 	public function filterReports($from, $to) {
-		if ($from && $to) {
-			return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
-						->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
-						->order_by('id', 'DESC')
-						->get('sales', $this->start, $this->limit)->result();
+		$from = $from ? $from : date('Y-m-d');
+		$to = $to ? $to : date('Y-m-d'); 
 
-
-		} 
-		
-		$date = date('Y-m-d');
-		return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") =', $date)
+		return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+					->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
 					->order_by('id', 'DESC')
 					->get('sales', $this->start, $this->limit)->result();
 		 
@@ -335,7 +329,6 @@ class SalesController extends CI_Controller {
 	public function details() {
 		$id = $this->input->post('id');
 		$datasets = [];
-
 		$description = $this->db->where('sales_id', $id)->get('sales_description')->result();
 		foreach ($description as $desc) {
 			$item = $this->db->where('id', $desc->item_id)->get('items')->row();

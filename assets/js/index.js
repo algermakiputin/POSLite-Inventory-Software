@@ -4,6 +4,7 @@ $(document).ready(function() {
 	var site_live = $("meta[name='site_live']").attr('content');
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr("content");
+	var api_key = $("meta[name='api_key']").attr('content');
 	
 	$("form").parsley();	
 
@@ -39,6 +40,7 @@ $(document).ready(function() {
 				itemTable = $("#item_tbl").DataTable({
 					processing : true,
 					serverSide : true,
+					lengthMenu : [[10, 25, 50, 0], [10, 25, 50, "Show All"]],
 					ajax : {
 						url : base_url + 'ItemController/dataTable',
 						type : 'POST',
@@ -78,18 +80,21 @@ $(document).ready(function() {
 
 						},
 					],
-					initComplete : function() {
-						$.previewImage(
-						{
-						   	'xOffset': 30,  // x-offset from cursor
-						   'yOffset': -270,  // y-offset from cursor
-						   'fadeIn': 1000, // delay in ms. to display the preview
-						   'css': {        // the following css will be used when rendering the preview image.
-						   	
-						   	'border': '2px solid black', 
-						   }
-						}
-						);
+					initComplete : function(settings, json) {
+						
+							$.previewImage(
+							{
+							   	'xOffset': 30,  // x-offset from cursor
+							   'yOffset': -270,  // y-offset from cursor
+							   'fadeIn': 1000, // delay in ms. to display the preview
+							   'css': {        // the following css will be used when rendering the preview image.
+							   	
+							   	'border': '2px solid black', 
+							   }
+							}
+							);
+
+
 					} 
 				})
 			},
@@ -572,6 +577,51 @@ $(document).ready(function() {
 			$("#graph").show();
 			$("#table-menu").hide();
 			$("#graph-menu").show();
+		}
+	})
+
+
+	$("#activation-form").submit(function(e) {
+		e.preventDefault();
+		var key = $(this).find('[name=key]').val();
+		var jsonData = {};
+		var ajaxData = {};
+		ajaxData['api_key'] = api_key;
+		ajaxData['key'] = key;
+		jsonData[csrfName] = csrfHash;
+
+		if (key) {
+			$.ajax({
+				type : 'POST',
+				url : 'https://poslite-license.herokuapp.com/index.php/LicenseController/validateLicense',
+				data : ajaxData,
+				beforeSend : function() {
+					$("#key-submit").button('loading');
+				},
+				success : function(data) {
+					 
+					if (data ) {
+						var result = JSON.parse(data);
+						jsonData['data'] = result;
+						
+						$.ajax({
+							type : 'POST',
+							url : base_url + 'LicenseController/activateLicense',
+							data : jsonData,
+							success : function(data) {
+								 window.location.href = data;
+							}
+						})
+					} else {
+					 	alert('Invalid License Key');
+					}
+
+					$("#key-submit").button('reset');
+				},
+				error : function() {
+					$("#key-submit").button('reset');
+				}
+			})
 		}
 	})
 

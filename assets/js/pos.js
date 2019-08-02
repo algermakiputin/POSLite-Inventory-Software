@@ -93,8 +93,8 @@
 		var stocks = stockCol.text();
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
-	 	
-	 	if ( parseInt(stocks) > 0 ) {
+	 	 
+	 	if ( parseInt(stocks.split(' ').join('')) > 0 ) {
 	 		if (id && name && stocks && price && description) {
 	  	 		if (itemExist(id,stocks) == false) {
 		  	 		var quantity = 1;
@@ -133,12 +133,9 @@
 				qtyCol = $(this).find('[name="qty"]');
 				qty = parseInt(qtyCol.val());
 
-				if (qty == stocks) {
-					alert('Not enought stocks')
-				}else {
-					qtyCol.val(qty + 1);
-			 		recount();
-				}
+				qtyCol.val(qty + 1);
+		 		recount();
+				 
 				
 				exist = true;
 
@@ -309,6 +306,15 @@
 
 	})
 
+	$("#cart").on('focusout','.quantity-box',function(e) {
+		var quantity = parseInt($(this).val()); 
+		if (isNaN(quantity) || quantity < 0) {
+			$(this).val(1);
+		 
+			calculateRemainingStocks($(this).data('stocks') - 1, $(this).data('id'))
+			return quantity = 1; 
+		}
+	})
 
  	$("#cart").on('input', '.quantity-box', function(e) {
 
@@ -317,17 +323,14 @@
  			return false;
  		}
 
-
-
 		var quantity = parseInt($(this).val());
 		var currentStocks = $(this).data('stocks');
 		var itemID = $(this).data('id');
 		var remaining = $(this).data('stocks') - quantity;
 
 		$(this).data('remaining', remaining);
-		if (isNaN(quantity)) {
-			return quantity = 1;
-			alert(0)
+		if (isNaN(quantity) || quantity < 0) {
+			return quantity = 1; 
 		}
 
 		if (!isNaN(quantity) && quantity != 0 || $(this).val() == "") {
@@ -360,12 +363,17 @@
 			var currentStocks = $(this).data('stocks');
 			var itemID = $(this).data('id'); 
 			calculateRemainingStocks(currentStocks - quantity,itemID);
-
 			return recount();
 		}
 	}); 
 
 
+	/*
+		1. Accepts Two Arguments
+			A. The remaining stocks from Quantity Box Data
+			B. The Item ID
+		2. Find the item with ID in the table and update the remaining Quantity
+	*/
 	function calculateRemainingStocks(remaining, itemID) {
 		var table = $("#item-table > tbody > tr");
 		$.each(table, function(key, value) {
@@ -377,6 +385,11 @@
 		});
 	}
 
+
+	/*
+		Function Loop through the cart table
+		To calculate the total amount
+	*/
 	function recount() {
 		var row = $("#cart tbody tr").length;
 		var total = 0;
