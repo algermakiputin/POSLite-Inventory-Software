@@ -5,7 +5,7 @@ $(document).ready(function() {
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr("content");
 	var api_key = $("meta[name='api_key']").attr('content');
-	
+	$("body").show();
 	$("form").parsley();	
 
  	if (site_live == 1) {

@@ -6,6 +6,7 @@ body {
   margin-bottom: -20px;
   border-collapse: collapse;
   font-family: "Roboto" Arial serif sans-serif;
+  display: none;
 }
 
 .product-thumbnail img {
@@ -156,6 +157,15 @@ h1.page-header {
   border:solid 1px #ddd;
 }
 
+fieldset {
+  padding: 10px;border:solid 1px #ddd;
+  margin-bottom: 20px;
+}
+legend {
+  width: unset !important;border:none!important;
+  font-size: 1.3em;
+  padding: 0 10px;
+}
 
 
  
