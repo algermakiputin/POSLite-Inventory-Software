@@ -54,6 +54,7 @@ $route['installer'] = "InstallerController/install";
 $route['expenses'] = "ExpensesController/index";
 $route['expenses/new'] = "ExpensesController/new";
 $route['expenses/insert'] = "ExpensesController/insert";
+$route['expenses/reports'] = "ExpensesController/reports";
 
 $route['default_controller'] = 'AuthController/login';
 $route['404_override'] = '';

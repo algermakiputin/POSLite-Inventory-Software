@@ -7,6 +7,10 @@
 		die();
 	}
 
+	function currency() {
+		return "₱";
+	}
+
 	function profile() {
 		return explode(',', base64_decode(file_get_contents("./profile.txt")));
 	}

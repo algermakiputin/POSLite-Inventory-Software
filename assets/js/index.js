@@ -28,6 +28,17 @@ $(document).ready(function() {
 				this.clearDataTableFilter();
 				this.deleteItem();
 				this.changeImage();
+				this.itemForm();
+			},
+			itemForm: function() {
+				$("#item-form").submit(function(e) {
+					var price = $("[name='price']").val();
+					var retail = $("[name='retail_price']").val();
+					if (parseInt(price) > retail) {
+						alert("Retail price must be greather or equal to price");
+						e.preventDefault();
+					}
+				})
 			},
 			changeImage : function() {
 				$("#productImage").change(function() {
@@ -82,19 +93,15 @@ $(document).ready(function() {
 					],
 					initComplete : function(settings, json) {
 						
-							$.previewImage(
-							{
-							   	'xOffset': 30,  // x-offset from cursor
+							$.previewImage({
+							   'xOffset': 30,  // x-offset from cursor
 							   'yOffset': -270,  // y-offset from cursor
 							   'fadeIn': 1000, // delay in ms. to display the preview
 							   'css': {        // the following css will be used when rendering the preview image.
-							   	
-							   	'border': '2px solid black', 
+						
+							   'border': '2px solid black', 
 							   }
-							}
-							);
-
-
+							});
 					} 
 				})
 			},
@@ -393,22 +400,105 @@ $(document).ready(function() {
 			} 
 		}
 
+		var expensesTable
+		var expenses = {
+
+			init : function() {
+				this.dataTable();
+				this.filterReports();
+			},
+			dataTable: function () {
+				data = {};
+				data[csrfName] = csrfHash;
+				expensesTable = $("#expenses_table").DataTable({
+					searching : true,
+					ordering : false, 
+					serverSide : true,
+					info : false,
+					processing : true,
+					bsearchable : true,
+					paging : false,
+					dom : 'lrtB',
+					ajax : {
+						url : base_url + 'expenses/reports',
+						type : 'POST',
+						data : data
+					},
+					buttons: [ 
+						{
+							extend: 'excelHtml5',
+							filename : 'Expenses',
+							title : 'Expenses Report', 
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0,1, 2, 3 ]
+							},
+						},
+						{
+							extend: 'pdfHtml5',
+							filename : 'Expenses Report',
+							title : 'Expenses', 
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0, 1, 2, 3 ]
+							},
+
+						},
+					],
+					drawCallback: function(setting) {
+						var data = setting.json;
+						$("#total").text(data.total);
+					}
+				}); 
+					
+			},
+			filterReports: function() {
+				$("#expenses_to").change(function(e) {
+					var toDate = $(this).val();
+					var fromDate = $("#expenses_from").val();
+					
+					if (fromDate && toDate && toDate >= fromDate) {
+						expensesTable.columns(0).search(fromDate)
+									.columns(1).search(toDate)
+									.draw();
+					}else {
+						alert("From date is empty or from date is greather than to date");
+					}
+				})
+			}
+
+		}
+
+		var dateTimePickers = {
+			init : function() {
+				this.initDatePickers();
+			},
+			initDatePickers : function() {
+				$('.date-range-filter').datepicker({
+					useCurrent : false
+				});
+
+				 $("#datetimepicker6").on("dp.change", function (e) {
+			        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+			    });
+			    $("#datetimepicker7").on("dp.change", function (e) {
+			        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+			    });
+
+				$("#min-date").change(function(e){
+					$("#max-date").datepicker({startDate : new Date()})
+				})
+			}
+		} 
+
+		expenses.init();
+		dateTimePickers.init();
 		items.init();
 		sales.init();
 		customers.init();
 		suppliers.init();
 	 
 	})();
-
-	$("#expenses_table").DataTable();
-	$("#item-form").submit(function(e) {
-		var price = $("[name='price']").val();
-		var retail = $("[name='retail_price']").val();
-		if (parseInt(price) > retail) {
-			alert("Retail price must be greather or equal to price");
-			e.preventDefault();
-		}
-	})
 
 	$("#customer_table").on('click', '.renew', function() {
 		var id = $(this).data('id');
@@ -463,25 +553,11 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('.date-range-filter').datepicker({
-		useCurrent : false
-	});
-
-	 $("#datetimepicker6").on("dp.change", function (e) {
-        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-    });
-    $("#datetimepicker7").on("dp.change", function (e) {
-        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-    });
-
-	$("#min-date").change(function(e){
-		$("#max-date").datepicker({startDate : new Date()})
-	})
+	
 	$("#history_table").DataTable({
 		'bLengthChange' : false,
 		'searching' : false,
 		'ordering' : false,
-
 	});
 
 	$("#mail").click(function() {
@@ -562,6 +638,7 @@ $(document).ready(function() {
 	$("#categories_table").DataTable({
 		ordering : false
 	});
+
 	$("#deliveries_table").DataTable();
 
 	$("#btn-group-menu .btn").click(function() {
