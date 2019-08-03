@@ -34,5 +34,7 @@ This system is developed in PHP using the Codeigniter framework. This very simpl
 	- Admin: has full privilege <br />
 9. **Expenses** <br /> 
 	- Record expenses maintenance. <br />
+	- Expenses falls down under 4 categories namely: Operating, Non-operating, Fixed, and Variable. <br />
+	- Expenses export to excel and PDF
 	
 
