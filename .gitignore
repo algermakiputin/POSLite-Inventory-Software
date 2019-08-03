@@ -1,4 +1,5 @@
 .DS_Store
+profile.txt
 
 application/cache/*
 !application/cache/index.html
@@ -20,7 +21,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /nbproject/
 .idea/*
 .poslite.zip
-.profile.txt
+
 
 ## Sublime Text cache files
 *.tmlanguage.cache
