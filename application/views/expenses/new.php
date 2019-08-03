@@ -13,7 +13,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<?php echo form_open('expenses/insert', ['method' => 'POST']) ?> 
+					<?php echo form_open('expenses/insert', ['method' => 'POST', 'autocomplete' => 'off']) ?> 
 						<div class="col-lg-6 col-md-offset-3">
 						 	<?php if ($this->session->flashdata('success')): ?>
 						 		<div class="form-group"> 
@@ -25,8 +25,17 @@
 						 	<div class="form-group">
 						 		<?php echo validation_errors(); ?>
 						 	</div>
+						 	<div class="form-group">  
+								<select name="type" class="form-control">
+									<option value="">Select Type</option>
+									<option value="Operating">Operating</option>
+									<option value="Non-operating">Non-operating</option>
+									<option value="Fixed">Fixed</option>
+									<option value="Variable">Variable</option>
+								</select>
+							</div>
 							<div class="form-group">  
-								<input type="text" required="required" placeholder="Expense Name" name="type" class="form-control">
+								<input type="text" required="required" placeholder="Expense Name" name="name" class="form-control">
 							</div>
 						 
 							<div class="form-group">  
@@ -34,7 +43,7 @@
 							</div>
 
 							<div class="form-group">  
-								<input type="date" required="required" placeholder="Date" name="date" class="form-control">
+								<input type="text" required="required" placeholder="Date" name="date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
 							</div>
 							<div class="form-group">
 								<input type="submit" name="" value="Save" class="btn btn-primary">

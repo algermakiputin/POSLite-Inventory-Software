@@ -124,14 +124,12 @@ class SalesController extends CI_Controller {
 		
 		$datasets = [];
 
-	 	 
-
 		$interval = new DateInterval($int);
 		$daterange = new DatePeriod($begin, $interval ,$end);
 		$total = 0;
 
 		foreach($daterange as $date){
-	 	  
+	 	  	
 		 	$sales = $this->db->where('DATE_FORMAT(date_time,"'.$sqlDateFormat.'") =', $date->format($dateFormat)) 
 						->get('sales')
 						->result();
@@ -142,9 +140,7 @@ class SalesController extends CI_Controller {
 			    		
 					foreach ( $description as $descr) {
 						$item = $this->db->where('id', $descr->item_id)->get('items')->row();
-		 				 
 						$total += $descr->price * $descr->quantity;
-						
 					}	
 				}
 				$datasets[$date->format($format)][] = round($total,2);

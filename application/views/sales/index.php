@@ -17,16 +17,11 @@
 			</div>
 			<div  id="table-menu">
 				<div class="col-md-6" >
-
 					<div class="form-group">
 						<div class="input-group input-daterange">
-
 							<input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-
 							<div class="input-group-addon">to</div>
-
 							<input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:" data-date-min-date="2019-04-18" >
-
 						</div>
 					</div>
 				</div>
