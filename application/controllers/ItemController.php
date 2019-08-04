@@ -171,7 +171,7 @@ class ItemController extends AppController {
 				'₱' . number_format($itemCapital,2),
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining . ' pcs',
-				$item->name,
+				currency() . number_format($itemPrice * $stocksRemaining,2),
 				$itemSupplier,
 				$actions
 			];
