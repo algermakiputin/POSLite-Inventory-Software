@@ -370,6 +370,7 @@ $(document).ready(function() {
 				$("#supplier_table").DataTable({
 					ordering : false,
 					initComplete : function() {
+						$("#supplier_table_length").append('&nbsp; <select class="form-inline form-control"></select>')
 						$("#supplier_table_length").append('&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
 					}
 				})
@@ -400,7 +401,8 @@ $(document).ready(function() {
 			} 
 		}
 
-		var expensesTable
+		var expensesTable;
+		var totalExpenses;
 		var expenses = {
 
 			init : function() {
@@ -428,26 +430,39 @@ $(document).ready(function() {
 						{
 							extend: 'excelHtml5',
 							filename : 'Expenses',
-							title : 'Expenses Report', 
+							title : function() {
+								return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
+							 	
+							}, 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
 								columns: [ 0,1, 2, 3 ]
 							},
+							messageTop: function() {
+								return "Total: " + $("#total").text();
+							}
 						},
 						{
 							extend: 'pdfHtml5',
 							filename : 'Expenses Report',
-							title : 'Expenses', 
+							title : function() {
+								return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
+							 	
+							},
 							className : "btn btn-default btn-sm",
 							exportOptions: {
 								columns: [ 0, 1, 2, 3 ]
 							},
-
+							messageTop: function() {
+								return "Total: " + $("#total").text();
+							}
 						},
 					],
 					drawCallback: function(setting) {
 						var data = setting.json;
-						$("#total").text(data.total);
+						totalExpenses = data.total;
+						$("#total").text(totalExpenses);
+
 					}
 				}); 
 					

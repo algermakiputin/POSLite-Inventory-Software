@@ -66,7 +66,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">New Supplier</h4>
       </div>
-      <?php echo form_open('suppliers/insert', ['method' => 'POST']) ?>
+      <?php echo form_open('suppliers/insert', ['method' => 'POST', 'autocomplete' => "OFF"]) ?>
       <div class="modal-body">
          
         	<div class="form-group">

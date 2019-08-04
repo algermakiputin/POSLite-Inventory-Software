@@ -36,13 +36,9 @@ class SuppliersController Extends CI_Controller {
 				$this->email->subject('Re order stocks');
 				$this->email->message($html);
 				$this->email->set_mailtype('html');
-
 				if (!$this->email->send()) 
-					return 0;
-				 
+					return 0;	 
 			}
-
-
 		}
 
 		return 1;
