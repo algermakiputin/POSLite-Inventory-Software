@@ -40,11 +40,7 @@
 									<div class="form-group">
 										<label>Delivery Date</label>
 										<input type="date" name="delivery_date" class="form-control">
-									</div>
-									<div class="form-group">
-										<label>Payment</label>
-										<input type="text" name="payment" class="form-control">
-									</div>
+									</div> 
 								</div>
 								<div class="col-md-9">
 									<fieldset>
