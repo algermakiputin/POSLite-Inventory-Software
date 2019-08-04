@@ -1,6 +1,8 @@
 @import url("fonts/font.css");
 
-
+.form-control {
+  border-radius: 1px;
+}
 body {
   overflow-x: hidden;
   margin-bottom: -20px;
@@ -158,7 +160,7 @@ h1.page-header {
 }
 
 fieldset {
-  padding: 10px;border:solid 1px #ddd;
+  padding: 0 10px 10px;border:solid 1px #ddd;
   margin-bottom: 20px;
 }
 legend {

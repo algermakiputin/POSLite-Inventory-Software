@@ -20,26 +20,43 @@
              <table class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
 				<thead>
 					<tr>
-						<th>Supplier Name</th>
-						<th>Item Name</th>
-						<th>Price</th> 
-						<th>Quantity</th>
-						<th>Expirty Date</th>
+						<th>Delivery ID</th>
+						<th>Delivery Date</th>
+						<th>Received By</th>
+						<th>Supplier</th> 
+						<th>Total Amount</th>
+						<th>Defectives</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 
 				<tbody>
-					<?php foreach($dataSet as $data): ?> 
+				 	<?php foreach($deliveries as $delivery): ?> 
 						<tr>
-							<td><?php echo $data['supplier_name'] ?></td>
-							<td><?php echo $data['item'] ?></td>
-							<td>₱<?php echo number_format($data['price']) ?></td>
-							<td><?php echo $data['quantity'] ?></td>
-							<td><?php echo $data['expiry_date'] ?></td>
-							<td><a href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $data['id'] ?>" class="btn btn-danger btn-sm">Delete</a></td>
+							<td><?php echo $delivery->id ?></td>
+							<td><?php echo $delivery->date_time ?></td>
+							<td><?php echo $delivery->received_by ?></td>
+							<td><?php echo $delivery->name ?></td>
+							<td>₱<?php echo number_format($delivery->total) ?></td>
+							<td><?php echo $delivery->defectives ?></td>
+							<td>
+								<div class="dropdown">
+				                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+				                    <ul class="dropdown-menu">
+				                    	
+				                        <li>
+				                        	<a href="<?php echo base_url("deliveries/details/" . $delivery->id) ?>"><i class="fa fa-eye"></i> View Details</a> 
+				                        </li> 
+				                        <li>
+				                            <a href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $delivery->id ?>">
+				                                <i class="fa fa-trash"></i> Delete</a>
+				                        </li>
+				                    </ul>
+				                </div>
+								<!-- <a href="" class="btn btn-danger btn-sm">Delete</a> -->
+							</td>
 						</tr>
-					<?php endforeach; ?>
+					<?php endforeach; ?>  
 				</tbody>
 			</table>
 			
