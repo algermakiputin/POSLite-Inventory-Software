@@ -7,7 +7,7 @@ body {
   overflow-x: hidden;
   margin-bottom: -20px;
   border-collapse: collapse;
-  font-family: "Roboto" Arial serif sans-serif;
+  font-family: "Roboto", Arial, serif, sans-serif !important;
   display: none;
 }
 

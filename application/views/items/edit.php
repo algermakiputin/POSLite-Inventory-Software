@@ -37,11 +37,11 @@
 							</div>
 							<div class="form-group"> 
 								<label>Capital/Unit:</label>
-								<input value="<?php echo $price->getCapital($item->id); ?>" max="500000" type="text" name="capital" class="form-control" required="required">
+								<input value="<?php echo $price->getCapital($item->id); ?>" max="500000" type="text" name="capital" class="form-control" required="required" id="capital">
 							</div> 
 							<div class="form-group"> 
 								<label>Price:</label>
-								<input value="<?php echo $price->getPrice($item->id); ?>" max="500000" type="text" name="price" class="form-control" required="required">
+								<input value="<?php echo $price->getPrice($item->id); ?>" max="500000" type="text" name="price" class="form-control" required="required" id="selling-price" data-parsley-gte="#capital">
 							</div>  
 							<div class="form-group">
 								<label>Supplier:</label>
