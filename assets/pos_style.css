@@ -4,7 +4,7 @@ body {
 	margin:0;
 	overflow: hidden; 
 	font-size: 14px;
-	font-family: "Roboto" Arial serif sans-serif;
+	font-family: "Roboto", Arial, serif, sans-serif !important;
 }
 
 .navbar {
