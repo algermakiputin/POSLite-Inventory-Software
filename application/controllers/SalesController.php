@@ -233,14 +233,15 @@ class SalesController extends CI_Controller {
 		$this->limit = $this->input->post('length');
 		$datasets = [];
 		$totalSales = 0;
-		$from = $this->input->post('columns[0][search][value]');
-		$to = $this->input->post('columns[1][search][value]');
+		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $from;
+		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $to;
 		$sales = $this->filterReports($from, $to);
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
 		$expenses = $this->db->select("SUM(cost) as total")
-							->where('date', date('Y-m-d'))
+							->where('date >=', $from)
+							->where('date <=', $to)
 							->get('expenses')
 							->row();
 
