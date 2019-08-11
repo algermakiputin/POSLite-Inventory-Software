@@ -233,8 +233,8 @@ class SalesController extends CI_Controller {
 		$this->limit = $this->input->post('length');
 		$datasets = [];
 		$totalSales = 0;
-		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $from;
-		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $to;
+		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
+		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
 		$sales = $this->filterReports($from, $to);
 		$count = count($sales);
 		$totalExpenses = 0;
