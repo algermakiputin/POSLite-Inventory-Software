@@ -17,7 +17,7 @@
 						<div class="col-lg-6 col-md-offset-2">
 							<div class="form-group"> 
 								<label>Barcode:</label>
-								<input type="text" value="<?php echo $item->barcode; ?>" name="name" class="form-control" required="required"> 
+								<input type="text"  value="<?php echo $item->barcode; ?>" name="barcode" class="form-control" required="required"> 
 							</div>
 							<div class="form-group"> 
 								<label>Item Name:</label>

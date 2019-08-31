@@ -433,7 +433,7 @@ class ItemController extends AppController {
 			 
 		}
 		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id);
+		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'));
 
 		if ($update) {
 			
