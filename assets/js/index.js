@@ -51,7 +51,7 @@ $(document).ready(function() {
 				itemTable = $("#item_tbl").DataTable({
 					processing : true,
 					serverSide : true,
-					lengthMenu : [[10, 25, 50, 0], [10, 25, 50, "Show All"]],
+					lengthMenu : [[7, 25, 50, 0], [7, 25, 50, "Show All"]],
 					ajax : {
 						url : base_url + 'ItemController/dataTable',
 						type : 'POST',
@@ -93,15 +93,15 @@ $(document).ready(function() {
 					],
 					initComplete : function(settings, json) {
 						
-							$.previewImage({
-							   'xOffset': 30,  // x-offset from cursor
-							   'yOffset': -270,  // y-offset from cursor
-							   'fadeIn': 1000, // delay in ms. to display the preview
-							   'css': {        // the following css will be used when rendering the preview image.
-						
-							   'border': '2px solid black', 
-							   }
-							});
+						$.previewImage({
+						   'xOffset': 30,  // x-offset from cursor
+						   'yOffset': -270,  // y-offset from cursor
+						   'fadeIn': 1000, // delay in ms. to display the preview
+						   'css': {        // the following css will be used when rendering the preview image.
+					
+						   'border': '2px solid black', 
+						   }
+						});
 					} 
 				})
 			},

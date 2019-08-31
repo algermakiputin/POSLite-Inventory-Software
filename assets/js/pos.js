@@ -17,13 +17,15 @@
 
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
+
 		if (event.code.length > 5) {
+			data = {};
+			data[csrfName] = csrfHash;
+			data['code'] = event.code;
 			$.ajax({
 				type : 'POST',
 				url : base_url + 'items/find',
-				data : {
-					code : event.code
-				},
+				data : data,
 				success : function(data) {
 					if (data) {
 						var result = JSON.parse(data);
