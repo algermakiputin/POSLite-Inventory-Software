@@ -8,6 +8,10 @@ $(document).ready(function() {
 	$("body").show();
 	$("form").parsley();	
 
+	$(".sidebar-nav ul li a").click(function(e) {
+		$(".sidebar").css("top", "0px");
+	})
+
  	if (site_live == 1) {
  		if (!sessionStorage.getItem("demo")) {
 	 		introJs().start().oncomplete(endDemo)
