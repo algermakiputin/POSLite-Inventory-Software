@@ -55,7 +55,7 @@ $(document).ready(function() {
 				itemTable = $("#item_tbl").DataTable({
 					processing : true,
 					serverSide : true,
-					lengthMenu : [[7, 25, 50, 0], [7, 25, 50, "Show All"]],
+					lengthMenu : [[10, 25, 50, 0], [10, 25, 50, "Show All"]],
 					ajax : {
 						url : base_url + 'ItemController/dataTable',
 						type : 'POST',
