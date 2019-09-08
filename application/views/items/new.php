@@ -77,7 +77,7 @@
 									
 								</div>
 								<label>Product Image
-									<input type="file" name="productImage" id="productImage">
+									<input type="file" name="productImage" id="productImage" class="form-control">
 								</label>
 							</div>
 						</div>

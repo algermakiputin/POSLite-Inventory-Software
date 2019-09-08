@@ -68,8 +68,9 @@
 										<img style="width: inherit;height: inherit;" src="<?php echo base_url('uploads/' . $item->image) ?>">
 									<?php endif; ?>
 								</div>
-								<label>Product Image
-									<input type="file" name="productImage" id="productImage">
+								<br/>
+								<label>Change Image
+									<input type="file" name="productImage" id="productImage" class="form-control">
 								</label>
 							</div>
 						</div>
