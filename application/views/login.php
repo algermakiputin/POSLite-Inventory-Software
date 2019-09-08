@@ -62,8 +62,9 @@
 	'class' => 'form-signin'
 	);
 	?>
+
 	<?php echo form_open('AuthController/login_validation',$attributes )?>     
-	<legend  class=" text-center">Member login<br></legend>
+	<h2 class="text-center">Login</h2>
 	<br>
 	<?php if($this->session->flashdata('errorMessage')): ?>
 	<div class="form-group">
