@@ -19,7 +19,7 @@
 								<p><?php echo $this->session->flashdata('success') ?></p>
 							</div>
 						<?php endif; ?> 
-						<form action="<?php echo base_url('customers/open-membership') ?>" method="POST">
+						<?php echo form_open("customers/open-membership") ?>
 							<div class="form-group">
 								<label>Customer ID</label>
 								<input type="text"  name="customer_id" readonly="readonly"  value="<?php echo $customer->id ?>" class="form-control" required="required">
@@ -37,7 +37,7 @@
 								<input type="submit" name="" value="Open Membership" class="btn btn-primary" required="required">					 
 							</div>
 		 
-						</form>
+						<?php echo form_close(); ?>
 					</div>
 					<!-- /.col-lg-6 (nested) -->
 					
