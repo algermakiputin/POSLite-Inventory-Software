@@ -7,7 +7,8 @@ $(document).ready(function() {
 	var api_key = $("meta[name='api_key']").attr('content');
 	$("body").show();
 	$("form").parsley();	
-
+	
+	$('[data-toggle="tooltip"]').tooltip();
 	$(".sidebar-nav ul li a").click(function(e) {
 		$(".sidebar").css("top", "0px");
 	})

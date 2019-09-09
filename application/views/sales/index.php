@@ -4,41 +4,39 @@
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
-<div class="row">
-	<div class="col-md-12" >
-		<div class="col-md-12 sales-menu-wrapper">
-			<div class="col-md-3">
-				<div class="form-group">
-					<div class="btn-group" id="btn-group-menu" role="group" aria-label="Basic example">
-						<button type="button" class="btn btn-default " data-id="graph">Graphical View</button>
-						<button type="button" class="btn btn-default active" data-id="table">Table View</button> 
-					</div>
-				</div>
-			</div>
-			<div  id="table-menu">
-				<div class="col-md-6" >
-					<div class="form-group">
-						<div class="input-group input-daterange">
-							<input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-							<div class="input-group-addon">to</div>
-							<input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:" data-date-min-date="2019-04-18" >
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 text-right">
-					<div class="form-group">
-						<button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
-					</div>
+<div class="row"> 
+	 
+		<div class="col-md-3">
+			<div class="form-group">
+				<div class="btn-group" id="btn-group-menu" role="group" aria-label="Basic example">
+					<button type="button" class="btn btn-default " data-id="graph">Graphical View</button>
+					<button type="button" class="btn btn-default active" data-id="table">Table View</button> 
 				</div>
 			</div>
 		</div>
-	</div>
+		<div  id="table-menu">
+			<div class="col-md-6" >
+				<div class="form-group">
+					<div class="input-group input-daterange">
+						<input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+						<div class="input-group-addon">to</div>
+						<input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:" data-date-min-date="2019-04-18" >
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 text-right">
+				<div class="form-group">
+					<button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
+				</div>
+			</div>
+		</div>
+	  
 
 
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Sales Reports
+				Sales Reports 
 			</div>
 
 			<!-- /.panel-heading -->
@@ -46,19 +44,19 @@
 				<div id="widgets">
 					<div class="col-md-4">
 						<div class="sale-widget text-center">
-							Total Sales<br>
+							Total Sales <i class="fa fa-question-circle" data-toggle="tooltip" title="Total sales is the total amount of sales in a given period of time. Formulated as (Total Number of units sold *(times) price per unit" style="font-size: 16px;"></i><br>
 							<b><span id="total-sales"></span></b>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="sale-widget text-center">
-							Total Expenses<br>
+							Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
 							<b><span id="total-expense"></span></b>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="sale-widget text-center">
-							Profit<br>
+							Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Is the profit your store makes after deducting the cost of total expenes and capital or making the product." style="font-size: 16px;"></i><br>
 							<b><span id="total-profit"></span></b>
 						</div>
 					</div> 
@@ -140,40 +138,44 @@
 </div>
 <script src="<?php echo base_url('assets/vendor/chart.min.js') ?>"></script>
 <script type="text/javascript">
-	var labels = JSON.parse('<?php echo json_encode(array_keys($dataset)) ?>');
-	var totalSales = JSON.parse('<?php echo json_encode(array_values($dataset)) ?>');
+	
+	window.onload = function() {
+		var labels = JSON.parse('<?php echo json_encode(array_keys($dataset)) ?>');
+		var totalSales = JSON.parse('<?php echo json_encode(array_values($dataset)) ?>');
 
-	var ctx = document.getElementById("myChart");
-	var myChart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: labels,
-			datasets: [{
-				label: 'Sales for the Last 7 Days',
-				data: totalSales,
-				backgroundColor: [
-				'#337ab7',
-				],
-				strokeColor: [
-				'#337ab7',
-				],
-				borderWidth: 1
-			}]
-		},
-		options: {
-			scales: {
-				yAxes: [{
-					ticks: {
-						beginAtZero:true,
-						callback : function(value, index, values) {
-							return '₱' + (value);
-
-						}
-					}
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: labels,
+				datasets: [{
+					label: 'Sales for the Last 7 Days',
+					data: totalSales,
+					backgroundColor: [
+					'#337ab7',
+					],
+					strokeColor: [
+					'#337ab7',
+					],
+					borderWidth: 1
 				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero:true,
+							callback : function(value, index, values) {
+								return '₱' + (value);
+
+							}
+						}
+					}]
+				}
 			}
-		}
-	}); 
+		}); 
+	}
+
 </script>
 
 
