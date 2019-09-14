@@ -64,7 +64,7 @@
 	?>
 
 	<?php echo form_open('AuthController/login_validation',$attributes )?>     
-	<h2 class="text-center">Login</h2>
+	<h2 class="text-center">Sign In</h2>
 	<br>
 	<?php if($this->session->flashdata('errorMessage')): ?>
 	<div class="form-group">
