@@ -9,9 +9,10 @@ $(document).ready(function() {
 	$("form").parsley();	
 	
 	$('[data-toggle="tooltip"]').tooltip();
-	$(".sidebar-nav ul li a").click(function(e) {
-		$(".sidebar").css("top", "0px");
-	})
+	// $(".sidebar-nav ul li a").click(function(e) {
+	// 	$(".sidebar").css("top", "0px");
+	// 	alert(0)
+	// })
 
  	if (site_live == 1) {
  		if (!sessionStorage.getItem("demo")) {
@@ -212,8 +213,7 @@ $(document).ready(function() {
 						})
 					},
 					drawCallback : function (setting) {
-						var data = setting.json;
-						console.log(data);
+						var data = setting.json; 
 						$("#total-sales").text('₱' + data.total_sales);
 						$("#total-profit").text('₱' + data.profit);
 						$("#total-lost").text('₱' + data.lost);
@@ -265,8 +265,7 @@ $(document).ready(function() {
 						url : base_url + 'customers/find',
 						data : data,
 						success : function(data) {
-							var customer = JSON.parse(data);
-							console.log(customer); 
+							var customer = JSON.parse(data); 
 							$("#customer-edit input[name='name']").val(customer.name); 
 							$("#customer-edit input[name='gender']").val(customer.gender);
 							$("#customer-edit input[name='home_address']").val(customer.home_address);
@@ -279,38 +278,7 @@ $(document).ready(function() {
 				})
 			},
 			graphSales : function() {
-				$("#graph-menu button").click(function() {
-				$('#graph-menu button').removeClass('active');
-				$(this).addClass('active');
-				var type = $(this).data('id');
-				var btn = $(this).button('loading');
-				var data = {};
-				data[csrfName] = csrfHash;
-				data['type'] = type;
-				$.ajax({
-						type : 'POST',
-						url : base_url + 'sales/graph-filter',
-						data : data,
-						success : function(data) {
 
-							var result = JSON.parse(data);
-
-							if (type == "week")
-								myChart.data.datasets[0].label = "Sales for the last 7 Days";
-							else if (type == "month")
-								myChart.data.datasets[0].label = "Monthly Sales";
-							else if (type == "year")
-								myChart.data.datasets[0].label = "Yearly Sales";
-
-							myChart.data.labels = Object.keys(result);
-							myChart.data.datasets.data = Object.values(result);
-							myChart.data.datasets[0].data = Object.values(result);
-							myChart.update();
-							btn.button("reset");
-
-						}
-					});
-				});
 			},
 			customerDatatable() {
 				var customer_table = $("#customer_table").DataTable({
@@ -530,8 +498,7 @@ $(document).ready(function() {
 					id : id
 				},
 				success : function(data) {
-					var result = JSON.parse(data);
-					console.log(result)
+					var result = JSON.parse(data); 
 					$("#date-open").text((result.date_open));
 					$("#renew-date").text(moment().format('YYYY-MM-DD'));
 					$("#new-expiration").text(moment().add(3,'years').format('YYYY-MM-DD'));

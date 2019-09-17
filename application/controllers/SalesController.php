@@ -143,20 +143,22 @@ class SalesController extends CI_Controller {
 						$total += $descr->price * $descr->quantity;
 					}	
 				}
+
 				$datasets[$date->format($format)][] = round($total,2);
 		    	}else {
 		    		$datasets[$date->format($format)][] = 0;
 		    	}
 
 		    	$total = 0;
-		}
-
+		} 
 		return $datasets;
 	}
 
 	public function graphFilter() {
 		$type = $this->input->post('type');
+
 		echo json_encode($this->graphSales($type));
+
 		return;
 	}
 

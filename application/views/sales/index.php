@@ -64,7 +64,7 @@
 
 				<div class="col-md-6" id="graph-menu" style="display: none;">
 					<div class="btn-group pull-center" role="group" aria-label="Basic example">
-						<button type="button" class="btn btn-default active" data-id="week">Last 7 Days</button>
+						<button type="button" class="btn btn-default active" id="default-filter" data-id="week">Last 7 Days</button>
 						<button type="button" class="btn btn-default" data-id="month">Monthly</button> 
 						<button type="button" class="btn btn-default" data-id="year">Yearly</button>
 					</div>
@@ -173,6 +173,45 @@
 					}]
 				}
 			}
+		}); 
+
+		var base_url = $("meta[name='base_url']").attr('content');
+		var currency = '₱';
+		var site_live = $("meta[name='site_live']").attr('content');
+		var csrfName = $("meta[name='csrfName']").attr('content');
+		var csrfHash = $("meta[name='csrfHash']").attr("content");
+		var api_key = $("meta[name='api_key']").attr('content');
+
+		$("#graph-menu button").click(function() {
+		$('#graph-menu button').removeClass('active');
+		$(this).addClass('active');
+		var type = $(this).data('id');
+		var btn = $(this).button('loading');
+		var data = {};
+		data[csrfName] = csrfHash;
+		data['type'] = type;
+		$.ajax({
+				type : 'POST',
+				url : base_url + 'sales/graph-filter',
+				data : data,
+				success : function(data) { 
+					var result = JSON.parse(data); 
+					
+					if (type == "week")
+						myChart.data.datasets[0].label = "Sales for the last 7 Days";
+					else if (type == "month")
+						myChart.data.datasets[0].label = "Monthly Sales";
+					else if (type == "year")
+						myChart.data.datasets[0].label = "Yearly Sales";
+
+					myChart.data.labels = Object.keys(result);
+					myChart.data.datasets.data = Object.values(result);
+					myChart.data.datasets[0].data = Object.values(result);
+					myChart.update();
+					btn.button("reset");
+
+				}
+			});
 		}); 
 	}
 
