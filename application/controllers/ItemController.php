@@ -1,9 +1,9 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH."controllers/AppController.php");
-class ItemController extends AppController {
+class ItemController extends AppController { 
 	
-	public function __construct() {
+	public function __construct() { 
 
 		parent::__construct();
  		$this->load->model('categories_model');
@@ -33,8 +33,7 @@ class ItemController extends AppController {
 					'quantity' => $quantity,
 					'id' => $item->id
 				]) ;
-		}
-
+		} 
 		return;
 	}
 
