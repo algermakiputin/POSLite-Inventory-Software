@@ -9,10 +9,10 @@ $(document).ready(function() {
 	$("form").parsley();	
 	
 	$('[data-toggle="tooltip"]').tooltip();
-	// $(".sidebar-nav ul li a").click(function(e) {
-	// 	$(".sidebar").css("top", "0px");
-	// 	alert(0)
-	// })
+	$(".datatable").DataTable({
+		dom: "ltrp",
+		order: [[0, 'DESC']]
+	});
 
  	if (site_live == 1) {
  		if (!sessionStorage.getItem("demo")) {

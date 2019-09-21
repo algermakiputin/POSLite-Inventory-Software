@@ -2,18 +2,18 @@
 
 class ItemModel extends CI_Model {
 
-	public function itemList () {
+	private $barcode, $name, $description, $status, $image; 
 
+	public function itemList () { 
 		return $this->db->select("items.*, supplier.name as supplier_name")
 					->from("items")
 					->join("supplier", "supplier.id = items.supplier_id", "both")
 					->get()
-					->result();
-
+					->result(); 
 	}
-
-
+ 
 	public function deleteItem($id) {
+
 		$id = $this->security->xss_clean($id);
  		$this->db->trans_start();
  		$this->db->where('item_id', $id)->delete('ordering_level');
@@ -42,8 +42,9 @@ class ItemModel extends CI_Model {
 	}
 
 	public function update_item($id,$name,$category,$description,$price_id, $image, $supplier_id, $barcode) {
-		$item = $this->db->where('id',$id)->get('items')->row();
-	
+		
+		$item = $this->db->where('id',$id)->get('items')->row(); 
+
 		$data = array(
 			'name' => $name,
 			'category_id' => $category,
@@ -51,6 +52,7 @@ class ItemModel extends CI_Model {
 			'supplier_id' => $supplier_id,
 			'barcode' => $barcode
 			);
+
 		$data = $this->security->xss_clean($data);
 		if ($image != '')
 			$data['image'] = $image;

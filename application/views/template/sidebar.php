@@ -91,7 +91,7 @@
                     <a href="<?php echo base_url('license') ?>"><i class="fa fa-legal"></i> License</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('backup') ?>"><i class="fa fa-database"></i> Backup</a>
+                    <a href="<?php echo base_url('backups') ?>"><i class="fa fa-database"></i> Backup</a>
                 </li>
             <?php endif; ?>
             

@@ -331,7 +331,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = 'poslitegotyoucovered';
+$config['encryption_key'] = '1589ee5fa4afa2dc61367e973d39a85c';
 
 /*
 |--------------------------------------------------------------------------
