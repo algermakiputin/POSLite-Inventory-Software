@@ -98,10 +98,15 @@
 	<div class="form-group">
 		<button class="btn btn-md btn-primary btn-block" type="submit" style="border-radius: 1em;">Login</button>  
 	</div> 
-	<?php if (SITE_LIVE): ?>
-		<div class="form-group text-center">
-			<b>Username:</b> admin <b>Password:</b> admin123
-		</div>
+	<?php if (SITE_LIVE): ?> 
+		<div class="">
+			<h4 class="text-center">Login Credentials </h4>
+			<ul>
+				<li><b>Username:</b> admin <b>Password:</b> admin123</li>
+				<li><b>Username:</b> cashier <b>Password:</b> cashier123</li>
+			</ul>
+		</div> 
+	 	<h5></h5>
 	<?php endif; ?>
 	<p class="text-center" style="color: #777">&copy; <?php echo date('Y-m-d') ?> All Rights Reserved <br> Developed by: <a href="https://algermakiputin.com">Alger Makiputin</a></p>
 	<?php echo form_close() ?>
