@@ -188,9 +188,9 @@
 							'<tr>' +
 								'<td>'+value.id +'</td>' +
 								'<td>'+value.name +'</td>' +
-								'<td>'+currency+value.price +'</td>' +
+								'<td>'+currency+ number_format(value.price) +'</td>' +
 								'<td>'+value.quantity+'</td>' +
-								'<td>'+currency+value.subtotal.toFixed(2)+'</td>' +
+								'<td>'+currency+ number_format(value.subtotal)+'</td>' +
 							'</tr>'
 						);
 				});
@@ -214,17 +214,17 @@
 						$("#loader").hide();
 						//Transaction Summary 
 		
-						$("#summary-payment").text( currency + payment);
-						$("#summary-change").text( currency + change);
-					 	$("#summary-discount").text(currency + totalDiscount.toFixed(2));
-						$("#summary-total").text( currency + (total_amount).toFixed(2) )
+						$("#summary-payment").text( currency + number_format(payment));
+						$("#summary-change").text( currency + number_format(change));
+					 	$("#summary-discount").text(currency + number_format(totalDiscount));
+						$("#summary-total").text( currency + number_format(total_amount) )
 						
 						//Fill In Receipt 
-						$("#r-payment").text( currency + parseFloat(payment));
-						$("#r-change").text( currency + change);
+						$("#r-payment").text( currency + number_format(payment));
+						$("#r-change").text( currency + number_format(change));
 						$("#r-cashier").text($("#user").text()); 
-						$("#r-total-amount").text( currency + (total_amount).toFixed(2) )
-						$("#r-discount").text(currency + totalDiscount.toFixed(2));
+						$("#r-total-amount").text( currency + number_format(total_amount) )
+						$("#r-discount").text(currency + number_format(totalDiscount));
 						$("#r-id").text(data);
 
 					 	$("#cart tbody").empty();
