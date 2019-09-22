@@ -58,6 +58,7 @@ class ItemController extends AppController {
     }
 
 	public function items () {
+		 
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'inventory';
@@ -133,11 +134,15 @@ class ItemController extends AppController {
 			$itemPrice = $this->PriceModel->getPrice($item->id);
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
-			$itemSupplier = $this->db->where('id', $item->supplier_id)->get('supplier')->row()->name ?? '';
+			$itemSupplier = $this->db->where('id', $item->supplier_id)->get('supplier')->row()->name ?? 'unset';
 			$deleteAction = "";
 			if ($this->session->userdata('account_type') == "Admin") {
 
-				$deleteAction = '<li>
+				$deleteAction = '
+						<li>
+                        	<a href="'.base_url("items/edit/$item->id").'"><i class="fa fa-edit"></i> Edit</a> 
+                        </li>
+						<li>
                         	<a onclick="(this).nextSibling.submit()" class="delete-item" href="#">
 					            <i class="fa fa-trash"></i>
 					        Delete</a>
@@ -156,9 +161,7 @@ class ItemController extends AppController {
                             <a href="' . base_url("items/stock-in/$item->id") .'">
                                 <i class="fa fa-plus"></i> Stock In</a>
                         </li>
-                        <li>
-                        	<a href="'.base_url("items/edit/$item->id").'"><i class="fa fa-edit"></i> Edit</a> 
-                        </li>
+                        
                         '.$deleteAction.'
                     </ul>
                 </div>';
