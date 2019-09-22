@@ -32,6 +32,11 @@
 		return $outOfStocks;
 	}
 
+	function is_admin() {
+		$CI =& get_instance();
+		return ($CI->session->userdata('account_type') === "Admin") ? 1 : 0;
+	}
+
 	function success($message) {
 		$CI =& get_instance();
 		$CI->session->set_flashdata('success', $message);

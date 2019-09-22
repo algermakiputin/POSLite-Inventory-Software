@@ -48,7 +48,7 @@
 				                        	<a href="<?php echo base_url("deliveries/details/" . $delivery->id) ?>"><i class="fa fa-eye"></i> View Details</a> 
 				                        </li> 
 				                        <li>
-				                            <a href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $delivery->id ?>">
+				                            <a class="delete-data" href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $delivery->id ?>">
 				                                <i class="fa fa-trash"></i> Delete</a>
 				                        </li>
 				                    </ul>
