@@ -90,7 +90,7 @@
 												</a>
 											</li>
 											<li>
-												<a title="Delete Customer"  href="<?php echo base_url('customers/delete/' . $customer->id) ?>">
+												<a title="Delete Customer" class="delete-data"  href="<?php echo base_url('customers/delete/' . $customer->id) ?>">
 													<i class="fa fa-trash"></i> Delete
 												</a>
 											</li>

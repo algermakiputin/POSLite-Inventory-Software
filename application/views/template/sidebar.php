@@ -7,7 +7,7 @@
                     <li>
                         <a href="<?php echo base_url('items') ?>"><i class="fa fa-circle-o"></i> View Products</a>
                     </li>
-                    <?php if ($this->session->userdata('account_type') != "Clerk"): ?>
+                    <?php if ( is_admin()): ?>
                         <li>
                         <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Product</a>
                     </li>
@@ -19,10 +19,11 @@
             <li data-step="2" data-intro="This menu takes you to the customer page where you can manage your customers.">
                 <a href="<?php echo base_url('customers') ?>"><i class="fa fa-table fa-fw"></i> Customers</a>
             </li>
+            <?php if (is_admin()): ?>
             <li data-step="3" data-intro="This menu will takes you to the suppliers page where you can manage your suppliers.">
                 <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-industry fa-fw"></i> Suppliers</a>
             </li>
-            
+            <?php endif; ?>
             <?php if ($this->session->userdata('account_type') == "Admin"): ?>
                 <li data-step="4" data-intro="If you have products delivered, you can save it here.">
                     <a href="#"><i class="fa fa-truck fa-fw"></i> Deliveries<span class="fa arrow"></span></a>
