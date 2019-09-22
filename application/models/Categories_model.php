@@ -6,7 +6,7 @@ class Categories_model extends CI_Model {
 	}
 
 	public function getName($id) {
-		return $this->db->where('id', $id)->get('categories')->row()->name ?? '';
+		return $this->db->where('id', $id)->get('categories')->row()->name ?? 'uncategorized';
 	}
 
 	

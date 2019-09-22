@@ -32,7 +32,7 @@ class ExpensesController extends CI_Controller {
 					$expense->name,
 					currency() . number_format($expense->cost,2),
 					$expense->date,
-					'<a href="'.base_url("ExpensesController/destroy/") . $expense->id.'" class="btn btn-danger btn-sm">Delete</a>'
+					'<a href="'.base_url("ExpensesController/destroy/") . $expense->id.'" class="delete-data btn btn-danger btn-sm">Delete</a>'
 				];
 		} 
 

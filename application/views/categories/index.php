@@ -69,7 +69,7 @@
 						 				<td><?php echo $category->id ?></td>
 						 				<td><?php echo $category->name ?></td>
 						 				<td>
-						 					<a class="btn btn-danger btn-sm" href="<?php echo base_url('CategoriesController/destroy/'.$category->id.'') ?>">Delete</a>
+						 					<a class="btn btn-danger btn-sm delete-data" href="<?php echo base_url('CategoriesController/destroy/'.$category->id.'') ?>">Delete</a>
 						 				</td>
 						 			</tr>
 						 		<?php endforeach; ?>
