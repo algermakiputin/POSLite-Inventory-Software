@@ -1,14 +1,13 @@
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Products
-            <!-- <span class="pull-right">Inventory Value: ₱<span id="total"><?php echo $total; ?></span></span> -->
+            <span class="pull-right">Inventory Value: ₱<span id="total"><?php echo $total; ?></span></span>
         </h1> 
     </div>
     <div class="col-md-12">
         <?php 
         echo $this->session->flashdata('errorMessage');
-        echo $this->session->flashdata('successMessage');
-
+        echo $this->session->flashdata('successMessage'); 
         ?>
     </div>
 </div>
