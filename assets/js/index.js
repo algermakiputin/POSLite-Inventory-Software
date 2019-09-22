@@ -5,6 +5,20 @@ $(document).ready(function() {
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr("content");
 	var api_key = $("meta[name='api_key']").attr('content');
+	var hide = $("meta[name='admin']").attr("content") == 1 ? true : false;
+
+	$("body").on("click", ".delete-data", function(e) {
+
+		var confirm = window.confirm("Are you sure you want to delete that data?");
+
+		if (!confirm) {
+
+			e.preventDefault();
+			return false;
+		}
+	});
+	 
+
 	$("body").show();
 	$("form").parsley();	
 	
@@ -64,6 +78,14 @@ $(document).ready(function() {
 						data : data
 					},
 					dom : "lfrtBp",
+
+					columnDefs: [
+						{ 
+							targets: [3,6], 
+							visible: false,
+							searchable: false
+						},
+					],
 					buttons: [
 						{
 							extend: 'copyHtml5',
@@ -192,6 +214,11 @@ $(document).ready(function() {
 						type : 'POST',
 						data : data
 					},
+					columnDefs: [{
+						targets: [1, 8],
+						visible: hide ,
+						searchable:hide
+					} ],
 					initComplete : function(settings, json) {
 						
 						$("#total-sales").text('₱' + json.total_sales);
@@ -463,7 +490,10 @@ $(document).ready(function() {
 			},
 			initDatePickers : function() {
 				$('.date-range-filter').datepicker({
-					useCurrent : false
+					useCurrent : false,
+					todayHighlight: true,
+    				toggleActive: true,
+    				autoclose: true,
 				});
 
 				 $("#datetimepicker6").on("dp.change", function (e) {
@@ -474,7 +504,12 @@ $(document).ready(function() {
 			    });
 
 				$("#min-date").change(function(e){
-					$("#max-date").datepicker({startDate : new Date()})
+					$("#max-date").datepicker({
+						startDate : new Date(),
+						todayHighlight: true,
+	    				toggleActive: true,
+	    				autoclose: true,
+					})
 				})
 			}
 		} 
