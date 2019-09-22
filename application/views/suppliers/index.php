@@ -41,7 +41,7 @@
              <td><?php echo $supplier->email; ?></td>
              <td>
                <button class="btn btn-info btn-sm edit" data-toggle="modal" data-target="#edit-supplier" data-id="<?php echo $supplier->id ?>">Edit</button>
-               <a class="btn btn-danger btn-sm" href="<?php echo base_url('suppliers/delete/' . $supplier->id ) ?>">Delete</a>
+               <a class="btn btn-danger btn-sm delete-data" href="<?php echo base_url('suppliers/delete/' . $supplier->id ) ?>">Delete</a>
              </td>
            </tr>
          <?php endforeach; ?>
