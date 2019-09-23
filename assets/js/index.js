@@ -82,8 +82,8 @@ $(document).ready(function() {
 					columnDefs: [
 						{ 
 							targets: [3,6], 
-							visible: false,
-							searchable: false
+							visible: hide,
+							searchable: hide
 						},
 					],
 					buttons: [
