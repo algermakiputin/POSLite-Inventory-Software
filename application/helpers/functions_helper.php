@@ -45,16 +45,24 @@
 	function license($table) {
 		$CI =& get_instance();
 		
-		$data['basic'] = [
-				'items' => 500,
-				'users' => 3,
+	 
+
+		$data['bronze'] = [
+				'items' => 300,
+				'users' => 5,
 				'customers' => 500
 			];
 
-		$data['bronze'] = [
-				'items' => 1500,
-				'users' => 5,
-				'customers' => 3000
+		$data['silver'] = [
+				'items' => 5000,
+				'users' => 5000,
+				'customers' => 5000
+			];
+
+		$data['gold'] = [
+				'items' => 5000000,
+				'users' => 5000000,
+				'customers' => 5000000
 			];
 
 		$license = $CI->config->item('license');
