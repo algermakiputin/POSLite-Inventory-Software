@@ -141,8 +141,10 @@ $(document).ready(function() {
 					if (column == 5) 
 					{
 						itemTable.columns(4).search('');
-						itemTable.columns(column).search(this.value).draw();
+						
 					}
+
+					itemTable.columns(column).search(this.value).draw();
 
 						
 				})
