@@ -138,9 +138,13 @@ $(document).ready(function() {
 					let column = $(this).data('column');
 					if (column == 4)
 						itemTable.columns(5).search('');
-					if (column == 5)
+					if (column == 5) 
+					{
 						itemTable.columns(4).search('');
-					itemTable.columns(column).search(this.value).draw();
+						itemTable.columns(column).search(this.value).draw();
+					}
+
+						
 				})
 			},
 			clearDataTableFilter : function() {
