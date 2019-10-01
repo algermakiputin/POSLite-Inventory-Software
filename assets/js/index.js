@@ -136,8 +136,11 @@ $(document).ready(function() {
 			dataTableFilter : function() {
 				$(".filter-items").change(function() {
 					let column = $(this).data('column');
-					if (column == 4)
+
+					if (column == 4) {
 						itemTable.columns(5).search('');
+					}
+
 					if (column == 5) 
 					{
 						itemTable.columns(4).search('');
@@ -147,7 +150,7 @@ $(document).ready(function() {
 					itemTable.columns(column).search(this.value).draw();
 
 						
-				})
+				});
 			},
 			clearDataTableFilter : function() {
 				$("#clear-filter").click(function(e) {
