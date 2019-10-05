@@ -25,6 +25,11 @@
 								<input type="hidden" name="id" value="<?php echo $item->id ?>">
 							</div>
 							<div class="form-group"> 
+								<label>Stocks:</label>
+								<input type="text" value="<?php echo $stocks->quantity; ?>" name="stocks" class="form-control" required="required">
+								<input type="hidden" name="id" value="<?php echo $item->id ?>">
+							</div>
+							<div class="form-group"> 
 								<label>Category:</label>
 								<select name="category" class="form-control" required="required">
 									<option value="">Select Category</option>

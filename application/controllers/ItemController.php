@@ -402,6 +402,7 @@ class ItemController extends AppController {
 		$data['price'] = $this->PriceModel;
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
+		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row();
 		$data['content'] = "items/edit";
 		$this->load->view('master', $data);
 	}
@@ -418,6 +419,7 @@ class ItemController extends AppController {
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));
 
+		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
 		$currentPrice = $this->PriceModel->getPrice($id);
 		$reorder = $this->input->post('reorder');
@@ -434,6 +436,8 @@ class ItemController extends AppController {
 			$upload = $this->do_upload('productImage');
 			 
 		}
+
+		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
 		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
 		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'));
 
