@@ -187,12 +187,16 @@ class SalesController extends CI_Controller {
 
 	public function insert() {
 		$data = [];
+		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
+		$transaction_number = "TRN000" . ((int)$last_sales_id + 1 ); 
+
 		$sales = $this->input->post('sales');
 		$this->load->model("PriceModel");
-		$this->db->trans_begin();
+		$this->db->trans_begin(); 
 
 		$this->db->insert('sales',[
 				'id' => null ,
+				'transaction_number' => $transaction_number,
 				'date_time' => date('Y-m-d h:i:s')
 			]);
 		$sales_id = $this->db->insert_id();
@@ -214,6 +218,7 @@ class SalesController extends CI_Controller {
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
 			$this->db->where('item_id', $sale['id']);
 			$this->db->update('ordering_level');
+			
 		}
  
 
@@ -226,7 +231,7 @@ class SalesController extends CI_Controller {
 		}
 		 
 		$this->db->trans_commit(); 
-		echo $sales_id;
+		echo $transaction_number;
 		return;
 	}
 
