@@ -212,12 +212,12 @@ class ItemController extends AppController {
 
 		$datasets = array_map(function($item) use ($orderingLevel){
 			$quantity = (int)$orderingLevel->getQuantity($item->id)->quantity;
-			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
+			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price; 
 			
 			return [
 				$item->id,
-				ucwords($item->name),
-				ucfirst($item->description),
+				$item->name,
+				$item->description,
 				$quantity,
 				'₱'. number_format($price,2)
 			];
@@ -414,11 +414,11 @@ class ItemController extends AppController {
 		$this->load->model('HistoryModel');
  		$updated_name = strip_tags($this->input->post('name'));
 		$updated_category = strip_tags($this->input->post('category'));
-		$updated_desc = strip_tags(strtolower($this->input->post('description')));
+		$updated_desc = strip_tags(($this->input->post('description')));
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));
-
+		
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
 		$currentPrice = $this->PriceModel->getPrice($id);

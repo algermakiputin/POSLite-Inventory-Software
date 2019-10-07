@@ -122,8 +122,7 @@
 	 	}else {
 	 		alert("Not enough stocks remaining");
 	 	}
-  	 	
-		
+  	 	 
 	})
 
 	function itemExist(itemID,stocks) {
