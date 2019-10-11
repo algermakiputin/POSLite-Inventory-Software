@@ -21,7 +21,15 @@
             </li>
             <?php if (is_admin()): ?>
             <li data-step="3" data-intro="This menu will takes you to the suppliers page where you can manage your suppliers.">
-                <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-industry fa-fw"></i> Suppliers</a>
+                <a href="#"><i class="fa fa-industry fa-fw"></i> Suppliers<span class="fa arrow"></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-circle-o"></i> View Suppliers</a>
+                    </li> 
+                        <li>
+                        <a href="<?php echo base_url('supplier/po') ?>"><i class="fa fa-circle-o"></i> Purchase Order</a>
+                    </li> 
+                </ul>
             </li>
             <?php endif; ?>
             <?php if ($this->session->userdata('account_type') == "Admin"): ?>

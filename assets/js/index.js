@@ -7,16 +7,7 @@ $(document).ready(function() {
 	var api_key = $("meta[name='api_key']").attr('content');
 	var hide = $("meta[name='admin']").attr("content") == 1 ? true : false;
 
-	$("body").on("click", ".delete-data", function(e) {
-
-		var confirm = window.confirm("Are you sure you want to delete that data?");
-
-		if (!confirm) {
-
-			e.preventDefault();
-			return false;
-		}
-	});
+	
 	 
 
 	$("body").show();
@@ -41,6 +32,25 @@ $(document).ready(function() {
 
 	(function() {
 		var itemTable;
+
+		var app = {
+			init: function() {
+
+				this.delete_row();
+			},
+			delete_row: function() {
+				$("body").on("click", ".delete-data", function(e) { 
+					var confirm = window.confirm("Are you sure you want to delete that data?");
+
+					if (!confirm) {
+
+						e.preventDefault();
+						return false;
+					}
+				});
+			}
+		}
+
 		var items = {		
 			init : function() {
 				this.dataTable();
@@ -283,6 +293,7 @@ $(document).ready(function() {
 				this.edit();
 				this.graphSales();
 				this.customerDatatable();
+				
 			},
 			edit : function() {
 				$("#customer_table").on('click','.edit',function() {
@@ -374,14 +385,12 @@ $(document).ready(function() {
 			init : function() {
 				this.dataTable();
 				this.edit();
+				this.purhase_order_new_line();
 			},
 			dataTable : function(){
 				$("#supplier_table").DataTable({
-					ordering : false,
-					initComplete : function() {
-						$("#supplier_table_length").append('&nbsp; <select class="form-inline form-control"></select>')
-						$("#supplier_table_length").append('&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
-					}
+					ordering : false, 
+					processing: true,
 				})
 
 			},
@@ -406,6 +415,12 @@ $(document).ready(function() {
 						}
 
 					});
+				})
+			},
+			purhase_order_new_line: function() {
+				$("#new-line").click(function(e) {
+					console.log("test");
+					console.log($("#line"));
 				})
 			} 
 		}
@@ -529,7 +544,7 @@ $(document).ready(function() {
 		sales.init();
 		customers.init();
 		suppliers.init();
-	 
+	 	app.init();
 	})();
 
 	$("#customer_table").on('click', '.renew', function() {

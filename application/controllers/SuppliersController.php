@@ -13,6 +13,12 @@ class SuppliersController Extends CI_Controller {
 		
 	}
 
+	public function purchase_order() {
+
+		$data['content'] = "suppliers/po";
+		$this->load->view('master', $data);
+	}
+
 	public function sendEmailToSupplier($suppliers) {
 
 		foreach ($suppliers as $supplier) {

@@ -66,12 +66,10 @@
 						$("payment").val('');
 						$("change").val('');
 					}else 
-						alert('No item found in the database');
-				 
+						alert('No item found in the database'); 
 				}
 			})
-		}
-	
+		} 
 	});
 
 	data = {};
