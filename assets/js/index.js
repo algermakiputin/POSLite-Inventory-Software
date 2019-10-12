@@ -381,11 +381,13 @@ $(document).ready(function() {
 			}
 		}
 
+		var po_new_row = "<tr>" + $("#products-table tbody tr:first-child").html() + "</tr>";
 		var suppliers = {
 			init : function() {
 				this.dataTable();
 				this.edit();
 				this.purhase_order_new_line();
+				this.purchase_order_remove_line();
 			},
 			dataTable : function(){
 				$("#supplier_table").DataTable({
@@ -419,10 +421,22 @@ $(document).ready(function() {
 			},
 			purhase_order_new_line: function() {
 				$("#new-line").click(function(e) {
-					console.log("test");
-					console.log($("#line"));
+					var tbody = $("#products-table tbody"); 
+					tbody.append(po_new_row);
+					
 				})
-			} 
+			},
+			purchase_order_remove_line: function() {
+
+				$("#remove-line").click(function(e) {
+					var length = $("#products-table tbody tr").length;
+
+					if (length >= 2)
+						return $("#products-table tbody tr:last-child").remove(); 
+
+					return alert("Cannot delete line the only line");
+				})
+			}
 		}
 
 		var expensesTable;
