@@ -39,6 +39,19 @@
 								</select>
 							</div>
 							<div class="form-group">
+								<label><input type="checkbox" id="change_password_tickbox" class="" name="change_password"> Change Password</label>
+							</div>
+							<div id="change_password_field" style="display: none;">
+								<div class="form-group">
+									<label>New Password</label>
+									<input type="password" name="new_password" class="form-control">
+								</div>
+								<div class="form-group">
+									<label>Confirm New Password</label>
+									<input type="password" name="confirm_new_password" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
 								<input type="submit" name="update" class="btn btn-success" value="Update"> 
 							</div> 
 						<?php echo form_close(); ?>
@@ -52,6 +65,15 @@
 	<!-- /.panel -->
 </div>
 <!-- /.col-lg-12 -->
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		$("#change_password_tickbox").change(function() {
+			
+		})
+	})
+</script>
 
 
 
