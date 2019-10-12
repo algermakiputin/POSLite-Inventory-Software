@@ -2,6 +2,8 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH."controllers/AppController.php");
 class UsersController extends AppController {
+
+	public $name, $username, $account_type, $user_id;
  
 	public function __construct() {
 		parent::__construct();
@@ -21,6 +23,7 @@ class UsersController extends AppController {
 
 		$this->form_validation->set_rules('Username', 'Username', 'required|min_length[5]');
 		$this->form_validation->set_rules('Password', 'Password', 'required|min_length[8]');
+		$this->form_validation->set_rules('Full Name', 'full_name', 'required');
 		$this->form_validation->set_rules('repeat_password', 'Repeat Password', 'required|matches[Password]');
 		
 		if ($this->form_validation->run() == FALSE) {
@@ -33,9 +36,10 @@ class UsersController extends AppController {
 		$username = $this->input->post('Username');
 		$password = $this->input->post('Password');
 		$account_type = $this->input->post('account_type');
+		$full_name = $this->input->post('full_name');
 		$created_by = 'admin';
 
-		$exec = $this->UsersModel->insert_account($username,$password,$account_type,$date_created,$created_by);
+		$exec = $this->UsersModel->insert_account($username,$password,$account_type,$date_created,$created_by, $full_name);
 		if ($exec) {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Account Created Successfully</div>');
 			return redirect(base_url('users'));
@@ -85,11 +89,45 @@ class UsersController extends AppController {
 		$this->load->view('master',$data);
 	}
 
+	public function edit($id) {
+
+		$user = $this->db->where('id', $id)->get('users')->row();
+
+		if ($user) {
+
+			$data['user'] = $user;
+			$data['content'] = "users/edit";
+			return $this->load->view('master', $data);
+		}
+
+		return redirect('/');
+	}
+
 	public function checkLogin() {
 		if (!$this->session->userdata('log_in')) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));
 		}
+	}
+
+	public function update() {
+
+		$this->set_data(); 
+		$this->db->where('id', $this->user_id)
+				->update("users", [
+					'username' => $this->username, 
+					'account_type' => $this->account_type, 
+					'name' => $this->name
+				]);
+		return redirect('users');
+	}
+
+	public function set_data() { 
+		
+		$this->username = $this->input->post("username");
+		$this->name = $this->input->post("fullname");
+		$this->account_type = $this->input->post("account_type");
+		$this->user_id = $this->input->post('id');
 	}
 
 	

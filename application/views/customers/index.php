@@ -48,10 +48,8 @@
 								}
 								else if (Carbon\Carbon::parse($controller->getExpiration($customer->id))->gt(Carbon\Carbon::now()) && Carbon\Carbon::parse($controller->getExpiration($customer->id))->lt(Carbon\Carbon::now()->addDays(30)) ) {
 									$membership = "<span class='text-warning'>Needs Renewal</span>";
-									$renewable = true;
-
-								}  
-
+									$renewable = true; 
+								}   
 							}
 							
 

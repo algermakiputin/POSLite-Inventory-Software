@@ -82,6 +82,7 @@ $route['items/delete'] = "ItemController/delete";
 $route['categories'] = 'CategoriesController/categories';
 $route['categories/insert'] = 'CategoriesController/insert';
 $route['users'] = 'UsersController/accounts';
+$route['user/edit/(:any)'] = 'UsersController/edit/$1';
 $route['logout'] = 'AuthController/logout';
 $route['users/history'] = 'UsersController/history';
 $route['pos'] = 'pos_con/pos';
