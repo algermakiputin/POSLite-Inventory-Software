@@ -42,7 +42,7 @@ class PurchaseOrderController Extends CI_Controller {
 
 	public function purchase_order_list() {
 
-		$data['content'] = "suppliers/po_list";
+		$data['content'] = "po/po_list";
 		$this->load->view('master', $data);
 	}
 
