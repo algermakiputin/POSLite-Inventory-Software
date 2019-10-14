@@ -1,4 +1,4 @@
-function generate_pdf(items, total,po_number, po_date,shipto,supplier) {
+function generate_pdf(items, total,po_number, po_date,shipto,supplier, image) {
   return {
     content: [
     {
@@ -11,12 +11,17 @@ function generate_pdf(items, total,po_number, po_date,shipto,supplier) {
         'Naga City, Camarines Sur 4400\n',
         'PH\n',
         'james@bitbicol.com\n',
+         
+        ],
 
-        ]
 
       },
       { 
-      }
+      
+          image: image,
+          width: 200
+       
+        }
       ], 
     }, 
     {
@@ -56,6 +61,18 @@ function generate_pdf(items, total,po_number, po_date,shipto,supplier) {
       }
       ]
     },
+    '\n\n',
+     {
+        canvas: [ {
+             type: 'line',
+              x1: 0,
+              y1: 5,
+              x2: 518,
+              y2: 5,
+              lineWidth: 0.5,
+              color: '#4f90bb'
+        } ]
+    },
     {text: '\nSHIP VIA\n', fontSize: 12, bold:true},
     {text: 'Prieto Cargo Forwarders\n\n'},
 
@@ -63,8 +80,10 @@ function generate_pdf(items, total,po_number, po_date,shipto,supplier) {
       table: {
         headerRows: 1,
         widths: ['*',40,100, 60], 
-        body: items
-      }
+        body: items,
+
+      },
+      
     },
 
     {
@@ -87,7 +106,7 @@ function generate_pdf(items, total,po_number, po_date,shipto,supplier) {
         },
       ]
     },
-    '\n\nApproved By:    _____________________________________ \n\n Date:                  _____________________________________ \n\n'
+    '\n\n\n\n\n\n\nApproved By:    _____________________________________ \n\n Date:                  _____________________________________ \n\n'
     ,
     // {
     //   columns: [

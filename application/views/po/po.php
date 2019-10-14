@@ -14,7 +14,7 @@
 </div>
 
 <div class="row">
-  <?php echo form_open("SuppliersController/save_po"); ?>
+  <?php echo form_open("PurchaseOrderController/save_po"); ?>
   <div class="col-lg-3">
 
     <div class="panel panel-default">
@@ -115,6 +115,7 @@
     var products = JSON.parse('<?php echo $products ?>');
     var total = 0;
     var currency = "<?php echo currency(); ?>";
+    var image = "<?php echo $image_base64 ?>"; 
     $(".product").autocomplete({
       lookup: products,
       onSelect: function(suggestion) { 
@@ -184,7 +185,10 @@
       var shipto = $("[name='shipto']").val();
 
       var items = [
-      [ {text: 'PRODUCT', bold: true}, {text: 'QTY', bold: true}, {text: 'PRICE', bold: true}, {text: 'AMOUNT', bold: true}]
+      [ {text: 'PRODUCT', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
+        {text: 'QTY', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
+        {text: 'PRICE', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
+        {text: 'AMOUNT', bold: true, fillColor:"#4f90bb", color: "#fff"}]
       ];
       var total = 0;
       var order = $("#products-table tbody tr");
@@ -220,7 +224,7 @@
       if (items.length > 1) {
         var pdfmake = pdfMake; 
 
-        var docDefinition = generate_pdf(items, 'PHP' + number_format(total), po_number,po_date, shipto,supplier_data);
+        var docDefinition = generate_pdf(items, 'PHP' + number_format(total), po_number,po_date, shipto,supplier_data, image);
 
         var pdf = pdfmake.createPdf(docDefinition);
         pdf._openPdf();
@@ -261,13 +265,5 @@
     }
 
   })
-
-
-  
-
-
-  
-
-
-  
+ 
 </script>

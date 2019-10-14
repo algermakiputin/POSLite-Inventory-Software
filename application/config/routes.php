@@ -102,7 +102,9 @@ $route['suppliers/delete/(:any)'] = "SuppliersController/destroy/$1";
 $route['suppliers/find'] = "SuppliersController/find";
 $route['suppliers/update'] = "SuppliersController/update";
 $route['out-of-stocks'] = "ItemController/outOfStocks";
-$route['supplier/po'] = "SuppliersController/purchase_order";
+$route['supplier/po'] = "PurchaseOrderController/purchase_order";
+$route['purchase-orders'] = "PurchaseOrderController/purchase_order_list";
+$route['po/view/(:any)'] = "PurchaseOrderController/view/$1";
 
 $route['deliveries'] = "DeliveriesController/index";
 $route['deliveries/details/(:any)'] = "DeliveriesController/details/$1";
