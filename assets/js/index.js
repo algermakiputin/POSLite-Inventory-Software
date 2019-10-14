@@ -379,8 +379,8 @@ $(document).ready(function() {
 				$("#supplier_table").DataTable({
 					ordering : false,
 					initComplete : function() {
-						$("#supplier_table_length").append('&nbsp; <select class="form-inline form-control"></select>')
-						$("#supplier_table_length").append('&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
+						
+						$("#supplier_table_length").append('&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Add Supplier</button>')
 					}
 				})
 
