@@ -14,8 +14,12 @@ class SuppliersController Extends CI_Controller {
 	}
 
 	public function purchase_order() {
-
+		$max_id = $this->db->select("MAX(id) as id")->from("purchase_order")->get()->row()->id || 0;
+		$po_number = "BN" . date('Y') . '-' . ($max_id + 1);
+		$data['products'] = json_encode($this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result());
 		$data['content'] = "suppliers/po";
+		$data['suppliers'] = $this->db->get('supplier')->result();
+		$data['po_number'] = $po_number;
 		$this->load->view('master', $data);
 	}
 
@@ -73,7 +77,11 @@ class SuppliersController Extends CI_Controller {
 				'name' => $this->input->post('name'),
 				'address' => $this->input->post('address'),
 				'contact' => $this->input->post('contact'),
-				'email' =>  $this->input->post('email')
+				'email' =>  $this->input->post('email'),
+				'company' =>  $this->input->post('company'),
+				'province' =>  $this->input->post('province'),
+				'city' =>  $this->input->post('city'),
+				'country' =>  $this->input->post('country'),
 			);
 
 		$this->db->insert('supplier',$data);
@@ -83,12 +91,16 @@ class SuppliersController Extends CI_Controller {
 
 	public function update() {
 		$this->load->database();
-
+			
 		$data = array(
 				'name' => $this->input->post('name'),
 				'address' => $this->input->post('address'),
 				'contact' => $this->input->post('contact'),
 				'email' => $this->input->post('email'),
+				'company' => $this->input->post('company'),
+				'province' => $this->input->post('province'),
+				'city' => $this->input->post('city'),
+				'country' => $this->input->post('country'),
 			);
 
 		$this->db->where('id',$this->input->post('id'))->update('supplier', $data);
@@ -104,5 +116,58 @@ class SuppliersController Extends CI_Controller {
 		}
 
 		return redirect('suppliers');
+	}
+
+	public function save_po() {
+		$this->db->db_debug = TRUE;
+		$supplier = $this->input->post('supplier');
+		$shipto = $this->input->post('shipto');
+		$po_number = $this->input->post('po_number');
+		$memo = $this->input->post('memo');
+		$date = $this->input->post('po_date');
+		$products = $this->input->post('product[]');
+		$quantity = $this->input->post('quantity[]');
+		$price = $this->input->post('price[]');
+		$product_id = $this->input->post('product_id[]');
+	 
+		$this->db->trans_begin();
+
+		$this->db->insert("purchase_order", [
+			'supplier_id' => $supplier, 
+			'shipto' => $shipto,
+			'memo' => $memo,
+			'po_date' => date('Y-m-d', strtotime($date)),
+			'po_number' => $po_number, 
+		]);
+		
+		$po_id = $this->db->insert_id();
+
+		foreach ($products as $key => $product) {
+
+			if ($product && $quantity[$key] && $price[$key] && $product_id[$key]) {
+
+				$this->db->insert("purchase_order_line", [
+					'product_id' => $product_id[$key],
+					'product_name' => $products[$key],
+					'quantity' => $quantity[$key],
+					'price' => $price[$key],
+					'purchase_order_id' => $po_id
+				]);
+			}
+		}
+
+
+		if($this->db->trans_status() === FALSE){
+
+		   $this->db->trans_rollback();
+		   die();
+		   set_error_message("Opps Something Went Wrong please try again");
+		   return redirect('supplier/po');
+		} 
+		
+		success("Purchase order saved successfully");
+		$this->db->trans_commit();
+		return redirect('supplier/po');
+		 
 	}
 }

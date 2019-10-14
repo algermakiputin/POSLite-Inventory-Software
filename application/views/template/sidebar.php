@@ -27,7 +27,7 @@
                         <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-circle-o"></i> View Suppliers</a>
                     </li> 
                         <li>
-                        <a href="<?php echo base_url('supplier/po') ?>"><i class="fa fa-circle-o"></i> Purchase Order</a>
+                        <a href="<?php echo base_url('supplier/po') ?>"><i class="fa fa-circle-o"></i> New Purchase Order</a>
                     </li> 
                 </ul>
             </li>

@@ -393,15 +393,27 @@ $(document).ready(function() {
 				$("#supplier_table").DataTable({
 					ordering : false, 
 					processing: true,
+					dom: 'Bfrtlp',
+					buttons: [ 
+						{
+							text: "<i class='fa fa-plus'></i> Add Supplier",
+							action: function() {
+								$("#myModal").modal("toggle");
+							},
+							className: "btn btn-default btn-sm"
+						}, 
+					],
 				})
 
 			},
 			edit : function(){
 		 
 				$("#supplier_table").on('click','.edit',function() {
-					var id = $(this).data('id');
+					var id = $(this).data('id'); 
+
 					var data = {};
 					$("#supplier_id").val(id);
+
 					data['id'] = id;
 					data[csrfName] = csrfHash;
 					$.ajax({
@@ -414,17 +426,22 @@ $(document).ready(function() {
 							$("#edit-supplier input[name='address']").val(supplier.address);
 							$("#edit-supplier input[name='contact']").val(supplier.contact);
 							$("#edit-supplier input[name='email']").val(supplier.email);
+
+							$("#edit-supplier input[name='company']").val(supplier.company);
+							$("#edit-supplier input[name='city']").val(supplier.city);
+							$("#edit-supplier input[name='province']").val(supplier.province);
+							$("#edit-supplier input[name='country']").val(supplier.country);
 						}
 
 					});
 				})
 			},
 			purhase_order_new_line: function() {
-				$("#new-line").click(function(e) {
-					var tbody = $("#products-table tbody"); 
-					tbody.append(po_new_row);
+				// $("#new-line").click(function(e) {
+				// 	var tbody = $("#products-table tbody"); 
+				// 	tbody.append(po_new_row);
 					
-				})
+				// })
 			},
 			purchase_order_remove_line: function() {
 

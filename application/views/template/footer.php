@@ -8,8 +8,7 @@
 <script src="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/dataTables.buttons.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jszip.min.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/pdfmake.min.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/vsfont.min.js'); ?>"></script>
+
 <script src="<?php echo base_url('assets/js/buttons.flash.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/html.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/moment.min.js'); ?>"></script>
