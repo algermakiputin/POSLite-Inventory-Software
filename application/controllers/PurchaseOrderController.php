@@ -96,6 +96,7 @@ class PurchaseOrderController Extends CI_Controller {
 		$quantity = $this->input->post('quantity[]');
 		$price = $this->input->post('price[]');
 		$product_id = $this->input->post('product_id[]');
+		$note = $this->input->post('note');
 	 	 
 		$this->db->trans_begin();
 
@@ -105,6 +106,7 @@ class PurchaseOrderController Extends CI_Controller {
 			'memo' => $memo,
 			'po_date' => date('Y-m-d', strtotime($date)),
 			'po_number' => $po_number, 
+			'note' => $note
 		]);
 		
 		$po_id = $this->db->insert_id();
@@ -127,7 +129,6 @@ class PurchaseOrderController Extends CI_Controller {
 		if($this->db->trans_status() === FALSE){
 
 		   $this->db->trans_rollback();
-		   die();
 		   set_error_message("Opps Something Went Wrong please try again");
 		   return redirect('supplier/po');
 		} 

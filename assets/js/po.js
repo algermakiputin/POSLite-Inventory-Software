@@ -1,4 +1,4 @@
-function generate_pdf(items, total,po_number, po_date,shipvia,supplier, image) {
+function generate_pdf(items, total,po_number, po_date,shipvia,supplier, image, note) {
   return {
     content: [
     {
@@ -74,31 +74,37 @@ function generate_pdf(items, total,po_number, po_date,shipvia,supplier, image) {
         } ]
     },
     {text: '\nSHIP VIA\n', fontSize: 12, bold:true},
-    {text: 'Prieto Cargo Forwarders\n\n'},
+    {text: shipvia +'\n\n'},
 
     {
       table: {
         headerRows: 1,
         widths: ['*',40,100, 60], 
         body: items,
-
+        margin: [5,5,5,5]
       },
       
     },
 
     {
       columns: [
-       
+        {
+          alignment:'left',
+          width: "*",
+          text: [
+            {text: '\n\n' + note}
+          ]
+        },
         {
           alignment: 'right',
-          width: "*",
+          width: 100,
           text: [ 
             {text: '\n\nTOTAL:\n', bold:true},
           ]
         },
         {
           alignment: 'right',
-          width: "100",
+          width: 100,
           text: [
             '\n\n',
             total

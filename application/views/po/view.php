@@ -123,22 +123,24 @@
         var po_date = "<?php echo $po->po_date ?>";
         var shipvia = "<?php echo $po->shipvia ?>";
         var image = "<?php echo $image_base64 ?>";
+        var note = "<?php echo $po->note; ?>"
+       
         var items = [
           [ {text: 'PRODUCT', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
             {text: 'QTY', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
-            {text: 'PRICE', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
-            {text: 'AMOUNT', bold: true, fillColor:"#4f90bb", color: "#fff"}]
+            {text: 'PRICE', bold: true, fillColor:"#4f90bb", color: "#fff", alignment: "right"}, 
+            {text: 'AMOUNT', bold: true, fillColor:"#4f90bb", color: "#fff", alignment: "right"}]
           ];
         var orderline = JSON.parse('<?php echo json_encode($orderline) ?>');
 
         $.each(orderline, function(key, value) {
-            items.push([value.product_name, value.quantity, value.price, value.quantity * value.price]);
+            items.push([value.product_name, value.quantity, {text: value.price, alignment:'right'}, {text: value.quantity * value.price, alignment: 'right'}]);
         });
   
         var total = '<?php echo currency() . number_format($total,2); ?>';
 
         $("#pdf").click(function(e) {
-            var docDefinition = generate_pdf(items, total, po_number,po_date, shipvia,supplier, image);
+            var docDefinition = generate_pdf(items, total, po_number,po_date, shipvia,supplier, image, note);
      
             var pdf = pdfMake.createPdf(docDefinition);
             pdf._openPdf();

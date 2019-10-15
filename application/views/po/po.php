@@ -64,6 +64,10 @@
           <input type="text" required="required" class="form-control" name="shipvia">
         </div>
         <div class="form-group">
+          <label>Note to supplier:</label>
+          <textarea class="form-control" name="note" rows="3"></textarea>
+        </div>
+        <div class="form-group">
           <label>Memo:</label>
           <textarea class="form-control" name="memo" rows="3"></textarea>
         </div>
@@ -197,12 +201,13 @@
       var po_number = $("[name='po_number']").val();
       var po_date = $("[name='date']").val();
       var shipvia = $("[name='shipvia']").val();
+      var note = $("[name='note']").val();
 
       var items = [
       [ {text: 'PRODUCT', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
         {text: 'QTY', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
-        {text: 'PRICE', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
-        {text: 'AMOUNT', bold: true, fillColor:"#4f90bb", color: "#fff"}]
+        {text: 'PRICE', bold: true, fillColor:"#4f90bb", color: "#fff", alignment: "right"}, 
+        {text: 'AMOUNT', bold: true, fillColor:"#4f90bb", color: "#fff", alignment: "right"}]
       ];
       var total = 0;
       var order = $("#products-table tbody tr");
@@ -217,7 +222,7 @@
         if (product && qty && price && sub) {
 
 
-          items.push([product, qty, price, sub]);
+          items.push([product, qty, {text:price, alignment:'right'}, {text:sub, alignment:'right'}]);
 
           total += qty * price;
         } 
@@ -238,7 +243,7 @@
       if (items.length > 1) {
         var pdfmake = pdfMake; 
 
-        var docDefinition = generate_pdf(items, 'PHP' + number_format(total), po_number,po_date, shipvia,supplier_data, image);
+        var docDefinition = generate_pdf(items, 'PHP' + number_format(total), po_number,po_date, shipvia,supplier_data, image, note);
 
         var pdf = pdfmake.createPdf(docDefinition);
         pdf._openPdf();
