@@ -47,7 +47,7 @@
 											'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
 											'<td>'+ result.price +'</td>' +
 								 			
-											'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
+											'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
 										'</tr>'
 									);
 								recount();
@@ -110,7 +110,7 @@
 								'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
 								'<td>'+ price +'</td>' +
 					 			
-								'<td><span class="remove" style="font-size:12px;"><i class="fa fa-times text-danger" title="Remove"></i></span></td>' +
+								'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
 							'</tr>'
 						);
 					recount();
@@ -185,8 +185,7 @@
 				$.each(sales, function(key, value) {
 			 	 
 					$("#r-items-table tbody").append(
-							'<tr>' +
-								'<td>'+value.id +'</td>' +
+							'<tr>' + 
 								'<td>'+value.name +'</td>' +
 								'<td>'+currency+ number_format(value.price) +'</td>' +
 								'<td>'+value.quantity+'</td>' +
