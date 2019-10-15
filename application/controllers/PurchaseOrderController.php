@@ -23,7 +23,7 @@ class PurchaseOrderController Extends CI_Controller {
                              <i class="fa fa-plus"></i> View</a>
                      </li>
                      <li>
-                         <a href="' . base_url("po/delete/$po->po_number") .'">
+                         <a href="' . base_url("PurchaseOrderController/destroy/$po->id") .'" class="delete-data">
                              <i class="fa fa-trash"></i> Delete</a>
                      </li>
                     </ul>
@@ -40,6 +40,27 @@ class PurchaseOrderController Extends CI_Controller {
 		]);
 	}
 
+	public function destroy($id) {
+
+		$this->db->trans_begin();
+
+		$this->db->where('id', $id)->delete("purchase_order");
+		$this->db->where('purchase_order_id', $id)->delete('purchase_order_line');
+		
+		if($this->db->trans_status() === FALSE){
+
+		   $this->db->trans_rollback(); 
+		   set_error_message("Opps Something Went Wrong please try.");
+		   return redirect('purchase-orders');
+		} 
+
+
+		
+		success("Purchase Order has been deleted successfully.");
+		$this->db->trans_commit();
+		return redirect('purchase-orders');
+	}
+
 	public function purchase_order_list() {
 
 		$data['content'] = "po/po_list";
@@ -51,7 +72,11 @@ class PurchaseOrderController Extends CI_Controller {
 		$max_id = $max_id ? $max_id : 0;
 		
 		$po_number = "BN" . date('Y') . '-' . ($max_id + 1);
-		$data['products'] = json_encode($this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result());
+		$products = $this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result();
+		foreach ($products as $product) {
+			$product->value = str_replace('"', '”', $product->value);
+		}
+		$data['products'] = json_encode($products);
 		$data['content'] = "po/po";
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['po_number'] = $po_number;
@@ -63,7 +88,7 @@ class PurchaseOrderController Extends CI_Controller {
 	public function save_po() {
 		$this->db->db_debug = TRUE;
 		$supplier = $this->input->post('supplier');
-		$shipto = $this->input->post('shipto');
+		$shipvia = $this->input->post('shipvia');
 		$po_number = $this->input->post('po_number');
 		$memo = $this->input->post('memo');
 		$date = $this->input->post('date');
@@ -76,7 +101,7 @@ class PurchaseOrderController Extends CI_Controller {
 
 		$this->db->insert("purchase_order", [
 			'supplier_id' => $supplier, 
-			'shipto' => $shipto,
+			'shipvia' => $shipvia,
 			'memo' => $memo,
 			'po_date' => date('Y-m-d', strtotime($date)),
 			'po_number' => $po_number, 
@@ -109,7 +134,7 @@ class PurchaseOrderController Extends CI_Controller {
 		
 		success("Purchase order saved successfully");
 		$this->db->trans_commit();
-		return redirect('supplier/po');
+		return redirect('po/view/' . $po_number );
 		 
 	}
 

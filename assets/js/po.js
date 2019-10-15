@@ -1,4 +1,4 @@
-function generate_pdf(items, total,po_number, po_date,shipto,supplier, image) {
+function generate_pdf(items, total,po_number, po_date,shipvia,supplier, image) {
   return {
     content: [
     {

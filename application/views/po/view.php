@@ -8,10 +8,17 @@
                 <?php echo $this->session->flashdata('success') ?>
             </div>
         <?php endif; ?>
+        <?php if ($this->session->flashdata('error')): ?>
+        <div class="form-group"> 
+                <div class="alert alert-danger">
+                    <?php echo $this->session->flashdata('error') ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 <div class="row">
-
+    
 
     <div class="col-lg-12">
        <div class="panel panel-default">
@@ -55,7 +62,7 @@
                 <div class="col-md-12">
                     <div style="border-bottom: solid 2px #ddd;margin: 20px 0"></div>
                     <div><b>SHIP VIA</b></div>
-                    <div>Prieto Cargo Forwarders</div>
+                    <div><?php echo $po->shipvia; ?></div>
                     <div>&nbsp;</div>
                 </div>
                 <div class="col-md-12">
@@ -114,7 +121,7 @@
  
         var po_number = "<?php echo $po->po_number ?>";
         var po_date = "<?php echo $po->po_date ?>";
-        var shipto = "<?php echo $po->shipto ?>";
+        var shipvia = "<?php echo $po->shipvia ?>";
         var image = "<?php echo $image_base64 ?>";
         var items = [
           [ {text: 'PRODUCT', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
@@ -131,7 +138,7 @@
         var total = '<?php echo currency() . number_format($total,2); ?>';
 
         $("#pdf").click(function(e) {
-            var docDefinition = generate_pdf(items, total, po_number,po_date, shipto,supplier, image);
+            var docDefinition = generate_pdf(items, total, po_number,po_date, shipvia,supplier, image);
      
             var pdf = pdfMake.createPdf(docDefinition);
             pdf._openPdf();

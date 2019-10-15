@@ -14,6 +14,20 @@
 </div>
 
 <div class="row">
+  <div class="col-lg-12">
+    <?php if ($this->session->flashdata('success')): ?>
+        <div class="alert alert-success">
+            <?php echo $this->session->flashdata('success') ?>
+        </div>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('error')): ?>
+    <div class="form-group"> 
+            <div class="alert alert-danger">
+                <?php echo $this->session->flashdata('error') ?>
+            </div>
+        </div>
+    <?php endif; ?>
+  </div>
   <?php echo form_open("PurchaseOrderController/save_po"); ?>
   <div class="col-lg-3">
 
@@ -46,8 +60,8 @@
           </select>
         </div>
         <div class="form-group">
-          <label>Ship to:</label>
-          <input type="text" required="required" class="form-control" name="shipto">
+          <label>Ship Via:</label>
+          <input type="text" required="required" class="form-control" name="shipvia">
         </div>
         <div class="form-group">
           <label>Memo:</label>
@@ -182,7 +196,7 @@
  
       var po_number = $("[name='po_number']").val();
       var po_date = $("[name='date']").val();
-      var shipto = $("[name='shipto']").val();
+      var shipvia = $("[name='shipvia']").val();
 
       var items = [
       [ {text: 'PRODUCT', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
@@ -213,8 +227,8 @@
         return alert("Purchase Order date is required");
       }
 
-      if (shipto == "") {
-        return alert("Ship to is required");
+      if (shipvia == "") {
+        return alert("Ship Via to is required");
       }
 
       if (supplier == "") {
@@ -224,7 +238,7 @@
       if (items.length > 1) {
         var pdfmake = pdfMake; 
 
-        var docDefinition = generate_pdf(items, 'PHP' + number_format(total), po_number,po_date, shipto,supplier_data, image);
+        var docDefinition = generate_pdf(items, 'PHP' + number_format(total), po_number,po_date, shipvia,supplier_data, image);
 
         var pdf = pdfmake.createPdf(docDefinition);
         pdf._openPdf();

@@ -438,6 +438,7 @@ $(document).ready(function() {
 							$("#edit-supplier input[name='company']").val(supplier.company);
 							$("#edit-supplier input[name='city']").val(supplier.city);
 							$("#edit-supplier input[name='province']").val(supplier.province);
+							$("#edit-supplier input[name='postcode']").val(supplier.postcode);
 							$("#edit-supplier input[name='country']").val(supplier.country);
 						}
 

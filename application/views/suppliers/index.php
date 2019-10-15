@@ -25,17 +25,19 @@
       <table class="table table-striped table-bordered table-hover table-responsive" id="supplier_table">
         <thead>
           <tr>
-            <th width="25%">Name</th>
-            <th width="20%">Address</th>
-            <th width="20%">Contact</th> 
-            <th width="20%">Email Address</th>
-            <th width="15%">Actions</th>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Address</th>
+            <th>Contact</th> 
+            <th>Email Address</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach($suppliers as $supplier): ?>
             <tr>
              <td><?php echo $supplier->name; ?></td>
+             <td><?php echo $supplier->company; ?></td>
              <td><?php echo $supplier->address; ?></td>
              <td><?php echo $supplier->contact; ?></td>
              <td><?php echo $supplier->email; ?></td>
@@ -105,6 +107,10 @@
               <input required="required" type="text" class="form-control" name="city">
             </div>
             <div class="form-group">
+              <label>Postcode</label>
+              <input required="required" type="text" class="form-control" name="postcode">
+            </div>
+            <div class="form-group">
               <label>Country</label>
               <input required="required" type="text" class="form-control" name="country">
             </div>
@@ -165,6 +171,10 @@
             <div class="form-group">
               <label>City</label>
               <input required="required" autocomplete="off" type="text" class="form-control" name="city">
+            </div>
+            <div class="form-group">
+              <label>Postcode</label>
+              <input required="required" type="text" class="form-control" name="postcode">
             </div>
             <div class="form-group">
               <label>Country</label>

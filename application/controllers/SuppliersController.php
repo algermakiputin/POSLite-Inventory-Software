@@ -72,6 +72,7 @@ class SuppliersController Extends CI_Controller {
 				'province' =>  $this->input->post('province'),
 				'city' =>  $this->input->post('city'),
 				'country' =>  $this->input->post('country'),
+				'postcode' => $this->input->post('postcode'),
 			);
 
 		$this->db->insert('supplier',$data);
@@ -91,6 +92,7 @@ class SuppliersController Extends CI_Controller {
 				'province' => $this->input->post('province'),
 				'city' => $this->input->post('city'),
 				'country' => $this->input->post('country'),
+				'postcode' => $this->input->post('postcode')
 			);
 
 		$this->db->where('id',$this->input->post('id'))->update('supplier', $data);

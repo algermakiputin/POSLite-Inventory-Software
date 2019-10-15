@@ -8,10 +8,19 @@
                 <?php echo $this->session->flashdata('success') ?>
             </div>
         <?php endif; ?>
+        <?php if ($this->session->flashdata('error')): ?>
+        <div class="form-group"> 
+                <div class="alert alert-danger">
+                    <?php echo $this->session->flashdata('error') ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 <div class="row">  
     <div class="col-lg-12">
+    
+    
      <div class="panel panel-default">
          <div class="panel-heading">
              Purchase Orders
