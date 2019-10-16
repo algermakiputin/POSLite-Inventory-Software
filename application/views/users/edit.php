@@ -34,8 +34,7 @@
 								<select required="required" name="account_type" class="form-control">
 									<option value="">Select Account Type</option>
 									<option <?php echo $user->account_type == "Admin" ? "selected" : '' ?> >Admin</option>
-									<option <?php echo $user->account_type == "Cashier" ? "selected" : '' ?>>Cashier</option>
-									<option <?php echo $user->account_type == "Clerk" ? "selected" : '' ?>>Clerk</option>
+									<option <?php echo $user->account_type == "Cashier" ? "selected" : '' ?>>Cashier</option> 
 								</select>
 							</div>
 							<div class="form-group">
