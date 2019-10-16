@@ -23,7 +23,7 @@ class UsersController extends AppController {
 
 		$this->form_validation->set_rules('Username', 'Username', 'required|min_length[5]');
 		$this->form_validation->set_rules('Password', 'Password', 'required|min_length[8]');
-		$this->form_validation->set_rules('Full Name', 'full_name', 'required');
+		$this->form_validation->set_rules('full_name', 'Full Name', 'required|min_length[3]');
 		$this->form_validation->set_rules('repeat_password', 'Repeat Password', 'required|matches[Password]');
 		
 		if ($this->form_validation->run() == FALSE) {
@@ -90,7 +90,7 @@ class UsersController extends AppController {
 	}
 
 	public function edit($id) {
-
+		$this->admin_only();
 		$user = $this->db->where('id', $id)->get('users')->row();
 
 		if ($user) {
@@ -110,8 +110,14 @@ class UsersController extends AppController {
 		}
 	}
 
-	public function update() {
+	private function admin_only() {
+		if ($this->session->userdata('account_type') != "Admin") { 
+			return redirect('/');
+		}
+	}
 
+	public function update() {
+		$this->admin_only();
 		$this->set_data(); 
 		$data = ['username' => $this->username, 'account_type' => $this->account_type, 'name' => $this->name];
 

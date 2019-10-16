@@ -43,8 +43,7 @@
 								<select required="required" name="account_type" class="form-control">
 									<option value="">Select Account Type</option>
 									<option>Admin</option>
-									<option>Cashier</option>
-									<option>Clerk</option>
+									<option>Cashier</option> 
 								</select>
 							</div>
 							<div class="form-group">
@@ -84,11 +83,13 @@
 											<div class="dropdown">
 												<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
 												<ul class="dropdown-menu">
-													<li>
-														<a href="<?php echo base_url("user/edit/$id") ?>">
-															<i class="fa fa-edit"></i> Edit
-														</a>
-													</li>
+													<?php if ($this->session->userdata('account_type') == "Admin"): ?>
+														<li>
+															<a href="<?php echo base_url("user/edit/$id") ?>">
+																<i class="fa fa-edit"></i> Edit
+															</a>
+														</li>
+													<?php endif; ?>
 													<li>
 														<a href="<?php echo base_url("UsersController/delete/$id"); ?>" class="delete-data" <?php echo SITE_LIVE ? 'disabled onclick="return false;"' : '' ?>><i class="fa fa-trash"></i> Delete</a></td>
 													</li>
