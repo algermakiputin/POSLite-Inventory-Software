@@ -44,11 +44,11 @@
 							<div id="change_password_field" style="display: none;">
 								<div class="form-group">
 									<label>New Password</label>
-									<input type="password" name="new_password" class="form-control">
+									<input type="password" data-parsley-minlength="8" id="new-password" name="new_password" class="form-control">
 								</div>
 								<div class="form-group">
 									<label>Confirm New Password</label>
-									<input type="password" name="confirm_new_password" class="form-control">
+									<input type="password" data-parsley-minlength="8" id="confirm-password" data-parsley-equalto-message="This value must be the same with your password" name="confirm_new_password" class="form-control">
 								</div>
 							</div>
 							<div class="form-group">
@@ -69,8 +69,22 @@
 <script type="text/javascript">
 	
 	$(document).ready(function() {
+		var new_password_field = $("#new-password");
+		var confirm_password_field = $("#confirm-password");
 		$("#change_password_tickbox").change(function() {
-			
+
+			if ( $(this).is(":checked") ) {
+				
+				new_password_field.attr("required",'required');
+				confirm_password_field.attr("required", 'required')
+											.attr("data-parsley-equalto", "#new-password");
+
+				return $("#change_password_field").show();
+			}
+
+			new_password_field.removeAttr("required");
+			confirm_password_field.removeAttr("required");
+			return $("#change_password_field").hide();
 		})
 	})
 </script>

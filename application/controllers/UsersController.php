@@ -113,12 +113,20 @@ class UsersController extends AppController {
 	public function update() {
 
 		$this->set_data(); 
+		$data = ['username' => $this->username, 'account_type' => $this->account_type, 'name' => $this->name];
+
+		if ($this->input->post("change_password") == "on") {
+			$password = $this->input->post("new_password");
+			$confirm_password = $this->input->post('confirm_new_password');
+
+			if ($password == $confirm_password) { 
+				$encrypt_password = password_hash($password,PASSWORD_DEFAULT); 
+				$data['password'] = $encrypt_password;
+			} 
+		}
+ 
 		$this->db->where('id', $this->user_id)
-				->update("users", [
-					'username' => $this->username, 
-					'account_type' => $this->account_type, 
-					'name' => $this->name
-				]);
+				->update("users", $data);
 		return redirect('users');
 	}
 
