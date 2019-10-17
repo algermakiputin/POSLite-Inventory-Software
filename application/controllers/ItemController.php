@@ -82,53 +82,21 @@ class ItemController extends AppController {
 		$sortStocks = $this->input->post('columns[5][search][value]');
 		$itemCount = $this->db->get('items')->num_rows();
 
-		if ($filterCategory) {
-			$sortPrice = NULL;
-			$sortStocks = NULL;
-			$this->db->select('items.*,categories.id as cat_id');
-			$this->db->from('items');
-			$this->db->join('categories', 'categories.id = items.category_id', 'left');
-			$this->db->where('categories.name', $filterCategory);
-			if ($filterSupplier) {
-				$this->db->join('supplier', 'supplier.id = items.supplier_id', 'left');
-				$this->db->where('supplier.name', $filterSupplier);
-			}
-			$items = $this->db->get()->result();
-		}
-
-		if ($filterSupplier) {
-			$sortPrice = NULL;
-			$sortStocks = NULL;
-			$this->db->select('items.*,supplier.id as cat_id');
-			$this->db->from('items');
-			$this->db->join('supplier', 'supplier.id = items.supplier_id', 'left');
-			$this->db->where('supplier.name', $filterSupplier);
-			if ($filterCategory) {
-				$this->db->join('categories', 'categories.id = items.category_id', 'left');
-				$this->db->where('categories.name', $filterCategory);
-			}
-			$items = $this->db->get()->result();
-		}
-
-		if ($sortPrice) {
-			$sortStocks = NULL;
-			$items = $this->db->select('items.*')
+		$this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id')
 					->from('items')
+					->join('categories', 'categories.id = items.category_id', 'left')
+					->join('supplier', 'supplier.id = items.supplier_id', 'left')
 					->join('prices', 'prices.item_id = items.id')
-					->order_by('prices.price',$sortPrice)
-					->get()
-					->result();
-		}
-
-		if ($sortStocks) {
-			$sortPrice = NULL;
-			$items = $this->db->select('items.*')
-					->from('items')
 					->join('ordering_level', 'ordering_level.item_id = items.id')
-					->order_by('ordering_level.quantity',$sortStocks)
-					->get()
-					->result();
-		}
+					->like('categories.name', $filterCategory, "BOTH") 
+					->like('supplier.name', $filterSupplier, "BOTH");
+
+		if ($sortPrice)
+			$this->db->order_by('prices.price',$sortPrice); 
+		if ($sortStocks)
+			$this->db->order_by('ordering_level.quantity',$sortStocks);
+					
+		$items = $this->db->get()->result(); 
 
 		$datasets = array_map(function($item) {
 			$itemPrice = $this->PriceModel->getPrice($item->id);
@@ -234,18 +202,12 @@ class ItemController extends AppController {
 	}
 
 	public function dataFilter($search, $start, $limit) {
-		$this->db->limit($limit, $start);
-		if ($search != "") {
-			return $this->db->where('status', 1)
-						->like('name',$search, 'BOTH')
-						->get('items')
-		 
-						->result();
-		} 
-		
+	 
 		return $this->db->where('status', 1)
-						->get('items')
-						->result();
+							->like('name',$search, 'BOTH')
+							->get('items', $limit, $start)
+							->result();
+	 
 	}
 
 	public function new() {
