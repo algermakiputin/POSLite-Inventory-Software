@@ -69,6 +69,9 @@ $route['sales'] = 'SalesController/sales';
 $route['sales/report'] ='SalesController/reports';
 $route['sales/graph-filter'] = 'SalesController/graphFilter';
 
+$route['inventory'] = 'InventoryController/index';
+$route['inventory/new'] = 'InventoryController/new';
+
 $route['items'] = 'ItemController/items';
 $route['items/new'] = 'ItemController/new';
 $route['items/insert'] = 'ItemController/insert';

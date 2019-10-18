@@ -8,8 +8,23 @@
                         <a href="<?php echo base_url('items') ?>"><i class="fa fa-circle-o"></i> View Products</a>
                     </li>
                     <?php if ( is_admin()): ?>
-                        <li>
+                    <li>
                         <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Product</a>
+                    </li>
+                    <?php endif; ?>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
+            <li>
+            <a href="#"><i class="fa fa-code-fork fa-fw"></i> inventory<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('inventory') ?>"><i class="fa fa-circle-o"></i> View inventory</a>
+                    </li>
+                    <?php if ( is_admin()): ?>
+                    <li>
+                    <a href="<?php echo base_url('inventory/new') ?>"><i class="fa fa-circle-o"></i> Register Ingredient</a>
                     </li>
                     <?php endif; ?>
                 </ul>
