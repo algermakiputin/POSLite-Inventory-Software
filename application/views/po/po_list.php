@@ -31,6 +31,7 @@
                 <tr>
                     <th width="20%">P.O. Date</th>
                     <th width="20%">P.O. No.</th>
+                    <th width="20%">Supplier</th>
                     <th width="20%">Memo</th> 
                     <th width="20%">Actions</th>
                  </tr>

@@ -87,15 +87,21 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-10 text-right">  
+                <div class="col-md-6">
+                    <?php echo str_replace("?", "&#x20B1;", $po->note) ?>
+                </div>
+                <div class="col-md-4 text-right">  
                     <div><b>TOTAL</b></div>
                 </div>
                 <div class="col-md-2 text-right">
                     <div><?php echo currency() . number_format($total,2); ?></div>
                 </div> 
                 <div class="col-md-12">
+                    <br/>
                     <div class="form-group">
                         <button class="btn btn-default" id="pdf"><i class="fa fa-file-pdf-o"></i> PDF</button>
+                        &nbsp;
+                        <a href="<?php echo base_url("PurchaseOrderController/edit/$po->po_number") ?>"  class="btn btn-default"><i class="fa fa-edit"></i> Edit</a>
                     </div>
                 </div>
             </div>
@@ -123,8 +129,8 @@
         var po_date = "<?php echo $po->po_date ?>";
         var shipvia = "<?php echo $po->shipvia ?>";
         var image = "<?php echo $image_base64 ?>";
-        var note = "<?php echo $po->note; ?>"
-       
+        var note = "<?php echo str_replace("?", "₱", $po->note) ?>"
+         
         var items = [
           [ {text: 'PRODUCT', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
             {text: 'QTY', bold: true, fillColor:"#4f90bb", color: "#fff"}, 
