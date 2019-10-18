@@ -81,12 +81,13 @@
        Items
      </div>  
      <div class="panel-body">
-      <table class="table" id="products-table" style="border-bottom: solid 1px #ddd;">
+      <table class="table" id="products-table" style="border-bottom: solid 1px #ddd;table-layout: fixed;">
         <thead>
           <th>Product Name</th>
           <th>Quantity</th>
           <th>Unit Price</th>
           <th>Sub Total</th>
+          <th width="50px">&nbsp;</th>
         </thead>
         <tbody>
           <tr> 
@@ -96,11 +97,12 @@
               <td><input type="number" required="required" autocomplete="off" class="form-control quantity" name="quantity[]"></td>
               <td><input type="text" required="required" autocomplete="off" class="form-control" name="price[]"></td>
               <td><input type="text" autocomplete="off" class="form-control" name="sub[]" readonly="readonly"></td>
+              <td><i class="fa fa-trash delete-row"></i> &nbsp;</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="3" class="text-right"><b>Total:</b></td>
+              <td colspan="4" class="text-right"><b>Total:</b></td>
               <td><span id="grand-total">0.0</span></td>
             </tr>
           </tfoot>
@@ -121,12 +123,22 @@
   </div>
   <?php echo form_close(); ?>
 </div>
-
+<style type="text/css">
+  .delete-row:hover {
+    cursor: pointer;
+  }
+</style>
 
 <script src="<?php echo base_url('assets/js/jquery-autocomplete.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/po.js') ?>"></script>
 <script type="text/javascript">
   $(document).ready(function() {
+    // Romove row when trash icon is clicked
+    $("body").on("click", ".delete-row", function() { 
+      $(this).parents("tr").remove();
+      calculate_total_po_order();
+    });
+
     var row = $("#products-table tbody tr:first-child").html();
     var tbody = $("#products-table tbody");
     var index = 1;
