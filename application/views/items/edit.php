@@ -9,12 +9,12 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-			 Edit Product Form
+				Edit Product Form
 			</div>
 			<div class="panel-body">
 				<div class="row">
 					<?php echo form_open_multipart('items/update', array('method' => 'post', 'id' => 'item-form')) ?>
-				 
+
 					<div class="col-lg-6 col-md-offset-2">
 						<div class="form-group"> 
 							<label>Barcode:</label>
@@ -50,17 +50,15 @@
 							<input value="<?php echo $price->getPrice($item->id); ?>" max="500000" type="text" name="price" class="form-control" required="required" id="selling-price" data-parsley-gte="#capital">
 						</div>  
 						<div class="form-group">
-								<label>Supplier:</label>
-								<select name="supplier" class="form-control">
-									<?php foreach ($suppliers as $supplier): ?>
-										<option value="<?php echo $supplier->id; ?>" <?php echo $item->id == $supplier->id ? 'Selected' : '' ?>>
-											<?php echo $supplier->name ?>
-										</option>
-									<?php endforeach; ?>
-								</select>
-							</div> 
-						
-
+							<label>Supplier:</label>
+							<select name="supplier" class="form-control">
+								<?php foreach ($suppliers as $supplier): ?>
+									<option value="<?php echo $supplier->id; ?>" <?php echo $item->id == $supplier->id ? 'Selected' : '' ?>>
+										<?php echo $supplier->name ?>
+									</option>
+								<?php endforeach; ?>
+							</select>
+						</div>  
 						<div class="form-group"> 
 							<label>Inventory Type</label>
 							<select class="form-control" name="inventory" id="inventory-type">
@@ -88,8 +86,8 @@
 								<input type="file" name="productImage" id="productImage" class="form-control">
 							</label>
 						</div>
-							<fieldset class="ingredients-add" <?php echo $item->inventory == "individual" ? "style='display:none'" : ""; ?>>
-						 	<legend>Add Ingredient</legend>
+						<fieldset class="ingredients-add" <?php echo $item->inventory == "individual" ? "style='display:none'" : ""; ?>>
+							<legend>Add Ingredient</legend>
 							<div class="form-group">
 								<input type="hidden" id="inventory-id" name="inventory-id" >
 								<input type="hidden" id="unit" name="">
@@ -126,9 +124,9 @@
 									<?php foreach ($production as $row): ?>
 										<tr>
 											<input type='hidden' name='inventory-id[]' value="<?php echo $row->id; ?>"> 
-									 		<input type='hidden' name='inventory-name[]' value="<?php echo $row->name; ?>"> 
-									 		<input type='hidden' name='inventory-cost[]' value="<?php echo $row->cost; ?>"> 
-									 		<input type='hidden' name='inventory-unit[]' value="<?php echo $row->unit; ?>"> 
+											<input type='hidden' name='inventory-name[]' value="<?php echo $row->name; ?>"> 
+											<input type='hidden' name='inventory-cost[]' value="<?php echo $row->cost; ?>"> 
+											<input type='hidden' name='inventory-unit[]' value="<?php echo $row->unit; ?>"> 
 											<td><?php echo $row->name; ?></td>
 											<td><?php echo $row->unit; ?></td>
 											<td><?php echo $row->cost; ?></td>
@@ -137,8 +135,7 @@
 									<?php endforeach; ?>
 								</tbody>
 							</table>
-						</div>
-						
+						</div> 
 					</div>
 					<?php echo form_close(); ?>
 					
@@ -160,13 +157,9 @@
 <script>
 	
 	$(document).ready(function() {
-		var inventory_type = $("#inventory-type");
-		var ingredients_fields = $(".ingredients-add");
-		var ingredients_tbl_wrapper = $("#ingredients-tbl-wrapper");
-		var ingredients_tbl = $("#ingredients-tbl");
-	 	var ingredients = <?php echo json_encode($ingredients); ?>;
-	  	
-	  	$(".ingredients").autocomplete({
+		var ingredients = <?php echo json_encode($ingredients); ?>;
+
+		$(".ingredients").autocomplete({
 			lookup: ingredients,
 			onSelect: function(suggestion) { 
 				console.log(suggestion)
@@ -174,60 +167,5 @@
 				$("#unit").val(suggestion.unit);
 			}
 		});
-
-
-		$("#add-ingredient").click(function(e) {
-
-			var id = $("#inventory-id").val();
-			var name = $("#ingredient-name").val();
-			var cost = $("#ingredient-cost").val();
-			var unit = $("#unit").val();
-
-			if (id && name && cost && unit) {
-				ingredients_tbl.find("tbody").append("<tr>"+
-				 		"<input type='hidden' name='inventory-id[]' value="+id+">" + 
-				 		"<input type='hidden' name='inventory-name[]' value="+name+">" + 
-				 		"<input type='hidden' name='inventory-cost[]' value="+cost+">" + 
-				 		"<input type='hidden' name='inventory-unit[]' value="+unit+">" + 
-						"<td>"+name+"</td>" + 
-						"<td>"+unit+"</td>" + 
-						"<td>"+cost+"</td>" +
-						"<td><i class='fa fa-trash remove-row'></i></td>" +
- 					"</tr>");
-
-				$("#inventory-id").val('');
-				$("#ingredient-name").val('');
-				$("#ingredient-cost").val('');
-				$("#unit").val('');
-
-				alert("Ingredient added successfully.");
-
-			}else {
-				alert("Please complete add ingredients form to add");
-			}
-
-		});
-		
-		inventory_type.change(function(e) {
-
-			let value = $(this).val();
-
-			if (value === "individual") {
-
-				ingredients_fields.fadeOut();
-				ingredients_tbl_wrapper.fadeOut();
-
-			}else if (value === "assembled") {
-
-				ingredients_fields.fadeIn();
-				ingredients_tbl_wrapper.fadeIn();
-			}
-		});
-
-		$("body").on("click", '.remove-row', function(e) {
-
-			$(this).parents("tr").remove();
-		})
-
 	})
 </script>

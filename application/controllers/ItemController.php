@@ -2,6 +2,8 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH."controllers/AppController.php");
 class ItemController extends AppController { 
+
+	private $inventory;
 	
 	public function __construct() { 
 
@@ -215,6 +217,8 @@ class ItemController extends AppController {
 		$this->load->model('categories_model'); 
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
+		$data['ingredients'] = $this->get_ingredients_autosuggest();
+
 		$data['page'] = 'new_item';
 		$data['content'] = "items/new";  
 		$this->load->view('master', $data);
@@ -241,6 +245,7 @@ class ItemController extends AppController {
 		$price = $this->input->post('price'); 
 		$capital = $this->input->post('capital');
 		$productImage = $_FILES['productImage'];
+		$this->inventory = $this->input->post('inventory');
 	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
@@ -273,10 +278,16 @@ class ItemController extends AppController {
 		$data = $this->security->xss_clean($data);
 		$this->db->insert('items', $data);
 		$item_id = $this->db->insert_id();
+
+		if ($this->inventory === "assembled") {
+			$this->store_ingredients($item_id);
+		}
 		$this->HistoryModel->insert('Register new item: ' . $name);
 		$this->PriceModel->insert($price,$capital, $item_id);
 		$this->OrderingLevelModel->insert($item_id);
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
+
+
 		return redirect(base_url('items'));
 
 
@@ -388,13 +399,7 @@ class ItemController extends AppController {
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));
-		$inventory = $this->input->post("inventory");
-
-		$inventory_id = $this->input->post('inventory-id');
-		$inventory_name = $this->input->post('inventory-name');
-		$inventory_cost = $this->input->post('inventory-cost');
-		$inventory_unit = $this->input->post('inventory-unit');
-
+		$this->inventory = $this->input->post("inventory");
 
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
@@ -414,20 +419,8 @@ class ItemController extends AppController {
 			 
 		}
 
-		if ($inventory == "assembled") {
-
-			$this->db->where('item_id', $id)->delete('ingredients');
-
-			foreach ($inventory_id as $key => $ingredients) {
-
-				$this->db->insert('ingredients', [
-					'name' => $inventory_name[$key], 
-					'cost' => $inventory_cost[$key], 
-					'unit' => $inventory_unit[$key], 
-					'item_id' => $id
-				]);
-
-			}
+		if ($this->inventory === "assembled") {
+			$this->store_ingredients($id);
 		}
 
 		//Update Stocks
@@ -451,6 +444,27 @@ class ItemController extends AppController {
 			return redirect(base_url('items'));
 		}
 	 		
+	}
+
+	public function store_ingredients($id) {
+		$inventory_id = $this->input->post('inventory-id');
+		$inventory_name = $this->input->post('inventory-name');
+		$inventory_cost = $this->input->post('inventory-cost');
+		$inventory_unit = $this->input->post('inventory-unit');
+ 
+		$this->db->where('item_id', $id)->delete('ingredients');
+
+		foreach ($inventory_id as $key => $ingredients) {
+
+			$this->db->insert('ingredients', [
+				'name' => $inventory_name[$key], 
+				'cost' => $inventory_cost[$key], 
+				'unit' => $inventory_unit[$key], 
+				'item_id' => $id
+			]);
+
+		}
+	 
 	}
 
 	public function updateFormValidation() {

@@ -16,8 +16,7 @@ $(document).ready(function() {
 			e.preventDefault();
 			return false;
 		}
-	});
-	 
+	}); 
 
 	$("body").show();
 	$("form").parsley();	
@@ -523,6 +522,80 @@ $(document).ready(function() {
 			}
 		} 
 
+
+		var inventory_type = $("#inventory-type");
+		var ingredients_fields = $(".ingredients-add");
+		var ingredients_tbl_wrapper = $("#ingredients-tbl-wrapper");
+		var ingredients_tbl = $("#ingredients-tbl");
+		var ingredients = {
+
+			init: function() {
+
+				this.add_ingredients();
+				this.inventory_option();
+				this.remove_ingredient();
+			}, 
+			inventory_option: function() {
+				
+				inventory_type.change(function(e) {
+
+					let value = $(this).val();
+
+					if (value === "individual") {
+
+						ingredients_fields.fadeOut();
+						ingredients_tbl_wrapper.fadeOut();
+
+					}else if (value === "assembled") {
+
+						ingredients_fields.fadeIn();
+						ingredients_tbl_wrapper.fadeIn();
+					}
+				});
+			},
+			add_ingredients: function() {
+
+				$("#add-ingredient").click(function(e) { 
+				var id = $("#inventory-id").val();
+				var name = $("#ingredient-name").val();
+				var cost = $("#ingredient-cost").val();
+				var unit = $("#unit").val();
+
+				if (id && name && cost && unit) {
+					ingredients_tbl.find("tbody").append("<tr>"+
+							"<input type='hidden' name='inventory-id[]' value="+id+">" + 
+							"<input type='hidden' name='inventory-name[]' value="+name+">" + 
+							"<input type='hidden' name='inventory-cost[]' value="+cost+">" + 
+							"<input type='hidden' name='inventory-unit[]' value="+unit+">" + 
+							"<td>"+name+"</td>" + 
+							"<td>"+unit+"</td>" + 
+							"<td>"+cost+"</td>" +
+							"<td><i class='fa fa-trash remove-row'></i></td>" +
+							"</tr>");
+
+						$("#inventory-id").val('');
+						$("#ingredient-name").val('');
+						$("#ingredient-cost").val('');
+						$("#unit").val('');
+
+						alert("Ingredient added successfully.");
+
+					}else {
+						alert("Please complete add ingredients form to add");
+					}
+
+				});
+			},
+			remove_ingredient: function() {
+				$("body").on("click", '.remove-row', function(e) {
+
+					$(this).parents("tr").remove();
+				})
+			}
+		}
+
+
+		ingredients.init();
 		expenses.init();
 		dateTimePickers.init();
 		items.init();
