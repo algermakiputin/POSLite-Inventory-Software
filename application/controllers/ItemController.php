@@ -365,8 +365,16 @@ class ItemController extends AppController {
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row();
+		$data['production'] = $this->db->where('item_id', $id)->get('ingredients')->result();
+		$data['ingredients'] = $this->get_ingredients_autosuggest();
+
 		$data['content'] = "items/edit";
 		$this->load->view('master', $data);
+	}
+
+	public function get_ingredients_autosuggest() {
+
+		return $this->db->select('name as value, id as data, unit')->get('inventory')->result();
 	}
 
 	public function update() {
@@ -380,6 +388,13 @@ class ItemController extends AppController {
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));
+		$inventory = $this->input->post("inventory");
+
+		$inventory_id = $this->input->post('inventory-id');
+		$inventory_name = $this->input->post('inventory-name');
+		$inventory_cost = $this->input->post('inventory-cost');
+		$inventory_unit = $this->input->post('inventory-unit');
+
 
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
@@ -399,9 +414,27 @@ class ItemController extends AppController {
 			 
 		}
 
+		if ($inventory == "assembled") {
+
+			$this->db->where('item_id', $id)->delete('ingredients');
+
+			foreach ($inventory_id as $key => $ingredients) {
+
+				$this->db->insert('ingredients', [
+					'name' => $inventory_name[$key], 
+					'cost' => $inventory_cost[$key], 
+					'unit' => $inventory_unit[$key], 
+					'item_id' => $id
+				]);
+
+			}
+		}
+
+		//Update Stocks
 		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
 		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'));
+		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'), $inventory);
+
 
 		if ($update) {
 			

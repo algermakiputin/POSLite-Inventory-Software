@@ -24,6 +24,10 @@ body {
 .remove {
 	font-size: 13px;
 }
+
+.remove-row:hover {
+	cursor: pointer;
+}
 .remove:hover {
 	cursor: pointer;
 }

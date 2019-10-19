@@ -33,8 +33,7 @@ body {
   background: #eee;
   background-size: cover;
   background-size: 300px 300px;
-  background-repeat: no-repeat;
-  border: solid 1px #ddd;
+  background-repeat: no-repeat; 
   height: 300px;
   width: 300px;
 }
