@@ -211,9 +211,24 @@ class SalesController extends CI_Controller {
 				'user_id' => $this->session->userdata('id')
 			];
 			
-			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
-			$this->db->where('item_id', $sale['id']);
-			$this->db->update('ordering_level');
+			if ($sale['inventory'] == "assembled") {
+
+				$ingredients = $this->db->where('item_id', $sale['id'])->get('ingredients')->result();
+
+				foreach ($ingredients as $ingredient) {
+					
+					$used = $ingredient->cost * $sale['quantity'];
+					$this->db->set('stocks', "stocks - $used", false)
+								->where('id', $ingredient->inventory_id)
+								->update('inventory');
+				}
+			}else {
+				$this->db->set('quantity', "quantity - $sale[quantity]" , false);
+				$this->db->where('item_id', $sale['id']);
+				$this->db->update('ordering_level');
+			}
+
+			
 		}
  
 

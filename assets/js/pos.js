@@ -42,6 +42,7 @@
 								$("#cart tbody").append(
 										'<tr>' +
 											'<input name="id" type="hidden" value="'+ result.id +'">' +
+											'<input name="inventory" type="hidden" value="'+result.inventory+'">' +
 											'<td>'+ result.name +'</td>' +
 											'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
 											'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
@@ -95,6 +96,7 @@
 		var stocks = stockCol.text();
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
+		var inventory = $(this).find("input[name='inventory']").val();
 	 	 
 	 	if ( parseInt(stocks.split(' ').join('')) > 0 ) {
 	 		if (id && name && stocks && price && description) {
@@ -102,14 +104,15 @@
 		  	 		var quantity = 1;
 				 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
 				 	totalAmountDue += parseFloat(subtotal);
+
 					$("#cart tbody").append(
 							'<tr>' +
 								'<input name="id" type="hidden" value="'+ id +'">' +
+								'<input name="inventory" type="hidden" value="'+inventory+'">' +
 								'<td>'+ name +'</td>' +
 								'<td><input data-stocks="'+stocks+'" data-remaining="'+stocks+'" data-id="'+id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
 								'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-								'<td>'+ price +'</td>' +
-					 			
+								'<td>'+ price +'</td>' + 
 								'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
 							'</tr>'
 						);
@@ -167,18 +170,21 @@
 					var r = $("#cart tbody tr").eq(i).find('td');
 					var quantity = r.eq(1).find('input').val();
 					var price = r.eq(3).text().substring(1).replace(',','');
+					var inventory = $("#cart tbody tr").eq(i).find("input[name='inventory']").val();
+				 
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
 							price : price,
 							name : r.eq(0).text(),
 							subtotal : parseFloat(price) * parseInt(quantity),
-							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val()
+							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
+							inventory : inventory
 						};
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);
 				}
-
+ 
 				total_amount -= totalDiscount;
 				// Receipt Items
 				$("#r-items-table tbody").empty();

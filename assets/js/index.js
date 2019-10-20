@@ -534,6 +534,7 @@ $(document).ready(function() {
 				this.add_ingredients();
 				this.inventory_option();
 				this.remove_ingredient();
+				this.dataTable();
 			}, 
 			inventory_option: function() {
 				
@@ -591,6 +592,45 @@ $(document).ready(function() {
 
 					$(this).parents("tr").remove();
 				})
+			},
+			dataTable: function() {
+
+				$("#inventory-tbl").DataTable({
+					dom : "lfrtBp",
+					buttons: [
+					{
+						extend: 'copyHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory',
+						messageTop : 'Inventory Report',
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0, 1, 2, 3]
+						},
+					},
+					{
+						extend: 'excelHtml5',
+						filename : 'Inventory',
+						title : 'Inventory Report',
+						messageTop : 'Inventory Report',
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0, 1, 2, 3]
+						},
+					},
+					{
+						extend: 'pdfHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory',
+						messageTop : 'Inventory Report',
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0, 1, 2, 3]
+						},
+
+					},
+					],
+				});
 			}
 		}
 

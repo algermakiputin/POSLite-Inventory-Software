@@ -17,14 +17,14 @@
             </li>
 
             <li>
-            <a href="#"><i class="fa fa-code-fork fa-fw"></i> inventory<span class="fa arrow"></span></a>
+            <a href="#"><i class="fa fa-database fa-fw"></i> inventory<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="<?php echo base_url('inventory') ?>"><i class="fa fa-circle-o"></i> View inventory</a>
                     </li>
                     <?php if ( is_admin()): ?>
                     <li>
-                    <a href="<?php echo base_url('inventory/new') ?>"><i class="fa fa-circle-o"></i> Register Ingredient</a>
+                    <a href="<?php echo base_url('inventory/new') ?>"><i class="fa fa-circle-o"></i> New Entry</a>
                     </li>
                     <?php endif; ?>
                 </ul>

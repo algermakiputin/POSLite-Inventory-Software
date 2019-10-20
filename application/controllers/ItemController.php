@@ -104,9 +104,11 @@ class ItemController extends AppController {
 		$datasets = array_map(function($item) {
 			$itemPrice = $this->PriceModel->getPrice($item->id);
 			$itemCapital = $this->PriceModel->getCapital($item->id);
-			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
+			$stocksRemaining = $this->get_remaining_stocks($item->inventory, $item->id);
 			$itemSupplier = $this->db->where('id', $item->supplier_id)->get('supplier')->row()->name ?? 'unset';
 			$deleteAction = "";
+
+
 			if ($this->session->userdata('account_type') == "Admin") {
 
 				$deleteAction = '
@@ -125,13 +127,18 @@ class ItemController extends AppController {
 					    </li>';
 			}
 
+			$stockin = "";
+			if ($item->inventory == "individual") {
+				$stockin = '<li>
+                            <a href="' . base_url("items/stock-in/$item->id") .'">
+                                <i class="fa fa-plus"></i> Stock In</a>
+                        </li>';
+			}
+
 			$actions = '<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                    	<li>
-                            <a href="' . base_url("items/stock-in/$item->id") .'">
-                                <i class="fa fa-plus"></i> Stock In</a>
-                        </li>
+                    		'.$stockin.'
                         
                         '.$deleteAction.'
                     </ul>
@@ -159,6 +166,34 @@ class ItemController extends AppController {
 		]);
 	}
 
+	private function get_remaining_stocks($inventory, $item_id) {
+		$this->load->model("OrderingLevelModel");
+
+		if ($inventory === "assembled") {
+
+			$ingredients = $this->db->where('item_id', $item_id)->get('ingredients')->result();
+			$quantities = array(); 
+		 	
+
+			foreach ($ingredients as $ingredient) {
+				$inventory = $this->db->where('id', $ingredient->inventory_id)->get('inventory')->row();
+			 
+				$cost = $ingredient->cost;
+				$stocks = $inventory->stocks ?? 0;
+
+				array_push($quantities, (int) ( $stocks / $cost ));
+			}
+
+
+
+			return min($quantities); 
+
+		} 
+
+		return $this->OrderingLevelModel->getQuantity($item_id)->quantity ?? 0;
+		 
+	}
+
 	public function disPlayItemImage($image) {
 		if ($image && file_exists('./uploads/' . $image)) {
 			return "<div class='product-thumbnail'><img src='".base_url('uploads/' . $image)."' data-preview-image='".base_url('uploads/' . $image)."'> </div>";
@@ -173,7 +208,7 @@ class ItemController extends AppController {
 	}
 
 	public function data() {
-		$orderingLevel = $this->OrderingLevelModel;
+
 		$price = $this->PriceModel;
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
@@ -182,11 +217,11 @@ class ItemController extends AppController {
 		$itemCount = $this->db->get('items')->num_rows();
 
 		$datasets = array_map(function($item) use ($orderingLevel){
-			$quantity = (int)$orderingLevel->getQuantity($item->id)->quantity;
+			$quantity = $this->get_remaining_stocks($item->inventory, $item->id);
 			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
-			
+				
 			return [
-				$item->id,
+				$item->id . "<input type='hidden' name='inventory' value='$item->inventory'>",
 				ucwords($item->name),
 				ucfirst($item->description),
 				$quantity,
@@ -267,7 +302,8 @@ class ItemController extends AppController {
 				'description' => $description, 
 				'supplier_id' => $supplier_id,
 				'status' => 1,
-				'barcode' => $barcode 
+				'barcode' => $barcode,
+				'inventory' => $this->inventory,
 			);
 		
 		if ($productImage) {
@@ -427,7 +463,7 @@ class ItemController extends AppController {
 		//Update Stocks
 		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
 		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'), $inventory);
+		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'), $this->inventory);
 
 
 		if ($update) {
@@ -452,7 +488,7 @@ class ItemController extends AppController {
 		$inventory_name = $this->input->post('inventory-name');
 		$inventory_cost = $this->input->post('inventory-cost');
 		$inventory_unit = $this->input->post('inventory-unit');
- 
+ 	
 		$this->db->where('item_id', $id)->delete('ingredients');
 
 		foreach ($inventory_id as $key => $ingredients) {
@@ -461,7 +497,8 @@ class ItemController extends AppController {
 				'name' => $inventory_name[$key], 
 				'cost' => $inventory_cost[$key], 
 				'unit' => $inventory_unit[$key], 
-				'item_id' => $id
+				'item_id' => $id,
+				'inventory_id' => $inventory_id[$key],
 			]);
 
 		}

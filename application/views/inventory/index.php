@@ -18,12 +18,12 @@
              Ingredients List
          </div> 
          <div class="panel-body"> 
-            <table class="table table-responsive table-striped table-hover table-bordered" id="" width="100%">
+            <table class="table table-responsive table-striped table-hover table-bordered " id="inventory-tbl" width="100%">
                <thead>
                 <tr>
                     <th width="20%">Name</th>
                     <th width="20%">Unit</th>
-                    <th width="20%">Stocks</th>
+                    <th width="20%">Stocks Remaining</th>
                     <th width="20%">Price</th> 
                     <th width="20%">Action</th>
                  </tr>

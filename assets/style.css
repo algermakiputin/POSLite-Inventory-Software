@@ -3,6 +3,8 @@
 .form-control {
   border-radius: 1px;
 }
+
+
 body {
   overflow-x: hidden;
   margin-bottom: -20px;
@@ -36,6 +38,10 @@ body {
   background-repeat: no-repeat; 
   height: 300px;
   width: 300px;
+}
+
+.remove-row:hover {
+  cursor: pointer;
 }
 
 .product-thumbnail {

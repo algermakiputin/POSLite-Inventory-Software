@@ -25,11 +25,13 @@
 							<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control" required="required">
 							<input type="hidden" name="id" value="<?php echo $item->id ?>">
 						</div>
+						<?php if ($item->inventory == "individual"): ?>
 						<div class="form-group"> 
 							<label>Stocks:</label>
 							<input type="text" value="<?php echo $stocks->quantity; ?>" name="stocks" class="form-control" required="required">
 							<input type="hidden" name="id" value="<?php echo $item->id ?>">
 						</div>
+						<?php endif; ?>
 						<div class="form-group"> 
 							<label>Category:</label>
 							<select name="category" class="form-control" required="required">
@@ -123,7 +125,7 @@
 								<tbody> 
 									<?php foreach ($production as $row): ?>
 										<tr>
-											<input type='hidden' name='inventory-id[]' value="<?php echo $row->id; ?>"> 
+											<input type='hidden' name='inventory-id[]' value="<?php echo $row->inventory_id; ?>"> 
 											<input type='hidden' name='inventory-name[]' value="<?php echo $row->name; ?>"> 
 											<input type='hidden' name='inventory-cost[]' value="<?php echo $row->cost; ?>"> 
 											<input type='hidden' name='inventory-unit[]' value="<?php echo $row->unit; ?>"> 
@@ -162,7 +164,6 @@
 		$(".ingredients").autocomplete({
 			lookup: ingredients,
 			onSelect: function(suggestion) { 
-				console.log(suggestion)
 				$("#inventory-id").val(suggestion.data);
 				$("#unit").val(suggestion.unit);
 			}
