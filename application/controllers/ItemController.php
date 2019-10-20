@@ -89,6 +89,7 @@ class ItemController extends AppController {
 					->join('prices', 'prices.item_id = items.id')
 					->join('ordering_level', 'ordering_level.item_id = items.id')
 					->like('categories.name', $filterCategory, "BOTH") 
+					->like('items.name', $search, "BOTH")
 					->like('supplier.name', $filterSupplier, "BOTH");
 
 		if ($sortPrice)
@@ -96,7 +97,7 @@ class ItemController extends AppController {
 		if ($sortStocks)
 			$this->db->order_by('ordering_level.quantity',$sortStocks);
 					
-		$items = $this->db->get()->result(); 
+		$items = $this->db->limit($limit, $start)->get()->result(); 
 
 		$datasets = array_map(function($item) {
 			$itemPrice = $this->PriceModel->getPrice($item->id);
