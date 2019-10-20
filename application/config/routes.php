@@ -71,6 +71,7 @@ $route['sales/graph-filter'] = 'SalesController/graphFilter';
 
 $route['inventory'] = 'InventoryController/index';
 $route['inventory/new'] = 'InventoryController/new';
+$route['inventory/edit/(:any)'] = 'InventoryController/edit/$1';
 
 $route['items'] = 'ItemController/items';
 $route['items/new'] = 'ItemController/new';

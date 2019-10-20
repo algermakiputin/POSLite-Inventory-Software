@@ -34,8 +34,8 @@
                     <td><?php echo $row->name; ?></td>
                     <td><?php echo $row->unit; ?></td>
                     <td><?php echo $row->stocks; ?></td>
-                    <td><?php echo $row->price; ?></td>
-                    <td><button>Test</button></td>
+                    <td><?php echo currency() . number_format($row->price); ?></td>
+                    <td><a class="btn btn-sm btn-primary" href="<?php echo base_url('inventory/edit/' . $row->id) ?>">Edit</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

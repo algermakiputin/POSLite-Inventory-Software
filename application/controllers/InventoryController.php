@@ -4,7 +4,7 @@ require_once(APPPATH."controllers/AppController.php");
 
 class InventoryController extends AppController { 
 
-	private $name, $stocks, $unit, $price;
+	private $id, $name, $stocks, $unit, $price;
 
 	public function index() {
 
@@ -44,12 +44,40 @@ class InventoryController extends AppController {
 
 	}
 
+	public function edit($id) {
+
+		$data['content'] = 'inventory/edit';
+		$data['inventory'] = $this->db->where('id', $id)->get('inventory')->row();
+
+		if (!$data['inventory']) return redirect('inventory');
+
+		$this->load->view('master', $data);
+	}
+
+	public function update() {
+		$this->setter();
+
+		$data = [
+			'name' => $this->name,
+			'stocks' => $this->stocks,
+			'unit' => $this->unit,
+			'price' => $this->price
+		];
+
+		$this->db->where('id', $this->id)->update('inventory', $data);
+		success("Inventory Updated successfully");
+
+		return redirect('inventory');
+
+	}
+
 	public function setter() {
 
 		$this->name = $this->input->post('name');
 		$this->stocks = $this->input->post('stocks');
 		$this->unit = $this->input->post('unit');
 		$this->price = $this->input->post('price');
+		$this->id = $this->input->post('id');
 
 	}
 }

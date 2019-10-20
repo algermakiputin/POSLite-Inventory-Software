@@ -77,7 +77,7 @@ class ItemController extends AppController {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
-		$items = $this->dataFilter($search, $start, $limit);
+		 
 		$filterCategory = $this->input->post('columns[2][search][value]');
 		$filterSupplier = $this->input->post('columns[7][search][value]');
 		$sortPrice = $this->input->post('columns[4][search][value]');
@@ -91,6 +91,7 @@ class ItemController extends AppController {
 					->join('prices', 'prices.item_id = items.id')
 					->join('ordering_level', 'ordering_level.item_id = items.id')
 					->like('categories.name', $filterCategory, "BOTH") 
+					->like('items.name', $search, "BOTH")
 					->like('supplier.name', $filterSupplier, "BOTH");
 
 		if ($sortPrice)
