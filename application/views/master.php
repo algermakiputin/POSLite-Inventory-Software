@@ -123,7 +123,7 @@
                 tbody += "<tr>"+
                     "<td>"+value.name+"</td>" + 
                     "<td>"+value.description+"</td>" + 
-                    "<td>"+value.quantity+"</td>" + 
+                    "<td>stock out</td>" + 
                 "</tr>";
             });
 
@@ -159,7 +159,7 @@
                 tbody += "<tr>"+
                     "<td>"+value.name+"</td>" + 
                     "<td>"+value.description+"</td>" + 
-                    "<td>"+value.quantity+"</td>" + 
+                    "<td>"+value.quantity+" remaining</td>" + 
                 "</tr>";
             });
 
