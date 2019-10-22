@@ -22,14 +22,29 @@
 
 	function noStocks() {
 		$CI =& get_instance();
-		$outOfStocks = $CI->db->select("items.id, items.name, ordering_level.quantity")
+		$outOfStocks = $CI->db->select("items.id, items.name,items.description, ordering_level.quantity")
 				->from("items")
 				->join("ordering_level", "ordering_level.item_id = items.id", "left")
 				->where('items.status', 1)
 				->where('ordering_level.quantity <=', 0)
-				->get();
+				->get()
+				->result();
 
-		return $outOfStocks;
+		return ($outOfStocks);
+	}
+
+	function low_stocks() {
+		$CI =& get_instance();
+		$running_outofstock = $CI->db->select("items.id, items.name,items.description, ordering_level.quantity")
+				->from("items")
+				->join("ordering_level", "ordering_level.item_id = items.id", "left")
+				->where('items.status', 1)
+				->where('ordering_level.quantity >', 0)
+				->where('ordering_level.quantity <=', 50)
+				->get()
+				->result();
+
+		return $running_outofstock;
 	}
 
 	function is_admin() {
