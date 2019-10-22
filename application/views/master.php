@@ -97,7 +97,7 @@
         //alert(getCookie("disablepopup"));
         function set_disable_notification_cookie(name) {
             var now = new Date();
-            now.setTime(now.getTime() + 1 * 3600 * 1000);
+            now.setTime(now.getTime() + 1 * 3600 * 3000);
             document.cookie = name+"=1; expires=" + now.toUTCString() + "; path=/";
         }
 
@@ -141,11 +141,11 @@
                     },
 
                     disable: {
-                        text: "Do now show this for 1HR",
+                        text: "Do now show this for 3HR",
                         btnClass: "btn-danger",
                         action: function() {
                             set_disable_notification_cookie("disable_stockout_popup");
-                            alert("Low stock notification will be disabled for 1 hour.")
+                            alert("Low stock notification will be disabled for 3 hours.")
                         }
                     }
                 }
@@ -177,11 +177,11 @@
                     },
 
                     disable: {
-                        text: "Do now show this for 1HR",
+                        text: "Do now show this for 3HR",
                         btnClass: "btn-warning",
                         action: function() {
                             set_disable_notification_cookie("disable_lowstock_popup");
-                            alert("Stock out notification will be disabled for 1 hour.")
+                            alert("Stock out notification will be disabled for 3 hours.")
                         }
                     }
                 }
