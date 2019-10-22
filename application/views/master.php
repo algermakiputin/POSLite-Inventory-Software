@@ -145,7 +145,7 @@
                         btnClass: "btn-danger",
                         action: function() {
                             set_disable_notification_cookie("disable_stockout_popup");
-                            alert("Low stock notification will be disabled for 3 hours.")
+                            alert("Stock out notification will be disabled for 3 hours.")
                         }
                     }
                 }
@@ -181,7 +181,7 @@
                         btnClass: "btn-warning",
                         action: function() {
                             set_disable_notification_cookie("disable_lowstock_popup");
-                            alert("Stock out notification will be disabled for 3 hours.")
+                            alert("Low stock notification will be disabled for 3 hours.")
                         }
                     }
                 }
