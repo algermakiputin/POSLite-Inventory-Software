@@ -67,5 +67,26 @@ class CategoriesController Extends CI_Controller {
 		
 		 
 	}
+
+	public function edit($id) {
+		$cat = $this->db->where('id', $id)->get('categories')->row();
+
+		$data['content'] = "categories/edit";
+		$data['cat'] = $cat;
+
+		$this->load->view('master', $data);
+	}
+
+	public function update() {
+
+		$id = $this->input->post('id');
+		$name = $this->input->post('name');
+
+		$this->db->where('id', $id)->update('categories', ['name' => $name]);
+
+		success("Updated Successfully");
+
+		return redirect('categories');
+	}
 }
 ?>
