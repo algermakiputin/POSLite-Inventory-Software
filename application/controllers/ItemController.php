@@ -103,7 +103,6 @@ class ItemController extends AppController {
 			$itemPrice = $this->PriceModel->getPrice($item->id);
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
-			$itemSupplier = $this->db->where('id', $item->supplier_id)->get('supplier')->row()->name ?? 'unset';
 			$deleteAction = "";
 			if ($this->session->userdata('account_type') == "Admin") {
 
@@ -142,8 +141,7 @@ class ItemController extends AppController {
 				'₱' . number_format($itemCapital,2),
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining . ' pcs',
-				currency() . number_format($itemPrice * $stocksRemaining,2),
-				$itemSupplier,
+				currency() . number_format($itemPrice * $stocksRemaining,2), 
 				$actions
 			];
 
