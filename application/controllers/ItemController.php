@@ -57,7 +57,7 @@ class ItemController extends AppController {
 
     }
 
-	public function items () {
+	public function items () { 
 		 
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
 		$data['suppliers'] = $this->db->get('supplier')->result();
@@ -82,59 +82,27 @@ class ItemController extends AppController {
 		$sortStocks = $this->input->post('columns[5][search][value]');
 		$itemCount = $this->db->get('items')->num_rows();
 
-		if ($filterCategory) {
-			$sortPrice = NULL;
-			$sortStocks = NULL;
-			$this->db->select('items.*,categories.id as cat_id');
-			$this->db->from('items');
-			$this->db->join('categories', 'categories.id = items.category_id', 'left');
-			$this->db->where('categories.name', $filterCategory);
-			if ($filterSupplier) {
-				$this->db->join('supplier', 'supplier.id = items.supplier_id', 'left');
-				$this->db->where('supplier.name', $filterSupplier);
-			}
-			$items = $this->db->get()->result();
-		}
-
-		if ($filterSupplier) {
-			$sortPrice = NULL;
-			$sortStocks = NULL;
-			$this->db->select('items.*,supplier.id as cat_id');
-			$this->db->from('items');
-			$this->db->join('supplier', 'supplier.id = items.supplier_id', 'left');
-			$this->db->where('supplier.name', $filterSupplier);
-			if ($filterCategory) {
-				$this->db->join('categories', 'categories.id = items.category_id', 'left');
-				$this->db->where('categories.name', $filterCategory);
-			}
-			$items = $this->db->get()->result();
-		}
-
-		if ($sortPrice) {
-			$sortStocks = NULL;
-			$items = $this->db->select('items.*')
+		$this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id')
 					->from('items')
+					->join('categories', 'categories.id = items.category_id', 'left')
+					->join('supplier', 'supplier.id = items.supplier_id', 'left')
 					->join('prices', 'prices.item_id = items.id')
-					->order_by('prices.price',$sortPrice)
-					->get()
-					->result();
-		}
-
-		if ($sortStocks) {
-			$sortPrice = NULL;
-			$items = $this->db->select('items.*')
-					->from('items')
 					->join('ordering_level', 'ordering_level.item_id = items.id')
-					->order_by('ordering_level.quantity',$sortStocks)
-					->get()
-					->result();
-		}
+					->like('categories.name', $filterCategory, "BOTH") 
+					->like('items.name', $search, "BOTH")
+					->like('supplier.name', $filterSupplier, "BOTH");
+
+		if ($sortPrice)
+			$this->db->order_by('prices.price',$sortPrice); 
+		if ($sortStocks)
+			$this->db->order_by('ordering_level.quantity',$sortStocks);
+					
+		$items = $this->db->limit($limit, $start)->get()->result(); 
 
 		$datasets = array_map(function($item) {
 			$itemPrice = $this->PriceModel->getPrice($item->id);
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
-			$itemSupplier = $this->db->where('id', $item->supplier_id)->get('supplier')->row()->name ?? 'unset';
 			$deleteAction = "";
 			if ($this->session->userdata('account_type') == "Admin") {
 
@@ -173,8 +141,7 @@ class ItemController extends AppController {
 				'₱' . number_format($itemCapital,2),
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining . ' pcs',
-				currency() . number_format($itemPrice * $stocksRemaining,2),
-				$itemSupplier,
+				currency() . number_format($itemPrice * $stocksRemaining,2), 
 				$actions
 			];
 
@@ -234,18 +201,12 @@ class ItemController extends AppController {
 	}
 
 	public function dataFilter($search, $start, $limit) {
-		$this->db->limit($limit, $start);
-		if ($search != "") {
-			return $this->db->where('status', 1)
-						->like('name',$search, 'BOTH')
-						->get('items')
-		 
-						->result();
-		} 
-		
+	 
 		return $this->db->where('status', 1)
-						->get('items')
-						->result();
+							->like('name',$search, 'BOTH')
+							->get('items', $limit, $start)
+							->result();
+	 
 	}
 
 	public function new() {
@@ -414,7 +375,9 @@ class ItemController extends AppController {
 		$this->load->model('HistoryModel');
  		$updated_name = strip_tags($this->input->post('name'));
 		$updated_category = strip_tags($this->input->post('category'));
+
 		$updated_desc = strip_tags(($this->input->post('description')));
+
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));

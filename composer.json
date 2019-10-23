@@ -1,8 +1,8 @@
 {
-	"description": "The CodeIgniter framework",
-	"name": "codeigniter/framework",
+	"description": "POSLITE",
+	"name": "POSLite/codeigniter/framework",
 	"type": "project",
-	"homepage": "https://codeigniter.com",
+	"homepage": "https://poslite.herokuapp.com",
 	"license": "MIT",
 	"support": {
 		"forum": "http://forum.codeigniter.com/",

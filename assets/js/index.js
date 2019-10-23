@@ -78,7 +78,8 @@ $(document).ready(function() {
 						data : data
 					},
 					dom : "lfrtBp",
-
+					"targets": 'no-sort',
+					"bSort": false,
 					columnDefs: [
 						{ 
 							targets: [3,6], 
@@ -303,10 +304,9 @@ $(document).ready(function() {
 						success : function(data) {
 							var customer = JSON.parse(data); 
 							$("#customer-edit input[name='name']").val(customer.name); 
-							$("#customer-edit input[name='gender']").val(customer.gender);
+							$('input:radio[name="gender"]').filter('[value="'+customer.gender+'"]').attr('checked', true);
 							$("#customer-edit input[name='home_address']").val(customer.home_address);
-							$("#customer-edit input[name='outlet_location']").val(customer.outlet_location);
-							$("#customer-edit input[name='outlet_address']").val(customer.outlet_address);  
+ 
 							$("#customer-edit input[name='contact_number']").val(customer.contact_number);
 						}
 
@@ -354,14 +354,7 @@ $(document).ready(function() {
 					},
 					],
 					initComplete : function() {
-						$("#customer_table_length").append( '&nbsp;&nbsp;<select class="form-control" id="member-status"><option value="">Membership Status</option>'+
-							'<option value="Active">Active</option>' + 
-							'<option value="Expired">Expired</option>' + 
-							'<option value="Needs Renewal">Needs Renewal</option>' + 
-							'<option value="Not Open">Not Open</option>' + 
-							'</select>'
-							+'&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
-						
+						$("#customer_table_length").append( '&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
 						$("#member-status").change(function() {
 							customer_table.columns(7).search($(this).val()).draw();
 						})
@@ -379,8 +372,8 @@ $(document).ready(function() {
 				$("#supplier_table").DataTable({
 					ordering : false,
 					initComplete : function() {
-						$("#supplier_table_length").append('&nbsp; <select class="form-inline form-control"></select>')
-						$("#supplier_table_length").append('&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Supplier</button>')
+						
+						$("#supplier_table_length").append('&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Add Supplier</button>')
 					}
 				})
 
@@ -665,12 +658,18 @@ $(document).ready(function() {
 	})
 
 	
-	$("#users_table").DataTable();
+	$("#users_table").DataTable({
+		"targets": 'no-sort',
+		"bSort": false,
+	});
 	$("#categories_table").DataTable({
 		ordering : false
 	});
 
-	$("#deliveries_table").DataTable();
+	$("#deliveries_table").DataTable({
+		"targets": 'no-sort',
+		"bSort": false,
+	});
 
 	$("#btn-group-menu .btn").click(function() {
 		$('.btn-group .btn').removeClass('active');

@@ -18,10 +18,14 @@
 						<?php echo $this->session->flashdata('errorMessage');?> 
 					</div>
 					<?php endif; ?>
-					<div class="col-lg-4">
+					<div class="col-lg-3">
 						 
 						<?php echo form_open('UsersController/register_account'); ?> 
 						<fieldset <?php echo SITE_LIVE ? 'disabled' : '' ?>>
+							<div class="form-group">
+								<label for='Username'>Full Name</label>
+								<input required="required" type="text" name="full_name" class="form-control">
+							</div>
 							<div class="form-group">
 								<label for='Username'>Username</label>
 								<input required="required" type="text" name="Username" class="form-control">
@@ -39,8 +43,7 @@
 								<select required="required" name="account_type" class="form-control">
 									<option value="">Select Account Type</option>
 									<option>Admin</option>
-									<option>Cashier</option>
-									<option>Clerk</option>
+									<option>Cashier</option> 
 								</select>
 							</div>
 							<div class="form-group">
@@ -50,11 +53,12 @@
 						</fieldset>
 						<?php echo form_close(); ?>
 					</div>
-					<div class="col-lg-8"> 
+					<div class="col-lg-9"> 
 						<table class="table table-striped table-hover table-bordered" id="users_table">
 							<thead>
 								<tr>
 									<th>ID</th>
+									<th>Name</th>
 									<th>Username</th>
 									<th>Account Type</th>
 									<th>Date/Time Created</th>
@@ -70,11 +74,29 @@
 										<?php
 										$id = $account->id;
 										?>
-										<td><?php echo $count++; ?></td>
+										<td><?php echo $id; ?></td>
+										<td><?php echo $account->name; ?></td>
 										<td><?php echo $account->username ?></td>
 										<td><?php echo $account->account_type ?></td>
 										<td><?php echo $account->date_created ?></td>
-										<td><a href="<?php echo base_url("UsersController/delete/$id"); ?>" class="btn btn-danger btn-sm" <?php echo SITE_LIVE ? 'disabled onclick="return false;"' : '' ?>>Delete</a></td>
+										<td>
+											<div class="dropdown">
+												<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+												<ul class="dropdown-menu">
+													<?php if ($this->session->userdata('account_type') == "Admin"): ?>
+														<li>
+															<a href="<?php echo base_url("user/edit/$id") ?>">
+																<i class="fa fa-edit"></i> Edit
+															</a>
+														</li>
+													<?php endif; ?>
+													<li>
+														<a href="<?php echo base_url("UsersController/delete/$id"); ?>" class="delete-data" <?php echo SITE_LIVE ? 'disabled onclick="return false;"' : '' ?>><i class="fa fa-trash"></i> Delete</a></td>
+													</li>
+													 
+												</ul>
+											</div>
+											
 									</tr>
 								<?php endforeach;?>
 							</tbody>

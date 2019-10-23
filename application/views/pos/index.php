@@ -160,8 +160,7 @@
 								<div class="r-body">
 									<table class="table table-striped" id="r-items-table">
 										<thead>
-											<tr>
-												<th>ID</th>
+											<tr> 
 												<th>Item Name</th>
 												<th>Price</th>
 												<th>Quantity</th>
