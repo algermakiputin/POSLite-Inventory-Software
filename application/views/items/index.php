@@ -84,12 +84,11 @@
                     <th width="8%">&nbsp;</th>
                     <th width="20%">Item Name</th>
                     <th width="10%">Category</th> 
-                    <th width="11%">Capital Per/Item</th>
-                    <th width="11%">Retail Price</th>
+                    <th width="15%">Capital Per/Item</th>
+                    <th width="15%">Retail Price</th>
                     <th width="10%">Stocks</th>
-                    <th width="10%">Total</th>
-                    <th width="10%">Supplier</th>
-                    <th width="10%">Action</th>
+                    <th width="10%">Total</th> 
+                    <th width="12%">Action</th>
                 </tr>
             </thead>
             <tbody>
