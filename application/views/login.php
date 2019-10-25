@@ -1,5 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login - POSLite Inventory Mangement Software</title>
+
+	<?php $this->load->view('template/header'); ?>
+</head>
+<body>
+
 <style type="text/css">
-	@import "bourbon";
+	 
 	
 	.wrapper {	
 		margin-top: 80px;
@@ -113,3 +122,6 @@
 </div>
 	
 
+<?php $this->load->view('template/footer'); ?>
+</body>
+</html>

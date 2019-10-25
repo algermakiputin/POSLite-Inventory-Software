@@ -232,8 +232,7 @@
 								<div class="form-group">
 								 	<label>CUSTOMER:</label>
 								 	<select id="customer-select" placeholder="Select Customer" class="form-control" name="total"> 
-								 		<option value=""></option>
-								 		<option value="walk-in" data-id="0" selected="selected">Walk-in Customer</option>
+								 		<option value=""></option> 
 								 		<?php foreach ($customers as $customer): ?>
 								 			<option value="<?php echo $customer->name ?>" data-id="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
 								 		<?php endforeach; ?> 

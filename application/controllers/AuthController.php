@@ -17,9 +17,9 @@ class AuthController extends AppController {
 		}
 
 		$data['page_name'] = "Login";
-		$this->load->view('template/header',$data);
+	
 		$this->load->view('login');
-		$this->load->view('template/footer');
+	
 	}
  
 

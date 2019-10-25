@@ -11,6 +11,7 @@ $(document).ready(function() {
 	var dHeight = parseInt($(document).height());
 
 	var new_customer = 0;
+	
 	var customer_options = $("#customer-select").selectize({
 		create: true,
     	sortField: 'text',
@@ -26,9 +27,7 @@ $(document).ready(function() {
  			$("#customer_id").val(option.id);
 	   } 
 	});
- 
 
- 
 	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
 	
 	dHeight = dHeight - 58;
@@ -197,6 +196,13 @@ $(document).ready(function() {
 
 		if ( !customer_name )
 			return alert("Customer is empty"); 
+
+		if (transaction_type == "credit") {
+
+			if (!customer_name || !customer_id) {
+				return alert("Customer is required for credit transaction");
+			}
+		}
  	  
 		if (parseFloat(payment) < parseFloat(totalAmountDue) && transaction_type === "cash")
 	 		return alert("Insufficient Amount");
@@ -237,6 +243,8 @@ $(document).ready(function() {
 		var data = {};
 		data['sales'] = sales;
 		data['transaction_type'] = transaction_type;
+		data['customer_name'] = customer_name;
+		data['customer_id'] = customer_id;
 
 		data[csrfName] = csrfHash;
 		$.ajax({
@@ -431,7 +439,25 @@ $(document).ready(function() {
 		Function Loop through the cart table
 		To calculate the total amount
 	*/
-	function recount() {
+function itemExist(itemID,stocks) {
+		var table = $("#cart-tbl tbody tr");
+	 	var exist = false;
+		$.each(table, function(index) {
+			id = ($(this).find('[name="id"]').val());
+			if (id == itemID) {
+				qtyCol = $(this).find('[name="qty"]');
+				qty = parseInt(qtyCol.val());
+
+				qtyCol.val(qty + 1);
+		 		recount(); 
+				exist = true; 
+			}
+		})
+
+		return exist;
+}
+
+function recount() {
 		var row = $("#cart tbody tr").length;
 		var total = 0;
 		var discountAmount = 0;
@@ -439,18 +465,17 @@ $(document).ready(function() {
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
 			var quantity = parseInt(r.eq(1).find('input').val());
-			var price = r.eq(3).text().substring(1).replace(',','');
-			var discount = parseInt(r.eq(2).find('input').val());
-			total += parseFloat(price) * quantity;
+			var price = r.eq(3).text().substring(1).replace(',',''); 
 
-			discountAmount += isNaN(discount) == true ? 0 : discount ;
+			total += parseFloat(price) * quantity;
+ 
 			
 		} 
 		totalAmountDue = total;
 		
 		$("#amount-discount").text(currency + totalDiscount.toFixed(2));
 		$("#amount-total").text("₱" + number_format(totalAmountDue.toFixed(2)));
-	}
+}
 
  
 
@@ -527,20 +552,3 @@ function no_format(str) {
 	return parseFloat((str.slice(1).replace(/,/g, "")).slice(0,-3));
 }
 
-function itemExist(itemID,stocks) {
-		var table = $("#cart-tbl tbody tr");
-	 	var exist = false;
-		$.each(table, function(index) {
-			id = ($(this).find('[name="id"]').val());
-			if (id == itemID) {
-				qtyCol = $(this).find('[name="qty"]');
-				qty = parseInt(qtyCol.val());
-
-				qtyCol.val(qty + 1);
-		 		recount(); 
-				exist = true; 
-			}
-		})
-
-		return exist;
-	}
