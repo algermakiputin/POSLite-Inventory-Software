@@ -9,7 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
-	
+
+	<meta name="license" content="<?php echo get_license(); ?>">
 	<meta name="base_url" content="<?php echo base_url() ?>">
 	<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
     <meta name="csrfHash" content="<?php echo $this->security->get_csrf_hash(); ?>">
