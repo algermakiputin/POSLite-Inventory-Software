@@ -52,6 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['installer'] = "InstallerController/install";
 $route['backups'] = "BackupController/index";
 
+$route['upgrade'] = "AppController/upgrade";
+
 
 $route['expenses'] = "ExpensesController/index";
 $route['expenses/new'] = "ExpensesController/new";
