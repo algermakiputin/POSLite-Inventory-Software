@@ -55,9 +55,9 @@
                 ?> 
                 <?php if (!SITE_LIVE) : ?>
                     <?php if ( $this->config->item('license') == "bronze" || $this->config->item('license') == "silver" ): ?>
-                       <li >
-                        <a href="<?php echo base_url('upgrade'); ?>"><button class="btn btn-primary"><i class="fa fa-level-up"></i> Upgrade License</button></a>
-                    </li>
+                       <li>
+                        <a style="padding-top: 0;padding-bottom: 0;min-height: 0" href="<?php echo base_url('upgrade'); ?>"><button class="btn btn-primary"><i class="fa fa-level-up"></i> Upgrade License</button></a>
+                        </li>
                     <?php endif; ?>
                 <?php endif; ?>
                 <!-- /.dropdown -->
