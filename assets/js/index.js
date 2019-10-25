@@ -516,6 +516,34 @@ $(document).ready(function() {
 			}
 		} 
 
+		var transactions = {
+
+			init: function() {
+
+				this.credits_DataTable();
+
+			},
+			credits_DataTable : function() {
+				data = {};
+				data[csrfName] = csrfHash;
+				var credits_tbl = $("#credits_tbl").DataTable({
+					bProcessing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'TransactionsController/credits_datatable',
+						type : 'POST',
+						data : data
+					},
+					dom : "lfrtip",
+					"targets": 'no-sort',
+					"bSort": false,
+					 
+					 
+				})
+			},
+		}
+
+		transactions.init();
 		expenses.init();
 		dateTimePickers.init();
 		items.init();

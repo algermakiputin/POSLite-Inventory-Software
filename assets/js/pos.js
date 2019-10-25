@@ -13,8 +13,7 @@ $(document).ready(function() {
 	var new_customer = 0;
 	
 	var customer_options = $("#customer-select").selectize({
-		create: true,
-    	sortField: 'text',
+		create: true, 
     	 persist: false,
     	onInitialize: function () {
 			var s = this;
@@ -26,6 +25,10 @@ $(document).ready(function() {
 	   	var option = this.options[value];
  			$("#customer_id").val(option.id);
 	   } 
+	});
+
+	var transaction_type_select = $("#transaction-type").selectize({
+		sortField: 'text',
 	});
 
 	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
@@ -281,13 +284,15 @@ $(document).ready(function() {
 			 	$("#change").val('');
 			 	$("#amount-due").text(''); 
 			 	$("#amount-total").text('');
-			 	$("#amount-discount").text('');
+			 	$("#amount-discount").text(''); 
+			 	$("#customer_id").val(0); 
+			 	$("#customer-select").data('selectize').setValue('Walk-in Customer');
+			 	$("#transaction-type").data('selectize').setValue('cash'); 
 			 	item_table.clear().draw();
 			 	$("#btn").button('reset');
 			 	totalAmountDue = 0;  
 				totalDiscount = 0;
-				transaction_type = "cash";
-			 	
+				transaction_type = "cash"; 
 			}
 		}) 
 			    

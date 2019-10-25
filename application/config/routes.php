@@ -55,6 +55,9 @@ $route['backups'] = "BackupController/index";
 $route['upgrade'] = "AppController/upgrade";
 
 
+$route['transactions'] = "TransactionsController/index";
+
+
 $route['expenses'] = "ExpensesController/index";
 $route['expenses/new'] = "ExpensesController/new";
 $route['expenses/insert'] = "ExpensesController/insert";

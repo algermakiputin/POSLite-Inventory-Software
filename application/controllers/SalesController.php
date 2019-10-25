@@ -190,10 +190,20 @@ class SalesController extends CI_Controller {
 		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
 		$transaction_number = "TRN000" . ((int)$last_sales_id + 1 ); 
 
+		$status = 0;
 		$sales = $this->input->post('sales');
+		$type = $this->input->post('transaction_type');
+		$status = $type == "cash" ? 1 : 0;
+
 		$this->load->model("PriceModel");
 		$this->db->trans_begin(); 
 
+		/*	4 Types of Transactions 
+			1. Cash - When cash is selected, Automatically insert transaction as done, and update inventory.
+			2. Credit - Transaction is not yet completed as the payment will still be credit to the customer account but inventory would be updated,
+			3. Stand By - Transaction would be saved as standby status. There is no sales yet, and can be modified until the transaction is completed by the user.
+			4. Invoice - This is an invoice contain prices of the products that will be sent to the customer, No transaction yet so will not update inventory value.
+		*/
 		$this->db->insert('sales',[
 				'id' => null ,
 				'transaction_number' => $transaction_number,
@@ -201,8 +211,10 @@ class SalesController extends CI_Controller {
 				'user_id' => $this->session->userdata('id'),
 				'customer_id' => $this->input->post('customer_id'),
 				'customer_name' => $this->input->post('customer_name'),
-				'type' => $this->input->post('transaction_type')
+				'type' => $this->input->post('transaction_type'),
+				'status' => $status
 			]);
+
 		$sales_id = $this->db->insert_id();
 		$sales = $this->security->xss_clean($sales);
 

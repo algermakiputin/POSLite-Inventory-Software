@@ -231,8 +231,8 @@
 								<input type="hidden" name="customer_id" id="customer_id" value="0">
 								<div class="form-group">
 								 	<label>CUSTOMER:</label>
-								 	<select id="customer-select" placeholder="Select Customer" class="form-control" name="total"> 
-								 		<option value=""></option> 
+								 	<select id="customer-select" placeholder="Select Customer" class="form-control" name="total">   
+								 		<option value="Walk-in Customer">Walk-in Customer</option>
 								 		<?php foreach ($customers as $customer): ?>
 								 			<option value="<?php echo $customer->name ?>" data-id="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
 								 		<?php endforeach; ?> 
@@ -240,11 +240,12 @@
 								</div>
 								<div class="form-group">
 								 	<label>TRANSACTION TYPE:</label>
-								 	<select name="type" class="form-control" id="transaction-type"> 
+								 	<select name="type" class="form-control" id="transaction-type">  
 								 		<option value="cash">Cash</option>
-								 		<option value="standby">Stand By</option>
-								 		<option value="credit">Invoice</option>
 								 		<option value="credit">Customer Credit</option> 
+								 		<option value="standby">Stand By Order</option>
+								 		<option value="invoice">Invoice</option>
+								 		
 								 	</select>
 								</div>
 							</div>
@@ -256,7 +257,7 @@
 								</div>
 								<div class="form-group">
 									 <label>Change</label>
-									<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:"  autocomplete="off">
+									<input readonly="readonly" type="text" class="form-control" id="change" name="" placeholder="Change:"  autocomplete="off">
 									 
 								</div>
 							</div>  
