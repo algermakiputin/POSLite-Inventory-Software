@@ -11,6 +11,11 @@
 		return "₱";
 	}
 
+	function get_license() {
+		$CI =& get_instance();
+		return $CI->config->item('license');
+	}
+
 	function profile() {
 		return explode(',', base64_decode(file_get_contents("./profile.txt")));
 	}
@@ -63,16 +68,17 @@
 	 
 
 		$data['bronze'] = [
-				'items' => 300,
+				'items' => 200,
 				'users' => 5,
-				'customers' => 500
+				'customers' => 200,
 			];
 
 		$data['silver'] = [
-				'items' => 5000,
-				'users' => 5000,
-				'customers' => 5000
+				'items' => 2000,
+				'users' => 10,
+				'customers' => 2000
 			];
+			
 
 		$data['gold'] = [
 				'items' => 5000000,
@@ -81,6 +87,7 @@
 			];
 
 		$license = $CI->config->item('license');
+
 		$count = $CI->db->get($table)->num_rows();
 		 
 		if ($count > $data[$license][$table] ) {

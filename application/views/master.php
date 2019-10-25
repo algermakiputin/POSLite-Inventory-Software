@@ -32,7 +32,7 @@
             <ul class="nav navbar-top-links navbar-right">
                
                 <!-- /.dropdown -->
-         
+             
                 <li >
                     <a href="#" onclick="event.preventDefault(); javascript:introJs().start()">Start Demo</a>
                 </li>
@@ -50,6 +50,16 @@
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
+                <?php 
+
+                ?> 
+                <?php if (!SITE_LIVE) : ?>
+                    <?php if ( $this->config->item('license') == "bronze" || $this->config->item('license') == "silver" ): ?>
+                       <li >
+                        <a href="<?php echo base_url('upgrade'); ?>"><button class="btn btn-primary"><i class="fa fa-level-up"></i> Upgrade License</button></a>
+                    </li>
+                    <?php endif; ?>
+                <?php endif; ?>
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
