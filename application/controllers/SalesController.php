@@ -221,8 +221,7 @@ class SalesController extends CI_Controller {
 			$this->db->update('ordering_level');
 			
 		}
- 
-
+  
 		$this->db->insert_batch('sales_description', $data);
 
 		if ($this->db->trans_status() === FALSE)

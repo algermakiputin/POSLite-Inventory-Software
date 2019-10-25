@@ -7,6 +7,11 @@ body {
 	font-family: "Roboto", Arial, serif, sans-serif !important;
 }
 
+input[readonly] {
+
+  background-color: #f4f4f5!important;
+} 
+
 .navbar {
 	background-color: #333;
 /*	background: #333;*/
@@ -101,11 +106,24 @@ header {
 	padding: 20px 0;
 
 }
+
+#confirm-transaction-modal .modal-header {
+	border-top: solid 15px #337ab7;
+	color: #000;
+}
 #item-details tr td:first-child {
 	width: 20%;
 }
 .table > tbody > tr > td {
 	border: none !important;
+}
+
+#transaction-total {
+	background-color: #f4f4f5;
+	border:solid 1px #ddd;
+	padding: 20px;
+	font-size: 14.5px;
+	line-height: 1.6;
 }
 
 .main {
