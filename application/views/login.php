@@ -1,5 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/logo/poslite.png') ?>" />
+	<title>Login - POSLite Inventory Mangement Software</title>
+
+	<?php $this->load->view('template/header'); ?>
+</head>
+<body>
+
 <style type="text/css">
-	@import "bourbon";
+	 
 	
 	.wrapper {	
 		margin-top: 80px;
@@ -113,3 +123,6 @@
 </div>
 	
 
+<?php $this->load->view('template/footer'); ?>
+</body>
+</html>
