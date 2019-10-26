@@ -50,7 +50,7 @@ class AppController extends CI_Controller {
 	}
 
 	public function upgrade() {
-		$this->load->config('license');
+		 
 
 		$license = get_license();
 		 

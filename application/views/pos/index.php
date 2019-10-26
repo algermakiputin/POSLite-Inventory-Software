@@ -9,7 +9,12 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
+<<<<<<< HEAD
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/selectize.css') ?>"> 
+=======
+
+	<meta name="license" content="<?php echo get_license(); ?>">
+>>>>>>> c9083259e86e8f976bf2da1d4a087c44ae1cbd2f
 	<meta name="base_url" content="<?php echo base_url() ?>">
 	<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
     <meta name="csrfHash" content="<?php echo $this->security->get_csrf_hash(); ?>">

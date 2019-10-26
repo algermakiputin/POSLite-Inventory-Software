@@ -13,6 +13,7 @@
 
 	function get_license() {
 		$CI =& get_instance();
+		$CI->load->config('license');
 		return $CI->config->item('license');
 	}
 
@@ -64,8 +65,7 @@
 
 	function license($table) {
 		$CI =& get_instance();
-		
-	 
+		 
 
 		$data['bronze'] = [
 				'items' => 200,
@@ -91,7 +91,7 @@
 		$count = $CI->db->get($table)->num_rows();
 		 
 		if ($count > $data[$license][$table] ) {
-			$CI->session->set_flashdata('errorMessage', "<div class='alert alert-danger'>Your ". $table ." reached the limit, please contact us to upgrade</div>");
+			$CI->session->set_flashdata('errorMessage', "<div class='alert alert-danger'>Your ". $table ." reached the limit, please <a href='https://m.me/poslitesoftware'>contact us</a> to upgrade</div>");
 			return redirect('/items');
 		}
 		 

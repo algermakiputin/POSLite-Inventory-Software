@@ -2,11 +2,13 @@ $(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr('content');
+	var license = $("meta[name='license']").attr('content');
 	var totalAmountDue = 0;
 	var totalDiscount = 0;
 	var transactionComplete = false;
 	var currency = '₱';
 	var transaction_type = "cash";
+
 
 	var dHeight = parseInt($(document).height());
 
@@ -39,8 +41,10 @@ $(document).ready(function() {
 	$("#cart-tbl").css('min-height', (dHeight - (285)) + 'px');
 	$("#cart-tbl").css('max-height', (dHeight - (255 + 231)) + 'px');
 
+	
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
+<<<<<<< HEAD
 
 		if (event.code.length > 5) {
 			data = {};
@@ -90,12 +94,72 @@ $(document).ready(function() {
 						$("change").val('');
 					}else 
 						alert('No item found in the database');
+=======
+		if (license === "silver" || license === "gold") {
+			if (event.code.length > 5) {
+				data = {};
+				data[csrfName] = csrfHash;
+				data['code'] = event.code;
+				$.ajax({
+					type : 'POST',
+					url : base_url + 'items/find',
+					data : data,
+					success : function(data) {
+						if (data) {
+							var result = JSON.parse(data);
+							var quantity = 1;
+						 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+						 	totalAmountDue += parseFloat(subtotal);
+
+						 	if ( parseInt(result.quantity) > 0 ) {
+						 		 
+					  	 		if (itemExist(result.id,result.quantity) == false) {
+						  	 		var quantity = 1;
+								 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
+								 	totalAmountDue += parseFloat(result.subtotal);
+									$("#cart tbody").append(
+											'<tr>' +
+												'<input name="id" type="hidden" value="'+ result.id +'">' +
+												'<td>'+ result.name +'</td>' +
+												'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+												'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+												'<td>'+ result.price +'</td>' +
+									 			
+												'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
+											'</tr>'
+										);
+									recount();
+									$("payment").val('');
+									$("change").val('');
+
+						  	 	}
+						  	 	stockCol.text(parseInt(stocks - 1));
+						  	  
+						 	}else {
+						 		alert("Not enough stocks remaining");
+						 	}
+>>>>>>> c9083259e86e8f976bf2da1d4a087c44ae1cbd2f
 				 
-				}
-			})
+
+							recount();
+							$("payment").val('');
+							$("change").val('');
+						}else 
+							alert('No item found in the database');
+					 
+					}
+				})
+			}
+		} else {
+			alert("Your license does not support Barcode Feature, Upgrade Now!");
 		}
+<<<<<<< HEAD
 	});
 
+=======
+	}); 
+	
+>>>>>>> c9083259e86e8f976bf2da1d4a087c44ae1cbd2f
 	data = {};
 	data[csrfName] = csrfHash;
 	var item_table = $("#item-table").DataTable({
