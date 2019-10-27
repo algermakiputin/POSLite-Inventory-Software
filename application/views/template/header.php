@@ -22,5 +22,8 @@
 <script src="<?php echo base_url('assets/vendor/jquery/jquery.min.js'); ?>"></script> 
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/jquery-autocomplete.css')?>">
 
+<script src="<?php echo base_url('assets/js/pdfmake.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/vsfont.min.js'); ?>"></script>
+
 
 

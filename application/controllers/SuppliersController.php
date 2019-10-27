@@ -67,7 +67,12 @@ class SuppliersController Extends CI_Controller {
 				'name' => $this->input->post('name'),
 				'address' => $this->input->post('address'),
 				'contact' => $this->input->post('contact'),
-				'email' =>  $this->input->post('email')
+				'email' =>  $this->input->post('email'),
+				'company' =>  $this->input->post('company'),
+				'province' =>  $this->input->post('province'),
+				'city' =>  $this->input->post('city'),
+				'country' =>  $this->input->post('country'),
+				'postcode' => $this->input->post('postcode'),
 			);
 
 		$this->db->insert('supplier',$data);
@@ -77,12 +82,17 @@ class SuppliersController Extends CI_Controller {
 
 	public function update() {
 		$this->load->database();
-
+			
 		$data = array(
 				'name' => $this->input->post('name'),
 				'address' => $this->input->post('address'),
 				'contact' => $this->input->post('contact'),
 				'email' => $this->input->post('email'),
+				'company' => $this->input->post('company'),
+				'province' => $this->input->post('province'),
+				'city' => $this->input->post('city'),
+				'country' => $this->input->post('country'),
+				'postcode' => $this->input->post('postcode')
 			);
 
 		$this->db->where('id',$this->input->post('id'))->update('supplier', $data);
@@ -99,4 +109,6 @@ class SuppliersController Extends CI_Controller {
 
 		return redirect('suppliers');
 	}
+
+	
 }

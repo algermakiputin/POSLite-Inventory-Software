@@ -5,22 +5,21 @@ $(document).ready(function() {
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr("content");
 	var api_key = $("meta[name='api_key']").attr('content');
-	var hide = $("meta[name='admin']").attr("content") == 1 ? true : false;
-
-	$("body").on("click", ".delete-data", function(e) {
-
-		var confirm = window.confirm("Are you sure you want to delete that data?");
-
-		if (!confirm) {
-
-			e.preventDefault();
-			return false;
-		}
-	});
-	 
-
+	var hide = $("meta[name='admin']").attr("content") == 1 ? true : false; 
 	$("body").show();
 	$("form").parsley();	
+
+	data = {};
+	data[csrfName] = csrfHash;
+	$("#purchase-order-tbl").DataTable({
+		processing : true,
+		serverSide : true, 
+		ajax : {
+			url : base_url + '/PurchaseOrderController/dataTable',
+			type : 'POST',
+			data : data
+		},
+	});
 	
 	$('[data-toggle="tooltip"]').tooltip();
 	$(".datatable").DataTable({
@@ -28,19 +27,38 @@ $(document).ready(function() {
 		order: [[0, 'DESC']]
 	});
 
- 	if (site_live == 1) {
- 		if (!sessionStorage.getItem("demo")) {
-	 		introJs().start().oncomplete(endDemo)
-							.onskip(endDemo)
-							.onexit(endDemo);
-	 	}
- 	}
+	if (site_live == 1) {
+		if (!sessionStorage.getItem("demo")) {
+			introJs().start().oncomplete(endDemo)
+			.onskip(endDemo)
+			.onexit(endDemo);
+		}
+	}
 	function endDemo() {
 		sessionStorage.setItem("demo", false);
 	}
 
 	(function() {
 		var itemTable;
+
+		var app = {
+			init: function() {
+
+				this.delete_row();
+			},
+			delete_row: function() {
+				$("body").on("click", ".delete-data", function(e) { 
+					var confirm = window.confirm("Are you sure you want to delete that data?");
+
+					if (!confirm) {
+
+						e.preventDefault();
+						return false;
+					}
+				});
+			}
+		}
+
 		var items = {		
 			init : function() {
 				this.dataTable();
@@ -81,13 +99,14 @@ $(document).ready(function() {
 					"targets": 'no-sort',
 					"bSort": false,
 					columnDefs: [
-						{ 
-							targets: [3,6], 
-							visible: hide,
-							searchable: hide
-						},
+					{ 
+						targets: [3,6], 
+						visible: hide,
+						searchable: hide
+					},
 					],
 					buttons: [
+ 
 						{
 							extend: 'copyHtml5',
 							filename : 'Inventory Report',
@@ -117,8 +136,10 @@ $(document).ready(function() {
 							exportOptions: {
 								columns: [ 1, 2, 3,4,5,6 ]
 							},
-
+ 
 						},
+
+					},
 					],
 					initComplete : function(settings, json) {
 						
@@ -127,8 +148,8 @@ $(document).ready(function() {
 						   'yOffset': -270,  // y-offset from cursor
 						   'fadeIn': 1000, // delay in ms. to display the preview
 						   'css': {        // the following css will be used when rendering the preview image.
-					
-						   'border': '2px solid black', 
+
+						   	'border': '2px solid black', 
 						   }
 						});
 					} 
@@ -150,7 +171,7 @@ $(document).ready(function() {
 
 					itemTable.columns(column).search(this.value).draw();
 
-						
+
 				});
 			},
 			clearDataTableFilter : function() {
@@ -263,18 +284,18 @@ $(document).ready(function() {
 		var jQueryConfirm = {
 			deleteConfimation : function(title,content, callbackFunction) {
 				$.confirm({
-				    title: title,
-				    content: content,
-				    buttons: {
-				        confirm: {
-				        	text : 'Delete',
-				        	btnClass : 'btn btn-danger',
-				        	action : callbackFunction
-				        },
-				        cancel: function () {
-				            $.alert('Canceled!');
-				        } 
-				    }
+					title: title,
+					content: content,
+					buttons: {
+						confirm: {
+							text : 'Delete',
+							btnClass : 'btn btn-danger',
+							action : callbackFunction
+						},
+						cancel: function () {
+							$.alert('Canceled!');
+						} 
+					}
 				});
 			}
 		}
@@ -284,6 +305,7 @@ $(document).ready(function() {
 				this.edit();
 				this.graphSales();
 				this.customerDatatable();
+				
 			},
 			edit : function() {
 				$("#customer_table").on('click','.edit',function() {
@@ -293,6 +315,7 @@ $(document).ready(function() {
 						Set Data
 						1 - csrfname and token
 						2 - customer ID
+ 
 					*/
 					var data = {};
 					data[csrfName] = csrfHash;
@@ -308,10 +331,10 @@ $(document).ready(function() {
 							$("#customer-edit input[name='home_address']").val(customer.home_address);
  
 							$("#customer-edit input[name='contact_number']").val(customer.contact_number);
-						}
+						} 
 
-					});
-				})
+						});
+					})
 			},
 			graphSales : function() {
 
@@ -363,27 +386,34 @@ $(document).ready(function() {
 			}
 		}
 
+		var po_new_row = "<tr>" + $("#products-table tbody tr:first-child").html() + "</tr>";
 		var suppliers = {
 			init : function() {
 				this.dataTable();
 				this.edit();
+				this.purhase_order_new_line();
+				this.purchase_order_remove_line();
 			},
 			dataTable : function(){
 				$("#supplier_table").DataTable({
+ 
 					ordering : false,
 					initComplete : function() {
 						
 						$("#supplier_table_length").append('&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Add Supplier</button>')
 					}
+ 
 				})
 
 			},
 			edit : function(){
-		 
+
 				$("#supplier_table").on('click','.edit',function() {
-					var id = $(this).data('id');
+					var id = $(this).data('id'); 
+
 					var data = {};
 					$("#supplier_id").val(id);
+
 					data['id'] = id;
 					data[csrfName] = csrfHash;
 					$.ajax({
@@ -396,11 +426,35 @@ $(document).ready(function() {
 							$("#edit-supplier input[name='address']").val(supplier.address);
 							$("#edit-supplier input[name='contact']").val(supplier.contact);
 							$("#edit-supplier input[name='email']").val(supplier.email);
+
+							$("#edit-supplier input[name='company']").val(supplier.company);
+							$("#edit-supplier input[name='city']").val(supplier.city);
+							$("#edit-supplier input[name='province']").val(supplier.province);
+							$("#edit-supplier input[name='postcode']").val(supplier.postcode);
+							$("#edit-supplier input[name='country']").val(supplier.country);
 						}
 
 					});
 				})
-			} 
+			},
+			purhase_order_new_line: function() {
+				// $("#new-line").click(function(e) {
+				// 	var tbody = $("#products-table tbody"); 
+				// 	tbody.append(po_new_row);
+
+				// })
+			},
+			purchase_order_remove_line: function() {
+
+				$("#remove-line").click(function(e) {
+					var length = $("#products-table tbody tr").length;
+
+					if (length >= 2)
+						return $("#products-table tbody tr:last-child").remove(); 
+
+					return alert("Cannot delete line the only line");
+				})
+			}
 		}
 
 		var expensesTable;
@@ -429,36 +483,36 @@ $(document).ready(function() {
 						data : data
 					},
 					buttons: [ 
-						{
-							extend: 'excelHtml5',
-							filename : 'Expenses',
-							title : function() {
-								return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
-							 	
-							}, 
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 0,1, 2, 3 ]
-							},
-							messageTop: function() {
-								return "Total: " + $("#total").text();
-							}
+					{
+						extend: 'excelHtml5',
+						filename : 'Expenses',
+						title : function() {
+							return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
+
+						}, 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0,1, 2, 3 ]
 						},
-						{
-							extend: 'pdfHtml5',
-							filename : 'Expenses Report',
-							title : function() {
-								return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
-							 	
-							},
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 0, 1, 2, 3 ]
-							},
-							messageTop: function() {
-								return "Total: " + $("#total").text();
-							}
+						messageTop: function() {
+							return "Total: " + $("#total").text();
+						}
+					},
+					{
+						extend: 'pdfHtml5',
+						filename : 'Expenses Report',
+						title : function() {
+							return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
+
 						},
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0, 1, 2, 3 ]
+						},
+						messageTop: function() {
+							return "Total: " + $("#total").text();
+						}
+					},
 					],
 					drawCallback: function(setting) {
 						var data = setting.json;
@@ -467,7 +521,7 @@ $(document).ready(function() {
 
 					}
 				}); 
-					
+
 			},
 			filterReports: function() {
 				$("#expenses_to").change(function(e) {
@@ -476,8 +530,8 @@ $(document).ready(function() {
 					
 					if (fromDate && toDate && toDate >= fromDate) {
 						expensesTable.columns(0).search(fromDate)
-									.columns(1).search(toDate)
-									.draw();
+						.columns(1).search(toDate)
+						.draw();
 					}else {
 						alert("From date is empty or from date is greather than to date");
 					}
@@ -494,23 +548,23 @@ $(document).ready(function() {
 				$('.date-range-filter').datepicker({
 					useCurrent : false,
 					todayHighlight: true,
-    				toggleActive: true,
-    				autoclose: true,
+					toggleActive: true,
+					autoclose: true,
 				});
 
-				 $("#datetimepicker6").on("dp.change", function (e) {
-			        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-			    });
-			    $("#datetimepicker7").on("dp.change", function (e) {
-			        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-			    });
+				$("#datetimepicker6").on("dp.change", function (e) {
+					$('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+				});
+				$("#datetimepicker7").on("dp.change", function (e) {
+					$('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+				});
 
 				$("#min-date").change(function(e){
 					$("#max-date").datepicker({
 						startDate : new Date(),
 						todayHighlight: true,
-	    				toggleActive: true,
-	    				autoclose: true,
+						toggleActive: true,
+						autoclose: true,
 					})
 				})
 			}
@@ -565,7 +619,7 @@ $(document).ready(function() {
 		sales.init();
 		customers.init();
 		suppliers.init();
-	 
+		app.init();
 	})();
 
 	$("#customer_table").on('click', '.renew', function() {
@@ -751,7 +805,7 @@ $(document).ready(function() {
 					$("#key-submit").button('loading');
 				},
 				success : function(data) {
-					 
+
 					if (data ) {
 						var result = JSON.parse(data);
 						jsonData['data'] = result;
@@ -761,11 +815,11 @@ $(document).ready(function() {
 							url : base_url + 'LicenseController/activateLicense',
 							data : jsonData,
 							success : function(data) {
-								 window.location.href = data;
+								window.location.href = data;
 							}
 						})
 					} else {
-					 	alert('Invalid License Key');
+						alert('Invalid License Key');
 					}
 
 					$("#key-submit").button('reset');

@@ -5,3 +5,25 @@
   font-weight: 400;
   src : url("Roboto/Roboto-Regular.ttf");
 }
+ 
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src : url("Roboto/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: bold;
+  font-weight: 700;
+  src : url("Roboto/Roboto-Black.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: bold;
+  font-weight: 300;
+  src : url("Roboto/Roboto-Light.ttf");
+}
+ 

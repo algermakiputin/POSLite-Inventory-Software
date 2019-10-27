@@ -43,7 +43,7 @@ $(document).ready(function() {
 
 	
 	$(document).pos();
-	$(document).on('scan.pos.barcode', function(event){
+	$(document).on('scan.pos.barcode', function(event){ 
  
 		if (license === "silver" || license === "gold") {
 			if (event.code.length > 5) {
@@ -105,6 +105,7 @@ $(document).ready(function() {
  
 	}); 
 	 
+ 
 	data = {};
 	data[csrfName] = csrfHash;
 	var item_table = $("#item-table").DataTable({

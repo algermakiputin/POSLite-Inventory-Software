@@ -134,7 +134,7 @@
 						<div class="col-md-7">
 							<div id="receipt">
 								<div class="r-header text-center">
-									<h3>Receipt</h3>
+									<h3>Order Details</h3>
 									<div class="row">
 										<div class="col-md-4 text-left">
 											<div>ID:</div>
