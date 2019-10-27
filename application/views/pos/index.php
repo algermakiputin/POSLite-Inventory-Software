@@ -9,12 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
-<<<<<<< HEAD
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/selectize.css') ?>"> 
-=======
-
 	<meta name="license" content="<?php echo get_license(); ?>">
->>>>>>> c9083259e86e8f976bf2da1d4a087c44ae1cbd2f
 	<meta name="base_url" content="<?php echo base_url() ?>">
 	<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
     <meta name="csrfHash" content="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -235,7 +231,7 @@
 							<div class="col-md-12">
 								<input type="hidden" name="customer_id" id="customer_id" value="0">
 								<div class="form-group">
-								 	<label>CUSTOMER:</label>
+								 	<label>Customer:</label>
 								 	<select id="customer-select" placeholder="Select Customer" class="form-control" name="total">   
 								 		<option value="Walk-in Customer">Walk-in Customer</option>
 								 		<?php foreach ($customers as $customer): ?>
@@ -244,28 +240,34 @@
 								 	</select>
 								</div>
 								<div class="form-group">
-								 	<label>TRANSACTION TYPE:</label>
+								 	<label>Transaction type:</label>
 								 	<select name="type" class="form-control" id="transaction-type">  
 								 		<option value="cash">Cash</option>
 								 		<option value="credit">Customer Credit</option> 
 								 		<option value="standby">Stand By Order</option>
 								 		<option value="invoice">Invoice</option>
-								 		
+								 		<option value="po">Purchase Order</option>
 								 	</select>
 								</div>
 							</div>
 				 
 							<div class="col-md-12" id="cash-fields">
 								<div class="form-group">
-									<label>Enter Payment Amount:</label>
+									<label>Enter payment amount:</label>
 									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off" max="500000" maxlength="6">
 								</div>
 								<div class="form-group">
-									 <label>Change</label>
-									<input readonly="readonly" type="text" class="form-control" id="change" name="" placeholder="Change:"  autocomplete="off">
-									 
+									 <label>Change:</label>
+									<input readonly="readonly" type="text" class="form-control" id="change" name="" placeholder="Change:"  autocomplete="off"> 
 								</div>
+								
 							</div>  
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Transaction note:</label>
+									<textarea name="note" id="note" class="form-control" rows="3"></textarea>
+								</div>
+							</div>
 						</div>  
 					</div>
 					<div class="modal-footer"> 

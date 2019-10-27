@@ -5,25 +5,42 @@
     <!-- /.col-lg-12 -->
 </div>
 <div class="row">  
-
     <div class="col-lg-12">
-       
-      
+        <?php if ($this->session->flashdata('success')): ?>
+            <div class="form-group"> 
+                <div class="alert alert-success">
+                    <?php echo $this->session->flashdata('success') ?>
+                </div>
+            </div>
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('error')): ?>
+            <div class="form-group"> 
+                <div class="alert alert-dangerr">
+                    <?php echo $this->session->flashdata('error') ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="col-lg-12">
+        
         <ul class="nav nav-tabs">
           <li role="presentation" class="active"><a href="#">Customer Credits</a></li> 
-          <li role="presentation"><a href="<?php echo base_url('transactions/invoice') ?>">Invoice</a></li>
+          <li role="presentation"><a href="<?php echo base_url('invoice') ?>">Invoice</a></li>
           <li role="presentation"><a href="<?php echo base_url('reports/category') ?>">Standby Order</a></li> 
         </ul>   
         <div class="wrapper">
           
             <table class="table table-striped table-bordered" id="credits_tbl">
                 <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Transaction Number</th> 
+                    <tr> 
+                        <th>Credit No:</th> 
+                        <th>Credit Date</th>
                         <th>Sales Person</th>
                         <th>Customer Name</th>
+                        <th>Amount</th>
                         <th>Status</th>
+                        <th>Note</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,13 +55,10 @@
                             ?>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-                 
-            </table>
-             
+                </tbody> 
+            </table> 
         </div>
-    </div>
-
+    </div> 
 </div>
 
 <style type="text/css">

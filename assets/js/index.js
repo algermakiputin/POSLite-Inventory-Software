@@ -521,7 +521,7 @@ $(document).ready(function() {
 			init: function() {
 
 				this.credits_DataTable();
-
+				this.invoice_DataTable();
 			},
 			credits_DataTable : function() {
 				data = {};
@@ -534,10 +534,25 @@ $(document).ready(function() {
 						type : 'POST',
 						data : data
 					},
-					dom : "lfrtip",
 					"targets": 'no-sort',
 					"bSort": false,
 					 
+					 
+				})
+			},
+			invoice_DataTable : function() {
+				data = {};
+				data[csrfName] = csrfHash;
+				var credits_tbl = $("#invoice_tbl").DataTable({
+					bProcessing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'TransactionsController/invoice_datatable',
+						type : 'POST',
+						data : data
+					},
+					"targets": 'no-sort',
+					"bSort": false, 
 					 
 				})
 			},

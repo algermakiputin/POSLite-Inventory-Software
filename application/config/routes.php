@@ -56,6 +56,18 @@ $route['upgrade'] = "AppController/upgrade";
 
 
 $route['transactions'] = "TransactionsController/index";
+$route['credit/view/(:any)'] = "TransactionsController/view_credit/$1";
+$route['credit/destroy/(:any)'] = "TransactionsController/destroy_credit/$1";
+
+$route['invoice'] = "TransactionsController/invoice";
+$route['invoice/view/(:any)'] = "TransactionsController/view_invoice/$1";
+$route['invoice/destroy/(:any)'] = "TransactionsController/destroy_invoice/$1";
+
+$route['transactions'] = "TransactionsController/index";
+$route['credit/view/(:any)'] = "TransactionsController/view_credit/$1";
+$route['credit/destroy/(:any)'] = "TransactionsController/destroy_credit/$1";
+
+$route['payments/new/(:any)'] = "PaymentsController/add_payment/$1";
 
 
 $route['expenses'] = "ExpensesController/index";

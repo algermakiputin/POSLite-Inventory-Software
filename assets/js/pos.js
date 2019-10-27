@@ -44,57 +44,7 @@ $(document).ready(function() {
 	
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
-<<<<<<< HEAD
-
-		if (event.code.length > 5) {
-			data = {};
-			data[csrfName] = csrfHash;
-			data['code'] = event.code;
-			$.ajax({
-				type : 'POST',
-				url : base_url + 'items/find',
-				data : data,
-				success : function(data) {
-					if (data) {
-						var result = JSON.parse(data);
-						var quantity = 1;
-					 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-					 	totalAmountDue += parseFloat(subtotal);
-
-					 	if ( parseInt(result.quantity) > 0 ) {
-					 		 
-				  	 		if (itemExist(result.id,result.quantity) == false) {
-					  	 		var quantity = 1;
-							 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
-							 	totalAmountDue += parseFloat(result.subtotal);
-								$("#cart tbody").append(
-										'<tr>' +
-											'<input name="id" type="hidden" value="'+ result.id +'">' +
-											'<td>'+ result.name +'</td>' +
-											'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-											'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-											'<td>'+ result.price +'</td>' +
-								 			
-											'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
-										'</tr>'
-									);
-								recount();
-								$("payment").val('');
-								$("change").val('');
-
-					  	 	}
-					  	 	stockCol.text(parseInt(stocks - 1));
-					  	  
-					 	}else {
-					 		alert("Not enough stocks remaining");
-					 	}
-			  
-						recount();
-						$("payment").val('');
-						$("change").val('');
-					}else 
-						alert('No item found in the database');
-=======
+ 
 		if (license === "silver" || license === "gold") {
 			if (event.code.length > 5) {
 				data = {};
@@ -138,8 +88,7 @@ $(document).ready(function() {
 						 	}else {
 						 		alert("Not enough stocks remaining");
 						 	}
->>>>>>> c9083259e86e8f976bf2da1d4a087c44ae1cbd2f
-				 
+  
 
 							recount();
 							$("payment").val('');
@@ -153,13 +102,9 @@ $(document).ready(function() {
 		} else {
 			alert("Your license does not support Barcode Feature, Upgrade Now!");
 		}
-<<<<<<< HEAD
-	});
-
-=======
+ 
 	}); 
-	
->>>>>>> c9083259e86e8f976bf2da1d4a087c44ae1cbd2f
+	 
 	data = {};
 	data[csrfName] = csrfHash;
 	var item_table = $("#item-table").DataTable({
@@ -256,6 +201,7 @@ $(document).ready(function() {
 		var sales = [];
 		var customer_id = $("#customer_id").val();
 		var customer_name = $("#customer-select option:selected").val();
+		var note = $("#note").val();
 		var total_amount = 0;
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val() || 0;
@@ -264,10 +210,10 @@ $(document).ready(function() {
 		if ( !customer_name )
 			return alert("Customer is empty"); 
 
-		if (transaction_type == "credit") {
+		if (transaction_type != "cash" || transaction_type != "standby") {
 
-			if (!customer_name || !customer_id) {
-				return alert("Customer is required for credit transaction");
+			if (!customer_name || !customer_id || customer_id == "0") {
+				return alert("Error: Customer is empty, Please select a customer.");
 			}
 		}
  	  
@@ -312,7 +258,8 @@ $(document).ready(function() {
 		data['transaction_type'] = transaction_type;
 		data['customer_name'] = customer_name;
 		data['customer_id'] = customer_id;
-
+		data['total_amount'] = totalAmountDue;
+		data['note'] = note;
 		data[csrfName] = csrfHash;
 		$.ajax({
 			type : 'POST',
@@ -343,6 +290,7 @@ $(document).ready(function() {
 				$("#r-id").text(data);
 				$("#r-transaction").text(transaction_type);
 
+				$("#note").val('');
 			 	$("#cart tbody").empty();
 			 	$("#payment").val('');
 			 	$("#change").val('');

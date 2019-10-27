@@ -194,6 +194,7 @@ class SalesController extends CI_Controller {
 		$sales = $this->input->post('sales');
 		$type = $this->input->post('transaction_type');
 		$status = $type == "cash" ? 1 : 0;
+		$total_amount = $this->input->post('total_amount');
 
 		$this->load->model("PriceModel");
 		$this->db->trans_begin(); 
@@ -212,7 +213,9 @@ class SalesController extends CI_Controller {
 				'customer_id' => $this->input->post('customer_id'),
 				'customer_name' => $this->input->post('customer_name'),
 				'type' => $this->input->post('transaction_type'),
-				'status' => $status
+				'status' => $status,
+				'total' => $total_amount,
+				'note' => $this->input->post('note'),
 			]);
 
 		$sales_id = $this->db->insert_id();

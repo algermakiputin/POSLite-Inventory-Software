@@ -35,8 +35,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				Sales Reports 
-			</div>
-
+			</div> 
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<div id="widgets">
@@ -82,15 +81,15 @@
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
-								<th >Date</th>
-								<th >Transaction Profit</th>
-								<th >Staff</th>
-								<th >Item Name</th> 
-								<th >Quantity</th>
-								<th >Price</th>
+								<th>Date</th>
+								<th>Transaction Profit</th>
+								<th>Staff</th>
+								<th>Item Name</th> 
+								<th>Quantity</th>
+								<th>Price</th>
 								<th>Discount</th>
-								<th >Total</th>  
-								<th >Action</th>
+								<th>Total</th>  
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody></tbody>

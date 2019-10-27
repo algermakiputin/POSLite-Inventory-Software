@@ -7,6 +7,10 @@ body {
 	font-family: "Roboto", Arial, serif, sans-serif !important;
 }
 
+.selectize-dropdown-content .option:hover {
+	cursor: pointer;
+} 
+
 input[readonly] {
 
   background-color: #f4f4f5!important;

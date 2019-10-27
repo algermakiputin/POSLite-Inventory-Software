@@ -50,7 +50,7 @@
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
-           
+                
                 <?php if (!SITE_LIVE) : ?>
                     <?php if ( $this->config->item('license') == "bronze" || $this->config->item('license') == "silver" ): ?>
                        <li>
