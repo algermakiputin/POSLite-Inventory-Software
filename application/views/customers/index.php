@@ -21,11 +21,10 @@
 				<table class="table table-striped table-bordered table-hover table-responsive" id="customer_table">
 					<thead>
 						<tr>
-							<th width="10%">Name</th>
-							<th width="10%">Gender</th>
-							<th width="10%">Home Address</th>  
-							<th width="10%">Contact Number</th>
-							<th width="10%">Action</th>
+							<th width="25%">Name</th> 
+							<th width="40%">Address</th>  
+							<th width="20%">Contact Number</th>
+							<th width="15%">Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -33,9 +32,8 @@
 					  
 							<tr>
 
-								<td><?php echo $customer->name ?></td>
-								<td><?php echo $customer->gender ?></td>
-								<td><?php echo $customer->home_address ?></td> 
+								<td><?php echo $customer->name ?></td> 
+								<td><?php echo $customer->address ?></td> 
 								<td><?php echo $customer->contact_number ?></td>
 								<td> 
 									<div class="dropdown">
@@ -84,20 +82,24 @@
 						name="<?php echo $this->security->get_csrf_token_name(); ?>"
 						value="<?php echo $this->security->get_csrf_hash(); ?>">
 					<div class="form-group">
-						<input required="required" type="text" class="form-control" name="name" placeholder="Name">
+						<label>Name</label>
+						<input required="required" type="text" class="form-control" name="name">
+					</div>   
+					<div class="form-group">
+						<label>Address</label>
+						<input type="text" required="required" class="form-control" name="address">
+					</div>
+					<div class="form-group">
+						<label>City</label>
+						<input type="text" required="required" class="form-control" name="city">
+					</div>
+					<div class="form-group">
+						<label>Zipcode</label>
+						<input type="text" required="required" class="form-control" name="zipcode">
 					</div> 
 					<div class="form-group">
-						<label>Gender</label><br/>
-						<label class="radio-inline"><input type="radio" checked="checked" value="male" name="gender" checked>Male</label>
-						<label class="radio-inline"><input type="radio" value="female" name="gender">Female</label> 
-					</div>
-
-					<div class="form-group">
-						<input type="text" required="required" class="form-control" name="home_address" placeholder="Home Address">
-					</div>
-					 
-					<div class="form-group">
-						<input type="text" required="required" class="form-control" name="mobileNumber" placeholder="Contact Number">
+						<label>Number</label>
+						<input type="text" required="required" class="form-control" name="number">
 					</div> 
 				
 			</div>
@@ -126,23 +128,24 @@
 					<input type="hidden" name="customer_id" id="customer_id">
 					<div class="form-group">
 						<label>Name</label>
-						<input type="text" class="form-control" name="name" placeholder="Name">
+						<input required="required" type="text" class="form-control" name="name">
+					</div>   
+					<div class="form-group">
+						<label>Address</label>
+						<input type="text" required="required" class="form-control" name="address">
+					</div>
+					<div class="form-group">
+						<label>City</label>
+						<input type="text" required="required" class="form-control" name="city">
+					</div>
+					<div class="form-group">
+						<label>Zipcode</label>
+						<input type="text" required="required" class="form-control" name="zipcode">
 					</div> 
 					<div class="form-group">
-						<label>Gender</label><br/>
-						<label class="radio-inline"><input type="radio" value="male" name="gender" checked>Male</label>
-						<label class="radio-inline"><input type="radio" value="female" name="gender">Female</label> 
-					</div>
-
-					<div class="form-group">
-						<label>Home Address:</label>
-						<input type="text" class="form-control" name="home_address" placeholder="Home Address">
+						<label>Number</label>
+						<input type="text" required="required" class="form-control" name="number">
 					</div> 
-
-					<div class="form-group">
-						<label>Contact Number</label>
-						<input type="text" class="form-control" name="contact_number" placeholder="Contact Number">
-					</div>
 					<div class="form-group">
 						<button class="btn btn-primary">Save</button>
 					</div>

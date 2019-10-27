@@ -22,12 +22,7 @@
         <?php endif; ?>
     </div>
     <div class="col-lg-12">
-        
-        <ul class="nav nav-tabs">
-          <li role="presentation" class="active"><a href="#">Customer Credits</a></li> 
-          <li role="presentation"><a href="<?php echo base_url('invoice') ?>">Invoice</a></li>
-          <li role="presentation"><a href="<?php echo base_url('reports/category') ?>">Standby Order</a></li> 
-        </ul>   
+         
         <div class="wrapper">
           
             <table class="table table-striped table-bordered" id="credits_tbl">
@@ -63,10 +58,9 @@
 
 <style type="text/css">
     .wrapper {
-        border-right: solid 1px #ddd;
-        border-left: solid 1px #ddd;
-        border-bottom: solid 1px #ddd;
-        padding: 20px 10px 10px 10px;
+        border: solid 1px #ddd; 
+        padding: 20px;
+        border-radius: 5px;
     }
      legend {
         margin-bottom: 10px;

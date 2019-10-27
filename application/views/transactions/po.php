@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Invoices</h1>
+        <h1 class="page-header">Purchase Order</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 <div class="row">   
     <div class="col-lg-12"> 
         <div class="wrapper"> 
-            <table class="table table-striped table-bordered" id="invoice_tbl">
+            <table class="table table-striped table-bordered" id="po_tbl">
                 <thead>
                     <tr>
                         <th>Invoice No:</th> 

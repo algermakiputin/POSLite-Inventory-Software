@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="col-md-12">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered has-footer">
                             <thead>
                                 <tr>
                                     <td width="10%">Qty</td>
@@ -57,24 +57,24 @@
                                     </tr>
                                     <?php $total+= $order->quantity * $order->price; ?>
                                 <?php endforeach; ?>
-                            </tbody>
-                            <tfoot style="background-color: #f4f4f5;">
                                 <tr>
-                                    <td colspan="2"></td>
-                                    <td colspan="1" class="text-right"><b>Amount Paid</b></td>
-                                    <td class="text-right"><?php echo currency() . number_format($paid,2) ?></td>
+                                    <td colspan="2" class="" style="border-left-width: 0;border-right-width: 0;padding: 5px;"></td>
+                                    <td colspan="1" class="text-right" style="border-left-width: 0;border-right-width: 0;padding: 5px;"><b>Amount Paid</b></td>
+                                    <td class="text-right" style="border-left-width: 0;border-right-width: 0;padding: 5px;"><?php echo currency() . number_format($paid,2) ?></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"></td>
-                                    <td colspan="1" class="text-right"><b>Total</b></td>
-                                    <td class="text-right"><?php echo currency() . number_format($total,2) ?></td>
+                                    <td colspan="2" style="padding: 5px;" class="no-border"></td>
+                                    <td colspan="1" style="padding: 5px;" class="text-right no-border"><b>Total</b></td>
+                                    <td style="padding: 5px;" class="text-right no-border"><?php echo currency() . number_format($total,2) ?></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"></td>
-                                    <td colspan="1" class="text-right"><b>Balance</b></td>
-                                    <td class="text-right"><?php echo currency() . number_format($total,2) ?></td>
+                                    <td style="padding: 5px;" colspan="2" class="no-border"></td>
+                                    <td style="padding: 5px;" colspan="1" class="text-right no-border"><b>Balance</b></td>
+                                    <td style="padding: 5px;" class="text-right no-border"><?php echo currency() . number_format($total,2) ?></td>
                                 </tr>
-                            </tfoot>
+                            </tbody> 
+                            
+                            
                         </table>
                     </div>
 

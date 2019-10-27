@@ -304,10 +304,10 @@ $(document).ready(function() {
 						success : function(data) {
 							var customer = JSON.parse(data); 
 							$("#customer-edit input[name='name']").val(customer.name); 
-							$('input:radio[name="gender"]').filter('[value="'+customer.gender+'"]').attr('checked', true);
-							$("#customer-edit input[name='home_address']").val(customer.home_address);
- 
-							$("#customer-edit input[name='contact_number']").val(customer.contact_number);
+							$("#customer-edit input[name='address']").val(customer.address); 
+							$("#customer-edit input[name='city']").val(customer.city);
+							$("#customer-edit input[name='zipcode']").val(customer.zipcode);
+							$("#customer-edit input[name='number']").val(customer.contact_number);
 						}
 
 					});
@@ -354,7 +354,7 @@ $(document).ready(function() {
 					},
 					],
 					initComplete : function() {
-						$("#customer_table_length").append( '&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
+						$("#customer_table_length").append( '&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Add Customer</button>');
 						$("#member-status").change(function() {
 							customer_table.columns(7).search($(this).val()).draw();
 						})
@@ -522,6 +522,7 @@ $(document).ready(function() {
 
 				this.credits_DataTable();
 				this.invoice_DataTable();
+				this.po_DataTable();
 			},
 			credits_DataTable : function() {
 				data = {};
@@ -548,6 +549,22 @@ $(document).ready(function() {
 					serverSide : true, 
 					ajax : {
 						url : base_url + 'TransactionsController/invoice_datatable',
+						type : 'POST',
+						data : data
+					},
+					"targets": 'no-sort',
+					"bSort": false, 
+					 
+				})
+			},
+			po_DataTable : function() {
+				data = {};
+				data[csrfName] = csrfHash;
+				var credits_tbl = $("#po_tbl").DataTable({
+					bProcessing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'TransactionsController/po_datatable',
 						type : 'POST',
 						data : data
 					},

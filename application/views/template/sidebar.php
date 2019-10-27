@@ -59,10 +59,24 @@
             <?php endif; ?>
             <?php if ($this->session->userdata('account_type') == "Admin" ||
                         $this->session->userdata('account_type') == "Cashier"
-                ): ?> 
-                <li>
-                    <a href="<?php echo base_url('transactions') ?>"><i class="fa fa-exchange fa-fw"></i> Transactions </a>
-                </li> 
+                ): ?>
+                <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
+                   <a href="#"><i class="fa fa-exchange fa-fw"></i> Transactions <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?php echo base_url('credits') ?>"><i class="fa fa-circle-o"></i> Credit</a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo base_url('invoice') ?>"><i class="fa fa-circle-o"></i> Invoice</a>
+                        </li> 
+                         <li>
+                            <a href="<?php echo base_url('po') ?>"><i class="fa fa-circle-o"></i> Purchase Order</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('standby-orders') ?>"><i class="fa fa-circle-o"></i> Standby Order</a>
+                        </li>
+                    </ul>
+                </li>  
                 <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">

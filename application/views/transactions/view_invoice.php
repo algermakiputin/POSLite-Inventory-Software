@@ -19,26 +19,43 @@
            </div> 
            <div class="panel-body"> 
                 <div class="row">
-                    <div class="col-md-6">
-                        <h4>INVOICE DETAILS</h4>
-                        <table width="100%" style="margin-bottom: 10px;">
+                    <div class="col-md-8">
+                        <h2>COMPANY NAME</h2>
+                        <br/>
+                        <div class="company_details">
+                            <p>Street Address</p>
+                            <p>City Zip</p>
+                            <p>EMAIL PHONE</p>
+                        </div>
+                        <br/>
+                        <div class="bill_to">
+                            <h4>BILL TO</h4>
+                            <p>NAME</p>
+                            <p>ADDRESS</p>
+                            <p>CITY, ZIP CODE</p>
+                        </div>
+                        <br/>                           
+                    </div>
+                    <div class="col-md-4">
+                        <h1>INVOICE</h1>
+                        <table style="display: block;margin: auto;">
                             <tr>
-                                <td width="20%">Invoice No:</td>
-                                <td style="padding: 5px 0;"><input type="text" class="form-control" style="max-width: 250px" name="" readonly="readonly" value="<?php echo $invoice->transaction_number; ?>"></td>
-                            </tr> 
-                            <tr>
-                                <td width="20%">Invoice Date:</td>
-                                <td style="padding: 5px 0;"><input type="text" class="form-control" style="max-width: 250px" name="" readonly="readonly" value="<?php echo date('Y-m-d', strtotime($invoice->date_time)); ?>"></td>
-                            </tr> 
-                            <tr>
-                                <td width="20%">Customer:</td>
-                                <td style="padding: 5px 0;"><input type="text" class="form-control" style="max-width: 250px" name="" readonly="readonly" value="<?php echo $invoice->customer_name; ?>"></td>
+                                <td>DATE: &nbsp;</td>
+                                <td>10/10/1995</td> 
                             </tr>
-                        </table> 
+                            <tr>
+                                <td>INVOICE #: &nbsp;</td>
+                                <td>10/10/1995</td> 
+                            </tr>
+                            <tr>
+                                <td>CUSTOMER ID: &nbsp;</td>
+                                <td>10/10/1995</td> 
+                            </tr>
+                        </table>
                     </div>
 
                     <div class="col-md-12">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered has-footer">
                             <thead>
                                 <tr>
                                     <td width="10%">Qty</td>
@@ -58,14 +75,14 @@
                                     <?php $total+= $order->quantity * $order->price; ?>
                                 <?php endforeach; ?>
                             </tbody>
-                            <tfoot style="background-color: #f4f4f5;">
-                               
-                                <tr>
-                                    <td colspan="2"></td>
-                                    <td colspan="1" class="text-right"><b>Total</b></td>
-                                    <td class="text-right"><?php echo currency() . number_format($total,2) ?></td>
-                                </tr> 
+                     
+                            <tr>
+                            <td colspan="2" style="border: 0"></td>
+                            <td colspan="1" class="text-right" style="border: 0"><b>TOTAL DUE</b></td>
+                            <td class="text-right" style="border: 0"><?php echo currency() . number_format($total,2) ?></td>
+                             
                             </tfoot>
+                           
                         </table>
                     </div> 
                 </div>

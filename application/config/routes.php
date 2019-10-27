@@ -55,13 +55,17 @@ $route['backups'] = "BackupController/index";
 $route['upgrade'] = "AppController/upgrade";
 
 
-$route['transactions'] = "TransactionsController/index";
+$route['credits'] = "TransactionsController/index";
 $route['credit/view/(:any)'] = "TransactionsController/view_credit/$1";
 $route['credit/destroy/(:any)'] = "TransactionsController/destroy_credit/$1";
 
 $route['invoice'] = "TransactionsController/invoice";
 $route['invoice/view/(:any)'] = "TransactionsController/view_invoice/$1";
 $route['invoice/destroy/(:any)'] = "TransactionsController/destroy_invoice/$1";
+
+$route['po'] = "TransactionsController/po";
+$route['po/view/(:any)'] = "TransactionsController/view_po/$1";
+$route['po/destroy/(:any)'] = "TransactionsController/destroy_po/$1";
 
 $route['transactions'] = "TransactionsController/index";
 $route['credit/view/(:any)'] = "TransactionsController/view_credit/$1";
