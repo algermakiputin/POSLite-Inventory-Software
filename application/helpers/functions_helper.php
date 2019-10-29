@@ -26,6 +26,15 @@
 		return trim(str_replace('SerialNumber','', $serial));
 	}
 
+	function db_transaction($func) {
+
+		$CI =& get_instance();
+
+		$this->db->trans_begin();
+
+		$func();
+	}
+
 	function noStocks() {
 		$CI =& get_instance();
 		$outOfStocks = $CI->db->select("items.id, items.name,items.description, ordering_level.quantity")

@@ -511,7 +511,7 @@ function recount() {
 	        	title: 'Receipt',
 	        	doctype: '<!doctype html>'
 		});
-	})
+	});
 
 
 })

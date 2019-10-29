@@ -12,4 +12,26 @@ class PaymentsController extends CI_Controller {
 		$data['credit'] = $credit;
 		$this->load->view('master', $data);
 	}
+
+
+	public function store() {
+ 
+		$id = $this->input->post('id');
+		$amount = $this->input->post('payment');
+		$note = $this->input->post('note');
+		$date = $this->input->post('date');
+		
+
+		$this->db->insert('payments', [
+				'sales_id' => $id,
+				'amount' => $amount,
+				'note' => $note,
+				'date' => $date
+			]);
+  		
+  		success("Payment added successfully");
+
+  		return redirect('');
+
+	}
 }

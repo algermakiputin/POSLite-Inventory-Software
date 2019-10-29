@@ -38,7 +38,9 @@
                     </div>
 
                     <div class="col-md-12">
-                        <table class="table table-bordered has-footer">
+                        <h4>ORDER DESCRIPTION</h4>
+                        <div id="order-tbl">
+                            <table class="table table-bordered has-footer">
                             <thead>
                                 <tr>
                                     <td width="10%">Qty</td>
@@ -57,29 +59,60 @@
                                     </tr>
                                     <?php $total+= $order->quantity * $order->price; ?>
                                 <?php endforeach; ?>
-                                <tr>
-                                    <td colspan="2" class="" style="border-left-width: 0;border-right-width: 0;padding: 5px;"></td>
-                                    <td colspan="1" class="text-right" style="border-left-width: 0;border-right-width: 0;padding: 5px;"><b>Amount Paid</b></td>
-                                    <td class="text-right" style="border-left-width: 0;border-right-width: 0;padding: 5px;"><?php echo currency() . number_format($paid,2) ?></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" style="padding: 5px;" class="no-border"></td>
-                                    <td colspan="1" style="padding: 5px;" class="text-right no-border"><b>Total</b></td>
-                                    <td style="padding: 5px;" class="text-right no-border"><?php echo currency() . number_format($total,2) ?></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 5px;" colspan="2" class="no-border"></td>
-                                    <td style="padding: 5px;" colspan="1" class="text-right no-border"><b>Balance</b></td>
-                                    <td style="padding: 5px;" class="text-right no-border"><?php echo currency() . number_format($total,2) ?></td>
-                                </tr>
+                                
                             </tbody> 
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="tfoot" ></td>
+                                    <td colspan="1" class="text-left" ><b>AMOUNT PAID</b></td>
+                                    <td class="text-right" ><?php echo currency() . number_format($paid,2) ?></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"  class="no-border tfoot"></td>
+                                    <td colspan="1"  class="text-left tfoot"><b>TOTAL</b></td>
+                                    <td class="text-right no-border"><?php echo currency() . number_format($total,2) ?></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="no-border tfoot"></td>
+                                    <td colspan="1" class="text-left no-border tfoot"><b>BALANCE</b></td>
+                                    <td class="text-right no-border tfoot"><?php echo currency() . number_format($total,2) ?></td>
+                                </tr>
+                            </tfoot>
                             
-                            
+                        </table> 
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>PAYMENTS RECORDS</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>AMOUNT</th>
+                                    <th>NOTE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($payments_history): ?>
+                                    <?php foreach ($payments_history as $history): ?>
+                                    <tr>
+                                        <td><?php echo $history->date ?></td>
+                                        <td><?php echo $history->amount ?></td>
+                                        <td><?php echo $history->note ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="3" class="text-center">No payment record exist</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
                         </table>
                     </div>
 
-                    <div class="col-md-12">
-                        <a href="<?php echo base_url('payments/new/' . $credit->transaction_number) ?>" class="btn btn-default"><i class="fa fa-money"></i> Add Payment</a>
+                    <div class="col-md-12" style="margin-top: 20px;">
+                        <a href="<?php echo base_url('payments/new/' . $credit->transaction_number) ?>" class="btn btn-default"><i class="fa fa-money"></i> ADD PAYMENT</a>
+                        <a href="<?php echo base_url('TransactionsController/pdf_invoice/' . $credit->transaction_number) ?>" class="btn btn-default"><i class="fa fa-file-pdf-o"></i> GENERATE INVOICE</a>
                     </div>
 
                 </div>
@@ -88,4 +121,31 @@
     </div>
 
 </div>
+
+<style type="text/css">
+    #order-tbl tfoot td {
+        border:0 !important;
+        padding: 3px!important;
+        line-height: 1.5;
+    }
+
+    #order-tbl tfoot tr:first-child td {
+        border-top: solid 1px #ddd!important;
+        padding-top: 10px!important;
+    }
+
+    #order-tbl .table-bordered {
+        border-bottom: 0;
+        border-right:0;
+        border-left: 0;
+    }
+
+    #order-tbl .table-bordered tr td:first-child {
+        border-left: solid 1px #ddd;
+    }
+
+    #order-tbl .table-bordered tr td:last-child {
+        border-right: solid 1px #ddd;
+    }
+</style>
 

@@ -52,20 +52,19 @@ class SalesController extends CI_Controller {
 					";
 				}	
 				 
-			}
-
-			$totalSales += $sub_total;
-			
+			} 
+			$totalSales += $sub_total; 
 		}
 
 		$html .= "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
-				<link type='text/css' href='".base_url('assets/print.css')."'>
+				<link type='text/css' href='".base_url('assets/print.css')."' rel='stylesheet'>
+				<link type='text/css' href='".base_url('assets/print.css')."' rel='stylesheet'>
 			";
 		$html .= "<h1 class='text-center'>Sales Reports</h1>";
 		$html .= "<div class='date'><h4>Date:</h4>";
 		$html .= "<div class='date'>From: " . $from . "</div>";
 		$html .= "<div class='date'>To: " . $to . "</div></div>";
-		$html .= "<div class='right'><h4>Total Sales:</h4><div>₱".number_format($totalSales)."</div></div>";
+		$html .= "<div class='right'><h4>Total Sales:</h4>₱".number_format($totalSales)."</div>";
 		$html .= "<div class='clearfix'></div>";
 		$html .= "<br>";
 		$html .= "<table class='table table-striped'>";

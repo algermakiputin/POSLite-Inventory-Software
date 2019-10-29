@@ -522,7 +522,7 @@ $(document).ready(function() {
 
 				this.credits_DataTable();
 				this.invoice_DataTable();
-				this.po_DataTable();
+				this.standby_order_DataTable();
 			},
 			credits_DataTable : function() {
 				data = {};
@@ -557,14 +557,14 @@ $(document).ready(function() {
 					 
 				})
 			},
-			po_DataTable : function() {
+			standby_order_DataTable : function() {
 				data = {};
 				data[csrfName] = csrfHash;
-				var credits_tbl = $("#po_tbl").DataTable({
+				var standby_orders_table = $("#standby_orders_tbl").DataTable({
 					bProcessing : true,
 					serverSide : true, 
 					ajax : {
-						url : base_url + 'TransactionsController/po_datatable',
+						url : base_url + 'TransactionsController/standby_order_datatable',
 						type : 'POST',
 						data : data
 					},

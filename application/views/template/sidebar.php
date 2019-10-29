@@ -68,10 +68,7 @@
                         </li> 
                         <li>
                             <a href="<?php echo base_url('invoice') ?>"><i class="fa fa-circle-o"></i> Invoice</a>
-                        </li> 
-                         <li>
-                            <a href="<?php echo base_url('po') ?>"><i class="fa fa-circle-o"></i> Purchase Order</a>
-                        </li>
+                        </li>  
                         <li>
                             <a href="<?php echo base_url('standby-orders') ?>"><i class="fa fa-circle-o"></i> Standby Order</a>
                         </li>
