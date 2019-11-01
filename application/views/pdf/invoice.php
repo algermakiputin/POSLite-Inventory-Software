@@ -5,19 +5,19 @@
         <div style="padding: 20px; id="print">
             <div class="row"> 
                 <div style="width:70%;float:left;">
-                    <h2>COMPANY NAME</h2>
+                    <h2><?php echo $preference['name'] ?></h2>
                     <br/>
                     <div class="company_details">
-                        <p>Street Address</p>
-                        <p>City Zip</p>
-                        <p>EMAIL PHONE</p>
+                        <p><?php echo $preference['address']; ?></p>
+                        <p><?php echo $preference['city']; ?>, <?php echo $preference['zip']; ?></p>
+                        <p><?php echo $preference['phone']; ?></p>
                     </div>
                     <br/>
                     <div class="bill_to">
-                        <h4 style="background: #eee;padding: 10px;max-width: 200px;border-radius: 3px;">BILL TO</h4>
-                        <p>NAME</p>
-                        <p>ADDRESS</p>
-                        <p>CITY, ZIP CODE</p>
+                    <h4 style="background: #eee;padding: 10px;max-width: 200px;border-radius: 3px;">BILL TO</h4>
+                        <p><?php echo $invoice->customer_name; ?></p>
+                        <p><?php echo $invoice->address; ?></p>
+                        <p><?php echo $invoice->city; ?> <?php if ($invoice->city && $invoice->zipcode) : echo ","; endif; ?> <?php echo $invoice->zipcode; ?></p>
                     </div>
                     <br/>                           
                 </div>
@@ -73,7 +73,7 @@
                     
                 </table>
                 <br/>
-                <p>Invoice payment note</p>
+                <p><?php echo $invoice->note; ?></p>
             </div>  
         </div>
     </div>

@@ -43,15 +43,17 @@
 							<?php echo validation_errors(); ?>
 						</div> 
 						<input type="hidden" name="id" value="<?php echo $credit->id; ?>">
+						<input type="hidden" name="amount" value="0" id="amount">
+						<input type="hidden" name="status" value="0" id="status">
 						<fieldset>
 							<legend>Payment Form</legend>
 							<div class="form-group">  
 								<label>Paid</label>
-								<input type="text" required="required" name="paid" class="form-control" readonly="readonly" value="0">
+								<input type="text" required="required" name="paid" class="form-control" readonly="readonly" value="<?php echo $paid; ?>">
 							</div>
 							<div class="form-group">  
 								<label>Balance</label>
-								<input type="text" required="required" name="balance" id="balance" class="form-control" readonly="readonly" value="0">
+								<input type="text" required="required" name="balance" id="balance" class="form-control" readonly="readonly" value="<?php echo $grand_total - $paid; ?>">
 							</div>
 							<div class="form-group">  
 								<label>Payment Date</label>
@@ -60,7 +62,12 @@
 
 							<div class="form-group">  
 								<label>Enter Payment</label>
-								<input type="number" required="required" name="payment" class="form-control">
+								<input type="number" required="required" name="payment" id="payment" class="form-control">
+							</div>
+
+							<div class="form-group">  
+								<label>Change</label>
+								<input type="number" readonly="readonly" required="required" name="change" id="change" class="form-control">
 							</div>
 
 							<div class="form-group">
@@ -75,11 +82,34 @@
 					</div>
 				<?php echo form_close(); ?>
 			</div>
-			<!-- /.row (nested) -->
-
+			<!-- /.row (nested) --> 
 			<!-- /.panel-body -->
 		</div>
 		<!-- /.panel -->
 	</div>
 	<!-- /.col-lg-12 -->
 </div>  
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+ 
+		var balance = '<?= $grand_total - $paid ?>';
+
+		$("#payment").keyup(function(e) {
+
+			var amount = parseFloat($(this).val()) || 0;
+
+			if (amount >= balance) {
+				$("#change").val( amount - balance );
+				$("#amount").val( balance )
+				$("#status").val(1);
+
+			} else {
+				$("#amount").val(0);
+				$("#change").val(0);
+				$("#status").val(0);
+			}
+		});
+	});
+</script>

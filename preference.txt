@@ -1,0 +1,8 @@
+name=POSLite
+region=Region 11
+state=Davao del sur
+country=Philippines
+zip=80000
+phone=09560887535
+address=purok 19, San Gabriel Mintal Davao City
+city=Davao

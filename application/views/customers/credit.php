@@ -28,7 +28,7 @@
                             </tr> 
                             <tr>
                                 <td width="20%">Date:</td>
-                                <td style="padding: 5px 0;"><input type="text" class="form-control" style="max-width: 250px" name="" readonly="readonly" value="<?php echo date('Y-m-d', strtotime($credit->date_time)); ?>"></td>
+                                <td style="padding: 5px 0;"><input type="text" class="" style="max-width: 250px" name="" readonly="readonly" value="<?php echo date('Y-m-d', strtotime($credit->date_time)); ?>"></td>
                             </tr>
                             <tr>
                                 <td width="20%">Customer:</td>
@@ -65,11 +65,11 @@
                                 <tr>
                                     <td colspan="2" class="tfoot" ></td>
                                     <td colspan="1" class="text-left" ><b>AMOUNT PAID</b></td>
-                                    <td class="text-right" ><?php echo currency() . number_format($paid,2) ?></td>
+                                    <td class="text-right" ><?php echo currency() . ($paid > 0 ? number_format($paid,2) : 0)  ?></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"  class="no-border tfoot"></td>
-                                    <td colspan="1"  class="text-left tfoot"><b>TOTAL</b></td>
+                                    <td colspan="2"  class="no-border tfoot">Note: <input readonly="readonly" id="note" type="text" value="<?php echo $credit->note; ?>" style="max-width: 550px;" class="form-control editable" name="note"></td
+>                                    <td colspan="1"  class="text-left tfoot"><b>TOTAL</b></td>
                                     <td class="text-right no-border"><?php echo currency() . number_format($total,2) ?></td>
                                 </tr>
                                 <tr>
@@ -101,6 +101,10 @@
                                         <td><?php echo $history->note ?></td>
                                     </tr>
                                     <?php endforeach; ?>
+                                    <tr>
+                                        <td colspan="2" class="text-right">TOTAL</td>
+                                        <td class="text-right"><?php echo currency() . ($paid > 0 ? number_format($paid,2) : 0) ?></td>
+                                    </tr>
                                 <?php else: ?>
                                     <tr>
                                         <td colspan="3" class="text-center">No payment record exist</td>
@@ -113,6 +117,9 @@
                     <div class="col-md-12" style="margin-top: 20px;">
                         <a href="<?php echo base_url('payments/new/' . $credit->transaction_number) ?>" class="btn btn-default"><i class="fa fa-money"></i> ADD PAYMENT</a>
                         <a href="<?php echo base_url('TransactionsController/pdf_invoice/' . $credit->transaction_number) ?>" class="btn btn-default"><i class="fa fa-file-pdf-o"></i> GENERATE INVOICE</a>
+
+                        <button id="edit-note" class="btn btn-default"><i class="fa fa-edit"></i> Edit Note</button> 
+                        <button id="save-note" class="btn btn-primary"><i class="fa fa-save"></i> Save Note</button>
                     </div>
 
                 </div>
@@ -140,6 +147,10 @@
         border-left: 0;
     }
 
+    input[readonly] {
+        background-color: #fff!important;
+    }
+
     #order-tbl .table-bordered tr td:first-child {
         border-left: solid 1px #ddd;
     }
@@ -147,5 +158,73 @@
     #order-tbl .table-bordered tr td:last-child {
         border-right: solid 1px #ddd;
     }
+
+    .editable {
+        padding: 0;
+        border:0;
+    }
+
+    .editable:focus, .editable:active {
+       outline: none;
+       border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+    }
+    .editable:hover {
+        cursor: unset;
+    }
+
+    .editable-na:hover {
+        cursor: text;
+    }
+
+    #save-note {
+        display: none;
+    }
+
 </style>
+
+<script type="text/javascript">
+    
+    $(document).ready(function(e) {
+
+        var base_url = $("meta[name='base_url']").attr('content');  
+        var csrfName = $("meta[name='csrfName']").attr('content');
+        var csrfHash = $("meta[name='csrfHash']").attr("content");
+
+        $("#edit-note").click(function(e) {
+
+            $(".editable").addClass("editable-na").removeClass("editable").removeAttr("readonly").focus();
+
+            $(this).hide();
+
+            $("#save-note").show();
+
+        });
+
+         
+        $("#save-note").click(function(e) {
+            
+            var data = {};
+            data[csrfName] = csrfHash;
+            data['note'] = $("#note").val();
+            data['id'] = '<?php echo $credit->id ?>';
+            $.ajax({
+                type: "POST",
+                url : base_url + "TransactionsController/update_note",
+                data: data,
+                success : function(e) {
+
+                    $(".editable-na").addClass("editable").removeClass("editable-na").attr("readonly", "readonly");
+
+                    alert("Note saved successfully");
+
+                    $("#save-note").hide();
+
+                    $("#edit-note").show();
+                }
+            });
+        })
+    })
+</script>
 

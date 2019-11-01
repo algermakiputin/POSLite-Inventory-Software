@@ -194,6 +194,23 @@ class SalesController extends CI_Controller {
 		$type = $this->input->post('transaction_type');
 		$status = $type == "cash" ? 1 : 0;
 		$total_amount = $this->input->post('total_amount');
+		$customer_id = $this->input->post('customer_id');
+		$address = "";
+		$city = "";
+		$zipcode = "";
+
+		if ( $customer_id ) {
+
+			$customer = $this->db->where('id', $customer_id)->get('customers')->row();
+		 
+			if ($customer) {
+
+				$address = $customer->address;
+				$city = $customer->city;
+				$zipcode = $customer->zipcode;
+
+			}
+		}
 
 		$this->load->model("PriceModel");
 		$this->db->trans_begin(); 
@@ -209,12 +226,15 @@ class SalesController extends CI_Controller {
 				'transaction_number' => $transaction_number,
 				'date_time' => date('Y-m-d h:i:s'),
 				'user_id' => $this->session->userdata('id'),
-				'customer_id' => $this->input->post('customer_id'),
+				'customer_id' => $customer_id,
 				'customer_name' => $this->input->post('customer_name'),
 				'type' => $this->input->post('transaction_type'),
 				'status' => $status,
 				'total' => $total_amount,
 				'note' => $this->input->post('note'),
+				'address' => $address,
+				'city'	=> $city,
+				'zipcode' => $zipcode
 			]);
 
 		$sales_id = $this->db->insert_id();

@@ -57,8 +57,9 @@
           <th width="50px"></th>
         </thead>
         <tbody>
-          <tr> 
+          
             <?php foreach ($orderline as $order): ?>
+              <tr> 
               <td>
                 <input type="text" autocomplete="off" class="form-control product" required="required" name="product[]" value="<?php echo $order->name; ?>">
                 <input type="hidden" name="product_id[]" value="<?php echo $order->product_id; ?>">
@@ -69,7 +70,7 @@
               <td>
                 <input type="text" value="<?php echo $order->price; ?>" required="required" autocomplete="off" class="form-control" name="price[]"></td>
               <td>
-                <input type="text" autocomplete="off" value="<?php echo currency() . number_format($order->price * $order->quantity, 2); ?>" class="form-control" name="sub[]" readonly="readonly"></td>
+                <input type="text" autocomplete="off" value="<?php echo currency() . number_format($order->price * $order->quantity); ?>" class="form-control" name="sub[]" readonly="readonly"></td>
               <td><i class="fa fa-trash delete-row"></i></td>
             </tr>
             <?php $total+= $order->price * $order->quantity; ?>
@@ -78,7 +79,7 @@
         <tfoot>
           <tr>
             <td colspan="3" class="text-right"><b>Total:</b></td>
-            <td class="text-right" style="font-size: 16px;"><span id="grand-total"><?php echo currency() . number_format($total, 2) ?> </span></td>
+            <td class="text-right" style="font-size: 16px;"><span id="grand-total"><?php echo currency() . number_format($total) ?> </span></td>
             <td></td>
           </tr>
         </tfoot>
@@ -112,7 +113,7 @@
   </div>
   <?php echo form_close(); ?>
   <?php echo form_open("TransactionsController/complete", ['id' => 'transaction-form', 'style' => 'display:none']) ?>
-    <input type="hidden" name="sales_id" value="<?php echo $transaction->sales_id; ?>">
+    <input type="hidden" name="sales_id" value="<?php echo $transaction->id; ?>">
     <input type="submit" name="">
   <?php echo form_close(); ?>
 </div>
@@ -152,6 +153,7 @@
 
     $("#payment").keyup(function(e) {
       var grand_total = parseFloat(no_format($("#grand-total").text()));
+
       var payment = parseFloat($(this).val()) || 0;
 
       if (payment >= grand_total) {
@@ -170,6 +172,7 @@
     var total = 0;
     var currency = "<?php echo currency(); ?>";
     var image = "<?php echo $image_base64 ?>"; 
+
     $(".product").autocomplete({
       lookup: products,
       onSelect: function(suggestion) { 
@@ -203,23 +206,22 @@
     function calculate_total_po_order() {
       var rows = $("#products-table tbody tr");
       var length = rows.length;
-      var subtotal = 0;
+      var subtotal = 0; 
 
       for (i = 0; i < length; i++) {
+
         var order_row = $(rows[i]);
         var item_id = order_row.find("input[name='product_id[]']").val();
-        var price = parseFloat(order_row.find("input[name='price[]']").val());
+        var price = parseFloat(order_row.find("input[name='price[]']").val()) || 0;
         var qty = parseInt(order_row.find("input[name='quantity[]']").val()) || 0;
-        var sub = price * qty
-        if (item_id && qty && price) {
-          subtotal += sub;
+        var sub = price * qty;
+         
+        subtotal += sub
+        order_row.find("input[name='sub[]']").val(currency + number_format(sub)); 
 
-          order_row.find("input[name='sub[]']").val(currency + number_format(sub));
-        } 
-      }
-
-      total = subtotal;
-      $("#grand-total").text(currency + number_format(total));
+      } 
+    
+      $("#grand-total").text(currency + number_format(subtotal));
 
     }
  
@@ -256,7 +258,7 @@
 
     function no_format(str) {
 
-      return parseFloat((str.slice(1).replace(/,/g, "")).slice(0,-3));
+      return parseFloat(((str.slice(1).replace(/,/g, ""))));
     }
 
 

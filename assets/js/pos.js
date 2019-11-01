@@ -24,6 +24,7 @@ $(document).ready(function() {
 			});
 	   },
 	   onChange: function (value) {
+	   	console.log(value)
 	   	var option = this.options[value];
  			$("#customer_id").val(option.id);
 	   } 

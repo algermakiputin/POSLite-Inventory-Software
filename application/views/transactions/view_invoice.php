@@ -15,19 +15,19 @@
         <div style="padding: 20px;border:solid 1px #ddd;" id="print">
             <div class="row"> 
             <div class="col-md-8">
-                <h2>COMPANY NAME</h2>
+                <h2><?php echo $preference['name'] ?></h2>
                 <br/>
                 <div class="company_details">
-                    <p>Street Address</p>
-                    <p>City Zip</p>
-                    <p>EMAIL PHONE</p>
+                    <p><?php echo $preference['address']; ?></p>
+                    <p><?php echo $preference['city']; ?>, <?php echo $preference['zip']; ?></p>
+                    <p><?php echo $preference['phone']; ?></p>
                 </div>
                 <br/>
                 <div class="bill_to">
                     <h4 style="background: #eee;padding: 10px;max-width: 200px;border-radius: 3px;">BILL TO</h4>
-                    <p>NAME</p>
-                    <p>ADDRESS</p>
-                    <p>CITY, ZIP CODE</p>
+                    <p><?php echo $invoice->customer_name; ?></p>
+                    <p><?php echo $invoice->address; ?></p>
+                    <p><?php echo $invoice->city; ?> <?php if ($invoice->city && $invoice->zipcode) : echo ","; endif; ?> <?php echo $invoice->zipcode; ?></p>
                 </div>
                 <br/>                           
             </div>
@@ -83,6 +83,8 @@
             </div> 
             <div class="col-md-12">
                 <a class="btn btn-default" href="<?php echo base_url('TransactionsController/pdf_invoice/' . $invoice->transaction_number) ?>" id="pdf"><i class="fa fa-file-pdf-o"></i> PDF</a>
+
+                <a class="btn btn-default delete-data" href="<?php echo base_url('TransactionsController/destroy_invoice/' . $invoice->id) ?>" id="pdf"><i class="fa fa-trash"></i> DELETE</a>
             </div> 
         </div>
         </div>

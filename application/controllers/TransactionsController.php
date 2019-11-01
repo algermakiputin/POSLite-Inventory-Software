@@ -20,6 +20,15 @@ class TransactionsController extends CI_Controller {
 		$this->load->view('master', $data);
 	}
 
+	public function update_note() {
+
+		$id = $this->input->post('id');
+		$note = $this->input->post('note');
+
+		$this->db->where('id', $id)->update('sales', ['note' => $note]);
+
+	}
+
 	public function credits_datatable() {
 		$draw = $this->input->post('draw');
 		$start = $this->input->post('start');
@@ -82,7 +91,7 @@ class TransactionsController extends CI_Controller {
 	public function destroy_credit($id) {
 
 		$this->db->where('id', $id)->delete('sales');
-		$this->db->where('sales_id', $id)->delete();
+		$this->db->where('sales_id', $id)->delete('sales_description');
 		success("Credit Deleted Successfully");
 
 		return redirect('transactions');
@@ -90,8 +99,10 @@ class TransactionsController extends CI_Controller {
  
 	public function view_credit($id) {
 		$credit = $this->db->where('transaction_number', $id)->get('sales')->row();
-
 		if (!$credit) return redirect('/');
+
+		$payments = $this->db->where('sales_id', $credit->id)->get('payments')->result();
+		$total_amount = $this->db->select("SUM(amount) as total")->from("payments")->where('sales_id', $credit->id)->get()->row(); 
 
 		$orderline = $this->db->where('sales_id', $credit->id)
 									->get('sales_description')
@@ -101,8 +112,8 @@ class TransactionsController extends CI_Controller {
 		$data['orderline'] = $orderline;
 		$data['credit'] = $credit;
 		$data['total'] = 0;
-		$data['paid'] = 0;
-		$data['payments_history'] = $this->db->where('sales_id', $credit->id)->get('payments')->result();
+		$data['paid'] = $total_amount->total;
+		$data['payments_history'] = $payments;
  
 
 		
@@ -188,6 +199,9 @@ class TransactionsController extends CI_Controller {
 									->result();
 
 		$data['content'] = 'transactions/view_invoice'; 
+		$data['customer'] = $this->db->where('id', $invoice->customer_id)->get('customers')->row();
+		$data['preference'] = get_preferences();
+
 		$data['orderline'] = $orderline;
 		$data['invoice'] = $invoice;
 		$data['total'] = 0;
@@ -350,7 +364,7 @@ class TransactionsController extends CI_Controller {
 
 	public function complete() {
 		
-		$this->db->where('id', $this->input->post('sales_id'))->update('status', 1);
+		$this->db->where('id', $this->input->post('sales_id'))->update('sales', ['status' => 1]);
 		success("Transaction completed Successfully");
 
 		return redirect('standby-orders');
@@ -373,6 +387,7 @@ class TransactionsController extends CI_Controller {
 		$data['invoice'] = $invoice;
 		$data['total'] = 0;
 		$data['paid'] = 0;
+		$data['preference'] = get_preferences();
 		
 		$html = $this->load->view('pdf/invoice', $data, TRUE);
 	 	

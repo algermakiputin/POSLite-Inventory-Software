@@ -78,4 +78,45 @@ class SettingsController extends CI_Controller {
     	
     }
 
+    public function preference() {
+        
+        $preference = get_preferences();
+ 
+        $data['content'] = "settings/preference";
+        $data['preference'] = $preference; 
+        $this->load->view('master', $data);
+    }
+
+    public function update_preference() {
+        $this->load->helper('file');
+        $name = $this->input->post('name');
+        $region = $this->input->post('region');
+        $state = $this->input->post('state');
+        $country = $this->input->post('country');
+        $zip = $this->input->post('zip');
+        $phone = $this->input->post('phone');
+        $address = $this->input->post('address');
+        $city = $this->input->post('city');
+
+        $path = './preference.txt';
+ 
+        
+        $file = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        write_file($path, '', 'w');
+
+       $new_preference = "name=$name".PHP_EOL."region=$region".PHP_EOL."state=$state".PHP_EOL."country=$country".PHP_EOL."zip=$zip".PHP_EOL."phone=$phone".PHP_EOL."address=$address".PHP_EOL."city=$city".PHP_EOL."";
+
+
+
+       write_file($path, $new_preference);
+
+       success("Preference updated successfully");
+
+       return redirect('preference');
+
+
+
+    }
+
 }
