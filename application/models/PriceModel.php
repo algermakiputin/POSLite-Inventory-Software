@@ -7,7 +7,8 @@ class PriceModel extends CI_Model {
 		$data = array(
 				'price' => $price,
 				'capital' => $capital,
-				'item_id' => $item_id
+				'item_id' => $item_id,
+				'date_time' => get_date_time(),
 			);
 		$data = $this->security->xss_clean($data);
 		$this->db->insert('prices', $data);

@@ -7,6 +7,11 @@
 		die();
 	}
 
+	function get_date_time() {
+
+		return date('Y-m-d H:i:s');
+	}
+
 	function currency() {
 		return "₱";
 	}
