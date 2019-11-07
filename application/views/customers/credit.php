@@ -2,6 +2,7 @@
 	<div class="col-lg-12">
 		<h1 class="page-header">Credit</h1>
 	</div> 
+    
     <div class="col-md-12">
         <?php if ($this->session->flashdata('success')): ?>
             <div class="alert alert-success">
@@ -28,11 +29,15 @@
                             </tr> 
                             <tr>
                                 <td width="20%">Date:</td>
-                                <td style="padding: 5px 0;"><input type="text" class="" style="max-width: 250px" name="" readonly="readonly" value="<?php echo date('Y-m-d', strtotime($credit->date_time)); ?>"></td>
+                                <td style="padding: 5px 0;"><input type="text" class="form-control" style="max-width: 250px" readonly="readonly" value="<?php echo date('Y-m-d', strtotime($credit->date_time)); ?>"></td>
                             </tr>
                             <tr>
                                 <td width="20%">Customer:</td>
                                 <td style="padding: 5px 0;"><input type="text" class="form-control" style="max-width: 250px" name="" readonly="readonly" value="<?php echo $credit->customer_name; ?>"></td>
+                            </tr>
+                            <tr>
+                                <td width="20%">Status:</td>
+                                <td style="padding: 5px 0;"><input type="text" class="form-control" style="max-width: 250px" name="" readonly="readonly" value="<?php echo $credit->status ? "Complete" : "Pending"; ?>"></td>
                             </tr>
                         </table> 
                     </div>

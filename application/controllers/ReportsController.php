@@ -64,11 +64,13 @@ class ReportsController extends CI_Controller {
 						->join('users','users.id = sales.user_id')
 						->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") >=', $from)
 						->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") <=', $to)
+						->where('status', 1)
 						->group_by('sales.id')
 						->order_by('sales.id','DESC')
 						->get()
 						->result();
 		return $sales;
+
 	}
 
 	private function get_product_sales($from = NULL, $to = NULL) {

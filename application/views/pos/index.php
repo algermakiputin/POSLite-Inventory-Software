@@ -230,27 +230,37 @@
 						<div class="row">
 							<div class="col-md-12">
 								<input type="hidden" name="customer_id" id="customer_id" value="0">
-								<div class="form-group">
-								 	<label>Customer:</label>
-								 	<select id="customer-select" placeholder="Select Customer" class="form-control" name="total">   
-								 		<option value="Walk-in Customer">Walk-in Customer</option>
-								 		<?php foreach ($customers as $customer): ?>
-								 			<option value="<?php echo $customer->name ?>" data-id="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
-								 		<?php endforeach; ?> 
-								 	</select>
-								</div>
+								<input type="hidden" name="supplier_id" id="supplier_id" value="0">
+
 								<div class="form-group">
 								 	<label>Transaction type:</label>
 								 	<select name="type" class="form-control" id="transaction-type">  
 								 		<option value="cash">Cash</option>
 								 		<option value="credit">Customer Credit</option> 
 								 		<option value="standby">Stand By Order</option>
-								 		<option value="invoice">Invoice</option>
-								 		<option value="po">Purchase Order</option>
+								 		<option value="invoice">Invoice</option> 
 								 	</select>
 								</div>
-							</div>
-				 
+								
+								<div class="form-group" id="select-customer-fields">
+								 	<label>Customer:</label>
+								 	<select id="customer-select" placeholder="Select Customer" class="form-control" name="customer">   
+								 		<option value="Walk-in Customer">Walk-in Customer</option>
+								 		<?php foreach ($customers as $customer): ?>
+								 			<option value="<?php echo $customer->name ?>" data-id="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
+								 		<?php endforeach; ?> 
+								 	</select>
+								</div>
+								<div class="form-group" id="po-fields" style="display: none;">
+				 					<label>Supplier:</label>
+								 	<select id="supplier-select" placeholder="Select Supplier" class="form-control" name="supplier">    
+								 		<?php foreach ($suppliers as $supplier): ?>
+								 			<option value="<?php echo $supplier->name ?>" data-id="<?php echo $supplier->id ?>"><?php echo $supplier->name ?></option>
+								 		<?php endforeach; ?> 
+								 	</select>
+				 				</div>
+								
+							</div> 
 							<div class="col-md-12" id="cash-fields">
 								<div class="form-group">
 									<label>Enter payment amount:</label>

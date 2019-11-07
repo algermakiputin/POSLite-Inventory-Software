@@ -56,6 +56,9 @@ $route['upgrade'] = "AppController/upgrade";
 
 $route['preference'] = "SettingsController/preference";
 
+$route['supplier/po'] = "PurchaseOrderController/purchase_order";
+$route['purchase-orders'] = "PurchaseOrderController/purchase_order_list";
+$route['po/view/(:any)'] = "PurchaseOrderController/view/$1";
 
 $route['credits'] = "TransactionsController/index";
 $route['credit/view/(:any)'] = "TransactionsController/view_credit/$1";

@@ -195,6 +195,9 @@ class SalesController extends CI_Controller {
 		$status = $type == "cash" ? 1 : 0;
 		$total_amount = $this->input->post('total_amount');
 		$customer_id = $this->input->post('customer_id');
+		$supplier_id = $this->input->post('supplier_id');
+		$supplier_name = $this->input->post('supplier_name');
+
 		$address = "";
 		$city = "";
 		$zipcode = "";
@@ -234,7 +237,9 @@ class SalesController extends CI_Controller {
 				'note' => $this->input->post('note'),
 				'address' => $address,
 				'city'	=> $city,
-				'zipcode' => $zipcode
+				'zipcode' => $zipcode,
+				'supplier_id' => $supplier_id,
+				'supplier_name' => $supplier_name
 			]);
 
 		$sales_id = $this->db->insert_id();

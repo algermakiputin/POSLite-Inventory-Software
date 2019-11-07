@@ -45,6 +45,10 @@
           <td>STAFF: &nbsp;</td>
           <td>Staff Name</td>
         </tr> 
+        <tr>
+          <td>STATUS: &nbsp;</td>
+          <td><?php echo $transaction->status ? "<span class='badge badge-success'>Complete</span>" : "<span class='badge badge-warning'>Pending Payment</span>"?></td>
+        </tr> 
       </table>
       <br/>
       <h4>ORDER DETAILS</h4>     
@@ -126,7 +130,18 @@
 <script src="<?php echo base_url('assets/js/jquery-autocomplete.js') ?>"></script> 
 <script type="text/javascript">
   $(document).ready(function() { 
- 
+    
+    var status = '<?php echo $transaction->status ?>';
+
+    if (status) {
+
+      $('input').attr("readonly", "readonly");
+      $('.delete-row').hide();
+      $("#complete-transaction").hide();
+      $("button[type='submit']").hide();
+      $("#remove-line").hide();
+      $("#new-line").hide();
+    }
     // Romove row when trash icon is clicked
     $("body").on("click", ".delete-row", function() { 
       var confirm = window.confirm("Action cannot be undo.. Are you sure you want to delete that order?");
@@ -180,6 +195,8 @@
         $(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
       }
     });
+
+
 
     $("#new-line").click(function(e) {
 

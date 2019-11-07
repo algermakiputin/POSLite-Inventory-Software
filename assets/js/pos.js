@@ -26,7 +26,24 @@ $(document).ready(function() {
 	   onChange: function (value) {
 	   	console.log(value)
 	   	var option = this.options[value];
- 			$("#customer_id").val(option.id);
+ 			$("#supplier_id").val(option.id);
+	   } 
+	});
+
+	var supplier_options = $("#supplier-select").selectize({
+		create: true, 
+    	persist: false,
+    	onInitialize: function () {
+			var s = this;
+			this.revertSettings.$children.each(function () {
+			    $.extend(s.options[this.value], $(this).data());
+			});
+	   },
+	   onChange: function (value) {
+	   	
+	   	var option = this.options[value];
+
+ 			$("#supplier_id").val(option.id);
 	   } 
 	});
 
@@ -129,16 +146,30 @@ $(document).ready(function() {
 		if (type === "cash") {
 
 			$("#cash-fields").show();
+			$("#select-customer-fields").show();
+			$("#po-fields").hide();
 
 		}else {
 
 			$("#cash-fields").hide();
+
+			if (type == "po") {
+
+				$("#select-customer-fields").hide();
+				$("#po-fields").show();
+
+			}else {
+				$("#select-customer-fields").show();
+				$("#po-fields").hide();
+			}
 		}
 
 		transaction_type = type;
 
 
 	});
+
+
 
 	$("#item-table").on('click', 'tbody tr', function(event) {
 		var id = $(this).find('td').eq(0).text();
@@ -202,18 +233,22 @@ $(document).ready(function() {
 		var sales = [];
 		var customer_id = $("#customer_id").val();
 		var customer_name = $("#customer-select option:selected").val();
+		var supplier_id = $("#supplier_id").val();
+		var supplier_name = $("#supplier-select option:selected").val();
 		var note = $("#note").val();
 		var total_amount = 0;
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val() || 0;
 		var change = $("#change").val() || 0;
 
-		if ( !customer_name )
+
+
+		if ( !customer_name && transaction_type == "po")
 			return alert("Customer is empty"); 
 
-		if (transaction_type != "cash" || transaction_type != "standby") {
+		if (transaction_type == "credit" || transaction_type == "invoice") {
 
-			if (!customer_name || !customer_id || customer_id == "0") {
+			if (!customer_name || !customer_id || customer_id == "0" && transaction_type != "po") {
 				return alert("Error: Customer is empty, Please select a customer.");
 			}
 		}
@@ -259,6 +294,8 @@ $(document).ready(function() {
 		data['transaction_type'] = transaction_type;
 		data['customer_name'] = customer_name;
 		data['customer_id'] = customer_id;
+		data['supplier_name'] = supplier_name;
+		data['supplier_id'] = supplier_id;
 		data['total_amount'] = totalAmountDue;
 		data['note'] = note;
 		data[csrfName] = csrfHash;

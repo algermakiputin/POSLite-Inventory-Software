@@ -21,6 +21,18 @@ $(document).ready(function() {
 
 	$("body").show();
 	$("form").parsley();	
+
+	var data = {};
+	data[csrfName] = csrfHash;
+	$("#purchase-order-tbl").DataTable({
+		processing : true,
+		serverSide : true, 
+		ajax : {
+			url : base_url + '/PurchaseOrderController/dataTable',
+			type : 'POST',
+			data : data
+		},
+	});
 	
 	$('[data-toggle="tooltip"]').tooltip();
 	$(".datatable").DataTable({
