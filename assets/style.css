@@ -7,12 +7,18 @@
 html, body {
   height: 99%;
   width: 100%;
+
+}
+
+.sidebar {
+  margin-top: 53px;
 }
 
 body {
   overflow-x: hidden;
   margin-bottom: -20px;
   border-collapse: collapse;
+  font-size: 1.54em;
   font-family: "Roboto", Arial, serif, sans-serif !important;
   display: none;
 }
@@ -44,9 +50,13 @@ body {
   background-size: cover;
   background-size: 300px 300px;
   background-repeat: no-repeat;
-  border: solid 1px #ddd;
+
   height: 300px;
   width: 300px;
+}
+
+.productImage img {
+    border: solid 1px #ddd;
 }
 
 .product-thumbnail {
