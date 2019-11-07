@@ -193,7 +193,7 @@ class SalesController extends CI_Controller {
 
 		$this->db->insert('sales',[
 				'id' => null ,
-				'date_time' => date('Y-m-d h:i:s')
+				'date_time' => get_date_time(),
 			]);
 		$sales_id = $this->db->insert_id();
 		$sales = $this->security->xss_clean($sales);
@@ -208,7 +208,8 @@ class SalesController extends CI_Controller {
 				'name' => $sale['name'],
 				'discount' => $sale['discount'],
 				'profit' => $transactionProfit,
-				'user_id' => $this->session->userdata('id')
+				'user_id' => $this->session->userdata('id'),
+				'created_at' => get_date_time(),
 			];
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
