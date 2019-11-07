@@ -10,8 +10,8 @@ class BackupController extends CI_Controller {
 	}
 	public function dump() { 
 	 	$filename = './backup/backup'.date('Y-m-d-h-i-s').'.txt';
-	 
-		$this->db->insert("backup", ['id' => null, 'filename' => $filename]);
+	 	
+		$this->db->insert("backup", ['id' => null, 'filename' => $filename, 'date_time' => get_date_time()]);
 		$this->backup($filename);
 		$this->session->set_flashdata('success', "Backup successfully");
 		return redirect('backups');
