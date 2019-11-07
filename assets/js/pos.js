@@ -17,7 +17,7 @@
 	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
 	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
 
-	
+	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
 		if (license === "silver" || license === "gold") {
