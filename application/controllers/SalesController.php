@@ -261,7 +261,7 @@ class SalesController extends CI_Controller {
 		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
 		 		$staff = $user ? $user->username : 'Not found';
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
-				$saleProfit = (((float)$desc->price - $desc->discount) - (float)$desc->profit ) * (int)$desc->quantity;
+				$saleProfit = (($desc->price - $desc->profit) * $desc->quantity) - $desc->discount;
 				$transactionProfit += $saleProfit;
 				$datasets[] = [ 
 					date('Y-m-d', strtotime($sale->date_time)), 
