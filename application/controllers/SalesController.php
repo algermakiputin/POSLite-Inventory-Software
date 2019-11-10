@@ -225,7 +225,7 @@ class SalesController extends CI_Controller {
 			4. Invoice - This is an invoice contain prices of the products that will be sent to the customer, No transaction yet so will not update inventory value.
 		*/
 		$this->db->insert('sales',[
-				'id' => null ,
+				'id' => null , 
 				'transaction_number' => $transaction_number,
 				'date_time' => date('Y-m-d h:i:s'),
 				'user_id' => $this->session->userdata('id'),
@@ -239,7 +239,8 @@ class SalesController extends CI_Controller {
 				'city'	=> $city,
 				'zipcode' => $zipcode,
 				'supplier_id' => $supplier_id,
-				'supplier_name' => $supplier_name
+				'supplier_name' => $supplier_name 
+				'date_time' => get_date_time(),
 			]);
 
 		$sales_id = $this->db->insert_id();
@@ -255,7 +256,8 @@ class SalesController extends CI_Controller {
 				'name' => $sale['name'],
 				'discount' => $sale['discount'],
 				'profit' => $transactionProfit,
-				'user_id' => $this->session->userdata('id')
+				'user_id' => $this->session->userdata('id'),
+				'created_at' => get_date_time(),
 			];
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
@@ -307,7 +309,7 @@ class SalesController extends CI_Controller {
 		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
 		 		$staff = $user ? $user->username : 'Not found';
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
-				$saleProfit = (((float)$desc->price - $desc->discount) - (float)$desc->profit ) * (int)$desc->quantity;
+				$saleProfit = (($desc->price - $desc->profit) * $desc->quantity) - $desc->discount;
 				$transactionProfit += $saleProfit;
 				$datasets[] = [ 
 					date('Y-m-d', strtotime($sale->date_time)), 

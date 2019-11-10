@@ -59,7 +59,7 @@ $(document).ready(function() {
 	$("#cart-tbl").css('min-height', (dHeight - (285)) + 'px');
 	$("#cart-tbl").css('max-height', (dHeight - (255 + 231)) + 'px');
 
-	
+	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
  

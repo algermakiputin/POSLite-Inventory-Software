@@ -7,6 +7,7 @@
 		die();
 	}
 
+
 	function get_preferences() {
 		$path = './preference.txt';
  
@@ -20,6 +21,13 @@
      }
 
      return $preference;
+
+  	}
+
+	function get_date_time() {
+
+		return date('Y-m-d H:i:s');
+
 	}
 
 	function currency() {
