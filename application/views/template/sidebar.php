@@ -84,10 +84,7 @@
                         </li>  
                         <li>
                             <a href="<?php echo base_url('standby-orders') ?>"><i class="fa fa-circle-o"></i> Standby Order</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url('standby-orders') ?>"><i class="fa fa-circle-o"></i> Purchase Order</a>
-                        </li>
+                        </li> 
                     </ul>
                 </li>  
                 <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">

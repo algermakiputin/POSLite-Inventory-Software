@@ -39,7 +39,11 @@
 									<div class="dropdown">
 										<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
 										<ul class="dropdown-menu">
-										 
+										 	<li>
+												<a title="More details" href="<?php echo base_url('customer/profile/' . $customer->id) ?>"> 
+													<i class="fa fa-edit"></i> View
+												</a>
+											</li>
 											<li>
 												<a title="Edit Info" class="pointer edit" data-toggle="modal" data-target="#customer-edit" data-id="<?php echo $customer->id ?>"> 
 													<i class="fa fa-edit"></i> Edit

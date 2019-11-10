@@ -116,4 +116,10 @@ class CustomersController Extends CI_Controller {
 		echo json_encode($customer);
 	}
 
+	public function profile($id) {
+
+		$data['content'] = "customers/profile";
+		$this->load->view('master', $data);
+	}
+
 }

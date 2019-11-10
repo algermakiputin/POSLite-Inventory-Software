@@ -54,6 +54,8 @@ $route['backups'] = "BackupController/index";
 
 $route['upgrade'] = "AppController/upgrade";
 
+$route['customer/profile/(:any)'] = "CustomersController/profile/$1";
+
 $route['preference'] = "SettingsController/preference";
 
 $route['supplier/po'] = "PurchaseOrderController/purchase_order";

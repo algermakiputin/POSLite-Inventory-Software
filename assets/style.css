@@ -4,13 +4,7 @@
   border-radius: 1px;
 }
 
-<<<<<<< HEAD
 
-html, body {
-  height: 99%;
-  width: 100%;
-}
-=======
 html, body {
   height: 99%;
   width: 100%;
@@ -21,23 +15,19 @@ html, body {
   margin-top: 53px;
 }
 
->>>>>>> ad4e34328bee6017382654c14116b966aab53881
 body {
   overflow-x: hidden;
   margin-bottom: -20px;
   border-collapse: collapse;
-  font-size: 1.54em;
+/*  font-size: 1.54em;*/
   font-family: "Roboto", Arial, serif, sans-serif !important;
   display: none;
 }
 
 #wrapper, #page-wrapper {
   height: 98%;
-<<<<<<< HEAD
 }
-=======
-} 
->>>>>>> ad4e34328bee6017382654c14116b966aab53881
+
 
 .product-thumbnail img {
   height: inherit;
