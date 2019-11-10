@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">PO NO. <?php echo $invoice->transaction_number ?></h1>
+		<h1 class="page-header">INVOICE NO. <?php echo $invoice->transaction_number ?></h1>
 	</div> 
     <div class="col-md-12">
         <?php if ($this->session->flashdata('success')): ?>
@@ -32,7 +32,7 @@
                 <br/>                           
             </div>
             <div class="col-md-4">
-                <h1 class="bg-text">PURCHASE ORDER</h1>
+                <h1 class="bg-text">INVOICE</h1>
                 <table style="display: block;margin: auto;">
                     <tr>
                         <td>DATE: &nbsp;</td>

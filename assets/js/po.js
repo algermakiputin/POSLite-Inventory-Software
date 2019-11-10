@@ -19,7 +19,7 @@ function generate_pdf(items, total,po_number, po_date,shipvia,supplier, image, n
       { 
       
           image: image,
-          width: 200
+          width: 100
        
         }
       ], 

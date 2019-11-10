@@ -26,7 +26,7 @@ $(document).ready(function() {
 	   onChange: function (value) {
 	   	console.log(value)
 	   	var option = this.options[value];
- 			$("#supplier_id").val(option.id);
+ 			$("#customer_id").val(option.id);
 	   } 
 	});
 

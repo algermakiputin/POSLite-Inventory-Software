@@ -245,7 +245,7 @@ class PurchaseOrderController Extends CI_Controller {
 	}
 
 	function get_logo_base64() {
-		$path = base_url("assets/logo/poslite.png");
+		$path = base_url("assets/logo/test.png");
 
 		$type = pathinfo($path, PATHINFO_EXTENSION);
 		$data = file_get_contents($path);
