@@ -12,7 +12,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-12" style="padding-bottom: 10px;">
+  <!--   <div class="col-lg-12" style="padding-bottom: 10px;">
         <div style="background: #eee;padding: 10px;border:solid 1px #ddd;border-radius: 0.5em">
             <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#filter-options">
                 <i class="fa fa-cog"></i> Filter Options
@@ -67,7 +67,7 @@
             </div>
         </div>
 
-    </div>
+    </div> -->
     <div class="col-lg-12">
      <div class="panel panel-default">
 
@@ -78,7 +78,7 @@
 
          <!-- /.panel-heading -->
          <div class="panel-body">
-             <table class="table table-responsive table-hover table-bordered" id="item_tbl">
+             <table class="table table-responsive table-hover table-bordered" id="item_tbl" width="100%">
                <thead>
                 <tr>
                     <th width="8%">&nbsp;</th>
