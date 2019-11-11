@@ -21,6 +21,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /nbproject/
 .idea/*
 .poslite.zip
+.env
 
 
 ## Sublime Text cache files
