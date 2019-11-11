@@ -84,10 +84,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'poslite',
+	'hostname' => env('hostname') ? env('hostname') : "localhost",
+	'username' => env('db_username') ? env('db_username') : "root",
+	'password' => env('db_password') ? env('db_password') : "",
+	'database' => env('db_name') ? env('db_name') : "poslite",
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
