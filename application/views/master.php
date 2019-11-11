@@ -32,8 +32,11 @@
             <ul class="nav navbar-top-links navbar-right">
                
                 <!-- /.dropdown --> 
+                 <li >
+                    <a href="#" onclick="event.preventDefault(); javascript:introJs().start()">Start Tour</a>
+                </li>
                 <li data-step="10" data-intro="This Link takes you to POS Screen where you can process purchases.">
-                    <a href="<?php echo base_url('pos') ?>" title="Go to POS"><i class="fa fa-shopping-cart fa-fw"></i></a>
+                    <a href="<?php echo base_url('pos') ?>" title="Go to POS">Go To POS</a>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
