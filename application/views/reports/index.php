@@ -39,7 +39,7 @@
 
 		<div class="wrapper">
 
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped table-bordered" id="sales-description-tbl">
 				<thead>
 					<tr>
 						<th>Transaction Number</th>
@@ -48,23 +48,11 @@
 						<th>Total</th>
 					</tr>
 				</thead>
-				<tbody>
-					<?php foreach ($descriptions as $description): ?>
-						<tr>
-							<td><?php echo $description->transaction_number ?></td>
-							<td><?php echo date('Y-m-d', strtotime($description->date_time)) ?></td>
-							<td><?php echo $description->username ?></td>
-							<td><?php echo currency() . number_format($description->total,2) ?></td>
-							<?php 
-							$total_sales += $description->total;
-							?>
-						</tr>
-					<?php endforeach; ?>
+				<tbody> 
 				</tbody>
 
 			</table>
-			<legend>  <span>Total: <?php echo currency() . number_format($total_sales,2); ?> </span>
-			</legend>
+			  
 		</div>
 	</div>
 

@@ -18,8 +18,7 @@ html, body {
 body {
   overflow-x: hidden;
   margin-bottom: -20px;
-  border-collapse: collapse;
-/*  font-size: 1.54em;*/
+  border-collapse: collapse; 
   font-family: "Roboto", Arial, serif, sans-serif !important;
   display: none;
 }

@@ -22,7 +22,8 @@
 	 
 		<div class="col-md-12" style="padding: 0">
 			<nav class="navbar">
-			<span class="navbar-text">Current User:  <span id="user"><?php echo $this->session->userdata['username'] ?></span>
+			<span class="navbar-text">POSLite V 1.0  
+			<!-- 	<span id="user"><?php echo $this->session->userdata['username'] ?></span> -->
 			</span>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>

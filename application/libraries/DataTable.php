@@ -11,7 +11,17 @@ class DataTable {
  
 	}
 
-	public function format($draw, $data, $columns, $data_count, $extra = []) {
+	/**
+     * Returns JSON encoded object for Datatable.
+     *
+     * @param int $draw
+     * @param string[] $data 
+     * @param int[] $recordsFiltered 
+     * @param string[] $extra
+
+     * @return json[]
+   */ 
+	public function format($draw = 1, $data, $columns, $data_count, $extra = []) {
 
 		$datasets = []; 
 

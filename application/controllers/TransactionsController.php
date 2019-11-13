@@ -167,7 +167,7 @@ class TransactionsController extends CI_Controller {
           </div>';
 		}
 	  
-		$data_count = $this->db->where('type', 'credit')->get('sales')->num_rows();
+		$data_count = $this->db->where('type', 'invoice')->get('sales')->num_rows();
 
 		$columns = [  
 			'transaction_number' => "Invoice No",

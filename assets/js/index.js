@@ -587,6 +587,32 @@ $(document).ready(function() {
 			},
 		}
 
+		var reports = {
+
+			init: function() {
+				this.description();
+			},
+
+			description: function() { 
+
+				data = {};
+				data[csrfName] = csrfHash;
+				itemTable = $("#sales-description-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'ReportsController/description_datatable',
+						type : 'POST',
+						data : data
+					}, 
+					"targets": 'no-sort',
+					"bSort": false, 
+					 
+				})
+			}
+		}
+
+		reports.init();
 		transactions.init();
 		expenses.init();
 		dateTimePickers.init();

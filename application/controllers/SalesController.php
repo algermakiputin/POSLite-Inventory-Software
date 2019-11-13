@@ -239,7 +239,7 @@ class SalesController extends CI_Controller {
 				'city'	=> $city,
 				'zipcode' => $zipcode,
 				'supplier_id' => $supplier_id,
-				'supplier_name' => $supplier_name 
+				'supplier_name' => $supplier_name,
 				'date_time' => get_date_time(),
 			]);
 
