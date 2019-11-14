@@ -12,7 +12,7 @@ class AppController extends CI_Controller {
     public function licenseControl () {
     	
     	if (!SITE_LIVE) {
-    		if (!file_exists('./profile.txt')) {
+    		if (!file_exists(homeDir() . '/profile.txt')) {
 	    		return redirect('activate');
 	    	}
 
