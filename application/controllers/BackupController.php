@@ -50,12 +50,14 @@ class BackupController extends CI_Controller {
 		$sql = $this->encryption->decrypt($sql);
 		$rows = explode(";", $sql);
 
+		//Need to empty the database first
+
 		$this->db->trans_start();
 		foreach ($rows as $query) {
 
 			$pos = strpos($query,'ci_sessions');
-		 
-			if($pos == false) 
+		 		
+			if($pos == false) // Execute the query 
 				$result = $this->db->query($query); 
 			else  
 				continue;
@@ -65,7 +67,7 @@ class BackupController extends CI_Controller {
 		$this->db->trans_complete();
 		
 		if ($this->db->trans_status() === FALSE) {
-			$this->session->set_flashdata('success', "Error restoring backup");
+			$this->session->set_flashdata('error', "Error restoring backup");
 			return redirect('backups');
 		}
 
