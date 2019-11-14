@@ -12,6 +12,25 @@
 		return date('Y-m-d H:i:s');
 	}
 
+	function homeDir()
+	{
+	    if(isset($_SERVER['HOME'])) {
+	        $result = $_SERVER['HOME'];
+	    } else {
+	        $result = getenv("HOME");
+	    }
+
+	    if(empty($result) && function_exists('exec')) {
+	        if(strncasecmp(PHP_OS, 'WIN', 3) === 0) {
+	            $result = exec("echo %userprofile%");
+	        } else {
+	            $result = exec("echo ~");
+	        }
+	    }
+
+	    return $result;
+	}
+
 	function currency() {
 		return "₱";
 	}
@@ -23,7 +42,7 @@
 	}
 
 	function profile() {
-		return explode(',', base64_decode(file_get_contents("./profile.txt")));
+		return explode(',', base64_decode(file_get_contents( homeDir() . "/profile.txt")));
 	}
 
 	function serial() {

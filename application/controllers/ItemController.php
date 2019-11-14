@@ -58,6 +58,8 @@ class ItemController extends AppController {
     }
 
 	public function items () { 
+
+		
 		 
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
 		$data['suppliers'] = $this->db->get('supplier')->result();
