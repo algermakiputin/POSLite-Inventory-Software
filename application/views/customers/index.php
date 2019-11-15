@@ -8,7 +8,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Customers List
+				<i class="fa fa-table fa-fw"></i> Customers List
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">

@@ -49,6 +49,13 @@
 			 			</div>
 			 		</div>
 			 	<?php endif; ?>
+			 	<?php if ($this->session->flashdata('error')): ?>
+			 		<div class="form-group"> 
+			 			<div class="alert alert-danger">
+			 				<?php echo $this->session->flashdata('error') ?>
+			 			</div>
+			 		</div>
+			 	<?php endif; ?>
 				<?php echo form_open("BackupController/dump"); ?>
 					<div class="form-group">
 						<p>
@@ -57,6 +64,24 @@
 						<button type="submit" class="btn btn-default">
 							<i class="fa fa-database"></i> Backup Data
 						</button> 
+					</div>
+				<?php echo form_close(); ?>
+				<!-- /.row (nested) -->
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Restore Backup
+			</div>
+			<div class="panel-body">
+				 
+				<?php echo form_open_multipart("BackupController/import"); ?>
+					<div class="form-group">
+						<input type="file" class="form-control" name="file">
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Restore" name="submit" class="btn btn-default">
 					</div>
 				<?php echo form_close(); ?>
 				<!-- /.row (nested) -->

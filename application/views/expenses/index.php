@@ -35,7 +35,7 @@
     <div class="col-lg-12">
      <div class="panel panel-default">
          <div class="panel-heading">
-             Expenses List
+             <i class="fa fa-money fa-fw"></i> Expenses List
          </div> 
          <div class="panel-body"> 
             <table class="table table-responsive table-striped table-hover table-bordered" id="expenses_table" width="100%">
