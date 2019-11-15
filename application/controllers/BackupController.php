@@ -46,33 +46,68 @@ class BackupController extends CI_Controller {
 	}
 
 	public function import() {
-		$sql = file_get_contents('./backup/backup2019-09-20-07-43-01.txt');
-		$sql = $this->encryption->decrypt($sql);
-		$rows = explode(";", $sql);
 
-		//Need to empty the database first
+		$file = $_FILES['file'];
+
+		$sql = file_get_contents($file['tmp_name']);
+
+		if (!$sql)
+			return redirect('/');
+
+		$sql = $this->encryption->decrypt($sql); 
+
+		$rows = explode(";", $sql);
+  
 
 		$this->db->trans_start();
-		foreach ($rows as $query) {
+ 
+ 		$this->truncate_tables();
 
-			$pos = strpos($query,'ci_sessions');
-		 		
-			if($pos == false) // Execute the query 
-				$result = $this->db->query($query); 
-			else  
-				continue;
-			 
+		foreach ($rows as $key => $query) {
+ 		
+			if ( strpos($query, "INSERT INTO") ) {
+ 	
+				$this->db->query($query);
+			}
 		} 
+ 	
+ 		
 
 		$this->db->trans_complete();
 		
 		if ($this->db->trans_status() === FALSE) {
 			$this->session->set_flashdata('error', "Error restoring backup");
+ 
 			return redirect('backups');
 		}
 
 		$this->session->set_flashdata('success', "Backup restored successfully");
+ 
 		return redirect('backups');
+ 	 
+
+	}
+
+	public function truncate_tables() {
+
+		$tables = ['backup', 'categories', 'customers', 'delivery', 'delivery_details', 'expenses', 'history', 'items', 'memberships', 'ordering_level', 'payments', 'prices', 'purchase_order', 'purchase_order_line', 'sales', 'sales_description', 'settings', 'supplier', 'users'];
+
+
+		$this->db->trans_start();
+
+		foreach ($tables as $table) {
+
+			$this->db->empty_table($table);
+		}
+
+
+		$this->db->trans_complete();
+		
+		if ($this->db->trans_status() !== FALSE) {
+			return true;
+		}
+
+		return false;
 
 	}
 }

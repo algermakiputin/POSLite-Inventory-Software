@@ -72,7 +72,7 @@
      <div class="panel panel-default">
 
          <div class="panel-heading">
-             Items List
+             <span class="fa fa-inbox fa-fw"></span> Items List
 
          </div>
 
