@@ -26,6 +26,7 @@ class AuthController extends AppController {
 		$this->form_validation->set_rules('username','Username', 'required');
 		$this->form_validation->set_rules('password','Password', 'required');
 		
+
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' . validation_errors() . '</div>');
 			return redirect(base_url('login'));
@@ -34,7 +35,7 @@ class AuthController extends AppController {
 		$this->load->model('UsersModel');
 
 		$verify_login = $this->UsersModel->login($username);
-		
+		 
 		if ($verify_login) {
 			$hash_password = $verify_login->password;
 
@@ -57,7 +58,7 @@ class AuthController extends AppController {
 				
 			}
 			
-			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Incorrect Login Name Or Password</div>');
+			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Incorrects Login Name Or Password</div>');
 			return redirect(base_url('login'));
 			
 		} 
