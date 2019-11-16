@@ -15,4 +15,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* index.php/$0 [PT,L]
 
-Redirect 301 poslite.herokuapp.com https://poslitesoftware.com
+Redirect 301 https://poslite.herokuapp.com https://poslitesoftware.com
