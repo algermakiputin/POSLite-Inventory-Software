@@ -233,7 +233,7 @@ class ItemController extends AppController {
 
 	public function insert() {
 		license('items');
-		$this->demoRestriction();
+	
 		$name = $this->input->post('name');
 		$category = $this->input->post('category');
 		$description = $this->input->post('description');
