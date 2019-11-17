@@ -180,7 +180,7 @@ class ItemController extends AppController {
 		$itemCount = $this->db->get('items')->num_rows();
 
 		$datasets = array_map(function($item) use ($orderingLevel){
-			$quantity = (int)$orderingLevel->getQuantity($item->id)->quantity;
+			$quantity = $orderingLevel->getQuantity($item->id)->quantity;
 			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
 			
 			return [
