@@ -313,7 +313,7 @@
 	})
 
 	$("#cart").on('focusout','.quantity-box',function(e) {
-		var quantity = parseInt($(this).val()); 
+		var quantity = parseFloat($(this).val()); 
 		if (isNaN(quantity) || quantity < 0) {
 			$(this).val(1);
 		 
@@ -329,7 +329,7 @@
  			return false;
  		}
 
-		var quantity = parseInt($(this).val());
+		var quantity = parseFloat($(this).val());
 		var currentStocks = $(this).data('stocks');
 		var itemID = $(this).data('id');
 		var remaining = $(this).data('stocks') - quantity;
@@ -403,7 +403,7 @@
 
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
-			var quantity = parseInt(r.eq(1).find('input').val());
+			var quantity = parseFloat(r.eq(1).find('input').val());
 			var price = r.eq(3).text().substring(1).replace(',','');
 			var discount = parseInt(r.eq(2).find('input').val());
 			total += parseFloat(price) * quantity;
