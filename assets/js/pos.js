@@ -122,7 +122,7 @@
 					$("payment").val('');
 					$("change").val('');
 		  	 	}
-		  	 	stockCol.text(parseInt(stocks - 1));
+		  	 	stockCol.text(parseFloat(stocks - 1));
 	  	 	}
 	 	}else {
 	 		alert("Not enough stocks remaining");
