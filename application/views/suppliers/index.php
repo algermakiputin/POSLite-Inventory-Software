@@ -8,7 +8,7 @@
  <div class="col-lg-12">
    <div class="panel panel-default">
      <div class="panel-heading">
-       Suppliers List
+       <i class="fa fa-bar-chart-o fa-fw"></i> Suppliers List
      </div>
      <!-- /.panel-heading -->
      <div class="panel-body">

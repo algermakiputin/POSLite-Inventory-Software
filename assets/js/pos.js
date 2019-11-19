@@ -199,7 +199,7 @@ $(document).ready(function() {
 					$("payment").val('');
 					$("change").val('');
 		  	 	}
-		  	 	stockCol.text(parseInt(stocks - 1));
+		  	 	stockCol.text(parseFloat(stocks - 1));
 	  	 	}
 	 	}else {
 	 		alert("Not enough stocks remaining");
@@ -241,8 +241,7 @@ $(document).ready(function() {
 		var payment = $("#payment").val() || 0;
 		var change = $("#change").val() || 0;
 
-
-
+ 
 		if ( !customer_name && transaction_type == "po")
 			return alert("Customer is empty"); 
 
@@ -309,6 +308,8 @@ $(document).ready(function() {
 			success : function(data) { 
 				transactionComplete = true;
 				var total = parseFloat(total_amount);
+				var d = new Date();
+
 			 	$("#confirm-transaction-modal").modal("toggle");
 				$("#payment-modal").modal('toggle');
 				$("#loader").hide();
@@ -327,6 +328,7 @@ $(document).ready(function() {
 				$("#r-discount").text(currency + number_format(totalDiscount));
 				$("#r-id").text(data);
 				$("#r-transaction").text(transaction_type);
+				$("#r-time").text(d.toLocaleTimeString());
 
 				$("#note").val('');
 			 	$("#cart tbody").empty();
@@ -345,7 +347,7 @@ $(document).ready(function() {
 				transaction_type = "cash"; 
 			}
 		}) 
-			    
+			     
 	})
 
 	$("#payment").keyup(function() {
@@ -406,7 +408,7 @@ $(document).ready(function() {
 	})
 
 	$("#cart").on('focusout','.quantity-box',function(e) {
-		var quantity = parseInt($(this).val()); 
+		var quantity = parseFloat($(this).val()); 
 		if (isNaN(quantity) || quantity < 0) {
 			$(this).val(1);
 		 
@@ -423,7 +425,7 @@ $(document).ready(function() {
  			return false;
  		}
 
-		var quantity = parseInt($(this).val());
+		var quantity = parseFloat($(this).val());
 		var currentStocks = $(this).data('stocks');
 		var itemID = $(this).data('id');
 		var remaining = $(this).data('stocks') - quantity;
@@ -518,12 +520,12 @@ function recount() {
 		var discountAmount = 0;
 
 		for (i = 0; i < row; i++) {
-			var r = $("#cart tbody tr").eq(i).find('td');
-			var quantity = parseInt(r.eq(1).find('input').val());
-			var price = r.eq(3).text().substring(1).replace(',',''); 
-
-			total += parseFloat(price) * quantity;
- 
+			var r = $("#cart tbody tr").eq(i).find('td'); 
+			var quantity = parseFloat(r.eq(1).find('input').val());
+			var price = r.eq(2).text().substring(1).replace(',','');
+			var discount = parseInt(r.eq(2).find('input').val());
+			total += parseFloat(price) * quantity; 
+ 		 
 			
 		} 
 		totalAmountDue = total;

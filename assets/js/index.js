@@ -591,6 +591,7 @@ $(document).ready(function() {
 
 			init: function() {
 				this.description();
+				this.product_sales();
 			},
 
 			description: function() { 
@@ -606,10 +607,46 @@ $(document).ready(function() {
 						data : data
 					}, 
 					"targets": 'no-sort',
-					"bSort": false, 
+					"bSort": false,
 					 
-				})
-			}
+				});
+			},
+
+			product_sales: function() {
+				data = {};
+				data[csrfName] = csrfHash; 
+				var product_sales_tbl = $("#product-sales-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'ReportsController/product_sales_datatable',
+						type : 'POST',
+						data : data
+					}, 
+					"targets": 'no-sort',
+					"bSort": false,  
+					"dom": "r",
+					"processing" : true,
+					drawCallback : function (setting) {
+						var data = JSON.parse(setting.json.extra);
+						console.log(data);
+						$("#total-sales").text(data.total);
+
+					}
+				}); 
+
+				$("#to").change(function() {
+
+					if ( date_range = date_range_select("from", "to") ) {
+				 
+						product_sales_tbl.columns(0).search(date_range[0])
+									.columns(1).search(date_range[1])
+									.draw();
+
+					}
+				});
+
+			},
 		}
 
 		reports.init();

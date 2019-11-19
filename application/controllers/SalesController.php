@@ -226,8 +226,7 @@ class SalesController extends CI_Controller {
 		*/
 		$this->db->insert('sales',[
 				'id' => null , 
-				'transaction_number' => $transaction_number,
-				'date_time' => date('Y-m-d h:i:s'),
+				'transaction_number' => $transaction_number, 
 				'user_id' => $this->session->userdata('id'),
 				'customer_id' => $customer_id,
 				'customer_name' => $this->input->post('customer_name'),
@@ -254,10 +253,10 @@ class SalesController extends CI_Controller {
 				'sales_id' => $sales_id, 
 				'price' => $sale['price'],
 				'name' => $sale['name'],
-				'discount' => $sale['discount'],
+				'discount' => $sale['discount'] ?? 0,
 				'profit' => $transactionProfit,
 				'user_id' => $this->session->userdata('id'),
-				'created_at' => get_date_time(),
+				'created_at' => get_date_time(), 
 			];
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);

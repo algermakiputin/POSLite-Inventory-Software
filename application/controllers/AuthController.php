@@ -10,13 +10,21 @@ class AuthController extends AppController {
 		
 	}
 	public function login() {
+		
+		if ( $_SERVER['SERVER_NAME'] == "poslite.herokuapp.com" ) {
+
+			// If they access the heroku default domain, will redirect the user to our new custom domain
+
+			header("location: https://www.poslitesoftware.com");
+	 	}
+
 		if ($this->session->userdata('log_in')) redirect(base_url('items'));
 		$this->load->dbutil();
 		if (!$this->dbutil->database_exists('poslite') && !SITE_LIVE) {
-			return $this->load->view('buy');
+ 
 		} 
 		
-		$this->load->view('login');  
+		$this->load->view('login');   
 	}
  
 
@@ -26,6 +34,7 @@ class AuthController extends AppController {
 		$this->form_validation->set_rules('username','Username', 'required');
 		$this->form_validation->set_rules('password','Password', 'required');
 		
+
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' . validation_errors() . '</div>');
 			return redirect(base_url('login'));
@@ -34,7 +43,7 @@ class AuthController extends AppController {
 		$this->load->model('UsersModel');
 
 		$verify_login = $this->UsersModel->login($username);
-		
+		 
 		if ($verify_login) {
 			$hash_password = $verify_login->password;
 
@@ -57,7 +66,7 @@ class AuthController extends AppController {
 				
 			}
 			
-			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Incorrect Login Name Or Password</div>');
+			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Incorrects Login Name Or Password</div>');
 			return redirect(base_url('login'));
 			
 		} 

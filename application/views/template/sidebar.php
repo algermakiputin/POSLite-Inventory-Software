@@ -117,6 +117,15 @@
             </li>
             <?php endif; ?>
 
+            <li data-step="8" data-intro="Here you can add users like cashier">
+                <a href="#"><i class="fa fa-cog fa-fw"></i> System <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('backups') ?>"><i class="fa fa-circle-o"></i> Backups</a>
+                    </li> 
+                </ul>
+            </li>
+
             <?php if (!SITE_LIVE): ?>
                 <li>
                     <a href="<?php echo base_url('license') ?>"><i class="fa fa-legal"></i> License</a>

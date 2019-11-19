@@ -118,7 +118,7 @@
 		</div> 
 	 	<h5></h5>
 	<?php endif; ?>
-	<p class="text-center" style="color: #777">&copy; <?php echo date('Y-m-d') ?> All Rights Reserved <br> Developed by: <a href="https:algermakiputin.github.io/portfolio">Alger Makiputin</a></p>
+	<p class="text-center" style="color: #777">&copy; <?php echo date('Y-m-d') ?> All Rights Reserved <br> Developed by: <a href="https://algermakiputin.github.io/portfolio">Alger Makiputin</a></p>
 	<?php echo form_close() ?>
 </div>
 	

@@ -37,6 +37,36 @@ class ReportsController extends CI_Controller {
 
 	}
 
+	public function product_sales_datatable() {
+		$draw = $this->input->post('draw');
+		
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$from = $this->input->post('[columns][0][search][value]');
+		$to = $this->input->post('[columns][1][search][value]');
+
+		$product_sales = $this->get_best_seller_products($from, $to);
+		$total = 0;
+		foreach ($product_sales as $product) {
+			$total += $product->total;
+			$product->total = currency() . number_format($product->total,2);
+			$product->price = currency() . number_format($product->price,2);
+			
+		}
+		$columns = [
+			'item_id' => "Item ID",
+			'name' => "Product Name",
+			'sold' => "Qty Sold",
+			'price' => 'Unit Cost',
+			'total' => "Total"
+		];
+
+		$data_count = $this->db->where('type !=', 'invoice')->get('sales')->num_rows(); 
+
+		echo $this->datatable->format($draw, $product_sales, $columns, $data_count, ['total' => currency() . number_format($total,2)]);
+
+	}
+
 	public function products() {
 		$data['content'] = "reports/products";
 		$data['total_sales'] = 0;
@@ -53,8 +83,7 @@ class ReportsController extends CI_Controller {
 
 	public function best_seller() {
 		$data['content'] = "reports/best_seller";
-		$data['total_sales'] = 0; 
-		$data['products'] = $this->get_best_seller_products();
+		$data['total_sales'] = 0;  
 		$this->load->view('master', $data);
 	}
 
@@ -65,11 +94,13 @@ class ReportsController extends CI_Controller {
 	}
 
 	private function get_best_seller_products($from = NULL, $to = NULL) {
-		$from = $from == NULL ? date('Y-m-d') : $from;
-		$to = $from == NULL ? date('Y-m-d') : $from;
+		$from = $from == "" ? date('Y-m-d') : $from;
+		$to = $to == "" ? date('Y-m-d') : $to;
 
-		$best_seller = $this->db->select("SUM(quantity) as sold, name, SUM(quantity * price - discount) as total")
+		$best_seller = $this->db->select("SUM(quantity) as sold, name, price, item_id, SUM(quantity * price - discount) as total")
 								->from('sales_description')
+								->where('DATE_FORMAT(created_at,"%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(created_at,"%Y-%m-%d") <=', $to)
 								->group_by('item_id')
 								->limit(10, 0)
 								->order_by('sold', 'DESC')
@@ -81,8 +112,8 @@ class ReportsController extends CI_Controller {
 
 
 	private function get_sales($start, $limit, $from = NULL, $to = NULL) {
-		$from = $from == NULL ? date('Y-m-d') : $from;
-		$to = $from == NULL ? date('Y-m-d') : $from;
+		$from = $from ? date('Y-m-d') : $from;
+		$to = $to ? date('Y-m-d') : $to;
 
 
 		return $this->db->select("sales.*, SUM(sales_description.price * sales_description.quantity - sales_description.discount) as total, users.username")

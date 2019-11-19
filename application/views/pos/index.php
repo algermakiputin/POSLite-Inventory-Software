@@ -23,7 +23,7 @@
 		<div class="col-md-12" style="padding: 0">
 			<nav class="navbar">
 			<span class="navbar-text">POSLite V 1.0  
-			<!-- 	<span id="user"><?php echo $this->session->userdata['username'] ?></span> -->
+			<span id="user" style="display: none;"><?php echo $this->session->userdata['username'] ?></span> 
 			</span>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
@@ -223,8 +223,8 @@
 			<div class="modal-dialog modal-md" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title"><i class="fa fa-exchange"></i> Transaction Details
-							<span class="pull-right">Grand Total: <span id="grand_total"></span> </span>
+						<h4 class="modal-title"><i class="fa fa-exchange"></i> Grand Total: <span id="grand_total"></span> </span>
+							<!-- <span class="pull-right"> -->
 						</h4>
 					</div>
 					<div class="modal-body">
@@ -232,7 +232,7 @@
 							<div class="col-md-12">
 								<input type="hidden" name="customer_id" id="customer_id" value="0">
 								<input type="hidden" name="supplier_id" id="supplier_id" value="0">
-
+							 
 								<div class="form-group">
 								 	<label>Transaction type:</label>
 								 	<select name="type" class="form-control" id="transaction-type">  
@@ -252,6 +252,7 @@
 								 		<?php endforeach; ?> 
 								 	</select>
 								</div>
+								 
 								<div class="form-group" id="po-fields" style="display: none;">
 				 					<label>Supplier:</label>
 								 	<select id="supplier-select" placeholder="Select Supplier" class="form-control" name="supplier">    

@@ -58,6 +58,8 @@ class ItemController extends AppController {
     }
 
 	public function items () { 
+
+		
 		 
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
 		$data['suppliers'] = $this->db->get('supplier')->result();
@@ -178,8 +180,10 @@ class ItemController extends AppController {
 		$itemCount = $this->db->get('items')->num_rows();
 
 		$datasets = array_map(function($item) use ($orderingLevel){
-			$quantity = (int)$orderingLevel->getQuantity($item->id)->quantity;
-			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price; 
+ 
+			$quantity = $orderingLevel->getQuantity($item->id)->quantity;
+			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
+
 			
 			return [
 				$item->id,
@@ -231,7 +235,7 @@ class ItemController extends AppController {
 
 	public function insert() {
 		license('items');
-		$this->demoRestriction();
+	
 		$name = $this->input->post('name');
 		$category = $this->input->post('category');
 		$description = $this->input->post('description');
