@@ -592,6 +592,7 @@ $(document).ready(function() {
 			init: function() {
 				this.description();
 				this.product_sales();
+				this.best_seller();
 			},
 
 			description: function() { 
@@ -644,8 +645,35 @@ $(document).ready(function() {
 									.draw();
 
 					}
-				});
+				}); 
+			},
 
+			best_seller: function() {
+				data = {};
+				data[csrfName] = csrfHash; 
+				var best_seller_tbl = $("#best-seller-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'ReportsController/best_seller_datatable',
+						type : 'POST',
+						data : data
+					}, 
+					"targets": 'no-sort',
+					"bSort": false,  
+					"dom": "r",
+					"processing" : true, 
+				}); 
+
+				$("#to").change(function() { 
+					if ( date_range = date_range_select("from", "to") ) {
+				 
+						best_seller_tbl.columns(0).search(date_range[0])
+									.columns(1).search(date_range[1])
+									.draw();
+
+					}
+				}); 
 			},
 		}
 
