@@ -99,12 +99,13 @@
   line-height:1.6;
   position: relative;
   /*background:#EDEDED;*/
+  text-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
 blockquote::before{
   font-family:Arial;
   content: "\201C";
-  color:#204d74;
+  color:#333;
   font-size:4em;
   position: absolute;
   left: 10px;
@@ -121,6 +122,7 @@ blockquote span{
   font-style: normal;
   font-weight: bold;
   margin-top:1em;
+  text-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
 </style>
@@ -128,8 +130,8 @@ blockquote span{
 	<div class="quote-wrapper"> 
    
 		<blockquote>
-  Creativity is just connecting things. When you ask creative people how they did something, they feel a little guilty because they didn't really do it, they just saw something. It seemed obvious to them after a while. That's because they were able to connect experiences they've had and synthesize new things.
-  <span>Steve Jobs</span>
+  The Inventory Management system is useually one of the most important and biggest financial investment a business must make.
+  <span>Rosemary Peavler</span>
 </blockquote>
    
 	</div>
