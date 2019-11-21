@@ -693,10 +693,13 @@ $(document).ready(function() {
 	$("#activation-form").submit(function(e) {
 		e.preventDefault();
 		var key = $(this).find('[name=key]').val();
+		var serial = $(this).find('[name=serial]').val();
+
 		var jsonData = {};
 		var ajaxData = {};
 		ajaxData['api_key'] = api_key;
 		ajaxData['key'] = key;
+		ajaxData['serial'] = serial;
 		jsonData[csrfName] = csrfHash;
 
 		if (key) {
