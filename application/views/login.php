@@ -88,8 +88,8 @@
 	}
 
 	blockquote{
-  font-size: 1.8em;
-  width:60%;
+  font-size: 2.1em;
+  width:80%;
   margin:50px auto;
   font-family:Open Sans;
   font-style:italic;
@@ -130,8 +130,8 @@ blockquote span{
 	<div class="quote-wrapper"> 
    
 		<blockquote>
-  The Inventory Management system is useually one of the most important and biggest financial investment a business must make.
-  <span>Rosemary Peavler</span>
+  There are no secrets to success. It is the result of preparation, hard work and learning from failure. 
+  <span>– Colin Powell</span>
 </blockquote>
    
 	</div>

@@ -7,10 +7,13 @@ class AppController extends CI_Controller {
 		
       parent::__construct();
 
+      
+ 
+
     }
 
     public function licenseControl () {
-    	
+    	  
     	if (!SITE_LIVE) {
     		if (!file_exists(homeDir() . '/profile.txt')) {
 	    		return redirect('activate');

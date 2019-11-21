@@ -74,6 +74,7 @@
 		<div class="input-group ">
 			<span class="input-group-addon"><i class="fa fa-key " aria-hidden="true"></i></span>
 			<input autocomplete="off" id="key" type="text" class="form-control input-md" name="key" placeholder="Activation Key" required="required" data-parsley-errors-container="#password-error">
+			<input type="hidden" name="serial" id="serial" value="<?php echo $serial; ?>">
 		</div>      
 		<span id="password-error"></span>
 	</div>
