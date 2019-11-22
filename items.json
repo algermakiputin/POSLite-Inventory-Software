@@ -1,0 +1,5036 @@
+{
+    "Sheet1": [
+        {
+            "BAR CODE": "4801981116171",
+            "SKU": "Soda Royal 1.5 65",
+            "SELLING PRICE/UNIT": "65",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "54.71",
+            "Total Value (₱)": "109.42"
+        },
+        {
+            "BAR CODE": " 4803925061141",
+            "SKU": "Gatorade Bolt 500 ml 45",
+            "SELLING PRICE/UNIT": "45",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "21.4",
+            "Total Value (₱)": "107"
+        },
+        {
+            "BAR CODE": "4803925061110",
+            "SKU": "SODA GATORADE GRAPES 500ML 45",
+            "SELLING PRICE/UNIT": "45",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "10.19",
+            "Total Value (₱)": "10.19"
+        },
+        {
+            "BAR CODE": "4803925061103",
+            "SKU": "SODA GATORADE TROPICAL FRUIT 500ML 45",
+            "SELLING PRICE/UNIT": "45",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "11.5",
+            "Total Value (₱)": "23"
+        },
+        {
+            "BAR CODE": "4800220595357",
+            "SKU": "TANDUAY ICE YELLOW 32",
+            "SELLING PRICE/UNIT": "32",
+            "QUANTITY": "20",
+            "Average Cost (₱)": "24.15",
+            "Total Value (₱)": "483"
+        },
+        {
+            "BAR CODE": "4800024578426",
+            "SKU": "SODA FIT AND RIGHT 35",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "30",
+            "Total Value (₱)": "240"
+        },
+        {
+            "BAR CODE": "4800220531355",
+            "SKU": "TANDUAY ICE WHITE 32",
+            "SELLING PRICE/UNIT": "32",
+            "QUANTITY": "20",
+            "Average Cost (₱)": "24.25",
+            "Total Value (₱)": "485"
+        },
+        {
+            "BAR CODE": "8996001414309",
+            "SKU": "KOPIKO BLANCA P 9",
+            "SELLING PRICE/UNIT": "9",
+            "QUANTITY": "34",
+            "Average Cost (₱)": "6.24",
+            "Total Value (₱)": "212.16"
+        },
+        {
+            "BAR CODE": "750515018402",
+            "SKU": "MY SAN SKYFLAKES P8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "23",
+            "Average Cost (₱)": "4.8",
+            "Total Value (₱)": "110.4"
+        },
+        {
+            "BAR CODE": "4807770121326",
+            "SKU": "MONDE MAMON P15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "11.25",
+            "Total Value (₱)": "112.5"
+        },
+        {
+            "BAR CODE": "4800194105965",
+            "SKU": "OISHI Spicy Flavor 15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "10.32",
+            "Total Value (₱)": "82.56"
+        },
+        {
+            "BAR CODE": "731126105088",
+            "SKU": "NAGARAYA HOT AND SPICY P20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "21",
+            "Average Cost (₱)": "14.93",
+            "Total Value (₱)": "313.53"
+        },
+        {
+            "BAR CODE": "4809011681378",
+            "SKU": "Boy Bawang Garlic P20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "13.55",
+            "Total Value (₱)": "27.1"
+        },
+        {
+            "BAR CODE": "4807770101861",
+            "SKU": "MONDE BREAD STICK P10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "7.07",
+            "Total Value (₱)": "14.14"
+        },
+        {
+            "BAR CODE": "8850007372882",
+            "SKU": "MODESS RETAIL php.7",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "24",
+            "Average Cost (₱)": "4.78",
+            "Total Value (₱)": "114.72"
+        },
+        {
+            "BAR CODE": "8850007371403",
+            "SKU": "Modes Maxi P40",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "25.17",
+            "Total Value (₱)": "75.51"
+        },
+        {
+            "BAR CODE": "4806525620091",
+            "SKU": "PANTY LINERS P10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "6.1",
+            "Total Value (₱)": "6.1"
+        },
+        {
+            "BAR CODE": "4800488668886",
+            "SKU": "KITCHEN MATE TOWEL TISSUE P40",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "34.5",
+            "Total Value (₱)": "138"
+        },
+        {
+            "BAR CODE": "052100056227",
+            "SKU": "IODIZED SALT P30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "22.59",
+            "Total Value (₱)": "112.95"
+        },
+        {
+            "BAR CODE": "4801668100240",
+            "SKU": "DATU PUTI SPICED VINEGAR P35",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "27.98",
+            "Total Value (₱)": "111.92"
+        },
+        {
+            "BAR CODE": "4801668501030",
+            "SKU": "Datu Puti Patis P25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "19.48",
+            "Total Value (₱)": "38.96"
+        },
+        {
+            "BAR CODE": "4801668100103",
+            "SKU": "DATU PUTI VINEGAR REGULAR P15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "11.78",
+            "Total Value (₱)": "23.56"
+        },
+        {
+            "BAR CODE": "8853333009842",
+            "SKU": "KRATOS COFFEE ORIG P32",
+            "SELLING PRICE/UNIT": "32",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "26.25",
+            "Total Value (₱)": "26.25"
+        },
+        {
+            "BAR CODE": "8853333009798",
+            "SKU": "KRATOS COFFEE KAFE P32",
+            "SELLING PRICE/UNIT": "32",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "25.25",
+            "Total Value (₱)": "75.75"
+        },
+        {
+            "BAR CODE": "6914973600362",
+            "SKU": "SNICKERS CLASSIC 45",
+            "SELLING PRICE/UNIT": "45",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "38.9",
+            "Total Value (₱)": "311.2"
+        },
+        {
+            "BAR CODE": "02285304",
+            "SKU": "JUICY FRUIT GUM P16",
+            "SELLING PRICE/UNIT": "16",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "12.1",
+            "Total Value (₱)": "157.3"
+        },
+        {
+            "BAR CODE": "4800142110102",
+            "SKU": "EMPERADOR LIGHT BRANDY 1 LITER 135",
+            "SELLING PRICE/UNIT": "135",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "111.93",
+            "Total Value (₱)": "895.44"
+        },
+        {
+            "BAR CODE": "4800142110089",
+            "SKU": "EMPERADOR LIGHT BRANDY 750 ML P100",
+            "SELLING PRICE/UNIT": "100",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "81.5",
+            "Total Value (₱)": "815"
+        },
+        {
+            "BAR CODE": "4800361331500",
+            "SKU": "BEAR BRAND STERILIZED  200 ML 30 each",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "22.52",
+            "Total Value (₱)": "337.8"
+        },
+        {
+            "BAR CODE": "4801668100295",
+            "SKU": "PAPA KETCHUP REGULAR 320 G P30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "17.05",
+            "Total Value (₱)": "51.15"
+        },
+        {
+            "BAR CODE": "4806502359754",
+            "SKU": "Bath Tissue 12 each",
+            "SELLING PRICE/UNIT": "12",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "7.9",
+            "Total Value (₱)": "102.7"
+        },
+        {
+            "BAR CODE": "4809010657442",
+            "SKU": "Soda Coke 8 oz",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "20",
+            "Average Cost (₱)": "6.48",
+            "Total Value (₱)": "129.6"
+        },
+        {
+            "BAR CODE": "4808887030037",
+            "SKU": "LANCHEON MEAT SULIT P70",
+            "SELLING PRICE/UNIT": "70",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "62.35",
+            "Total Value (₱)": "124.7"
+        },
+        {
+            "BAR CODE": "4800073202426",
+            "SKU": "CIGARETTE LIGHTER P20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "14.75",
+            "Total Value (₱)": "73.75"
+        },
+        {
+            "BAR CODE": "4902430705417",
+            "SKU": "PANTENE SHAMPOO  P80",
+            "SELLING PRICE/UNIT": "80",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "69.8",
+            "Total Value (₱)": "139.6"
+        },
+        {
+            "BAR CODE": "4902430634014",
+            "SKU": "PANTENE PRO V P12",
+            "SELLING PRICE/UNIT": "12",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "8.4",
+            "Total Value (₱)": "58.8"
+        },
+        {
+            "BAR CODE": "4807770273674",
+            "SKU": "pancit canton kalamansi 15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "11.5",
+            "Total Value (₱)": "46"
+        },
+        {
+            "BAR CODE": "8717644190494",
+            "SKU": "DOVE BAR REGULAR P50",
+            "SELLING PRICE/UNIT": "50",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "41",
+            "Total Value (₱)": "328"
+        },
+        {
+            "BAR CODE": "4800888154279",
+            "SKU": "DOVE SH ST&S P5",
+            "SELLING PRICE/UNIT": "5",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "3.76",
+            "Total Value (₱)": "33.84"
+        },
+        {
+            "BAR CODE": "4808887119480",
+            "SKU": "SIZZLING  SISIG IN CAN 45",
+            "SELLING PRICE/UNIT": "45",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "40.6",
+            "Total Value (₱)": "121.8"
+        },
+        {
+            "BAR CODE": "4800047840029",
+            "SKU": "ZONROX 500ML 25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "19",
+            "Total Value (₱)": "38"
+        },
+        {
+            "BAR CODE": "4800130910127",
+            "SKU": "GSM BLUE P95",
+            "SELLING PRICE/UNIT": "95",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "81.9",
+            "Total Value (₱)": "245.7"
+        },
+        {
+            "BAR CODE": "4808887011678",
+            "SKU": "STAR CORN BEEF php.40",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "30.32",
+            "Total Value (₱)": "90.96"
+        },
+        {
+            "BAR CODE": "4800147200099",
+            "SKU": "SPONGE 25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "17.75",
+            "Total Value (₱)": "124.25"
+        },
+        {
+            "BAR CODE": "748485200668",
+            "SKU": "555 Sardines Hot & Spicy P30 each",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "11.14",
+            "Total Value (₱)": "66.84"
+        },
+        {
+            "BAR CODE": "748485200019",
+            "SKU": "555 Sardines green php.20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "15.86",
+            "Total Value (₱)": "222.04"
+        },
+        {
+            "BAR CODE": "4800249032635",
+            "SKU": "High Land Corn Beef P30 each",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "25.42",
+            "Total Value (₱)": "101.68"
+        },
+        {
+            "BAR CODE": "8850006325216",
+            "SKU": "COLGATE TWIN PACK P10",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "6.66",
+            "Total Value (₱)": "79.92"
+        },
+        {
+            "BAR CODE": "4902430754460",
+            "SKU": "JOY 20ML P6",
+            "SELLING PRICE/UNIT": "6",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "4.33",
+            "Total Value (₱)": "43.3"
+        },
+        {
+            "BAR CODE": "4800016553325",
+            "SKU": "PAYLESS Chicken NOODLES P10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "5.73",
+            "Total Value (₱)": "11.46"
+        },
+        {
+            "BAR CODE": "4800047841767",
+            "SKU": "Zonrox Clorsafe 5",
+            "SELLING PRICE/UNIT": "5",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "3.05",
+            "Total Value (₱)": "33.55"
+        },
+        {
+            "BAR CODE": "4902430766838",
+            "SKU": "TIDE POWDER 74g php.13",
+            "SELLING PRICE/UNIT": "13",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "6.42",
+            "Total Value (₱)": "51.36"
+        },
+        {
+            "BAR CODE": "748485200989",
+            "SKU": "555 Sardines Escabeche P30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "24.5",
+            "Total Value (₱)": "73.5"
+        },
+        {
+            "BAR CODE": "4800142120033",
+            "SKU": "Andy Player 150 each",
+            "SELLING PRICE/UNIT": "150",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "141.75",
+            "Total Value (₱)": "283.5"
+        },
+        {
+            "BAR CODE": "8850131009036",
+            "SKU": "SODA - MOUNTAIN 12 oz",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "51",
+            "Average Cost (₱)": "10.58",
+            "Total Value (₱)": "539.58"
+        },
+        {
+            "BAR CODE": "4801032211138",
+            "SKU": "RED HORSE MUCHO 90",
+            "SELLING PRICE/UNIT": "90",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "46.67",
+            "Total Value (₱)": "233.35"
+        },
+        {
+            "BAR CODE": "4801032211077",
+            "SKU": "RED HORSE 500ML 45",
+            "SELLING PRICE/UNIT": "45",
+            "QUANTITY": "43",
+            "Average Cost (₱)": "34.63",
+            "Total Value (₱)": "1489.09"
+        },
+        {
+            "BAR CODE": "5836805400180",
+            "SKU": "SODA - COKE KASALO 25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "50",
+            "Average Cost (₱)": "19.37",
+            "Total Value (₱)": "968.5"
+        },
+        {
+            "BAR CODE": "SO0005236404",
+            "SKU": "SODA - ROYAL 8  OZ",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "6.3",
+            "Total Value (₱)": "88.2"
+        },
+        {
+            "BAR CODE": "4801981105205",
+            "SKU": "Sprite 8 OZ",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "23",
+            "Average Cost (₱)": "6.49",
+            "Total Value (₱)": "149.27"
+        },
+        {
+            "BAR CODE": "5011987861497",
+            "SKU": "SODA - GATORADE 8oz",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "32",
+            "Average Cost (₱)": "11.24",
+            "Total Value (₱)": "359.68"
+        },
+        {
+            "BAR CODE": "4800611000293",
+            "SKU": "SODA - cobra 15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "62",
+            "Average Cost (₱)": "11.3",
+            "Total Value (₱)": "700.6"
+        },
+        {
+            "BAR CODE": "76164217",
+            "SKU": "marlboro red php.6",
+            "SELLING PRICE/UNIT": "6",
+            "QUANTITY": "223",
+            "Average Cost (₱)": "4",
+            "Total Value (₱)": "892"
+        },
+        {
+            "BAR CODE": "76239878",
+            "SKU": "MARLBORO LIGHTS php.6",
+            "SELLING PRICE/UNIT": "6",
+            "QUANTITY": "159",
+            "Average Cost (₱)": "3.96",
+            "Total Value (₱)": "629.64"
+        },
+        {
+            "BAR CODE": "4800361403764",
+            "SKU": "Nescafe Original Red P9",
+            "SELLING PRICE/UNIT": "9",
+            "QUANTITY": "37",
+            "Average Cost (₱)": "5.22",
+            "Total Value (₱)": "193.14"
+        },
+        {
+            "BAR CODE": "4800361393096",
+            "SKU": "Nescafe White P9",
+            "SELLING PRICE/UNIT": "9",
+            "QUANTITY": "24",
+            "Average Cost (₱)": "5.36",
+            "Total Value (₱)": "128.64"
+        },
+        {
+            "BAR CODE": "48043441",
+            "SKU": "FORTUNE LIGHTS php.5",
+            "SELLING PRICE/UNIT": "5",
+            "QUANTITY": "92",
+            "Average Cost (₱)": "3.17",
+            "Total Value (₱)": "291.64"
+        },
+        {
+            "BAR CODE": "748485200026",
+            "SKU": "Sardines Yellow 20 each",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "15.39",
+            "Total Value (₱)": "15.39"
+        },
+        {
+            "BAR CODE": "4800194116466",
+            "SKU": "CHOCO PILLOW CRARKERS P10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "6.6",
+            "Total Value (₱)": "39.6"
+        },
+        {
+            "BAR CODE": "4800194153225",
+            "SKU": "BREAD PAN ONION P10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "4.75",
+            "Total Value (₱)": "33.25"
+        },
+        {
+            "BAR CODE": "5011987861411",
+            "SKU": "c2 apple solo 15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "22",
+            "Average Cost (₱)": "9.75",
+            "Total Value (₱)": "214.5"
+        },
+        {
+            "BAR CODE": "PORK SIOMAI PHP. 5",
+            "SKU": "lan3799388",
+            "SELLING PRICE/UNIT": "5",
+            "QUANTITY": "175",
+            "Average Cost (₱)": "0.65",
+            "Total Value (₱)": "113.75"
+        },
+        {
+            "BAR CODE": "087295121207",
+            "SKU": "Siopao Mini - Asado/Bolabola",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "3.06",
+            "Total Value (₱)": "30.6"
+        },
+        {
+            "BAR CODE": "6902131110181",
+            "SKU": "Maling 170 mlg P35",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "30",
+            "Total Value (₱)": "30"
+        },
+        {
+            "BAR CODE": "48041812",
+            "SKU": "MIGHTY green php. 4",
+            "SELLING PRICE/UNIT": "4",
+            "QUANTITY": "208",
+            "Average Cost (₱)": "2.91",
+            "Total Value (₱)": "605.28"
+        },
+        {
+            "BAR CODE": "4802288884046",
+            "SKU": "Care Diaper XL P30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "23.75",
+            "Total Value (₱)": "47.5"
+        },
+        {
+            "BAR CODE": "4809010510556",
+            "SKU": "Cheese Cake - Pasalubong P10",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "17",
+            "Average Cost (₱)": "5.35",
+            "Total Value (₱)": "90.95"
+        },
+        {
+            "BAR CODE": "4800220503451",
+            "SKU": "Tanduay Rum 5years 250 ml",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "32.4",
+            "Total Value (₱)": "129.6"
+        },
+        {
+            "BAR CODE": "4800130100023",
+            "SKU": "Ginebra San Miguel - Round P50",
+            "SELLING PRICE/UNIT": "50",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "41.2",
+            "Total Value (₱)": "453.2"
+        },
+        {
+            "BAR CODE": "4800142120217",
+            "SKU": "Andy Cola Whiskey 40 each",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "28.5",
+            "Total Value (₱)": "57"
+        },
+        {
+            "BAR CODE": "8935001720195",
+            "SKU": "Mentos P1",
+            "SELLING PRICE/UNIT": "1",
+            "QUANTITY": "293",
+            "Average Cost (₱)": "0.63",
+            "Total Value (₱)": "184.59"
+        },
+        {
+            "BAR CODE": "4809010510297",
+            "SKU": "Pasalubong brownies 10",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "5.35",
+            "Total Value (₱)": "37.45"
+        },
+        {
+            "BAR CODE": "014285003045",
+            "SKU": "Catsup UFC 1k 55 each",
+            "SELLING PRICE/UNIT": "55",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "48.1",
+            "Total Value (₱)": "48.1"
+        },
+        {
+            "BAR CODE": "4809010626011",
+            "SKU": "Lemon Cheese Cake P10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "6.38",
+            "Total Value (₱)": "57.42"
+        },
+        {
+            "BAR CODE": "4800094097315",
+            "SKU": "Minola Cooking Oil P80",
+            "SELLING PRICE/UNIT": "80",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "68.2",
+            "Total Value (₱)": "341"
+        },
+        {
+            "BAR CODE": "4800094098831",
+            "SKU": "Minola Cooking Oil P35",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "29.7",
+            "Total Value (₱)": "59.4"
+        },
+        {
+            "BAR CODE": "Kikiam Trays ",
+            "SKU": "lan3808976",
+            "SELLING PRICE/UNIT": "1",
+            "QUANTITY": "100",
+            "Average Cost (₱)": "0.35",
+            "Total Value (₱)": "35"
+        },
+        {
+            "BAR CODE": "5011987234017",
+            "SKU": "C2 Lemon Solo P15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "9.73",
+            "Total Value (₱)": "87.57"
+        },
+        {
+            "BAR CODE": "4800220503253",
+            "SKU": "Tanduay Rum 5 years 375 ml 60",
+            "SELLING PRICE/UNIT": "60",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "43.5",
+            "Total Value (₱)": "87"
+        },
+        {
+            "BAR CODE": "8887155143026",
+            "SKU": "Canola Oil 127",
+            "SELLING PRICE/UNIT": "127",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "105",
+            "Total Value (₱)": "105"
+        },
+        {
+            "BAR CODE": "4805885171007",
+            "SKU": "Reno Liver Spread 22",
+            "SELLING PRICE/UNIT": "22",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "15.72",
+            "Total Value (₱)": "110.04"
+        },
+        {
+            "BAR CODE": "031146270606",
+            "SKU": "Nongshim Shin Cup P65",
+            "SELLING PRICE/UNIT": "65",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "52.71",
+            "Total Value (₱)": "52.71"
+        },
+        {
+            "BAR CODE": "4807770273858",
+            "SKU": "PC cup noodles EXTRA HOT php.30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "20.31",
+            "Total Value (₱)": "20.31"
+        },
+        {
+            "BAR CODE": "00552011",
+            "SKU": "Soda - Mountain Dew Mega",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "54",
+            "Average Cost (₱)": "19.17",
+            "Total Value (₱)": "1035.18"
+        },
+        {
+            "BAR CODE": "4800016553332",
+            "SKU": "Payless Beef Noodles P10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "5",
+            "Total Value (₱)": "5"
+        },
+        {
+            "BAR CODE": "4807770273681",
+            "SKU": "pancit canton extra hot chili php.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "11.48",
+            "Total Value (₱)": "34.44"
+        },
+        {
+            "BAR CODE": "074923405068",
+            "SKU": "Pik Nik - Original",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "32.45",
+            "Total Value (₱)": "64.9"
+        },
+        {
+            "BAR CODE": "038000845529",
+            "SKU": "Pringles Sour Cream P48",
+            "SELLING PRICE/UNIT": "48",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "39.4",
+            "Total Value (₱)": "118.2"
+        },
+        {
+            "BAR CODE": "038000845512",
+            "SKU": "Pringles Original",
+            "SELLING PRICE/UNIT": "48",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "39.4",
+            "Total Value (₱)": "118.2"
+        },
+        {
+            "BAR CODE": "4800523220048",
+            "SKU": "Pee Wee BBQ",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "11.53",
+            "Total Value (₱)": "34.59"
+        },
+        {
+            "BAR CODE": "4800361390804",
+            "SKU": "Coffee Mate Creamer",
+            "SELLING PRICE/UNIT": "42",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "34.59",
+            "Total Value (₱)": "172.95"
+        },
+        {
+            "BAR CODE": "4806504173457",
+            "SKU": "Egg",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "6.72",
+            "Total Value (₱)": "100.8"
+        },
+        {
+            "BAR CODE": "00452342",
+            "SKU": "Food Tong  Supplies Expense",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "28.75",
+            "Total Value (₱)": "28.75"
+        },
+        {
+            "BAR CODE": "00034654",
+            "SKU": "Spoon Store Supplies",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "3.25",
+            "Total Value (₱)": "39"
+        },
+        {
+            "BAR CODE": "4808887300284",
+            "SKU": "Tender Juicy Hotdog",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "16",
+            "Average Cost (₱)": "11.31",
+            "Total Value (₱)": "180.96"
+        },
+        {
+            "BAR CODE": "Barcode NA",
+            "SKU": "Sauce Dispenser- Office Supplies",
+            "SELLING PRICE/UNIT": "45",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "45",
+            "Total Value (₱)": "90"
+        },
+        {
+            "BAR CODE": "4800496813902",
+            "SKU": "Hotdog Rolls",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "4.56",
+            "Total Value (₱)": "31.92"
+        },
+        {
+            "BAR CODE": "Tropican 8 Oz",
+            "SKU": "Tropicana 8 OZ",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "11.19",
+            "Total Value (₱)": "167.85"
+        },
+        {
+            "BAR CODE": "4800523223162",
+            "SKU": "Cheez it 95g.php 22",
+            "SELLING PRICE/UNIT": "22",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "16.62",
+            "Total Value (₱)": "116.34"
+        },
+        {
+            "BAR CODE": "4800194179904",
+            "SKU": "Marty's Craklin Salt",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "14.92",
+            "Total Value (₱)": "119.36"
+        },
+        {
+            "BAR CODE": "4800523220086",
+            "SKU": "Cheez it 60g php.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "9.59",
+            "Total Value (₱)": "47.95"
+        },
+        {
+            "BAR CODE": "4800216110069",
+            "SKU": " Clover chips Cheese 60 gm.php.20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "15.44",
+            "Total Value (₱)": "108.08"
+        },
+        {
+            "BAR CODE": "4801688103511",
+            "SKU": "Regent Cheese Ring",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "11.83",
+            "Total Value (₱)": "11.83"
+        },
+        {
+            "BAR CODE": "4800016663802",
+            "SKU": "J&J NOVA CNTRY CHEDDAR php.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "11.28",
+            "Total Value (₱)": "124.08"
+        },
+        {
+            "BAR CODE": "4800016622533",
+            "SKU": "J&J V-CUTS SPICY BBQ php.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "11.35",
+            "Total Value (₱)": "147.55"
+        },
+        {
+            "BAR CODE": "4800194104869",
+            "SKU": "Oishi Crispy Patata php. 8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "4.94",
+            "Total Value (₱)": "69.16"
+        },
+        {
+            "BAR CODE": "4806500730012",
+            "SKU": "Snow Bear Candy",
+            "SELLING PRICE/UNIT": "1",
+            "QUANTITY": "51",
+            "Average Cost (₱)": "0.68",
+            "Total Value (₱)": "34.68"
+        },
+        {
+            "BAR CODE": "750515017450",
+            "SKU": " M.Y. San Fita Single ",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "16",
+            "Average Cost (₱)": "4.81",
+            "Total Value (₱)": "76.96"
+        },
+        {
+            "BAR CODE": "4800010075601",
+            "SKU": "Presto Creams choco",
+            "SELLING PRICE/UNIT": "9",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "4.52",
+            "Total Value (₱)": "4.52"
+        },
+        {
+            "BAR CODE": "857451000536",
+            "SKU": "mega sardines chilli php.20",
+            "SELLING PRICE/UNIT": "19",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "14.88",
+            "Total Value (₱)": "29.76"
+        },
+        {
+            "BAR CODE": "748485100418",
+            "SKU": "Century Tuna Flk H& S",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "28.87",
+            "Total Value (₱)": "144.35"
+        },
+        {
+            "BAR CODE": "4801668505038",
+            "SKU": "Datu Puti Patis",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "20.05",
+            "Total Value (₱)": "60.15"
+        },
+        {
+            "BAR CODE": "4800575140370",
+            "SKU": "Alaska Evaporada 370ML Php 32",
+            "SELLING PRICE/UNIT": "32",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "25.38",
+            "Total Value (₱)": "76.14"
+        },
+        {
+            "BAR CODE": "4800575140158",
+            "SKU": "Alaska Evaporada 140 Ml",
+            "SELLING PRICE/UNIT": "17",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "10.78",
+            "Total Value (₱)": "32.34"
+        },
+        {
+            "BAR CODE": "4800022100018",
+            "SKU": "Hunts Pork & Beans Php 32 each",
+            "SELLING PRICE/UNIT": "32",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "25.5",
+            "Total Value (₱)": "76.5"
+        },
+        {
+            "BAR CODE": "4800361394093",
+            "SKU": "Bear Brand Ster 25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "20.61",
+            "Total Value (₱)": "123.66"
+        },
+        {
+            "BAR CODE": "8996001410547",
+            "SKU": "KOPIKO BROWN php.9",
+            "SELLING PRICE/UNIT": "9",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "6.19",
+            "Total Value (₱)": "80.47"
+        },
+        {
+            "BAR CODE": "4800016021039",
+            "SKU": "Great Taste White",
+            "SELLING PRICE/UNIT": "9",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "5.71",
+            "Total Value (₱)": "57.1"
+        },
+        {
+            "BAR CODE": "1234",
+            "SKU": "Coffee Paper Cups",
+            "SELLING PRICE/UNIT": "3",
+            "QUANTITY": "17",
+            "Average Cost (₱)": "2",
+            "Total Value (₱)": "34"
+        },
+        {
+            "BAR CODE": "4800092112317",
+            "SKU": "Hansel Crackers",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "4.63",
+            "Total Value (₱)": "41.67"
+        },
+        {
+            "BAR CODE": "4809012175012",
+            "SKU": "Acetone P8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "3.5",
+            "Total Value (₱)": "7"
+        },
+        {
+            "BAR CODE": "4809012175289",
+            "SKU": "Merthilet P8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "2.5",
+            "Total Value (₱)": "22.5"
+        },
+        {
+            "BAR CODE": "4809012175128",
+            "SKU": "Cuticle Remover 8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "2.5",
+            "Total Value (₱)": "27.5"
+        },
+        {
+            "BAR CODE": "4800088251006",
+            "SKU": "Cricket Lighters 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "16",
+            "Average Cost (₱)": "13.5",
+            "Total Value (₱)": "216"
+        },
+        {
+            "BAR CODE": "6952337300886",
+            "SKU": "Shaver Blue 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "30",
+            "Average Cost (₱)": "13.9",
+            "Total Value (₱)": "417"
+        },
+        {
+            "BAR CODE": "3014260276676",
+            "SKU": "Oral B Classic 35",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "28.5",
+            "Total Value (₱)": "313.5"
+        },
+        {
+            "BAR CODE": "8888826016588",
+            "SKU": "Oral B Vision 35",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "22",
+            "Average Cost (₱)": "28.5",
+            "Total Value (₱)": "627"
+        },
+        {
+            "BAR CODE": "4865872548595",
+            "SKU": "Sun Up Ballpen Black 8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "48",
+            "Average Cost (₱)": "4.49",
+            "Total Value (₱)": "215.52"
+        },
+        {
+            "BAR CODE": "4800581157300",
+            "SKU": "Marker Pentelpen 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "16",
+            "Average Cost (₱)": "12.5",
+            "Total Value (₱)": "200"
+        },
+        {
+            "BAR CODE": "4902505088094",
+            "SKU": "Marker Pilot 40",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "23",
+            "Average Cost (₱)": "28.5",
+            "Total Value (₱)": "655.5"
+        },
+        {
+            "BAR CODE": "4809655074543",
+            "SKU": "Q tips Cotton Buds P20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "29",
+            "Average Cost (₱)": "12.5",
+            "Total Value (₱)": "362.5"
+        },
+        {
+            "BAR CODE": "6971017920121",
+            "SKU": "Nail Cutter Small 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "21",
+            "Average Cost (₱)": "12.5",
+            "Total Value (₱)": "262.5"
+        },
+        {
+            "BAR CODE": "N0817",
+            "SKU": "Nail Cutter Big 25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "23",
+            "Average Cost (₱)": "18.5",
+            "Total Value (₱)": "425.5"
+        },
+        {
+            "BAR CODE": "6958225715008",
+            "SKU": "Chani 25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "23",
+            "Average Cost (₱)": "18.5",
+            "Total Value (₱)": "425.5"
+        },
+        {
+            "BAR CODE": "6940597705909",
+            "SKU": "Steet Whool 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "21",
+            "Average Cost (₱)": "15",
+            "Total Value (₱)": "315"
+        },
+        {
+            "BAR CODE": "4806502146002",
+            "SKU": "Bond Paper Short 1",
+            "SELLING PRICE/UNIT": "1",
+            "QUANTITY": "291",
+            "Average Cost (₱)": "0.38",
+            "Total Value (₱)": "110.58"
+        },
+        {
+            "BAR CODE": "4806501523194",
+            "SKU": "Bond Paper Long 1",
+            "SELLING PRICE/UNIT": "1",
+            "QUANTITY": "497",
+            "Average Cost (₱)": "0.23",
+            "Total Value (₱)": "114.31"
+        },
+        {
+            "BAR CODE": "3416702548257",
+            "SKU": "Band Aid 2",
+            "SELLING PRICE/UNIT": "2",
+            "QUANTITY": "25",
+            "Average Cost (₱)": "0.48",
+            "Total Value (₱)": "12"
+        },
+        {
+            "BAR CODE": "Small White Envelope",
+            "SKU": "Small White Envelope 1",
+            "SELLING PRICE/UNIT": "1",
+            "QUANTITY": "395",
+            "Average Cost (₱)": "0.38",
+            "Total Value (₱)": "150.1"
+        },
+        {
+            "BAR CODE": "Big White Envelope",
+            "SKU": "Big White Envelope php.2",
+            "SELLING PRICE/UNIT": "1.50",
+            "QUANTITY": "227",
+            "Average Cost (₱)": "0.85",
+            "Total Value (₱)": "192.95"
+        },
+        {
+            "BAR CODE": "8887549452611",
+            "SKU": "AA Battery Panasonic 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "38",
+            "Average Cost (₱)": "14.75",
+            "Total Value (₱)": "560.5"
+        },
+        {
+            "BAR CODE": "6928394900666",
+            "SKU": "AAA Battery 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "40",
+            "Average Cost (₱)": "6.25",
+            "Total Value (₱)": "250"
+        },
+        {
+            "BAR CODE": "4801234014414",
+            "SKU": "Kiwi Black 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "71",
+            "Average Cost (₱)": "6.25",
+            "Total Value (₱)": "443.75"
+        },
+        {
+            "BAR CODE": "4800361379557",
+            "SKU": "Nestea Powder Lemon Blend P20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "16.36",
+            "Total Value (₱)": "147.24"
+        },
+        {
+            "BAR CODE": "69025310",
+            "SKU": "Snickers 20 gms P16",
+            "SELLING PRICE/UNIT": "16",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "11.9",
+            "Total Value (₱)": "47.6"
+        },
+        {
+            "BAR CODE": "4806521130112",
+            "SKU": "Ulam Paksiw Php 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "15.94",
+            "Total Value (₱)": "15.94"
+        },
+        {
+            "BAR CODE": "4806521130105",
+            "SKU": "Ulam Caldereta",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "15.94",
+            "Total Value (₱)": "31.88"
+        },
+        {
+            "BAR CODE": "7622300559991",
+            "SKU": "Tang Orange Juice P20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "15.4",
+            "Total Value (₱)": "231"
+        },
+        {
+            "BAR CODE": "7622300312039",
+            "SKU": "Cheez Whiz Pimiento P10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "5.77",
+            "Total Value (₱)": "11.54"
+        },
+        {
+            "BAR CODE": "4807770270024",
+            "SKU": "LM Chicken Noodles 12",
+            "SELLING PRICE/UNIT": "12",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "7.49",
+            "Total Value (₱)": "59.92"
+        },
+        {
+            "BAR CODE": "4807770270017",
+            "SKU": "LM Beef Noodles P12",
+            "SELLING PRICE/UNIT": "12",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "7.49",
+            "Total Value (₱)": "104.86"
+        },
+        {
+            "BAR CODE": "014285003908",
+            "SKU": "UFC Ketchup Tamis Anghang P5",
+            "SELLING PRICE/UNIT": "5",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "2.41",
+            "Total Value (₱)": "4.82"
+        },
+        {
+            "BAR CODE": "4800016303081",
+            "SKU": "Maxx Dalandan Orange p1",
+            "SELLING PRICE/UNIT": "1",
+            "QUANTITY": "97",
+            "Average Cost (₱)": "0.57",
+            "Total Value (₱)": "55.29"
+        },
+        {
+            "BAR CODE": "4809015337011",
+            "SKU": "Adobong Mani Skin on P6",
+            "SELLING PRICE/UNIT": "6",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "4.32",
+            "Total Value (₱)": "34.56"
+        },
+        {
+            "BAR CODE": "4809015337035",
+            "SKU": "Adobong Mani Skinless P6",
+            "SELLING PRICE/UNIT": "6",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "4.33",
+            "Total Value (₱)": "38.97"
+        },
+        {
+            "BAR CODE": "096785010976",
+            "SKU": "Saba Squid P40",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "34.5",
+            "Total Value (₱)": "103.5"
+        },
+        {
+            "BAR CODE": "4800158987033",
+            "SKU": "Hekaido Mackerel  30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "23.5",
+            "Total Value (₱)": "47"
+        },
+        {
+            "BAR CODE": "4807770273698",
+            "SKU": "Pancit Canton Chilimansi P15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "48",
+            "Average Cost (₱)": "11.41",
+            "Total Value (₱)": "547.68"
+        },
+        {
+            "BAR CODE": "4807770273711",
+            "SKU": "Pancit Canton Sweet & SpicyP15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "11.6",
+            "Total Value (₱)": "139.2"
+        },
+        {
+            "BAR CODE": "4800016021497",
+            "SKU": "Great Taste Twin Pack 13",
+            "SELLING PRICE/UNIT": "13",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "8.38",
+            "Total Value (₱)": "58.66"
+        },
+        {
+            "BAR CODE": "Fish Crackers ",
+            "SKU": "Fish Crackers",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "5",
+            "Total Value (₱)": "45"
+        },
+        {
+            "BAR CODE": "48043717",
+            "SKU": "fort green php.5",
+            "SELLING PRICE/UNIT": "5",
+            "QUANTITY": "122",
+            "Average Cost (₱)": "3",
+            "Total Value (₱)": "366"
+        },
+        {
+            "BAR CODE": "8993175538145",
+            "SKU": "richeese wafer",
+            "SELLING PRICE/UNIT": "13",
+            "QUANTITY": "33",
+            "Average Cost (₱)": "7.92",
+            "Total Value (₱)": "261.36"
+        },
+        {
+            "BAR CODE": "4800016628269",
+            "SKU": "pretzels Php 15 each",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "9.61",
+            "Total Value (₱)": "48.05"
+        },
+        {
+            "BAR CODE": "4800818809750",
+            "SKU": "icool gum",
+            "SELLING PRICE/UNIT": "1",
+            "QUANTITY": "39",
+            "Average Cost (₱)": "0.53",
+            "Total Value (₱)": "20.67"
+        },
+        {
+            "BAR CODE": "4801288830084",
+            "SKU": "thosedays18",
+            "SELLING PRICE/UNIT": "18",
+            "QUANTITY": "18",
+            "Average Cost (₱)": "10.5",
+            "Total Value (₱)": "189"
+        },
+        {
+            "BAR CODE": "4800092660962",
+            "SKU": "chocomucho darkchoco",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "20",
+            "Average Cost (₱)": "5.92",
+            "Total Value (₱)": "118.4"
+        },
+        {
+            "BAR CODE": "4800010961447",
+            "SKU": "cloud9 Php 12 each",
+            "SELLING PRICE/UNIT": "12",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "6.35",
+            "Total Value (₱)": "19.05"
+        },
+        {
+            "BAR CODE": "4800016641503",
+            "SKU": "chippy chilicheese Php25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "19.15",
+            "Total Value (₱)": "57.45"
+        },
+        {
+            "BAR CODE": "4800216121058",
+            "SKU": "LESLIE cheezy crunch php.25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "17.88",
+            "Total Value (₱)": "160.92"
+        },
+        {
+            "BAR CODE": "4800818807497",
+            "SKU": "potchi gummy",
+            "SELLING PRICE/UNIT": "1",
+            "QUANTITY": "35",
+            "Average Cost (₱)": "0.56",
+            "Total Value (₱)": "19.6"
+        },
+        {
+            "BAR CODE": "4800194106108",
+            "SKU": "POTATO CRISP ketchup php.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "18",
+            "Average Cost (₱)": "11.44",
+            "Total Value (₱)": "205.92"
+        },
+        {
+            "BAR CODE": "4800194106153",
+            "SKU": "POTATO CRISP creamy php.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "11.5",
+            "Total Value (₱)": "23"
+        },
+        {
+            "BAR CODE": "paracetamol",
+            "SKU": "biogesic 500g 7",
+            "SELLING PRICE/UNIT": "7",
+            "QUANTITY": "17",
+            "Average Cost (₱)": "3.89",
+            "Total Value (₱)": "66.13"
+        },
+        {
+            "BAR CODE": "neozep",
+            "SKU": "neozep 8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "5.25",
+            "Total Value (₱)": "42"
+        },
+        {
+            "BAR CODE": "bioflu",
+            "SKU": "bioflu500mg 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "8",
+            "Total Value (₱)": "120"
+        },
+        {
+            "BAR CODE": "4800575142633",
+            "SKU": "alaska 33g. 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "6.67",
+            "Total Value (₱)": "6.67"
+        },
+        {
+            "BAR CODE": "48025522",
+            "SKU": "magic sarap8g 5",
+            "SELLING PRICE/UNIT": "5",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "2.94",
+            "Total Value (₱)": "29.4"
+        },
+        {
+            "BAR CODE": "4801958259009",
+            "SKU": "ajinomoto12g 4",
+            "SELLING PRICE/UNIT": "4",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "2.6",
+            "Total Value (₱)": "10.4"
+        },
+        {
+            "BAR CODE": "48040693",
+            "SKU": "JB powder pink25g 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "11.83",
+            "Total Value (₱)": "23.66"
+        },
+        {
+            "BAR CODE": "8410162100234",
+            "SKU": "fundador light 1ltr. 450",
+            "SELLING PRICE/UNIT": "450",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "321.25",
+            "Total Value (₱)": "321.25"
+        },
+        {
+            "BAR CODE": "4800095004183",
+            "SKU": "rubbing alcohol 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "11.95",
+            "Total Value (₱)": "47.8"
+        },
+        {
+            "BAR CODE": "4800010075243",
+            "SKU": "cream O chocolate 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "27",
+            "Average Cost (₱)": "5.63",
+            "Total Value (₱)": "152.01"
+        },
+        {
+            "BAR CODE": "4800361383301",
+            "SKU": "milo22g 12",
+            "SELLING PRICE/UNIT": "12",
+            "QUANTITY": "19",
+            "Average Cost (₱)": "6.75",
+            "Total Value (₱)": "128.25"
+        },
+        {
+            "BAR CODE": "7622300601768",
+            "SKU": "tang pineapple 25g 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "15.9",
+            "Total Value (₱)": "143.1"
+        },
+        {
+            "BAR CODE": "4800092551444",
+            "SKU": "fudgee bar macapuno 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "26",
+            "Average Cost (₱)": "5.52",
+            "Total Value (₱)": "143.52"
+        },
+        {
+            "BAR CODE": "4805358603059",
+            "SKU": "magnolia chocolait 250ml. 30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "22.05",
+            "Total Value (₱)": "66.15"
+        },
+        {
+            "BAR CODE": "SO0005236404",
+            "SKU": "royal 8oz",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "144",
+            "Average Cost (₱)": "6.6",
+            "Total Value (₱)": "950.4"
+        },
+        {
+            "BAR CODE": "054028367911",
+            "SKU": "yakult12 Php 12 each",
+            "SELLING PRICE/UNIT": "12",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "9",
+            "Total Value (₱)": "81"
+        },
+        {
+            "BAR CODE": "4800449555514",
+            "SKU": "lala100g 23",
+            "SELLING PRICE/UNIT": "22",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "17.5",
+            "Total Value (₱)": "87.5"
+        },
+        {
+            "BAR CODE": "4800016138546",
+            "SKU": "g/goose tortillos cheese 25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "18.9",
+            "Total Value (₱)": "207.9"
+        },
+        {
+            "BAR CODE": "4800016625534",
+            "SKU": "J&J V-CUTS SPICY BBQ BIG php.30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "25.4",
+            "Total Value (₱)": "203.2"
+        },
+        {
+            "BAR CODE": "4800194173223",
+            "SKU": "bread pan onoin 42g.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "16",
+            "Average Cost (₱)": "8.54",
+            "Total Value (₱)": "136.64"
+        },
+        {
+            "BAR CODE": "4800092552229",
+            "SKU": "chunkee chipcookies10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "47",
+            "Average Cost (₱)": "5.73",
+            "Total Value (₱)": "269.31"
+        },
+        {
+            "BAR CODE": "8996001440049",
+            "SKU": "energen choco9",
+            "SELLING PRICE/UNIT": "9",
+            "QUANTITY": "49",
+            "Average Cost (₱)": "5.88",
+            "Total Value (₱)": "288.12"
+        },
+        {
+            "BAR CODE": "8996001440124",
+            "SKU": "energen vanilla9",
+            "SELLING PRICE/UNIT": "9",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "5.78",
+            "Total Value (₱)": "57.8"
+        },
+        {
+            "BAR CODE": "4807770273841",
+            "SKU": "PC cup noodles kalamansi30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "20.31",
+            "Total Value (₱)": "121.86"
+        },
+        {
+            "BAR CODE": "4801288820153",
+            "SKU": "happy cotton php. 8",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "3.69",
+            "Total Value (₱)": "14.76"
+        },
+        {
+            "BAR CODE": "4807770272653",
+            "SKU": "LM jjamppong27",
+            "SELLING PRICE/UNIT": "27",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "19.43",
+            "Total Value (₱)": "233.16"
+        },
+        {
+            "BAR CODE": "7622300501525",
+            "SKU": "cheez whiz 62g 30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "23.87",
+            "Total Value (₱)": "23.87"
+        },
+        {
+            "BAR CODE": "4800361381024",
+            "SKU": "bear brand SWAK15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "11.11",
+            "Total Value (₱)": "133.32"
+        },
+        {
+            "BAR CODE": "4902430945554",
+            "SKU": "safeguard white22",
+            "SELLING PRICE/UNIT": "22",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "16.72",
+            "Total Value (₱)": "50.16"
+        },
+        {
+            "BAR CODE": "4800016052040",
+            "SKU": "C2 apple 355ml.  Php 25 each",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "18.14",
+            "Total Value (₱)": "181.4"
+        },
+        {
+            "BAR CODE": "4800016052057",
+            "SKU": "C2 lemon355ml. Php 25 each",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "18.39",
+            "Total Value (₱)": "73.56"
+        },
+        {
+            "BAR CODE": "puto seko",
+            "SKU": "puto seko 8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "5",
+            "Total Value (₱)": "40"
+        },
+        {
+            "BAR CODE": "8850006304563",
+            "SKU": "colgate plax 30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "21.75",
+            "Total Value (₱)": "43.5"
+        },
+        {
+            "BAR CODE": "4800888150608",
+            "SKU": "rexona 3ml.shower 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "6.73",
+            "Total Value (₱)": "13.46"
+        },
+        {
+            "BAR CODE": "4800888166494",
+            "SKU": "rexona 3ml. advanced 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "6.73",
+            "Total Value (₱)": "47.11"
+        },
+        {
+            "BAR CODE": "4800888158888",
+            "SKU": "rexona 3ml.powder dry 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "6.73",
+            "Total Value (₱)": "26.92"
+        },
+        {
+            "BAR CODE": "4800888160027",
+            "SKU": "rexona men 3ml.ice cool 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "6.73",
+            "Total Value (₱)": "47.11"
+        },
+        {
+            "BAR CODE": "4806011610070",
+            "SKU": "scaths tape 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "7",
+            "Total Value (₱)": "14"
+        },
+        {
+            "BAR CODE": "4800016653094",
+            "SKU": "mr chips 25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "18.1",
+            "Total Value (₱)": "36.2"
+        },
+        {
+            "BAR CODE": "4800016663505",
+            "SKU": "J&J NOVA Country cheddar php.30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "25.4",
+            "Total Value (₱)": "177.8"
+        },
+        {
+            "BAR CODE": "8998666001726",
+            "SKU": "kopiko blanca twin 13",
+            "SELLING PRICE/UNIT": "13",
+            "QUANTITY": "33",
+            "Average Cost (₱)": "9.12",
+            "Total Value (₱)": "300.96"
+        },
+        {
+            "BAR CODE": "4800888147288",
+            "SKU": "close up 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "5.7",
+            "Total Value (₱)": "5.7"
+        },
+        {
+            "BAR CODE": "4800016113048",
+            "SKU": "DEWBERRY strawberris 10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "19",
+            "Average Cost (₱)": "5.95",
+            "Total Value (₱)": "113.05"
+        },
+        {
+            "BAR CODE": "4801668602034",
+            "SKU": "datu puti soysauce pack 200ml 13",
+            "SELLING PRICE/UNIT": "13",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "7.94",
+            "Total Value (₱)": "31.76"
+        },
+        {
+            "BAR CODE": "4801668600542",
+            "SKU": "datu puti patis 150ml. pack 15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "9.55",
+            "Total Value (₱)": "19.1"
+        },
+        {
+            "BAR CODE": "4801668602027",
+            "SKU": "datu puti suka 200ml. php.10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "6.16",
+            "Total Value (₱)": "43.12"
+        },
+        {
+            "BAR CODE": "4801668500293",
+            "SKU": "datu puti vinegar 385ml. 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "13.78",
+            "Total Value (₱)": "55.12"
+        },
+        {
+            "BAR CODE": "7622210895097",
+            "SKU": "cheez whiz 24g. 15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "9.49",
+            "Total Value (₱)": "104.39"
+        },
+        {
+            "BAR CODE": "00164962",
+            "SKU": "JBO savings sugar php.30",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "24.61",
+            "Total Value (₱)": "24.61"
+        },
+        {
+            "BAR CODE": "748485200064",
+            "SKU": "555 big green425g. 50",
+            "SELLING PRICE/UNIT": "50",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "40.4",
+            "Total Value (₱)": "161.6"
+        },
+        {
+            "BAR CODE": "748485200071",
+            "SKU": "555 big red hot 425g. 55",
+            "SELLING PRICE/UNIT": "50",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "40.03",
+            "Total Value (₱)": "40.03"
+        },
+        {
+            "BAR CODE": "00006187",
+            "SKU": "CANDLE php.10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "34",
+            "Average Cost (₱)": "6.95",
+            "Total Value (₱)": "236.3"
+        },
+        {
+            "BAR CODE": "4800014142088",
+            "SKU": "summit 1LTR  30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "19",
+            "Average Cost (₱)": "17.21",
+            "Total Value (₱)": "326.99"
+        },
+        {
+            "BAR CODE": "48033831",
+            "SKU": "winston red php.6",
+            "SELLING PRICE/UNIT": "6",
+            "QUANTITY": "108",
+            "Average Cost (₱)": "3.72",
+            "Total Value (₱)": "401.76"
+        },
+        {
+            "BAR CODE": "4806500076073",
+            "SKU": "young gel 4",
+            "SELLING PRICE/UNIT": "4",
+            "QUANTITY": "24",
+            "Average Cost (₱)": "1.33",
+            "Total Value (₱)": "31.92"
+        },
+        {
+            "BAR CODE": "4800194114462",
+            "SKU": "pillow 150g. 40",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "31.6",
+            "Total Value (₱)": "63.2"
+        },
+        {
+            "BAR CODE": "4800016012266",
+            "SKU": "greatest premium 25g. ph25",
+            "SELLING PRICE/UNIT": "25",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "17.1",
+            "Total Value (₱)": "136.8"
+        },
+        {
+            "BAR CODE": "4800361396677",
+            "SKU": "bearbrand adult plus ph20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "14.7",
+            "Total Value (₱)": "147"
+        },
+        {
+            "BAR CODE": "4800523443423",
+            "SKU": "LOADED WHITE php.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "33",
+            "Average Cost (₱)": "10.57",
+            "Total Value (₱)": "348.81"
+        },
+        {
+            "BAR CODE": "4807770120725",
+            "SKU": "monde creampuffs choco php.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "9.99",
+            "Total Value (₱)": "69.93"
+        },
+        {
+            "BAR CODE": "4807770120732",
+            "SKU": "monde cream puffs custard php.15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "9.95",
+            "Total Value (₱)": "49.75"
+        },
+        {
+            "BAR CODE": "4806517042153",
+            "SKU": "goya almonds 30",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "18",
+            "Total Value (₱)": "198"
+        },
+        {
+            "BAR CODE": "4800365881315",
+            "SKU": "super delight brownies php.5",
+            "SELLING PRICE/UNIT": "5",
+            "QUANTITY": "96",
+            "Average Cost (₱)": "2.93",
+            "Total Value (₱)": "281.28"
+        },
+        {
+            "BAR CODE": "4800092552366",
+            "SKU": "crossinni bavarian php.10",
+            "SELLING PRICE/UNIT": "10",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "6.43",
+            "Total Value (₱)": "83.59"
+        },
+        {
+            "BAR CODE": "4808647020094",
+            "SKU": "Eden cheese 165g. php.60",
+            "SELLING PRICE/UNIT": "60",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "46.22",
+            "Total Value (₱)": "184.88"
+        },
+        {
+            "BAR CODE": "4807770270116",
+            "SKU": "LM mami itnok php.12",
+            "SELLING PRICE/UNIT": "12",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "7.4",
+            "Total Value (₱)": "51.8"
+        },
+        {
+            "BAR CODE": "857451000529",
+            "SKU": "mega sardines php.20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "14.25",
+            "Total Value (₱)": "42.75"
+        },
+        {
+            "BAR CODE": "4800249006612",
+            "SKU": "san marino corned tuna 150g. php.38",
+            "SELLING PRICE/UNIT": "40",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "30.96",
+            "Total Value (₱)": "154.8"
+        },
+        {
+            "BAR CODE": "748485900032",
+            "SKU": "Fresca tuna caldereta php.28",
+            "SELLING PRICE/UNIT": "28",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "20.4",
+            "Total Value (₱)": "20.4"
+        },
+        {
+            "BAR CODE": "748485100081",
+            "SKU": "Century tuna flk in oil 180g. php45",
+            "SELLING PRICE/UNIT": "45",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "35.05",
+            "Total Value (₱)": "210.3"
+        },
+        {
+            "BAR CODE": "4800249006674",
+            "SKU": "san marino chili 180g. php50",
+            "SELLING PRICE/UNIT": "50",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "40",
+            "Total Value (₱)": "120"
+        },
+        {
+            "BAR CODE": "748485800448",
+            "SKU": "ARGENTINA meatloft 250g. php 35",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "13.45",
+            "Total Value (₱)": "40.35"
+        },
+        {
+            "BAR CODE": "748485800233",
+            "SKU": "Argentina meatloft 170g. php.28",
+            "SELLING PRICE/UNIT": "30",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "19.21",
+            "Total Value (₱)": "76.84"
+        },
+        {
+            "BAR CODE": "4800014145089",
+            "SKU": "absolute 1ltr. php.35",
+            "SELLING PRICE/UNIT": "35",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "20.52",
+            "Total Value (₱)": "61.56"
+        },
+        {
+            "BAR CODE": "4801981116270",
+            "SKU": "Sprite 1.5 Ltrs. php 65",
+            "SELLING PRICE/UNIT": "65",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "51.2",
+            "Total Value (₱)": "256"
+        },
+        {
+            "BAR CODE": "4801981116072",
+            "SKU": "Coke 1.5 Ltrs php. 65",
+            "SELLING PRICE/UNIT": "65",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "56.28",
+            "Total Value (₱)": "168.84"
+        },
+        {
+            "BAR CODE": "4800888139283",
+            "SKU": "creamsilk green php.8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "4.9",
+            "Total Value (₱)": "63.7"
+        },
+        {
+            "BAR CODE": "9556031084119",
+            "SKU": "palmolive pink php.18",
+            "SELLING PRICE/UNIT": "18",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "10",
+            "Total Value (₱)": "20"
+        },
+        {
+            "BAR CODE": "9556031084126",
+            "SKU": "palmolive green php.18",
+            "SELLING PRICE/UNIT": "18",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "10.08",
+            "Total Value (₱)": "60.48"
+        },
+        {
+            "BAR CODE": "4902430698658",
+            "SKU": "head & shoulder pink php.7",
+            "SELLING PRICE/UNIT": "7",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "4.7",
+            "Total Value (₱)": "4.7"
+        },
+        {
+            "BAR CODE": "4800888169716",
+            "SKU": "sunsilk shampoo pink php.8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "24",
+            "Average Cost (₱)": "4.04",
+            "Total Value (₱)": "96.96"
+        },
+        {
+            "BAR CODE": "4806525283043",
+            "SKU": "hanna shmpoo lychess scent 8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "3.67",
+            "Total Value (₱)": "7.34"
+        },
+        {
+            "BAR CODE": "4806525283005",
+            "SKU": "hana shmpoo apple scent 8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "3.67",
+            "Total Value (₱)": "7.34"
+        },
+        {
+            "BAR CODE": "4902430431163",
+            "SKU": "tide bar lemon php15",
+            "SELLING PRICE/UNIT": "15",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "8.43",
+            "Total Value (₱)": "8.43"
+        },
+        {
+            "BAR CODE": "4801010504207",
+            "SKU": "JB baby oil green php48",
+            "SELLING PRICE/UNIT": "48",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "39.8",
+            "Total Value (₱)": "199"
+        },
+        {
+            "BAR CODE": "4806507831927",
+            "SKU": "Juicy cologne dreamsicle php.20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "13.9",
+            "Total Value (₱)": "41.7"
+        },
+        {
+            "BAR CODE": "4806507831965",
+            "SKU": "Juicy cologne sweet delight php 20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "13.9",
+            "Total Value (₱)": "69.5"
+        },
+        {
+            "BAR CODE": "4806507831934",
+            "SKU": "JUICY COLGNE PINK php.20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "13.9",
+            "Total Value (₱)": "55.6"
+        },
+        {
+            "BAR CODE": "4806507831972",
+            "SKU": "Juicy cologne icylicious php.20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "13.9",
+            "Total Value (₱)": "55.6"
+        },
+        {
+            "BAR CODE": "4806507831989",
+            "SKU": "Juicy cologne springkle php.20",
+            "SELLING PRICE/UNIT": "20",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "13.9",
+            "Total Value (₱)": "27.8"
+        },
+        {
+            "BAR CODE": "4800361339186",
+            "SKU": "nescafe classic 25g.php27",
+            "SELLING PRICE/UNIT": "27",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "19",
+            "Total Value (₱)": "95"
+        },
+        {
+            "BAR CODE": "4800014141081",
+            "SKU": "SUMMIT MINERAL WATER 500ml php 15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "69",
+            "Average Cost (₱)": "10.03",
+            "Total Value (₱)": "692.07"
+        },
+        {
+            "BAR CODE": "4804880314181",
+            "SKU": "PURO php.28",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "20.93",
+            "Total Value (₱)": "125.58"
+        },
+        {
+            "BAR CODE": "4800092110030",
+            "SKU": "rebisco choco php.8",
+            "SELLING PRICE/UNIT": "8",
+            "QUANTITY": "16",
+            "Average Cost (₱)": "4.44",
+            "Total Value (₱)": "71.04"
+        },
+        {
+            "BAR CODE": "4800016082856",
+            "SKU": "magic flakes cheese  php.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "4.32",
+            "Total Value (₱)": "21.6"
+        },
+        {
+            "BAR CODE": "4800092552175",
+            "SKU": "Topps choco php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "5.27",
+            "Total Value (₱)": "15.81"
+        },
+        {
+            "BAR CODE": "4806506406102",
+            "SKU": "Rabbit sugar washed php.17",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "11.55",
+            "Total Value (₱)": "34.65"
+        },
+        {
+            "BAR CODE": "4806506406010",
+            "SKU": "Rabbit sugar whte php.32",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "24.6",
+            "Total Value (₱)": "24.6"
+        },
+        {
+            "BAR CODE": "4801688103726",
+            "SKU": "sweet corn 60g. php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "11",
+            "Total Value (₱)": "11"
+        },
+        {
+            "BAR CODE": "4800016043123",
+            "SKU": "NIPS chocolate php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "11.18",
+            "Total Value (₱)": "167.7"
+        },
+        {
+            "BAR CODE": "038000138430",
+            "SKU": "PRINGLES sour cream php115",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "91.25",
+            "Total Value (₱)": "182.5"
+        },
+        {
+            "BAR CODE": "4800040352314",
+            "SKU": " CHOCO mallows php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "29.38",
+            "Total Value (₱)": "117.52"
+        },
+        {
+            "BAR CODE": "4801958390108",
+            "SKU": "crispy fry 1kg. php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "13.65",
+            "Total Value (₱)": "40.95"
+        },
+        {
+            "BAR CODE": "4800361389426",
+            "SKU": "KOkokrunch all in 1php.13",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "8.95",
+            "Total Value (₱)": "35.8"
+        },
+        {
+            "BAR CODE": "4807770121708",
+            "SKU": "waffle deluxe php.12",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "8.86",
+            "Total Value (₱)": "88.6"
+        },
+        {
+            "BAR CODE": "750515030176",
+            "SKU": "Skyflakes oinion & chives php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "5.05",
+            "Total Value (₱)": "40.4"
+        },
+        {
+            "BAR CODE": "4800216126725",
+            "SKU": "LESLIE cheezy hot big php.38",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "31.76",
+            "Total Value (₱)": "63.52"
+        },
+        {
+            "BAR CODE": "4800092330131",
+            "SKU": "DINGDONG mixed nut php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "13.98",
+            "Total Value (₱)": "27.96"
+        },
+        {
+            "BAR CODE": "4802288882042",
+            "SKU": "CARE medium php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "18.75",
+            "Total Value (₱)": "18.75"
+        },
+        {
+            "BAR CODE": "024000163015",
+            "SKU": "DM cream corn php.47",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "35.85",
+            "Total Value (₱)": "71.7"
+        },
+        {
+            "BAR CODE": "748485800790",
+            "SKU": "ARGENTINA sausage php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "21.6",
+            "Total Value (₱)": "86.4"
+        },
+        {
+            "BAR CODE": "4806014001424",
+            "SKU": "JOLLY mushroom php.38",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "30.5",
+            "Total Value (₱)": "91.5"
+        },
+        {
+            "BAR CODE": "4801668100264",
+            "SKU": "MANG TOMAS sarsa php.38",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "29.22",
+            "Total Value (₱)": "58.44"
+        },
+        {
+            "BAR CODE": "4800024562258",
+            "SKU": "DM pineapple TIDBITS php.32",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "25.25",
+            "Total Value (₱)": "50.5"
+        },
+        {
+            "BAR CODE": "4800024020642",
+            "SKU": "DM pineapple CHUNKS php.32",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "25.25",
+            "Total Value (₱)": "202"
+        },
+        {
+            "BAR CODE": "4807770273865",
+            "SKU": "PC cup noodles chilimansi php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "19.87",
+            "Total Value (₱)": "119.22"
+        },
+        {
+            "BAR CODE": "4805358245341",
+            "SKU": "STAR marg.CLASSIC php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "26.32",
+            "Total Value (₱)": "184.24"
+        },
+        {
+            "BAR CODE": "4804888900089",
+            "SKU": "ZESTO BIG 250 mango php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "8.23",
+            "Total Value (₱)": "24.69"
+        },
+        {
+            "BAR CODE": "4800888183804",
+            "SKU": "SURF fabcon rose fresh php.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "27",
+            "Average Cost (₱)": "4.81",
+            "Total Value (₱)": "129.87"
+        },
+        {
+            "BAR CODE": "tuseran forte capsule",
+            "SKU": "tuseran php 12",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "9.5",
+            "Total Value (₱)": "19"
+        },
+        {
+            "BAR CODE": "kremil S chewable ",
+            "SKU": "kremil S php.9",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "6.63",
+            "Total Value (₱)": "66.3"
+        },
+        {
+            "BAR CODE": "ROYAL KASALO php.25",
+            "SKU": "ROYAL KASALO php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "20",
+            "Average Cost (₱)": "20",
+            "Total Value (₱)": "400"
+        },
+        {
+            "BAR CODE": "4800204002048",
+            "SKU": "Lyan diswashing liquid php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "25",
+            "Total Value (₱)": "50"
+        },
+        {
+            "BAR CODE": "4800194106016",
+            "SKU": "OISHI BM P/fries plain salted php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "11.26",
+            "Total Value (₱)": "11.26"
+        },
+        {
+            "BAR CODE": "4800523220123",
+            "SKU": "RICHEE MILK php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "9.65",
+            "Total Value (₱)": "28.95"
+        },
+        {
+            "BAR CODE": "4800016138577",
+            "SKU": "tortillos chili php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "18.9",
+            "Total Value (₱)": "18.9"
+        },
+        {
+            "BAR CODE": "731126103046",
+            "SKU": "nagaraya BBQ php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "24",
+            "Average Cost (₱)": "5.27",
+            "Total Value (₱)": "126.48"
+        },
+        {
+            "BAR CODE": "4800092113291",
+            "SKU": "hansel mocha php.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "4.62",
+            "Total Value (₱)": "69.3"
+        },
+        {
+            "BAR CODE": "750515030206",
+            "SKU": "skyflakes garlic php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "28",
+            "Average Cost (₱)": "5.36",
+            "Total Value (₱)": "150.08"
+        },
+        {
+            "BAR CODE": "8850580500023",
+            "SKU": "KOPIKO ICED BLANCA PHP. 20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "12.11",
+            "Total Value (₱)": "72.66"
+        },
+        {
+            "BAR CODE": "014285000068",
+            "SKU": "UFC ketchup 320g php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "19.55",
+            "Total Value (₱)": "58.65"
+        },
+        {
+            "BAR CODE": "4804888999694",
+            "SKU": "lorins patis",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "18.15",
+            "Total Value (₱)": "72.6"
+        },
+        {
+            "BAR CODE": "4801668500262",
+            "SKU": "datu puti soysauce  20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "15.25",
+            "Total Value (₱)": "61"
+        },
+        {
+            "BAR CODE": "4806501953106",
+            "SKU": "ROSE VINEGAR PHP.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "5.45",
+            "Total Value (₱)": "16.35"
+        },
+        {
+            "BAR CODE": "4801032741048",
+            "SKU": "SAN MIG LIGHT BOTTLE php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "32",
+            "Average Cost (₱)": "28.65",
+            "Total Value (₱)": "916.8"
+        },
+        {
+            "BAR CODE": "4807770272936",
+            "SKU": "LM SEAFOOD big php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "26.62",
+            "Total Value (₱)": "106.48"
+        },
+        {
+            "BAR CODE": "4800523220482",
+            "SKU": "MOBY CHOCO php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "9.8",
+            "Total Value (₱)": "58.8"
+        },
+        {
+            "BAR CODE": "4800016643095",
+            "SKU": "chippy BBQ php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "18.9",
+            "Total Value (₱)": "37.8"
+        },
+        {
+            "BAR CODE": "4800016105098",
+            "SKU": "CHIZ CURLS php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "15.15",
+            "Total Value (₱)": "45.45"
+        },
+        {
+            "BAR CODE": "8850389106273",
+            "SKU": "MOGU MOGU coconut php.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "31.51",
+            "Total Value (₱)": "31.51"
+        },
+        {
+            "BAR CODE": "4800112010111",
+            "SKU": "posporo guitar php.3",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "1.17",
+            "Total Value (₱)": "4.68"
+        },
+        {
+            "BAR CODE": "4809012699419",
+            "SKU": "VICTORIA wash sugar 1/4 php 18",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "14",
+            "Total Value (₱)": "42"
+        },
+        {
+            "BAR CODE": "4809012699518",
+            "SKU": "VICTORIA wash sugar 1/2 php.32",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "27",
+            "Total Value (₱)": "135"
+        },
+        {
+            "BAR CODE": "alaxan",
+            "SKU": "ALAXAN forte php.12",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "8.25",
+            "Total Value (₱)": "107.25"
+        },
+        {
+            "BAR CODE": "dolfenal",
+            "SKU": "DOLFENAL 500mg.php.32",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "28.25",
+            "Total Value (₱)": "282.5"
+        },
+        {
+            "BAR CODE": "flanax",
+            "SKU": "FLANAX FORTE 550mg. php.27",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "23",
+            "Total Value (₱)": "230"
+        },
+        {
+            "BAR CODE": "advil",
+            "SKU": "ADVIL LIQUI GEL php.12",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "8.75",
+            "Total Value (₱)": "113.75"
+        },
+        {
+            "BAR CODE": "MODESS LONG php.55",
+            "SKU": "modess",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "40.5",
+            "Total Value (₱)": "40.5"
+        },
+        {
+            "BAR CODE": "8850007371434",
+            "SKU": "MODESS DRY MAX php.50",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "37.95",
+            "Total Value (₱)": "37.95"
+        },
+        {
+            "BAR CODE": "014285004158",
+            "SKU": "PAPA BAON pack php.5",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "2.15",
+            "Total Value (₱)": "8.6"
+        },
+        {
+            "BAR CODE": "4809011741065",
+            "SKU": "HARVEST IODIZED php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "20.1",
+            "Total Value (₱)": "40.2"
+        },
+        {
+            "BAR CODE": "4807770272646",
+            "SKU": "LM JJAMPONG BIG PHP. 40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "33",
+            "Total Value (₱)": "99"
+        },
+        {
+            "BAR CODE": "4801032111025",
+            "SKU": "SAN MIGUEL PALE PILSEN PHP. 35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "20.25",
+            "Total Value (₱)": "283.5"
+        },
+        {
+            "BAR CODE": "31010400",
+            "SKU": "SORB3in1 KesoPastTsoko 1ltr.php.150",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "90",
+            "Total Value (₱)": "90"
+        },
+        {
+            "BAR CODE": "31010430",
+            "SKU": "SORB3in1 UbeMangTsoko 1ltr.php150",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "90",
+            "Total Value (₱)": "180"
+        },
+        {
+            "BAR CODE": "31010497",
+            "SKU": "SORB3in1 BananaTsokoStraw 1ltr.php150",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "90",
+            "Total Value (₱)": "360"
+        },
+        {
+            "BAR CODE": "4800249008531",
+            "SKU": "san marino chili 85g. php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "22.1",
+            "Total Value (₱)": "110.5"
+        },
+        {
+            "BAR CODE": "8997035600010",
+            "SKU": "POCARI SWEAT 350ml. php.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "30.08",
+            "Total Value (₱)": "180.48"
+        },
+        {
+            "BAR CODE": "4806521130044",
+            "SKU": "ulam dinuguan php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "16.2",
+            "Total Value (₱)": "97.2"
+        },
+        {
+            "BAR CODE": "8851717904967",
+            "SKU": "DUTCHMILL delight php.12",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "9.1",
+            "Total Value (₱)": "18.2"
+        },
+        {
+            "BAR CODE": "4806513740008",
+            "SKU": "SAN MIG COFFEE php.9",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "23",
+            "Average Cost (₱)": "5.19",
+            "Total Value (₱)": "119.37"
+        },
+        {
+            "BAR CODE": "4800888607126",
+            "SKU": "ladys choice mayo php.13",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "9.2",
+            "Total Value (₱)": "27.6"
+        },
+        {
+            "BAR CODE": "8996001350560",
+            "SKU": "calcheese stick php,3",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "2.41",
+            "Total Value (₱)": "19.28"
+        },
+        {
+            "BAR CODE": "4809012699426",
+            "SKU": "victoria brown sugar php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "12.75",
+            "Total Value (₱)": "38.25"
+        },
+        {
+            "BAR CODE": "4800016622571",
+            "SKU": "J&J PIC-A ULTIMATE CHEDDAR php.50",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "41",
+            "Total Value (₱)": "82"
+        },
+        {
+            "BAR CODE": "4800365101239",
+            "SKU": "SUPER CRUNCH SWEETCORN php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "15.4",
+            "Total Value (₱)": "15.4"
+        },
+        {
+            "BAR CODE": "4806013033464",
+            "SKU": "LION TIGER KATOL lavender php.3",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "1.23",
+            "Total Value (₱)": "17.22"
+        },
+        {
+            "BAR CODE": "8850389100684",
+            "SKU": "MOGU MOGU LYCHEE php.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "31.64",
+            "Total Value (₱)": "126.56"
+        },
+        {
+            "BAR CODE": "4902430389532",
+            "SKU": "JOY liquid 40ml. php.14",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "10",
+            "Total Value (₱)": "20"
+        },
+        {
+            "BAR CODE": "8850007331384",
+            "SKU": "CAREFREE superdry php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "20.2",
+            "Total Value (₱)": "60.6"
+        },
+        {
+            "BAR CODE": "FYM",
+            "SKU": "Fym fabric conditioner php.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "34.5",
+            "Total Value (₱)": "103.5"
+        },
+        {
+            "BAR CODE": "4800047840289",
+            "SKU": "ZONROX LEMON 250ml. php.18",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "13.1",
+            "Total Value (₱)": "39.3"
+        },
+        {
+            "BAR CODE": "4800047840036",
+            "SKU": "ZONROX ORIGINAL php.18",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "12.4",
+            "Total Value (₱)": "37.2"
+        },
+        {
+            "BAR CODE": "8888336025469",
+            "SKU": "KOTEX LUXE ultra thin day&night php.74",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "64.1",
+            "Total Value (₱)": "64.1"
+        },
+        {
+            "BAR CODE": "4800142113530",
+            "SKU": "THE BAR LIME GIN php.110",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "90.75",
+            "Total Value (₱)": "272.25"
+        },
+        {
+            "BAR CODE": "4800142113516",
+            "SKU": "THE BAR PREMIUM DRY php.110",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "90.75",
+            "Total Value (₱)": "272.25"
+        },
+        {
+            "BAR CODE": "4800488101307",
+            "SKU": "HY-5 HYGIENIC WIPES php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "17.45",
+            "Total Value (₱)": "34.9"
+        },
+        {
+            "BAR CODE": "31010472",
+            "SKU": "TEMPT Almond Brownie 1.3L php.270",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "222.73",
+            "Total Value (₱)": "445.46"
+        },
+        {
+            "BAR CODE": "31011869",
+            "SKU": "TEMPT Strawberry filled 1.3L php.270",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "222.73",
+            "Total Value (₱)": "445.46"
+        },
+        {
+            "BAR CODE": "31011870",
+            "SKU": "TEMPT Bavarian Cream 1.3L php.270",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "222.73",
+            "Total Value (₱)": "222.73"
+        },
+        {
+            "BAR CODE": "31011871",
+            "SKU": "TEMPT Choco Butternut 1.3L php.245",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "222.73",
+            "Total Value (₱)": "222.73"
+        },
+        {
+            "BAR CODE": "31011917",
+            "SKU": "TEMPT Cookies&Cream 1.3L php.270",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "222.73",
+            "Total Value (₱)": "222.73"
+        },
+        {
+            "BAR CODE": "31010563",
+            "SKU": "Tempt Cookies & Cream 450ml php.120",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "90",
+            "Total Value (₱)": "90"
+        },
+        {
+            "BAR CODE": "31010438",
+            "SKU": "DS ChocoAlmondVanilla 110ml php.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "36.36",
+            "Total Value (₱)": "327.24"
+        },
+        {
+            "BAR CODE": "31010391",
+            "SKU": "NIC Mango 100ml. php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "17",
+            "Average Cost (₱)": "20",
+            "Total Value (₱)": "340"
+        },
+        {
+            "BAR CODE": "31010536",
+            "SKU": "NIC Cookies&Cream 100ml php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "16",
+            "Average Cost (₱)": "20",
+            "Total Value (₱)": "320"
+        },
+        {
+            "BAR CODE": "31010387",
+            "SKU": "TWINPOPS Orange 75ml php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "14.55",
+            "Total Value (₱)": "203.7"
+        },
+        {
+            "BAR CODE": "31010388",
+            "SKU": "TWINPOPS Chocolate 75ml php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "33",
+            "Average Cost (₱)": "14.55",
+            "Total Value (₱)": "480.15"
+        },
+        {
+            "BAR CODE": "31010494",
+            "SKU": "CRUNCH Stick 60ml php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "22.72",
+            "Total Value (₱)": "272.64"
+        },
+        {
+            "BAR CODE": "31010498",
+            "SKU": "KIMY Jelly Tongue 43g php. 15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "78",
+            "Average Cost (₱)": "10.9",
+            "Total Value (₱)": "850.2"
+        },
+        {
+            "BAR CODE": "31010511",
+            "SKU": " KIMY Milky Stick 43g php.18",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "30",
+            "Average Cost (₱)": "13.64",
+            "Total Value (₱)": "409.2"
+        },
+        {
+            "BAR CODE": "4806501320434",
+            "SKU": "PANDA BALL pen php.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "4.73",
+            "Total Value (₱)": "61.49"
+        },
+        {
+            "BAR CODE": "6902131110037",
+            "SKU": "MALING big php 105",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "88",
+            "Total Value (₱)": "176"
+        },
+        {
+            "BAR CODE": "6902131110181",
+            "SKU": "MALING SMALL php.55",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "42.75",
+            "Total Value (₱)": "85.5"
+        },
+        {
+            "BAR CODE": "tropical straw",
+            "SKU": "TROPICAL STRAW php.17",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "12.5",
+            "Total Value (₱)": "100"
+        },
+        {
+            "BAR CODE": "fas pack big",
+            "SKU": "FAS PACK php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "7",
+            "Total Value (₱)": "70"
+        },
+        {
+            "BAR CODE": "fas pack",
+            "SKU": "FAS PACK php.9",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "5.3",
+            "Total Value (₱)": "53"
+        },
+        {
+            "BAR CODE": "4800040352413",
+            "SKU": "choco mallows small php. 15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "11.15",
+            "Total Value (₱)": "11.15"
+        },
+        {
+            "BAR CODE": "8996001350584",
+            "SKU": "CAL CHEESE php.13",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "7.9",
+            "Total Value (₱)": "7.9"
+        },
+        {
+            "BAR CODE": "folder white short",
+            "SKU": "FOLDER WHITE SHORT php.7",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "4",
+            "Total Value (₱)": "36"
+        },
+        {
+            "BAR CODE": "folder white long",
+            "SKU": "FOLDER WHT LONG php.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "5",
+            "Total Value (₱)": "15"
+        },
+        {
+            "BAR CODE": "brown envelope long",
+            "SKU": "BROWN ENVELOPE LONG php.5",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "1.8",
+            "Total Value (₱)": "16.2"
+        },
+        {
+            "BAR CODE": "brown evelope short",
+            "SKU": "BROWN EVELOPE SHORT php.4",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "1.6",
+            "Total Value (₱)": "3.2"
+        },
+        {
+            "BAR CODE": "4800049720190",
+            "SKU": "WET! mineral php.12",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "19",
+            "Average Cost (₱)": "6.23",
+            "Total Value (₱)": "118.37"
+        },
+        {
+            "BAR CODE": "4809012413039",
+            "SKU": "KATINKO php.76",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "68.2",
+            "Total Value (₱)": "204.6"
+        },
+        {
+            "BAR CODE": "4987176600776",
+            "SKU": "VICKS 10g. php.52",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "44.6",
+            "Total Value (₱)": "223"
+        },
+        {
+            "BAR CODE": "48035156",
+            "SKU": "EFFICASCENT OIL php.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "31.6",
+            "Total Value (₱)": "94.8"
+        },
+        {
+            "BAR CODE": "4800011133126",
+            "SKU": "EFFICASCENT OINTMENT 10g. php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "23.1",
+            "Total Value (₱)": "69.3"
+        },
+        {
+            "BAR CODE": "4806515160293",
+            "SKU": "GRIPS WAX php.5",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "3.75",
+            "Total Value (₱)": "33.75"
+        },
+        {
+            "BAR CODE": "4800449556856",
+            "SKU": "LALA tempura shrimp Php.23",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "17.5",
+            "Total Value (₱)": "70"
+        },
+        {
+            "BAR CODE": "4801688103825",
+            "SKU": "SNACKU Php.18",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "12.25",
+            "Total Value (₱)": "24.5"
+        },
+        {
+            "BAR CODE": "4800016633782",
+            "SKU": "J&J PIATTOS RH BBQ php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "32",
+            "Average Cost (₱)": "11.35",
+            "Total Value (₱)": "363.2"
+        },
+        {
+            "BAR CODE": "4807770100406",
+            "SKU": "NISSIN EGGNOG php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "24.4",
+            "Total Value (₱)": "48.8"
+        },
+        {
+            "BAR CODE": "4806530990066",
+            "SKU": "B&B CHOCO CHAMP php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "5.53",
+            "Total Value (₱)": "27.65"
+        },
+        {
+            "BAR CODE": "4806530990035",
+            "SKU": "B&B DOUBLE TROUBLE php. 10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "4.98",
+            "Total Value (₱)": "29.88"
+        },
+        {
+            "BAR CODE": "sunflower",
+            "SKU": "sunflower butter cream php.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "18",
+            "Average Cost (₱)": "12.68",
+            "Total Value (₱)": "228.24"
+        },
+        {
+            "BAR CODE": "doublemint",
+            "SKU": "DOUBLEMINT php.1",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "117",
+            "Average Cost (₱)": "39.92",
+            "Total Value (₱)": "4670.64"
+        },
+        {
+            "BAR CODE": "icepop",
+            "SKU": "ICEPOP php. 5",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "22",
+            "Average Cost (₱)": "2.49",
+            "Total Value (₱)": "54.78"
+        },
+        {
+            "BAR CODE": "icepop mango",
+            "SKU": "ICEPOP MANGO php.5",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "16",
+            "Average Cost (₱)": "2.46",
+            "Total Value (₱)": "39.36"
+        },
+        {
+            "BAR CODE": "the bar pink",
+            "SKU": "THE BAR PINK php.110",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "90.75",
+            "Total Value (₱)": "272.25"
+        },
+        {
+            "BAR CODE": "4902430256100",
+            "SKU": "pantene shampoo pink php.7",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "4.31",
+            "Total Value (₱)": "25.86"
+        },
+        {
+            "BAR CODE": "ice",
+            "SKU": "ice/yelo php.3",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "0.49",
+            "Total Value (₱)": "1.47"
+        },
+        {
+            "BAR CODE": "4801032281049",
+            "SKU": "SAN MIGUEL APPLE PHP.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "34",
+            "Average Cost (₱)": "29.17",
+            "Total Value (₱)": "991.78"
+        },
+        {
+            "BAR CODE": "4806531431216",
+            "SKU": "SIP 500ml. php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "9.13",
+            "Total Value (₱)": "18.26"
+        },
+        {
+            "BAR CODE": "4806531431209",
+            "SKU": "sip 350 ml/php 10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "5.71",
+            "Total Value (₱)": "28.55"
+        },
+        {
+            "BAR CODE": "4800116016003",
+            "SKU": "sunflower strawberry php.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "4.9",
+            "Total Value (₱)": "63.7"
+        },
+        {
+            "BAR CODE": "4800092116537",
+            "SKU": "CM white choco php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "5.6",
+            "Total Value (₱)": "16.8"
+        },
+        {
+            "BAR CODE": "4800016551581",
+            "SKU": "NISSIN RAMEN beef php.12",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "8.36",
+            "Total Value (₱)": "125.4"
+        },
+        {
+            "BAR CODE": "4800016561429",
+            "SKU": "NISSIN RAMEN crmy seafood php.14",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "11",
+            "Total Value (₱)": "44"
+        },
+        {
+            "BAR CODE": "4800016560910",
+            "SKU": "NISSIN RAMEN spcy seafood php.14",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "11",
+            "Total Value (₱)": "55"
+        },
+        {
+            "BAR CODE": "31013480 DS double choco 14x100ml",
+            "SKU": "NESTLE  DRUMSTICK double chocolate php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "39",
+            "Average Cost (₱)": "18.18",
+            "Total Value (₱)": "709.02"
+        },
+        {
+            "BAR CODE": "31013481 DS ube 14x100ml",
+            "SKU": "DS Ube cheese cake php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "18.18",
+            "Total Value (₱)": "72.72"
+        },
+        {
+            "BAR CODE": "4803925280061",
+            "SKU": "PEPSI 300ml. php 15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "11",
+            "Total Value (₱)": "11"
+        },
+        {
+            "BAR CODE": "4803925280085",
+            "SKU": "MOUNTAIN DEW mismo php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "44",
+            "Average Cost (₱)": "11",
+            "Total Value (₱)": "484"
+        },
+        {
+            "BAR CODE": "49814521",
+            "SKU": "Chupa Chups php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "41",
+            "Average Cost (₱)": "7.5",
+            "Total Value (₱)": "307.5"
+        },
+        {
+            "BAR CODE": "8851717040016",
+            "SKU": "DUTCHMILL S'BERRY 180ml. php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "18",
+            "Total Value (₱)": "72"
+        },
+        {
+            "BAR CODE": "096785013298",
+            "SKU": "SABA mackerel natural oil 155g php.32",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "25.95",
+            "Total Value (₱)": "77.85"
+        },
+        {
+            "BAR CODE": "096785013106",
+            "SKU": "SABA sardines grn. php23",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "17.4",
+            "Total Value (₱)": "17.4"
+        },
+        {
+            "BAR CODE": "748485700090",
+            "SKU": "555 TUNA BICOL EXPRESS php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "22.85",
+            "Total Value (₱)": "22.85"
+        },
+        {
+            "BAR CODE": "748485700748",
+            "SKU": "555 TUNA SISIG php.34",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "26.25",
+            "Total Value (₱)": "52.5"
+        },
+        {
+            "BAR CODE": "748485700038",
+            "SKU": "555 TUNA CALDERETA php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "22.85",
+            "Total Value (₱)": "68.55"
+        },
+        {
+            "BAR CODE": "748485200675",
+            "SKU": "555 fried sardines w/tausi php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "27.75",
+            "Total Value (₱)": "83.25"
+        },
+        {
+            "BAR CODE": "096785013175",
+            "SKU": "SABA sardines red php.23",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "17.4",
+            "Total Value (₱)": "52.2"
+        },
+        {
+            "BAR CODE": "09678501093",
+            "SKU": "SABA SQIUD IN SOYSAUCE 425g.php.95",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "81.65",
+            "Total Value (₱)": "163.3"
+        },
+        {
+            "BAR CODE": "748485100326",
+            "SKU": "CENTURY TUNA hot&spcy php.90",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "77.5",
+            "Total Value (₱)": "155"
+        },
+        {
+            "BAR CODE": "748485100319",
+            "SKU": "CENTURY TUNA Flakes in oil php.90",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "77.5",
+            "Total Value (₱)": "155"
+        },
+        {
+            "BAR CODE": "4800158987026",
+            "SKU": "HOKKAIDO mackerel 200g. php.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "36.95",
+            "Total Value (₱)": "110.85"
+        },
+        {
+            "BAR CODE": "4800523223810",
+            "SKU": "MOBY crunchy choco php.23",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "16.59",
+            "Total Value (₱)": "49.77"
+        },
+        {
+            "BAR CODE": "4800194115063",
+            "SKU": "OISHI POTATO CHIPS plain php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "23.58",
+            "Total Value (₱)": "117.9"
+        },
+        {
+            "BAR CODE": "4807770122644",
+            "SKU": "NISSIN WAFER DOUBLE CHOCO php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "10.75",
+            "Total Value (₱)": "75.25"
+        },
+        {
+            "BAR CODE": "4800194117067",
+            "SKU": "POTATO CHIPS PLAIN SALTED PHP.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "9.28",
+            "Total Value (₱)": "46.4"
+        },
+        {
+            "BAR CODE": "4800523443232",
+            "SKU": "MOBY CHOCO CHUM php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "10.34",
+            "Total Value (₱)": "20.68"
+        },
+        {
+            "BAR CODE": "4800016633799",
+            "SKU": "J&J PIATTOS RHBBQ php. 30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "18",
+            "Average Cost (₱)": "25.4",
+            "Total Value (₱)": "457.2"
+        },
+        {
+            "BAR CODE": "4800024570611",
+            "SKU": "DM P/APPLE TIDBITS php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "12.75",
+            "Total Value (₱)": "63.75"
+        },
+        {
+            "BAR CODE": "8992760223022",
+            "SKU": "OREO vanilla php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "7.03",
+            "Total Value (₱)": "14.06"
+        },
+        {
+            "BAR CODE": "4800092553189",
+            "SKU": "WHOOPIE MARSMALLOW CAKE php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "21",
+            "Average Cost (₱)": "7.25",
+            "Total Value (₱)": "152.25"
+        },
+        {
+            "BAR CODE": "8850389112991",
+            "SKU": "MOGU2X pink guava php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "31.2",
+            "Total Value (₱)": "218.4"
+        },
+        {
+            "BAR CODE": "4801981116645",
+            "SKU": "COKE ZERO 1.5 LTRS. php.65",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "56.65",
+            "Total Value (₱)": "283.25"
+        },
+        {
+            "BAR CODE": "4800024562616",
+            "SKU": "DM PINEAPPLE JUICE FIBER php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "23.49",
+            "Total Value (₱)": "328.86"
+        },
+        {
+            "BAR CODE": "luncheon meat",
+            "SKU": "LUNCHEON MEAT php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "27.11",
+            "Total Value (₱)": "162.66"
+        },
+        {
+            "BAR CODE": "4804880313160",
+            "SKU": "PURO 1ltr. php.70",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "60.85",
+            "Total Value (₱)": "121.7"
+        },
+        {
+            "BAR CODE": "4800040314138",
+            "SKU": "FIBISCO CHOCO chipcookies 400g.php.175",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "154.75",
+            "Total Value (₱)": "154.75"
+        },
+        {
+            "BAR CODE": "750515018105",
+            "SKU": "M.Y. SAN skyflakes 850g. php 185",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "163.45",
+            "Total Value (₱)": "163.45"
+        },
+        {
+            "BAR CODE": "4805358327672",
+            "SKU": "MAGNOLIA cheezee pimiento php.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "37.6",
+            "Total Value (₱)": "75.2"
+        },
+        {
+            "BAR CODE": "4800016627286",
+            "SKU": "J&J MILKY KNOTS php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "5.5",
+            "Total Value (₱)": "11"
+        },
+        {
+            "BAR CODE": "4800040314428",
+            "SKU": "FIBISCO CHOCO CHIP 80g. php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "21.45",
+            "Total Value (₱)": "21.45"
+        },
+        {
+            "BAR CODE": "4806517040029",
+            "SKU": "KNICK KNACKS CHOCOLATE PHP.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "15.6",
+            "Total Value (₱)": "109.2"
+        },
+        {
+            "BAR CODE": "4808591800049",
+            "SKU": "OVALTINE 20g php.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "4.97",
+            "Total Value (₱)": "29.82"
+        },
+        {
+            "BAR CODE": "4800009000034",
+            "SKU": "DOLE pineapple juice php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "20.33",
+            "Total Value (₱)": "60.99"
+        },
+        {
+            "BAR CODE": "4800016552106",
+            "SKU": "NISSIN BEEF PHP.23",
+            "SELLING PRICE/UNIT": "23",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "16.43",
+            "Total Value (₱)": "164.3"
+        },
+        {
+            "BAR CODE": "4807770122477",
+            "SKU": "NISSIN WAFER CHEESE PHP.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "9.55",
+            "Total Value (₱)": "124.15"
+        },
+        {
+            "BAR CODE": "4807770100468",
+            "SKU": "NISSIN EGGNOG COOKIES 32g.php,10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "7.15",
+            "Total Value (₱)": "14.3"
+        },
+        {
+            "BAR CODE": "8717644190524",
+            "SKU": "DOVE GENTLE EXFOLIATING PHP.60",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "48.35",
+            "Total Value (₱)": "96.7"
+        },
+        {
+            "BAR CODE": "4808888190082",
+            "SKU": "COLGATE SENSITIVE php.129",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "109",
+            "Total Value (₱)": "109"
+        },
+        {
+            "BAR CODE": "6920354816581",
+            "SKU": "COLGATE M/cavity Sugar acid php.159",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "149",
+            "Total Value (₱)": "298"
+        },
+        {
+            "BAR CODE": "4808888201177",
+            "SKU": "COLGATE w/toothbrush php.120",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "99.1",
+            "Total Value (₱)": "198.2"
+        },
+        {
+            "BAR CODE": "safe guard ivory",
+            "SKU": "SAFEGUARD IVORY BOX PHP.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "24.1",
+            "Total Value (₱)": "48.2"
+        },
+        {
+            "BAR CODE": "4806525060057",
+            "SKU": "GLEE apple mint php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "28.55",
+            "Total Value (₱)": "85.65"
+        },
+        {
+            "BAR CODE": "8850006321133",
+            "SKU": "COLGATE 25ml. great php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "27.95",
+            "Total Value (₱)": "139.75"
+        },
+        {
+            "BAR CODE": "8850006321546",
+            "SKU": "COLGATE TRIPLE ACTION 25ml. php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "27.5",
+            "Total Value (₱)": "110"
+        },
+        {
+            "BAR CODE": "8992725910448",
+            "SKU": "LISTERINE TARTAR CONTROL 80ml. php.90",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "74.5",
+            "Total Value (₱)": "223.5"
+        },
+        {
+            "BAR CODE": "48042697",
+            "SKU": "JB COLOGNE happy berries php.27",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "19",
+            "Total Value (₱)": "38"
+        },
+        {
+            "BAR CODE": "48040525",
+            "SKU": "JB COLOGNE slide25ml. php 27",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "19",
+            "Total Value (₱)": "38"
+        },
+        {
+            "BAR CODE": "48041201",
+            "SKU": "JB COLOGNE forever mine php. 27",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "19",
+            "Total Value (₱)": "38"
+        },
+        {
+            "BAR CODE": "4806789442170",
+            "SKU": "ESKINOL papaya 75ml. php.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "34.5",
+            "Total Value (₱)": "69"
+        },
+        {
+            "BAR CODE": "48038164",
+            "SKU": "ESKINOL spotless white php.42",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "32.65",
+            "Total Value (₱)": "65.3"
+        },
+        {
+            "BAR CODE": "480088196231",
+            "SKU": "ESKINOL mild 4teens php.42",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "32.8",
+            "Total Value (₱)": "65.6"
+        },
+        {
+            "BAR CODE": "4800003439571",
+            "SKU": "ESKINOL CLASSIC php.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "34.3",
+            "Total Value (₱)": "68.6"
+        },
+        {
+            "BAR CODE": "4800888173690",
+            "SKU": "DOVE ORIGINAL php.60",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "48.4",
+            "Total Value (₱)": "96.8"
+        },
+        {
+            "BAR CODE": "4800888190505",
+            "SKU": "DOVE ultimate wht. php.65",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "53.35",
+            "Total Value (₱)": "106.7"
+        },
+        {
+            "BAR CODE": "4800888150622",
+            "SKU": "REXONA SHOWER CLEAN 25ml.58",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "46.5",
+            "Total Value (₱)": "93"
+        },
+        {
+            "BAR CODE": "4800888142672",
+            "SKU": "REXONA PASSION 25ml. php.58",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "46.5",
+            "Total Value (₱)": "93"
+        },
+        {
+            "BAR CODE": "4800888158925",
+            "SKU": "REXONA POWDER DRY 25ml. php. 58",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "46.5",
+            "Total Value (₱)": "93"
+        },
+        {
+            "BAR CODE": "4800888166234",
+            "SKU": "REXONA  women advanced php.60",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "24",
+            "Average Cost (₱)": "49.7",
+            "Total Value (₱)": "1192.8"
+        },
+        {
+            "BAR CODE": "4800888144256",
+            "SKU": "REXONA MEN QUANTUM dry php.58",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "46.5",
+            "Total Value (₱)": "93"
+        },
+        {
+            "BAR CODE": "4800888178510",
+            "SKU": "AXE APOLLO DRY 25ml. php.60",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "48.9",
+            "Total Value (₱)": "97.8"
+        },
+        {
+            "BAR CODE": "42131946",
+            "SKU": "NIVEA EXTRA WHITENING PHP.79",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "59",
+            "Total Value (₱)": "118"
+        },
+        {
+            "BAR CODE": "42300045",
+            "SKU": "NIVEA WHITE & FIRM SERUM php.105",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "89",
+            "Total Value (₱)": "89"
+        },
+        {
+            "BAR CODE": "8992802063012",
+            "SKU": "FITBAR RICE BAR FRUITS php.28",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "19.75",
+            "Total Value (₱)": "177.75"
+        },
+        {
+            "BAR CODE": "8992802063029",
+            "SKU": "FITBAR NUTS php.28",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "20.6",
+            "Total Value (₱)": "164.8"
+        },
+        {
+            "BAR CODE": "8992802063173",
+            "SKU": "FITBAR CHOCOLATE php.28",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "19.75",
+            "Total Value (₱)": "237"
+        },
+        {
+            "BAR CODE": "4800092660634",
+            "SKU": "CHOCOMUCHO milk chocolte php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "5.89",
+            "Total Value (₱)": "29.45"
+        },
+        {
+            "BAR CODE": "4800361403863",
+            "SKU": "NESCAFE BROWN php.9",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "5.54",
+            "Total Value (₱)": "38.78"
+        },
+        {
+            "BAR CODE": "4800361393478",
+            "SKU": "BEARBRAND CEREAL php.9",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "6.16",
+            "Total Value (₱)": "55.44"
+        },
+        {
+            "BAR CODE": "4809011445659",
+            "SKU": "ULTRAMATIC PLUS DETERGENT php 45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "13",
+            "Average Cost (₱)": "37.5",
+            "Total Value (₱)": "487.5"
+        },
+        {
+            "BAR CODE": "4800552888820",
+            "SKU": "MINI CHIP DELIGHT OATMEAL PHP.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "12.06",
+            "Total Value (₱)": "168.84"
+        },
+        {
+            "BAR CODE": "4800014148080",
+            "SKU": "SUMMIT 350ml. php.12",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "41",
+            "Average Cost (₱)": "7.41",
+            "Total Value (₱)": "303.81"
+        },
+        {
+            "BAR CODE": "48000166227262",
+            "SKU": "J&J CHOCO KNOTS php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "26",
+            "Average Cost (₱)": "5.5",
+            "Total Value (₱)": "143"
+        },
+        {
+            "BAR CODE": "4800016012273",
+            "SKU": "GREATASTE PREMIUM 50g.PHP.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "34.95",
+            "Total Value (₱)": "104.85"
+        },
+        {
+            "BAR CODE": "4800888602725",
+            "SKU": "KNORR CUBES php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "32",
+            "Average Cost (₱)": "4.75",
+            "Total Value (₱)": "152"
+        },
+        {
+            "BAR CODE": "4800016561436",
+            "SKU": "PAYLESS PC XTRA BIG PHP.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "15",
+            "Total Value (₱)": "30"
+        },
+        {
+            "BAR CODE": "mefenamic acid generic",
+            "SKU": "MEFENAMIC generic php.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "4",
+            "Total Value (₱)": "12"
+        },
+        {
+            "BAR CODE": "medicol",
+            "SKU": "MEDICOL soft php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "6.5",
+            "Total Value (₱)": "58.5"
+        },
+        {
+            "BAR CODE": "lomotil",
+            "SKU": "LOMOTIL php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "11",
+            "Total Value (₱)": "33"
+        },
+        {
+            "BAR CODE": "buscopan venus",
+            "SKU": "BUSCOPAN VENUS PHP.32",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "29.25",
+            "Total Value (₱)": "58.5"
+        },
+        {
+            "BAR CODE": "4806527715160",
+            "SKU": "ROOT BEER php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "8.16",
+            "Total Value (₱)": "73.44"
+        },
+        {
+            "BAR CODE": "9555192501107",
+            "SKU": "DOUBLEMINT PHP.13",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "9.5",
+            "Total Value (₱)": "38"
+        },
+        {
+            "BAR CODE": "4891208040181",
+            "SKU": "lan5479893",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "5.1",
+            "Total Value (₱)": "51"
+        },
+        {
+            "BAR CODE": "4891208040181",
+            "SKU": "RIN BEE PHP.8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "5.1",
+            "Total Value (₱)": "30.6"
+        },
+        {
+            "BAR CODE": "4800016628283",
+            "SKU": "PRETZEL mini php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "5.5",
+            "Total Value (₱)": "11"
+        },
+        {
+            "BAR CODE": "RICE VILLASIS 950 (price)",
+            "SKU": "RICE VILLASIS php kilo.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "38",
+            "Total Value (₱)": "570"
+        },
+        {
+            "BAR CODE": "4803925270116",
+            "SKU": "LIPTON RED/Lemon TEA PHP 30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "23",
+            "Average Cost (₱)": "21",
+            "Total Value (₱)": "483"
+        },
+        {
+            "BAR CODE": "4800016082979",
+            "SKU": "J&J MAGIC CHIPS BBQ PHP. 10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "5.5",
+            "Total Value (₱)": "38.5"
+        },
+        {
+            "BAR CODE": "0024778",
+            "SKU": "MR.BROWNIES php.80",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "60",
+            "Total Value (₱)": "180"
+        },
+        {
+            "BAR CODE": "8996001410226",
+            "SKU": "KOPIKO BLACK SACHET PHP.9",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "6.45",
+            "Total Value (₱)": "70.95"
+        },
+        {
+            "BAR CODE": "4800016012358",
+            "SKU": "GREAT TASTE STICK php.3",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "34",
+            "Average Cost (₱)": "1.55",
+            "Total Value (₱)": "52.7"
+        },
+        {
+            "BAR CODE": "4805358327061",
+            "SKU": "MAGNOLIA CHEEZEE PIM.php.170",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "144",
+            "Total Value (₱)": "144"
+        },
+        {
+            "BAR CODE": "4801668600641",
+            "SKU": "MANG THOMAS SACHET 100g.php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "9.55",
+            "Total Value (₱)": "28.65"
+        },
+        {
+            "BAR CODE": "4805358247017",
+            "SKU": "MAGNOLIA DARI CREME classic php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "27.85",
+            "Total Value (₱)": "139.25"
+        },
+        {
+            "BAR CODE": "4800016561054",
+            "SKU": "NISSIN SOUPER MEAL S-SEAFOOD php.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "28.5",
+            "Total Value (₱)": "57"
+        },
+        {
+            "BAR CODE": "4800488960669",
+            "SKU": "CHARMEE COTTONY PHP.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "23.92",
+            "Total Value (₱)": "95.68"
+        },
+        {
+            "BAR CODE": "4801010361121",
+            "SKU": "CAREFREE SUPER DRY PHP.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "23.25",
+            "Total Value (₱)": "46.5"
+        },
+        {
+            "BAR CODE": "4800488958604",
+            "SKU": "CHARMEE PANTYLINER rose scent php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "8",
+            "Total Value (₱)": "24"
+        },
+        {
+            "BAR CODE": "4800047820250",
+            "SKU": "GREEN CROSS alcohol php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "16.5",
+            "Total Value (₱)": "82.5"
+        },
+        {
+            "BAR CODE": "4800047865008",
+            "SKU": "GREEN CROSS sanitizing gel php.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "29.7",
+            "Total Value (₱)": "89.1"
+        },
+        {
+            "BAR CODE": "31013184",
+            "SKU": "NOB 3in1 chocokeso ube 1.5L php.125",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "90.91",
+            "Total Value (₱)": "181.82"
+        },
+        {
+            "BAR CODE": "bread",
+            "SKU": "BREAD PHP.7",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "35",
+            "Average Cost (₱)": "5",
+            "Total Value (₱)": "175"
+        },
+        {
+            "BAR CODE": "4809015222041",
+            "SKU": "YAN YAN BREAD CRUMBS PHP.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "8.25",
+            "Total Value (₱)": "41.25"
+        },
+        {
+            "BAR CODE": "splenda",
+            "SKU": "SPLENDA PHP.3",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "98",
+            "Average Cost (₱)": "1.57",
+            "Total Value (₱)": "153.86"
+        },
+        {
+            "BAR CODE": "hopia",
+            "SKU": "HOPIA",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "4.56",
+            "Total Value (₱)": "50.16"
+        },
+        {
+            "BAR CODE": "4800313030000",
+            "SKU": "PAMPANGA BEST TOCINO1/4 php.60",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "45.5",
+            "Total Value (₱)": "136.5"
+        },
+        {
+            "BAR CODE": "4800313031809",
+            "SKU": "PAMPANGA'S BEST CORNBEEF PHP.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "31",
+            "Total Value (₱)": "93"
+        },
+        {
+            "BAR CODE": "MEIFOODS",
+            "SKU": "MEIFOODS SAUSAGE php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "29",
+            "Total Value (₱)": "29"
+        },
+        {
+            "BAR CODE": "4806503883661",
+            "SKU": "MEKENI chicken hotdog JUMBO php.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "38",
+            "Total Value (₱)": "76"
+        },
+        {
+            "BAR CODE": "4806503882879",
+            "SKU": "MEKENI MIZMO w/cheese php.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "38",
+            "Total Value (₱)": "38"
+        },
+        {
+            "BAR CODE": "4806503884408",
+            "SKU": "MEKENI  HAM php.55",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "44",
+            "Total Value (₱)": "176"
+        },
+        {
+            "BAR CODE": "chicken macao",
+            "SKU": "CHICKEN MACAO PHP.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "37",
+            "Total Value (₱)": "111"
+        },
+        {
+            "BAR CODE": "8853002303110",
+            "SKU": "DUTCHMILL SMALL yogurt php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "24",
+            "Average Cost (₱)": "10",
+            "Total Value (₱)": "240"
+        },
+        {
+            "BAR CODE": "sukang paombong",
+            "SKU": "Sukang Paombong php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "15",
+            "Total Value (₱)": "60"
+        },
+        {
+            "BAR CODE": "4809014862958",
+            "SKU": "Allyssa SOY SAUCE php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "20",
+            "Total Value (₱)": "120"
+        },
+        {
+            "BAR CODE": "4809014862996",
+            "SKU": "Allyssa PATIS php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "20",
+            "Total Value (₱)": "100"
+        },
+        {
+            "BAR CODE": "plate",
+            "SKU": "paper plate php.2",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "1",
+            "Total Value (₱)": "15"
+        },
+        {
+            "BAR CODE": "toothpick",
+            "SKU": "TOOTHPICK PHP.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "19",
+            "Total Value (₱)": "228"
+        },
+        {
+            "BAR CODE": "RICHOCO ",
+            "SKU": "RICHOCO PHP.125",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "105.5",
+            "Total Value (₱)": "422"
+        },
+        {
+            "BAR CODE": "8851028002505",
+            "SKU": "VITAMILK BOTTLE PHP.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "30",
+            "Average Cost (₱)": "22.11",
+            "Total Value (₱)": "663.3"
+        },
+        {
+            "BAR CODE": "NISSIN ",
+            "SKU": "NISSIN CUPS NOODLES S php.23",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "26",
+            "Average Cost (₱)": "16.39",
+            "Total Value (₱)": "426.14"
+        },
+        {
+            "BAR CODE": "4800054123283",
+            "SKU": "GROWERS MIX NUTS PHP.75",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "62.3",
+            "Total Value (₱)": "62.3"
+        },
+        {
+            "BAR CODE": "4800054111280",
+            "SKU": "GROWERS D'ORIGINAL GARLIC PHP.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "33.5",
+            "Total Value (₱)": "67"
+        },
+        {
+            "BAR CODE": "4800054121289",
+            "SKU": "GROWERS CASHEW NUTS PHP.105",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "90.88",
+            "Total Value (₱)": "90.88"
+        },
+        {
+            "BAR CODE": "4805358317031",
+            "SKU": "MAGNOLIA CHEEZEE PHP.60",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "43.25",
+            "Total Value (₱)": "129.75"
+        },
+        {
+            "BAR CODE": "LM CUPS NOODLES BIG ",
+            "SKU": "LM CUPS NOODLES BIG PHP. 35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "26.8",
+            "Total Value (₱)": "214.4"
+        },
+        {
+            "BAR CODE": "8996001305201",
+            "SKU": "VALMER BISCUITS PHP.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "5.81",
+            "Total Value (₱)": "23.24"
+        },
+        {
+            "BAR CODE": "4800365881483",
+            "SKU": "super delight brownies yellow php.5",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "40",
+            "Average Cost (₱)": "2.92",
+            "Total Value (₱)": "116.8"
+        },
+        {
+            "BAR CODE": "4800888113498",
+            "SKU": "CLOSE UP PHP. 35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "23.8",
+            "Total Value (₱)": "119"
+        },
+        {
+            "BAR CODE": "4800888171467",
+            "SKU": "SURF FAB. php.7",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "8",
+            "Average Cost (₱)": "4.9",
+            "Total Value (₱)": "39.2"
+        },
+        {
+            "BAR CODE": "4800047847349",
+            "SKU": "DEL fabric softener php.7",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "4.31",
+            "Total Value (₱)": "38.79"
+        },
+        {
+            "BAR CODE": "4902430495073",
+            "SKU": "SAFEGUARD wht/pink/ivory.90g. php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "27.1",
+            "Total Value (₱)": "243.9"
+        },
+        {
+            "BAR CODE": "4800216110014",
+            "SKU": "CLOVER CHIPS CHEESE 95g. php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "24",
+            "Total Value (₱)": "24"
+        },
+        {
+            "BAR CODE": "4800016622526",
+            "SKU": "J&J POTATO CHIPS CLASSIC PHP. 30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "25.4",
+            "Total Value (₱)": "50.8"
+        },
+        {
+            "BAR CODE": "sampalok",
+            "SKU": "SAMPALOK PACK PHP.12",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "10",
+            "Total Value (₱)": "20"
+        },
+        {
+            "BAR CODE": "48000249908657",
+            "SKU": "CDO KARNE NORTE CLASSIC 260g. php.50",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "39.39",
+            "Total Value (₱)": "118.17"
+        },
+        {
+            "BAR CODE": "4800249908848",
+            "SKU": "CDO KARNE NORTE classic 150g.php.32",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "24.2",
+            "Total Value (₱)": "96.8"
+        },
+        {
+            "BAR CODE": "4800249907032",
+            "SKU": "CDO KARNE NORTE hot&spicy100g.23",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "15.45",
+            "Total Value (₱)": "77.25"
+        },
+        {
+            "BAR CODE": "4800361015400",
+            "SKU": "NESTLE CHUCKIE 250ml.32",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "23",
+            "Total Value (₱)": "230"
+        },
+        {
+            "BAR CODE": "4800016042690",
+            "SKU": "NIPS CHOCO PEANUT PHP.3",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "1.22",
+            "Total Value (₱)": "18.3"
+        },
+        {
+            "BAR CODE": "4801981109210",
+            "SKU": "MINUTE MAID PULPY 4 SEASON PHP.70",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "52.85",
+            "Total Value (₱)": "105.7"
+        },
+        {
+            "BAR CODE": "8993175541787",
+            "SKU": "RICHOCO 24g. 8",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "4.15",
+            "Total Value (₱)": "49.8"
+        },
+        {
+            "BAR CODE": "8993175544511",
+            "SKU": "NEXTAR CHOCO BROWNIES php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "8.13",
+            "Total Value (₱)": "40.65"
+        },
+        {
+            "BAR CODE": "4806506318818",
+            "SKU": "SISTER DAY MAXI w/wings php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "29.75",
+            "Total Value (₱)": "89.25"
+        },
+        {
+            "BAR CODE": "4803925370007",
+            "SKU": "PEPSI 1.25L php.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "38.75",
+            "Total Value (₱)": "77.5"
+        },
+        {
+            "BAR CODE": "Coke Zero 1.5 ltr.",
+            "SKU": "lan5826990",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "56.95",
+            "Total Value (₱)": "56.95"
+        },
+        {
+            "BAR CODE": "Ladies Choice Mayonaise 80ml",
+            "SKU": "lan5826995 php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "5",
+            "Average Cost (₱)": "26.8",
+            "Total Value (₱)": "134"
+        },
+        {
+            "BAR CODE": "Dove Shampoo 10 ML",
+            "SKU": "lan5827062",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "18",
+            "Average Cost (₱)": "4.14",
+            "Total Value (₱)": "74.52"
+        },
+        {
+            "BAR CODE": "Clear Shampoo 12ml",
+            "SKU": "lan5827075",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "10",
+            "Average Cost (₱)": "4.07",
+            "Total Value (₱)": "40.7"
+        },
+        {
+            "BAR CODE": "Choco Chum 32 g",
+            "SKU": "800523443201",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "96",
+            "Average Cost (₱)": "5.28",
+            "Total Value (₱)": "506.88"
+        },
+        {
+            "BAR CODE": "Loaded Choco filled 32g.php.10",
+            "SKU": "lan5827159",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "94",
+            "Average Cost (₱)": "5.28",
+            "Total Value (₱)": "496.32"
+        },
+        {
+            "BAR CODE": "4800016560392",
+            "SKU": "Nissin  Creamy Carbonara",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "6",
+            "Average Cost (₱)": "10.25",
+            "Total Value (₱)": "61.5"
+        },
+        {
+            "BAR CODE": "4800092551604",
+            "SKU": "Rebisco Doowee Donut",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "17",
+            "Average Cost (₱)": "7.18",
+            "Total Value (₱)": "122.06"
+        },
+        {
+            "BAR CODE": "480910510198",
+            "SKU": "Pasalubong Caramel Bar",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "7.66",
+            "Total Value (₱)": "53.62"
+        },
+        {
+            "BAR CODE": "800016661099",
+            "SKU": "Roller Coaster 85 g Php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "18",
+            "Total Value (₱)": "72"
+        },
+        {
+            "BAR CODE": "800361405485",
+            "SKU": "Nescafe Creamy White Twin 28g",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "14",
+            "Average Cost (₱)": "10",
+            "Total Value (₱)": "140"
+        },
+        {
+            "BAR CODE": "4800016012273",
+            "SKU": "Great Taste Premium 50g - Php 40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "33.95",
+            "Total Value (₱)": "101.85"
+        },
+        {
+            "BAR CODE": "4800361393645",
+            "SKU": "Nescafe Classic 50g Php. 45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "38",
+            "Total Value (₱)": "152"
+        },
+        {
+            "BAR CODE": "748485700045",
+            "SKU": "555 Tuna Mechado 155g",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "22.85",
+            "Total Value (₱)": "91.4"
+        },
+        {
+            "BAR CODE": "7484585700052",
+            "SKU": "555 Tuna hot & Spicy 155g php. 30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "25.5",
+            "Total Value (₱)": "76.5"
+        },
+        {
+            "BAR CODE": "57372742",
+            "SKU": "MAGNUM ALMOND 90ml. php.60",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "36",
+            "Average Cost (₱)": "44.64",
+            "Total Value (₱)": "1607.04"
+        },
+        {
+            "BAR CODE": "57950237",
+            "SKU": "CORNETTO DISC MILK TEA 115ml php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "20.26",
+            "Total Value (₱)": "243.12"
+        },
+        {
+            "BAR CODE": "4800086134325",
+            "SKU": "SELECTA CORNETTO CHOCOLATE 110ml.php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "48",
+            "Average Cost (₱)": "16.23",
+            "Total Value (₱)": "779.04"
+        },
+        {
+            "BAR CODE": "4800086034670",
+            "SKU": "SELECTA CORNETTO VANILLA 110ml.php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "36",
+            "Average Cost (₱)": "16.23",
+            "Total Value (₱)": "584.28"
+        },
+        {
+            "BAR CODE": "57052108",
+            "SKU": "CORNETO POH COOK&CREAM 110ml.php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "7",
+            "Average Cost (₱)": "16.23",
+            "Total Value (₱)": "113.61"
+        },
+        {
+            "BAR CODE": "57175595",
+            "SKU": "CORNETTO POH ROCKY ROAD 110ml.php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "24",
+            "Average Cost (₱)": "16.23",
+            "Total Value (₱)": "389.52"
+        },
+        {
+            "BAR CODE": "57572389",
+            "SKU": "SELECTA POH PINIPIG VANI.50ml.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "43",
+            "Average Cost (₱)": "12.18",
+            "Total Value (₱)": "523.74"
+        },
+        {
+            "BAR CODE": "57763256",
+            "SKU": "SELECTA POH MANGO STICK 50ml. php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "12.17",
+            "Total Value (₱)": "146.04"
+        },
+        {
+            "BAR CODE": "57108509",
+            "SKU": "SELECTA SANDWICH ICECREAM 80ml.php.20",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "29",
+            "Average Cost (₱)": "16.23",
+            "Total Value (₱)": "470.67"
+        },
+        {
+            "BAR CODE": "burung ebon",
+            "SKU": "sallted egg php.13",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "17",
+            "Average Cost (₱)": "12",
+            "Total Value (₱)": "204"
+        },
+        {
+            "BAR CODE": "57158723",
+            "SKU": "SELECTA BASO Choco/Ube/Keso400ml. php.50",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "11",
+            "Average Cost (₱)": "40.58",
+            "Total Value (₱)": "446.38"
+        },
+        {
+            "BAR CODE": "57765925",
+            "SKU": "SELECTA WATERMELON STICK php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "8.11",
+            "Total Value (₱)": "8.11"
+        },
+        {
+            "BAR CODE": "57613450",
+            "SKU": "SELECTA ICS QUESOREAL,rocky road,cookies&cream php.15",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "46",
+            "Average Cost (₱)": "8.11",
+            "Total Value (₱)": "373.06"
+        },
+        {
+            "BAR CODE": "57267601",
+            "SKU": "SELECTA 3in1ChocoMangofloatBuco1ltr.php.100",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "80.36",
+            "Total Value (₱)": "80.36"
+        },
+        {
+            "BAR CODE": "57099992",
+            "SKU": "SELECTA PISTACHIO&CASHEW 475ml.95",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "77.11",
+            "Total Value (₱)": "77.11"
+        },
+        {
+            "BAR CODE": "57100006",
+            "SKU": "SELECTA COFFEE CRUMBLE 475ml.php.95",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "77.11",
+            "Total Value (₱)": "77.11"
+        },
+        {
+            "BAR CODE": "57099998",
+            "SKU": "SELECTA COOKIES&CREAM 475ml.PHP.95",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "77.11",
+            "Total Value (₱)": "77.11"
+        },
+        {
+            "BAR CODE": "57451899",
+            "SKU": "SELECTA QUEZO REAL 475ml. php.95",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "77.11",
+            "Total Value (₱)": "77.11"
+        },
+        {
+            "BAR CODE": "57950147",
+            "SKU": "SELECTA SUP ChocoToffeeCrunch 475ml.php.95",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "80.36",
+            "Total Value (₱)": "80.36"
+        },
+        {
+            "BAR CODE": "57920138",
+            "SKU": "SELECTA UbeLangkaCheesecake 475ml.php.95",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "80.36",
+            "Total Value (₱)": "80.36"
+        },
+        {
+            "BAR CODE": "57109215",
+            "SKU": "SELECTA 2in1 ChocoUbe 750ml.php.80",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "64.11",
+            "Total Value (₱)": "128.22"
+        },
+        {
+            "BAR CODE": "57109213",
+            "SKU": "SELECTA 2in1 ChocoKeso 750ml.80",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "64.11",
+            "Total Value (₱)": "128.22"
+        },
+        {
+            "BAR CODE": "57693760",
+            "SKU": "SELECTA 3in1+1 MANGO FLOAT 1.5ml php.149",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "120.94",
+            "Total Value (₱)": "120.94"
+        },
+        {
+            "BAR CODE": "57693762",
+            "SKU": "SELECTA 3in1 especial BucoSalad 1.5ml.php.149",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "120.94",
+            "Total Value (₱)": "120.94"
+        },
+        {
+            "BAR CODE": "57693758",
+            "SKU": "SELECTA 3in1+1especial CHOCO BROWNIE 1.5ml php.149",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "120.94",
+            "Total Value (₱)": "120.94"
+        },
+        {
+            "BAR CODE": "57771832",
+            "SKU": "SELECTA MATCHA CNC 1.3ml. php.225",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "198.86",
+            "Total Value (₱)": "198.86"
+        },
+        {
+            "BAR CODE": "57920144",
+            "SKU": "SELECTA SUP. UbeLangkaCheesecake 1.3ml.php.225",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "198.86",
+            "Total Value (₱)": "198.86"
+        },
+        {
+            "BAR CODE": "57771832",
+            "SKU": "SELECTA Classic BucoSalad 1.3ml.php.225",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "186.7",
+            "Total Value (₱)": "186.7"
+        },
+        {
+            "BAR CODE": "57950147",
+            "SKU": "SELECTA SUP. ChocoToffeeCrunch 1.3ml.php.225",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "198.86",
+            "Total Value (₱)": "198.86"
+        },
+        {
+            "BAR CODE": "21028787",
+            "SKU": "SELECTA SUPREME CoffeeCrumble750ml.php.129",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "104.71",
+            "Total Value (₱)": "104.71"
+        },
+        {
+            "BAR CODE": "21028784",
+            "SKU": "SELECTA SUPREME DoubleDutch750ml.php.129",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "104.71",
+            "Total Value (₱)": "104.71"
+        },
+        {
+            "BAR CODE": "4800067552278",
+            "SKU": "mediplast checker band aid php.3",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "45",
+            "Average Cost (₱)": "1.96",
+            "Total Value (₱)": "88.2"
+        },
+        {
+            "BAR CODE": "4800086036186",
+            "SKU": "SELECTA SUP.ROCKY ROAD 1.5L php.245",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "198.86",
+            "Total Value (₱)": "198.86"
+        },
+        {
+            "BAR CODE": "4800086035943",
+            "SKU": "SELECTA SUP.COFFEE CRUMBLE 1.5L php.245",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "198.86",
+            "Total Value (₱)": "198.86"
+        },
+        {
+            "BAR CODE": "4800086040893",
+            "SKU": "SELECTA SUPREME cookies&cream 750ml. php.129",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "104.71",
+            "Total Value (₱)": "104.71"
+        },
+        {
+            "BAR CODE": "4800086040886",
+            "SKU": "SELECTA SUPREME rockyroad 750ml php.129",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "104.71",
+            "Total Value (₱)": "104.71"
+        },
+        {
+            "BAR CODE": "4800086035929",
+            "SKU": "SELECTA SUP. COOKIES&CREAM 1.5L php.245",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "198.86",
+            "Total Value (₱)": "198.86"
+        },
+        {
+            "BAR CODE": "4800086035967",
+            "SKU": "SELECTA SUP.DOUBLE DUTCH 1.5L php.245",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "198.86",
+            "Total Value (₱)": "198.86"
+        },
+        {
+            "BAR CODE": "4800086035790",
+            "SKU": "SELECTA 3in1 ChocoMangoUbe 1L.php.100",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "80.35",
+            "Total Value (₱)": "80.35"
+        },
+        {
+            "BAR CODE": "4800086040527",
+            "SKU": "SELECTA 3in1 ChocoKesoUbe 1L.php.100",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "80.35",
+            "Total Value (₱)": "80.35"
+        },
+        {
+            "BAR CODE": "4800249080049",
+            "SKU": "CDO IDOL CHEESEDOG 1/4 php.50",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "1",
+            "Average Cost (₱)": "40",
+            "Total Value (₱)": "40"
+        },
+        {
+            "BAR CODE": "48003134032776",
+            "SKU": "PAMPANGA'S BEST CHICKEN WHT/CHEESE php.55",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "2",
+            "Average Cost (₱)": "45",
+            "Total Value (₱)": "90"
+        },
+        {
+            "BAR CODE": "berlin foods",
+            "SKU": "BERLIN'S FOOD php.45",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "35",
+            "Total Value (₱)": "105"
+        },
+        {
+            "BAR CODE": "4800313032745",
+            "SKU": "PAMPANGA'S BEST CHICKEN WHT. php.50",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "40",
+            "Total Value (₱)": "120"
+        },
+        {
+            "BAR CODE": "BERLIN FOOD PRODUCT",
+            "SKU": "embotido php.42",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "35",
+            "Total Value (₱)": "105"
+        },
+        {
+            "BAR CODE": "reno",
+            "SKU": "RENO BIG php.42",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "3",
+            "Average Cost (₱)": "33.75",
+            "Total Value (₱)": "101.25"
+        },
+        {
+            "BAR CODE": "coke in can ",
+            "SKU": "COKE IN CAN php.35",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "12",
+            "Average Cost (₱)": "25.4",
+            "Total Value (₱)": "304.8"
+        },
+        {
+            "BAR CODE": "cowhead",
+            "SKU": "COW HEAD PHP.40",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "4",
+            "Average Cost (₱)": "31.4",
+            "Total Value (₱)": "125.6"
+        },
+        {
+            "BAR CODE": "kopiko 78C",
+            "SKU": "KOPIKO 78C php.25",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "9",
+            "Average Cost (₱)": "15.5",
+            "Total Value (₱)": "139.5"
+        },
+        {
+            "BAR CODE": "cobra mismo",
+            "SKU": "COBRA mismo php.30",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "15",
+            "Average Cost (₱)": "19.75",
+            "Total Value (₱)": "296.25"
+        },
+        {
+            "BAR CODE": "surf bar",
+            "SKU": "surf bar by 4 php.10",
+            "SELLING PRICE/UNIT": " ",
+            "QUANTITY": "16",
+            "Average Cost (₱)": "5.65",
+            "Total Value (₱)": "90.4"
+        }
+    ]
+}
