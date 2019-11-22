@@ -86,8 +86,8 @@ class ItemController extends AppController {
 
 		$this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id')
 					->from('items')
-					->join('categories', 'categories.id = items.category_id', 'left')
-					->join('supplier', 'supplier.id = items.supplier_id', 'left')
+					->join('categories', 'categories.id = items.category_id', 'BOTH')
+					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH')
 					->join('prices', 'prices.item_id = items.id')
 					->join('ordering_level', 'ordering_level.item_id = items.id')
 					->like('categories.name', $filterCategory, "BOTH") 
