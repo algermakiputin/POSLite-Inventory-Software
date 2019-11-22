@@ -9,9 +9,7 @@ class AuthController extends AppController {
 		$this->licenseControl();
 		
 	}
-	public function login() {
-
-		dd($_SERVER);
+	public function login() { 
 		
 		if ( $_SERVER['SERVER_NAME'] == "poslite.herokuapp.com" ) { 
 			// If they access the heroku default domain, will redirect the user to our new custom domain
