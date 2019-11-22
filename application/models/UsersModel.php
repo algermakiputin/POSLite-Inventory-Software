@@ -30,10 +30,11 @@ class UsersModel extends CI_Model {
 		return $del;
 	}
 
-	public function login($username) {
-		$this->load->database();
+	public function login($username) { 
+		
 		$sql = $this->db->where('username',$username)
 						->get('users');
+
 	 	return $row = $sql->row();
 	}
 }

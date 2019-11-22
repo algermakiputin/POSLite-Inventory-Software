@@ -188,6 +188,38 @@ legend {
   padding: 0 10px;
 }
 
+.loader {
+  border: 7px solid #f3f3f3; /* Light grey */
+  border-top: 7px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.2);
+  z-index: 99999;
+  display: none;
+}
+
+.spinner-wrapper .loader {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%,-50%);
+}
+
 
  
 
