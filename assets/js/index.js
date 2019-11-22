@@ -17,6 +17,13 @@ $(document).ready(function() {
 			return false;
 		}
 	});
+
+	$("#side-menu a").click(function() {
+
+		if ($(this).attr('href') != "#") {
+			$(".spinner-wrapper").show();
+		}
+	})
 	 
 
 	$("body").show();

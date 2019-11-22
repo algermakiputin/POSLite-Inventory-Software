@@ -10,6 +10,8 @@ class AuthController extends AppController {
 		
 	}
 	public function login() {
+
+		dd($_SERVER);
 		
 		if ( $_SERVER['SERVER_NAME'] == "poslite.herokuapp.com" ) { 
 			// If they access the heroku default domain, will redirect the user to our new custom domain
@@ -19,11 +21,13 @@ class AuthController extends AppController {
 	 	}
 
 		if ($this->session->userdata('log_in')) redirect(base_url('items'));
-			$this->load->dbutil();
+		
+
+		// $this->load->dbutil();
 			
-		if (!$this->dbutil->database_exists('poslite') && !SITE_LIVE) {
-			return $this->load->view('buy');
-		}
+		// if (!$this->dbutil->database_exists('poslite') && !SITE_LIVE) {
+		// 	return $this->load->view('buy');
+		// }
  
  
 		$this->load->view('login'); 
