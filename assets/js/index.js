@@ -18,12 +18,12 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#side-menu a").click(function() {
+	// $("#side-menu a").click(function() {
 
-		if ($(this).attr('href') != "#") {
-			$(".spinner-wrapper").show();
-		}
-	})
+	// 	if ($(this).attr('href') != "#") {
+	// 		$(".spinner-wrapper").show();
+	// 	}
+	// })
 	 
 
 	$("body").show();
