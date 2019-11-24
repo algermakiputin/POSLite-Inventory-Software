@@ -47,7 +47,11 @@
 
 	function serial() {
 		$serial =  shell_exec('c:\Windows\System32\wbem\wmic.exe DISKDRIVE GET SerialNumber 2>&1');
-		return trim(str_replace('SerialNumber','', $serial));
+
+
+		$serial = trim(str_replace('SerialNumber','', $serial));
+
+		return preg_split ('/\R/', $serial)[0];
 	}
 
 	function noStocks() {
@@ -93,27 +97,28 @@
 
 		$data['bronze'] = [
 				'items' => 200,
-				'users' => 5,
+				'users' => 2,
 				'customers' => 200,
 			];
 
 		$data['silver'] = [
 				'items' => 2000,
-				'users' => 10,
+				'users' => 2,
 				'customers' => 2000
 			];
 			
 
 		$data['gold'] = [
 				'items' => 5000000,
-				'users' => 5000000,
+				'users' => 200,
 				'customers' => 5000000
 			];
 
 		$license = $CI->config->item('license');
 
 		$count = $CI->db->get($table)->num_rows();
-		 
+
+	 
 		if ($count > $data[$license][$table] ) {
 			$CI->session->set_flashdata('errorMessage', "<div class='alert alert-danger'>Your ". $table ." reached the limit, please <a href='https://m.me/poslitesoftware'>contact us</a> to upgrade</div>");
 			return redirect('/items');

@@ -3,13 +3,8 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class AppController extends CI_Controller {
 
 	public function __construct() {
-
-		
-      parent::__construct();
-
-      
  
-
+      parent::__construct();  
     }
 
     public function licenseControl () {
@@ -22,8 +17,8 @@ class AppController extends CI_Controller {
 	    	$content = profile(); 
 
 	    	$serial = (str_replace('serialNumber=', '', $content[0]));
-	    	
-	    	if ($serial != serial()) {
+	    	 
+	    	if (trim($serial) != trim(serial())) {
 
 	    		return redirect('activate');
 	    	}
