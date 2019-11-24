@@ -8,6 +8,8 @@ class ImportExportController extends CI_Controller {
 
 		$items = file_get_contents('./items.json');
  		$items = json_decode($items, true);
+ 		
+ 
 
  		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
@@ -16,22 +18,31 @@ class ImportExportController extends CI_Controller {
 		$this->db->trans_begin();
 
 		foreach ($items['Sheet1'] as $item) {
+			$category_id = 0;
+			$category = $this->db->where('name', $item['Category'])->get('categories')->row();
 
-			 $data = array(
-				'name' => $item['SKU'],
-				'category_id' => 78,
+			if ($category) {
+				$category_id = $category->id;
+			}else {
+				$this->db->insert('categories', ['name' => $item['Category'], 'active' => 1]);
+				$category_id = $this->db->insert_id();
+			}
+
+			$data = array(
+				'name' => $item['Item Name'],
+				'category_id' => $category_id,
 				'description' => '', 
 				'supplier_id' => 10,
 				'status' => 1,
-				'barcode' => $item['BAR CODE']
+				'barcode' => $item['Barcode']
 			);
 
 			$this->db->insert('items', $data);
 
 			$item_id = $this->db->insert_id();
 
-			$this->PriceModel->insert($item['SELLING PRICE/UNIT'],$item['Average Cost (₱)'], $item_id);
-			$this->db->insert('ordering_level', ['quantity' => $item['QUANTITY'], 'item_id' => $item_id]);
+			$this->PriceModel->insert($item['Capital per/ Item'],$item['Retail Price'], $item_id);
+			$this->db->insert('ordering_level', ['quantity' => $item['Stocks'], 'item_id' => $item_id]);
 		}
 
 

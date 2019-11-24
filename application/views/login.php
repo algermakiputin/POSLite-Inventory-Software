@@ -66,7 +66,7 @@
 	}
 
 	.col1 {
-		background-image: url('https://images.pexels.com/photos/1227520/pexels-photo-1227520.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+		background-image: url('<?php echo base_url('assets/images/login.jpeg') ?>');
 		background-position: center;
 		height: 100%;
 		width: 40%;

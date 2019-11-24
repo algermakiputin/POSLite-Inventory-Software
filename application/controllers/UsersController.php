@@ -68,6 +68,7 @@ class UsersController extends AppController {
 
 
 	public function users () {
+		
 		$this->checkLogin();
 		$data['page'] = 'accounts';
 		$this->load->model('UsersModel');
@@ -78,15 +79,42 @@ class UsersController extends AppController {
 	}
 
 	public function history() {
-		$this->checkLogin();
-		$data['history'] = $this->db->order_by('id','DESC')
+		$this->checkLogin(); 
+		$data['content'] = "users/history";
+		$this->load->view('master',$data);
+	}
+
+	public function history_datatable() {
+
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$history_count = $this->db->get('history')->num_rows();
+
+		$history = $this->db->order_by('id','DESC')
 						->select('users.account_type, users.username, history.*')
 						->from('history')
 						->join('users', 'users.id = history.user_id')
+						->limit($limit, $start)
 						->get()->result();
-	 
-		$data['content'] = "users/history";
-		$this->load->view('master',$data);
+
+		$datasets = array_map( function($history){ 
+			
+			return [
+				date('Y-m-d h:i:s a', strtotime($history->date)),
+				$history->username,
+				$history->account_type,
+				$history->action,
+			];
+		}, $history);
+
+		$count = count($datasets);
+
+		echo json_encode([
+				'draw' => $this->input->post('draw'),
+				'recordsTotal' => $count,
+				'recordsFiltered' => $history_count,
+				'data' => $datasets
+			]);
 	}
 
 	public function edit($id) {

@@ -583,13 +583,7 @@ $(document).ready(function() {
 
 		}
 	});
-	
-	
-	$("#history_table").DataTable({
-		'bLengthChange' : false,
-		'searching' : false,
-		'ordering' : false,
-	});
+	 
 
 	$("#mail").click(function() {
 		var button = $(this);
@@ -664,7 +658,20 @@ $(document).ready(function() {
 		$("#modal").modal('toggle');
 	})
 
-	
+	var data = {};
+	data[csrfName] = csrfHash;
+
+	$("#history_table").DataTable({
+		processing : true, 
+		ordering : false, 
+		serverSide : true, 
+		ajax : {
+			type : "POST",
+			data: data,
+			url : base_url + "UsersController/history_datatable"
+		}, 
+	});
+
 	$("#users_table").DataTable({
 		"targets": 'no-sort',
 		"bSort": false,
