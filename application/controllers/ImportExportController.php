@@ -7,9 +7,7 @@ class ImportExportController extends CI_Controller {
 	public function import_items() {
 
 		$items = file_get_contents('./items.json');
- 		$items = json_decode($items, true);
- 		
- 
+ 		$items = json_decode($items, true); 
 
  		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
@@ -41,7 +39,7 @@ class ImportExportController extends CI_Controller {
 
 			$item_id = $this->db->insert_id();
 
-			$this->PriceModel->insert($item['Capital per/ Item'],$item['Retail Price'], $item_id);
+			$this->PriceModel->insert($item['Retail Price'], $item['Capital per/ Item'], $item_id);
 			$this->db->insert('ordering_level', ['quantity' => $item['Stocks'], 'item_id' => $item_id]);
 		}
 
