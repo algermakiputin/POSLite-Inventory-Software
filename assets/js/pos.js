@@ -25,6 +25,7 @@
 				data = {};
 				data[csrfName] = csrfHash;
 				data['code'] = event.code;
+			
 				$.ajax({
 					type : 'POST',
 					url : base_url + 'items/find',
@@ -100,9 +101,9 @@
 		var stocks = stockCol.text();
 		var price = $(this).find('td').eq(4).text();
 		var description = $(this).find('td').eq(2).text();
-	 	 
+		
 	 	if ( parseInt(stocks.split(' ').join('')) > 0 ) {
-	 		if (id && name && stocks && price && description) {
+	 		if (id && name && stocks && price) {
 	  	 		if (itemExist(id,stocks) == false) {
 		  	 		var quantity = 1;
 				 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));

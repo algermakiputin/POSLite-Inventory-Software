@@ -24,15 +24,7 @@
 									<th width="45%">Action</th>
 								</tr>
 							</thead>
-							<tbody>
-								<?php foreach($history as $hist): ?>
-									<tr>
-										<td><?php echo date('Y-m-d h:i:s a', strtotime($hist->date)) ?></td>
-										<td><?php echo $hist->username ?></td>
-										<td><?php echo $hist->account_type ?></td>
-										<td><?php echo $hist->action ?></td>
-									</tr>
-								<?php endforeach; ?>
+							<tbody> 
 							</tbody>
 						</table>
 					</div>

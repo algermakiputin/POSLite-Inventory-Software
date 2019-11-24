@@ -1,7 +1,8 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH."controllers/AppController.php");
-class ItemController extends AppController { 
+class ItemController extends AppController {
+ 
 	
 	public function __construct() { 
 
@@ -82,25 +83,13 @@ class ItemController extends AppController {
 		$filterSupplier = $this->input->post('columns[7][search][value]');
 		$sortPrice = $this->input->post('columns[4][search][value]');
 		$sortStocks = $this->input->post('columns[5][search][value]');
-		$itemCount = $this->db->get('items')->num_rows();
 
-		$this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id')
-					->from('items')
-					->join('categories', 'categories.id = items.category_id', 'BOTH')
-					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH')
-					->join('prices', 'prices.item_id = items.id')
-					->join('ordering_level', 'ordering_level.item_id = items.id')
-					->like('categories.name', $filterCategory, "BOTH") 
-					->like('items.name', $search, "BOTH")
-					->like('supplier.name', $filterSupplier, "BOTH");
 
-		if ($sortPrice)
-			$this->db->order_by('prices.price',$sortPrice); 
-		if ($sortStocks)
-			$this->db->order_by('ordering_level.quantity',$sortStocks);
-					
-		$items = $this->db->limit($limit, $start)->get()->result(); 
-
+		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
+												->limit($limit, $start)->get()->result();
+ 
+		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)->get()->num_rows(); 
+		  
 		$datasets = array_map(function($item) {
 			$itemPrice = $this->PriceModel->getPrice($item->id);
 			$itemCapital = $this->PriceModel->getCapital($item->id);
@@ -155,6 +144,25 @@ class ItemController extends AppController {
 			'recordsFiltered' => $itemCount,
 			'data' => $datasets
 		]);
+	}
+
+	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks) {
+		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id')
+					->from('items')
+					->join('categories', 'categories.id = items.category_id', 'BOTH')
+					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH')
+					->join('prices', 'prices.item_id = items.id')
+					->join('ordering_level', 'ordering_level.item_id = items.id')
+					->like('categories.name', $filterCategory, "BOTH") 
+					->like('items.name', $search, "BOTH")
+					->like('supplier.name', $filterSupplier, "BOTH");
+
+		if ($sortPrice)
+			$query->order_by('prices.price',$sortPrice); 
+		if ($sortStocks)
+			$query->order_by('ordering_level.quantity',$sortStocks);
+
+		return $query;
 	}
 
 	public function disPlayItemImage($image) {
