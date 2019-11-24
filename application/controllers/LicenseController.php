@@ -11,10 +11,7 @@ class LicenseController extends CI_Controller {
 	}
 
 	public function activate() {
-
-		dd(profile());
-
-		dd(serial());
+ 
 		$data['page_name'] = "Activate";
 		$data['serial'] =  serial();
 		$this->load->view('template/header',$data); 
