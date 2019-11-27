@@ -82,13 +82,13 @@
     </footer>
 
     
-</body>
-
+</body> 
  
 <script type="text/javascript">
     var no_stocks = <?= json_encode(noStocks()); ?>;
     var low_stocks = <?= json_encode(low_stocks()); ?>;
-
+    console.log(low_stocks);
+    console.log(no_stocks);
     $(document).ready(function() {
 
         var disable_stockout_notification = getCookie("disable_stockout_popup");

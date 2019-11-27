@@ -10,10 +10,12 @@ class DeliveriesController extends CI_Controller
 
 	public function new() {
 		$this->load->model('PriceModel');
+		$products = $this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result();
+ 
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
-		$data['products'] = json_encode($this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result());
-		 
+		$data['products'] = ($products);
+
  		$data['content'] = "deliveries/new";
 		$this->load->view('master',$data);
 		 

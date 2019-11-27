@@ -143,7 +143,7 @@ $(document).ready(function() {
 			},
 			dataTableFilter : function() {
 				$(".filter-items").change(function() {
-					let column = $(this).data('column');
+					var column = $(this).data("column");
 
 					if (column == 4) {
 						itemTable.columns(5).search('');
@@ -323,7 +323,7 @@ $(document).ready(function() {
 			graphSales : function() {
 
 			},
-			customerDatatable() {
+			customerDatatable : function() {
 				var customer_table = $("#customer_table").DataTable({
 					ordering : false,
 					dom : "lfrtBp",
@@ -745,6 +745,7 @@ $(document).ready(function() {
 					$("#key-submit").button('reset');
 				},
 				error : function() {
+					alert("Please check your internet connection");
 					$("#key-submit").button('reset');
 				}
 			})

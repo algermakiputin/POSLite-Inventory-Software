@@ -78,12 +78,20 @@
 		position: absolute;
 		top: 50%;
 		transform: translate(0, -50%);
+		-moz-transform: translate(0, -50%);
+		-ms-transform: translate(0, -50%);
+		-o-transform: translate(0, -50%);
+		-webkit-transform: translate(0, -50%); 
 	}
 
 	.col2 .form-signin {
 		position: absolute;
 		top: 50%;
 		transform: translate(0, -50%);
+		-moz-transform: translate(0, -50%);
+		-ms-transform: translate(0, -50%);
+		-o-transform: translate(0, -50%);
+		-webkit-transform: translate(0, -50%); 
 		margin-left: 20px;
 	}
 

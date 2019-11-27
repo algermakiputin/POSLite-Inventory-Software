@@ -61,6 +61,7 @@
 				->join("ordering_level", "ordering_level.item_id = items.id", "left")
 				->where('items.status', 1)
 				->where('ordering_level.quantity <=', 0)
+				->limit(100,0)
 				->get()
 				->result();
 
@@ -75,6 +76,7 @@
 				->where('items.status', 1)
 				->where('ordering_level.quantity >', 0)
 				->where('ordering_level.quantity <=', 50)
+				->limit(100,0)
 				->get()
 				->result();
 
