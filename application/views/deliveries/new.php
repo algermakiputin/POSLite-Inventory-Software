@@ -39,7 +39,7 @@
 									</div>
 									<div class="form-group">
 										<label>Delivery Date</label>
-										<input type="text" required="required" placeholder="Date" name="delivery_date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
+										<input type="date" name="delivery_date" class="form-control">
 									</div> 
 								</div>
 								<div class="col-md-9">
@@ -64,7 +64,8 @@
 												<input type="hidden" name="product_id[]" >
 											</td>
 											<td> 
-												<input type="text" required="required" placeholder="Date" name="expiry_date[]" class="form-control date-range-filter" data-date-format="yyyy-mm-dd"> 
+
+												<input type="date"  name="expiry_date[]" class="form-control" required="required"> 
 											</td>
 											
 											<td>
@@ -125,7 +126,7 @@
 	$(document).ready(function() {
 		var row = $("#deliveryDetailsTable tbody tr:first-child").html();
 		var index = 1;
-		var products = <?= json_encode($products); ?>;
+		var products = JSON.parse('<?php echo $products ?>');
 		$(".product").autocomplete({
 			lookup: products,
 			onSelect: function(suggestion) { 
@@ -146,14 +147,6 @@
 					$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
 				}
 			})
-
-			rowIndex.find(".date-range-filter").datepicker({
-					useCurrent : false,
-					todayHighlight: true,
-    				toggleActive: true,
-    				autoclose: true,
-				});
-			
 			rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
 			index++;
 
