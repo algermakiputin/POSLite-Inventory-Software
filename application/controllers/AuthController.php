@@ -26,7 +26,9 @@ class AuthController extends AppController {
 		// if (!$this->dbutil->database_exists('poslite') && !SITE_LIVE) {
 		// 	return $this->load->view('buy');
 		// }
- 
+ 	
+
+ 	
  
 		$this->load->view('login'); 
 	}
