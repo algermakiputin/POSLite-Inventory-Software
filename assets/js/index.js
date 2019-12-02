@@ -218,14 +218,10 @@ $(document).ready(function() {
 				data[csrfName] = csrfHash;
 				var sales_table = $("#sales_table").DataTable({
 					searching : true,
-					ordering : false,
-					bLengthChange :false,
 					serverSide : true,
-					info : false,
 					processing : true,
 					bsearchable : true,
-					paging : false,
-					dom : 'lrtip',
+					dom: "B",
 					ajax : {
 						url : base_url + 'sales/report',
 						type : 'POST',
@@ -236,25 +232,41 @@ $(document).ready(function() {
 						visible: hide ,
 						searchable:hide
 					} ],
+					buttons: [
+						{
+							extend: 'copyHtml5',
+							filename : 'Sales Report',
+							title : 'Sales',
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0,1, 2, 3,4,5,6,7 ]
+							},
+						},
+						{
+							extend: 'excelHtml5',
+							filename : 'Sales',
+							title : 'Sales Report',
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0,1, 2, 3,4,5,6,7 ]
+							},
+						},
+						{
+							extend: 'pdfHtml5',
+							filename : 'Sales Report',
+							title : 'Sales',
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0,1, 2, 3,4,5,6,7 ]
+							},
+
+						},
+					],
 					initComplete : function(settings, json) {
 						
 						$("#total-sales").text('₱' + json.total_sales);
 						$("#total-expenses").text('₱' + json.expenses);
-						$("#max-date").change(function() {
-							$(this).datepicker('hide');
-							var to = $(this).val();
-							var from = $("#min-date").val();
-							
-							if (from) {
-								sales_table.columns(0).search(from);
-								sales_table.columns(1).search(to).draw();
-								$("#range").text('Date: ' +to + ' - ' + from);
-								$("#widgets").show();
-
-							}else {
-								alert('Select from date');
-							}
-						})
+						
 					},
 					drawCallback : function (setting) {
 						var data = setting.json; 
@@ -264,6 +276,24 @@ $(document).ready(function() {
 						$("#total-expense").text('₱' + data.expenses);
 					}
 				});
+
+				$("#run").click(function() { 
+
+					var to = $(this).val();
+					var from = $("#min-date").val();
+					var sales_person = $("#sales_person").val();
+					
+					if (from) {
+						sales_table.columns(0).search(from);
+						sales_table.columns(1).search(to).draw();
+						sales_table.columns(2).search(sales_person).draw();
+						$("#range").text('Date: ' +to + ' - ' + from);
+						$("#widgets").show();
+
+					}else {
+						alert('Error: Please select starting date');
+					}
+				})
 			}
 		}
 
