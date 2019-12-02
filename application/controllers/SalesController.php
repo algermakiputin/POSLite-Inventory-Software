@@ -16,7 +16,6 @@ class SalesController extends CI_Controller {
 	public function sales () {
 		$data['widget_column'] = is_admin() ? 4 : 6;
 		$data['dataset'] = $this->graphSales();
-		$data['users'] = $this->db->get('users')->result();
 		$data['content'] = "sales/index";
 		$this->load->view('master',$data);
 		 
@@ -195,7 +194,6 @@ class SalesController extends CI_Controller {
 		$this->db->insert('sales',[
 				'id' => null ,
 				'date_time' => get_date_time(),
-				'user_id' => $this->session->userdata('id')
 			]);
 		$sales_id = $this->db->insert_id();
 		$sales = $this->security->xss_clean($sales);
@@ -241,8 +239,7 @@ class SalesController extends CI_Controller {
 		$totalSales = 0;
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
-		$sales_person = $this->input->post('columns[2][search][value]');
-		$sales = $this->filterReports($from, $to, $sales_person);
+		$sales = $this->filterReports($from, $to);
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
@@ -314,17 +311,17 @@ class SalesController extends CI_Controller {
 		{
 			echo "1";
 	        return $this->db->trans_commit();
-		} 
+		}
+
  
 	}
 
-	public function filterReports($from, $to, $sales_person) {
+	public function filterReports($from, $to) {
 		$from = $from ? $from : date('Y-m-d');
 		$to = $to ? $to : date('Y-m-d'); 
 
 		return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
 					->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
-					->like("user_id", $sales_person, "BOTH")
 					->order_by('id', 'DESC')
 					->get('sales', $this->start, $this->limit)->result();
 		 
