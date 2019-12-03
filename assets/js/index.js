@@ -648,6 +648,24 @@ $(document).ready(function() {
 
 		}
 	});
+
+
+	var data = {};
+	data[csrfName] = csrfHash;
+
+	var stockin_datatable = $("#stockin_tbl").DataTable({
+		processing : true,
+		bLengthChange : false,
+		ordering : false,
+		paging : false,
+		serverSide : true,
+		dom : 'r',
+		ajax : {
+			type : "POST",
+			url : base_url + "DeliveriesController/stockin_datatable",
+			data: data
+		}, 
+	});
 	 
 
 	$("#mail").click(function() {

@@ -67,6 +67,8 @@ $route['test'] = 'AuthController/test';
 
 $route['accounting'] = "AccountingController/index";
 
+$route['reports/stockin'] = "DeliveriesController/stockin_reports";
+
 $route['sales'] = 'SalesController/sales';
 $route['sales/report'] ='SalesController/reports';
 $route['sales/graph-filter'] = 'SalesController/graphFilter';

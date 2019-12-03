@@ -65,6 +65,9 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo base_url('reports/stockin') ?>"><i class="fa fa-circle-o"></i> Stock In</a>
                         </li>
                     </ul>
                 </li>

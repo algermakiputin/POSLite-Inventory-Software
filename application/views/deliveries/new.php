@@ -39,8 +39,8 @@
 									</div>
 									<div class="form-group">
 										<label>Delivery Date</label>
-										<input type="date" name="delivery_date" class="form-control">
-									</div> 
+										<input type="text" required="required" placeholder="Date" name="delivery_date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
+									</div>  
 								</div>
 								<div class="col-md-9">
 									<fieldset>
@@ -59,28 +59,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td> 
-												<input type="text" name="product[]" class="form-control product" placeholder="Type Product Name">
-												<input type="hidden" name="product_id[]" >
-											</td>
-											<td> 
-
-												<input type="date"  name="expiry_date[]" class="form-control" required="required"> 
-											</td>
-											
-											<td>
-												<input type="text" name="price[]" placeholder="Price Per Unit" class="form-control" required="required">
-											</td>
-											<td>
-											 	<input type="text" name="quantity[]" placeholder="QTY" class="form-control" required="required">
-											</td>
-											<td>
-												<input type="text" name="defective[]" placeholder="Defectives" class="form-control" required="required"> 
-											</td>
-											<td> 
-												<input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> 
-											</td>
-											<td></td>
+											<td colspan="7" id="placeholder">Add delivery items by Barcode Scanner</td>
 										</tr>
 									</tbody>
 								</table>
@@ -120,13 +99,18 @@
 		cursor: pointer;
 	}
 </style>
-
+<script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery-autocomplete.js') ?>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var row = $("#deliveryDetailsTable tbody tr:first-child").html();
+		var row = '<td><input readonly type="text" name="product[]" class="form-control product" placeholder="Type Product Name"><input type="hidden" name="product_id[]" ></td><td> <input type="date"  name="expiry_date[]" class="form-control" required="required"></td><td><input type="text" name="price[]" placeholder="Price Per Unit" class="form-control" required="required"></td><td><input type="text" name="quantity[]" placeholder="QTY" class="form-control" required="required"></td><td><input type="text" name="defective[]" placeholder="Defectives" class="form-control" required="required"> </td><td> <input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> </td><td></td>';
 		var index = 1;
-		var products = JSON.parse('<?php echo $products ?>');
+		var products = <?php echo $products ?>;
+		var base_url = $("meta[name='base_url']").attr('content');
+		var csrfName = $("meta[name='csrfName']").attr('content');
+		var csrfHash = $("meta[name='csrfHash']").attr('content');
+		var started = 0;
+
 		$(".product").autocomplete({
 			lookup: products,
 			onSelect: function(suggestion) { 
@@ -160,6 +144,46 @@
 
 			$(this).parents("tr").remove();
 		})
+
+		var data = {};
+		data[csrfName] = csrfHash;
+		
+
+		window.addEventListener('selectstart', function(e){ e.preventDefault(); });
+		$(document).pos();
+		$(document).on('scan.pos.barcode', function(event){
+		 	
+		 	if (!started) {
+
+		 		started = 1;
+		 		$("#placeholder").remove();
+		 	}
+
+			var barcode = event.code;
+			data['code'] = barcode;
+			$.ajax({
+				type: "POST",
+				url: base_url + 'ItemController/find',
+				data: data,
+				success: function(data) {
+					var item = JSON.parse(data);
+					var tbody = $("#deliveryDetailsTable tbody");
+					tbody.append("<tr id='row"+index+"'>"+ row +"</tr>");
+					var rowIndex =  $("#row" + index);
+					rowIndex.find("input[name='price[]']").val(item.price.slice(1));
+					rowIndex.find("input[name='product_id[]']").val(item.id);
+					rowIndex.find("input[name='product[]']").val(item.name);
+					rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
+					index++;
+
+				},
+				error: function() {
+					alert("Error: Opps something went wrong, please check your internet connection and try again");
+				}
+			});
+
+
+		}); 
 	})
 
 </script>

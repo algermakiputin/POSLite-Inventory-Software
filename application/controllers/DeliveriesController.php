@@ -8,16 +8,64 @@ class DeliveriesController extends CI_Controller
 	 
 	}
 
+	public function stockin_reports() {
+  
+		$data['content'] = "reports/stockin";
+		$this->load->view('master', $data);
+
+	}
+
+	public function stockin_datatable() {
+
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+		$count = $this->db->get('delivery_details')->num_rows();
+		$datasets = [];
+		$deliveries = $this->db->select("delivery.*, delivery_details.*")
+							->from('delivery')  
+							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
+							->group_by('delivery.id')
+
+							->get()
+							->result();
+
+		foreach ($deliveries as $delivery) {
+		 
+			$datasets[] = [
+				$delivery->date_time,
+				$delivery->barcode,
+				$delivery->name,
+				$delivery->received_by,
+				$delivery->quantities,
+				currency() . number_format($delivery->price),
+				$delivery->defectives,
+				currency() . number_format($delivery->price * $delivery->quantities)
+
+			];
+		}
+
+
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => count($datasets),
+			'recordsFiltered' => $count,
+			'data' => $datasets
+		]);
+
+	}
+
 	public function new() {
 		$this->load->model('PriceModel');
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
-		$data['products'] = json_encode($this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result());
-		 
+		$data['products'] = json_encode($this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result()); 
  		$data['content'] = "deliveries/new";
 		$this->load->view('master',$data);
 		 
 	}
+
+	
 
 	public function details($id) {
 		$data['delivery'] = $this->db->select('delivery.*, supplier.name')
@@ -63,6 +111,11 @@ class DeliveriesController extends CI_Controller
 			if (!$products_id[$key])
 				continue;
 			
+			$item = $this->db->where('id', $products_id[$key])->get('items')->row();
+			if (!$item) 
+				continue;
+
+
 			$orderDetails[] = array(
 				'item_id'	=> $products_id[$key],
 				'quantities' => $quantity[$key],
@@ -70,7 +123,9 @@ class DeliveriesController extends CI_Controller
 				'price'	=>	$price[$key],
 				'expiry_date' => $expiry_date[$key],
 				'defectives' => $defectives[$key],
-				'remarks'	=> $remarks[$key]
+				'remarks'	=> $remarks[$key],
+				'barcode' => $item->barcode,
+				'name' => $item->name,
 			);
  			//Update Product Quantities
 			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
