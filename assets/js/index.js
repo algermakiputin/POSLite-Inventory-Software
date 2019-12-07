@@ -221,7 +221,8 @@ $(document).ready(function() {
 					serverSide : true,
 					processing : true,
 					bsearchable : true,
-					dom: "Br",
+					bLengthChange: false,
+					dom : 'lrtB',
 					ajax : {
 						url : base_url + 'sales/report',
 						type : 'POST',
@@ -658,8 +659,8 @@ $(document).ready(function() {
 		bLengthChange : false,
 		ordering : false,
 		paging : false,
-		serverSide : true,
-		dom : 'Br',
+		serverSide : true, 
+		dom : 'lrtB',
 		ajax : {
 			type : "POST",
 			url : base_url + "DeliveriesController/stockin_datatable",

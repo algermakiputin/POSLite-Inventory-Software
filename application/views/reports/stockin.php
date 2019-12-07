@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div style="padding:10px;font-size: 16px;">
-                        <b>Total Expenses:</b> <span id="total"></span>
+                        <b>Total:</b> <span id="total"></span>
                     </div>
                 </div>
             </div>
