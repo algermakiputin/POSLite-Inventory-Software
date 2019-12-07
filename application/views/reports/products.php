@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Stockin Report</h1>
+		<h1 class="page-header">Products Report</h1>
 	</div> 
    
 </div>
@@ -20,32 +20,25 @@
                         </div> 
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            <input id="stockin_from" type="text" class="form-control date-range-filter" name="email" placeholder="From Date" data-date-format="yyyy-mm-dd">
+                            <input id="products_from" type="text" class="form-control date-range-filter" name="email" placeholder="From Date" data-date-format="yyyy-mm-dd">
                         </div>
                         &nbsp;
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            <input id="stockin_to" type="text" class="form-control date-range-filter" name="email" placeholder="To Date" data-date-format="yyyy-mm-dd">
+                            <input id="products_to" type="text" class="form-control date-range-filter" name="email" placeholder="To Date" data-date-format="yyyy-mm-dd">
                         </div>
                     </form>
-                </div>
-                <div class="col-md-6 text-right">
-                    <div style="padding:10px;font-size: 16px;">
-                        <b>Total Expenses:</b> <span id="total"></span>
-                    </div>
-                </div>
+                </div> 
             </div>
-            <table class="table table-responsive table-striped table-hover table-bordered" id="stockin_tbl" width="100%">
+            <table class="table table-responsive table-striped table-hover table-bordered" id="products_table" width="100%">
                <thead>
-                <tr> 
-                    <th>Date</th> 
-                    <th>Item ID</th>
+                <tr>  
+                    <th>Barcode</th>
                     <th>Name</th>
-                    <th>Received By</th>
-                    <th>Qty</th> 
-                    <th>Price</th>
-                    <th>Defectives</th>
-                    <th>Total</th>
+                    <th>Stock-in</th>
+                    <th>Sold</th> 
+                    <th>Returns</th>
+                    <th>Total</th> 
                  </tr>
          </thead>
          <tbody>

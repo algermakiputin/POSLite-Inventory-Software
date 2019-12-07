@@ -22,11 +22,16 @@ class DeliveriesController extends CI_Controller
 		$search = $this->input->post('search[value]'); 
 		$count = $this->db->get('delivery_details')->num_rows();
 		$datasets = [];
+		$total = 0;
+		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
+		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
+ 
 		$deliveries = $this->db->select("delivery.*, delivery_details.*")
 							->from('delivery')  
 							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
-							->group_by('delivery.id')
-
+							->where('date_time >=', $from)
+							->where('date_time <=', $to)
+							->group_by('delivery.id') 
 							->get()
 							->result();
 
@@ -43,6 +48,8 @@ class DeliveriesController extends CI_Controller
 				currency() . number_format($delivery->price * $delivery->quantities)
 
 			];
+
+			$total += $delivery->price * $delivery->quantities;
 		}
 
 
@@ -50,7 +57,8 @@ class DeliveriesController extends CI_Controller
 			'draw' => $this->input->post('draw'),
 			'recordsTotal' => count($datasets),
 			'recordsFiltered' => $count,
-			'data' => $datasets
+			'data' => $datasets,
+			'total' => number_format($total,2),
 		]);
 
 	}

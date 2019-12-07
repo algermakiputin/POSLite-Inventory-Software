@@ -32,7 +32,8 @@ class ItemController extends AppController {
 					'name' => $item->name,
 					'price' => '₱' . $price,
 					'quantity' => $quantity,
-					'id' => $item->id
+					'id' => $item->id,
+					'barcode' => $item->barcode
 				]) ;
 		} 
 		return;
@@ -113,11 +114,7 @@ class ItemController extends AppController {
 
 			$actions = '<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    	<li>
-                            <a href="' . base_url("items/stock-in/$item->id") .'">
-                                <i class="fa fa-plus"></i> Stock In</a>
-                        </li>
+                    <ul class="dropdown-menu"> 
                         
                         '.$deleteAction.'
                     </ul>

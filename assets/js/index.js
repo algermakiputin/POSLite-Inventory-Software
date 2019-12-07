@@ -659,12 +659,203 @@ $(document).ready(function() {
 		ordering : false,
 		paging : false,
 		serverSide : true,
-		dom : 'r',
+		dom : 'Br',
 		ajax : {
 			type : "POST",
 			url : base_url + "DeliveriesController/stockin_datatable",
 			data: data
 		}, 
+		buttons: [ 
+			{
+				extend: 'excelHtml5',
+				filename : 'Stockin Report', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1, 2, 3,4,5,6,7 ]
+				}, 
+				title : function() {
+					var to = $("#stockin_to").val();
+					var from = $("#stockin_from").val();
+
+					if (to && from) {
+						return 'Stockin Report: ' + $("#stockin_from").val() + ' - ' + $("#stockin_to").val();
+					}
+				 	else {
+				 		return "Stock in Report: " + moment().format("YYYY-MM-DD");
+				 	}
+				 	
+				},
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'Stockin Report', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0, 1, 2, 3,4,5,6,7 ]
+				}, 
+				title : function() {
+
+					var to = $("#stockin_to").val();
+					var from = $("#stockin_from").val(); 
+					if (to && from) {
+						return 'Stockin Report: ' + $("#stockin_from").val() + ' - ' + $("#stockin_to").val();
+					}
+				 	else {
+				 		return "Stock in Report: " + moment().format("YYYY-MM-DD");
+				 	}
+				},
+			},
+		],
+		initComplete:function() {
+			$("#stockin_to").change(function(e) {
+
+				var to = $(this).val();
+				var from = $("#stockin_from").val();
+
+				if (from && to) {
+
+					stockin_datatable.columns(0).search(from)
+											.columns(1).search(to)
+											.draw();
+
+				}else {
+
+					alert("Error: please select a valid date period");
+				}
+			})
+		},
+		drawCallback : function (setting) {
+			var data = setting.json;
+			$("#total").text('₱' + data.total); 
+		}
+	});
+
+
+	returnsTable = $("#returns_table").DataTable({
+		searching : true,
+		ordering : false, 
+		serverSide : true,
+		info : false,
+		processing : true,
+		bsearchable : true, 
+		dom : 'lrtB',
+		ajax : {
+			url : base_url + 'ReturnsController/report_datatable',
+			type : 'POST',
+			data : data
+		},
+		buttons: [ 
+			{
+				extend: 'excelHtml5',
+				filename : 'Expenses',
+				title : function() {
+					return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
+				 	
+				}, 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1, 2, 3 ]
+				},
+				messageTop: function() {
+					return "Total: " + $("#total").text();
+				}
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'Expenses Report',
+				title : function() {
+					return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
+				 	
+				},
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0, 1, 2, 3 ]
+				},
+				messageTop: function() {
+					return "Total: " + $("#total").text();
+				}
+			},
+		],
+		drawCallback: function(setting) {
+			var data = setting.json;
+			totalExpenses = data.total;
+			$("#total").text(totalExpenses);
+
+		},
+		initComplete:function() {
+			$("#return_to").change(function(e) {
+				var from = $("#return_from").val();
+				var to = $(this).val();
+
+				if (from && to) {
+
+					returnsTable.columns(0).search(from)
+									.columns(1).search(to)
+									.draw();
+				}else {
+					alert("Invalid date");
+				}
+
+			})
+		}
+	}); 
+
+
+	productsTable = $("#products_table").DataTable({
+		searching : true,
+		ordering : false, 
+		serverSide : true, 
+		processing : true,
+		bsearchable : true,  
+		dom: 'lfrtBp',
+		ajax : {
+			url : base_url + 'ReportsController/products_datatable',
+			type : 'POST',
+			data : data
+		},
+		lengthMenu : [[10, 25, 50, 0], [10, 25, 50, "Show All"]],
+		buttons: [ 
+			{
+				extend: 'excelHtml5',
+				filename : 'Products Report',
+				title : function() {
+					return 'Products Report: ' + $("#products_from").val() + ' - ' + $("#products_to").val();
+				 	
+				}, 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1, 2, 3, 4, 5 ]
+				}, 
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'Products Report',
+				title : function() {
+					return 'Products Report: ' + $("#products_from").val() + ' - ' + $("#products_from").val();
+				 	
+				},
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0, 1, 2, 3, 4, 5 ]
+				}, 
+			},
+		], 
+		initComplete:function() {
+			$("#products_to").change(function(e) {
+				var from = $("#products_from").val();
+				var to = $(this).val();
+
+				if (from && to) {
+
+					productsTable.columns(0).search(from)
+									.columns(1).search(to)
+									.draw();
+				}else {
+					alert("Invalid date");
+				}
+
+			})
+		} 
 	});
 	 
 

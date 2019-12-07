@@ -1,15 +1,21 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Stockin Report</h1>
+		<h1 class="page-header">Product Returns Report</h1>
 	</div> 
-   
+    <div class="col-md-12">
+        <?php if ($this->session->flashdata('success')): ?>
+            <div class="alert alert-success">
+                <?php echo $this->session->flashdata('success') ?>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
 <div class="row">
-   
+    
     <div class="col-lg-12">
      <div class="panel panel-default">
          <div class="panel-heading">
-              Reports
+             <i class="fa fa-refresh fa-fw"></i> Product Returns
          </div> 
          <div class="panel-body"> 
             <div class="row">
@@ -20,12 +26,12 @@
                         </div> 
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            <input id="stockin_from" type="text" class="form-control date-range-filter" name="email" placeholder="From Date" data-date-format="yyyy-mm-dd">
+                            <input id="return_from" type="text" class="form-control date-range-filter" name="email" placeholder="From Date" data-date-format="yyyy-mm-dd">
                         </div>
                         &nbsp;
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                            <input id="stockin_to" type="text" class="form-control date-range-filter" name="email" placeholder="To Date" data-date-format="yyyy-mm-dd">
+                            <input id="return_to" type="text" class="form-control date-range-filter" name="email" placeholder="To Date" data-date-format="yyyy-mm-dd">
                         </div>
                     </form>
                 </div>
@@ -35,17 +41,15 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-responsive table-striped table-hover table-bordered" id="stockin_tbl" width="100%">
+            <table class="table table-responsive table-striped table-hover table-bordered" id="returns_table" width="100%">
                <thead>
-                <tr> 
-                    <th>Date</th> 
-                    <th>Item ID</th>
+                <tr>
+                    <th>Date</th>
+                    <th>Staff</th>
+                    <th>Barcode</th>
                     <th>Name</th>
-                    <th>Received By</th>
-                    <th>Qty</th> 
-                    <th>Price</th>
-                    <th>Defectives</th>
-                    <th>Total</th>
+                    <th>Quantity</th> 
+                    <th>Reason</th>
                  </tr>
          </thead>
          <tbody>
