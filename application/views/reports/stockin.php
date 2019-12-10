@@ -13,7 +13,7 @@
          </div> 
          <div class="panel-body"> 
             <div class="row">
-                <div class="col-md-6" style="margin-bottom: 10px;">
+                <div class="col-md-8" style="margin-bottom: 10px;">
                     <form class="form-inline" autocomplete="off">
                         <div class="form-group">
                             <label>Filter Reports: &nbsp;</label> 
@@ -29,7 +29,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-4 text-right">
                     <div style="padding:10px;font-size: 16px;">
                         <b>Total:</b> <span id="total"></span>
                     </div>

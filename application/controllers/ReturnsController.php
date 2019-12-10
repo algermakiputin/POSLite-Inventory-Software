@@ -82,8 +82,11 @@ class ReturnsController extends AppController {
 				$return->barcode,
 				$return->name,
 				$return->quantity,
-				$return->price, 
+				currency() . number_format($return->price), 
+				$return->reason, 
 			]; 
+
+			$total += $return->price * $return->quantity;
 		}
 
 		echo json_encode([
@@ -91,7 +94,7 @@ class ReturnsController extends AppController {
 			'recordsTotal' => count($datasets),
 			'recordsFiltered' => $count,
 			'data' => $datasets,
-			'total' => number_format($total,2),
+			'total' => currency() . number_format($total,2),
 		]); 
 	}
 }

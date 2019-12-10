@@ -4,6 +4,10 @@
   border-radius: 1px;
 }
 
+div.dataTables_processing {
+  top: 8%!important;
+}
+
 html, body {
   height: 99%;
   width: 100%;

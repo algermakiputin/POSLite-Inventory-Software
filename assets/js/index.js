@@ -780,6 +780,7 @@ $(document).ready(function() {
 		drawCallback: function(setting) {
 			var data = setting.json;
 			totalExpenses = data.total;
+	 
 			$("#total").text(totalExpenses);
 
 		},
@@ -858,6 +859,86 @@ $(document).ready(function() {
 			})
 		} 
 	});
+  	
+  	
+
+  	if ( $("#ledger_product").length ) {
+
+  		var data = {};
+		data[csrfName] = csrfHash;
+		data['id'] = $("#ledger_product").val();
+
+  		productLedgerTable = $("#product_ledger_tbl").DataTable({
+		searching : true,
+		ordering : false, 
+		serverSide : true, 
+		processing : true,
+		bsearchable : true,  
+		dom: 'lfrtBp',
+		ajax : {
+			url : base_url + 'ReportsController/ledger',
+			type : 'POST',
+			data : data
+		},
+		lengthMenu : [[10, 25, 50, 0], [10, 25, 50, "Show All"]],
+		buttons: [ 
+			{
+				extend: 'excelHtml5',
+				filename : 'Products Report',
+				title : function() {
+					return 'Products Report: ' + $("#products_from").val() + ' - ' + $("#products_to").val();
+				 	
+				}, 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1, 2, 3, 4, 5,6 ]
+				}, 
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'Products Report',
+				title : function() {
+
+					var to = $("#products_from").val();
+					var from = $("#products_from").val();
+
+					if (from && to) 
+						return 'Products Report: ' + from  + ' - ' + to ;
+				 	
+				},
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0, 1, 2, 3, 4, 5,6 ]
+				}, 
+			},
+		], 
+		initComplete:function() {
+			$("#ledger-report").click(function(e) {
+				e.preventDefault();
+
+				var from = $("#ledger_from").val();
+				var to = $("#ledger_to").val();
+				var user = $("#staff").val();
+				var type = $("#type").val();
+
+
+				if (from && to) {
+
+					productLedgerTable.columns(0).search(from)
+											.columns(1).search(to)
+											.columns(2).search(type)
+											.columns(3).search(user)
+											.draw();
+
+				}else {
+
+					alert("Invalid Date");
+				}
+			})
+		} 
+	});
+  	}
+	 
 	 
 
 	$("#mail").click(function() {

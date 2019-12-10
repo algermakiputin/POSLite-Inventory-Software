@@ -62,6 +62,7 @@ class ReportsController extends AppController
  					$sales->sold ? $sales->sold : 0,
  					$returns->total ? $returns->total : 0,
  					currency() . number_format($sales->total, 2),
+ 					'<a href="'.base_url('ReportsController/product_ledger/' . $product->id).'" class="btn btn-primary btn-sm">Details</a>'
  				];
  		}
 
@@ -76,6 +77,93 @@ class ReportsController extends AppController
 			'recordsFiltered' => $count,
 			'data' => $datasets 
 		]); 
+	}
+
+	public function product_ledger($id) {
+
+		$product = $this->db->where('id', $id)->get('items')->row();
+		if (!$product)
+			return redirect('/');
+
+		$data['product'] = $product;
+		$data['content'] = 'reports/product_ledger';
+		$data['staffs'] = $this->db->get('users')->result();
+
+		$this->load->view('master', $data);
+	}
+
+	public function ledger() {
+
+		$draw = $this->input->post('draw');
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]');
+		$id = $this->input->post('id');
+
+
+		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
+		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
+		$type = $this->input->post('columns[2][search][value]');
+		$staff = $this->input->post('columns[3][search][value]');
+		$merged = [];
+
+		$sales = $this->db->where('item_id', $id)
+
+								->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $to)
+								->like('staff', $staff, 'BOTH')			
+								->get('sales_description')
+								->result();
+
+		$returns = $this->db->where('item_id', $id)
+								->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+								->like('staff', $staff, 'BOTH')	
+								->get('returns')
+								->result();
+
+		if ($type == "sales") {
+			$merged = $sales;
+		}else if ($type == "returns") {
+			$merged = $returns;
+		}else {
+			$merged = array_merge($sales, $returns);
+		}
+		
+		$datasets = [];
+
+		foreach ($merged as $row) {
+
+			$type = "Return";
+			$date = "";
+			if (array_key_exists('sales_id', $row)) {
+
+				$type = "Sales";
+				$date = date('Y-m-d', strtotime($row->created_at));
+			}else {
+
+				$date = date('Y-m-d', strtotime($row->date_time));
+
+			} 
+
+			$datasets[] = [
+					$date,
+					$type,
+					$row->staff,
+					$row->name, 
+					$row->quantity,
+					currency() . number_format($row->price, 2),
+					currency() . number_format((float)$row->price * (float)$row->quantity,2)
+				];
+		}
+
+
+		echo json_encode([
+			'draw' => $draw,
+			'recordsTotal' => count($datasets),
+			'recordsFiltered' => count($merged),
+			'data' => $datasets
+		]);
 	}
 
 }

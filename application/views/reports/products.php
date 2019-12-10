@@ -39,6 +39,7 @@
                     <th>Sold</th> 
                     <th>Returns</th>
                     <th>Total</th> 
+                    <th>Action</th>
                  </tr>
          </thead>
          <tbody>

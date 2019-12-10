@@ -211,6 +211,7 @@ class SalesController extends CI_Controller {
 				'discount' => $sale['discount'],
 				'profit' => $transactionProfit,
 				'user_id' => $this->session->userdata('id'),
+				'staff' => $this->session->userdata('username'),
 				'created_at' => get_date_time(),
 			];
 			
