@@ -41,19 +41,18 @@
 							<td><?php echo $delivery->defectives ?></td>
 							<td>
 								<div class="dropdown">
-				                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-				                    <ul class="dropdown-menu">
-				                    	
-				                        <li>
-				                        	<a href="<?php echo base_url("deliveries/details/" . $delivery->id) ?>"><i class="fa fa-eye"></i> View Details</a> 
-				                        </li> 
-				                        <li>
-				                            <a class="delete-data" href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $delivery->id ?>">
-				                                <i class="fa fa-trash"></i> Delete</a>
-				                        </li>
-				                    </ul>
-				                </div>
-								<!-- <a href="" class="btn btn-danger btn-sm">Delete</a> -->
+		                    	<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+		                    	<ul class="dropdown-menu">
+		                    	
+		                        <li>
+		                        	<a href="<?php echo base_url("deliveries/details/" . $delivery->id) ?>"><i class="fa fa-eye"></i> View Details</a> 
+		                        </li> 
+		                        <li>
+		                            <a class="delete-data" href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $delivery->id ?>">
+		                                <i class="fa fa-trash"></i> Delete</a>
+		                        </li>
+		                    	</ul>
+				            </div> 
 							</td>
 						</tr>
 					<?php endforeach; ?>  

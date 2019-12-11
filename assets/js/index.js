@@ -680,9 +680,16 @@ $(document).ready(function() {
 		ordering : false
 	});
 
+	var data = {};
+	data[csrfName] = csrfHash;
 	$("#deliveries_table").DataTable({
-		"targets": 'no-sort',
-		"bSort": false,
+		processing : true, 
+		serverSide : true, 
+		ajax : {
+			type : "POST",
+			url : base_url + "DeliveriesController/datatable",
+			data: data
+		}, 
 	});
 
 	$("#btn-group-menu .btn").click(function() {
