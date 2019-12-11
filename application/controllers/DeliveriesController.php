@@ -116,4 +116,57 @@ class DeliveriesController extends CI_Controller
 		return redirect(deliveries);
 	}
 
+	public function datatable() {
+
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+		$count = $this->db->get('delivery')->num_rows();
+	 	
+	 	$deliveries = $this->db->select("delivery.*, supplier.name, SUM(delivery_details.quantities * delivery_details.price) as total, SUM(delivery_details.defectives) as defectives")
+							->from('delivery') 
+							->join('supplier', 'supplier.id = delivery.supplier_id', 'both')
+							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
+							->group_by('delivery.id')
+							->like('received_by', $search, 'both')
+							->limit($limit, $start)
+							->get()
+							->result();
+		  
+		$datasets = array_map(function($delivery) {
+			 
+			return [
+				$delivery->id,
+				$delivery->date_time,
+				$delivery->received_by,
+				$delivery->name,
+				currency() . number_format($delivery->total),
+				$delivery->defectives,
+				'
+				<div class="dropdown">
+              	<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+              	<ul class="dropdown-menu">
+              	
+                  <li>
+                  	<a href="'. base_url("deliveries/details/" . $delivery->id) .'"><i class="fa fa-eye"></i> View Details</a> 
+                  </li> 
+                  <li>
+                      <a class="delete-data" href="' . base_url('DeliveriesController/destroy/' . $delivery->id ) .'">
+                          <i class="fa fa-trash"></i> Delete</a>
+                  </li>
+              	</ul>
+            </div> 
+				',
+			];
+
+		}, $deliveries);
+
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => count($datasets),
+			'recordsFiltered' => $count,
+			'data' => $datasets
+		]);
+	}
+
 }
