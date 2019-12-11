@@ -69,6 +69,12 @@
 					<?php if (is_admin()): ?>
 					<div class="col-md-<?php echo $widget_column ?>">
 						<div class="sale-widget text-center">
+							Returns <i class="fa fa-question-circle" data-toggle="tooltip" title="Is the total returns from customers." style="font-size: 16px;"></i><br>
+							<b><span id="total-returns">4</span></b>
+						</div>
+					</div> 
+					<div class="col-md-<?php echo $widget_column ?>">
+						<div class="sale-widget text-center">
 							Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Is the profit your store makes after deducting the cost of total expenes and capital or making the product." style="font-size: 16px;"></i><br>
 							<b><span id="total-profit"></span></b>
 						</div>

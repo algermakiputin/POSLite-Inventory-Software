@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Products: <?php echo $product->name; ?></h1>
+		<h1 class="page-header">Products: <span id="product-name"><?php echo $product->name; ?></span></h1>
 	</div> 
 
 </div>

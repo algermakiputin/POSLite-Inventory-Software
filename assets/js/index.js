@@ -310,6 +310,7 @@ $(document).ready(function() {
 						$("#total-profit").text('₱' + data.profit);
 						$("#total-lost").text('₱' + data.lost);
 						$("#total-expense").text('₱' + data.expenses);
+						$("#total-returns").text('₱' + data.returns);
 					}
 				});
 
@@ -884,11 +885,19 @@ $(document).ready(function() {
 		buttons: [ 
 			{
 				extend: 'excelHtml5',
-				filename : 'Products Report',
+				filename : 'Product History',
 				title : function() {
-					return 'Products Report: ' + $("#products_from").val() + ' - ' + $("#products_to").val();
+
+					var to = $("#ledger_from").val();
+					var from = $("#ledger_to").val();
+
+					if (from && to) 
+						return 'Products Report: ' + from  + ' - ' + to ;
 				 	
-				}, 
+				},
+				messageTop: function() {
+					return $("#product-name").text();
+				},
 				className : "btn btn-default btn-sm",
 				exportOptions: {
 					columns: [ 0,1, 2, 3, 4, 5,6 ]
@@ -896,15 +905,18 @@ $(document).ready(function() {
 			},
 			{
 				extend: 'pdfHtml5',
-				filename : 'Products Report',
+				filename : 'Product History',
 				title : function() {
 
-					var to = $("#products_from").val();
-					var from = $("#products_from").val();
+					var to = $("#ledger_from").val();
+					var from = $("#ledger_to").val();
 
 					if (from && to) 
 						return 'Products Report: ' + from  + ' - ' + to ;
 				 	
+				},
+				messageTop: function() {
+					return $("#product-name").text();
 				},
 				className : "btn btn-default btn-sm",
 				exportOptions: {

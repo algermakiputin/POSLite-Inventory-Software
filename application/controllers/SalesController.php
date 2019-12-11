@@ -14,7 +14,7 @@ class SalesController extends CI_Controller {
  
 
 	public function sales () {
-		$data['widget_column'] = is_admin() ? 4 : 6;
+		$data['widget_column'] = is_admin() ? 3 : 6;
 		$data['dataset'] = $this->graphSales();
 		$data['users'] = $this->db->get('users')->result();
 		$data['content'] = "sales/index";
@@ -247,15 +247,24 @@ class SalesController extends CI_Controller {
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
+		$totalReturns = 0;
 		$expenses = $this->db->select("SUM(cost) as total")
 							->where('date >=', $from)
 							->where('date <=', $to)
 							->get('expenses')
 							->row();
+		$returns = $this->db->select("SUM(price * quantity) as total")
+							->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+							->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+							->get('returns')
+							->row();	
 
 		if ($expenses) {
 			$totalExpenses = $expenses->total;
 		}
+
+		if ($returns)
+			$totalReturns = $returns->total;
 
 		foreach ($sales as $sale) {
 			$sales_description = $this->db->where('sales_id', $sale->id)->get('sales_description')->result();
@@ -292,7 +301,8 @@ class SalesController extends CI_Controller {
 				'from' => $from,
 				'to' => $to,
 				'profit' => number_format($transactionProfit), 
-				'expenses' => number_format($totalExpenses)
+				'expenses' => number_format($totalExpenses),
+				'returns' => number_format($totalReturns)
 			]);
 
 	}
