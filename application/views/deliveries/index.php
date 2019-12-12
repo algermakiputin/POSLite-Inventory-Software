@@ -5,6 +5,22 @@
 <!-- /.col-lg-12 -->
 </div>
 <div class="row">
+	<div class="col-md-12" style="margin-bottom: 10px;">
+        <form class="form-inline" autocomplete="off">
+            <div class="form-group">
+                <label>Filter Reports: &nbsp;</label> 
+            </div> 
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                <input id="deliveries_from" type="text" class="form-control date-range-filter" name="email" placeholder="From Date" data-date-format="yyyy-mm-dd" value="<?php echo date('Y-m-d') ?>">
+            </div>
+            &nbsp;
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                <input id="deliveries_to" type="text" class="form-control date-range-filter" name="email" placeholder="To Date" data-date-format="yyyy-mm-dd" value="<?php echo date('Y-m-d') ?>">
+            </div>
+        </form>
+    </div>
  <div class="col-lg-12">
      <div class="panel panel-default">
          <div class="panel-heading">
@@ -20,43 +36,20 @@
              <table class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
 				<thead>
 					<tr>
-						<th>Delivery ID</th>
-						<th>Delivery Date</th>
+						<th>Date</th>
+						<th>Name</th>
+                        <th>Capital</th>
+                        <th>Retail Price</th>
+						<th>Quantity</th>
 						<th>Received By</th>
 						<th>Supplier</th> 
 						<th>Total Amount</th>
-						<th>Defectives</th>
-						<th>Action</th>
+						<th>Defectives</th> 
+						<th>Remarks</th>
 					</tr>
 				</thead>
 
-				<tbody>
-				 	<?php foreach($deliveries as $delivery): ?> 
-						<tr>
-							<td><?php echo $delivery->id ?></td>
-							<td><?php echo $delivery->date_time ?></td>
-							<td><?php echo $delivery->received_by ?></td>
-							<td><?php echo $delivery->name ?></td>
-							<td>₱<?php echo number_format($delivery->total) ?></td>
-							<td><?php echo $delivery->defectives ?></td>
-							<td>
-								<div class="dropdown">
-				                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-				                    <ul class="dropdown-menu">
-				                    	
-				                        <li>
-				                        	<a href="<?php echo base_url("deliveries/details/" . $delivery->id) ?>"><i class="fa fa-eye"></i> View Details</a> 
-				                        </li> 
-				                        <li>
-				                            <a class="delete-data" href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $delivery->id ?>">
-				                                <i class="fa fa-trash"></i> Delete</a>
-				                        </li>
-				                    </ul>
-				                </div>
-								<!-- <a href="" class="btn btn-danger btn-sm">Delete</a> -->
-							</td>
-						</tr>
-					<?php endforeach; ?>  
+				<tbody>  
 				</tbody>
 			</table>
 			

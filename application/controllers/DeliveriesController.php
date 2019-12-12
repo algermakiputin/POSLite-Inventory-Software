@@ -95,13 +95,15 @@ class DeliveriesController extends CI_Controller
 
 	public function insert() {
 	 
-		$products = $this->input->post("product");
+		$barcodes = $this->input->post("barcodes");
 		$products_id = $this->input->post("product_id");
-		$expiry_date = $this->input->post("expiry_date");
-		$price = $this->input->post("price");
+		$expiry_date = $this->input->post("expiry_date"); 
 		$quantity = $this->input->post("quantity");
 		$defectives = $this->input->post("defective");
 		$remarks = $this->input->post("remarks");
+		$names = $this->input->post('names');
+		$capitals = $this->input->post("capitals");
+		$retails = $this->input->post("retails");
 
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
@@ -115,26 +117,29 @@ class DeliveriesController extends CI_Controller
 		$delivery_id = $this->db->insert_id();
 		$orderDetails = array();
 
-		foreach ($products as $key => $product) {
+		foreach ($barcodes as $key => $barcode) {
 			if (!$products_id[$key])
 				continue;
-			
+
 			$item = $this->db->where('id', $products_id[$key])->get('items')->row();
 			if (!$item) 
-				continue;
+				continue; 
 
 
 			$orderDetails[] = array(
 				'item_id'	=> $products_id[$key],
 				'quantities' => $quantity[$key],
 				'delivery_id' => $delivery_id,
-				'price'	=>	$price[$key],
+				'capital'	=>	$capitals[$key],
 				'expiry_date' => $expiry_date[$key],
 				'defectives' => $defectives[$key],
 				'remarks'	=> $remarks[$key],
 				'barcode' => $item->barcode,
 				'name' => $item->name,
+				'price' => $retails[$key],
+				'delivery_date' => $this->input->post('delivery_date'),
 			);
+ 
  			//Update Product Quantities
 			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
 			$this->db->where('item_id', $products_id[$key]);
@@ -157,18 +162,56 @@ class DeliveriesController extends CI_Controller
 	}
 
 	public function index() {
-	
-		$deliveries = $this->db->select("delivery.*, supplier.name, SUM(delivery_details.quantities * delivery_details.price) as total, SUM(delivery_details.defectives) as defectives")
-							->from('delivery') 
-							->join('supplier', 'supplier.id = delivery.supplier_id', 'both')
-							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
-							->group_by('delivery.id')
-							->get()->result();
- 
-		$data['deliveries'] = $deliveries;
+	 
  		$data['content'] = "deliveries/index";
 		$this->load->view('master',$data);
 		 
+	}
+
+	public function datatable() {
+
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
+		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
+
+		$datasets = [];
+		$count = $this->db->get('delivery_details')->num_rows();
+
+		$deliveries = $this->db->select('delivery.received_by, delivery.date_time, delivery_details.*, supplier.name as s_name')
+								->from('delivery')
+								->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
+								->join('supplier', 'supplier.id = delivery.supplier_id')
+								->where('date_time >=', $from)
+								->where('date_time <=', $to)
+								->order_by('delivery.id', "DESC")
+								->limit($limit, $start)
+								->get()
+								->result();
+
+		foreach ($deliveries as $delivery) {
+
+			$datasets[] = [
+					$delivery->date_time,
+					$delivery->name,
+					currency() . number_format($delivery->capital,2),
+					currency() . number_format($delivery->price,2),
+					$delivery->quantities,
+					$delivery->received_by,
+					$delivery->s_name,
+					currency() . number_format($delivery->capital * $delivery->quantities,2),
+					$delivery->defectives,
+					$delivery->remarks,
+				];
+		}
+ 
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => count($datasets),
+			'recordsFiltered' => $count,
+			'data' => $datasets
+		]);
 	}
 
 	public function destroy($id) {

@@ -39,7 +39,7 @@
 									</div>
 									<div class="form-group">
 										<label>Delivery Date</label>
-										<input type="text" required="required" placeholder="Date" name="delivery_date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
+										<input type="text" required="required" placeholder="Date" name="delivery_date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" autocomplete="off">
 									</div>  
 								</div>
 								<div class="col-md-9">
@@ -48,9 +48,11 @@
 								<table class="table table-bordered" id="deliveryDetailsTable">
 									<thead>
 										<tr>
-											<th>Enter Product</th>
+											<th>Barcode</th>
+											<th>Name</th>
 											<th>Expiry Date</th>
-											<th>Price/unit</th>
+											<th>Capital/unit</th>
+											<th>Retail Price</th>
 											<th>QTY</th>
 											<th>Defective</th>
 											<th>Remarks</th>
@@ -59,13 +61,10 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td colspan="7" id="placeholder">Add delivery items by Barcode Scanner</td>
+											<td colspan="9" id="placeholder">Add delivery items by Barcode Scanner</td>
 										</tr>
 									</tbody>
-								</table>
-								<div class="text-right">
-									<button id="add" class="btn btn-default" type="button">Add</button>
-								</div>
+								</table> 
 							</fieldset>
 								</div>
 							</div>
@@ -103,7 +102,7 @@
 <script src="<?php echo base_url('assets/js/jquery-autocomplete.js') ?>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var row = '<td><input readonly type="text" name="product[]" class="form-control product" placeholder="Type Product Name"><input type="hidden" name="product_id[]" ></td><td> <input type="date"  name="expiry_date[]" class="form-control" required="required"></td><td><input type="text" name="price[]" placeholder="Price Per Unit" class="form-control" required="required"></td><td><input type="text" name="quantity[]" placeholder="QTY" class="form-control" required="required"></td><td><input type="text" name="defective[]" placeholder="Defectives" class="form-control" required="required"> </td><td> <input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> </td><td></td>';
+		var row = '<td><input readonly type="text" name="barcodes[]" class="form-control product"><input type="hidden" name="product_id[]" ></td><td><input readonly type="text" name="names[]" class="form-control"></td><td><input type="date"  name="expiry_date[]" class="form-control" required="required"></td><td><input type="text" name="capitals[]" placeholder="Capital Per Unit" class="form-control" required="required"></td><td><input type="text" name="retails[]" placeholder="Retail Price" class="form-control" required="required"></td><td><input type="text" name="quantity[]" autocomplete="off" placeholder="QTY" class="form-control" required="required"></td><td><input type="text" name="defective[]" placeholder="Defectives" class="form-control" required="required"> </td><td> <input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> </td><td></td>';
 		var index = 1;
 		var products = <?php echo $products ?>;
 		var base_url = $("meta[name='base_url']").attr('content');
@@ -167,14 +166,21 @@
 				data: data,
 				success: function(data) {
 					var item = JSON.parse(data);
+					console.log(item)
 					var tbody = $("#deliveryDetailsTable tbody");
 					tbody.append("<tr id='row"+index+"'>"+ row +"</tr>");
 					var rowIndex =  $("#row" + index);
-					rowIndex.find("input[name='price[]']").val(item.price.slice(1));
-					rowIndex.find("input[name='product_id[]']").val(item.id);
-					rowIndex.find("input[name='product[]']").val(item.name);
+					rowIndex.find("input[name='capitals[]']").val(item.capital.slice(1));
+					rowIndex.find("input[name='names[]']").val(item.name);
+					rowIndex.find("input[name='barcodes[]']").val(item.barcode);
+					rowIndex.find("input[name='retails[]']").val(item.price.slice(1));
+					rowIndex.find("input[name='product_id[]']").val(item.id); 
 					rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
+					
+					rowIndex.find("input[name='quantity[]']").focus();
+
 					index++;
+
 
 				},
 				error: function() {

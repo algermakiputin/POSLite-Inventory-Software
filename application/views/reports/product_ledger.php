@@ -20,7 +20,7 @@
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                 <input id="ledger_to" autocomplete="off" type="text" class="form-control date-range-filter" placeholder="To Date" data-date-format="yyyy-mm-dd" value="<?php echo date('Y-m-d') ?>">
             </div>
-            <div class="form-group">
+          <!--   <div class="form-group">
                 <select class="form-control" id="type">
                     <option value="">All Type</option>
                     <option value="sales">Sales</option>
@@ -34,7 +34,7 @@
                         <option value="<?php echo $staff->username ?>"><?php echo $staff->username ?></option>
                     <?php endforeach; ?>
                 </select>
-            </div>
+            </div> -->
             <div class="form-group">
                 <button class="btn btn-primary" type="button" id="ledger-report">Run Report</button>
             </div>
@@ -57,7 +57,8 @@
                         <th>Product</th>
                         <th>Quantity</th> 
                         <th>Price</th>
-                        <th>Total</th>          
+                        <th>Cost</th> 
+                        <th>Running Balance</th>         
                     </tr>
                 </thead>
                     <tbody>

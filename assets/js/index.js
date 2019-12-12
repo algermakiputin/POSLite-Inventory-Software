@@ -900,7 +900,7 @@ $(document).ready(function() {
 				},
 				className : "btn btn-default btn-sm",
 				exportOptions: {
-					columns: [ 0,1, 2, 3, 4, 5,6 ]
+					columns: [ 0,1, 2, 3, 4, 5,6, 7 ]
 				}, 
 			},
 			{
@@ -920,7 +920,7 @@ $(document).ready(function() {
 				},
 				className : "btn btn-default btn-sm",
 				exportOptions: {
-					columns: [ 0, 1, 2, 3, 4, 5,6 ]
+					columns: [ 0, 1, 2, 3, 4, 5,6, 7 ]
 				}, 
 			},
 		], 
@@ -1048,9 +1048,62 @@ $(document).ready(function() {
 		ordering : false
 	});
 
-	$("#deliveries_table").DataTable({
-		"targets": 'no-sort',
-		"bSort": false,
+	var deliveries_table = $("#deliveries_table").DataTable({
+		processing : true, 
+		ordering : false, 
+		serverSide : true, 
+		dom : "lfrtBp",
+		ajax : {
+			type : "POST",
+			data: data,
+			url : base_url + "DeliveriesController/datatable"
+		}, 
+		buttons: [
+			{
+				extend: 'copyHtml5',
+				filename : 'Deliveries Report',
+				title : 'Deliveries', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 1, 2, 3,4,5,6,7 ]
+				},
+			},
+			{
+				extend: 'excelHtml5',
+				filename : 'Deliveries',
+				title : 'Deliveries Report', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 1, 2, 3,4,5,6,7 ]
+				},
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'Deliveries Report',
+				title : 'Deliveries', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 1, 2, 3,4,5,6,7 ]
+				},
+
+			},
+		],
+		initComplete: function() {
+
+			$("#deliveries_to").change(function(e) {
+				var to = $(this).val();
+				var from = $("#deliveries_from").val();
+
+				if (to && from) {
+					deliveries_table.columns(0).search(from)
+										.columns(1).search(to)
+										.draw();
+
+				}else{ 
+					alert("ERROR: Invalid Date");
+				}
+			});
+		}
 	});
 
 	$("#btn-group-menu .btn").click(function() {

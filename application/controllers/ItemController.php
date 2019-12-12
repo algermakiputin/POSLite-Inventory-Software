@@ -27,13 +27,14 @@ class ItemController extends AppController {
 		$item = $this->db->where('barcode', $barcode)->get('items')->row();
 		if ($item) {
 			$quantity = (int)$this->OrderingLevelModel->getQuantity($item->id)->quantity;
-			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
+			$price = $this->db->where('item_id', $item->id)->get('prices')->row();
 			echo json_encode([
 					'name' => $item->name,
-					'price' => '₱' . $price,
+					'price' => '₱' . $price->price,
 					'quantity' => $quantity,
 					'id' => $item->id,
-					'barcode' => $item->barcode
+					'barcode' => $item->barcode,
+					'capital' => '₱' . $price->capital
 				]) ;
 		} 
 		return;
@@ -81,8 +82,7 @@ class ItemController extends AppController {
 		$filterCategory = $this->input->post('columns[2][search][value]');
 		$filterSupplier = $this->input->post('columns[7][search][value]');
 		$sortPrice = $this->input->post('columns[4][search][value]');
-		$sortStocks = $this->input->post('columns[5][search][value]');
-
+		$sortStocks = $this->input->post('columns[5][search][value]'); 
 
 		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
 												->limit($limit, $start)->get()->result();

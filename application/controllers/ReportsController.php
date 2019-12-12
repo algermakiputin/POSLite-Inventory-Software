@@ -68,7 +68,7 @@ class ReportsController extends AppController
 
  
  		usort($datasets, function($item1, $item2) {
-  			return substr(str_replace(',', '', $item2[5]), 1) <=> substr(str_replace(',', '', $item1[5]), 1);
+  			return (int)substr(str_replace(',', '', $item2[5]), 1) <=> (int)substr(str_replace(',', '', $item1[5]), 1);
   		}); 
 
 		echo json_encode([
@@ -99,7 +99,7 @@ class ReportsController extends AppController
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]');
 		$id = $this->input->post('id');
-
+		$running_balance = 0;
 
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
@@ -122,38 +122,95 @@ class ReportsController extends AppController
 								->get('returns')
 								->result();
 
-		if ($type == "sales") {
-			$merged = $sales;
-		}else if ($type == "returns") {
-			$merged = $returns;
-		}else {
-			$merged = array_merge($sales, $returns);
-		}
-		
+		$deliveries = $this->db->select('delivery.received_by, delivery_details.*')
+								->from('delivery')
+								->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
+								->where('delivery_details.item_id', $id)
+								->where('delivery.date_time >=', $from)
+								->where('delivery.date_time <=', $to) 
+								->get()
+								->result();
+
+		$expired = $this->db->select('delivery.received_by, delivery_details.*')
+								->from('delivery')
+								->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
+								->where('delivery_details.item_id', $id)
+								->where('delivery_details.expiry_date >=', $from)
+								->where('delivery_details.expiry_date <=', $to) 
+								->get()
+								->result();
+
+
+	 	
+	 	foreach ($expired as $expire) {
+	 		$expire->expiry = true;
+	 	 	$expire->delivery_date = $expire->expiry_date;
+	 	}
+
+
+		// if ($type == "sales") {
+		// 	$merged = $sales;
+		// }else if ($type == "returns") {
+		// 	$merged = $returns;
+		// }else {
+		$merged = array_merge( $expired, $sales, $returns, $deliveries,);
+		// }
+	 	
+		usort($merged, function($item1, $item2) {
+  			
+  			$d1 = strtotime(str_replace('-', '/', $item1->delivery_date));
+  			$d2 = strtotime(str_replace('-', '/', $item2->delivery_date));
+
+  			return $d1 < $t2;
+  		}); 
+
+
 		$datasets = [];
 
-		foreach ($merged as $row) {
+		$rows = count($merged) - 1;
+		for ( $i = $rows; $i >= 0; $i-- ) {
 
+			$sign = "+";
 			$type = "Return";
 			$date = "";
-			if (array_key_exists('sales_id', $row)) {
+			if (array_key_exists('sales_id', $merged[$i])) {
 
 				$type = "Sales";
-				$date = date('Y-m-d', strtotime($row->created_at));
-			}else {
+				$date = date('Y-m-d', strtotime($merged[$i]->created_at));
+			}else if (array_key_exists('delivery_id', $merged[$i])) { 
+				$type = "Stock in";
 
-				$date = date('Y-m-d', strtotime($row->date_time));
+				$date = date('Y-m-d', strtotime($merged[$i]->delivery_date));
+				$merged[$i]->price = $merged[$i]->capital;
+				$merged[$i]->staff = $merged[$i]->received_by;
+				$merged[$i]->quantity = $merged[$i]->quantities;
 
+				if (array_key_exists('expiry', $merged[$i])) {
+					$type = "Expired";
+					$date = date('Y-m-d', strtotime($merged[$i]->expiry_date));
+				} 
+				
+			}else { 
+				$date = date('Y-m-d', strtotime($merged[$i]->date_time)); 
 			} 
+
+			if ($type == "Return" || $type == "Expired") {
+				$sign = "-";
+				$running_balance -= (float)$merged[$i]->price * (float)$merged[$i]->quantity;
+			}else if ($type == "Stock in" || $type == "Sales") {
+
+				$running_balance += (float)$merged[$i]->price * (float)$merged[$i]->quantity;
+			}
 
 			$datasets[] = [
 					$date,
 					$type,
-					$row->staff,
-					$row->name, 
-					$row->quantity,
-					currency() . number_format($row->price, 2),
-					currency() . number_format((float)$row->price * (float)$row->quantity,2)
+					$merged[$i]->staff,
+					$merged[$i]->name, 
+					$merged[$i]->quantity,
+					currency() . number_format($merged[$i]->price, 2),
+					"<b>$sign</b> " . currency() . number_format((float)$merged[$i]->price * (float)$merged[$i]->quantity,2),
+					currency() . number_format($running_balance, 2)
 				];
 		}
 
@@ -162,7 +219,7 @@ class ReportsController extends AppController
 			'draw' => $draw,
 			'recordsTotal' => count($datasets),
 			'recordsFiltered' => count($merged),
-			'data' => $datasets
+			'data' => array_reverse($datasets)
 		]);
 	}
 
