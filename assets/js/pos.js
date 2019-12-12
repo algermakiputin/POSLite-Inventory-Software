@@ -10,7 +10,8 @@
 
 
 	var dHeight = parseInt($(document).height());
- 	
+ 	 
+
 	dHeight = dHeight - 60;
 	$(".header .box").css('height', dHeight + 'px');
 	$(".header .box").css('overflow-y', 'auto');
@@ -94,13 +95,41 @@
 		},
 	});
 
+
+	var selected_row = null;
+
 	$("#item-table").on('click', 'tbody tr', function(event) {
-		var id = $(this).find('td').eq(0).text();
-		var name = $(this).find('td').eq(1).text();
-		var stockCol = $(this).find('td').eq(3);
-		var stocks = stockCol.text();
+
+		selected_row = $(this);
 		var price = $(this).find('td').eq(4).text();
-		var description = $(this).find('td').eq(2).text();
+		var wholesale = $(this).find('td').eq(0).find('input[name="wholesale"]').val();
+		var name = $(this).find('td').eq(1).text();
+
+		$("#retail-price").text(price);
+		$("#wholesale-price").text(currency + number_format(parseFloat(wholesale)) + '.00');
+		$("#selected-product").text(name);
+
+		$("#product-options-modal").modal('toggle');
+ 
+	})
+
+
+	$("#confirm-selection").click(function(e) {
+		var price_option = $("input[name='pricing']:checked").val();
+		var id = selected_row.find('td').eq(0).text();
+		var name = selected_row.find('td').eq(1).text();
+		var stockCol = selected_row.find('td').eq(3);
+		var stocks = stockCol.text(); 
+		var price = selected_row.find('td').eq(4).text();
+		var wholesale = selected_row.find('td').eq(0).find('input[name="wholesale"]').val();
+		var description = selected_row.find('td').eq(2).text();
+		var selling_price = price;
+
+		
+		if (price_option == "wholesale") {
+
+			selling_price = currency + wholesale + '.00';
+		}
 		
 	 	if ( parseInt(stocks.split(' ').join('')) > 0 ) {
 	 		if (id && name && stocks && price) {
@@ -114,7 +143,7 @@
 								'<td>'+ name +'</td>' +
 								'<td><input data-stocks="'+stocks+'" data-remaining="'+stocks+'" data-id="'+id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
 								'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-								'<td>'+ price +'</td>' +
+								'<td>'+ selling_price +'</td>' +
 					 			
 								'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
 							'</tr>'
@@ -127,10 +156,10 @@
 	  	 	}
 	 	}else {
 	 		alert("Not enough stocks remaining");
-	 	}
-  	 	
-		
+	 	} 
 	})
+
+
 
 	function itemExist(itemID,stocks) {
 		var table = $("#cart-tbl tbody tr");

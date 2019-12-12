@@ -188,15 +188,14 @@ class ItemController extends AppController {
 		$itemCount = $this->db->get('items')->num_rows();
 
 		$datasets = array_map(function($item) use ($orderingLevel){
-			$quantity = $orderingLevel->getQuantity($item->id)->quantity;
-			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
+			$quantity = $orderingLevel->getQuantity($item->id)->quantity; 
 			
 			return [
-				$item->id,
+				$item->id . '<input type="hidden" name="wholesale" value="'.$item->wholesale.'">',
 				ucwords($item->name),
 				ucfirst($item->description),
 				$quantity,
-				'₱'. number_format($price,2)
+				'₱'. number_format($item->price,2)
 			];
 		}, $items);
 
@@ -212,9 +211,12 @@ class ItemController extends AppController {
 
 	public function dataFilter($search, $start, $limit) {
 	 
-		return $this->db->where('status', 1)
+		return $this->db->select('items.*, prices.price, prices.wholesale')
+							->from('items')
+							->join('prices', 'prices.item_id = items.id') 
 							->like('name',$search, 'BOTH')
-							->get('items', $limit, $start)
+							->limit( $limit, $start )
+							->get()
 							->result();
 	 
 	}
@@ -248,8 +250,11 @@ class ItemController extends AppController {
 		$supplier_id = $this->input->post('supplier');
 		$barcode = $this->input->post('barcode');
 		$price = $this->input->post('price'); 
+		$wholesale = $this->input->post('wholesale');
 		$capital = $this->input->post('capital');
 		$productImage = $_FILES['productImage'];
+
+		$this->db->trans_begin();
 	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
@@ -283,12 +288,19 @@ class ItemController extends AppController {
 		$this->db->insert('items', $data);
 		$item_id = $this->db->insert_id();
 		$this->HistoryModel->insert('Register new item: ' . $name);
-		$this->PriceModel->insert($price,$capital, $item_id);
+		$this->PriceModel->insert($price,$wholesale,$capital, $item_id);
 		$this->OrderingLevelModel->insert($item_id);
+
+		if ($this->db->trans_status() === FALSE) {
+		   $this->db->trans_rollback();
+		   return $this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps something went wrong please try again.</div>'); 		
+		}
+		 
+		$this->db->trans_commit();  
+
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
-
-
+ 
 	}
 
 	public function delete(){
@@ -369,7 +381,13 @@ class ItemController extends AppController {
 	public function edit($id) {
 		$this->userAccess('edit');
 		$id = $this->security->xss_clean($id);
-		$data['item'] = $this->db->where('id', $id)->get('items')->row();
+		$data['item'] = $this->db->select('items.*,prices.*')
+									->from('items')
+									->join('prices', 'prices.item_id = items.id')
+									->where('items.id', $id)
+									->get()
+									->row();
+
 		$data['price'] = $this->PriceModel;
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
@@ -389,6 +407,7 @@ class ItemController extends AppController {
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));
+		$wholesale = strip_tags($this->input->post('wholesale'));
 
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
@@ -409,7 +428,7 @@ class ItemController extends AppController {
 		}
 
 		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
-		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
+		$price_id = $this->PriceModel->update($updated_price,$wholesale,$capital, $id);
 		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'));
 
 		if ($update) {

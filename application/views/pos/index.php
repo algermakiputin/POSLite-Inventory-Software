@@ -223,6 +223,34 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="modal" tabindex="-1" role="dialog" id="product-options-modal">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header" style="border-top: solid 10px #ddd">
+		        <h5 style="float: left;" class="modal-title">Pricing Options</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <h4><span id="selected-product"></span></h4>
+		        <label>Select Price</label> 
+		        <fieldset>
+		        	<div class="radio">
+						  <label><input type="radio" value="retail" name="pricing" checked>Retail Price (<span id="retail-price"></span>)</label>
+						</div>
+						<div class="radio">
+							  <label><input type="radio" value="wholesale" name="pricing">Wholesale Price (<span id="wholesale-price"></span>)</label>
+							</div> 
+				      </div>
+		        </fieldset>
+		      <div class="modal-footer"> 
+		        <button type="button" class="btn btn-primary" id="confirm-selection" data-dismiss="modal">Confirm</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<script type="text/javascript">
 	        var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
 	        var csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';

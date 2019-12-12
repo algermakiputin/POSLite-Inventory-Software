@@ -2,10 +2,11 @@
 
 class PriceModel extends CI_Model { 
 
-	public function insert($price,$capital, $item_id) {
+	public function insert($price, $wholesale, $capital, $item_id) {
  
 		$data = array(
 				'price' => $price,
+				'wholesale' => $wholesale,
 				'capital' => $capital,
 				'item_id' => $item_id,
 				'date_time' => get_date_time(),
@@ -29,9 +30,10 @@ class PriceModel extends CI_Model {
 		return $this->db->where('id',$id)->update('prices', ['item_id' => $item_id]);
 	}
 
-	public function update($price,$capital, $item_id) {
+	public function update($price, $wholesale,$capital, $item_id) {
 		$data = [
 				'price' => $price,
+				'wholesale' => $wholesale,
 				'capital' => $capital,
 				'status' => 1
 			];

@@ -50,6 +50,10 @@
 								<input type="text" required="required" placeholder="Price" name="price" class="form-control" data-parsley-gte-message="Retail Price Must be greather or equal to capital" max="500000" id="selling-price" data-parsley-gte="#capital">
 							</div>  
 							<div class="form-group">  
+								<label>Wholesale Price:</label>
+								<input type="text" required="required" placeholder="Wholesale" name="wholesale" class="form-control" data-parsley-gte-message="Wholesale Price Must be greather or equal to capital" max="500000" id="wholesale-price" data-parsley-gte="#capital">
+							</div> 
+							<div class="form-group">  
 									<label>Supplier:</label>
 								<select name="supplier" class="form-control" required="required"> 
 									<option value="">Select Supplier</option>
