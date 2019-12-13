@@ -128,6 +128,7 @@ class DeliveriesController extends CI_Controller
 							->join('supplier', 'supplier.id = delivery.supplier_id', 'both')
 							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
 							->group_by('delivery.id')
+							->order_by('delivery.id', 'DESC')
 							->like('received_by', $search, 'both')
 							->limit($limit, $start)
 							->get()
