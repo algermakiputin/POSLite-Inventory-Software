@@ -803,6 +803,18 @@ $(document).ready(function() {
 		}
 	}); 
 
+	var expiry_table = $("#expiry_table").DataTable({
+		searching : true,
+		ordering : false, 
+		serverSide : true, 
+		processing : true,
+		bsearchable : true,   
+		ajax : {
+			url : base_url + 'ExpiriesController/datatable',
+			type : 'POST',
+			data : data
+		},
+	});
 
 	productsTable = $("#products_table").DataTable({
 		searching : true,

@@ -55,6 +55,18 @@
                 </li>
             <?php endif; ?>
             <li>
+                <a href="#"><i class="fa fa-hourglass-end fa-fw"></i> Expiry<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('expiries') ?>"><i class="fa fa-circle-o"></i> View Expired Products</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('expiries/new') ?>"><i class="fa fa-circle-o"></i> New Expiry</a>
+                    </li> 
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
                 <a href="<?php echo base_url('return') ?>"><i class="fa fa-refresh"></i> Return</a>
             </li>
             <?php if ($this->session->userdata('account_type') == "Admin" ||

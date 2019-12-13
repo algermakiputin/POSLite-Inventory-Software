@@ -175,20 +175,16 @@
 					rowIndex.find("input[name='barcodes[]']").val(item.barcode);
 					rowIndex.find("input[name='retails[]']").val(item.price.slice(1));
 					rowIndex.find("input[name='product_id[]']").val(item.id); 
-					rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
-					
-					rowIndex.find("input[name='quantity[]']").focus();
-
-					index++;
-
+					rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>") 
+					rowIndex.find("input[name='quantity[]']").focus(); 
+					index++; 
 
 				},
 				error: function() {
 					alert("Error: Opps something went wrong, please check your internet connection and try again");
 				}
 			});
-
-
+ 
 		}); 
 	})
 

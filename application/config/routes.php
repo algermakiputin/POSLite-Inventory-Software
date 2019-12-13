@@ -54,6 +54,8 @@ $route['backups'] = "BackupController/index";
 
 $route['upgrade'] = "AppController/upgrade";
 
+$route['expiries'] = "ExpiriesController/index";
+$route['expiries/new'] = 'ExpiriesController/new';
 
 $route['expenses'] = "ExpensesController/index";
 $route['expenses/new'] = "ExpensesController/new";
