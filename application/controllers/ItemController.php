@@ -130,6 +130,7 @@ class ItemController extends AppController {
 				$item->name,
 				$this->categories_model->getName($item->category_id),
 				'₱' . number_format($itemCapital,2),
+				'₱' . number_format($item->wholesale,2),
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining . ' pcs',
 				currency() . number_format($itemPrice * $stocksRemaining,2), 
@@ -381,7 +382,7 @@ class ItemController extends AppController {
 	public function edit($id) {
 		$this->userAccess('edit');
 		$id = $this->security->xss_clean($id);
-		$data['item'] = $this->db->select('items.*,prices.*')
+		$data['item'] = $this->db->select('items.*,prices.capital, prices.price')
 									->from('items')
 									->join('prices', 'prices.item_id = items.id')
 									->where('items.id', $id)
