@@ -58,7 +58,9 @@
                         <th>Quantity</th> 
                         <th>Price</th>
                         <th>Cost</th> 
-                        <th>Running Balance</th>         
+                        <th>Total</th>  
+                        <th>Stocks</th>
+                        <th>Inventory</th>       
                     </tr>
                 </thead>
                     <tbody>

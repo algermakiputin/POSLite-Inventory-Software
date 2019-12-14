@@ -86,9 +86,9 @@
                             <li>
                                 <a href="<?php echo base_url('reports/returns') ?>"><i class="fa fa-circle-o"></i> Returns</a>
                             </li>   
-                            <li>
+                            <!-- <li>
                                 <a href="<?php echo base_url('reports/products') ?>"><i class="fa fa-circle-o"></i> Products</a>
-                            </li>                                                                                           
+                            </li>  -->                                                                                          
                         <?php endif; ?>
                     </ul>
                 </li>

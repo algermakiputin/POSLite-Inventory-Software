@@ -15,19 +15,22 @@ class ExpiriesController extends AppController {
 		$barcode = $this->input->post('barcode');
 		$item_id = $this->input->post('item_id');
 		$quantities = $this->input->post('quantities');
-		$price = $this->input->post('price');
+		$price = $this->input->post('retail');
 		$name = $this->input->post('name');
 		$capital = $this->input->post('capital'); 
-
-		$this->db->insert('expiries', [
+		$expiry_date = $this->input->post('expiry_date');
+ 		 
+		$insert = $this->db->insert('expiries', [
 				'item_id' => $item_id,
 				'barcode' => $barcode,
 				'quantities' => $quantities,
-				'price' => $price,
+				'price' => substr($price, 1),
 				'name' => $name,
-				'capital' => $capital,
+				'capital' => substr($capital, 1),
+				'expiry_date' => $expiry_date
 			]);
 
+		 
 		success("Expired product added successfully");
 		return redirect('expiries');
 	}

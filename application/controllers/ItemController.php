@@ -3,7 +3,6 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH."controllers/AppController.php");
 class ItemController extends AppController {
  
-	
 	public function __construct() { 
 
 		parent::__construct();
@@ -115,7 +114,7 @@ class ItemController extends AppController {
 			$actions = '<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu"> 
-                        
+                        <li><a href="'.base_url('ReportsController/product_ledger/' . $item->id).'"><i class="fa fa-history"></i>  Product History</a></li>
                         '.$deleteAction.'
                     </ul>
                 </div>';

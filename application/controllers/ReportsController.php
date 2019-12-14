@@ -106,16 +106,19 @@ class ReportsController extends AppController
 		$type = $this->input->post('columns[2][search][value]');
 		$staff = $this->input->post('columns[3][search][value]');
 		$merged = [];
+		$stocks = 0;
+		$stock_sign = "+";
 
-		$sales = $this->db->where('item_id', $id)
-
+		$sales = $this->db->select('sales_description.*, sales_description.created_at as delivery_date')
+								->where('item_id', $id) 
 								->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $from)
 								->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $to)
 								->like('staff', $staff, 'BOTH')			
 								->get('sales_description')
 								->result();
 
-		$returns = $this->db->where('item_id', $id)
+		$returns = $this->db->select('returns.*, returns.date_time as delivery_date')
+								->where('item_id', $id)
 								->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
 								->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
 								->like('staff', $staff, 'BOTH')	
@@ -131,39 +134,29 @@ class ReportsController extends AppController
 								->get()
 								->result();
 
-		$expired = $this->db->select('delivery.received_by, delivery_details.*')
-								->from('delivery')
-								->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
-								->where('delivery_details.item_id', $id)
-								->where('delivery_details.expiry_date >=', $from)
-								->where('delivery_details.expiry_date <=', $to) 
-								->get()
+		$expired = $this->db->where('item_id', $id)
+								->where('expiry_date >=', $from)
+								->where('expiry_date <=', $to) 
+								->get('expiries')
 								->result();
-
-
+ 		
 	 	
 	 	foreach ($expired as $expire) {
 	 		$expire->expiry = true;
 	 	 	$expire->delivery_date = $expire->expiry_date;
 	 	}
+ 
+
+		$merged = array_merge( $expired, $sales, $returns, $deliveries);
 
 
-		// if ($type == "sales") {
-		// 	$merged = $sales;
-		// }else if ($type == "returns") {
-		// 	$merged = $returns;
-		// }else {
-		$merged = array_merge( $expired, $sales, $returns, $deliveries,);
-		// }
+
 	 	
-		usort($merged, function($item1, $item2) {
+		usort($merged, function($a, $b) {
   			
-  			$d1 = strtotime(str_replace('-', '/', $item1->delivery_date));
-  			$d2 = strtotime(str_replace('-', '/', $item2->delivery_date));
-
-  			return $d1 < $t2;
+  			return strtotime(str_replace('/', '-', $a->delivery_date)) < strtotime(str_replace('/', '-', $b->delivery_date));
   		}); 
-
+     
 
 		$datasets = [];
 
@@ -173,32 +166,46 @@ class ReportsController extends AppController
 			$sign = "+";
 			$type = "Return";
 			$date = "";
-			if (array_key_exists('sales_id', $merged[$i])) {
 
+			
+			if (array_key_exists('sales_id', $merged[$i])) {
+				//Sales
 				$type = "Sales";
 				$date = date('Y-m-d', strtotime($merged[$i]->created_at));
+				$stocks -= $merged[$i]->quantity;
+				$stock_sign = "-";
+				
 			}else if (array_key_exists('delivery_id', $merged[$i])) { 
-				$type = "Stock in";
-
+				// Stock in
+				$type = "Stock in";  
 				$date = date('Y-m-d', strtotime($merged[$i]->delivery_date));
 				$merged[$i]->price = $merged[$i]->capital;
 				$merged[$i]->staff = $merged[$i]->received_by;
 				$merged[$i]->quantity = $merged[$i]->quantities;
+				$stocks += $merged[$i]->quantity;
 
-				if (array_key_exists('expiry', $merged[$i])) {
-					$type = "Expired";
-					$date = date('Y-m-d', strtotime($merged[$i]->expiry_date));
-				} 
-				
-			}else { 
+ 
+			}else if (array_key_exists('expired', $merged[$i])) {
+				// Expired
+				$type = "Expired";
+				$date = date('Y-m-d', strtotime($merged[$i]->expiry_date));
+				$merged[$i]->price = $merged[$i]->capital;
+				$merged[$i]->staff = $merged[$i]->received_by;
+				$merged[$i]->quantity = $merged[$i]->quantities;
+				$stocks -= $merged[$i]->quantity;
+				$sign = "-";
+				$stock_sign = "-";
+			} else { 
+				$stocks -= $merged[$i]->quantity;
 				$date = date('Y-m-d', strtotime($merged[$i]->date_time)); 
+				$sign = "-";
 			} 
 
 			if ($type == "Return" || $type == "Expired") {
-				$sign = "-";
+				
 				$running_balance -= (float)$merged[$i]->price * (float)$merged[$i]->quantity;
+				$stock_sign = "";
 			}else if ($type == "Stock in" || $type == "Sales") {
-
 				$running_balance += (float)$merged[$i]->price * (float)$merged[$i]->quantity;
 			}
 
@@ -209,11 +216,12 @@ class ReportsController extends AppController
 					$merged[$i]->name, 
 					$merged[$i]->quantity,
 					currency() . number_format($merged[$i]->price, 2),
-					"<b>$sign</b> " . currency() . number_format((float)$merged[$i]->price * (float)$merged[$i]->quantity,2),
-					currency() . number_format($running_balance, 2)
+					"<b>$sign </b>" . currency() . number_format((float)$merged[$i]->price * (float)$merged[$i]->quantity,2),
+					currency() . number_format($running_balance, 2),
+					"<b>$stock_sign </b>" . $merged[$i]->quantity,
+					$stocks
 				];
-		}
-
+		} 
 
 		echo json_encode([
 			'draw' => $draw,
@@ -221,6 +229,48 @@ class ReportsController extends AppController
 			'recordsFiltered' => count($merged),
 			'data' => array_reverse($datasets)
 		]);
+	}
+
+	public function insert_delivery() {
+
+		$stocks = $this->db->select('ordering_level.quantity, items.*, prices.capital,prices.price')
+							->from('ordering_level')
+							->join('items', 'items.id = ordering_level.item_id')
+							->join('prices', 'prices.item_id = ordering_level.item_id')
+							->get()
+							->result();
+
+		
+		$this->db->insert('delivery', [
+					'supplier_id' => 8,
+					'date_time' => date('Y-m-d', strtotime("-45 days")),
+					'received_by' => 'admin'
+			]); 
+
+		$delivery_id = $this->db->insert_id();
+
+		foreach ($stocks as $stock) {
+
+			if (!$stock->quantity)
+				continue;
+
+			$data = array(
+				'item_id'	=> $stock->id,
+				'quantities' => $stock->quantity,
+				'delivery_id' => $delivery_id,
+				'capital'	=>	$stock->capital,
+				'expiry_date' => date('Y-m-d', strtotime('+2 years', strtotime((date('Y-m-d'))))),
+				'defectives' => 0,
+				'remarks'	=> '',
+				'barcode' => $stock->barcode,
+				'name' => $stock->name,
+				'price' => $stock->price,
+				'delivery_date' => date('Y-m-d', strtotime("-45 days")),
+			);
+
+
+			$this->db->insert('delivery_details', $data);
+		}
 	}
 
 }
