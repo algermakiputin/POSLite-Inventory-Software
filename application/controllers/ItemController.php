@@ -383,6 +383,7 @@ class ItemController extends AppController {
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));
+		$barcode = strip_tags($this->input->post('barcode'));
 
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
@@ -390,6 +391,8 @@ class ItemController extends AppController {
 		$reorder = $this->input->post('reorder');
 		$productImage = $_FILES['productImage'];
 		$supplier_id = $this->input->post('supplier');
+
+		$this->db->trans_begin();
 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
@@ -402,24 +405,72 @@ class ItemController extends AppController {
 			 
 		}
 
-		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
+		$current_stocks = $this->db->where('item_id', $id)->get('ordering_level')->row()->quantity;
+
+		if ($current_stocks != $stocks) {
+			$adjustment = 0;
+			$sign = "+";
+			$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
+			 
+			if ((int)$stocks > (int)$current_stocks ) {
+				// Increase the stocks
+				
+				$adjustment = $stocks - $current_stocks;
+				
+			}else {
+
+				// descrease the stocks
+				$adjustment = $current_stocks - $stocks;
+				
+				$sign = "-"; 
+			}
+
+			$this->db->insert('inventory_adjustment', [
+					'name' => $updated_name,
+					'barcode' => $barcode,
+					'price'	=> $updated_price,
+					'date_time'	=> date('Y-m-d h:i:s'),
+					'quantities'	=> $adjustment,
+					'capital'	=> $capital,
+					'staff' => $this->session->userdata('username'),
+					'sign' => $sign,
+					'item_id' => $id,
+				]);
+		}
+
+		
 		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
 		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'));
 
-		if ($update) {
-			
-			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
-			if ($item->name != $updated_name)
-				$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
-			 
-			if ($item->description != $updated_desc)
-				$this->HistoryModel->insert('Change '.$item->name.' Description: ' . $item->description . ' to ' . $updated_desc);
-			if ($currentPrice != $updated_price) 
-					$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
-				if ($item->category_id != $updated_category) 
-					$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
-			return redirect(base_url('items'));
+	 
+		if ($item->name != $updated_name) {
+			$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
 		}
+		 
+		if ($item->description != $updated_desc) {
+			$this->HistoryModel->insert('Change '.$item->name.' Description: ' . $item->description . ' to ' . $updated_desc);
+		}
+		if ($currentPrice != $updated_price) {
+			$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
+
+			if ($item->category_id != $updated_category)  {
+				$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
+			}
+		}
+				 
+
+		if ($this->db->trans_status() === FALSE)
+		{
+	        $this->db->trans_rollback();
+	        $this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps something went wrong please try again.</div>');
+	        return redirect(base_url('items'));
+		}
+		 
+		$this->db->trans_commit(); 
+
+		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
+		return redirect(base_url('items'));
+	 
 	 		
 	}
 

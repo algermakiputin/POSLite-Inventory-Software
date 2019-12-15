@@ -67,7 +67,7 @@ class DeliveriesController extends CI_Controller
 		$this->load->model('PriceModel');
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
-		$data['products'] = json_encode($this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result()); 
+		$data['products'] = json_encode($this->db->select('items.id as data, items.barcode, items.name as value, prices.capital, prices.price')->join('prices', 'prices.item_id = items.id')->get('items')->result()); 
  		$data['content'] = "deliveries/new";
 		$this->load->view('master',$data);
 		 
@@ -104,7 +104,7 @@ class DeliveriesController extends CI_Controller
 		$names = $this->input->post('names');
 		$capitals = $this->input->post("capitals");
 		$retails = $this->input->post("retails");
-
+ 
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
 			'date_time' => $this->input->post('delivery_date'),
