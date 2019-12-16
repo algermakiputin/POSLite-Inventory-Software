@@ -25,7 +25,7 @@
 						 	<div class="form-group">
 						 		<?php echo validation_errors(); ?>
 						 	</div>
-						 	<p>Scan barcode to enter product.</p>
+						 	<p>Scan barcode or enter product name to add product.</p>
 						 	<div class="form-group">  
 						 		<input type="hidden" name="item_id" id="item_id" value="">
 						 		<label>Expiry Date</label>
@@ -37,15 +37,15 @@
 							</div>
 							<div class="form-group">  
 								<label>Product Name</label>
-								<input type="text" required="required" readonly="readonly" id="name"  name="name" class="form-control">
+								<input type="text" autocomplete="off" required="required" id="name"  name="name" class="form-control product">
 							</div> 
 							<div class="form-group">  
 								<label>Capital</label>
-								<input type="text" required="required" readonly="readonly" id="capital" name="capital" class="form-control">
+								<input type="text" required="required" id="capital" name="capital" class="form-control">
 							</div>
 							<div class="form-group">  
 								<label>Retail Price</label>
-								<input type="text" required="required" readonly="readonly" id="retail" name="retail" class="form-control">
+								<input type="text" required="required"  id="retail" name="retail" class="form-control">
 							</div>
 							<div class="form-group">  
 								<label>Quantities</label>
@@ -66,11 +66,13 @@
 	</div>
 	<!-- /.col-lg-12 -->
 </div>   
+<script src="<?php echo base_url('assets/js/jquery-autocomplete.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
 
 <script type="text/javascript">
 	
 	$(document).ready(function(e) {
+		var products = <?php echo $products ?>;
 		var csrfName = $("meta[name='csrfName']").attr('content');
 		var csrfHash = $("meta[name='csrfHash']").attr("content");
 		var base_url = $("meta[name='base_url']").attr('content'); 
@@ -104,6 +106,18 @@
 
 		});
 
+		$(".product").autocomplete({
+			lookup: products,
+			onSelect: function(suggestion) {   
+				$("input[name='barcode']").val(suggestion.barcode);
+				$("input[name='retail']").val(suggestion.price);
+				$("input[name='capital']").val(suggestion.capital);
+
+				$("input[name='item_id']").val(suggestion.data);
+			 
+				$("#quantities").focus();
+			}
+		});
 
 	});
 

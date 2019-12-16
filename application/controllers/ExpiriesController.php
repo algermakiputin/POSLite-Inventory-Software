@@ -6,6 +6,7 @@ class ExpiriesController extends AppController {
 
 	public function new() {
 
+		$data['products'] = $data['products'] = json_encode($this->db->select('items.id as data, items.barcode, items.name as value, prices.capital, prices.price')->join('prices', 'prices.item_id = items.id')->get('items')->result()); 
 		$data['content'] = "expiries/new";
 		$this->load->view('master', $data);
 	}
