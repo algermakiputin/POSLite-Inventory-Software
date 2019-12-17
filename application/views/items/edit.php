@@ -52,7 +52,7 @@
 								<label>Supplier:</label>
 								<select name="supplier" class="form-control">
 									<?php foreach ($suppliers as $supplier): ?>
-										<option value="<?php echo $supplier->id; ?>" <?php echo $item->id == $supplier->id ? 'Selected' : '' ?>>
+										<option value="<?php echo $supplier->id; ?>" <?php echo $item->supplier_id == $supplier->id ? 'Selected' : '' ?>>
 											<?php echo $supplier->name ?>
 										</option>
 									<?php endforeach; ?>
