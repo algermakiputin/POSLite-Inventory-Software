@@ -28,7 +28,7 @@ class ExpiriesController extends AppController {
 				'price' => substr($price, 1),
 				'name' => $name,
 				'capital' => substr($capital, 1),
-				'expiry_date' => $expiry_date
+				'expiry_date' => $expiry_date . ' ' . date("H:i:s")
 			]);
 
 		 

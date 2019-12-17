@@ -103,7 +103,7 @@
 <script src="<?php echo base_url('assets/js/jquery-autocomplete.js') ?>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var row = '<td><input readonly type="text" name="barcodes[]" class="form-control product"><input type="hidden" name="product_id[]" ></td><td><input autocomplete="off" type="text" name="names[]" class="form-control"></td><td><input type="date"  name="expiry_date[]" class="form-control" required="required"></td><td><input type="text" name="capitals[]" placeholder="Capital Per Unit" class="form-control" required="required"></td><td><input type="text" name="retails[]" placeholder="Retail Price" class="form-control" required="required"></td><td><input type="text" name="quantity[]" autocomplete="off" placeholder="QTY" class="form-control" required="required"></td><td><input type="text" name="defective[]" autocomplete="off" placeholder="Defectives" class="form-control" required="required"> </td><td> <input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> </td><td></td>';
+		var row = '<td><input readonly type="text" name="barcodes[]" class="form-control product"><input type="hidden" name="product_id[]" ></td><td><input autocomplete="off" type="text" name="names[]" class="form-control product"></td><td><input type="text" required="required" placeholder="Date" name="expiry_date[]" class="form-control date-range-filter" data-date-format="yyyy-mm-dd"></td><td><input type="text" name="capitals[]" placeholder="Capital Per Unit" class="form-control" required="required"></td><td><input type="text" name="retails[]" placeholder="Retail Price" class="form-control" required="required"></td><td><input type="text" name="quantity[]" autocomplete="off" placeholder="QTY" class="form-control" required="required"></td><td><input type="text" name="defective[]" autocomplete="off" placeholder="Defectives" class="form-control" required="required"> </td><td> <input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> </td><td></td>';
 		var index = 1;
 		var products = <?php echo $products ?>;
 		var base_url = $("meta[name='base_url']").attr('content');
@@ -128,7 +128,8 @@
 			var tbody = $("#deliveryDetailsTable tbody");
 			tbody.append("<tr id='row"+index+"'>"+ row +"</tr>");
 			var rowIndex =  $("#row" + index);
-			
+			$("#placeholder").remove();
+
 			rowIndex.find(".product").autocomplete({
 				lookup: products,
 				onSelect: function(suggestion) {
@@ -140,6 +141,13 @@
 			})
 			rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
 			index++;
+
+			rowIndex.find('.date-range-filter').datepicker({
+					useCurrent : false,
+					todayHighlight: true,
+    				toggleActive: true,
+    				autoclose: true,
+				});
 
 		});
 
@@ -185,7 +193,13 @@
 					rowIndex.find("input[name='retails[]']").val(item.price.slice(1));
 					rowIndex.find("input[name='product_id[]']").val(item.id); 
 					rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>") 
-				
+					
+					rowIndex.find('.date-range-filter').datepicker({
+						useCurrent : false,
+						todayHighlight: true,
+	    				toggleActive: true,
+	    				autoclose: true,
+					});
 					index++; 
 
 				},

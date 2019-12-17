@@ -26,12 +26,14 @@ class DeliveriesController extends CI_Controller
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
  
-		$deliveries = $this->db->select("delivery.*, delivery_details.*")
-							->from('delivery')  
-							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
-							->where('date_time >=', $from)
-							->where('date_time <=', $to)
-							->group_by('delivery.id') 
+		$deliveries = $this->db->select("delivery.date_time*, delivery_details.*")
+							->from('delivery_details')  
+							->join('delivery', 'delivery_details.delivery_id = delivery.id')
+							->where('delivery.date_time >=', $from)
+							->where('delivery.date_time <=', $to)
+							->group_by('delivery_details.id') 
+							->order_by('delivery_details.id', 'DESC')
+							->limit($limit, $start)
 							->get()
 							->result();
 
@@ -107,7 +109,7 @@ class DeliveriesController extends CI_Controller
  
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
-			'date_time' => $this->input->post('delivery_date'),
+			'date_time' => $this->input->post('delivery_date') . ' ' . date("h:i:s"),
 			'received_by' => $this->session->userdata('username')
 			);
 
@@ -137,7 +139,7 @@ class DeliveriesController extends CI_Controller
 				'barcode' => $item->barcode,
 				'name' => $item->name,
 				'price' => $retails[$key],
-				'delivery_date' => $this->input->post('delivery_date'),
+				'delivery_date' => $this->input->post('delivery_date') . ' ' . date("H:i:s"),
 			);
  
  			//Update Product Quantities
@@ -157,8 +159,7 @@ class DeliveriesController extends CI_Controller
 
 		$this->db->trans_commit();  
 		$this->session->set_flashdata('success', 'Delivery saved successfully');
-		return redirect('new-delivery'); 
-
+		return redirect('new-delivery');  
 	}
 
 	public function index() {
@@ -180,12 +181,12 @@ class DeliveriesController extends CI_Controller
 		$count = $this->db->get('delivery_details')->num_rows();
 
 		$deliveries = $this->db->select('delivery.received_by, delivery.date_time, delivery_details.*, supplier.name as s_name')
-								->from('delivery')
-								->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
+								->from('delivery_details')
+								->join('delivery', 'delivery_details.delivery_id = delivery.id')
 								->join('supplier', 'supplier.id = delivery.supplier_id')
-								->where('date_time >=', $from)
-								->where('date_time <=', $to)
-								->order_by('delivery.id', "DESC")
+								->where('DATE_FORMAT(delivery.date_time, "%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(delivery.date_time, "%Y-%m-%d") <=', $to)
+								->order_by('delivery_details.id', "DESC")
 								->limit($limit, $start)
 								->get()
 								->result();

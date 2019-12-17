@@ -429,12 +429,13 @@ class ItemController extends AppController {
 					'name' => $updated_name,
 					'barcode' => $barcode,
 					'price'	=> $updated_price,
-					'date_time'	=> date('Y-m-d h:i:s'),
+					'date_time'	=> get_date_time(),
 					'quantities'	=> $adjustment,
 					'capital'	=> $capital,
 					'staff' => $this->session->userdata('username'),
 					'sign' => $sign,
 					'item_id' => $id,
+					'remaining_stocks' => $stocks,
 				]);
 		}
 

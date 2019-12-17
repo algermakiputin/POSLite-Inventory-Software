@@ -92,6 +92,8 @@ class ReportsController extends AppController
 		$to = date('Y-m-d');
 		$from = date('Y-m-d', strtotime('-12 months'));
 
+		$product_capital = $this->db->where('item_id', $id)->get('prices')->row()->capital;
+
 		$sales = $this->db->select('sales_description.*, sales_description.created_at as delivery_date')
 								->where('item_id', $id) 
 								->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $from)
@@ -146,7 +148,7 @@ class ReportsController extends AppController
 		$datasets = []; 
 		$rows = count($merged) - 1;
 		for ( $i = $rows; $i >= 0; $i-- ) {
-
+ 			
 			$sign = "+";
 			$type = "Return";
 			$date = "";
@@ -155,10 +157,9 @@ class ReportsController extends AppController
 				//Sales
 				
 				$type = "Sales";
-				$date = date('Y-m-d', strtotime($merged[$i]->created_at));
-
+				$date = date('Y-m-d', strtotime($merged[$i]->created_at)); 
 				$stocks -= $merged[$i]->quantity; 
-
+				$merged[$i]->price = $product_capital;
 				
 			}else if (array_key_exists('delivery_id', $merged[$i])) { 
 				// Stock in
@@ -188,11 +189,11 @@ class ReportsController extends AppController
 				$merged[$i]->quantity = $merged[$i]->quantities;
 				
 				if ($merged[$i]->sign == "+") {
-					$stocks += $merged[$i]->quantity; 
+					$stocks = $merged[$i]->remaining_stocks; 
 					$stock_sign = "+";
 				}else {
 					$stock_sign = "-";
-					$stocks -= $merged[$i]->quantity; 
+					$stocks = $merged[$i]->remaining_stocks; 
 				}
 
 			} else {
@@ -202,14 +203,15 @@ class ReportsController extends AppController
 				$sign = "-";
 			} 
 
-			if ($type == "Return" || $type == "Expired" || $type == "Sales") {
-				
-				$running_balance -= (float)$merged[$i]->price * (float)$merged[$i]->quantity;
+			if ($type == "Return" || $type == "Expired" || $type == "Sales") { 
 				$stock_sign = "-";
 			}else if ($type == "Stock in" ) {
-				$running_balance += (float)$merged[$i]->price * (float)$merged[$i]->quantity;
+				
 				$stock_sign = "+";
 			}
+
+
+			$running_balance = (float)$merged[$i]->price * (float)$stocks;
 
 			$datasets[] = [
 					$date,
@@ -221,7 +223,7 @@ class ReportsController extends AppController
 					currency() . number_format((float)$merged[$i]->price * (float)$merged[$i]->quantity,2),
 					currency() . number_format($running_balance, 2),
 					"<b>$stock_sign </b>" . $merged[$i]->quantity,
-					$stocks
+					$stocks 
 				];
 		} 
 

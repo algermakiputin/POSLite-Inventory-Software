@@ -30,7 +30,7 @@ class ReturnsController extends AppController {
  					'quantity' => $quantities[$key],
  					'staff' => $this->session->userdata('username'),
  					'reason' => $reasons[$key],
- 					'date_time' => date('Y-m-d h:i:s'),
+ 					'date_time' => date('Y-m-d H:i:s'),
  					'price' => $prices[$key],
  					'item_id' => $ids[$key]
  				]);
