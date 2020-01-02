@@ -1,18 +1,7 @@
-RewriteEngine on
-
-RewriteCond %{HTTP:X-Forwarded-Proto} =http [OR]
-
-# ...or just a plain old http request directly from the client
-RewriteCond %{HTTP:X-Forwarded-Proto} =""
-RewriteCond %{HTTPS} !=on
-
-# Redirect to https version
-RewriteCond %{HTTP_HOST} ^(poslite.herokuapp.com)
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteEngine on 
 
 RewriteCond $1 !^(index\.php|assets|image|resources|robots\.txt)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* index.php/$0 [PT,L]
-
-Redirect 301 https://poslite.herokuapp.com https://poslitesoftware.com
+ 
