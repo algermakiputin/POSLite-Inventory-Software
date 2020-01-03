@@ -26,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">POSLite Inventory v1.0</a>
+                <a class="navbar-brand" href="#">POSLite Inventory v1.0 | Ecoland Branch </a> 
             </div>
             <!-- /.navbar-header -->
 

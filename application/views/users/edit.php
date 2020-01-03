@@ -30,6 +30,17 @@
 								<input required="required" value="<?php echo $user->username ?>" type="text" name="username" class="form-control">
 							</div> 
 							<div class="form-group">
+								<label for='account_type'>Designated Store</label>
+								<select required="required" name="store" class="form-control">
+									<option value="">Select Store</option>
+									<?php foreach( $stores as $store ): ?>
+										<option value="<?php echo $store->id ?>"
+											<?php if ($user->store_id == $store->id) echo "selected" ?>
+											><?php echo $store->branch ?></option> 
+									<?php endforeach; ?>
+								</select>
+							</div>
+							<div class="form-group">
 								<label for='account_type'>Account Type</label>
 								<select required="required" name="account_type" class="form-control">
 									<option value="">Select Account Type</option>

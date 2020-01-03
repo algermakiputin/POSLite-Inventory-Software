@@ -38,8 +38,9 @@ class UsersController extends AppController {
 		$account_type = $this->input->post('account_type');
 		$full_name = $this->input->post('full_name');
 		$created_by = 'admin';
+		$store = $this->input->post('store');
 
-		$exec = $this->UsersModel->insert_account($username,$password,$account_type,$date_created,$created_by, $full_name);
+		$exec = $this->UsersModel->insert_account($username,$password,$account_type,$date_created,$created_by, $full_name, $store);
 		if ($exec) {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Account Created Successfully</div>');
 			return redirect(base_url('users'));
@@ -70,9 +71,10 @@ class UsersController extends AppController {
 	public function users () {
 		
 		$this->checkLogin();
-		$data['page'] = 'accounts';
 		$this->load->model('UsersModel');
-		$data['accountsList'] = $this->UsersModel->display_accounts();
+		$data['page'] = 'accounts'; 
+		$data['stores'] = $this->db->get('stores')->result();
+		$data['accountsList'] = $this->UsersModel->display_accounts(); 
 		$data['content'] = "users/index";
 		$this->load->view('master',$data);
 		 
@@ -119,10 +121,11 @@ class UsersController extends AppController {
 
 	public function edit($id) {
 		$this->admin_only();
-		$user = $this->db->where('id', $id)->get('users')->row();
+		$this->load->model('UsersModel');
+		$user = $this->UsersModel->find($id);
+		$data['stores'] = $this->db->get('stores')->result();
 
-		if ($user) {
-
+		if ($user) { 
 			$data['user'] = $user;
 			$data['content'] = "users/edit";
 			return $this->load->view('master', $data);
@@ -147,7 +150,13 @@ class UsersController extends AppController {
 	public function update() {
 		$this->admin_only();
 		$this->set_data(); 
-		$data = ['username' => $this->username, 'account_type' => $this->account_type, 'name' => $this->name];
+
+		$data = [
+			'username' => $this->username, 
+			'account_type' => $this->account_type, 
+			'name' => $this->name,
+			'store_id' => $this->input->post('store')
+		];
 
 		if ($this->input->post("change_password") == "on") {
 			$password = $this->input->post("new_password");

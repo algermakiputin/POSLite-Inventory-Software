@@ -39,6 +39,16 @@
 								<input required="required" type="password" name="repeat_password" class="form-control">
 							</div>
 							<div class="form-group">
+								<label for='account_type'>Designated Store</label>
+								<select required="required" name="store" class="form-control">
+									<option value="">Select Store</option>
+									<?php foreach( $stores as $store ): ?>
+										<option value="<?php echo $store->id ?>"><?php echo $store->branch ?></option>
+
+									<?php endforeach; ?>
+								</select>
+							</div>
+							<div class="form-group">
 								<label for='account_type'>Account Type</label>
 								<select required="required" name="account_type" class="form-control">
 									<option value="">Select Account Type</option>
@@ -56,8 +66,8 @@
 					<div class="col-lg-9"> 
 						<table class="table table-striped table-hover table-bordered" id="users_table">
 							<thead>
-								<tr>
-									<th>ID</th>
+								<tr> 
+									<th>Branch</th>
 									<th>Name</th>
 									<th>Username</th>
 									<th>Account Type</th>
@@ -70,11 +80,8 @@
 								$count = 1; 
 								?>
 								<?php foreach($accountsList as $account) :?>
-									<tr>
-										<?php
-										$id = $account->id;
-										?>
-										<td><?php echo $id; ?></td>
+									<tr> 
+										<td><?php echo $account->branch ?></td>
 										<td><?php echo $account->name; ?></td>
 										<td><?php echo $account->username ?></td>
 										<td><?php echo $account->account_type ?></td>
@@ -85,13 +92,13 @@
 												<ul class="dropdown-menu">
 													<?php if ($this->session->userdata('account_type') == "Admin"): ?>
 														<li>
-															<a href="<?php echo base_url("user/edit/$id") ?>">
+															<a href="<?php echo base_url("user/edit/$account->id") ?>">
 																<i class="fa fa-edit"></i> Edit
 															</a>
 														</li>
 													<?php endif; ?>
 													<li>
-														<a href="<?php echo base_url("UsersController/delete/$id"); ?>" class="delete-data" <?php echo SITE_LIVE ? 'disabled onclick="return false;"' : '' ?>><i class="fa fa-trash"></i> Delete</a></td>
+														<a href="<?php echo base_url("UsersController/delete/$account->id"); ?>" class="delete-data" <?php echo SITE_LIVE ? 'disabled onclick="return false;"' : '' ?>><i class="fa fa-trash"></i> Delete</a></td>
 													</li>
 													 
 												</ul>
