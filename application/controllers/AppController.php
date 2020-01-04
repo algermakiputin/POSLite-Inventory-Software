@@ -10,18 +10,15 @@ class AppController extends CI_Controller {
     }
 
     public function licenseControl () {
-    	
+    	  
     	if (!SITE_LIVE) {
     		if (!file_exists(homeDir() . '/profile.txt')) {
 	    		return redirect('activate');
 	    	}
-
 	    	$content = profile(); 
-
 	    	$serial = (str_replace('serialNumber=', '', $content[0]));
-	    	
-	    	if ($serial != serial()) {
-
+	    	 
+	    	if (trim($serial) != trim(serial())) {
 	    		return redirect('activate');
 	    	}
     	}
