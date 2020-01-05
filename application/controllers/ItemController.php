@@ -148,7 +148,7 @@ class ItemController extends AppController {
 	}
 
 	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks) {
-		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id')
+		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, prices.wholesale')
 					->from('items')
 					->join('categories', 'categories.id = items.category_id', 'BOTH')
 					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH')
