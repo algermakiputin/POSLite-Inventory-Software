@@ -27,12 +27,13 @@ class ItemController extends AppController {
 		$item = $this->db->where('barcode', $barcode)->get('items')->row();
 		if ($item) {
 			$quantity = (int)$this->OrderingLevelModel->getQuantity($item->id)->quantity;
-			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
+			$price = $this->db->where('item_id', $item->id)->get('prices')->row();
 			echo json_encode([
 					'name' => $item->name,
-					'price' => '₱' . $price,
+					'price' => '₱' . $price->price,
 					'quantity' => $quantity,
-					'id' => $item->id
+					'id' => $item->id,
+					'wholesale' => $price->wholesale
 				]) ;
 		} 
 		return;

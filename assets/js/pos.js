@@ -7,7 +7,8 @@
 	var totalDiscount = 0;
 	var transactionComplete = false;
 	var currency = '₱';
-
+	var toAppend = "";
+	var itemDetails = {};
 
 	var dHeight = parseInt($(document).height());
  	 
@@ -32,6 +33,9 @@
 					url : base_url + 'items/find',
 					data : data,
 					success : function(data) {
+						var result = JSON.parse(data);
+
+						 
 						if (data) {
 							var result = JSON.parse(data);
 							var quantity = 1;
@@ -44,20 +48,25 @@
 						  	 		var quantity = 1;
 								 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
 								 	totalAmountDue += parseFloat(result.subtotal);
-									$("#cart tbody").append(
-											'<tr>' +
-												'<input name="id" type="hidden" value="'+ result.id +'">' +
-												'<td>'+ result.name +'</td>' +
-												'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-												'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-												'<td>'+ result.price +'</td>' +
-									 			
-												'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
-											'</tr>'
-										);
-									recount();
-									$("payment").val('');
-									$("change").val('');
+									
+									itemDetails = {
+										id: result.id,
+										name: result.name,
+										quantity: result.quantity,
+										price: result.price,
+										wholesale: result.wholesale
+									};
+
+									var price = result.price;
+									var wholesale = result.wholesale;
+									var name = result.name;
+
+									$("#add-type").val("barcode");
+									$("#retail-price").text(price);
+									$("#wholesale-price").text(currency + number_format(parseFloat(wholesale)) + '.00');
+									$("#selected-product").text(name); 
+									$("#product-options-modal").modal('toggle');
+									
 
 						  	 	}
 						  	 	stockCol.text(parseInt(stocks - 1));
@@ -70,8 +79,7 @@
 							recount();
 							$("payment").val('');
 							$("change").val('');
-						}else 
-							alert('No item found in the database');
+						} 
 					 
 					}
 				})
@@ -101,62 +109,99 @@
 	$("#item-table").on('click', 'tbody tr', function(event) {
 
 		selected_row = $(this);
+		var id = selected_row.find('td').eq(0).text();
 		var price = $(this).find('td').eq(4).text();
 		var wholesale = $(this).find('td').eq(0).find('input[name="wholesale"]').val();
 		var name = $(this).find('td').eq(1).text();
+		var stockCol = selected_row.find('td').eq(3);
+		var stocks = stockCol.text(); 
 
-		$("#retail-price").text(price);
-		$("#wholesale-price").text(currency + number_format(parseFloat(wholesale)) + '.00');
-		$("#selected-product").text(name);
+		if (itemExist(id,stocks) == false) {
+			$("#add-type").val("select");
 
-		$("#product-options-modal").modal('toggle');
+			$("#retail-price").text(price);
+			$("#wholesale-price").text(currency + number_format(parseFloat(wholesale)) + '.00');
+			$("#selected-product").text(name);
+
+			$("#product-options-modal").modal('toggle');
+		}else { 
+			
+		}
+		
  
 	})
 
 
 	$("#confirm-selection").click(function(e) {
+
 		var price_option = $("input[name='pricing']:checked").val();
-		var id = selected_row.find('td').eq(0).text();
-		var name = selected_row.find('td').eq(1).text();
-		var stockCol = selected_row.find('td').eq(3);
-		var stocks = stockCol.text(); 
-		var price = selected_row.find('td').eq(4).text();
-		var wholesale = selected_row.find('td').eq(0).find('input[name="wholesale"]').val();
-		var description = selected_row.find('td').eq(2).text();
-		var selling_price = price;
-
 		
-		if (price_option == "wholesale") {
+		if ($("#add-type").val() == "select") {
 
-			selling_price = currency + wholesale + '.00';
-		}
-		
-	 	if ( parseInt(stocks.split(' ').join('')) > 0 ) {
-	 		if (id && name && stocks && price) {
-	  	 		if (itemExist(id,stocks) == false) {
-		  	 		var quantity = 1;
-				 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-				 	totalAmountDue += parseFloat(subtotal);
-					$("#cart tbody").append(
-							'<tr>' +
-								'<input name="id" type="hidden" value="'+ id +'">' +
-								'<td>'+ name +'</td>' +
-								'<td><input data-stocks="'+stocks+'" data-remaining="'+stocks+'" data-id="'+id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-								'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-								'<td>'+ selling_price +'</td>' +
-					 			
-								'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
-							'</tr>'
-						);
-					recount();
-					$("payment").val('');
-					$("change").val('');
+			
+			var id = selected_row.find('td').eq(0).text();
+			var name = selected_row.find('td').eq(1).text();
+			var stockCol = selected_row.find('td').eq(3);
+			var stocks = stockCol.text(); 
+			var price = selected_row.find('td').eq(4).text();
+			var wholesale = selected_row.find('td').eq(0).find('input[name="wholesale"]').val();
+			var description = selected_row.find('td').eq(2).text();
+			var selling_price = price;
+
+			
+			if (price_option == "wholesale") {
+
+				selling_price = currency + wholesale + '.00';
+			}
+			
+		 	if ( parseInt(stocks.split(' ').join('')) > 0 ) {
+		 		if (id && name && stocks && price) {
+		  	 		if (itemExist(id,stocks) == false) {
+			  	 		var quantity = 1;
+					 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+					 	totalAmountDue += parseFloat(subtotal);
+						$("#cart tbody").append(
+								'<tr>' +
+									'<input name="id" type="hidden" value="'+ id +'">' +
+									'<td>'+ name +'</td>' +
+									'<td><input data-stocks="'+stocks+'" data-remaining="'+stocks+'" data-id="'+id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+									'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+									'<td>'+ selling_price +'</td>' +
+						 			
+									'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
+								'</tr>'
+							);
+						recount();
+						$("#payment").val('');
+						$("#change").val('');
+			  	 	}
+			  	 	stockCol.text(parseFloat(stocks - 1));
 		  	 	}
-		  	 	stockCol.text(parseFloat(stocks - 1));
-	  	 	}
-	 	}else {
-	 		alert("Not enough stocks remaining");
-	 	} 
+		 	}else {
+		 		alert("Not enough stocks remaining");
+		 	} 
+		}else {
+ 		
+ 			var quantity = 1; 
+ 			itemDetails.price += ".00";
+ 			if (price_option == "wholesale") { 
+				itemDetails.price = currency + itemDetails.wholesale + ".00";
+			}
+
+			$("#cart tbody").append('<tr>' +
+									'<input name="id" type="hidden" value="'+ itemDetails.id +'">' +
+									'<td>'+ itemDetails.name +'</td>' +
+									'<td><input data-stocks="'+itemDetails.quantity+'" data-remaining="'+itemDetails.quantity+'" data-id="'+itemDetails.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+									'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+									'<td>'+ itemDetails.price +'</td>' +
+						 			
+									'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
+								'</tr>');
+			recount();
+			$("payment").val('');
+			$("change").val('');
+
+		}
 	})
 
 
