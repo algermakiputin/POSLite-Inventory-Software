@@ -141,7 +141,12 @@
 						<div class="col-md-7">
 							<div id="receipt">
 								<div class="r-header text-center">
-									<h3>Receipt</h3>
+									<h5 style="font-size: 14px">
+									 Sagudo-an Store</br>
+									 Poblacion Bokod Beng. </br>
+									<span style="font-size: 12px">Joseph Bugnay Carlos</span> </br>
+									09089824269
+									</h5>
 									<div class="row">
 										<div class="col-md-4 text-left">
 											<div>ID:</div>

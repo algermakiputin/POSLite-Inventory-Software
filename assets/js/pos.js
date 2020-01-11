@@ -116,11 +116,15 @@
 		var stockCol = selected_row.find('td').eq(3);
 		var stocks = stockCol.text(); 
 
+		if (parseFloat(stocks) <= 0) {
+			alert("Not enough stocks");
+			return false;
+		}
 		if (itemExist(id,stocks) == false) {
 			$("#add-type").val("select");
 
 			$("#retail-price").text(price);
-			$("#wholesale-price").text(currency + number_format(parseFloat(wholesale)) + '.00');
+			$("#wholesale-price").text(currency + number_format(parseFloat(wholesale)));
 			$("#selected-product").text(name);
 
 			$("#product-options-modal").modal('toggle');
@@ -151,7 +155,7 @@
 			
 			if (price_option == "wholesale") {
 
-				selling_price = currency + wholesale + '.00';
+				selling_price = currency + number_format(wholesale);
 			}
 			
 		 	if ( parseInt(stocks.split(' ').join('')) > 0 ) {
@@ -183,10 +187,7 @@
 		}else {
  		
  			var quantity = 1; 
- 			itemDetails.price += ".00";
- 			if (price_option == "wholesale") { 
-				itemDetails.price = currency + itemDetails.wholesale + ".00";
-			}
+ 		 
 
 			$("#cart tbody").append('<tr>' +
 									'<input name="id" type="hidden" value="'+ itemDetails.id +'">' +
