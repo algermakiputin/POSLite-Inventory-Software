@@ -238,6 +238,7 @@
 		        <label>Select Price</label> 
 		        <fieldset>
 		        	<div class="radio">
+		        			<input type="hidden" name="add-type" id="add-type" value="select">
 						  <label><input type="radio" value="retail" name="pricing" checked>Retail Price (<span id="retail-price"></span>)</label>
 						</div>
 						<div class="radio">

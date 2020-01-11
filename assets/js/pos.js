@@ -125,7 +125,7 @@
 
 			$("#product-options-modal").modal('toggle');
 		}else { 
-			
+			stockCol.text(parseFloat(stocks - 1));
 		}
 		
  
