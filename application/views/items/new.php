@@ -27,6 +27,16 @@
 								<label>Barcode:</label>
 								<input type="text" placeholder="Item Barcode" required="required" class="form-control" name="barcode" value="">
 							</div>
+							<div class="form-group">
+								<label for='account_type'>Store</label>
+								<select required="required" name="store_id" class="form-control">
+									<option value="">Select Store</option>
+									<?php foreach( $stores as $store ): ?>
+										<option value="<?php echo $store->id ?>"><?php echo $store->branch ?></option>
+
+									<?php endforeach; ?>
+								</select>
+							</div>
 							<div class="form-group"> 
 								<label>Item Name:</label>					 
 								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
@@ -49,6 +59,7 @@
 								<label>Retail Price:</label>
 								<input type="text" required="required" placeholder="Price" name="price" class="form-control" data-parsley-gte-message="Retail Price Must be greather or equal to capital" max="500000" id="selling-price" data-parsley-gte="#capital">
 							</div>  
+							
 							<div class="form-group">  
 									<label>Supplier:</label>
 								<select name="supplier" class="form-control" required="required"> 

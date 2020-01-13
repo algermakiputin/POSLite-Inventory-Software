@@ -221,8 +221,10 @@ class ItemController extends AppController {
 	public function new() {
 		$this->userAccess('new');
 		$this->load->model('categories_model'); 
+		$this->load->model('StoresModel');
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
+		$data['stores'] = $this->StoresModel->get_stores();
 		$data['page'] = 'new_item';
 		$data['content'] = "items/new";  
 		$this->load->view('master', $data);
@@ -240,7 +242,7 @@ class ItemController extends AppController {
 
 	public function insert() {
 		license('items');
-	
+		
 		$name = $this->input->post('name');
 		$category = $this->input->post('category');
 		$description = $this->input->post('description');
@@ -248,6 +250,7 @@ class ItemController extends AppController {
 		$barcode = $this->input->post('barcode');
 		$price = $this->input->post('price'); 
 		$capital = $this->input->post('capital');
+		$store = $this->input->post('store_id');
 		$productImage = $_FILES['productImage'];
 	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
@@ -269,7 +272,8 @@ class ItemController extends AppController {
 				'description' => $description, 
 				'supplier_id' => $supplier_id,
 				'status' => 1,
-				'barcode' => $barcode 
+				'barcode' => $barcode,
+				'store_id' => $store
 			);
 		
 		if ($productImage) {
@@ -368,12 +372,14 @@ class ItemController extends AppController {
 	public function edit($id) {
 		$this->userAccess('edit');
 		$id = $this->security->xss_clean($id);
+		$this->load->model('StoresModel');
 		$data['item'] = $this->db->where('id', $id)->get('items')->row();
 		$data['price'] = $this->PriceModel;
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row();
 		$data['content'] = "items/edit";
+		$data['stores'] = $this->StoresModel->get_stores();
 		$this->load->view('master', $data);
 	}
 
@@ -388,6 +394,8 @@ class ItemController extends AppController {
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));
+		$barcode = $this->input->post('barcode');
+		$store_id = $this->input->post('store_id');
 
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
@@ -409,7 +417,19 @@ class ItemController extends AppController {
 
 		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
 		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'));
+
+		$itemData = [
+			'id' => $id,
+			'name'	=>	$updated_name,
+			'category'	=> $updated_category,
+			'description'	=>	$updated_desc,
+			'price'	=> $price_id, 
+			'image'	=> $upload['upload_data']['file_name'], 
+			'supplier'	=>	$supplier_id, $barcode, 
+			'store_id'	=>	$store_id
+		];
+
+		$update = $this->ItemModel->update_item($itemData);
 
 		if ($update) {
 			
@@ -431,8 +451,7 @@ class ItemController extends AppController {
 	public function updateFormValidation() {
 		
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
-		$this->form_validation->set_rules('category', 'Category', 'required|max_length[150]');
-		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]');
+		$this->form_validation->set_rules('category', 'Category', 'required|max_length[150]'); 
 		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]'); 
 		$this->form_validation->set_rules('id', 'required'); 
  

@@ -19,6 +19,16 @@
 								<label>Barcode:</label>
 								<input type="text"  value="<?php echo $item->barcode; ?>" name="barcode" class="form-control" required="required"> 
 							</div>
+							<div class="form-group">
+								<label for='account_type'>Store</label>
+								<select required="required" name="store_id" class="form-control">
+									<option value="">Select Store</option>
+									<?php foreach( $stores as $store ): ?>
+										<option value="<?php echo $store->id ?>"><?php echo $store->branch ?></option>
+
+									<?php endforeach; ?>
+								</select>
+							</div>
 							<div class="form-group"> 
 								<label>Item Name:</label>
 								<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control" required="required">
@@ -60,7 +70,7 @@
 							</div>
 							<div class="form-group"> 
 								<label>Description:</label>
-								<textarea required="required" rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
+								<textarea rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
 							</div>
 							<div class="form-group"> 
 								<button class="btn btn-primary">Update</button>

@@ -67,7 +67,7 @@
 						<table class="table table-striped table-hover table-bordered" id="users_table">
 							<thead>
 								<tr> 
-									<th>Branch</th>
+									<th>Store</th>
 									<th>Name</th>
 									<th>Username</th>
 									<th>Account Type</th>

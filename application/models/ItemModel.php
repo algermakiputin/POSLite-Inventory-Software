@@ -41,23 +41,21 @@ class ItemModel extends CI_Model {
 
 	}
 
-	public function update_item($id,$name,$category,$description,$price_id, $image, $supplier_id, $barcode) {
-		
-		$item = $this->db->where('id',$id)->get('items')->row(); 
+	public function update_item($item) { 
 
 		$data = array(
-			'name' => $name,
-			'category_id' => $category,
-			'description' => $description,
-			'supplier_id' => $supplier_id,
-			'barcode' => $barcode
+			'name' => $item['name'],
+			'category_id' => $item['category'],
+			'description' => $item['description'],
+			'supplier_id' => $item['supplier_id'],
+			'barcode' => $item['barcode'],
+			'store_id' => $item['store_id']
 			);
-
-		$data = $this->security->xss_clean($data);
-		if ($image != '')
-			$data['image'] = $image;
  
-		return $this->db->where('id',$id)->update('items',$data);
+		if ($image != '')
+			$data['image'] = $item['image'];
+ 
+		return $this->db->where('id',$item['id'])->update('items',$data);
 	}
 
 	public function get_all_item() {
