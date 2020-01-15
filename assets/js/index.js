@@ -56,6 +56,7 @@ $(document).ready(function() {
 				this.deleteItem();
 				this.changeImage();
 				this.itemForm();
+				this.storeFilter();
 			},
 			itemForm: function() {
 				$("#item-form").submit(function(e) {
@@ -78,7 +79,7 @@ $(document).ready(function() {
 				itemTable = $("#item_tbl").DataTable({
 					processing : true,
 					serverSide : true,
-					lengthMenu : [[10, 25, 50, 0], [10, 25, 50, "Show All"]],
+					lengthMenu : [[10, 25, 50, 250, 1000, 3000], [10, 25, 50, 250, 1000, 3000]],
 					ajax : {
 						url : base_url + 'ItemController/dataTable',
 						type : 'POST',
@@ -159,6 +160,12 @@ $(document).ready(function() {
 
 						
 				});
+			},
+			storeFilter: function() {
+				$("#store-selector").change(function() {
+
+					itemTable.columns(6).search($(this).val()).draw();
+				})
 			},
 			clearDataTableFilter : function() {
 				$("#clear-filter").click(function(e) {

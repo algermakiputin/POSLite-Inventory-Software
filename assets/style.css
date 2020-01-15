@@ -10,6 +10,18 @@ html, body {
 
 }
 
+.section-menu {
+  background: #f5f5f5;
+  padding: 10px;
+  border:solid 1px #ddd;
+  border-radius: 0.5em; 
+}
+
+.form-control.limit {
+  max-width: 300px;
+  display: inline-block;
+}
+
 .sidebar {
   margin-top: 53px;
 }

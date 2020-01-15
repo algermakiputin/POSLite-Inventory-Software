@@ -95,6 +95,10 @@
                     </li> 
                 </ul>
             </li>
+            
+            <li>
+                <a href="<?php echo base_url('stores') ?>"><i class="fa fa-bank"></i> Stores</a>
+            </li>
 
             <?php if (!SITE_LIVE): ?>
                 <li>

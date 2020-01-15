@@ -60,14 +60,8 @@ class ItemController extends AppController {
 
 	public function items () { 
  
-		 
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
-		$data['suppliers'] = $this->db->get('supplier')->result();
-		$data['page'] = 'inventory';
-		$data['price'] = $this->PriceModel;
-		$data['categoryModel'] = $this->categories_model;
-		$data['categories'] = $this->categories_model->getCategories();
-		$data['orderingLevel'] = $this->OrderingLevelModel;
+		$data['page'] = 'inventory'; 
 		$data['content'] = "items/index";
 		$this->load->view('master', $data);
 
@@ -82,6 +76,8 @@ class ItemController extends AppController {
 		$filterSupplier = $this->input->post('columns[7][search][value]');
 		$sortPrice = $this->input->post('columns[4][search][value]');
 		$sortStocks = $this->input->post('columns[5][search][value]');
+		$store = $this->input->post('columns[6][search][value]');  
+
 
 
 		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
@@ -89,11 +85,12 @@ class ItemController extends AppController {
  
 		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)->get()->num_rows(); 
 		  
-		$datasets = array_map(function($item) {
-			$itemPrice = $this->PriceModel->getPrice($item->id);
-			$itemCapital = $this->PriceModel->getCapital($item->id);
-			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
+		$datasets = array_map(function($item) use ($store) {
+			$itemPrice = $this->PriceModel->getPrice($item->id, $store);
+			$itemCapital = $this->PriceModel->getCapital($item->id, $store);
+			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id, $store) ?? 0;
 			$deleteAction = "";
+
 			if ($this->session->userdata('account_type') == "Admin") {
 
 				$deleteAction = '

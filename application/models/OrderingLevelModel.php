@@ -10,8 +10,11 @@ class OrderingLevelModel extends CI_Model {
 		return $this->db->insert('ordering_level', $data);
 	}
 
-	public function getQuantity($id) {
-		return $this->db->where('item_id', $id)->get('ordering_level')->row();
+	public function getQuantity($id, $store) {
+
+		$column = "store" . $store;   
+		return $this->db->where('item_id', $id)->get('ordering_level')->row_array()[$column] ?? 0;
+
 	}
 
 	public function addStocks($id, $stocks) {

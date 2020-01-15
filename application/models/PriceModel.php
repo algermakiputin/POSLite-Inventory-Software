@@ -15,14 +15,20 @@ class PriceModel extends CI_Model {
 		return $this->db->insert_id();
 	}
 
-	public function getPrice($id) {
-		 
-		return $this->db->where('item_id',$id)->get('prices')->row()->price ?? 0;
+	public function getPrice($id, $store) {
+
+		$column = "store" . $store . '_retail'; 
+
+
+		return $this->db->where('item_id',$id)->get('prices')->row_array()[$column] ?? 0;
 	}
 
-	public function getCapital($id) {
+	public function getCapital($id, $store) {
+
+		$column = "store" . $store . '_capital'; 
 		 
-		return $this->db->where('item_id',$id)->get('prices')->row()->capital ?? 0;
+		return $this->db->where('item_id',$id)->get('prices')->row_array()[$column] ?? 0;
+
 	}
 
 	public function setId($id,$item_id) {
