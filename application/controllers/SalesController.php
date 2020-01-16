@@ -52,20 +52,19 @@ class SalesController extends CI_Controller {
 					";
 				}	
 				 
-			}
-
-			$totalSales += $sub_total;
-			
+			} 
+			$totalSales += $sub_total; 
 		}
 
 		$html .= "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
-				<link type='text/css' href='".base_url('assets/print.css')."'>
+				<link type='text/css' href='".base_url('assets/print.css')."' rel='stylesheet'>
+				<link type='text/css' href='".base_url('assets/print.css')."' rel='stylesheet'>
 			";
 		$html .= "<h1 class='text-center'>Sales Reports</h1>";
 		$html .= "<div class='date'><h4>Date:</h4>";
 		$html .= "<div class='date'>From: " . $from . "</div>";
 		$html .= "<div class='date'>To: " . $to . "</div></div>";
-		$html .= "<div class='right'><h4>Total Sales:</h4><div>₱".number_format($totalSales)."</div></div>";
+		$html .= "<div class='right'><h4>Total Sales:</h4>₱".number_format($totalSales)."</div>";
 		$html .= "<div class='clearfix'></div>";
 		$html .= "<br>";
 		$html .= "<table class='table table-striped'>";
@@ -187,15 +186,63 @@ class SalesController extends CI_Controller {
 
 	public function insert() {
 		$data = [];
-		$sales = $this->input->post('sales');
-		$this->load->model("PriceModel");
-		$this->db->trans_begin();
+		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
+		$transaction_number = "TRN000" . ((int)$last_sales_id + 1 ); 
 
+		$status = 0;
+		$sales = $this->input->post('sales');
+		$type = $this->input->post('transaction_type');
+		$status = $type == "cash" ? 1 : 0;
+		$total_amount = $this->input->post('total_amount');
+		$customer_id = $this->input->post('customer_id');
+		$supplier_id = $this->input->post('supplier_id');
+		$supplier_name = $this->input->post('supplier_name');
+
+		$address = "";
+		$city = "";
+		$zipcode = "";
+
+		if ( $customer_id ) {
+
+			$customer = $this->db->where('id', $customer_id)->get('customers')->row();
+		 
+			if ($customer) {
+
+				$address = $customer->address;
+				$city = $customer->city;
+				$zipcode = $customer->zipcode;
+
+			}
+		}
+
+		$this->load->model("PriceModel");
+		$this->db->trans_begin(); 
+
+		/*	4 Types of Transactions 
+			1. Cash - When cash is selected, Automatically insert transaction as done, and update inventory.
+			2. Credit - Transaction is not yet completed as the payment will still be credit to the customer account but inventory would be updated,
+			3. Stand By - Transaction would be saved as standby status. There is no sales yet, and can be modified until the transaction is completed by the user.
+			4. Invoice - This is an invoice contain prices of the products that will be sent to the customer, No transaction yet so will not update inventory value.
+		*/
 		$this->db->insert('sales',[
-				'id' => null ,
+				'id' => null , 
+				'transaction_number' => $transaction_number, 
+				'user_id' => $this->session->userdata('id'),
+				'customer_id' => $customer_id,
+				'customer_name' => $this->input->post('customer_name'),
+				'type' => $this->input->post('transaction_type'),
+				'status' => $status,
+				'total' => $total_amount,
+				'note' => $this->input->post('note'),
+				'address' => $address,
+				'city'	=> $city,
+				'zipcode' => $zipcode,
+				'supplier_id' => $supplier_id,
+				'supplier_name' => $supplier_name,
 				'date_time' => get_date_time(),
 				'user_id' => $this->session->userdata('id')
 			]);
+
 		$sales_id = $this->db->insert_id();
 		$sales = $this->security->xss_clean($sales);
 
@@ -207,18 +254,18 @@ class SalesController extends CI_Controller {
 				'sales_id' => $sales_id, 
 				'price' => $sale['price'],
 				'name' => $sale['name'],
-				'discount' => $sale['discount'],
+				'discount' => $sale['discount'] ?? 0,
 				'profit' => $transactionProfit,
 				'user_id' => $this->session->userdata('id'),
-				'created_at' => get_date_time(),
+				'created_at' => get_date_time(), 
 			];
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
 			$this->db->where('item_id', $sale['id']);
 			$this->db->update('ordering_level');
+			
 		}
- 
-
+  
 		$this->db->insert_batch('sales_description', $data);
 
 		if ($this->db->trans_status() === FALSE)
@@ -228,7 +275,7 @@ class SalesController extends CI_Controller {
 		}
 		 
 		$this->db->trans_commit(); 
-		echo $sales_id;
+		echo $transaction_number;
 		return;
 	}
 

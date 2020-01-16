@@ -28,6 +28,18 @@ $(document).ready(function() {
 
 	$("body").show();
 	$("form").parsley();	
+
+	var data = {};
+	data[csrfName] = csrfHash;
+	$("#purchase-order-tbl").DataTable({
+		processing : true,
+		serverSide : true, 
+		ajax : {
+			url : base_url + '/PurchaseOrderController/dataTable',
+			type : 'POST',
+			data : data
+		},
+	});
 	
 	$('[data-toggle="tooltip"]').tooltip();
 	$(".datatable").DataTable({
@@ -103,7 +115,7 @@ $(document).ready(function() {
 							messageTop : 'Inventory Report',
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7 ]
+								columns: [ 1, 2, 3,4,5,6 ]
 							},
 						},
 						{
@@ -113,7 +125,7 @@ $(document).ready(function() {
 							messageTop : 'Inventory Report',
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7 ]
+								columns: [ 1, 2, 3,4,5,6 ]
 							},
 						},
 						{
@@ -123,7 +135,7 @@ $(document).ready(function() {
 							messageTop : 'Inventory Report',
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7 ]
+								columns: [ 1, 2, 3,4,5,6 ]
 							},
 
 						},
@@ -318,10 +330,10 @@ $(document).ready(function() {
 						success : function(data) {
 							var customer = JSON.parse(data); 
 							$("#customer-edit input[name='name']").val(customer.name); 
-							$('input:radio[name="gender"]').filter('[value="'+customer.gender+'"]').attr('checked', true);
-							$("#customer-edit input[name='home_address']").val(customer.home_address);
- 
-							$("#customer-edit input[name='contact_number']").val(customer.contact_number);
+							$("#customer-edit input[name='address']").val(customer.address); 
+							$("#customer-edit input[name='city']").val(customer.city);
+							$("#customer-edit input[name='zipcode']").val(customer.zipcode);
+							$("#customer-edit input[name='number']").val(customer.contact_number);
 						}
 
 					});
@@ -368,7 +380,7 @@ $(document).ready(function() {
 					},
 					],
 					initComplete : function() {
-						$("#customer_table_length").append( '&nbsp; <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Add Customer</button>');
+						$("#customer_table_length").append( '&nbsp; <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Add Customer</button>');
 						$("#member-status").change(function() {
 							customer_table.columns(7).search($(this).val()).draw();
 						})
@@ -530,6 +542,157 @@ $(document).ready(function() {
 			}
 		} 
 
+		var transactions = {
+
+			init: function() {
+
+				this.credits_DataTable();
+				this.invoice_DataTable();
+				this.standby_order_DataTable();
+			},
+			credits_DataTable : function() {
+				data = {};
+				data[csrfName] = csrfHash;
+				var credits_tbl = $("#credits_tbl").DataTable({
+					bProcessing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'TransactionsController/credits_datatable',
+						type : 'POST',
+						data : data
+					},
+					"targets": 'no-sort',
+					"bSort": false,
+					 
+					 
+				})
+			},
+			invoice_DataTable : function() {
+				data = {};
+				data[csrfName] = csrfHash;
+				var credits_tbl = $("#invoice_tbl").DataTable({
+					bProcessing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'TransactionsController/invoice_datatable',
+						type : 'POST',
+						data : data
+					},
+					"targets": 'no-sort',
+					"bSort": false, 
+					 
+				})
+			},
+			standby_order_DataTable : function() {
+				data = {};
+				data[csrfName] = csrfHash;
+				var standby_orders_table = $("#standby_orders_tbl").DataTable({
+					bProcessing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'TransactionsController/standby_order_datatable',
+						type : 'POST',
+						data : data
+					},
+					"targets": 'no-sort',
+					"bSort": false, 
+					 
+				})
+			},
+		}
+
+		var reports = {
+
+			init: function() {
+				this.description();
+				this.product_sales();
+				this.best_seller();
+			},
+
+			description: function() { 
+
+				data = {};
+				data[csrfName] = csrfHash;
+				itemTable = $("#sales-description-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'ReportsController/description_datatable',
+						type : 'POST',
+						data : data
+					}, 
+					"targets": 'no-sort',
+					"bSort": false,
+					 
+				});
+			},
+
+			product_sales: function() {
+				data = {};
+				data[csrfName] = csrfHash; 
+				var product_sales_tbl = $("#product-sales-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'ReportsController/product_sales_datatable',
+						type : 'POST',
+						data : data
+					}, 
+					"targets": 'no-sort',
+					"bSort": false,  
+					"dom": "r",
+					"processing" : true,
+					drawCallback : function (setting) {
+						var data = JSON.parse(setting.json.extra);
+						console.log(data);
+						$("#total-sales").text(data.total);
+
+					}
+				}); 
+
+				$("#to").change(function() {
+
+					if ( date_range = date_range_select("from", "to") ) {
+				 
+						product_sales_tbl.columns(0).search(date_range[0])
+									.columns(1).search(date_range[1])
+									.draw();
+
+					}
+				}); 
+			},
+
+			best_seller: function() {
+				data = {};
+				data[csrfName] = csrfHash; 
+				var best_seller_tbl = $("#best-seller-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'ReportsController/best_seller_datatable',
+						type : 'POST',
+						data : data
+					}, 
+					"targets": 'no-sort',
+					"bSort": false,  
+					"dom": "r",
+					"processing" : true, 
+				}); 
+
+				$("#to").change(function() { 
+					if ( date_range = date_range_select("from", "to") ) {
+				 
+						best_seller_tbl.columns(0).search(date_range[0])
+									.columns(1).search(date_range[1])
+									.draw();
+
+					}
+				}); 
+			},
+		}
+
+		reports.init();
+		transactions.init();
 		expenses.init();
 		dateTimePickers.init();
 		items.init();

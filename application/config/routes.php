@@ -55,6 +55,33 @@ $route['backups'] = "BackupController/index";
 $route['upgrade'] = "AppController/upgrade";
 
 $route['stores'] = "StoresController/index";
+$route['customer/profile/(:any)'] = "CustomersController/profile/$1";
+
+$route['preference'] = "SettingsController/preference";
+
+$route['supplier/po'] = "PurchaseOrderController/purchase_order";
+$route['purchase-orders'] = "PurchaseOrderController/purchase_order_list";
+$route['po/view/(:any)'] = "PurchaseOrderController/view/$1";
+
+$route['credits'] = "TransactionsController/index";
+$route['credit/view/(:any)'] = "TransactionsController/view_credit/$1";
+$route['credit/destroy/(:any)'] = "TransactionsController/destroy_credit/$1";
+
+$route['invoice'] = "TransactionsController/invoice";
+$route['invoice/view/(:any)'] = "TransactionsController/view_invoice/$1";
+$route['invoice/destroy/(:any)'] = "TransactionsController/destroy_invoice/$1"; 
+
+$route['standby-orders'] = "TransactionsController/standby_order";
+$route['standby-order/view/(:any)'] = "TransactionsController/view_standby_order/$1";
+$route['standby-order/destroy/(:any)'] = "TransactionsController/destroy_standby_order/$1"; 
+
+$route['transactions'] = "TransactionsController/index";
+$route['credit/view/(:any)'] = "TransactionsController/view_credit/$1";
+$route['credit/destroy/(:any)'] = "TransactionsController/destroy_credit/$1";
+
+$route['payments/new/(:any)'] = "PaymentsController/add_payment/$1";
+
+
 
 $route['expenses'] = "ExpensesController/index";
 $route['expenses/new'] = "ExpensesController/new";
@@ -67,6 +94,12 @@ $route['translate_uri_dashes'] = FALSE;
 $route['test'] = 'AuthController/test';
 
 $route['accounting'] = "AccountingController/index";
+
+$route['reports'] = "ReportsController/index";
+$route['reports/products'] = "ReportsController/products";
+$route['reports/category'] = "ReportsController/category";
+$route['reports/summary'] = "ReportsController/summary";
+$route['reports/best-seller'] = "ReportsController/best_seller";
 
 $route['sales'] = 'SalesController/sales';
 $route['sales/report'] ='SalesController/reports';

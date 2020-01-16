@@ -4,6 +4,7 @@
   border-radius: 1px;
 }
 
+
 html, body {
   height: 99%;
   width: 100%;
@@ -29,14 +30,15 @@ html, body {
 body {
   overflow-x: hidden;
   margin-bottom: -20px;
-  border-collapse: collapse;
+  border-collapse: collapse; 
   font-family: "Roboto", Arial, serif, sans-serif !important;
   display: none;
 }
 
 #wrapper, #page-wrapper {
   height: 98%;
-} 
+}
+
 
 .product-thumbnail img {
   height: inherit;

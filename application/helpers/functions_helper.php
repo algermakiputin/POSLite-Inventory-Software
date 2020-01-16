@@ -7,9 +7,27 @@
 		die();
 	}
 
+
+	function get_preferences() {
+		$path = './preference.txt';
+ 
+        
+     $file = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+     $preference = [];
+     foreach ($file as $f) {
+         $setting = explode('=', $f);
+         $preference[$setting[0]] = $setting[1];
+     }
+
+     return $preference;
+
+  	}
+
 	function get_date_time() {
 
 		return date('Y-m-d H:i:s');
+
 	}
 
 	function homeDir()
@@ -52,6 +70,15 @@
 		$serial = trim(str_replace('SerialNumber','', $serial));
 
 		return preg_split ('/\R/', $serial)[0];
+	}
+
+	function db_transaction($func) {
+
+		$CI =& get_instance();
+
+		$this->db->trans_begin();
+
+		$func();
 	}
 
 	function noStocks() {

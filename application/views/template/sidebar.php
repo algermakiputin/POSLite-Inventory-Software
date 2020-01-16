@@ -19,9 +19,22 @@
             <li data-step="2" data-intro="This menu takes you to the customer page where you can manage your customers.">
                 <a href="<?php echo base_url('customers') ?>"><i class="fa fa-table fa-fw"></i> Customers</a>
             </li>
-            <?php if (is_admin()): ?>
+            <?php if (is_admin()): ?> 
+
             <li data-step="3" data-intro="This menu will takes you to the suppliers page where you can manage your suppliers.">
-                <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-industry fa-fw"></i> Suppliers</a>
+            <a href="#"><i class="fa fa-industry fa-fw"></i> Suppliers<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-circle-o"></i> View Suppliers</a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo base_url('purchase-orders') ?>"><i class="fa fa-circle-o"></i> View Purchase Orders</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('supplier/po') ?>"><i class="fa fa-circle-o"></i> New Purchase Order</a>
+                    </li> 
+                </ul>
+                <!-- /.nav-second-level -->
             </li>
             <?php endif; ?>
             <?php if ($this->session->userdata('account_type') == "Admin"): ?>
@@ -61,11 +74,28 @@
                         $this->session->userdata('account_type') == "Cashier"
                 ): ?>
                 <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
+                   <a href="#"><i class="fa fa-exchange fa-fw"></i> Transactions <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?php echo base_url('credits') ?>"><i class="fa fa-circle-o"></i> Credit</a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo base_url('invoice') ?>"><i class="fa fa-circle-o"></i> Invoice</a>
+                        </li>  
+                        <li>
+                            <a href="<?php echo base_url('standby-orders') ?>"><i class="fa fa-circle-o"></i> Standby Order</a>
+                        </li> 
+                    </ul>
+                </li>  
+                <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
+                            <a href="<?php echo base_url('reports') ?>"><i class="fa fa-circle-o"></i> View Reports</a>
                         </li>
+                      <!--   <li>
+                            <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
+                        </li> -->
                     </ul>
                 </li>
             <?php endif; ?>

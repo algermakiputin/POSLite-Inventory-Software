@@ -1,6 +1,6 @@
 body {
 	font-size: 14px;
-	font-family:  "Arial" !important;
+	font-family:  arial, sans-serif, sans, !important; 
 }
 table {
 	width: 100%;

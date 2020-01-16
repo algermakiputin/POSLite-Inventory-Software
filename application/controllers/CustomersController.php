@@ -21,13 +21,11 @@ class CustomersController Extends CI_Controller {
 	public function insert() { 
 		
 		$data = array(
-				'name' =>	strip_tags($this->input->post('name')), 
-				'gender' => strip_tags($this->input->post('gender')),
-				'home_address' => strip_tags($this->input->post('home_address')),
-				'outlet_location' => strip_tags($this->input->post('outlet_location')),
-				'outlet_address' => strip_tags($this->input->post('outlet_address')), 
-				'contact_number' => strip_tags($this->input->post('mobileNumber')),
-				'membership' => ''
+				'name' =>	strip_tags($this->input->post('name')),  
+				'address' => strip_tags($this->input->post('address')),
+				'city' => strip_tags($this->input->post('city')),
+				'zipcode' => strip_tags($this->input->post('zipcode')), 
+				'contact_number' => strip_tags($this->input->post('number'))  
  
 			);
 
@@ -93,12 +91,12 @@ class CustomersController Extends CI_Controller {
 	public function update() {
 
 		$data = array(
-				'name' =>	strip_tags($this->input->post('name')), 
-				'gender' => strip_tags($this->input->post('gender')),
-				'home_address' => strip_tags($this->input->post('home_address')),
-				'outlet_location' => strip_tags($this->input->post('outlet_location')),
-				'outlet_address' => strip_tags($this->input->post('outlet_address')), 
-				'contact_number' => strip_tags($this->input->post('contact_number')),
+				'name' =>	strip_tags($this->input->post('name')),  
+				'address' => strip_tags($this->input->post('address')),
+				'city' => strip_tags($this->input->post('city')),
+				'zipcode' => strip_tags($this->input->post('zipcode')), 
+				'contact_number' => strip_tags($this->input->post('number'))  
+ 
 			);
 
 		$data = $this->security->xss_clean($data);
@@ -116,6 +114,12 @@ class CustomersController Extends CI_Controller {
 	public function find() {
 		$customer = $this->db->where('id',$this->input->post('id'))->get('customers')->row();
 		echo json_encode($customer);
+	}
+
+	public function profile($id) {
+
+		$data['content'] = "customers/profile";
+		$this->load->view('master', $data);
 	}
 
 }

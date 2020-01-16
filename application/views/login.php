@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/logo/poslite.png') ?>" />
+<head> 
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/logo/poslite.png') ?>" /> 
 	<title>Login - POSLite Inventory Mangement Software</title>
 
 	<?php $this->load->view('template/header'); ?>

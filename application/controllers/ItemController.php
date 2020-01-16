@@ -194,8 +194,8 @@ class ItemController extends AppController {
 			
 			return [
 				$item->id,
-				ucwords($item->name),
-				ucfirst($item->description),
+				$item->name,
+				$item->description,
 				$quantity,
 				'₱'. number_format($price,2)
 			];
@@ -390,7 +390,9 @@ class ItemController extends AppController {
 		$this->load->model('HistoryModel');
  		$updated_name = strip_tags($this->input->post('name'));
 		$updated_category = strip_tags($this->input->post('category'));
-		$updated_desc = strip_tags($this->input->post('description'));
+
+		$updated_desc = strip_tags(($this->input->post('description')));
+
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));

@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
-
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/selectize.css') ?>"> 
 	<meta name="license" content="<?php echo get_license(); ?>">
 	<meta name="base_url" content="<?php echo base_url() ?>">
 	<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
@@ -41,14 +41,11 @@
 		<div class="">
 			<div class="">
 				<div class=" header">
-					<div class="col-sm-7 box rightnone">
-					 
-						<h3>List of Items</h3>
-						 
-						<div class="content">
-							<label>Select Item</label>
+					<div class="col-sm-7 box rightnone"> 
+						<h3>List of Products</h3> 
+						<div class="content"> 
 							<table style="width: 100%" class="table table-bordered table-hover table-striped" id="item-table">
-								<thead>
+								<thead> 
 									<tr>
 										<td>Item ID</td>
 										<td>Item Name</td>
@@ -63,51 +60,47 @@
 						</div>
 
 					</div>
-					<div class="col-sm-5 box">
-					 
-							<h3>Order Details</h3>
-					 
-						<div class="content">
+					<div class="col-sm-5 box"> 
+						<h3>Order Details</h3> 
+						<div class="content" style="padding-bottom: 0;">  
+							 
 							<div id="cart-tbl">
 								<table class="table" id="cart">
-									<thead>
+									<thead> 
 										<tr>			
-											<th width="50%">Product Name</th>
+											<th width="46%">Product</th>
 											<th width="15%">Quantity</th>
-											<th width="15%">Discount</th>
-											<th width="15%">Price</th>
+											<th width="17%" class="text-right">Price</th> 
+											<th width="17%" class="text-right">Amount</th>
 											<th width="5%"></th>	
 										</tr>
 									</thead>
 									<tbody>
 
 									</tbody>
+									 
+									</tfoot>
 								</table>
+
 							</div>
 						</div>
+						<div class="col-md-12" style="padding: 20px 20px 0 20px;">
+							<div id="transaction-total">
+								<div>Total Discount: <span id="amount-discount" class="pull-right">00.00</span></div> 
+							<div style="">Grand Total:<span id="amount-total" class="pull-right">00.00</span></div> 
+								
+							</div>
+							<hr style="margin-bottom: 0;border-color: #ddd;">
+						</div>  
 					 
-						<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 15px 25px;">
-							<div>Total Discount: <span id="amount-discount" class="pull-right">00.00</span></div> 
-							<div style="">Grand Total:<span id="amount-total" class="pull-right">00.00</span></div>
-							
+						<div class="col-md-12" style="padding: 15px 20px;">
+								<form id="process-transaction">
+									<div class="form-group" style="margin: 0;">
+										<input type="submit" class="btn btn-primary form-control" name="" value="Process order" id="btn" style="font-size: 16.5px;height: 39px;">
+									</div>
+								</form> 
 						</div>
-						<div class="col-md-12" style="padding: 15px 25px;">
-							<form id="process-form">
-								<div class="form-group">
-									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off" max="500000" maxlength="6">
-								</div>
-								<div class="form-group">
-									 
-									<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
-									 
-								</div>
-								<div class="form-group">
-									<input type="submit" class="btn btn-primary form-control" name="" value="Process" id="btn" >
-								</div>
-							</form>
-						</div>
-						 
-
+							 
 					</div>
 				</div>
 			</div>
@@ -147,14 +140,15 @@
 											<div>ID:</div>
 											<div>Date: <span></span></div>
 											<div>Cashier:</div>
-											<div>Time:</div>
-
+											<div>Time:</div> 
+											<div>Transaction:</div>
 										</div>
 										<div class="col-md-8 text-left">
 											<div id="r-id">005250</div>
 											<div id="r-date"><?php echo date('m/d/Y') ?></div>
 											<div id="r-cashier">Cashier</div>
 											<div id="r-time"><?php echo date('h:i a') ?></div> 
+											<div id="r-transaction"></div>
 										</div>
 									</div>
 									<div class="clearfix"></div>
@@ -223,6 +217,77 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="modal" tabindex="-1" role="dialog" id="confirm-transaction-modal">
+			<div class="modal-dialog modal-md" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title"><i class="fa fa-exchange"></i> Grand Total: <span id="grand_total"></span> </span>
+							<!-- <span class="pull-right"> -->
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<input type="hidden" name="customer_id" id="customer_id" value="0">
+								<input type="hidden" name="supplier_id" id="supplier_id" value="0">
+							 
+								<div class="form-group">
+								 	<label>Transaction type:</label>
+								 	<select name="type" class="form-control" id="transaction-type">  
+								 		<option value="cash">Cash</option>
+								 		<option value="credit">Customer Credit</option> 
+								 		<option value="standby">Stand By Order</option>
+								 		<option value="invoice">Invoice</option> 
+								 	</select>
+								</div>
+								
+								<div class="form-group" id="select-customer-fields">
+								 	<label>Customer:</label>
+								 	<select id="customer-select" placeholder="Select Customer" class="form-control" name="customer">   
+								 		<option value="Walk-in Customer">Walk-in Customer</option>
+								 		<?php foreach ($customers as $customer): ?>
+								 			<option value="<?php echo $customer->name ?>" data-id="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
+								 		<?php endforeach; ?> 
+								 	</select>
+								</div>
+								 
+								<div class="form-group" id="po-fields" style="display: none;">
+				 					<label>Supplier:</label>
+								 	<select id="supplier-select" placeholder="Select Supplier" class="form-control" name="supplier">    
+								 		<?php foreach ($suppliers as $supplier): ?>
+								 			<option value="<?php echo $supplier->name ?>" data-id="<?php echo $supplier->id ?>"><?php echo $supplier->name ?></option>
+								 		<?php endforeach; ?> 
+								 	</select>
+				 				</div>
+								
+							</div> 
+							<div class="col-md-12" id="cash-fields">
+								<div class="form-group">
+									<label>Enter payment amount:</label>
+									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off" max="500000" maxlength="6">
+								</div>
+								<div class="form-group">
+									 <label>Change:</label>
+									<input readonly="readonly" type="text" class="form-control" id="change" name="" placeholder="Change:"  autocomplete="off"> 
+								</div>
+								
+							</div>  
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Transaction note:</label>
+									<textarea name="note" id="note" class="form-control" rows="3"></textarea>
+								</div>
+							</div>
+						</div>  
+					</div>
+					<div class="modal-footer"> 
+						<button type="button" class="btn btn-primary" id="complete-transaction">Confirm Transaction</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<script type="text/javascript">
 	        var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
 	        var csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
@@ -236,6 +301,7 @@
 		<script src="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.js'); ?>"></script>
 		<script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
 		<script src="<?php echo base_url('assets/js/print.js') ?>"></script>
+		<script src="<?php echo base_url('assets/js/selectize.min.js') ?>"></script>
 		<script src="<?php echo base_url('assets/js/pos.js') ?>"></script>
 	</body>
 	</html>

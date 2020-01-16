@@ -23,6 +23,7 @@ class Pos_con extends AppController {
 		$data['categoryModel'] = $this->categories_model;
 		$data['orderingLevel'] = $this->OrderingLevelModel;  
  		$data['customers'] = $this->db->get('customers')->result();
+ 		$data['suppliers'] = $this->db->get('supplier')->result();
 
 		$this->load->view('pos/index',$data);
 	}

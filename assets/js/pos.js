@@ -1,4 +1,4 @@
-	$(document).ready(function() {
+$(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr('content');
@@ -7,19 +7,62 @@
 	var totalDiscount = 0;
 	var transactionComplete = false;
 	var currency = '₱';
+	var transaction_type = "cash";
 
 
 	var dHeight = parseInt($(document).height());
- 	
-	dHeight = dHeight - 60;
+
+	var new_customer = 0;
+	
+	var customer_options = $("#customer-select").selectize({
+		create: true, 
+    	 persist: false,
+    	onInitialize: function () {
+			var s = this;
+			this.revertSettings.$children.each(function () {
+			    $.extend(s.options[this.value], $(this).data());
+			});
+	   },
+	   onChange: function (value) {
+	   	console.log(value)
+	   	var option = this.options[value];
+ 			$("#customer_id").val(option.id);
+	   } 
+	});
+
+	var supplier_options = $("#supplier-select").selectize({
+		create: true, 
+    	persist: false,
+    	onInitialize: function () {
+			var s = this;
+			this.revertSettings.$children.each(function () {
+			    $.extend(s.options[this.value], $(this).data());
+			});
+	   },
+	   onChange: function (value) {
+	   	
+	   	var option = this.options[value];
+
+ 			$("#supplier_id").val(option.id);
+	   } 
+	});
+
+	var transaction_type_select = $("#transaction-type").selectize({
+		sortField: 'text',
+	});
+
+	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
+	
+	dHeight = dHeight - 58;
 	$(".header .box").css('height', dHeight + 'px');
 	$(".header .box").css('overflow-y', 'auto');
-	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
-	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
+	$("#cart-tbl").css('min-height', (dHeight - (285)) + 'px');
+	$("#cart-tbl").css('max-height', (dHeight - (255 + 231)) + 'px');
 
 	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
+ 
 		if (license === "silver" || license === "gold") {
 			if (event.code.length > 5) {
 				data = {};
@@ -64,7 +107,7 @@
 						 	}else {
 						 		alert("Not enough stocks remaining");
 						 	}
-				 
+  
 
 							recount();
 							$("payment").val('');
@@ -78,8 +121,9 @@
 		} else {
 			alert("Your license does not support Barcode Feature, Upgrade Now!");
 		}
+ 
 	}); 
-	
+	 
 	data = {};
 	data[csrfName] = csrfHash;
 	var item_table = $("#item-table").DataTable({
@@ -87,6 +131,8 @@
 		serverSide : true,
 		 "bPaginate": true,
 		pagin:true,
+		"targets": 'no-sort',
+		"bSort": false,
 		ajax : {
 			url : base_url + 'items/data',
 			data : data,
@@ -94,12 +140,44 @@
 		},
 	});
 
+	$("#transaction-type").change(function() {
+
+		var type = $(this).val();
+
+		if (type === "cash") {
+
+			$("#cash-fields").show();
+			$("#select-customer-fields").show();
+			$("#po-fields").hide();
+
+		}else {
+
+			$("#cash-fields").hide();
+
+			if (type == "po") {
+
+				$("#select-customer-fields").hide();
+				$("#po-fields").show();
+
+			}else {
+				$("#select-customer-fields").show();
+				$("#po-fields").hide();
+			}
+		}
+
+		transaction_type = type;
+
+
+	});
+
+
+
 	$("#item-table").on('click', 'tbody tr', function(event) {
 		var id = $(this).find('td').eq(0).text();
 		var name = $(this).find('td').eq(1).text();
 		var stockCol = $(this).find('td').eq(3);
 		var stocks = stockCol.text();
-		var price = $(this).find('td').eq(4).text();
+		var price = no_format($(this).find('td').eq(4).text());
 		var description = $(this).find('td').eq(2).text();
 		
 	 	if ( parseInt(stocks.split(' ').join('')) > 0 ) {
@@ -113,9 +191,8 @@
 								'<input name="id" type="hidden" value="'+ id +'">' +
 								'<td>'+ name +'</td>' +
 								'<td><input data-stocks="'+stocks+'" data-remaining="'+stocks+'" data-id="'+id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-								'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-								'<td>'+ price +'</td>' +
-					 			
+								'<td class="text-right">'+ currency + number_format(price) +'.00</td>' +
+					 			'<td class="text-right">' + currency + number_format(price * quantity) +'.00</td>' +
 								'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
 							'</tr>'
 						);
@@ -128,134 +205,150 @@
 	 	}else {
 	 		alert("Not enough stocks remaining");
 	 	}
-  	 	
-		
+  	 	 
 	})
 
-	function itemExist(itemID,stocks) {
-		var table = $("#cart-tbl tbody tr");
-	 	var exist = false;
-		$.each(table, function(index) {
-			id = ($(this).find('[name="id"]').val());
-			if (id == itemID) {
-				qtyCol = $(this).find('[name="qty"]');
-				qty = parseInt(qtyCol.val());
+	$("#process-transaction").submit(function(e) {
 
-				qtyCol.val(qty + 1);
-		 		recount();
-				 
-				
-				exist = true;
-
-			}
-		})
-
-		return exist;
-	}
-
-	$("#process-form").submit(function(e) {
 		e.preventDefault();
 		var row = $("#cart tbody tr").length;
+	
+		if (row) {
+			var modal = $("#confirm-transaction-modal"); 
+
+			$("#confirm-transaction-modal").modal("toggle");
+			$("#grand_total").text(currency + number_format(totalAmountDue.toFixed(2)));
+
+			return;
+		}
+
+		alert("Please add some items to continue");
+
+	});
+	
+	$("#complete-transaction").click(function(e) {
+		e.preventDefault();
+
+		var row = $("#cart tbody tr").length;
+		var totalAmountDue = no_format($("#amount-total").text()); 
 		var sales = [];
-		var customer_id = $("#customer-id").val();
+		var customer_id = $("#customer_id").val();
+		var customer_name = $("#customer-select option:selected").val();
+		var supplier_id = $("#supplier_id").val();
+		var supplier_name = $("#supplier-select option:selected").val();
+		var note = $("#note").val();
 		var total_amount = 0;
 		// var discount = $("#amount-discount").text();
-		var payment = $("#payment").val();
-		var change = $("#change").val();
- 	 
- 		if (row) {
+		var payment = $("#payment").val() || 0;
+		var change = $("#change").val() || 0;
 
- 			var totalAmountDue = parseFloat($("#amount-total").text().substring(1).replace(',',''));
-	 
-			if (parseFloat(payment) >= parseFloat(totalAmountDue)) {
-		 		
-	 			for (i = 0; i < row; i++) {
-					var r = $("#cart tbody tr").eq(i).find('td');
-					var quantity = r.eq(1).find('input').val();
-					var price = r.eq(3).text().substring(1).replace(',','');
-					var arr = {
-							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
-							quantity : quantity, 
-							price : price,
-							name : r.eq(0).text(),
-							subtotal : parseFloat(price) * parseInt(quantity),
-							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val()
-						};
-					total_amount += parseFloat(price) * parseInt(quantity);
-					sales.push(arr);
-				}
+ 
+		if ( !customer_name && transaction_type == "po")
+			return alert("Customer is empty"); 
 
-				total_amount -= totalDiscount;
-				// Receipt Items
-				$("#r-items-table tbody").empty();
-				$.each(sales, function(key, value) {
-			 	 
-					$("#r-items-table tbody").append(
-							'<tr>' + 
-								'<td>'+value.name +'</td>' +
-								'<td>'+currency+ number_format(value.price) +'</td>' +
-								'<td>'+value.quantity+'</td>' +
-								'<td>'+currency+ number_format(value.subtotal)+'</td>' +
-							'</tr>'
-						);
-				});
+		if (transaction_type == "credit" || transaction_type == "invoice") {
+
+			if (!customer_name || !customer_id || customer_id == "0" && transaction_type != "po") {
+				return alert("Error: Customer is empty, Please select a customer.");
+			}
+		}
+ 	  
+		if (parseFloat(payment) < parseFloat(totalAmountDue) && transaction_type === "cash")
+	 		return alert("Insufficient Amount");
 
 
-				var data = {};
-				data['sales'] = sales;
-				data[csrfName] = csrfHash;
-				$.ajax({
-					type : 'POST',
-					data : data,
-					url : base_url + 'SalesController/insert',
-					beforeSend : function() {
-						$("#btn").button('loading');
-					},
-					success : function(data) { 
-		 				transactionComplete = true;
-		 				var total = parseFloat(total_amount);
-		 			 	var d = new Date();
-		 				$("#payment-modal").modal('toggle');
-						$("#loader").hide();
-						//Transaction Summary 
-		
-						$("#summary-payment").text( currency + number_format(payment));
-						$("#summary-change").text( currency + number_format(change));
-					 	$("#summary-discount").text(currency + number_format(totalDiscount));
-						$("#summary-total").text( currency + number_format(total_amount) )
-						
-						//Fill In Receipt 
-						$("#r-payment").text( currency + number_format(payment));
-						$("#r-change").text( currency + number_format(change));
-						$("#r-cashier").text($("#user").text()); 
-						$("#r-total-amount").text( currency + number_format(total_amount) )
-						$("#r-discount").text(currency + number_format(totalDiscount));
-						$("#r-id").text(data);
-						$("#r-time").text(d.toLocaleTimeString());
+			for (i = 0; i < row; i++) { 
+			var r = $("#cart tbody tr").eq(i).find('td');
+			var quantity = r.eq(1).find('input').val();
+			var price = r.eq(3).text().substring(1).replace(',','');
+			var arr = {
+					id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
+					quantity : quantity, 
+					price : price,
+					name : r.eq(0).text(),
+					subtotal : parseFloat(price) * parseInt(quantity),
+					discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val()
+				};
 
-					 	$("#cart tbody").empty();
-					 	$("#payment").val('');
-					 	$("#change").val('');
-					 	$("#amount-due").text(''); 
-					 	$("#amount-total").text('');
-					 	$("#amount-discount").text('');
+			total_amount += parseFloat(price) * parseInt(quantity);
+			sales.push(arr);
+		}
 
-					 	item_table.clear().draw();
-					 	$("#btn").button('reset');
-					 	totalAmountDue = 0;  
-						totalDiscount = 0
-					 	
-					}
-				})
-				return;
-			}  
-			
-			return alert("Insufficient Amount");
- 		}
- 		
- 		return alert('Please add some items');
- 		
-		
+		total_amount -= totalDiscount;
+		// Receipt Items
+		$("#r-items-table tbody").empty();
+		$.each(sales, function(key, value) {
+	 	 
+			$("#r-items-table tbody").append(
+					'<tr>' + 
+						'<td>'+value.name +'</td>' +
+						'<td>'+currency+ number_format(value.price) +'</td>' +
+						'<td>'+value.quantity+'</td>' +
+						'<td>'+currency+ number_format(value.subtotal)+'</td>' +
+					'</tr>'
+				);
+		});
+
+		var data = {};
+		data['sales'] = sales;
+		data['transaction_type'] = transaction_type;
+		data['customer_name'] = customer_name;
+		data['customer_id'] = customer_id;
+		data['supplier_name'] = supplier_name;
+		data['supplier_id'] = supplier_id;
+		data['total_amount'] = totalAmountDue;
+		data['note'] = note;
+		data[csrfName] = csrfHash;
+		$.ajax({
+			type : 'POST',
+			data : data,
+			url : base_url + 'SalesController/insert',
+			beforeSend : function() {
+				$("#btn").button('loading');
+			},
+			success : function(data) { 
+				transactionComplete = true;
+				var total = parseFloat(total_amount);
+				var d = new Date();
+
+			 	$("#confirm-transaction-modal").modal("toggle");
+				$("#payment-modal").modal('toggle');
+				$("#loader").hide();
+				//Transaction Summary 
+
+				$("#summary-payment").text( currency + number_format(payment));
+				$("#summary-change").text( currency + number_format(change));
+			 	$("#summary-discount").text(currency + number_format(totalDiscount));
+				$("#summary-total").text( currency + number_format(total_amount) )
+				
+				//Fill In Receipt 
+				$("#r-payment").text( currency + number_format(payment));
+				$("#r-change").text( currency + number_format(change));
+				$("#r-cashier").text($("#user").text()); 
+				$("#r-total-amount").text( currency + number_format(total_amount) )
+				$("#r-discount").text(currency + number_format(totalDiscount));
+				$("#r-id").text(data);
+				$("#r-transaction").text(transaction_type);
+				$("#r-time").text(d.toLocaleTimeString());
+
+				$("#note").val('');
+			 	$("#cart tbody").empty();
+			 	$("#payment").val('');
+			 	$("#change").val('');
+			 	$("#amount-due").text(''); 
+			 	$("#amount-total").text('');
+			 	$("#amount-discount").text(''); 
+			 	$("#customer_id").val(0); 
+			 	$("#customer-select").data('selectize').setValue('Walk-in Customer');
+			 	$("#transaction-type").data('selectize').setValue('cash'); 
+			 	item_table.clear().draw();
+			 	$("#btn").button('reset');
+			 	totalAmountDue = 0;  
+				totalDiscount = 0;
+				transaction_type = "cash"; 
+			}
+		}) 
+			     
 	})
 
 	$("#payment").keyup(function() {
@@ -327,6 +420,7 @@
 
  	$("#cart").on('input', '.quantity-box', function(e) {
 
+ 		// I Dont remember what this function does :)
  		if (e.which == 13) {
  			e.stopPropagation();
  			return false;
@@ -342,13 +436,17 @@
 			return quantity = 1; 
 		}
 
-		if (!isNaN(quantity) && quantity != 0 || $(this).val() == "") {
+		if ( !isNaN(quantity) && quantity != 0 || $(this).val() == "" ) {
 			var row = $("#item-table").find('td').text() == itemID;
 
 			if (quantity <= parseInt(currentStocks)) {
 				var row = $(this).parents("tr");
 				var priceCol = row.find('td').eq(2);
-				var price = priceCol.text().substring(1);
+				var price = no_format(priceCol.text());
+				var sub = price * quantity;
+
+				row.find("td").eq(3).text( currency + number_format(sub.toFixed(2)) );
+
 				var subtotal = parseInt(quantity) * parseFloat(price);
 				calculateRemainingStocks(remaining,itemID);
 				return recount();
@@ -399,27 +497,43 @@
 		Function Loop through the cart table
 		To calculate the total amount
 	*/
-	function recount() {
+function itemExist(itemID,stocks) {
+		var table = $("#cart-tbl tbody tr");
+	 	var exist = false;
+		$.each(table, function(index) {
+			id = ($(this).find('[name="id"]').val());
+			if (id == itemID) {
+				qtyCol = $(this).find('[name="qty"]');
+				qty = parseInt(qtyCol.val());
+
+				qtyCol.val(qty + 1);
+		 		recount(); 
+				exist = true; 
+			}
+		})
+
+		return exist;
+}
+
+function recount() {
 		var row = $("#cart tbody tr").length;
 		var total = 0;
 		var discountAmount = 0;
 
 		for (i = 0; i < row; i++) {
-			var r = $("#cart tbody tr").eq(i).find('td');
+			var r = $("#cart tbody tr").eq(i).find('td'); 
 			var quantity = parseFloat(r.eq(1).find('input').val());
-			var price = r.eq(3).text().substring(1).replace(',','');
+			var price = r.eq(2).text().substring(1).replace(',','');
 			var discount = parseInt(r.eq(2).find('input').val());
-			total += parseFloat(price) * quantity;
-
-			discountAmount += isNaN(discount) == true ? 0 : discount ;
+			total += parseFloat(price) * quantity; 
+ 		 
 			
-		}
-		totalDiscount = discountAmount;
-		totalAmountDue = total - discountAmount;
+		} 
+		totalAmountDue = total;
 		
 		$("#amount-discount").text(currency + totalDiscount.toFixed(2));
 		$("#amount-total").text("₱" + number_format(totalAmountDue.toFixed(2)));
-	}
+}
 
  
 
@@ -438,10 +552,26 @@
 	        	title: 'Receipt',
 	        	doctype: '<!doctype html>'
 		});
-	})
+	});
 
 
 })
+
+function create_customer(name) {
+
+	var data = {};
+	data[csrfName] = csrfHash;
+	data['name'] = name
+
+	$.ajax({
+		type: 'POST',
+		url : base_url + 'CustomerContorller/insert',
+		data: data,
+		success: function(data) {
+			alert("Customer Added successfully");
+		}
+	}) 
+}
 
  
 
@@ -474,3 +604,9 @@ function number_format(number, decimals, dec_point, thousands_point) {
 
     return number;
 }
+
+function no_format(str) {
+
+	return parseFloat((str.slice(1).replace(/,/g, "")).slice(0,-3));
+}
+
