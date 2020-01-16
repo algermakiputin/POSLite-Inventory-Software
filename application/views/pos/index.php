@@ -22,7 +22,7 @@
 	 
 		<div class="col-md-12" style="padding: 0">
 			<nav class="navbar">
-			<span class="navbar-text">Current User:  <span id="user"><?php echo $this->session->userdata['username'] ?></span>
+			<span class="navbar-text">Store Branch:  <span id="user"><?php echo $this->session->userdata['store_name'] ?></span>
 			</span>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>

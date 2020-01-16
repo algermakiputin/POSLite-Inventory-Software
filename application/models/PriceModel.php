@@ -17,8 +17,7 @@ class PriceModel extends CI_Model {
 
 	public function getPrice($id, $store) {
 
-		$column = "store" . $store . '_retail'; 
-
+		$column = "store" . $store . '_retail';  
 
 		return $this->db->where('item_id',$id)->get('prices')->row_array()[$column] ?? 0;
 	}

@@ -77,7 +77,9 @@ class ItemController extends AppController {
 		$sortPrice = $this->input->post('columns[4][search][value]');
 		$sortStocks = $this->input->post('columns[5][search][value]');
 		$store = $this->input->post('columns[6][search][value]');  
+		$draw = $this->input->post('draw');
 
+		$store = $draw == 1 ? $this->session->userdata('store_number') : $store;
 
 
 		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
@@ -176,16 +178,19 @@ class ItemController extends AppController {
 
 	public function data() {
 		$orderingLevel = $this->OrderingLevelModel;
+		$priceModel = $this->PriceModel;
 		$price = $this->PriceModel;
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
 		$itemCount = $this->db->get('items')->num_rows();
+		$store_id = $this->session->userdata('store_number');
 
-		$datasets = array_map(function($item) use ($orderingLevel){
-			$quantity = $orderingLevel->getQuantity($item->id)->quantity;
-			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
+		
+		$datasets = array_map(function($item) use ($orderingLevel, $store_id, $priceModel){
+			$quantity = $orderingLevel->getQuantity($item->id, $store_id); 
+			$price = $priceModel->getPrice($item->id, $store_id);
 			
 			return [
 				$item->id,
@@ -246,8 +251,7 @@ class ItemController extends AppController {
 		$supplier_id = $this->input->post('supplier');
 		$barcode = $this->input->post('barcode');
 		$price = $this->input->post('price'); 
-		$capital = $this->input->post('capital');
-		$store = $this->input->post('store_id');
+		$capital = $this->input->post('capital'); 
 		$productImage = $_FILES['productImage'];
 	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
@@ -269,8 +273,7 @@ class ItemController extends AppController {
 				'description' => $description, 
 				'supplier_id' => $supplier_id,
 				'status' => 1,
-				'barcode' => $barcode,
-				'store_id' => $store
+				'barcode' => $barcode 
 			);
 		
 		if ($productImage) {
@@ -391,8 +394,7 @@ class ItemController extends AppController {
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));
-		$barcode = $this->input->post('barcode');
-		$store_id = $this->input->post('store_id');
+		$barcode = $this->input->post('barcode'); 
 
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
@@ -422,8 +424,7 @@ class ItemController extends AppController {
 			'description'	=>	$updated_desc,
 			'price'	=> $price_id, 
 			'image'	=> $upload['upload_data']['file_name'], 
-			'supplier'	=>	$supplier_id, $barcode, 
-			'store_id'	=>	$store_id
+			'supplier'	=>	$supplier_id, $barcode 
 		];
 
 		$update = $this->ItemModel->update_item($itemData);

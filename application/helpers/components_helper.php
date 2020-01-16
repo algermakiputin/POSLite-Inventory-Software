@@ -7,10 +7,15 @@ function store_selector_compoent($classes) {
 
 	$stores = $CI->db->get('stores')->result();
 	$options = "";
+	$user_store_number = $CI->session->userdata('store_number');
 
 	foreach ($stores as $store) {
+		$selected = "";
 
-		$options .= "<option value='$store->id'>$store->branch</option>";
+		if ($store->number == $user_store_number)
+			$selected = "selected";
+
+		$options .= "<option $selected value='$store->id'>$store->branch</option>";
 	}
 
 	$selector = "<select id='store-selector' class='".join(' ',$classes)."'>" .

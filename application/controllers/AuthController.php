@@ -26,15 +26,15 @@ class AuthController extends AppController {
 		// if (!$this->dbutil->database_exists('poslite') && !SITE_LIVE) {
 		// 	return $this->load->view('buy');
 		// }
- 	
-
- 	
+ 	 
  
 		$this->load->view('login'); 
 	}
  
 
 	public function login_validation() {
+		$this->load->model('UsersModel');
+
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$this->form_validation->set_rules('username','Username', 'required');
@@ -45,22 +45,24 @@ class AuthController extends AppController {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' . validation_errors() . '</div>');
 			return redirect(base_url('login'));
 		} 
-
-		$this->load->model('UsersModel');
+ 
 
 		$verify_login = $this->UsersModel->login($username);
 		 
 		if ($verify_login) {
-			$hash_password = $verify_login->password;
-
+			$hash_password = $verify_login->password; 
 			$verifyPassword = password_verify($password,$hash_password);
 			
+			$storeName = $this->db->where('number', $verify_login->store_number)->get('stores')->row()->branch;
+
 			if ($verifyPassword) {
 				$userdata = array( 
 					'id' => "$verify_login->id",
 					'username' => "$verify_login->username",
 					'log_in' => true,
-					'account_type' => "$verify_login->account_type"
+					'account_type' => "$verify_login->account_type",
+					'store_number' => $verify_login->store_number,
+					'store_name' => $storeName
 					);
 				$this->db->insert('history', [
 						'user_id' => $userdata['id'],
