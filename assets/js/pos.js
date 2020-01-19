@@ -7,7 +7,7 @@ $(document).ready(function() {
 	var totalDiscount = 0;
 	var transactionComplete = false;
 	var currency = '₱';
-	var transaction_type = "cash";
+	var transaction_type = "invoice";
 
 
 	var dHeight = parseInt($(document).height());
@@ -140,35 +140,35 @@ $(document).ready(function() {
 		},
 	});
 
-	$("#transaction-type").change(function() {
+	// $("#transaction-type").change(function() {
 
-		var type = $(this).val();
+	// 	var type = $(this).val();
 
-		if (type === "cash") {
+	// 	if (type === "cash") {
 
-			$("#cash-fields").show();
-			$("#select-customer-fields").show();
-			$("#po-fields").hide();
+	// 		$("#cash-fields").show();
+	// 		$("#select-customer-fields").show();
+	// 		$("#po-fields").hide();
 
-		}else {
+	// 	}else {
 
-			$("#cash-fields").hide();
+	// 		$("#cash-fields").hide();
 
-			if (type == "po") {
+	// 		if (type == "po") {
 
-				$("#select-customer-fields").hide();
-				$("#po-fields").show();
+	// 			$("#select-customer-fields").hide();
+	// 			$("#po-fields").show();
 
-			}else {
-				$("#select-customer-fields").show();
-				$("#po-fields").hide();
-			}
-		}
+	// 		}else {
+	// 			$("#select-customer-fields").show();
+	// 			$("#po-fields").hide();
+	// 		}
+	// 	}
 
-		transaction_type = type;
+	// 	transaction_type = type;
 
 
-	});
+	// });
 
 
 
@@ -238,6 +238,7 @@ $(document).ready(function() {
 		var supplier_name = $("#supplier-select option:selected").val();
 		var note = $("#note").val();
 		var total_amount = 0;
+		
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val() || 0;
 		var change = $("#change").val() || 0;

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">New Internal PO </h1>
+        <h1 class="page-header">New External PO </h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -44,7 +44,7 @@
                         <label>Enter Invoice Number</label>
                         <input type="text" required="required" class="form-control" id="invoice-number" name="invoice_number">
                         <input type="hidden" name="store_number" id="store-number">
-                        <input type="hidden" name="type" value="internal">
+                        <input type="hidden" name="type" value="external">
                     </div>
                     <div class="form-group">
                         <label>Date:</label>

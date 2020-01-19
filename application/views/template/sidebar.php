@@ -27,27 +27,22 @@
                     <li>
                         <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-circle-o"></i> View Suppliers</a>
                     </li> 
-                    <li>
-                        <a href="<?php echo base_url('purchase-orders') ?>"><i class="fa fa-circle-o"></i> View Purchase Orders</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo base_url('supplier/po') ?>"><i class="fa fa-circle-o"></i> New Purchase Order</a>
-                    </li> 
+                     
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
             <?php endif; ?>
             <?php if ($this->session->userdata('account_type') == "Admin"): ?>
                 <li data-step="4" data-intro="If you have products delivered, you can save it here.">
-                    <a href="#"><i class="fa fa-truck fa-fw"></i> Deliveries<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-truck fa-fw"></i> Purchases<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Deliveries</a>
+                            <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Purchases</a>
                         </li>
                         
                         <?php if ($this->session->userdata('account_type') == "Admin"): ?>
                             <li>
-                                    <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Delivery</a>
+                                    <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Purchase</a>
                                 </li>
                         <?php endif; ?>
                          
@@ -73,20 +68,38 @@
             <?php if ($this->session->userdata('account_type') == "Admin" ||
                         $this->session->userdata('account_type') == "Cashier"
                 ): ?>
-                <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
+                <li>
                    <a href="#"><i class="fa fa-exchange fa-fw"></i> Transactions <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="<?php echo base_url('credits') ?>"><i class="fa fa-circle-o"></i> Credit</a>
-                        </li> 
+                    <ul class="nav nav-second-level"> 
                         <li>
                             <a href="<?php echo base_url('invoice') ?>"><i class="fa fa-circle-o"></i> Invoice</a>
-                        </li>  
+                        </li>   
                         <li>
-                            <a href="<?php echo base_url('standby-orders') ?>"><i class="fa fa-circle-o"></i> Standby Order</a>
+                            <a href="<?php echo base_url('purchase-orders') ?>"><i class="fa fa-circle-o"></i> Internal PO</a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo base_url('external-po') ?>"><i class="fa fa-circle-o"></i> External PO</a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo base_url('supplier/po') ?>"><i class="fa fa-circle-o"></i> New Internal PO</a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo base_url('external_po/new') ?>"><i class="fa fa-circle-o"></i> New External PO</a>
                         </li> 
                     </ul>
                 </li>  
+                <li>
+                   <a href="#"><i class="fa fa-archive fa-fw"></i> Stocks Transfer <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level"> 
+                        <li>
+                            <a href="<?php echo base_url('transfer/internal-po') ?>"><i class="fa fa-circle-o"></i> Internal PO</a>
+                        </li>   
+                        <li>
+                            <a href="<?php echo base_url('transfer/external-po') ?>"><i class="fa fa-circle-o"></i> External PO</a>
+                        </li> 
+                        
+                    </ul>
+                </li> 
                 <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">

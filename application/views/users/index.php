@@ -52,8 +52,9 @@
 								<label for='account_type'>Account Type</label>
 								<select required="required" name="account_type" class="form-control">
 									<option value="">Select Account Type</option>
-									<option>Admin</option>
-									<option>Cashier</option> 
+									<option value="Admin">Admin</option>
+									<option value="Head_cashier">Head Cashier</option> 
+									<option value="Cashier">Cashier</option> 
 								</select>
 							</div>
 							<div class="form-group">

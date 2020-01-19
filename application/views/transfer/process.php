@@ -28,7 +28,7 @@
                     </div>
                     <?php endif; ?>
     </div>
-    <?php echo form_open("PurchaseOrderController/save_po"); ?>
+    <?php echo form_open("StocksTransferController/process_internal_po"); ?>
         <div class="col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -38,32 +38,27 @@
 
                     <div class="form-group">
                       <label>PO Number</label>
-                      <input type="text" class="form-control" value="<?php echo $po_number ?>" name="po_number" readonly>
+                      <input type="text" class="form-control" value="<?php echo $po->po_number ?>" name="po_number" readonly>
                     </div>
                     <div class="form-group">
                         <label>Enter Invoice Number</label>
-                        <input type="text" required="required" class="form-control" id="invoice-number" name="invoice_number">
-                        <input type="hidden" name="store_number" id="store-number">
+                        <input type="text" required="required" class="form-control" value="<?php echo $po->invoice_number ?>" id="invoice-number" name="invoice_number">
+                        <input type="hidden" name="store_number" id="store-number" readonly="readonly" value="<?php echo $po->store_number ?>">
                         <input type="hidden" name="type" value="internal">
                     </div>
                     <div class="form-group">
                         <label>Date:</label>
-                        <input type="date" required="required" class="form-control" name="date">
+                        <input type="date" value="<?php echo $po->po_date ?>" readonly  required="required" class="form-control" name="date">
                     </div>
                     <div class="form-group">
                         <label>Select Store:</label>
-                        <?php 
-                          echo store_selector_component(['form-control']);
-                        ?>
+                        <input type="text" readonly="readonly" class="form-control" value="<?php echo $po->store_name ?>" name="">
                     </div>
                     
                     <div class="form-group">
-                        <label>Note</label>
-                        <textarea class="form-control" name="note" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-default btn-sm" type="button" id="enter-invoice">Enter</button>
-                    </div>
+                        <label>Delivery Note</label>
+                        <textarea class="form-control" name="note"  rows="4"><?php echo $po->note ?></textarea>
+                    </div> 
                 </div>
 
             </div>
@@ -83,22 +78,31 @@
                             <th width="50px">&nbsp;</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <input type="text" readonly="readonly" autocomplete="off" class="form-control product" required="required" name="product[]">
-                                    <input type="hidden" name="product_id[]">
-                                </td>
-                                <td>
-                                    <input type="number" required="required" autocomplete="off" class="form-control quantity" name="quantity[]">
-                                </td>
-                                <td>
-                                    <input type="text" required="required" autocomplete="off" class="form-control" name="price[]">
-                                </td>
-                                <td>
-                                    <input type="text" autocomplete="off" class="form-control" name="sub[]" readonly="readonly">
-                                </td>
-                                <td><i class="fa fa-trash delete-row"></i> &nbsp;</td>
-                            </tr>
+                            <?php foreach ($orderline as $order): ?>
+                                <tr>
+                                    <td>
+                                        <input type="text" readonly="readonly" autocomplete="off" class="form-control product" required="required" name="product[]" value="<?php echo $order->product_name ?>">
+                                        <input type="hidden" name="product_id[]" value="<?php echo $order->product_id ?>">
+                                    </td>
+                                    <td>
+                                        <input 
+                                        type="number" 
+                                        value="<?php echo $order->quantity ?>" 
+                                        data-qty="<?php echo $order->quantity ?>" 
+                                        required="required" 
+                                        autocomplete="off"  
+                                        class="form-control quantity" 
+                                        name="quantity[]">
+                                    </td>
+                                    <td>
+                                        <input type="text" required="required" value="<?php echo $order->price ?>" autocomplete="off" class="form-control" name="price[]">
+                                    </td>
+                                    <td>
+                                        <input type="text" autocomplete="off" value="<?php echo $order->price * $order->quantity ?>" class="form-control" name="sub[]" readonly="readonly">
+                                    </td>
+                                    <td><i class="fa fa-trash delete-row"></i> &nbsp;</td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                         <tfoot>
                             <tr>
@@ -141,19 +145,10 @@
 
         var row = $("#products-table tbody tr:first-child").html();
         var tbody = $("#products-table tbody");
-        var index = 1;
-        var products = JSON.parse('<?php echo $products ?>');
+        var index = 1; 
         var total = 0;
-        var currency = "<?php echo currency(); ?>";
-        var image = "<?php echo $image_base64 ?>";
-        $(".product").autocomplete({
-            lookup: products,
-            onSelect: function(suggestion) {
-                $(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
-                $(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
-            }
-        });
-
+        var currency = "<?php echo currency(); ?>"; 
+       
         $("#new-line").click(function(e) {
 
             tbody.append("<tr id='row" + index + "'>" + row + "</tr>");
@@ -318,8 +313,9 @@
 
             return number;
         }
-
-        $("body").on("keyup", 'input[name="quantity[]"]', function() {
+ 
+ 
+        $("input[name='quantity[]']").keyup(function() {
             var quantity = parseInt($(this).val()) || 1;
             var old_qty = $(this).data('qty');
 
@@ -331,7 +327,5 @@
             }
 
         })
- 
-
     })
 </script>

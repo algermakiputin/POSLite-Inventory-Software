@@ -31,15 +31,7 @@ $(document).ready(function() {
 
 	var data = {};
 	data[csrfName] = csrfHash;
-	$("#purchase-order-tbl").DataTable({
-		processing : true,
-		serverSide : true, 
-		ajax : {
-			url : base_url + '/PurchaseOrderController/dataTable',
-			type : 'POST',
-			data : data
-		},
-	});
+	
 	
 	$('[data-toggle="tooltip"]').tooltip();
 	$(".datatable").DataTable({
@@ -59,6 +51,112 @@ $(document).ready(function() {
 	}
 
 	(function() {
+
+		var stocksTransfer = {
+			init: function() {
+				this.internal_po_datatable();
+				this.external_po_datatable();
+			},
+			internal_po_datatable: function() {
+				$("#transfer-purchase-order-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + '/StocksTransferController/internal_po_datatable',
+						type : 'POST',
+						data : data
+					},
+				});
+			},
+			external_po_datatable: function() {
+				$("#transfer-external-purchase-order-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + '/StocksTransferController/external_dataTable',
+						type : 'POST',
+						data : data
+					},
+				});
+			}
+
+		}
+
+		var purchaseOrderController = {
+			init: function() {
+				this.findInvoice();
+				this.external_po_datatable();
+				this.internal_po_datatable();
+			},
+			findInvoice: function() {
+
+				$("#enter-invoice").click(function() {
+
+					let invoice = $("#invoice-number").val();
+					var data = {};
+
+					data[csrfName] = csrfHash;
+					data['invoice'] = invoice;
+
+					if (invoice) {
+
+						$.ajax({
+							type: 'POST',
+							url: base_url + 'StocksTransferController/find_po',
+							data: data, 
+							success: function(data) { 
+								
+								if (data != '0') {
+									var result = JSON.parse(data);
+									
+									var total = 0;
+									var tbody = $("#products-table tbody").empty();
+
+									for (i = 0; i < result.orderline.length; i++) {
+
+										 tbody.append('<tr><td><input type="text" readonly="readonly" autocomplete="off" value="'+result.orderline[i].name+'" class="form-control product" required="required" name="product[]"><input type="hidden" name="product_id[]" value="'+result.orderline[i].item_id+'"></td><td><input type="number" required="required" autocomplete="off" value="'+result.orderline[i].quantity+'" min="1" data-qty="'+result.orderline[i].quantity+'" class="form-control quantity" name="quantity[]"></td><td><input type="text" required="required" autocomplete="off" class="form-control" value="'+result.orderline[i].price+'" name="price[]"></td><td><input type="text" autocomplete="off" class="form-control" value="'+result.orderline[i].price * result.orderline[i].quantity+'" name="sub[]" readonly="readonly"></td><td><i class="fa fa-trash delete-row"></i> &nbsp;</td></tr>')
+										 total += result.orderline[i].price * result.orderline[i].quantity;
+									}
+
+									$("#grand-total").text(currency + total);
+
+									$("#store-number").val(result.details.store_number);
+
+								}else {
+									alert("Error: No Invoice Found in the database");
+								}
+								
+                   
+								 
+							}     
+						})
+					}
+				})
+			},
+			internal_po_datatable: function() {
+				$("#purchase-order-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + '/PurchaseOrderController/dataTable',
+						type : 'POST',
+						data : data
+					},
+				});
+			},
+			external_po_datatable: function() {
+				$("#external-purchase-order-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + '/PurchaseOrderController/external_dataTable',
+						type : 'POST',
+						data : data
+					},
+				});
+			}
+		}
+
 		var itemTable;
 		var items = {		
 			init : function() {
@@ -699,7 +797,8 @@ $(document).ready(function() {
 		sales.init();
 		customers.init();
 		suppliers.init();
-	 
+	 	purchaseOrderController.init();
+	 	stocksTransfer.init();
 	})();
 
 	$("#customer_table").on('click', '.renew', function() {

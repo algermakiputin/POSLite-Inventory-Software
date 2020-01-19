@@ -22,10 +22,10 @@
 	 
 		<div class="col-md-12" style="padding: 0">
 			<nav class="navbar">
-			<span class="navbar-text">Store Branch:  <span id="user"><?php echo $this->session->userdata['store_name'] ?></span>
+			<span class="navbar-text" style="font-size: 18px;">Store Branch:  <span id="user"><?php echo $this->session->userdata['store_name'] ?></span>
 			</span>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
+						<li ><a  style="font-size: 18px" href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span class="caret"></span></a>
 							<ul class="dropdown-menu">
@@ -234,10 +234,7 @@
 							 
 								<div class="form-group">
 								 	<label>Transaction type:</label>
-								 	<select name="type" class="form-control" id="transaction-type">  
-								 		<option value="cash">Cash</option>
-								 		<option value="credit">Customer Credit</option> 
-								 		<option value="standby">Stand By Order</option>
+								 	<select name="type" class="form-control" id="transaction-type">   
 								 		<option value="invoice">Invoice</option> 
 								 	</select>
 								</div>
@@ -250,39 +247,18 @@
 								 			<option value="<?php echo $customer->name ?>" data-id="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
 								 		<?php endforeach; ?> 
 								 	</select>
-								</div>
-								 
-								<div class="form-group" id="po-fields" style="display: none;">
-				 					<label>Supplier:</label>
-								 	<select id="supplier-select" placeholder="Select Supplier" class="form-control" name="supplier">    
-								 		<?php foreach ($suppliers as $supplier): ?>
-								 			<option value="<?php echo $supplier->name ?>" data-id="<?php echo $supplier->id ?>"><?php echo $supplier->name ?></option>
-								 		<?php endforeach; ?> 
-								 	</select>
-				 				</div>
-								
-							</div> 
-							<div class="col-md-12" id="cash-fields">
-								<div class="form-group">
-									<label>Enter payment amount:</label>
-									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off" max="500000" maxlength="6">
-								</div>
-								<div class="form-group">
-									 <label>Change:</label>
-									<input readonly="readonly" type="text" class="form-control" id="change" name="" placeholder="Change:"  autocomplete="off"> 
-								</div>
-								
+								</div>  
 							</div>  
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>Transaction note:</label>
 									<textarea name="note" id="note" class="form-control" rows="3"></textarea>
 								</div>
-							</div>
+							</div> 
 						</div>  
 					</div>
 					<div class="modal-footer"> 
-						<button type="button" class="btn btn-primary" id="complete-transaction">Confirm Transaction</button>
+						<button type="button" class="btn btn-primary" id="complete-transaction">Submit</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</div>

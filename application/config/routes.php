@@ -59,7 +59,14 @@ $route['customer/profile/(:any)'] = "CustomersController/profile/$1";
 
 $route['preference'] = "SettingsController/preference";
 
+$route['transfer/external-po'] = "StocksTransferController/external_po";
+$route['transfer/internal-po'] = "StocksTransferController/internal_po";
+
 $route['supplier/po'] = "PurchaseOrderController/purchase_order";
+$route['po/external'] = "PurchaseOrderController/external_po";
+$route['external_po/new'] = "PurchaseOrderController/newExternalPO";
+
+$route['external-po'] = "PurchaseOrderController/external_po_list";
 $route['purchase-orders'] = "PurchaseOrderController/purchase_order_list";
 $route['po/view/(:any)'] = "PurchaseOrderController/view/$1";
 

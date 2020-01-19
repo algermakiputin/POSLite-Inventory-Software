@@ -197,6 +197,7 @@ class SalesController extends CI_Controller {
 		$customer_id = $this->input->post('customer_id');
 		$supplier_id = $this->input->post('supplier_id');
 		$supplier_name = $this->input->post('supplier_name');
+		$store_number = $this->session->userdata('store_number');
 
 		$address = "";
 		$city = "";
@@ -240,7 +241,8 @@ class SalesController extends CI_Controller {
 				'supplier_id' => $supplier_id,
 				'supplier_name' => $supplier_name,
 				'date_time' => get_date_time(),
-				'user_id' => $this->session->userdata('id')
+				'user_id' => $this->session->userdata('id'),
+				'store_number' => $store_number
 			]);
 
 		$sales_id = $this->db->insert_id();
@@ -258,11 +260,14 @@ class SalesController extends CI_Controller {
 				'profit' => $transactionProfit,
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(), 
+				'store_number' => $store_number
 			];
 			
-			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
-			$this->db->where('item_id', $sale['id']);
-			$this->db->update('ordering_level');
+			// $column = 'store' . $store_number;
+			// $this->db->set("$column", "$column- $sale[quantity]" , false);
+
+			// $this->db->where('item_id', $sale['id']);
+			// $this->db->update('ordering_level');
 			
 		}
   

@@ -17,7 +17,7 @@
         <div style="margin-bottom: 15px;">
             <h4 style="margin-bottom: -10px;display: inline-block;">Store: &nbsp; </h4>
             <?php 
-                echo store_selector_compoent(['form-control', 'limit']);
+                echo store_selector_component(['form-control', 'limit']);
             ?>
         </div>
         <div class="section-menu"> 

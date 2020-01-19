@@ -26,7 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">POSLite Inventory v1.0 | Ecoland Branch </a> 
+                <a class="navbar-brand" href="#">POSLite Inventory v1.0 | <?php echo $this->session->userdata('store_name') ?> Branch </a> 
             </div>
             <!-- /.navbar-header -->
 
@@ -94,13 +94,13 @@
         var disable_stockout_notification = getCookie("disable_stockout_popup");
         var disable_lowstock_notification = getCookie("disable_lowstock_popup");
       
-        if (Object.keys(no_stocks).length && disable_stockout_notification != "1") { 
-            setTimeout(out_of_stock_popup, 10000);
-        }
+        // if (Object.keys(no_stocks).length && disable_stockout_notification != "1") { 
+        //     setTimeout(out_of_stock_popup, 10000);
+        // }
 
-        if (Object.keys(low_stocks).length && disable_lowstock_notification != "1") { 
-            setTimeout(low_stock_popup, 20000);
-        }
+        // if (Object.keys(low_stocks).length && disable_lowstock_notification != "1") { 
+        //     setTimeout(low_stock_popup, 20000);
+        // }
 
         //alert(getCookie("disablepopup"));
         function set_disable_notification_cookie(name) {

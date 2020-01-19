@@ -100,20 +100,20 @@ class AuthController extends AppController {
 	}
 
 	public function logout() {
-
+		$user_id = $this->session->userdata('id');
 		$data = array('id','username','log_in','account_type');
 		
 		$this->session->unset_userdata($data);
 		$this->session->sess_destroy();
-		$this->inserLoginHistory();
+		$this->inserLoginHistory($user_id);
  
 		$this->session->set_flashdata('successMessage','<div class="alert alert-success">Lagout Successfully</div>');
 		redirect(base_url('login'));
 	}
 
-	public function inserLoginHistory() {
+	public function inserLoginHistory($user_id) {
 		$this->db->insert('history', [
-							'user_id' => $this->session->userdata('id'),
+							'user_id' => $user_id,
 							'action' => 'Log out',
 						]);
 	}

@@ -13,7 +13,7 @@ class UsersModel extends CI_Model {
 			'date_created' => get_date_time(),
 			'created_by' => $created_by,
 			'name' => $name,
-			'store' => $store
+			'store_number' => $store
 		);
 
 		$data = $this->security->xss_clean($data);
@@ -24,7 +24,7 @@ class UsersModel extends CI_Model {
 		 
 		$this->users = $this->db->select('users.*, stores.branch')
 										->order_by('users.id','DESC')
-										->join('stores', 'stores.id = users.store_id') 
+										->join('stores', 'stores.number = users.store_number') 
 										->get('users')
 										->result();
 		

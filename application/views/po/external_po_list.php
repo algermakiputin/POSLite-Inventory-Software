@@ -26,7 +26,7 @@
              Purchase Orders
          </div> 
          <div class="panel-body"> 
-            <table class="table table-responsive table-striped table-hover table-bordered" id="purchase-order-tbl" width="100%">
+            <table class="table table-responsive table-striped table-hover table-bordered" id="external-purchase-order-tbl" width="100%">
                <thead>
                 <tr>
                     <th >P.O. Date</th>

@@ -28,31 +28,23 @@
            <div class="panel-body" style="line-height: 1.5;padding: 40px 40px 60px 40px"> 
             <div class="row">
                 <div class="col-md-6">
-                    <div><b>Bitstop Bicol Sales Center</b></div>
+                    <div><b>Hardware Shop</b></div>
                     <div>WYC Bldg., J. Hernandez St.</div>
                     <div>Naga City, Camarines Sur 4400</div>
                     <div>PH</div>
-                    <div>james@bitbicol.com</div>
-                    <div>www.bitbicol.com</div>
+                    <div>test@example.com</div>
+                    <div>www.test.com</div>
                 </div> 
                 <div class="col-md-12">
                     <h3>PURCHASE ORDER</h3>
                 </div>
                 <div class="col-md-4">
-                    <div><b>SUPPLIER</b></div>
-                    <div><?php echo $supplier->name; ?></div>
-                    <div><?php echo $supplier->address; ?></div>
-                    <div><?php echo $supplier->province; ?></div>
-                    <div><?php echo $supplier->city; ?></div>
-                    <div><?php echo $supplier->country; ?></div>
+                    <div><b>REQUEST FROM</b></div> 
+                    <div><?php echo $po->store_name ?></div>
                 </div>
                 <div class="col-md-4">
-                    <div><b>SHIP TO</b></div>
-                    <div>Bitstop Bicol Sales Center</div>
-                    <div>WYC Bldg., J. Hernandez St.</div>
-                    <div>Naga City, Camarines Sur</div>
-                    <div>4400</div>
-                    <div>PH</div> 
+                    <div><b>REQUEST TO</b></div>
+                    <div><?php echo $po->requested_store_name ?></div>
                 </div>
                 <div class="col-md-4 text-left">
                     <div><b>P.O NO.</b>&nbsp; <?php echo $po->po_number; ?></div>
@@ -99,9 +91,9 @@
                 <div class="col-md-12">
                     <br/>
                     <div class="form-group">
-                        <button class="btn btn-default" id="pdf"><i class="fa fa-file-pdf-o"></i> PDF</button>
+                       <!--  <button class="btn btn-default" id="pdf"><i class="fa fa-file-pdf-o"></i> PDF</button>
                         &nbsp;
-                        <a href="<?php echo base_url("PurchaseOrderController/edit/$po->po_number") ?>"  class="btn btn-default"><i class="fa fa-edit"></i> Edit</a>
+                        <a href="<?php echo base_url("PurchaseOrderController/edit/$po->po_number") ?>"  class="btn btn-default"><i class="fa fa-edit"></i> Edit</a> -->
                     </div>
                 </div>
             </div>
@@ -153,6 +145,6 @@
         })
         
 
-         
+       
     });
 </script>
