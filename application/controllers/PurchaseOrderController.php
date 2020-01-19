@@ -20,8 +20,9 @@ class PurchaseOrderController Extends CI_Controller {
 		foreach ($purchase_orders as $po) {
 
 			$mark = "";
-
-			if ($po->status == "Pending") {
+			$class = "";
+			$status = $po->status;
+			if ($status == "Request Item") {
 
 				$mark = '<li>
                          <a href="' . base_url("PurchaseOrderController/mark_delivered/$po->po_number") .'">
@@ -31,9 +32,16 @@ class PurchaseOrderController Extends CI_Controller {
                          <a href="' . base_url("PurchaseOrderController/edit/$po->po_number") .'">
                              <i class="fa fa-edit"></i> Edit</a>
                      </li>';
+			}else if ($status == "Ongoing Transfer") {
+
+				$class = "badge-info";
+			}else {
+
+				$class = "badge-success";
 			}
 
-			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, $po->status,
+			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, 
+				"<span class='badge $class'>$status</span>",
 				'<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -292,7 +300,7 @@ class PurchaseOrderController Extends CI_Controller {
 		$store_number = $this->input->post('store_number');
 	 	$type = $this->input->post('type');
 	 	$po_number = $this->input->post('po_number');
-	 	$status = "Pending";
+	 	$status = "Request Item";
 
 	 	if ($type == "external") 
 	 		$status = "Open PO";

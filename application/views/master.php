@@ -44,7 +44,10 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        
+                        <li><a href="#">Store Number: <b><?php echo $this->session->userdata('store_number'); ?></b></a>
+                        </li>
+                        <li><a href="#">Store Name: <b><?php echo $this->session->userdata('store_name'); ?></b></a>
+                        </li>
                         <li><a href="<?php echo base_url('logout') ?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>

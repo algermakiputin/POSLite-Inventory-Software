@@ -51,7 +51,7 @@
                         <input type="date" value="<?php echo $po->po_date ?>" readonly  required="required" class="form-control" name="date">
                     </div>
                     <div class="form-group">
-                        <label>Select Store:</label>
+                        <label>Deliver To</label>
                         <input type="text" readonly="readonly" class="form-control" value="<?php echo $po->store_name ?>" name="">
                     </div>
                     

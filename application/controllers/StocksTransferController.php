@@ -53,22 +53,34 @@ class StocksTransferController Extends CI_Controller {
 			$mark = "";
 			$status = $po->status; 
 
-			if ($status == "Pending") {
+			if ($status == "Request Item") {
 
 				$mark = ' 
+							<ul class="dropdown-menu">
                      <li>
                          <a href="' . base_url("StocksTransferController/process/$po->po_number") .'">
                              <i class="fa fa-refresh"></i> Process PO</a>
-                     </li>';
+                     </li>
+                     </ul>
+                     '; 
+            $class = "badge-warning";
+			}else if ($status == "Ongoing Transfer") {
+
+				$class = "badge-info";
+			}else {
+
+				$class = "badge-success";
 			}
 
-			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, $status,
+			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, 
+				"<span class='badge $class'>$status</span>"
+				,
 				'<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
+                    
                     '.$mark.'
                      
-                    </ul>
+                    
             </div>'];
 		}
 
@@ -96,8 +108,9 @@ class StocksTransferController Extends CI_Controller {
 
 	public function process_internal_po() {
 
-		$po_number = $this->input->post('po_number');
+		$this->load->model("OrderingLevelModel");
 
+		$po_number = $this->input->post('po_number'); 
 		$product_id = $this->input->post('product_id[]');
 		$products = $this->input->post('products[]');
 		$quantity = $this->input->post('quantity[]');
@@ -105,7 +118,7 @@ class StocksTransferController Extends CI_Controller {
 		$note = $this->input->post('note');
 		$invoice_number = $this->input->post('invoice_number');
 		$data = [];
-
+		$store_number = $this->session->userdata('store_number');
 		
 
 		$this->db->trans_begin(); 
@@ -132,6 +145,8 @@ class StocksTransferController Extends CI_Controller {
 
 		}
 
+		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => 'Ongoing Transfer']);
+		$this->OrderingLevelModel->update_stocks($data, $store_number);
 		$this->db->insert_batch('stocks_transfer_line',$data);
 
 
