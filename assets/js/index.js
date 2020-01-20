@@ -73,12 +73,13 @@ $(document).ready(function() {
 					processing : true,
 					serverSide : true, 
 					ajax : {
-						url : base_url + '/StocksTransferController/external_dataTable',
+						url : base_url + '/StocksTransferController/external_po_dataTable',
 						type : 'POST',
 						data : data
 					},
 				});
-			}
+			},
+	
 
 		}
 

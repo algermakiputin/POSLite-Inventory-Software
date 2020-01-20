@@ -32,6 +32,13 @@ class StocksTransferController Extends CI_Controller {
 		$this->load->view('master', $data);
 	}
 
+	public function external_po() {
+
+		$data['content'] = "transfer/external_po";
+		$this->load->view('master', $data);
+
+	}
+
 	public function internal_po_dataTable() {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
@@ -67,6 +74,73 @@ class StocksTransferController Extends CI_Controller {
 			}else if ($status == "Ongoing Transfer") {
 
 				$class = "badge-info";
+			}else {
+
+				$class = "badge-success";
+			}
+
+			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, 
+				"<span class='badge $class'>$status</span>"
+				,
+				'<div class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+                    
+                    '.$mark.'
+                     
+                    
+            </div>'];
+		}
+
+		$count = $this->db->get("purchase_order")->num_rows();
+		
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => count($purchase_orders),
+			'recordsFiltered'	=> $count,
+			'data' => $dataset,
+			
+		]);
+	}
+
+	public function external_po_dataTable() {
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+		$dataset = []; 
+		$store_number = $this->session->userdata('store_number'); 
+		$store_number = $this->session->userdata('store_number');
+
+		$purchase_orders = $this->db->select("purchase_order.*") 
+											->where('purchase_order.type', 'external')
+											->where('request', $store_number)
+											->like('purchase_order.po_number', $search, 'BOTH')
+											->order_by("purchase_order.id", 'DESC')
+											->get('purchase_order', $limit, $start) 
+											->result();
+
+		foreach ($purchase_orders as $po) {
+
+			$mark = "";
+			$status = $po->status; 
+
+			if ($status == "Open PO") {
+
+				$mark = ' 
+							<ul class="dropdown-menu">
+                     <li>
+                         <a href="' . base_url("StocksTransferController/process/$po->po_number") .'">
+                             <i class="fa fa-refresh"></i> Process PO</a>
+                     </li>
+                     <li>
+                         <a href="' . base_url("StocksTransferController/close_external_po/$po->po_number") .'">
+                             <i class="fa fa-times	"></i> Close PO</a>
+                     </li>
+                     </ul>
+                     '; 
+            $class = "badge-warning";
+			}else if ($status == "Closed PO") {
+
+				$class = "badge-default";
 			}else {
 
 				$class = "badge-success";
@@ -163,62 +237,13 @@ class StocksTransferController Extends CI_Controller {
 		return redirect('transfer/internal-po');
 	}
 
-	public function external_po_dataTable() {
-		$start = $this->input->post('start');
-		$limit = $this->input->post('length');
-		$search = $this->input->post('search[value]'); 
-		$dataset = [];
-		$type = "internal";
+	public function close_external_po($po_number) {
 
-		$purchase_orders = $this->db->select("purchase_order.*") 
-											->where('purchase_order.type', 'internal')
-											->like('purchase_order.po_number', $search, 'BOTH')
-											->order_by("purchase_order.id", 'DESC')
-											->get('purchase_order', $limit, $start) 
-											->result();
+		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => "Closed PO"]);
+		success("Internal PO has been closed successfully");
 
-		foreach ($purchase_orders as $po) {
-
-			$mark = "";
-
-			if ($po->status == "Pending") {
-
-				$mark = '<li>
-                         <a href="' . base_url("PurchaseOrderController/mark_delivered/$po->po_number") .'">
-                             <i class="fa fa-truck"></i> Mark as delivered</a>
-                     </li>
-                     <li>
-                         <a href="' . base_url("PurchaseOrderController/edit/$po->po_number") .'">
-                             <i class="fa fa-edit"></i> Edit</a>
-                     </li>';
-			}
-
-			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, $po->status,
-				'<div class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    '.$mark.'
-                    
-                    	<li>
-                         <a href="' . base_url("po/view/$po->po_number") .'">
-                             <i class="fa fa-plus"></i> View</a>
-                     </li>
-                     <li>
-                         <a href="' . base_url("PurchaseOrderController/destroy/$po->id") .'" class="delete-data">
-                             <i class="fa fa-trash"></i> Delete</a>
-                     </li>
-                    </ul>
-            </div>'];
-		}
-
-		$count = $this->db->get("purchase_order")->num_rows();
-		
-		echo json_encode([
-			'draw' => $this->input->post('draw'),
-			'recordsTotal' => count($purchase_orders),
-			'recordsFiltered'	=> $count,
-			'data' => $dataset
-		]);
+		return redirect('transfer/external-po');
 	}
+ 
 
 }
