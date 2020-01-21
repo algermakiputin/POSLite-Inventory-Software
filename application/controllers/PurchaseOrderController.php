@@ -137,10 +137,31 @@ class PurchaseOrderController Extends CI_Controller {
 	}
 
 	public function mark_delivered($po_number) {
+		$this->load->model("OrderingLevelModel");
 
+		$po = $this->db->where('po_number', $po_number)->get('purchase_order')->result();
+
+		if (!$po)
+			return redirect('/');
+
+		$stocks_transfer = $this->db->where('po_number', $po_number)->get('stocks_transfer')->result(); 
+		$stocks_transfer_orderline = $this->db->where('stocks_transfer_id', $stocks_transfer->id)->get('stocks_transfer_line')->result();
+ 		
+ 		$this->db->trans_begin(); 
+
+		$this->OrderingLevelModel->stocks_transfer($stocks_transfer_orderline, $po->store_number);
 		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => 'Delivered']);
-		success("PO Marked as delivered successfully");
 
+		if ($this->db->trans_status() === FALSE)
+		{
+		      $this->db->trans_rollback(); 
+		      errorMessage("Opps! Something Went Wrong please try again later.."); 
+				return redirect('purchase-orders');
+		}
+		 
+
+		$this->db->trans_commit();  
+		success("PO Marked as delivered successfully"); 
 		return redirect('purchase-orders');
 
 	}
@@ -217,12 +238,12 @@ class PurchaseOrderController Extends CI_Controller {
 
 		   $this->db->trans_rollback(); 
 		   set_error_message("Opps Something Went Wrong please try.");
-		   return redirect('external_po');
+		   return redirect('external-po');
 		}  
 		
 		success("Purchase Order has been deleted successfully.");
 		$this->db->trans_commit();
-		return redirect('purchase-orders');
+		return redirect('external-po');
 	}
 
 	public function purchase_order_list() {
