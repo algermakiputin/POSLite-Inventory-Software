@@ -276,6 +276,21 @@ $(document).ready(function() {
 				$("#store-selector").change(function() {
 
 					itemTable.columns(6).search($(this).val()).draw();
+					data['store_number'] = $(this).val();
+
+					$.ajax({
+						type: 'POST',
+						url: base_url + '/ItemController/inventory_total',
+						data: data,
+						success: function(data) {
+
+							$("#total").text( data );
+						},
+						error: function(data) {
+
+						}
+
+					})
 				})
 			},
 			clearDataTableFilter : function() {

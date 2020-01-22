@@ -48,7 +48,7 @@
 							</tr>
 							<tr>
 								<td>Quantities:</td>
-								<td><?php echo $orderingLevel->getQuantity($item_info->id)->quantity ?></td>
+								<td><?php echo $orderingLevel->getQuantity($item_info->id, get_store_number()) ?></td>
 
 							</tr>
 							<tr>
@@ -58,7 +58,7 @@
 
 							<tr>
 								<td>Price:</td>
-								<td><?php echo $price->getPrice($item_info->id) ?></td>
+								<td><?php echo $price->getPrice($item_info->id, get_store_number()) ?></td>
 							</tr>
 						</table>
 						</div>

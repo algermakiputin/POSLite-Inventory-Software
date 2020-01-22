@@ -17,8 +17,10 @@ class OrderingLevelModel extends CI_Model {
 
 	}
 
-	public function addStocks($id, $stocks) {
-		$this->db->set('quantity', 'quantity+' . $stocks, FALSE);
+	public function addStocks($id, $stocks, $store_number) {
+
+		$column = get_column_qty();
+		$this->db->set("$column", "$column+" . $stocks, FALSE);
 		$this->db->where('item_id', $id);
 		return $this->db->update('ordering_level'); 
 	}

@@ -59,12 +59,21 @@ class ItemController extends AppController {
     }
 
 	public function items () { 
- 
-		$data['total'] = number_format($this->ItemModel->total()->total,2);
+ 		
+ 		$store_number = $this->session->userdata('store_number');
+		$data['total'] = number_format($this->ItemModel->total($store_number)->total,2);
 		$data['page'] = 'inventory'; 
 		$data['content'] = "items/index";
 		$this->load->view('master', $data);
 
+	}
+
+	public function inventory_total() {
+
+		$this->load->model("ItemModel");
+		$store_number = $this->input->post('store_number');
+
+		echo number_format($this->ItemModel->total($store_number)->total,2);
 	}
 
 	public function dataTable() {
@@ -281,13 +290,24 @@ class ItemController extends AppController {
 			if (array_key_exists('upload_data', $upload)) 
 				$data['image'] = $upload['upload_data']['file_name'];
 		}
-		
+
+		$this->db->trans_begin(); 
+
 		$data = $this->security->xss_clean($data);
 		$this->db->insert('items', $data);
 		$item_id = $this->db->insert_id();
 		$this->HistoryModel->insert('Register new item: ' . $name);
 		$this->PriceModel->insert($price,$capital, $item_id);
 		$this->OrderingLevelModel->insert($item_id);
+
+		if ($this->db->trans_status() === FALSE)
+		{
+		        $this->db->trans_rollback();
+		        $this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again..</div>'); 
+					return redirect(base_url('items'));
+		}
+		 
+		$this->db->trans_commit();  
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
 
@@ -356,7 +376,7 @@ class ItemController extends AppController {
 		$this->load->model('HistoryModel'); 
 		$this->load->model('OrderingLevelModel');
 
-		$update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
+		$update = $this->OrderingLevelModel->addStocks($itemID,$stocks, get_store_number());
 		$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
 		if ($update) {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
@@ -371,15 +391,19 @@ class ItemController extends AppController {
 
 	public function edit($id) {
 		$this->userAccess('edit');
-		$id = $this->security->xss_clean($id);
-		$this->load->model('StoresModel');
+		$column = "store" . get_store_number();
+
+		$id = $this->security->xss_clean($id); 
 		$data['item'] = $this->db->where('id', $id)->get('items')->row();
 		$data['price'] = $this->PriceModel;
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
-		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row();
+		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row_array()[$column];
+		$data['store_number'] = get_store_number();
+		$data['column'] = $column;
+
 		$data['content'] = "items/edit";
-		$data['stores'] = $this->StoresModel->get_stores();
+	
 		$this->load->view('master', $data);
 	}
 
@@ -388,22 +412,53 @@ class ItemController extends AppController {
 		//validation Form
 		$this->updateFormValidation();
 		$this->load->model('HistoryModel');
- 		$updated_name = strip_tags($this->input->post('name'));
-		$updated_category = strip_tags($this->input->post('category'));
+ 		$updated_name = $this->input->post('name');
+		$updated_category = $this->input->post('category');
 
-		$updated_desc = strip_tags(($this->input->post('description')));
+		$updated_desc = ($this->input->post('description'));
 
-		$updated_price = strip_tags($this->input->post('price')); 
-		$capital = strip_tags($this->input->post('capital'));
-		$id = strip_tags($this->input->post('id'));
+		$updated_price = $this->input->post('price'); 
+		$capital = $this->input->post('capital');
+		$id = $this->input->post('id');
 		$barcode = $this->input->post('barcode'); 
 
+		$store_number = get_store_number();
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
-		$currentPrice = $this->PriceModel->getPrice($id);
+
+		$currentPrice = $this->PriceModel->getPrice($id, $store_number);
 		$reorder = $this->input->post('reorder');
 		$productImage = $_FILES['productImage'];
 		$supplier_id = $this->input->post('supplier');
+ 
+
+		$this->db->where('item_id', $id)->update('ordering_level', [ get_column_qty() => $stocks]);
+		$price_id = $this->PriceModel->update($updated_price,$capital, $id, $store_number);
+
+		$itemData = [
+			'id' => $id,
+			'name'	=>	$updated_name,
+			'category'	=> $updated_category,
+			'description'	=>	$updated_desc,
+			'price'	=> $price_id, 
+			'image'	=> $upload['upload_data']['file_name'], 
+			'supplier'	=>	$supplier_id,
+			'barcode' => $barcode
+		];
+
+		$update = $this->ItemModel->update_item($itemData);
+
+
+		if ($this->db->trans_status() === FALSE)
+		{
+		        $this->db->trans_rollback();
+		         
+		        return redirect('/');
+		}
+		 
+		$this->db->trans_commit(); 
+	      
+		$this->db->trans_begin(); 
 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
@@ -416,35 +471,24 @@ class ItemController extends AppController {
 			 
 		}
 
-		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
-		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
 
-		$itemData = [
-			'id' => $id,
-			'name'	=>	$updated_name,
-			'category'	=> $updated_category,
-			'description'	=>	$updated_desc,
-			'price'	=> $price_id, 
-			'image'	=> $upload['upload_data']['file_name'], 
-			'supplier'	=>	$supplier_id, $barcode 
-		];
-
-		$update = $this->ItemModel->update_item($itemData);
-
-		if ($update) {
-			
-			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
-			if ($item->name != $updated_name)
-				$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
-			 
-			if ($item->description != $updated_desc)
-				$this->HistoryModel->insert('Change '.$item->name.' Description: ' . $item->description . ' to ' . $updated_desc);
-			if ($currentPrice != $updated_price) 
-					$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
-				if ($item->category_id != $updated_category) 
-					$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
-			return redirect(base_url('items'));
+		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
+		if ($item->name != $updated_name) {
+			$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
 		}
+		 
+		if ($item->description != $updated_desc){
+			$this->HistoryModel->insert('Change '.$item->name.' Description: ' . $item->description . ' to ' . $updated_desc);
+		}
+		if ($currentPrice != $updated_price) {
+			$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
+
+			if ($item->category_id != $updated_category) {
+				$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
+			}
+				
+		} 
+		return redirect(base_url('items')); 
 	 		
 	}
 

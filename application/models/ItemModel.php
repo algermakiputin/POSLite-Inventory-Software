@@ -42,14 +42,13 @@ class ItemModel extends CI_Model {
 	}
 
 	public function update_item($item) { 
-
+		 
 		$data = array(
 			'name' => $item['name'],
 			'category_id' => $item['category'],
 			'description' => $item['description'],
-			'supplier_id' => $item['supplier_id'],
-			'barcode' => $item['barcode'],
-			'store_id' => $item['store_id']
+			'supplier_id' => $item['supplier'],
+			'barcode' => $item['barcode'], 
 			);
  
 		if ($image != '')
@@ -63,13 +62,18 @@ class ItemModel extends CI_Model {
 		return $items->result_array();
 	}
 
-	public function total() {
-		return $this->db->select("SUM(prices.capital * ordering_level.quantity) as total")
-					->from("items")
-					->join("prices", "prices.item_id = items.id", "both")
-					->join("ordering_level", "ordering_level.item_id = items.id", "both")
-					->get()
-					->row();
+	public function total($store_number) {
+		
+		$column = "store" . $store_number;
+		$total = $this->db->select("SUM(prices.capital * ordering_level.$column) as total")
+								->from("items")
+								->join("prices", "prices.item_id = items.id", "both")
+								->join("ordering_level", "ordering_level.item_id = items.id", "both")
+								->get()
+								->row();
+
+		return $total;
+
 	}
 
 }

@@ -223,6 +223,7 @@ class SalesController extends CI_Controller {
 		}
 
 		$this->load->model("PriceModel");
+		$this->load->model("OrderingLevelModel");
 		$this->db->trans_begin(); 
 
 		/*	4 Types of Transactions 
@@ -253,9 +254,11 @@ class SalesController extends CI_Controller {
 
 		$sales_id = $this->db->insert_id();
 		$sales = $this->security->xss_clean($sales);
+		$column = "store" . $store_number;
 
 		foreach ($sales as $sale) {
 			$transactionProfit = $this->db->where('item_id', $sale['id'])->get('prices')->row()->capital;
+
 			$data[] = [ 
 				'item_id' => $sale['id'],
 				'quantity' => $sale['quantity'],
@@ -265,16 +268,9 @@ class SalesController extends CI_Controller {
 				'discount' => $sale['discount'] ?? 0,
 				'profit' => $transactionProfit,
 				'user_id' => $this->session->userdata('id'),
-				'created_at' => get_date_time(), 
-				'store_number' => $store_number
+				'created_at' => get_date_time()  
 			];
-			
-			// $column = 'store' . $store_number;
-			// $this->db->set("$column", "$column- $sale[quantity]" , false);
-
-			// $this->db->where('item_id', $sale['id']);
-			// $this->db->update('ordering_level');
-			
+			 
 		}
   
 		$this->db->insert_batch('sales_description', $data);
@@ -289,6 +285,16 @@ class SalesController extends CI_Controller {
 		echo $transaction_number;
 		return;
 	}
+
+
+	public function enter_sales() {
+
+		
+		$this->db->set("$column", "$column-" . $sale['quantity'], FALSE);
+		$this->db->where('item_id', $sale['id']);
+		$this->db->update('ordering_level');
+	}
+
 
 	public function reports() {
 

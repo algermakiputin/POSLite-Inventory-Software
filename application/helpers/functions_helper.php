@@ -7,6 +7,22 @@
 		die();
 	}
 
+	function get_store_number() {
+
+		$CI =& get_instance();
+
+		return $CI->session->userdata('store_number');
+	}
+
+	function get_column_qty() {
+
+		$CI =& get_instance();
+
+		$store_number = $CI->session->userdata('store_number');
+
+		return "store" . $store_number;
+	}
+
 
 	function get_preferences() {
 		$path = './preference.txt';
