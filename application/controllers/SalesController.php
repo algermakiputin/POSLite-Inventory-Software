@@ -174,6 +174,12 @@ class SalesController extends CI_Controller {
 		return false;
 	}
 
+	public function new() {
+
+		$data['content'] = "sales/new_sales";
+		$this->load->view('master', $data);
+	}
+ 
 	public function lastWeek() {
 		return $sunday = strtotime(date("Y-m-d h:i:s")." -6 days");
 	}

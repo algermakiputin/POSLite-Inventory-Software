@@ -111,6 +111,7 @@ $route['reports/best-seller'] = "ReportsController/best_seller";
 $route['sales'] = 'SalesController/sales';
 $route['sales/report'] ='SalesController/reports';
 $route['sales/graph-filter'] = 'SalesController/graphFilter';
+$route['sales/new'] = "SalesController/new";
 
 $route['items'] = 'ItemController/items';
 $route['items/new'] = 'ItemController/new';

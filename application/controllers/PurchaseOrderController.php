@@ -20,9 +20,9 @@ class PurchaseOrderController Extends CI_Controller {
 		foreach ($purchase_orders as $po) {
 
 			$mark = "";
-			$class = "";
+			$class = "badge-warning";
 			$status = $po->status;
-			if ($status == "Request Item") {
+			if ($status == "Request Item" || $status == "Ongoing Transfer") {
 
 				$mark = '<li>
                          <a href="' . base_url("PurchaseOrderController/mark_delivered/$po->po_number") .'">
@@ -32,6 +32,10 @@ class PurchaseOrderController Extends CI_Controller {
                          <a href="' . base_url("PurchaseOrderController/edit/$po->po_number") .'">
                              <i class="fa fa-edit"></i> Edit</a>
                      </li>';
+
+            if ($status == "Ongoing Transfer")
+            	$class = "badge-info";
+
 			}else if ($status == "Ongoing Transfer") {
 
 				$class = "badge-info";
@@ -139,12 +143,13 @@ class PurchaseOrderController Extends CI_Controller {
 	public function mark_delivered($po_number) {
 		$this->load->model("OrderingLevelModel");
 
-		$po = $this->db->where('po_number', $po_number)->get('purchase_order')->result();
+		$po = $this->db->where('po_number', $po_number)->get('purchase_order')->row();
 
 		if (!$po)
 			return redirect('/');
 
-		$stocks_transfer = $this->db->where('po_number', $po_number)->get('stocks_transfer')->result(); 
+		$stocks_transfer = $this->db->where('po_id', $po->id)->get('stocks_transfer')->row(); 
+		 
 		$stocks_transfer_orderline = $this->db->where('stocks_transfer_id', $stocks_transfer->id)->get('stocks_transfer_line')->result();
  		
  		$this->db->trans_begin(); 

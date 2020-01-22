@@ -51,10 +51,11 @@ class OrderingLevelModel extends CI_Model {
 
 		$this->db->trans_begin(); 
 		$column = "store" . $store_number;
+ 
 		foreach ($items as $item) {
 
-			$this->db->set("$column", "$column-" . $item['quantity'], FALSE);
-			$this->db->where('item_id', $item['item_id']);
+			$this->db->set("$column", "$column+" . $item->quantity, FALSE);
+			$this->db->where('item_id', $item->item_id); 
 			$this->db->update('ordering_level');
 
 		}

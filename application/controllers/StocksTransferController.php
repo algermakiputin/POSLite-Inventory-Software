@@ -193,7 +193,7 @@ class StocksTransferController Extends CI_Controller {
 		$invoice_number = $this->input->post('invoice_number');
 		$data = [];
 		$store_number = $this->session->userdata('store_number');
-		
+		$po_id = $this->input->post('po_id');
 
 		$this->db->trans_begin(); 
 
@@ -201,7 +201,8 @@ class StocksTransferController Extends CI_Controller {
 					'po_number' => $po_number,
 					'note'	=> $note,
 					'date'	=> get_date_time(),
-					'status'	=> "For Delivery"
+					'status'	=> "For Delivery",
+					'po_id' => $po_id
 			]);
 
 		$stocks_transfer_id = $this->db->insert_id();

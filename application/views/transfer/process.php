@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">New Internal PO </h1>
+        <h1 class="page-header">Process Internal PO </h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -39,6 +39,7 @@
                     <div class="form-group">
                       <label>PO Number</label>
                       <input type="text" class="form-control" value="<?php echo $po->po_number ?>" name="po_number" readonly>
+                      <input type="hidden" value="<?php echo $po->id ?>" name="po_id" readonly>
                     </div>
                     <div class="form-group">
                         <label>Enter Invoice Number</label>
