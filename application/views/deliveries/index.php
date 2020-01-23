@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Deliveries</h1>
+		<h1 class="page-header">Purchases</h1>
 	</div>
 <!-- /.col-lg-12 -->
 </div>
@@ -8,7 +8,7 @@
  <div class="col-lg-12">
      <div class="panel panel-default">
          <div class="panel-heading">
-             Deliveries List
+             Purchases List
          </div>
          <!-- /.panel-heading -->
          <div class="panel-body">	

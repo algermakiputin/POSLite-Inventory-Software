@@ -40,11 +40,20 @@
                         <input type="text" required="required" class="form-control" id="invoice-number" name="invoice_number">
                         <input type="hidden" name="store_number" id="store-number">
                         <input type="hidden" name="type" value="internal">
-                    </div>
-                    <div class="form-group">
-                        <label>Date:</label>
-                        <input type="date" required="required" class="form-control" name="date">
                     </div> 
+                    <div class="form-group">
+                        <label>Customer Name:</label>
+                        <input type="text" readonly required="required" class="form-control" name="customer_name" id="customer_name">
+                        <input type="hidden" name="customer_id" readonly required="required" id="customer_id">
+                    </div> 
+
+                    <div class="form-group">
+                        <label>Transaction Type</label>
+                        <select class="form-control" name="type">
+                            <option value="cash">Cash</option>
+                            <option value="credit">Credit</option>
+                        </select>
+                    </div>
                     
                     <div class="form-group">
                         <label>Note</label>

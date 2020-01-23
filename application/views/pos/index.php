@@ -134,7 +134,7 @@
 						<div class="col-md-7">
 							<div id="receipt">
 								<div class="r-header text-center">
-									<h3>Receipt</h3>
+									<h3>Invoice</h3>
 									<div class="row">
 										<div class="col-md-4 text-left">
 											<div>ID:</div>
@@ -231,12 +231,11 @@
 							<div class="col-md-12">
 								<input type="hidden" name="customer_id" id="customer_id" value="0">
 								<input type="hidden" name="supplier_id" id="supplier_id" value="0">
-							 
+							 	<input type="hidden" name="type" value="invoice" id="transaction-type">
 								<div class="form-group">
-								 	<label>Transaction type:</label>
-								 	<select name="type" class="form-control" id="transaction-type">   
-								 		<option value="invoice">Invoice</option> 
-								 	</select>
+								 	<label>Enter Invoice Number:</label>
+								 	<input type="text" name="invoice_number" value="" class="form-control" id="invoice_number">
+								 	<input type="hidden" id="valid_invoice" value="0" name="valid_invoice">    
 								</div>
 								
 								<div class="form-group" id="select-customer-fields">

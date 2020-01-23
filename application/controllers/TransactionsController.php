@@ -7,8 +7,23 @@ class TransactionsController extends CI_Controller {
 		parent::__construct();
 		$this->load->library("DataTable"); 
 	}
+
+	public function validate_invoice() {
+
+		$invoice = $this->input->post('invoice');
+
+		$validate = $this->db->where('transaction_number', $invoice)->get('sales')->num_rows();
+		
+		if (!$validate) {
+			echo "0"; 
+		}else {
+			echo "1";
+		}
  
-	public function index() {
+
+	}
+ 
+ 	public function index() {
 
 		$data['content'] = "transactions/index";
 		$this->load->view('master', $data);

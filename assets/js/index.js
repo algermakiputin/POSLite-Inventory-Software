@@ -109,7 +109,7 @@ $(document).ready(function() {
 								
 								if (data != '0') {
 									var result = JSON.parse(data);
-									
+									console.log(result);
 									var total = 0;
 									var tbody = $("#products-table tbody").empty();
 
@@ -123,14 +123,17 @@ $(document).ready(function() {
 
 									$("#store-number").val(result.details.store_number);
 
+									$("#customer_name").val(result.details.customer_name);
+									$("#customer_id").val(result.details.customer_id);
+
 								}else {
 									alert("Error: No Invoice Found in the database");
 								}
-								
-                   
 								 
 							}     
 						})
+					}else {
+						alert("Invoice Is empty");
 					}
 				})
 			},

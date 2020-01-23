@@ -192,8 +192,8 @@ class SalesController extends CI_Controller {
 
 	public function insert() {
 		$data = [];
-		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
-		$transaction_number = "TRN000" . ((int)$last_sales_id + 1 ); 
+		// $last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
+		// $transaction_number = "TRN000" . ((int)$last_sales_id + 1 ); 
 
 		$status = 0;
 		$sales = $this->input->post('sales');
@@ -204,6 +204,7 @@ class SalesController extends CI_Controller {
 		$supplier_id = $this->input->post('supplier_id');
 		$supplier_name = $this->input->post('supplier_name');
 		$store_number = $this->session->userdata('store_number');
+		$invoice_number = $this->input->post('invoice');
 
 		$address = "";
 		$city = "";
@@ -234,7 +235,7 @@ class SalesController extends CI_Controller {
 		*/
 		$this->db->insert('sales',[
 				'id' => null , 
-				'transaction_number' => $transaction_number, 
+				'transaction_number' => $invoice_number, 
 				'user_id' => $this->session->userdata('id'),
 				'customer_id' => $customer_id,
 				'customer_name' => $this->input->post('customer_name'),
@@ -249,7 +250,7 @@ class SalesController extends CI_Controller {
 				'supplier_name' => $supplier_name,
 				'date_time' => get_date_time(),
 				'user_id' => $this->session->userdata('id'),
-				'store_number' => $store_number
+				'store_number' => $store_number,
 			]);
 
 		$sales_id = $this->db->insert_id();
@@ -282,7 +283,7 @@ class SalesController extends CI_Controller {
 		}
 		 
 		$this->db->trans_commit(); 
-		echo $transaction_number;
+		echo $invoice_number;
 		return;
 	}
 

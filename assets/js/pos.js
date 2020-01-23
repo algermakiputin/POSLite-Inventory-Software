@@ -46,10 +46,7 @@ $(document).ready(function() {
  			$("#supplier_id").val(option.id);
 	   } 
 	});
-
-	var transaction_type_select = $("#transaction-type").selectize({
-		sortField: 'text',
-	});
+ 
 
 	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
 	
@@ -163,8 +160,7 @@ $(document).ready(function() {
 				$("change").val('');
 	  	 	}
 	  	 	stockCol.text(parseFloat(stocks - 1));
-  	 	}
-	  
+  	 	} 
   	 	 
 	})
 
@@ -185,9 +181,36 @@ $(document).ready(function() {
 		alert("Please add some items to continue");
 
 	});
+
+	$("#invoice_number").keyup(function() {
+
+		var invoice_number = $(this).val(); 
+
+		var data = {};
+		data[csrfName] = csrfHash;
+		data['invoice'] = invoice_number;
+		$.ajax({
+			type: "POST",
+			url: base_url + "/TransactionsController/validate_invoice",
+			data: data, 
+			success: function(data) {
+			 
+				$("#valid_invoice").val(data);
+			},	
+			error: function() {
+				$("#valid_invoice").val(0);
+			}
+
+		})
+	})
+
 	
 	$("#complete-transaction").click(function(e) {
-		e.preventDefault();
+		e.preventDefault(); 
+
+		if ($("#valid_invoice").val() == 1) {
+			return alert("Invalid Invoice or Already Exist");
+		}
 
 		var row = $("#cart tbody tr").length;
 		var totalAmountDue = no_format($("#amount-total").text()); 
@@ -198,21 +221,10 @@ $(document).ready(function() {
 		var supplier_name = $("#supplier-select option:selected").val();
 		var note = $("#note").val();
 		var total_amount = 0;
-		
+		var invoice_number = $("#invoice_number").val(); 
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val() || 0;
-		var change = $("#change").val() || 0;
-
- 
-		if ( !customer_name && transaction_type == "po")
-			return alert("Customer is empty"); 
-
-		if (transaction_type == "credit" || transaction_type == "invoice") {
-
-			if (!customer_name || !customer_id || customer_id == "0" && transaction_type != "po") {
-				return alert("Error: Customer is empty, Please select a customer.");
-			}
-		}
+		var change = $("#change").val() || 0; 
  	  
 		if (parseFloat(payment) < parseFloat(totalAmountDue) && transaction_type === "cash")
 	 		return alert("Insufficient Amount");
@@ -259,6 +271,7 @@ $(document).ready(function() {
 		data['supplier_id'] = supplier_id;
 		data['total_amount'] = totalAmountDue;
 		data['note'] = note;
+		data['invoice'] = invoice_number;
 		data[csrfName] = csrfHash;
 		$.ajax({
 			type : 'POST',
@@ -301,7 +314,7 @@ $(document).ready(function() {
 			 	$("#amount-discount").text(''); 
 			 	$("#customer_id").val(0); 
 			 	$("#customer-select").data('selectize').setValue('Walk-in Customer');
-			 	$("#transaction-type").data('selectize').setValue('cash'); 
+			  
 			 	item_table.clear().draw();
 			 	$("#btn").button('reset');
 			 	totalAmountDue = 0;  
@@ -447,8 +460,7 @@ $(document).ready(function() {
 				return val.find('td').eq(3).text(remaining);
 			} 
 		});
-	}
-
+	} 
 
 	/*
 		Function Loop through the cart table
@@ -566,4 +578,6 @@ function no_format(str) {
 
 	return parseFloat((str.slice(1).replace(/,/g, "")).slice(0,-3));
 }
+
+
 
