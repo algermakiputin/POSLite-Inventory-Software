@@ -74,38 +74,30 @@
                     Items
                 </div>
                 <div class="panel-body">
-                    <table class="table" id="products-table" style="border-bottom: solid 1px #ddd;table-layout: fixed;">
+                    <table class="table" width="100%" id="products-table" style="border-bottom: solid 1px #ddd;table-layout: fixed;">
                         <thead>
+                            <th>ID</th>
                             <th>Product Name</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
-                            <th>Sub Total</th>
+                            <th>Quantity</th> 
                             <th width="50px">&nbsp;</th>
                         </thead>
                         <tbody>
                             <tr>
+                                <td width="15%"> <input type="text" class="form-control" readonly="readonly" name="product_id[]"></td>
                                 <td>
                                     <input type="text" readonly="readonly" autocomplete="off" class="form-control product" required="required" name="product[]">
-                                    <input type="hidden" name="product_id[]">
-                                </td>
-                                <td>
+                                   
+                                </td width="60%">
+                                <td width="20%">
                                     <input type="number" required="required" autocomplete="off" class="form-control quantity" name="quantity[]">
-                                </td>
-                                <td>
-                                    <input type="text" required="required" autocomplete="off" class="form-control" name="price[]">
-                                </td>
-                                <td>
-                                    <input type="text" autocomplete="off" class="form-control" name="sub[]" readonly="readonly">
-                                </td>
-                                <td><i class="fa fa-trash delete-row"></i> &nbsp;</td>
+                                
+                                    <input type="hidden" required="required" autocomplete="off" class="form-control" name="price[]">
+                               
+                                    <input type="hidden" autocomplete="off" class="form-control" name="sub[]" readonly="readonly">
+                                 
+                                <td width="5%"><i class="fa fa-trash delete-row"></i> &nbsp;</td>
                             </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="4" class="text-right"><b>Total:</b></td>
-                                <td><span id="grand-total">0.0</span></td>
-                            </tr>
-                        </tfoot>
+                        </tbody> 
                     </table>
                     <div class="actions">
                         <!-- <button type="button" class="btn btn-sm btn-default" id="new-line"><i class="fa fa-plus"></i> Add New Line</button> &nbsp;

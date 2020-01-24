@@ -223,6 +223,7 @@ class SalesController extends CI_Controller {
 		$supplier_name = $this->input->post('supplier_name');
 		$store_number = $this->session->userdata('store_number');
 		$invoice_number = $this->input->post('invoice');
+		$user_name = $this->session->userdata('username');
 
 		$address = "";
 		$city = "";
@@ -269,6 +270,7 @@ class SalesController extends CI_Controller {
 				'date_time' => get_date_time(),
 				'user_id' => $this->session->userdata('id'),
 				'store_number' => $store_number,
+				'user_name' => $user_name
 			]);
 
 		$sales_id = $this->db->insert_id();

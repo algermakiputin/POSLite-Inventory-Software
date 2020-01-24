@@ -93,10 +93,7 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="<?php echo base_url('sales/new') ?>"><i class="fa fa-circle-o"></i> Enter Sales</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url('sales/view') ?>"><i class="fa fa-circle-o"></i> View Sales</a>
-                        </li>
+                        </li> 
                     </ul>
                 </li>
                 <li>

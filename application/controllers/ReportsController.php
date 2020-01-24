@@ -16,6 +16,24 @@ class ReportsController extends CI_Controller {
 		$this->load->view('master', $data);
 	}
 
+	public function details($id) { 
+
+		$sales = $this->db->where('id', $id)->get('sales')->row();
+ 
+		if (!$sales)
+			return redirect('/');
+
+		$orderline = $this->db->Where('sales_id', $sales->id)->get('sales_description')->result();
+
+		$data['content'] = "reports/details";
+		$data['sales'] = $sales;
+		$data['orderline'] = $orderline;
+		$data['total'] = 0;
+
+		$this->load->view('master', $data);
+
+	}
+
 	public function description_datatable() {
 		$draw = $this->input->post('draw');
 		
@@ -130,7 +148,7 @@ class ReportsController extends CI_Controller {
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     	<li>
-                            <a href="' . base_url("sales/view/$order->id") .'">
+                            <a href="' . base_url("sales/details/$order->id") .'">
                                 <i class="fa fa-eye"></i> View Details</a>
                         </li> 
                     </ul>
@@ -173,11 +191,18 @@ class ReportsController extends CI_Controller {
 		$limit = $this->input->post('length');
 		$from = $this->input->post('[columns][0][search][value]');
 		$to = $this->input->post('[columns][1][search][value]');
+		$filter_store = $this->input->post('[columns][2][search][value]');
+		
+		$store_number = $filter_store == "" ? get_store_number() : $filter_store;
 
-		$cash = $this->db->where('payment_type', 'cash')
-											->order_by('id', 'DESC')
-											->get('sales', $start, $limit)
-											->result();
+		$cash = $this->db->where('payment_type', 'credit')
+										->where('store_number', $store_number)	
+										->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+										->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+										->order_by('id', 'DESC')
+										->order_by('id', 'DESC')
+										->get('sales', $start, $limit)
+										->result();
 		$total = 0;
 
 		foreach ($cash as $order) {

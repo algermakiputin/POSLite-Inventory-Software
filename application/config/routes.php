@@ -109,6 +109,7 @@ $route['reports/summary'] = "ReportsController/summary";
 $route['reports/best-seller'] = "ReportsController/best_seller";
 $route['reports/cash'] = "ReportsController/cash_reports";
 $route['reports/credit'] = "ReportsController/credits_report";
+$route['sales/details/(:any)'] = "ReportsController/details/$1";
 
 $route['sales'] = 'SalesController/sales';
 $route['sales/report'] ='SalesController/reports';

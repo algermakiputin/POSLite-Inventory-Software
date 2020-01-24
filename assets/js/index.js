@@ -115,7 +115,7 @@ $(document).ready(function() {
 
 									for (i = 0; i < result.orderline.length; i++) {
 
-										 tbody.append('<tr><td><input type="text" readonly="readonly" autocomplete="off" value="'+result.orderline[i].name+'" class="form-control product" required="required" name="product[]"><input type="hidden" name="product_id[]" value="'+result.orderline[i].item_id+'"></td><td><input type="number" required="required" autocomplete="off" value="'+result.orderline[i].quantity+'" min="1" data-qty="'+result.orderline[i].quantity+'" class="form-control quantity" name="quantity[]"></td><td><input type="text" required="required" autocomplete="off" class="form-control" value="'+result.orderline[i].price+'" name="price[]"></td><td><input type="text" autocomplete="off" class="form-control" value="'+result.orderline[i].price * result.orderline[i].quantity+'" name="sub[]" readonly="readonly"></td><td><i class="fa fa-trash delete-row"></i> &nbsp;</td></tr>')
+										 tbody.append('<tr><td><input type="text" class="form-control" readonly name="product_id[]" value="'+result.orderline[i].item_id+'"></td><td><input type="text" readonly="readonly" autocomplete="off" value="'+result.orderline[i].name+'" class="form-control product" required="required" name="product[]"></td><td><input type="number" required="required" autocomplete="off" value="'+result.orderline[i].quantity+'" min="1" data-qty="'+result.orderline[i].quantity+'" class="form-control quantity" name="quantity[]"> <input type="hidden" required="required" autocomplete="off" class="form-control" value="'+result.orderline[i].price+'" name="price[]"><input type="hidden" autocomplete="off" class="form-control" value="'+result.orderline[i].price * result.orderline[i].quantity+'" name="sub[]" readonly="readonly"></td><td><i class="fa fa-trash delete-row"></i> &nbsp;</td></tr>')
 										 total += result.orderline[i].price * result.orderline[i].quantity;
 									}
 
@@ -782,6 +782,21 @@ $(document).ready(function() {
 					"targets": 'no-sort',
 					"bSort": false, 
 				})
+
+				$("#cash-store-filter").change(function(e) { 
+					credits_DataTable.columns(2).search($(this).val()).draw();
+				});
+
+				$("#to").change(function() {
+
+					if ( date_range = date_range_select("from", "to") ) {
+				 
+						credits_DataTable.columns(0).search(date_range[0])
+									.columns(1).search(date_range[1])
+									.draw();
+
+					}
+				}); 
  
 			},
 			

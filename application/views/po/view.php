@@ -53,27 +53,23 @@
                 <br/>
                 <div class="col-md-12">
                     <div style="border-bottom: solid 2px #ddd;margin: 20px 0"></div>
-                    <div><b>SHIP VIA</b></div>
-                    <div><?php echo $po->shipvia; ?></div>
-                    <div>&nbsp;</div>
+                 
                 </div>
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>PRODUCT</th>
-                                <th>QTY</th>
-                                <th>PRICE</th>
-                                <th>AMOUNT</th>
+                                <th>QTY</th> 
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($orderline as $line): ?>
                                 <tr>
+                                    <td><?php echo $line->product_id ?></td>
                                     <td><?php echo $line->product_name ?></td>
-                                    <td><?php echo $line->quantity ?></td>
-                                    <td><?php echo $line->price ?></td>
-                                    <td><?php echo currency() . number_format($line->quantity * $line->price,2); $total+= $line->quantity * $line->price ?></td>
+                                    <td><?php echo $line->quantity ?></td> 
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -82,12 +78,7 @@
                 <div class="col-md-6">
                     <?php echo str_replace("?", "&#x20B1;", $po->note) ?>
                 </div>
-                <div class="col-md-4 text-right">  
-                    <div><b>TOTAL</b></div>
-                </div>
-                <div class="col-md-2 text-right">
-                    <div><?php echo currency() . number_format($total,2); ?></div>
-                </div> 
+               
                 <div class="col-md-12">
                     <br/>
                     <div class="form-group">

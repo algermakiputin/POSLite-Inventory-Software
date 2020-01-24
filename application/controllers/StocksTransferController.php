@@ -66,7 +66,7 @@ class StocksTransferController Extends CI_Controller {
 							<ul class="dropdown-menu">
                      <li>
                          <a href="' . base_url("StocksTransferController/process/$po->po_number") .'">
-                             <i class="fa fa-refresh"></i> Process PO</a>
+                             <i class="fa fa-refresh"></i> Create Delivery Note</a>
                      </li>
                      </ul>
                      '; 
@@ -186,7 +186,7 @@ class StocksTransferController Extends CI_Controller {
 
 		$po_number = $this->input->post('po_number'); 
 		$product_id = $this->input->post('product_id[]');
-		$products = $this->input->post('products[]');
+		$products = $this->input->post('product[]');
 		$quantity = $this->input->post('quantity[]');
 		$price = $this->input->post('price[]'); 
 		$note = $this->input->post('note');

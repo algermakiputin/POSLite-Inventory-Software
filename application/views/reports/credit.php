@@ -5,6 +5,14 @@
 	<!-- /.col-lg-12 -->
 </div>
 <div class="row">  
+	<div class="col-lg-12">
+		<div style="background-color: #eee;padding: 10px;margin-bottom: 20px;">
+			<label>Select Store:</label>
+			<?php 
+                echo store_selector_component(['form-control', 'limit'], "cash-store-filter");
+            ?>
+		</div>
+	</div>
 	<div class="col-lg-9">
 		<ul class="nav nav-tabs">
 		  <li role="presentation" ><a href="<?php echo base_url('reports/cash') ?>">Cash</a></li>
