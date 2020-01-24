@@ -115,8 +115,14 @@
                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?php echo base_url('reports') ?>"><i class="fa fa-circle-o"></i> View Reports</a>
+                            <a href="<?php echo base_url('reports/cash') ?>"><i class="fa fa-circle-o"></i> Cash</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url('reports/credit') ?>"><i class="fa fa-circle-o"></i> Credit</a>
+                        </li>
+                        <!-- <li>
+                            <a href="<?php echo base_url('reports') ?>"><i class="fa fa-circle-o"></i> View Reports</a>
+                        </li> -->
                       <!--   <li>
                             <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
                         </li> -->

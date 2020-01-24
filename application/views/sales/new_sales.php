@@ -28,7 +28,7 @@
                     </div>
                     <?php endif; ?>
     </div>
-    <?php echo form_open("PurchaseOrderController/save_po"); ?>
+    <?php echo form_open("SalesController/confirm_sale"); ?>
         <div class="col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -49,7 +49,7 @@
 
                     <div class="form-group">
                         <label>Transaction Type</label>
-                        <select class="form-control" name="type">
+                        <select class="form-control" name="payment_type">
                             <option value="cash">Cash</option>
                             <option value="credit">Credit</option>
                         </select>

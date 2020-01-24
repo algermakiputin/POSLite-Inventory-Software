@@ -665,7 +665,7 @@ $(document).ready(function() {
 
 				this.credits_DataTable();
 				this.invoice_DataTable();
-				this.standby_order_DataTable();
+				this.standby_order_DataTable(); 
 			},
 			credits_DataTable : function() {
 				data = {};
@@ -684,6 +684,7 @@ $(document).ready(function() {
 					 
 				})
 			},
+			
 			invoice_DataTable : function() {
 				data = {};
 				data[csrfName] = csrfHash;
@@ -724,8 +725,66 @@ $(document).ready(function() {
 				this.description();
 				this.product_sales();
 				this.best_seller();
+				this.cash_DataTable();
+				this.credits_DataTable();
 			},
 
+			cash_DataTable: function() {
+				data = {};
+				data[csrfName] = csrfHash;
+
+				var credits_tbl = $("#cash-tbl").DataTable({
+					bProcessing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'ReportsController/cash_datatable',
+						type : 'POST',
+						data : data
+					},
+					"targets": 'no-sort',
+					"bSort": false,
+					drawCallback : function (setting) {
+						var data = JSON.parse(setting.json.extra);
+						console.log(data);
+						$("#total-sales").text(data.total);
+
+					} 
+				});
+
+				$("#cash-store-filter").change(function(e) { 
+					credits_tbl.columns(2).search($(this).val()).draw();
+				});
+
+				$("#to").change(function() {
+
+					if ( date_range = date_range_select("from", "to") ) {
+				 
+						credits_tbl.columns(0).search(date_range[0])
+									.columns(1).search(date_range[1])
+									.draw();
+
+					}
+				}); 
+			},
+
+			credits_DataTable: function() {
+				data = {};
+				data[csrfName] = csrfHash;
+
+				var credits_DataTable = $("#credits-tbl").DataTable({
+					bProcessing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'ReportsController/credits_datatable',
+						type : 'POST',
+						data : data
+					},
+					"targets": 'no-sort',
+					"bSort": false, 
+				})
+ 
+			},
+			
 			description: function() { 
 
 				data = {};

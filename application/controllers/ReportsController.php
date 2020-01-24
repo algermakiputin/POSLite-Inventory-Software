@@ -94,6 +94,124 @@ class ReportsController extends CI_Controller {
 
 		echo $this->datatable->format($draw, $product_sales, $columns, $data_count, ['total' => currency() . number_format($total,2)]); 
 	}
+ 
+
+	public function cash_reports() { 
+
+		$data['content'] = "reports/cash";
+		$this->load->view('master', $data);
+	}
+
+	public function cash_datatable() {
+		$draw = $this->input->post('draw');
+		
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$from = $this->input->post('[columns][0][search][value]');
+		$to = $this->input->post('[columns][1][search][value]');
+		$filter_store = $this->input->post('[columns][2][search][value]');
+
+		$store_number = $filter_store == "" ? get_store_number() : $filter_store;
+ 
+		$cash = $this->db->where('payment_type', 'cash')
+								->where('store_number', $store_number)	
+								->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+								->order_by('id', 'DESC')
+								->get('sales', $start, $limit)
+								->result();
+		$total = 0;
+
+
+		foreach ($cash as $order) {
+
+			$order->actions = '
+					<div class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    	<li>
+                            <a href="' . base_url("sales/view/$order->id") .'">
+                                <i class="fa fa-eye"></i> View Details</a>
+                        </li> 
+                    </ul>
+               </div>
+				';
+
+			$total += $order->total;
+
+			$order->total = currency() . number_format($order->total,2);
+		}
+	 
+		$columns = [
+			'transaction_number' => "Item ID",
+			'customer_name' => "Product Name",
+			'total' => "Qty Sold",
+			'note' => 'Unit Cost',
+			'actions' => "Total"
+		];
+
+		$data_count = $this->db->where('payment_type', 'cash')
+										->where('store_number', $store_number)	
+										->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+										->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+										->get('sales')
+										->num_rows(); 
+
+		echo $this->datatable->format($draw, $cash, $columns, $data_count, ['total' => currency() . number_format($total,2)]); 
+	}
+
+	public function credits_report() {
+
+		$data['content'] = "reports/credit";
+		$this->load->view('master', $data);
+	}
+
+	public function credits_datatable() {
+		$draw = $this->input->post('draw');
+		
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$from = $this->input->post('[columns][0][search][value]');
+		$to = $this->input->post('[columns][1][search][value]');
+
+		$cash = $this->db->where('payment_type', 'cash')
+											->order_by('id', 'DESC')
+											->get('sales', $start, $limit)
+											->result();
+		$total = 0;
+
+		foreach ($cash as $order) {
+
+			$order->actions = '
+					<div class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    	<li>
+                            <a href="' . base_url("sales/view/$order->id") .'">
+                                <i class="fa fa-eye"></i> View Details</a>
+                        </li> 
+                    </ul>
+               </div>
+				';
+
+				$order->payment_status = $order->payment_status == 0 ? "Pending Balance" : "Paid";
+
+			$total += $order->total;
+		}
+	 
+		$columns = [
+			'transaction_number' => "Item ID",
+			'customer_name' => "Product Name",
+			'total' => "Qty Sold",
+			'note' => 'Unit Cost',
+			'payment_status' => 'Status',
+ 			'actions' => "Total"
+		];
+
+		$data_count = $this->db->where('type !=', 'invoice')->get('sales')->num_rows(); 
+
+		echo $this->datatable->format($draw, $cash, $columns, $data_count, ['total' => currency() . number_format($total,2)]); 
+	}
 
 	public function products() {
 		$data['content'] = "reports/products";

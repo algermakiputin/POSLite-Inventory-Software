@@ -107,6 +107,8 @@ $route['reports/products'] = "ReportsController/products";
 $route['reports/category'] = "ReportsController/category";
 $route['reports/summary'] = "ReportsController/summary";
 $route['reports/best-seller'] = "ReportsController/best_seller";
+$route['reports/cash'] = "ReportsController/cash_reports";
+$route['reports/credit'] = "ReportsController/credits_report";
 
 $route['sales'] = 'SalesController/sales';
 $route['sales/report'] ='SalesController/reports';

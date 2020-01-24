@@ -11,6 +11,24 @@ class SalesController extends CI_Controller {
 			redirect(base_url('login'));
 		}
 	}
+
+	public function confirm_sale() {
+
+		$invoice_number = $this->input->post('invoice_number');
+		$payment_type = $this->input->post('payment_type');
+
+		$insert = $this->db->where('transaction_number', $invoice_number)->update('sales', ['status' => 1, 'payment_type' => $payment_type]);
+
+
+		if (!$insert) {
+
+			errorMessage("Opps Something Went Wrong Please Try Again Later");
+		} 
+
+
+		success("Sales Registered Successfully");
+		return redirect('sales/new');
+	}
  
 
 	public function sales () {

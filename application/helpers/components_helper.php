@@ -1,7 +1,7 @@
 <?php 
 
 
-function store_selector_component($classes) {
+function store_selector_component($classes, $id = "store-selector") {
 	
 	$CI =& get_instance();
 
@@ -18,7 +18,7 @@ function store_selector_component($classes) {
 		$options .= "<option $selected value='$store->id'>$store->branch</option>";
 	}
 
-	$selector = "<select id='store-selector' name='store-selector' class='".join(' ',$classes)."'>" .
+	$selector = "<select id='$id' name='store-selector' class='".join(' ',$classes)."'>" .
 			 $options.
 			"</select>";
 

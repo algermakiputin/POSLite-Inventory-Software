@@ -91,8 +91,7 @@
 								</div>
 							</div>
 							
-							<div class="form-group text-right">
-									 
+							<div class="form-group text-right"> 
 								<button type="reset" class="btn btn-info">Clear</button>
 								<input type="submit" name="" class="btn btn-primary" required="required">
 							</div>
