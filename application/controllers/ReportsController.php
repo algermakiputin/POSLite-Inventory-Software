@@ -212,7 +212,7 @@ class ReportsController extends CI_Controller {
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     	<li>
-                            <a href="' . base_url("sales/view/$order->id") .'">
+                            <a href="' . base_url("sales/details/$order->id") .'">
                                 <i class="fa fa-eye"></i> View Details</a>
                         </li> 
                     </ul>

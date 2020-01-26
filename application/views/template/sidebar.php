@@ -126,6 +126,9 @@
                     </ul>
                 </li>
             <?php endif; ?>
+            <li>
+                <a href="<?php echo base_url('return-refund') ?>"><i class="fa fa-undo"></i> Return/Refund</a>
+            </li>
             <li data-step="7" data-intro="To organize your inventory you can manage your inventory categories.">
                 <a href="<?php echo base_url('categories') ?>"><i class="glyphicon glyphicon glyphicon-tags fa-fw"></i> Categories</a>
             </li>
@@ -152,6 +155,7 @@
                     </li> 
                 </ul>
             </li>
+            
             
             <li>
                 <a href="<?php echo base_url('stores') ?>"><i class="fa fa-bank"></i> Stores</a>
