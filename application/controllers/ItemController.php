@@ -310,7 +310,7 @@ class ItemController extends AppController {
 	}
 
 	public function demoRestriction() {
-
+		return false;
 		if (SITE_LIVE) {
 
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">You cannot Add, Modify or Delete data in Demo Version.</div>');
