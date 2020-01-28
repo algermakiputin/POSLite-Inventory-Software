@@ -76,26 +76,12 @@
                         </li>   
                         <li>
                             <a href="<?php echo base_url('purchase-orders') ?>"><i class="fa fa-circle-o"></i> Internal PO</a>
-                        </li> 
-                        <li>
-                            <a href="<?php echo base_url('external-po') ?>"><i class="fa fa-circle-o"></i> External PO</a>
-                        </li> 
+                        </li>  
                         <li>
                             <a href="<?php echo base_url('supplier/po') ?>"><i class="fa fa-circle-o"></i> New Internal PO</a>
-                        </li> 
-                        <li>
-                            <a href="<?php echo base_url('external_po/new') ?>"><i class="fa fa-circle-o"></i> New External PO</a>
-                        </li> 
+                        </li>  
                     </ul>
-                </li>  
-                <li >
-                   <a href="#"><i class="fa fa-terminal fa-fw"></i> Sales<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="<?php echo base_url('sales/new') ?>"><i class="fa fa-circle-o"></i> Enter Sales</a>
-                        </li> 
-                    </ul>
-                </li>
+                </li>   
                 <li>
                    <a href="#"><i class="fa fa-archive fa-fw"></i> Stocks Transfer <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level"> 
@@ -108,6 +94,14 @@
                         
                     </ul>
                 </li> 
+                <li >
+                   <a href="#"><i class="fa fa-terminal fa-fw"></i> Sales<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?php echo base_url('sales/new') ?>"><i class="fa fa-circle-o"></i> Enter Sales</a>
+                        </li> 
+                    </ul>
+                </li>
                 <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -117,12 +111,12 @@
                         <li>
                             <a href="<?php echo base_url('reports/credit') ?>"><i class="fa fa-circle-o"></i> Credit</a>
                         </li>
-                        <!-- <li>
-                            <a href="<?php echo base_url('reports') ?>"><i class="fa fa-circle-o"></i> View Reports</a>
-                        </li> -->
-                      <!--   <li>
-                            <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
-                        </li> -->
+                        <li>
+                            <a href="<?php echo base_url('external-po') ?>"><i class="fa fa-circle-o"></i> View External PO</a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo base_url('external_po/new') ?>"><i class="fa fa-circle-o"></i> New External PO</a>
+                        </li> 
                     </ul>
                 </li>
             <?php endif; ?>

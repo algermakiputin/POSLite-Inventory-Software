@@ -17,8 +17,9 @@
             <table class="table table-striped table-bordered" id="invoice_tbl">
                 <thead>
                     <tr>
+                        <th>Invoice Date</th>
                         <th>Invoice No:</th> 
-                        <th>Invoice Date</th>  
+                        <th>Type</th> 
                         <th>Customer Name</th>
                         <th>Amount</th> 
                         <th>Note</th>

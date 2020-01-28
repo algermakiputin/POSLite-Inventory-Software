@@ -19,125 +19,120 @@
             <div class="alert alert-success">
                 <?php echo $this->session->flashdata('success') ?>
             </div>
-            <?php endif; ?>
-                <?php if ($this->session->flashdata('error')): ?>
-                    <div class="form-group">
-                        <div class="alert alert-danger">
-                            <?php echo $this->session->flashdata('error') ?>
-                        </div>
-                    </div>
-                    <?php endif; ?>
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('error')): ?>
+            <div class="form-group">
+                <div class="alert alert-danger">
+                    <?php echo $this->session->flashdata('error') ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
     <?php echo form_open("StocksTransferController/process_internal_po"); ?>
-        <div class="col-lg-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Details
-                </div>
-                <div class="panel-body">
-
-                    <div class="form-group">
-                      <label>PO Number</label>
-                      <input type="text" class="form-control" value="<?php echo $po->po_number ?>" name="po_number" readonly>
-                      <input type="hidden" value="<?php echo $po->id ?>" name="po_id" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>Enter Invoice Number</label>
-                        <input type="text" required="required" class="form-control" value="<?php echo $po->invoice_number ?>" id="invoice-number" name="invoice_number">
-                        <input type="hidden" name="store_number" id="store-number" readonly="readonly" value="<?php echo $po->store_number ?>">
-                        <input type="hidden" name="type" value="internal">
-                    </div>
-                    <div class="form-group">
-                        <label>Date:</label>
-                        <input type="date" value="<?php echo $po->po_date ?>" readonly  required="required" class="form-control" name="date">
-                    </div>
-                    <div class="form-group">
-                        <label>Deliver To</label>
-                        <input type="text" readonly="readonly" class="form-control" value="<?php echo $po->store_name ?>" name="">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Delivery Note</label>
-                        <textarea class="form-control" name="note"  rows="4"><?php echo $po->note ?></textarea>
-                    </div> 
-                </div>
-
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Details
             </div>
-        </div>
-        <div class="col-lg-9">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Items
+            <div class="panel-body">    
+                <div class="form-group">
+                    <label>Enter Delivery Note Number</label>
+                    <input type="text" required="required" class="form-control" value="" name="delivery_note_number">
+                    <input type="hidden" name="store_number" id="store-number" readonly="readonly" value="<?php echo $po->store_number ?>">
+                    <input type="hidden" name="type" value="internal">
                 </div>
-                <div class="panel-body">
-                    <table class="table" id="products-table" style="border-bottom: solid 1px #ddd;table-layout: fixed;">
-                        <thead>
-                            <th>Product Name</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
-                            <th>Sub Total</th>
-                            <th width="50px">&nbsp;</th>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($orderline as $order): ?>
-                                <tr>
-                                    <td>
-                                        <input type="text" readonly="readonly" autocomplete="off" class="form-control product" required="required" name="product[]" value="<?php echo $order->product_name ?>">
-                                        <input type="hidden" name="product_id[]" value="<?php echo $order->product_id ?>">
-                                    </td>
-                                    <td>
-                                        <input 
-                                        type="number" 
-                                        value="<?php echo $order->quantity ?>" 
-                                        data-qty="<?php echo $order->quantity ?>" 
-                                        required="required" 
-                                        autocomplete="off"  
-                                        class="form-control quantity" 
-                                        name="quantity[]">
-                                    </td>
-                                    <td>
-                                        <input type="text" required="required" value="<?php echo $order->price ?>" autocomplete="off" class="form-control" name="price[]">
-                                    </td>
-                                    <td>
-                                        <input type="text" autocomplete="off" value="<?php echo $order->price * $order->quantity ?>" class="form-control" name="sub[]" readonly="readonly">
-                                    </td>
-                                    <td><i class="fa fa-trash delete-row"></i> &nbsp;</td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="4" class="text-right"><b>Total:</b></td>
-                                <td><span id="grand-total">0.0</span></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <div class="actions">
-                        <!-- <button type="button" class="btn btn-sm btn-default" id="new-line"><i class="fa fa-plus"></i> Add New Line</button> &nbsp;
-            <button type="button" class="btn btn-sm btn-default" id="remove-line"><i class="fa fa-close"></i> Remove Line</button> -->
-                    </div>
-                </div>
+                <div class="form-group">
+                  <label>PO Number</label>
+                  <input type="text" class="form-control" value="<?php echo $po->po_number ?>" name="po_number" readonly>
+                  <input type="hidden" value="<?php echo $po->id ?>" name="po_id" readonly>
+              </div>
+
+              <div class="form-group">
+                <label>Date:</label>
+                <input type="date" value="<?php echo $po->po_date ?>" readonly  required="required" class="form-control" name="date">
             </div>
-        </div>
-        <div class="col-md-12 text-right">
-            <hr>
             <div class="form-group">
-           <!--      <button class="btn btn-info" type="button" id="pdf">PDF</button> -->
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <label>Deliver To</label>
+                <input type="text" readonly="readonly" class="form-control" value="<?php echo $po->store_name ?>" name="">
             </div>
-        </div>
-        <?php echo form_close(); ?>
-</div>
-<style type="text/css">
-    .delete-row:hover {
-        cursor: pointer;
-    }
-</style>
 
-<script src="<?php echo base_url('assets/js/jquery-autocomplete.js') ?>"></script>
-<script src="<?php echo base_url('assets/js/po.js') ?>"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
+            <div class="form-group">
+                <label>Delivery Note</label>
+                <textarea class="form-control" name="note"  rows="4"><?php echo $po->note ?></textarea>
+            </div> 
+        </div>
+
+    </div>
+</div>
+<div class="col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Items
+        </div>
+        <div class="panel-body">
+            <table class="table" id="products-table" style="border-bottom: solid 1px #ddd;table-layout: fixed;">
+                <thead>
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th> 
+                    <th width="50px">&nbsp;</th>
+                </thead>
+                <tbody>
+                    <?php foreach ($orderline as $order): ?>
+                        <tr>
+                            <td>
+                                <input type="text" required="required" class="form-control" name="product_id[]" value="<?php echo $order->product_id ?>">
+                            </td>
+                            <td>
+                                <input type="text" readonly="readonly" autocomplete="off" class="form-control product" required="required" name="product[]" value="<?php echo $order->product_name ?>">
+
+                            </td>
+                            <td>
+                                <input 
+                                type="number" 
+                                value="<?php echo $order->quantity ?>" 
+                                data-qty="<?php echo $order->quantity ?>" 
+                                required="required" 
+                                autocomplete="off"  
+                                class="form-control quantity" 
+                                name="quantity[]">
+
+                                <input type="hidden" required="required" value="<?php echo $order->price ?>" autocomplete="off" class="form-control" name="price[]">
+                                <input type="hidden" autocomplete="off" value="<?php echo $order->price * $order->quantity ?>" class="form-control" name="sub[]" readonly="readonly">
+                            </td>
+                            
+                            <td><i class="fa fa-trash delete-row"></i> &nbsp;</td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                
+            </table>
+            <div class="actions">
+                        <!-- <button type="button" class="btn btn-sm btn-default" id="new-line"><i class="fa fa-plus"></i> Add New Line</button> &nbsp;
+                            <button type="button" class="btn btn-sm btn-default" id="remove-line"><i class="fa fa-close"></i> Remove Line</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-right">
+                <hr>
+                <div class="form-group">
+                 <!--      <button class="btn btn-info" type="button" id="pdf">PDF</button> -->
+                 <button type="submit" class="btn btn-primary">Submit</button>
+             </div>
+         </div>
+         <?php echo form_close(); ?>
+     </div>
+     <style type="text/css">
+        .delete-row:hover {
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="<?php echo base_url('assets/js/jquery-autocomplete.js') ?>"></script>
+    <script src="<?php echo base_url('assets/js/po.js') ?>"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
         // Romove row when trash icon is clicked
         $("body").on("click", ".delete-row", function() {
             $(this).parents("tr").remove();
@@ -149,7 +144,7 @@
         var index = 1; 
         var total = 0;
         var currency = "<?php echo currency(); ?>"; 
-       
+
         $("#new-line").click(function(e) {
 
             tbody.append("<tr id='row" + index + "'>" + row + "</tr>");
@@ -212,29 +207,29 @@
             var note = $("[name='note']").val();
 
             var items = [
-                [{
-                    text: 'PRODUCT',
-                    bold: true,
-                    fillColor: "#4f90bb",
-                    color: "#fff"
-                }, {
-                    text: 'QTY',
-                    bold: true,
-                    fillColor: "#4f90bb",
-                    color: "#fff"
-                }, {
-                    text: 'PRICE',
-                    bold: true,
-                    fillColor: "#4f90bb",
-                    color: "#fff",
-                    alignment: "right"
-                }, {
-                    text: 'AMOUNT',
-                    bold: true,
-                    fillColor: "#4f90bb",
-                    color: "#fff",
-                    alignment: "right"
-                }]
+            [{
+                text: 'PRODUCT',
+                bold: true,
+                fillColor: "#4f90bb",
+                color: "#fff"
+            }, {
+                text: 'QTY',
+                bold: true,
+                fillColor: "#4f90bb",
+                color: "#fff"
+            }, {
+                text: 'PRICE',
+                bold: true,
+                fillColor: "#4f90bb",
+                color: "#fff",
+                alignment: "right"
+            }, {
+                text: 'AMOUNT',
+                bold: true,
+                fillColor: "#4f90bb",
+                color: "#fff",
+                alignment: "right"
+            }]
             ];
             var total = 0;
             var order = $("#products-table tbody tr");
@@ -314,8 +309,8 @@
 
             return number;
         }
- 
- 
+
+
         $("input[name='quantity[]']").keyup(function() {
             var quantity = parseInt($(this).val()) || 1;
             var old_qty = $(this).data('qty');
@@ -325,8 +320,8 @@
               alert("Error: Cannot be greather than the invoice quantity");
 
               $(this).val(old_qty);
-            }
+          }
 
-        })
+      })
     })
 </script>

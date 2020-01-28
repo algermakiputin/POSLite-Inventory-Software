@@ -33,7 +33,8 @@
                     <th >P.O. No.</th>
                     <th>Branch / Store</th>
                     <th >Requested To</th>
-                    <th >Memo</th> 
+                    <th >Memo</th>  
+                    <th>Delivery Note</th>
                     <th>Status</th>
                     <th >Actions</th>
                  </tr>

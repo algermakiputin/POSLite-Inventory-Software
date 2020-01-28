@@ -216,7 +216,7 @@ class SalesController extends CI_Controller {
 		$status = 0;
 		$sales = $this->input->post('sales');
 		$type = $this->input->post('transaction_type');
-		$status = $type == "cash" ? 1 : 0;
+		$status = $type == "cash" || $type == "cod" ? 1 : 0;
 		$total_amount = $this->input->post('total_amount');
 		$customer_id = $this->input->post('customer_id');
 		$supplier_id = $this->input->post('supplier_id');
@@ -295,6 +295,7 @@ class SalesController extends CI_Controller {
 		}
   
 		$this->db->insert_batch('sales_description', $data);
+		$this->OrderingLevelModel->update_stocks($data, $store_number);
 
 		if ($this->db->trans_status() === FALSE)
 		{

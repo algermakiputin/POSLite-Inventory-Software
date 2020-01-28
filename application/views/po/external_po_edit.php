@@ -61,30 +61,37 @@
    <div class="panel-body">
     <table class="table" id="products-table" style="border-bottom: solid 1px #ddd;table-layout: fixed;">
       <thead>
-        <th>Item ID</th>
         <th>Product Name</th>
-        <th>Quantity</th> 
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Sub Total</th>
+        <th width="50px"></th>
       </thead>
       <tbody>
         <tr> 
           <?php foreach ($orderline as $order): ?>
             <td>
-              <input type="text" class="form-control" name="product_id[]" value="<?php echo $order->product_id; ?>">
-            </td>
-            <td>
               <input type="text" autocomplete="off" class="form-control product" required="required" name="product[]" value="<?php echo $order->product_name; ?>">
-              </td>
-              <td>
-                <input type="number" data-qty="<?php echo $order->quantity; ?>" value="<?php echo $order->quantity; ?>" required="required" autocomplete="off" class="form-control quantity" name="quantity[]">
-                <input type="hidden" value="<?php echo $order->price; ?>" required="required" autocomplete="off" class="form-control" name="price[]"></
-                <input type="hidden" autocomplete="off" value="<?php echo currency() . number_format($order->price * $order->quantity, 2); ?>" class="form-control" name="sub[]" readonly="readonly">
-              </td>
-              
+              <input type="hidden" name="product_id[]" value="<?php echo $order->product_id; ?>"></td>
+              <td><input type="number" value="<?php echo $order->quantity; ?>" required="required" autocomplete="off" class="form-control quantity" name="quantity[]"></td>
+              <td><input type="text" value="<?php echo $order->price; ?>" required="required" autocomplete="off" class="form-control" name="price[]"></td>
+              <td><input type="text" autocomplete="off" value="<?php echo currency() . number_format($order->price * $order->quantity, 2); ?>" class="form-control" name="sub[]" readonly="readonly"></td>
+              <td><i class="fa fa-trash delete-row"></i></td>
             </tr>
             <?php $total+= $order->price * $order->quantity; ?>
           <?php endforeach; ?>
-        </tbody> 
-      </table>  
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" class="text-right"><b>Total:</b></td>
+            <td><span id="grand-total"><?php echo currency() . number_format($total, 2) ?> </span></td>
+          </tr>
+        </tfoot>
+      </table> 
+      <div class="actions"> 
+        <button type="button" class="btn btn-sm btn-default" id="new-line"><i class="fa fa-plus"></i> Add New Line</button> &nbsp;
+        <button type="button" class="btn btn-sm btn-default" id="remove-line"><i class="fa fa-close"></i> Remove Line</button>
+      </div>
     </div> 
   </div> 
 </div> 
@@ -112,19 +119,6 @@
       $(this).parents("tr").remove();
       calculate_total_po_order();
     });
-
-     $("body").on("keyup", 'input[name="quantity[]"]', function() {
-        var quantity = parseInt($(this).val()) || 1;
-        var old_qty = $(this).data('qty');
-
-        if (quantity > old_qty) {
-
-          alert("Error: Cannot be greather than the invoice quantity");
-
-          $(this).val(old_qty);
-        }
-
-    })
 
     var row = $("#products-table tbody tr:first-child").html();
     var tbody = $("#products-table tbody");
@@ -283,7 +277,5 @@
     }
 
   })
-
-
 
 </script>

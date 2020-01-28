@@ -184,7 +184,17 @@ class StocksTransferController Extends CI_Controller {
 
 		$this->load->model("OrderingLevelModel");
 
-		$po_number = $this->input->post('po_number'); 
+		$delivery_note_number = $this->input->post('delivery_note_number');
+
+		$validate_dm = $this->db->where('delivery_note', $delivery_note_number)->get('purchase_order')->num_rows();
+
+		if ($validate_dm) {
+			errorMessage("Error: Delivery Note Number Already Exist");
+			return redirect($_SERVER['HTTP_REFERER']);
+		}
+ 		
+
+		$po_number = $this->input->post('po_number');  
 		$product_id = $this->input->post('product_id[]');
 		$products = $this->input->post('product[]');
 		$quantity = $this->input->post('quantity[]');
@@ -202,7 +212,8 @@ class StocksTransferController Extends CI_Controller {
 					'note'	=> $note,
 					'date'	=> get_date_time(),
 					'status'	=> "For Delivery",
-					'po_id' => $po_id
+					'po_id' => $po_id,
+					'delivery_note' => $delivery_note_number
 			]);
 
 		$stocks_transfer_id = $this->db->insert_id();
@@ -220,6 +231,7 @@ class StocksTransferController Extends CI_Controller {
 
 		}
 
+		$this->db->where('po_number', $po_number)->update('purchase_order',['delivery_note' => $delivery_note_number]);
 		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => 'Ongoing Transfer']);
 		$this->OrderingLevelModel->update_stocks($data, $store_number);
 		$this->db->insert_batch('stocks_transfer_line',$data);

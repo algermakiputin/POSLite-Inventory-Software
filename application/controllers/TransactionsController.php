@@ -18,8 +18,7 @@ class TransactionsController extends CI_Controller {
 			echo "0"; 
 		}else {
 			echo "1";
-		}
- 
+		} 
 
 	}
  
@@ -168,6 +167,7 @@ class TransactionsController extends CI_Controller {
 			$transaction->status = $transaction->status ? "Complete" : "Pending";
 			$transaction->date_time = date('Y-m-d', strtotime($transaction->date_time));
 
+
 			$transaction->id = '<div class="dropdown">
               <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -184,9 +184,10 @@ class TransactionsController extends CI_Controller {
 	  
 		$data_count = $this->db->where('type', 'invoice')->get('sales')->num_rows();
 
-		$columns = [  
-			'transaction_number' => "Invoice No",
+		$columns = [   
 			'date_time' => "Date", 
+			'transaction_number' => "Invoice No",
+			'payment_type' => 'Type',
 			'customer_name' => "Customer",
 			'total' => "Amount",  
 			'note' => "Note",
@@ -198,7 +199,7 @@ class TransactionsController extends CI_Controller {
 	public function destroy_invoice($id) {
 
 		$this->db->where('id', $id)->delete('sales');
-		$this->db->where('sales_id', $id)->delete();
+		$this->db->where('sales_id', $id)->delete('sales_description');
 		success("Invoice Deleted Successfully");
 
 		return redirect('invoice');

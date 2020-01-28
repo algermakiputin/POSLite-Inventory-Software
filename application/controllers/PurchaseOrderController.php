@@ -24,41 +24,58 @@ class PurchaseOrderController Extends CI_Controller {
 			$status = $po->status;
 			if ($status == "Request Item" || $status == "Ongoing Transfer") {
 
-				$mark = '<li>
-                         <a href="' . base_url("PurchaseOrderController/mark_delivered/$po->po_number") .'">
-                             <i class="fa fa-truck"></i> Mark as delivered</a>
-                     </li>
+				$mark = '
                      <li>
                          <a href="' . base_url("PurchaseOrderController/edit/$po->po_number") .'">
                              <i class="fa fa-edit"></i> Edit</a>
                      </li>';
 
-            if ($status == "Ongoing Transfer")
+            if ($status == "Ongoing Transfer") {
             	$class = "badge-info";
+            	$mark = '
+					<li>
+	                   <a href="' . base_url("PurchaseOrderController/mark_delivered/$po->po_number") .'">
+	                       <i class="fa fa-truck"></i> Mark as delivered</a>
+	               </li>
+					';
+            }
 
 			}else if ($status == "Ongoing Transfer") {
 
+				$mark = '
+					<li>
+                   <a href="' . base_url("PurchaseOrderController/mark_delivered/$po->po_number") .'">
+                       <i class="fa fa-truck"></i> Mark as delivered</a>
+               </li>
+				';
 				$class = "badge-info";
 			}else {
 
 				$class = "badge-success";
 			}
 
-			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, 
+			$mark .= '<li>
+                         <a href="' . base_url("po/view/$po->po_number") .'">
+                             <i class="fa fa-plus"></i> View</a>
+                     </li>';
+
+         if ($status == "Request Item") {
+
+         	$mark .= '<li>
+                         <a href="' . base_url("PurchaseOrderController/destroy/$po->id") .'" class="delete-data">
+                             <i class="fa fa-trash"></i> Delete</a>
+                     </li>';
+         }
+
+			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, $po->delivery_note ?? '--',
 				"<span class='badge $class'>$status</span>",
 				'<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     '.$mark.'
                     
-                    	<li>
-                         <a href="' . base_url("po/view/$po->po_number") .'">
-                             <i class="fa fa-plus"></i> View</a>
-                     </li>
-                     <li>
-                         <a href="' . base_url("PurchaseOrderController/destroy/$po->id") .'" class="delete-data">
-                             <i class="fa fa-trash"></i> Delete</a>
-                     </li>
+                    	
+                     
                     </ul>
             </div>'];
 		}
@@ -103,7 +120,7 @@ class PurchaseOrderController Extends CI_Controller {
                              <i class="fa fa-times"></i> Close PO</a>
                      </li>
                      <li>
-                         <a href="' . base_url("PurchaseOrderController/edit/$po->po_number") .'">
+                         <a href="' . base_url("PurchaseOrderController/external_po_edit/$po->po_number") .'">
                              <i class="fa fa-edit"></i> Edit</a>
                      </li>';
 			}else if ($po->status == "Closed") {
@@ -138,6 +155,26 @@ class PurchaseOrderController Extends CI_Controller {
 			'recordsFiltered'	=> $count,
 			'data' => $dataset
 		]);
+	}
+
+	public function external_po_edit($id) {
+
+		$po = $this->db->where('po_number', $id)->get("purchase_order")->row();
+	  
+		if (!$po) return redirect('/');
+
+		$orderline = $this->db->where('purchase_order_id', $po->id)->get('purchase_order_line')->result();
+
+		$data['content'] = "po/external_po_edit";
+		$data['po'] = $po;
+		$data['orderline'] = $orderline;
+		$data['suppliers'] = $this->db->get('supplier')->result();
+		$data['products'] = json_encode($this->get_products());
+		$data['image_base64'] = $this->get_logo_base64();
+		$data['total'] = 0;
+
+		$this->load->view('master', $data);
+
 	}
 
 	public function mark_delivered($po_number) {
@@ -285,17 +322,14 @@ class PurchaseOrderController Extends CI_Controller {
 		$max_id = $this->db->select("MAX(id) as id")->from("purchase_order")->get()->row()->id;
 		$max_id = $max_id ? $max_id : 0;
 		
-		$po_number = "EXPO" . date('Y') . '-' . ($max_id + 1);
-
+		$po_number = "BN" . date('Y') . '-' . ($max_id + 1);
 		$products = $this->get_products();
-
-
 		$data['products'] = json_encode($products);
-		$data['content'] = "po/new_external_po";
+		
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['po_number'] = $po_number;
 		$data['image_base64'] = $this->get_logo_base64();
- 
+ 		$data['content'] = "po/new_external_po";
 		$this->load->view('master', $data);
 
 	}
@@ -326,17 +360,19 @@ class PurchaseOrderController Extends CI_Controller {
 		$store_number = $this->input->post('store_number');
 	 	$type = $this->input->post('type');
 	 	$po_number = $this->input->post('po_number');
+	 	$requested_store_name = 0;
 	 	$status = "Request Item";
 
-	 	if ($type == "external") 
+	 	if ($type == "external")  {
 	 		$status = "Open PO";
+	 		
+	 	}else {
+	 		$requested_store_name = $this->db->where('number', $request)->get('stores')->row()->branch;
+	 	}
 
-		$this->db->trans_begin();
-
-
+		$this->db->trans_begin(); 
 		$store_name = $this->db->where('number', $store_number)->get('stores')->row()->branch;
-		$requested_store_name = $this->db->where('number', $request)->get('stores')->row()->branch;
-
+   
 		$this->db->insert("purchase_order", [
 			'supplier_id' => $supplier,  
 			'memo' => $memo,
@@ -383,9 +419,7 @@ class PurchaseOrderController Extends CI_Controller {
 	}
 
 	public function update() {
-
-		$supplier = $this->input->post('supplier');
-		$shipvia = $this->input->post('shipvia');
+ 
 		$po_number = $this->input->post('po_number');
 		$memo = $this->input->post('memo');
 		$date = $this->input->post('date');
@@ -398,10 +432,7 @@ class PurchaseOrderController Extends CI_Controller {
 	 	 
 		$this->db->trans_begin();
 
-		$this->db->where("po_number", $po_number)->update("purchase_order", [
-			'supplier_id' => $supplier, 
-			'shipvia' => $shipvia,
-			'memo' => $memo,
+		$this->db->where("po_number", $po_number)->update("purchase_order", [  
 			'po_date' => date('Y-m-d', strtotime($date)),
 			'po_number' => $po_number, 
 			'note' => $note
