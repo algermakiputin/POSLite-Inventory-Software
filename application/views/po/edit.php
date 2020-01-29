@@ -69,10 +69,10 @@
         <tr> 
           <?php foreach ($orderline as $order): ?>
             <td>
-              <input type="text" class="form-control" name="product_id[]" value="<?php echo $order->product_id; ?>">
+              <input type="text" readonly="readonly" class="form-control" name="product_id[]" value="<?php echo $order->product_id; ?>">
             </td>
             <td>
-              <input type="text" autocomplete="off" class="form-control product" required="required" name="product[]" value="<?php echo $order->product_name; ?>">
+              <input type="text" autocomplete="off" class="form-control product" required="required" name="product[]" value="<?php echo $order->product_name; ?>" readonly>
               </td>
               <td>
                 <input type="number" data-qty="<?php echo $order->quantity; ?>" value="<?php echo $order->quantity; ?>" required="required" autocomplete="off" class="form-control quantity" name="quantity[]">
@@ -90,8 +90,7 @@
 </div> 
 <div class="col-md-12 text-right">
   <hr>
-  <div class="form-group">
-    <button class="btn btn-info" type="button" id="pdf">PDF</button>
+  <div class="form-group"> 
     <button type="submit" class="btn btn-primary">Update</button>
   </div>
 </div>

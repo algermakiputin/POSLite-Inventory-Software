@@ -41,6 +41,16 @@
         <input type="text" value=""  required="required" class="form-control" name="po_number">
         <input type="hidden" name="type" value="external">
         <input type="hidden" name="store_number" value="<?php echo get_store_number(); ?>">
+       
+    </div>
+    <div class="form-group">
+        <label>Select Customer:</label>
+        <select class="form-control" name="customer_id" id="customer_id">
+          <?php foreach ($customers as $customer): ?> 
+            <option value="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
+          <?php endforeach; ?>
+        </select>
+        <input type="hidden" name="customer_name" id="customer_name">
     </div>
     <div class="form-group">
         <label>Date:</label>
@@ -132,6 +142,11 @@
         $(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
     }
 });
+
+    $("#customer_id").change(function(e) {
+      var name = $(this).find("option:selected").text();
+      $("#customer_name").val(name);
+    })
 
     $("#new-line").click(function(e) {
 

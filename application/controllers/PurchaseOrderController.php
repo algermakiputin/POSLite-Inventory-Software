@@ -90,6 +90,28 @@ class PurchaseOrderController Extends CI_Controller {
 		]);
 	}
 
+	public function find_external_po() {
+
+		$external_po_number = $this->input->post('external_po_number');
+		$external_po = $this->db->where('po_number', $external_po_number)
+										->where('status', 'Delivered')
+										->get('purchase_order')
+										->row();
+
+		if ($external_po) {
+
+			$orderline = $this->db->where('purchase_order_id', $external_po->id)->get('purchase_order_line')->result();
+			echo json_encode([
+				'details' => $external_po,
+				'orderline' => $orderline
+			]);
+
+			
+		}else {
+			echo "0";
+		}
+	}
+
 	public function external_dataTable() {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
@@ -112,7 +134,7 @@ class PurchaseOrderController Extends CI_Controller {
 			if ($po->status == "Open PO") {
 
 				$mark = '<li>
-                         <a href="' . base_url("PurchaseOrderController/mark_delivered/$po->po_number") .'">
+                         <a href="' . base_url("PurchaseOrderController/external_mark_delivered/$po->po_number") .'">
                              <i class="fa fa-truck"></i> Mark as delivered</a>
                      </li>
                      <li>
@@ -205,6 +227,37 @@ class PurchaseOrderController Extends CI_Controller {
 		$this->db->trans_commit();  
 		success("PO Marked as delivered successfully"); 
 		return redirect('purchase-orders');
+
+	}
+
+	public function external_mark_delivered($po_number) {
+		$this->load->model("OrderingLevelModel");
+
+		$po = $this->db->where('po_number', $po_number)->get('purchase_order')->row();
+
+		if (!$po)
+			return redirect('/');
+
+		$stocks_transfer = $this->db->where('po_id', $po->id)->get('stocks_transfer')->row(); 
+		 
+		$stocks_transfer_orderline = $this->db->where('stocks_transfer_id', $stocks_transfer->id)->get('stocks_transfer_line')->result();
+ 		
+ 		$this->db->trans_begin(); 
+
+		$this->OrderingLevelModel->stocks_transfer($stocks_transfer_orderline, $po->store_number);
+		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => 'Delivered']);
+
+		if ($this->db->trans_status() === FALSE)
+		{
+		      $this->db->trans_rollback(); 
+		      errorMessage("Opps! Something Went Wrong please try again later.."); 
+				return redirect('external-po');
+		}
+		 
+
+		$this->db->trans_commit();  
+		success("PO Marked as delivered successfully"); 
+		return redirect('external-po');
 
 	}
 
@@ -325,6 +378,7 @@ class PurchaseOrderController Extends CI_Controller {
 		$po_number = "BN" . date('Y') . '-' . ($max_id + 1);
 		$products = $this->get_products();
 		$data['products'] = json_encode($products);
+		$data['customers'] = $this->db->get('customers')->result();
 		
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['po_number'] = $po_number;
@@ -361,6 +415,9 @@ class PurchaseOrderController Extends CI_Controller {
 	 	$type = $this->input->post('type');
 	 	$po_number = $this->input->post('po_number');
 	 	$requested_store_name = 0;
+	 	$customer_id = $this->input->post('customer_id');
+	 	$customer_name = $this->input->post('customer_name');
+
 	 	$status = "Request Item";
 
 	 	if ($type == "external")  {
@@ -386,6 +443,8 @@ class PurchaseOrderController Extends CI_Controller {
 			'store_name' => $store_name,
 			'requested_store_name' => $requested_store_name,
 			'status' => $status,
+			'customer_name' => $customer_name,
+			'customer_id'	=> $customer_id
 		]);
 		
 		$po_id = $this->db->insert_id();

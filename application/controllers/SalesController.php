@@ -309,6 +309,118 @@ class SalesController extends CI_Controller {
 	}
 
 
+	public function insert_invoice_po() {
+		$data = [];
+		// $last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
+		// $transaction_number = "TRN000" . ((int)$last_sales_id + 1 ); 
+
+		$status = 0; 
+		$type = $this->input->post('transaction_type');
+		$status = $type == "cash" || $type == "cod" ? 1 : 0;
+		$total_amount = $this->input->post('total_amount');
+		$customer_id = $this->input->post('customer_id');
+		$supplier_id = $this->input->post('supplier_id');
+		$supplier_name = $this->input->post('supplier_name');
+		$store_number = $this->session->userdata('store_number');
+		$invoice_number = $this->input->post('invoice');
+		$user_name = $this->session->userdata('username');
+
+		$address = "";
+		$city = "";
+		$zipcode = "";
+
+		if ( $customer_id ) {
+
+			$customer = $this->db->where('id', $customer_id)->get('customers')->row();
+		 
+			if ($customer) {
+
+				$address = $customer->address;
+				$city = $customer->city;
+				$zipcode = $customer->zipcode;
+
+			}
+		}
+
+		$this->load->model("PriceModel");
+		$this->load->model("OrderingLevelModel");
+		$this->db->trans_begin(); 
+
+		/*	4 Types of Transactions 
+			1. Cash - When cash is selected, Automatically insert transaction as done, and update inventory.
+			2. Credit - Transaction is not yet completed as the payment will still be credit to the customer account but inventory would be updated,
+			3. Stand By - Transaction would be saved as standby status. There is no sales yet, and can be modified until the transaction is completed by the user.
+			4. Invoice - This is an invoice contain prices of the products that will be sent to the customer, No transaction yet so will not update inventory value.
+		*/
+		$this->db->insert('sales',[
+				'id' => null , 
+				'transaction_number' => $invoice_number, 
+				'user_id' => $this->session->userdata('id'),
+				'customer_id' => $customer_id,
+				'customer_name' => $this->input->post('customer_name'),
+				'type' => $this->input->post('transaction_type'),
+				'status' => $status,
+				'total' => $total_amount,
+				'note' => $this->input->post('note'),
+				'address' => $address,
+				'city'	=> $city,
+				'zipcode' => $zipcode,
+				'supplier_id' => $supplier_id,
+				'supplier_name' => $supplier_name,
+				'date_time' => get_date_time(),
+				'user_id' => $this->session->userdata('id'),
+				'store_number' => $store_number,
+				'user_name' => $user_name
+			]);
+
+		$sales_id = $this->db->insert_id();
+		$sales = $this->security->xss_clean($sales);
+		$column = "store" . $store_number;
+
+		$item_ids = $this->input->post('product_id[]');
+		$quantity = $this->input->post('quantity[]');
+		$price = $this->input->post('price[]');
+		$product = $this->input->post('product[]'); 
+
+		
+		for ($i = 0; $i < count($item_ids); $i++) {
+			$item_id = $sales_id[$i];
+			$qty = $quantity[$i];
+			$name = $product[$i];
+			$price = $price[$i];
+
+			$transactionProfit = $this->db->where('item_id', $sales_id[$i])->get('prices')->row()->capital;
+
+			$data[] = [ 
+				'item_id' => $item_id,
+				'quantity' => $qty,
+				'sales_id' => $sales_id, 
+				'price' => $price,
+				'name' => $name,
+				'discount' =>  0,
+				'profit' => $transactionProfit,
+				'user_id' => $this->session->userdata('id'),
+				'created_at' => get_date_time()  
+			];
+		}
+			 
+  
+		$this->db->insert_batch('sales_description', $data);
+		$this->OrderingLevelModel->update_stocks($data, $store_number);
+
+		if ($this->db->trans_status() === FALSE)
+		{
+		        $this->db->trans_rollback();
+		        errorMessage("Opps Something Went Wrong Please Try Again");
+		        return redirect('sales/new');
+		}
+		 
+		$this->db->trans_commit(); 
+		success("New Sales Saved Successfully");
+		return redirect('sales/new');
+
+	}
+
 	public function enter_sales() {
 
 		

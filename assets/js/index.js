@@ -88,6 +88,75 @@ $(document).ready(function() {
 				this.findInvoice();
 				this.external_po_datatable();
 				this.internal_po_datatable();
+				this.find_external_po();
+			},
+
+			find_external_po: function() {
+
+				$("#enter-external-po").click(function() {
+
+					var external_po_number = $("#external-po-number").val();
+
+					var data = {};
+
+					data[csrfName] = csrfHash;
+					data['external_po_number'] = external_po_number;
+
+					if (external_po_number) {
+
+						$.ajax({
+							type: 'POST',
+							url: base_url + 'PurchaseOrderController/find_external_po',
+							data: data, 
+							success: function(data) { 
+								
+								if (data != '0') {
+									var result = JSON.parse(data);
+								       
+									var total = 0;
+									var tbody = $("#products-table tbody").empty();
+
+									for (i = 0; i < result.orderline.length; i++) {
+										console.log(result.orderline[i]);
+
+										tbody.append('<tr><td>'+
+												'<input type="text" value="'+result.orderline[i].product_name+'" readonly="readonly" autocomplete="off" class="form-control product" required="required" name="product[]">'+
+												'<input type="hidden" name="product_id[]" value="'+result.orderline[i].product_id+'">'+
+                                 '</td>' + 
+                                 '<td>' + 
+                                		'<input type="number" required="required" value="'+result.orderline[i].quantity+'" autocomplete="off" class="form-control quantity" name="quantity[]">'+
+                                	'</td>' +
+                                 '<td>' +   
+                                		'<input type="text" required="required" value="'+result.orderline[i].price+'" autocomplete="off" class="form-control" name="price[]">'+
+                                	'</td>' +
+                                 '<td>' +  
+                                		'<input type="text" autocomplete="off" value="'+result.orderline[i].price * result.orderline[i].quantity+'" class="form-control" name="sub[]" readonly="readonly">' +
+                                	'</td></tr>');
+										 // tbody.append('<tr>' +
+										 // 	'<td><input type="text" class="form-control" readonly name="product_id[]" value="'+result.orderline[i].product_id+'"></td>'+
+										 // 	'<td><input type="text" readonly="readonly" autocomplete="off" value="'+result.orderline[i].product_name+'" class="form-control product" required="required" name="product[]"></td>'+
+										 // 	'<td><input type="number" required="required" autocomplete="off" value="'+result.orderline[i].quantity+'" min="1" data-qty="'+result.orderline[i].quantity+'" class="form-control quantity" name="quantity[]"> <input type="hidden" required="required" autocomplete="off" class="form-control" value="'+result.orderline[i].price+'" name="price[]"><input type="hidden" autocomplete="off" class="form-control" value="'+result.orderline[i].price * result.orderline[i].quantity+'" name="sub[]" readonly="readonly"></td><td><i class="fa fa-trash delete-row"></i> &nbsp;</td></tr>')
+										 total += result.orderline[i].price * result.orderline[i].quantity;
+									}
+
+									$("#total_amount").val(total);
+									$("#grand-total").text(currency + total);
+
+									$("#store-number").val(result.details.store_number); 
+									$("#customer_name").val(result.details.customer_name);
+									$("#customer_id").val(result.details.customer_id);
+
+								}else {
+									alert("Error: No Invoice Found in the database");
+								}
+								 
+							}     
+						})
+					}else {
+						alert("External PO Number Is empty");
+					}
+				})
+
 			},
 			findInvoice: function() {
 

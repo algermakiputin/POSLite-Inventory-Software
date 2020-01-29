@@ -28,7 +28,7 @@
                     </div>
                     <?php endif; ?>
     </div>
-    <?php echo form_open("SalesController/confirm_sale"); ?>
+    <?php echo form_open("SalesController/insert_invoice_po"); ?>
         <div class="col-lg-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -36,31 +36,33 @@
                 </div>
                 <div class="panel-body"> 
                     <div class="form-group">
-                        <label>Enter Invoice Number</label>
-                        <input type="text" required="required" class="form-control" id="invoice-number" name="invoice_number">
+                        <label>Enter External PO Number</label>
+                        <input type="text" required="required" class="form-control" id="external-po-number" name="external_po_number">
                         <input type="hidden" name="store_number" id="store-number">
-                        <input type="hidden" name="type" value="internal">
+                        <input type="hidden" name="type" value="external">
+                        <input type="hidden" name="total_amount" id="total_amount" value="">
+                    </div> 
+                    <div class="form-group">
+                        <label>Invoice Number</label>
+                        <input type="text" required="required" class="form-control" id="invoice" name="invoice">  
                     </div> 
                     <div class="form-group">
                         <label>Customer Name:</label>
                         <input type="text" readonly required="required" class="form-control" name="customer_name" id="customer_name">
                         <input type="hidden" name="customer_id" readonly required="required" id="customer_id">
-                    </div> 
-
+                    </div>  
                     <div class="form-group">
                         <label>Transaction Type</label>
-                        <select class="form-control" name="payment_type">
-                            <option value="cash">Cash</option>
-                            <option value="credit">Credit</option>
+                        <select class="form-control" name="transaction_type"> 
+                            <option value="credit" selected="selected">Credit</option>
                         </select>
-                    </div>
-                    
+                    </div> 
                     <div class="form-group">
                         <label>Note</label>
                         <input type="text" class="form-control" name="note">
                     </div>
                     <div class="form-group ">
-                        <button class="btn btn-default btn-sm" type="button" id="enter-invoice">Enter</button>
+                        <button class="btn btn-default btn-sm" type="button" id="enter-external-po">Enter</button>
                     </div>
                 </div> 
             </div>
@@ -76,8 +78,7 @@
                             <th>Product Name</th>
                             <th>Quantity</th>
                             <th>Unit Price</th>
-                            <th>Sub Total</th>
-                            <th width="50px">&nbsp;</th>
+                            <th>Sub Total</th> 
                         </thead>
                         <tbody>
                             <tr>
@@ -93,14 +94,12 @@
                                 </td>
                                 <td>
                                     <input type="text" autocomplete="off" class="form-control" name="sub[]" readonly="readonly">
-                                </td>
-                                <td><i class="fa fa-trash delete-row"></i> &nbsp;</td>
+                                </td> 
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="4" class="text-right"><b>Total:</b></td>
-                                <td><span id="grand-total">0.0</span></td>
+                                <td colspan="4" class="text-right"><b>Total:</b> &nbsp;&nbsp; <span id="grand-total">0.0</span></td> 
                             </tr>
                         </tfoot>
                     </table>
