@@ -79,8 +79,7 @@ $(document).ready(function() {
 					},
 				});
 			},
-	
-
+	 
 		}
 
 		var purchaseOrderController = {
@@ -951,6 +950,93 @@ $(document).ready(function() {
 			},
 		}
 
+		var payments = {
+
+			init: function() {
+				this.find_invoice();
+				this.calculate();
+				this.submitForm();
+			},
+			find_invoice: function() {
+
+				$("#find-invoice").click(function(e) {
+
+					var data = {};
+					var invoice = $("#invoice_number").val();
+					data[csrfName] = csrfHash;
+					data['invoice_number'] = invoice;
+
+					$.ajax({
+						type: 'POST',
+						url: base_url + '/PaymentsController/find_invoice',
+						data: data,
+						success: function(data) {
+
+							if (data != "0") {
+
+								var result = JSON.parse(data);
+
+								$("#customer_id").val(result.customer_id);
+								$("#customer_name").val(result.customer_name);
+								$("#total_amount").val(result.total);
+								$("#invoice_number").attr('readonly', 'readonly');
+								$("#payment").focus();
+
+
+								$("#payment-area").show();
+								$("#find-button").hide();
+
+
+								
+							}else {
+
+								$("#payment-area").hide();
+								$("#find-button").show();
+								alert("Invalid Invoice Number or No Transaction Found");
+							}
+						},
+						error: function(data) {
+							alert("Opps something went wrong please try again later");
+						}
+					})
+				})
+			},
+			calculate: function() {
+
+				$("#payment").keyup(function() {
+
+					var payment = parseFloat($(this).val());
+					var total = parseFloat($("#total_amount").val());
+					var change = parseInt(payment - total);
+
+
+					if (change < 0) {
+ 
+						$("#valid").val(0);
+						$("#change").val(0);
+					}else {
+
+						$("#change").val(change);
+						$("#valid").val(1);	
+					}
+
+					
+				})
+			},
+			submitForm: function() {
+
+				$("#enter-payment").click(function(e) {
+					
+					if ($("#valid").val() == 1) {
+						$("#payment_form").submit();
+					}else {
+						alert("Insufficient Payment");
+					}
+				});
+			}
+		}
+
+		payments.init();
 		reports.init();
 		transactions.init();
 		expenses.init();

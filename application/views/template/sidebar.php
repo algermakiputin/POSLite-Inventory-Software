@@ -65,6 +65,19 @@
                     <!-- /.nav-second-level -->
                 </li>
             <?php endif; ?>
+            <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
+                    <a href="#"><i class="fa fa-credit-card fa-fw"></i> Payments<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?php echo base_url('expenses') ?>"><i class="fa fa-circle-o"></i> View Payments</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('expenses/new') ?>"><i class="fa fa-circle-o"></i> New Payment</a>
+                        </li>
+                         
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
             <?php if ($this->session->userdata('account_type') == "Admin" ||
                         $this->session->userdata('account_type') == "Cashier"
                 ): ?>

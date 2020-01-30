@@ -2,46 +2,51 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class PaymentsController extends CI_Controller {
 
-	public function add_payment($id) {
-
-		$credit = $this->db->where('transaction_number', $id)->get('sales')->row(); 
-		if ( !$credit ) return redirect('/');
-
-		$paid = $this->db->select("SUM(amount) as total")->from("payments")->where('sales_id', $credit->id)->get()->row();
- 
-
-		$data['content'] = "payments/index";
-		$data['credit'] = $credit;
-		$data['paid'] = $paid->total ? $paid->total : 0;
-		$data['grand_total'] = $credit->total ? $credit->total : 0;
-
-
+	public function add_payment() {
+   
+		$data['content'] = "payments/new";  
 		$this->load->view('master', $data);
 	}
 
 
-	public function store() {
- 
-		$id = $this->input->post('id');
-		$amount = $this->input->post('amount');
+	public function insert() {
+ 		
+ 		$invoice_number = $this->input->post('invoice_number'); 
+		$amount = $this->input->post('total_amount');
 		$note = $this->input->post('note');
-		$date = $this->input->post('date');
-		$status = $this->input->post('status');
+		$date = date('Y-m-d'); 
 
 		$this->db->insert('payments', [
-				'sales_id' => $id,
+				'invoice_number' => $invoice_number,
 				'amount' => $amount,
 				'note' => $note,
 				'date' => $date
 			]);
 
-		if ($status == 1) {
-			$this->db->where('id', $id)->update('sales',['status' => 1]);
-		}
+	 
+		$this->db->where('transaction_number', $invoice_number)->update('sales',['status' => 1, 'payment_status' => 1]);
+		 
   		
   		success("Payment added successfully");
 
-  		return redirect('credits');
+  		return redirect('payments/new');
 
 	}
+
+	public function find_invoice() {
+
+		$invoice_number = $this->input->post('invoice_number');
+ 
+		$invoice = $this->db->where('transaction_number', $invoice_number)->get('sales')->row();
+
+		if ($invoice) {
+
+			echo json_encode($invoice);
+		}else {
+
+			echo "0";
+		}
+
+	}
+
 }

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Internal Purchase Orders</h1>
+		<h1 class="page-header">External Purchase Orders</h1>
 	</div> 
     <div class="col-md-12">
         <?php if ($this->session->flashdata('success')): ?>
@@ -31,8 +31,7 @@
                 <tr>
                     <th >P.O. Date</th>
                     <th >P.O. No.</th>
-                    <th>Branch / Store</th>
-                    <th >Requested To</th>
+                    <th>Customer</th> 
                     <th >Memo</th> 
                     <th>Status</th>
                     <th >Actions</th>
