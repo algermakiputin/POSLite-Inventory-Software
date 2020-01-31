@@ -25,7 +25,7 @@
          		</tr>
          		<tr>
          			<th>Payment Type:&nbsp;&nbsp;&nbsp;</th>
-         			<td style="border-bottom: padding: 7px 10px;"><?php echo $sales->payment_type ?></td>
+         			<td style="border-bottom: padding: 7px 10px;"><?php echo $sales->type ?></td>
          		</tr> 
          		<tr>
          			<th>Sales Person:&nbsp;&nbsp;&nbsp;</th>

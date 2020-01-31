@@ -151,7 +151,16 @@ class PurchaseOrderController Extends CI_Controller {
 				$class = "text-success";
 			}
 
-			$dataset[] = [$po->po_date, $po->po_number, $po->customer_name, $po->requested_store_name, $po->memo, "<span class='$class'>$po->status</span>",
+
+			if ($po->status == "Open PO" || $po->status == "Closed") {
+
+				$mark .= '<li>
+                         <a href="' . base_url("PurchaseOrderController/destroy_external_po/$po->id") .'" class="delete-data">
+                             <i class="fa fa-trash"></i> Delete</a>
+                     </li>';
+			}
+
+			$dataset[] = [$po->po_date, $po->po_number, $po->customer_name, $po->memo, "<span class='$class'>$po->status</span>",
 				'<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -161,10 +170,7 @@ class PurchaseOrderController Extends CI_Controller {
                          <a href="' . base_url("po/view/$po->po_number") .'">
                              <i class="fa fa-plus"></i> View</a>
                      </li>
-                     <li>
-                         <a href="' . base_url("PurchaseOrderController/destroy_external_po/$po->id") .'" class="delete-data">
-                             <i class="fa fa-trash"></i> Delete</a>
-                     </li>
+                     
                     </ul>
             </div>'];
 		}

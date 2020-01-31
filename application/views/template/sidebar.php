@@ -122,7 +122,7 @@
                             <a href="<?php echo base_url('reports/cash') ?>"><i class="fa fa-circle-o"></i> Cash</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url('reports/credit') ?>"><i class="fa fa-circle-o"></i> Credit</a>
+                            <a href="<?php echo base_url('reports/credit') ?>"><i class="fa fa-circle-o"></i> Receivables</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url('external-po') ?>"><i class="fa fa-circle-o"></i> View External PO</a>

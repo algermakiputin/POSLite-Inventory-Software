@@ -41,11 +41,11 @@
  			<h4>Filter Report</h4>
  			<div class="form-group">
  				<label>From</label>
- 				<input type="date" name="from" class="form-control" id="from">
+ 				<input type="text" name="from" class="form-control date-range-filter" autocomplete="off" id="from" data-date-format="yyyy-mm-dd">
  			</div>
  			<div class="form-group">
  				<label>To</label>
- 				<input type="date" name="from" class="form-control" id="to">
+ 				<input type="text" name="from" class="form-control date-range-filter" autocomplete="off" id="to" data-date-format="yyyy-mm-dd">
  			</div>
  			<div> 
  				<hr>

@@ -131,7 +131,7 @@ class ReportsController extends CI_Controller {
 
 		$store_number = $filter_store == "" ? get_store_number() : $filter_store;
  
-		$cash = $this->db->where('payment_type', 'cash')
+		$cash = $this->db->where('type', 'cash')
 								->where('store_number', $store_number)	
 								->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
 								->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
@@ -168,7 +168,7 @@ class ReportsController extends CI_Controller {
 			'actions' => "Total"
 		];
 
-		$data_count = $this->db->where('payment_type', 'cash')
+		$data_count = $this->db->where('type', 'cash')
 										->where('store_number', $store_number)	
 										->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
 										->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
@@ -195,7 +195,7 @@ class ReportsController extends CI_Controller {
 		
 		$store_number = $filter_store == "" ? get_store_number() : $filter_store;
 
-		$cash = $this->db->where('payment_type', 'credit')
+		$cash = $this->db->where('type', 'receivable')
 										->where('store_number', $store_number)	
 										->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
 										->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
@@ -221,7 +221,11 @@ class ReportsController extends CI_Controller {
 
 				$order->payment_status = $order->payment_status == 0 ? "Pending Balance" : "Paid";
 
+
+
 			$total += $order->total;
+
+			$order->total = currency() . number_format($order->total, 2);
 		}
 	 
 		$columns = [

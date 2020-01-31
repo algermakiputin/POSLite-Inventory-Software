@@ -41,7 +41,7 @@
             <table class="table table-responsive table-striped table-hover table-bordered" id="expenses_table" width="100%">
                <thead>
                 <tr>
-                    <th width="20%">Type</th>
+                    <th width="20%">Category</th>
                     <th width="20%">Expense Name</th>
                     <th width="20%">Cost</th>
                     <th width="20%">Date</th> 
