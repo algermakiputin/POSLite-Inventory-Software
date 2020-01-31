@@ -1036,6 +1036,73 @@ $(document).ready(function() {
 			}
 		}
 
+		var refunds = {
+
+			init: function() {
+
+				this.find_invoice();
+				this.quantity_validation();
+			},
+			find_invoice: function() {
+
+				$("#return-invoice").click(function() {
+
+					var invoice_number = $("#invoice_number").val();
+					var data = {};
+					data[csrfName] = csrfHash;
+					data['invoice_number'] = invoice_number;
+
+					if (invoice_number) {
+
+						$.ajax({
+							type: 'POST',
+							url: base_url + '/SalesController/find_invoice',
+							data: data,
+							success: function(data) {
+
+								if (data != '0') {
+
+									var result = JSON.parse(data);
+									var tbody = $("#order-description tbody");
+
+									for (i = 0; i < result.orderline.length; i++) {
+
+										tbody.append('<tr>' +
+												'<td> <input type="hidden" name="sales_description_id[]" value="'+result.orderline[i].id+'">'+result.orderline[i].name+'</td>'+
+												'<td> <input type="hidden" name="product_names[]" value="'+result.orderline[i].name+'">'+result.orderline[i].price+'</td>'+
+												'<td>'+result.orderline[i].quantity+'</td>'+
+												'<td><input type="text" data-qty="'+result.orderline[i].quantity+'" class="form-control quantities" name="quantities[]"></td>'+
+											'</tr>');
+									}
+
+									$("#refund_form").show();
+								}
+							},
+							error: function(data) {
+
+							}
+						});
+					}
+				});
+			},
+			quantity_validation: function() {
+
+				$(document.body).on('keyup', '.quantities', function() {
+				 
+					var old_qty = $(this).data('qty');
+					var qty = $(this).val();
+		 
+					if (qty > old_qty) {
+
+						$(this).val(old_qty);
+
+						alert("Refund quantity cannot be greather than quantity ordered");
+					}
+				})
+			}
+		} 
+
+		refunds.init();
 		payments.init();
 		reports.init();
 		transactions.init();

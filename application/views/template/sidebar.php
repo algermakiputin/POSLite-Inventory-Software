@@ -133,9 +133,19 @@
                     </ul>
                 </li>
             <?php endif; ?>
-            <li>
-                <a href="<?php echo base_url('return-refund') ?>"><i class="fa fa-undo"></i> Return/Refund</a>
-            </li>
+            <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
+                <a href="#"><i class="fa fa-undo fa-fw"></i> Returns / Refunds<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('returns') ?>"><i class="fa fa-circle-o"></i> View Returns / Refunds</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('returns/new') ?>"><i class="fa fa-circle-o"></i> New Return / Refund</a>
+                    </li>
+                     
+                </ul>
+                <!-- /.nav-second-level -->
+            </li> 
             <li data-step="7" data-intro="To organize your inventory you can manage your inventory categories.">
                 <a href="<?php echo base_url('categories') ?>"><i class="glyphicon glyphicon glyphicon-tags fa-fw"></i> Categories</a>
             </li>

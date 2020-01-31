@@ -88,7 +88,8 @@ $route['credit/destroy/(:any)'] = "TransactionsController/destroy_credit/$1";
 
 $route['payments/new'] = "PaymentsController/add_payment";
 
-
+$route['returns'] = "RefundsController/index";
+$route['returns/new'] = "RefundsController/new";
 
 $route['expenses'] = "ExpensesController/index";
 $route['expenses/new'] = "ExpensesController/new";

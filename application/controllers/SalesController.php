@@ -12,6 +12,30 @@ class SalesController extends CI_Controller {
 		}
 	}
 
+	public function find_invoice() {
+
+		$invoice_number = $this->input->post('invoice_number');
+
+		$invoice = $this->db->where('transaction_number', $invoice_number)->get('sales')->row();
+
+		if ($invoice) {
+
+			$orderline = $this->db->where('sales_id', $invoice->id)->get('sales_description')->result();
+
+			echo json_encode([
+					'invoice'	=> $invoice,
+					'orderline'	=> $orderline
+				]);
+		}else {
+
+			echo "0";
+
+		}
+
+
+
+	}
+
 	public function confirm_sale() {
 
 		$invoice_number = $this->input->post('invoice_number');

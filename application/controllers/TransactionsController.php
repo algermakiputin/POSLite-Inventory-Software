@@ -187,7 +187,7 @@ class TransactionsController extends CI_Controller {
 		$columns = [   
 			'date_time' => "Date", 
 			'transaction_number' => "Invoice No",
-			'payment_type' => 'Type',
+			'type' => 'Type',
 			'customer_name' => "Customer",
 			'total' => "Amount",  
 			'note' => "Note",
