@@ -90,6 +90,9 @@ $route['payments/new'] = "PaymentsController/add_payment";
 
 $route['returns'] = "RefundsController/index";
 $route['returns/new'] = "RefundsController/new";
+$route['refunds/details/(:any)'] = "RefundsController/details/$1";
+
+$route['denomination/new'] = "CashDenominationController/new";
 
 $route['expenses'] = "ExpensesController/index";
 $route['expenses/new'] = "ExpensesController/new";

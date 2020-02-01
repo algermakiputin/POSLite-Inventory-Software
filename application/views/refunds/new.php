@@ -67,6 +67,11 @@
 						 	 		<tbody> 
 						 	 		</tbody>
 						 	 </table>
+						 	  <div class="form-group">
+						 	 	<label>Customer Name:</label>
+						 	 	<input type="hidden" name="invoice_number" id="invoice">
+						 	 	<input type="text" class="form-control" id="customer_name" name="customer_name" style="max-width:330px;">
+						 	 </div> 
 						 	 <div class="form-group">
 						 	 	<label>Reason:</label>
 						 	 	<input type="text" class="form-control" name="reason" style="max-width:330px;">

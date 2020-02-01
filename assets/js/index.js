@@ -955,7 +955,7 @@ $(document).ready(function() {
 			init: function() {
 				this.find_invoice();
 				this.calculate();
-				this.submitForm();
+				this.submitForm(); 
 			},
 			find_invoice: function() {
 
@@ -1042,6 +1042,7 @@ $(document).ready(function() {
 
 				this.find_invoice();
 				this.quantity_validation();
+				this.refundsDatatable();
 			},
 			find_invoice: function() {
 
@@ -1070,11 +1071,14 @@ $(document).ready(function() {
 										tbody.append('<tr>' +
 												'<td> <input type="hidden" name="sales_description_id[]" value="'+result.orderline[i].id+'">'+result.orderline[i].name+'</td>'+
 												'<td> <input type="hidden" name="product_names[]" value="'+result.orderline[i].name+'">'+result.orderline[i].price+'</td>'+
-												'<td>'+result.orderline[i].quantity+'</td>'+
+												'<td> <input type="hidden" name="prices[]" value="'+result.orderline[i].price+'">'+result.orderline[i].quantity+'</td>'+
 												'<td><input type="text" data-qty="'+result.orderline[i].quantity+'" class="form-control quantities" name="quantities[]"></td>'+
 											'</tr>');
+ 
 									}
 
+									$("#invoice").val(result.invoice.transaction_number);
+									$("#customer_name").val(result.invoice.customer_name);
 									$("#refund_form").show();
 								}
 							},
@@ -1099,6 +1103,24 @@ $(document).ready(function() {
 						alert("Refund quantity cannot be greather than quantity ordered");
 					}
 				})
+			},
+			refundsDatatable: function() {
+
+				var data = {};
+				data[csrfName] = csrfHash; 
+				var refundDataTable = $("#refunds_table").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'RefundsController/datatable',
+						type : 'POST',
+						data : data
+					}, 
+					"targets": 'no-sort',
+					"bSort": false,  
+					"dom": "r",
+					"processing" : true 
+				}); 
 			}
 		} 
 
