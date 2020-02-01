@@ -92,7 +92,9 @@ $route['returns'] = "RefundsController/index";
 $route['returns/new'] = "RefundsController/new";
 $route['refunds/details/(:any)'] = "RefundsController/details/$1";
 
-$route['denomination/new'] = "CashDenominationController/new";
+$route['denomination/start'] = "CashDenominationController/new";
+$route['denomination/close'] = "CashDenominationController/closing";
+$route['denomination'] = "CashDenominationController/denomination";
 
 $route['expenses'] = "ExpensesController/index";
 $route['expenses/new'] = "ExpensesController/new";

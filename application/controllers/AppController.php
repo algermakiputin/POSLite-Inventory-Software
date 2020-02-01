@@ -56,5 +56,29 @@ class AppController extends CI_Controller {
 		$this->load->view('upgrade/index', $license);
 	}
 
+	public function validate_opening_denomination() {
+
+		$date = date('Y-m-d');
+
+		$validate = $this->db->where('DATE_FORMAT(date, "%Y-%m-%d") =', $date)
+									->where('type', 'opening')
+									->get('denomination')
+									->num_rows();
+
+		return $validate;
+	}
+
+	public function validate_closing_denomination() {
+
+		$date = date('Y-m-d');
+
+		$validate = $this->db->where('DATE_FORMAT(date, "%Y-%m-%d") =', $date)
+									->where('type', 'closing')
+									->get('denomination')
+									->num_rows();
+
+		return $validate;
+	}
+
 }
  

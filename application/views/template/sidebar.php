@@ -103,8 +103,7 @@
                         </li>   
                         <li>
                             <a href="<?php echo base_url('transfer/external-po') ?>"><i class="fa fa-circle-o"></i> External PO</a>
-                        </li> 
-                        
+                        </li>  
                     </ul>
                 </li> 
                 <li >
@@ -123,6 +122,9 @@
                         </li>
                         <li>
                             <a href="<?php echo base_url('reports/credit') ?>"><i class="fa fa-circle-o"></i> Receivables</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('denomination') ?>"><i class="fa fa-circle-o"></i> Denomination</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url('external-po') ?>"><i class="fa fa-circle-o"></i> View External PO</a>

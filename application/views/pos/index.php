@@ -25,6 +25,7 @@
 			<span class="navbar-text" style="font-size: 18px;">Store Branch:  <span id="user"><?php echo $this->session->userdata['store_name'] ?></span>
 			</span>
 					<ul class="nav navbar-nav navbar-right">
+						<li ><a  style="font-size: 18px" href="<?php echo base_url('denomination/close') ?>">Closing Cash</a></li>
 						<li ><a  style="font-size: 18px" href="<?php echo base_url('items') ?>">Go to Inventory</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span class="caret"></span></a>

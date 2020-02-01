@@ -9,7 +9,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				New Cash Denomination
+				New Closing Cash Denomination
 			</div>
 			<div class="panel-body">
 				<?php if (!$started): ?>
@@ -33,14 +33,20 @@
 					</div>
 					<?php echo form_open('CashDenominationController/insert', ['method' => 'POST', 'autocomplete' => 'off']) ?> 
 						<div class="col-lg-6 col-md-offset-3">
-						 	
+						 	<?php if ($this->session->flashdata('success')): ?>
+						 		<div class="form-group"> 
+						 			<div class="alert alert-success">
+						 				<?php echo $this->session->flashdata('success') ?>
+						 			</div>
+						 		</div>
+						 	<?php endif; ?>
 						 	<div class="form-group">
 						 		<?php echo validation_errors(); ?>
 						 	</div>
 						 	<div class="form-group text-center">  
 						 		<label>Date</label>
 								<p class="lead text-center"><?php echo date('Y-m-d') ?></p>
-								<input type="hidden" name="type" value="opening">
+								<input type="hidden" name="type" value="closing">
 								<input type="hidden" name="total" value="0" id="total_input">
 							</div>
 							<div class="form-group text-center">  
@@ -121,7 +127,7 @@
 					<?php echo form_close(); ?>
 				</div>
 				<?php else: ?>
-					<p class="lead">Starting Cash Denomination is set!</p>
+					<p class="lead">Starting Domination is already set!</p>
 				<?php endif; ?>
 				<!-- /.row (nested) -->
 			</div>

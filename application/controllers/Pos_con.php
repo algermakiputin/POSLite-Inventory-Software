@@ -18,6 +18,15 @@ class Pos_con extends AppController {
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('categories_model');
+
+		$open = $this->validate_opening_denomination();
+		$close = $this->validate_closing_denomination();
+
+
+		if (!$open) {
+			errorMessage("Opening Cash Denomination Must Be set First");
+			return redirect('denomination/start');
+		}
  
 		$data['price'] = $this->PriceModel;
 		$data['categoryModel'] = $this->categories_model;
@@ -27,4 +36,6 @@ class Pos_con extends AppController {
 
 		$this->load->view('pos/index',$data);
 	}
+ 
+
 }
