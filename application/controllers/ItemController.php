@@ -35,8 +35,10 @@ class ItemController extends AppController {
 					'id' => $item->id,
 					'wholesale' => $price->wholesale
 				]) ;
-		} 
-		return;
+		} else {
+			echo 0;
+		}
+ 
 	}
 
    public function do_upload($file)
@@ -193,7 +195,7 @@ class ItemController extends AppController {
 			$quantity = $orderingLevel->getQuantity($item->id)->quantity; 
 			
 			return [
-				$item->id . '<input type="hidden" name="wholesale" value="'.$item->wholesale.'">',
+				$item->id . '<input type="hidden" name="wholesale" value="'.number_format($item->wholesale,2).'">',
 				ucwords($item->name),
 				ucfirst($item->description),
 				$quantity,

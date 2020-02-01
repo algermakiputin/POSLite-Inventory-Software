@@ -34,9 +34,8 @@
 					data : data,
 					success : function(data) {
 						var result = JSON.parse(data);
-
-						 
-						if (data) {
+ 
+						if (data != "0") {
 							var result = JSON.parse(data);
 							var quantity = 1;
 						 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
@@ -57,19 +56,21 @@
 										wholesale: result.wholesale
 									};
 
-									var price = result.price;
+									var price = result.price.substring(1);
 									var wholesale = result.wholesale;
 									var name = result.name;
+									
+									var retail_price = currency + number_format(parseFloat(price));
+									var wholesale_price = currency + number_format(parseFloat(wholesale));
 
 									$("#add-type").val("barcode");
-									$("#retail-price").text(price);
-									$("#wholesale-price").text(currency + number_format(parseFloat(wholesale)) + '.00');
+									$("#retail-price").text(retail_price);
+									$("#wholesale-price").text(wholesale_price);
+									$("#retail_price").val(retail_price);
+									$("#wholesale_price").val(wholesale_price);
 									$("#selected-product").text(name); 
-									$("#product-options-modal").modal('toggle');
-									
-
-						  	 	}
-						  	 	stockCol.text(parseInt(stocks - 1));
+									$("#product-options-modal").modal('toggle'); 
+						  	 	} 
 						  	  
 						 	}else {
 						 		alert("Not enough stocks remaining");
@@ -79,7 +80,10 @@
 							recount();
 							$("payment").val('');
 							$("change").val('');
-						} 
+						} else {
+
+							alert("No item found in the database");
+						}
 					 
 					}
 				})
@@ -126,6 +130,7 @@
 			$("#retail-price").text(price);
 			$("#wholesale-price").text(currency + number_format(parseFloat(wholesale)));
 			$("#selected-product").text(name);
+
 
 			$("#product-options-modal").modal('toggle');
 		}else { 
@@ -187,17 +192,23 @@
 		}else {
  		
  			var quantity = 1; 
- 		 
+ 		 	
+ 		 	if (price_option == "wholesale") {
+
+ 		 		itemDetails.price = $("#wholesale_price").val();
+ 		 	}else {
+ 		 		itemDetails.price = $("#retail_price").val();
+ 		 	}
 
 			$("#cart tbody").append('<tr>' +
-									'<input name="id" type="hidden" value="'+ itemDetails.id +'">' +
-									'<td>'+ itemDetails.name +'</td>' +
-									'<td><input data-stocks="'+itemDetails.quantity+'" data-remaining="'+itemDetails.quantity+'" data-id="'+itemDetails.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-									'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-									'<td>'+ itemDetails.price +'</td>' +
-						 			
-									'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
-								'</tr>');
+				'<input name="id" type="hidden" value="'+ itemDetails.id +'">' +
+				'<td>'+ itemDetails.name +'</td>' +
+				'<td><input data-stocks="'+itemDetails.quantity+'" data-remaining="'+itemDetails.quantity+'" data-id="'+itemDetails.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+				'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+				'<td>'+ itemDetails.price +'</td>' +
+	 			
+				'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
+			'</tr>');
 			recount();
 			$("payment").val('');
 			$("change").val('');
