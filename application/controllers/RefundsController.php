@@ -80,10 +80,12 @@ class RefundsController extends CI_Controller {
 		$start = $this->input->post('start'); 
 		$limit = $this->input->post('limit');
 		$draw = $this->input->post('draw');
-		$fromDate = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
-		$toDate = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
+		$store_number = $this->input->post('columns[0][search][value]') == "" ? get_store_number() : $this->input->post('columns[0][search][value]');
+		$fromDate = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
+		$toDate = $this->input->post('columns[2][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[2][search][value]');
  
-		$refunds = $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $fromDate)
+		$refunds = $this->db->where('store_number', $store_number)
+								->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $fromDate)
 								->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $toDate)
 								->get("returns")
 								->result();

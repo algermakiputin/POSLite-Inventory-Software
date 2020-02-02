@@ -38,6 +38,13 @@
 										</select>
 									</div>
 									<div class="form-group">
+										<label>Payment Type</label>
+										<select class="form-control" name="payment_type" required="required">
+											<option value="cash">Cash</option>
+											 <option value="cod">Cod</option>
+										</select>
+									</div>
+									<div class="form-group">
 										<label>Delivery Date</label>
 										<input type="date" name="delivery_date" class="form-control">
 									</div> 

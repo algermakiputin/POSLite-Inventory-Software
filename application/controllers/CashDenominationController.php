@@ -13,32 +13,50 @@ class CashDenominationController extends AppController {
 	}
 
 	public function denomination() {
+
+		$data['content'] = "denomination/index";
+		$this->load->view('master', $data);
+	}
+
+	public function denomination_datatable() {
  
-		$store_number = get_store_number();
+		$store_number = $this->input->post('columns[0][search][value]') == "" ? get_store_number() : $this->input->post('columns[0][search][value]');
+		$fromDate = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
+		$toDate = $this->input->post('columns[2][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[2][search][value]');
+
 		$denomination = $this->db->order_by('id', 'DESC')
+										->where('date <=', $toDate)
+										->where('date >=', $fromDate)
 										->where('store_number', $store_number)
 										->get('denomination')
 										->result();
- 	 
+
+		$recordsTotal = $this->db->group_by('DATE_FORMAT(date,"%Y-%m-%d")')
+										->where('date >=', $toDate)
+										->where('date <=', $fromDate)
+										->where('store_number', $store_number)
+										->get('denomination')
+										->result();
+ 
+ 	 	
+
 		$datasets = [];
 		$history = [];
 
 		foreach ($denomination as $row) { 
 			$datasets[$row->date][] = $row;
 
-		}
-
+		} 
 		
-		foreach ($datasets as $data) {
-
+		foreach ($datasets as $data) { 
 
 			if ( count($data) == 2) {
  
 				$history[] = [
-						'date' => $data[0]->date,
-						'staff'	=> $data[0]->staff,
-						'Opening Amount'	=> $data[1]->total,
-						'Closing Amount'	=> $data[0]->total
+						$data[0]->date,
+						$data[0]->staff,
+						currency() .number_format($data[1]->total,2),
+						currency() . number_format($data[0]->total,2)
 					];
 
 			}else if (count($data) == 1) {
@@ -47,25 +65,29 @@ class CashDenominationController extends AppController {
 				if ($data[0]->type == "closing") {
 
 					$history[] = [
-						'date' => $data[0]->date,
-						'staff'	=> $data[0]->staff,
-						'Opening Amount'	=> "Not set",
-						'Closing Amount'	=> $data[0]->total
+						$data[0]->date,
+						$data[0]->staff,
+						"Not set",
+						currency() . number_format($data[0]->total,2)
 					];
 				}else {
 
 					$history[] = [
-						'date' => $data[0]->date,
-						'staff'	=> $data[0]->staff,
-						'Opening Amount'	=> $data[0]->total,
-						'Closing Amount'	=> "Not set"
+						$data[0]->date,
+						$data[0]->staff,
+						currency() . number_format($data[0]->total,2),
+						"Not set"
 					];
 				}
-			} 
-
-		} 
-
-		dd($history);
+			}  
+		}  
+		
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => count($datasets),
+			'recordsFiltered' => $recordsTotal,
+			'data' => $history
+		]);
  
 	}
 

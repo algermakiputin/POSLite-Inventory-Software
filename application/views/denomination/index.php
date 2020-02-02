@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Refunds</h1>
+		<h1 class="page-header">Cash Denomination</h1>
+
 	</div> 
     <div class="col-md-12">
         <?php if ($this->session->flashdata('success')): ?>
@@ -13,7 +14,7 @@
 <div class="row">
     <div class="col-md-8" style="margin-bottom: 10px;">
         <form class="form-inline" autocomplete="off">
-            <div class="form-group">
+             <div class="form-group">
                 <label>Store: &nbsp;</label>
             </div>
             <div class="input-group">
@@ -27,12 +28,12 @@
             </div> 
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                <input id="refunds_from" type="text" class="form-control date-range-filter" name="date_range" placeholder="From Date" data-date-format="yyyy-mm-dd">
+                <input id="denomination_from" autocomplete="off" type="text" class="form-control date-range-filter" name="date_range" placeholder="From Date" data-date-format="yyyy-mm-dd">
             </div>
             &nbsp;
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                <input id="refunds_to" type="text" class="form-control date-range-filter" name="date_range" placeholder="To Date" data-date-format="yyyy-mm-dd">
+                <input id="denomination_to" autocomplete="off" type="text" class="form-control date-range-filter" name="date_range" placeholder="To Date" data-date-format="yyyy-mm-dd">
             </div>
         </form>
     </div>
@@ -44,18 +45,16 @@
     <div class="col-lg-12">
      <div class="panel panel-default">
          <div class="panel-heading">
-             <i class="fa fa-refresh fa-fw"></i> Refunds List
+             Denomination List
          </div> 
          <div class="panel-body"> 
-            <table class="table table-responsive table-striped table-hover table-bordered" id="refunds_table" width="100%">
+            <table class="table table-responsive table-striped table-hover table-bordered" id="denomination_table" width="100%">
                <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Invoice Number</th>
                     <th>Staff</th>
-                    <th>Customer Name</th> 
-                    <th>Reason</th>
-                    <th>Actions</th>
+                    <th>Opening Amount</th>
+                    <th>Closing Amount</th>  
                  </tr>
          </thead>
          <tbody>

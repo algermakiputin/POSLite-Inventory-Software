@@ -1121,9 +1121,79 @@ $(document).ready(function() {
 					"dom": "r",
 					"processing" : true 
 				}); 
+
+				$("#store-selector").change(function(e) {
+
+					var store_number = $(this).val();
+
+					refundDataTable.columns(0).search(store_number).draw();
+				});
+
+				$("#refunds_to").change(function() {
+
+					var from = $("#refunds_from").val();
+					var to = $("#refunds_to").val();
+					
+					if (from && to) {
+
+						refundDataTable.columns(1).search(from)
+											.columns(2).search(to)
+											.draw();
+					}
+				})
 			}
 		} 
 
+		var cash_denomination = {
+
+			init: function() {
+
+				this.cash_denomination_table();
+			},
+			cash_denomination_table: function() {
+
+				var data = {};
+				data[csrfName] = csrfHash; 
+				var denomination_datatable = $("#denomination_table").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + '/CashDenominationController/denomination_datatable',
+						type : 'POST',
+						data : data
+					}, 
+					"targets": 'no-sort',
+					"bSort": false,  
+					"dom": "r",
+					"processing" : true 
+				}); 
+
+
+				$("#store-selector").change(function(e) {
+
+					var store_number = $(this).val();
+
+					denomination_datatable.columns(0).search(store_number).draw();
+				});
+
+				$("#denomination_to").change(function() {
+
+					var from = $("#denomination_from").val();
+					var to = $("#denomination_to").val();
+					
+					if (from && to) {
+
+						denomination_datatable.columns(1).search(from)
+											.columns(2).search(to)
+											.draw();
+					}
+				})
+
+			}
+
+		}
+
+		cash_denomination.init();
 		refunds.init();
 		payments.init();
 		reports.init();
