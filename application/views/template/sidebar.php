@@ -69,10 +69,10 @@
                     <a href="#"><i class="fa fa-credit-card fa-fw"></i> Payments<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?php echo base_url('expenses') ?>"><i class="fa fa-circle-o"></i> View Payments</a>
+                            <a href="<?php echo base_url('payments') ?>"><i class="fa fa-circle-o"></i> View Payments</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url('expenses/new') ?>"><i class="fa fa-circle-o"></i> New Payment</a>
+                            <a href="<?php echo base_url('payments/new') ?>"><i class="fa fa-circle-o"></i> New Payment</a>
                         </li>
                          
                     </ul>
@@ -114,7 +114,10 @@
                         </li> 
                     </ul>
                 </li>
-                <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
+               
+            <?php endif; ?>
+            <?php if ($this->session->userdata('account_type') == 'Admin'): ?>
+                 <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -175,10 +178,11 @@
                 </ul>
             </li>
             
-            
+            <?php if ($this->session->userdata('account_type') == "Admin"): ?>
             <li>
                 <a href="<?php echo base_url('stores') ?>"><i class="fa fa-bank"></i> Stores</a>
             </li>
+            <?php endif; ?>
 
             <?php if (!SITE_LIVE): ?>
                 <li>

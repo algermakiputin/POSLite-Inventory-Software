@@ -18,12 +18,12 @@
             </div> 
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                <input id="expenses_from" type="text" class="form-control date-range-filter" name="email" placeholder="From Date" data-date-format="yyyy-mm-dd">
+                <input id="expenses_from" type="text" class="form-control date-range-filter" name="date_range" placeholder="From Date" data-date-format="yyyy-mm-dd">
             </div>
             &nbsp;
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                <input id="expenses_to" type="text" class="form-control date-range-filter" name="email" placeholder="To Date" data-date-format="yyyy-mm-dd">
+                <input id="expenses_to" type="text" class="form-control date-range-filter" name="date_range" placeholder="To Date" data-date-format="yyyy-mm-dd">
             </div>
         </form>
     </div>

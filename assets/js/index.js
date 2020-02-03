@@ -956,6 +956,7 @@ $(document).ready(function() {
 				this.find_invoice();
 				this.calculate();
 				this.submitForm(); 
+				this.datatable();
 			},
 			find_invoice: function() {
 
@@ -1033,6 +1034,35 @@ $(document).ready(function() {
 						alert("Insufficient Payment");
 					}
 				});
+			},
+			datatable: function() {
+
+				var paymentsDataTable = $("#payments_table").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + 'PaymentsController/datatable',
+						type : 'POST',
+						data : data
+					}, 
+					"targets": 'no-sort',
+					"bSort": false,  
+					"dom": "r",
+					"processing" : true 
+				}); 
+
+				$("#payments_to").change(function() {
+
+					var from = $("#payments_from").val();
+					var to = $("#payments_to").val();
+					
+					if (from && to) {
+
+						paymentsDataTable.columns(1).search(from)
+											.columns(2).search(to)
+											.draw();
+					}
+				})
 			}
 		}
 
@@ -1083,9 +1113,11 @@ $(document).ready(function() {
 								}
 							},
 							error: function(data) {
-
+								showErrorMessage();
 							}
 						});
+					}else {
+						alert("Error: Invoice Number is Empty");
 					}
 				});
 			},
@@ -1437,6 +1469,10 @@ $(document).ready(function() {
 	
 })
 
+function showErrorMessage() {
+
+	alert("Opps! Something Went Wrong Please Try Again Later");
+}
 
 function readURL(input) {
 

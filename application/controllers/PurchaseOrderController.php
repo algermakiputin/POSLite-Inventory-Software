@@ -24,11 +24,14 @@ class PurchaseOrderController Extends CI_Controller {
 			$status = $po->status;
 			if ($status == "Request Item" || $status == "Ongoing Transfer") {
 
-				$mark = '
+				if ($this->session->userdata('account_type') != "Cashier") {
+					$mark = '
                      <li>
                          <a href="' . base_url("PurchaseOrderController/edit/$po->po_number") .'">
                              <i class="fa fa-edit"></i> Edit</a>
                      </li>';
+				}
+				
 
             if ($status == "Ongoing Transfer") {
             	$class = "badge-info";
@@ -59,12 +62,15 @@ class PurchaseOrderController Extends CI_Controller {
                              <i class="fa fa-plus"></i> View</a>
                      </li>';
 
-         if ($status == "Request Item") {
+         if ($status == "Request Item" ) {
 
-         	$mark .= '<li>
+         	if ($this->session->userdata('account_type') != "Cashier") {
+
+         		$mark .= '<li>
                          <a href="' . base_url("PurchaseOrderController/destroy/$po->id") .'" class="delete-data">
                              <i class="fa fa-trash"></i> Delete</a>
                      </li>';
+         	}
          }
 
 			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, $po->delivery_note ?? '--',
