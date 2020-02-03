@@ -28,7 +28,7 @@ class PaymentsController extends CI_Controller {
 				'amount' => $amount,
 				'note' => $note,
 				'date' => $date,
-				'store_number' => $store_number
+				'store_number' => $store_number,
 				'staff' => $this->session->userdata('username')
 			]);
 
