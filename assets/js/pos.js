@@ -8,6 +8,7 @@ $(document).ready(function() {
 	var transactionComplete = false;
 	var currency = '₱';
 	var transaction_type = "cash";
+	var print_url = "";
 
 
 	var dHeight = parseInt($(document).height());
@@ -330,7 +331,7 @@ $(document).ready(function() {
 			 	$("#amount-discount").text(''); 
 			 	$("#customer_id").val(0); 
 			 	$("#customer-select").data('selectize').setValue('Walk-in Customer');
-			  
+			  	$("#print").data('invoice', invoice_number);
 			 	item_table.clear().draw();
 			 	$("#btn").button('reset');
 			 	totalAmountDue = 0;  
@@ -523,20 +524,24 @@ function recount() {
  
 
 	$("#print").click(function(){
-		$("#receipt").print({
-	        	globalStyles: true,
-	        	mediaPrint: false,
-	        	stylesheet: base_url + 'assets/receipt.css',
-	        	noPrintSelector: ".no-print",
-	        	iframe: true,
-	        	append: null,
-	        	prepend: null,
-	        	manuallyCopyFormValues: true,
-	        	deferred: $.Deferred(),
-	        	timeout: 500,
-	        	title: 'Receipt',
-	        	doctype: '<!doctype html>'
-		});
+
+		var invoice = $(this).data('invoice');
+		var url = base_url + '/ReceiptController/invoice/' + invoice;
+		window.open(url,'popUpWindow','height=768,width=1280,left=150,top=150,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+		// $("#receipt").print({
+	 //        	globalStyles: true,
+	 //        	mediaPrint: false,
+	 //        	stylesheet: base_url + 'assets/receipt.css',
+	 //        	noPrintSelector: ".no-print",
+	 //        	iframe: true,
+	 //        	append: null,
+	 //        	prepend: null,
+	 //        	manuallyCopyFormValues: true,
+	 //        	deferred: $.Deferred(),
+	 //        	timeout: 500,
+	 //        	title: 'Receipt',
+	 //        	doctype: '<!doctype html>'
+		// });
 	});
 
 

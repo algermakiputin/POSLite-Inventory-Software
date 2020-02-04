@@ -203,7 +203,7 @@
 										<td id="summary-change"></td>
 									</tr>
 								</table>
-								<button class="btn btn-default btn-sm" id="print">Print Receipt</button>
+								<button class="btn btn-default btn-sm" data-invoice='' id="print">Print Receipt</button>
 							</div>
 
 							<div class="clearfix"></div>

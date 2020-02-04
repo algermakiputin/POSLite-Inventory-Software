@@ -59,6 +59,8 @@ $route['customer/profile/(:any)'] = "CustomersController/profile/$1";
 
 $route['preference'] = "SettingsController/preference";
 
+$route['print/invoice/(:any)'] = "ReceiptController/invoice/$1";
+
 $route['transfer/external-po'] = "StocksTransferController/external_po";
 $route['transfer/internal-po'] = "StocksTransferController/internal_po";
 

@@ -57,7 +57,7 @@
             </div>
 
             <div class="form-group">
-                <label>Delivery Note</label>
+                <label>Note</label>
                 <textarea class="form-control" name="note"  rows="4"><?php echo $po->note ?></textarea>
             </div> 
         </div>
