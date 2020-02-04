@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Credit Sales Report</h1>
+		<h1 class="page-header">Receivables Sales Report</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -16,7 +16,7 @@
 	<div class="col-lg-9">
 		<ul class="nav nav-tabs">
 		  <li role="presentation" ><a href="<?php echo base_url('reports/cash') ?>">Cash</a></li>
-		  <li role="presentation" class="active"><a href="">Credits</a></li> 
+		  <li role="presentation" class="active"><a href="">Receivables</a></li> 
 		</ul>  
 		<div class="wrapper">
 			<table class="table table-striped table-bordered" id="credits-tbl">
@@ -49,7 +49,7 @@
  			</div>
  			<div> 
  				<hr>
- 				<h3><span class="small">total sales:</span> <span id="total-sales"></span></h3>
+ 				<h3><span class="small">total Receivable:</span> <span id="total-sales"></span></h3>
  			</div>
  		</div>
 

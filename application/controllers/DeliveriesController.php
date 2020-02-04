@@ -46,11 +46,16 @@ class DeliveriesController extends CI_Controller
 		$quantity = $this->input->post("quantity");
 		$defectives = $this->input->post("defective");
 		$remarks = $this->input->post("remarks");
+		$store_number = $this->input->post('store-selector');
+		$payment_type = $this->input->post('payment_type');
 
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
 			'date_time' => $this->input->post('delivery_date'),
-			'received_by' => $this->session->userdata('username')
+			'received_by' => $this->session->userdata('username'),
+			'payment_type'	=> $payment_type,
+			'store_number' => $store_number,
+			'paid'	=> 0
 			);
 
 		$data = $this->security->xss_clean($data);
@@ -122,11 +127,13 @@ class DeliveriesController extends CI_Controller
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		$count = $this->db->get('delivery')->num_rows();
+		$store_number = $this->input->post('columns[0][search][value]') == "" ? get_store_number() : $this->input->post('columns[0][search][value]');
 	 	
 	 	$deliveries = $this->db->select("delivery.*, supplier.name, SUM(delivery_details.quantities * delivery_details.price) as total, SUM(delivery_details.defectives) as defectives")
 							->from('delivery') 
 							->join('supplier', 'supplier.id = delivery.supplier_id', 'both')
 							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
+							->where('delivery.store_number', $store_number)
 							->group_by('delivery.id')
 							->order_by('delivery.id', 'DESC')
 							->like('received_by', $search, 'both')
@@ -138,7 +145,7 @@ class DeliveriesController extends CI_Controller
 			 
 			return [
 				$delivery->id,
-				$delivery->date_time,
+				date('Y-m-d', strtotime($delivery->date_time)),
 				$delivery->received_by,
 				$delivery->name,
 				currency() . number_format($delivery->total),

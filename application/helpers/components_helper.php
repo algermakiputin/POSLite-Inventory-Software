@@ -8,9 +8,13 @@ function store_selector_component($classes, $id = "store-selector") {
 	$stores = $CI->db->get('stores')->result();
 	$options = "";
 	$user_store_number = $CI->session->userdata('store_number');
+	$user_type = $CI->session->userdata('account_type');
 
 	foreach ($stores as $store) {
 		$selected = "";
+
+		if ($user_type == "Cashier" && $store->number != $user_store_number)
+			continue;
 
 		if ($store->number == $user_store_number)
 			$selected = "selected";

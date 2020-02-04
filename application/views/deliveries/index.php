@@ -17,6 +17,14 @@
  					<?php echo $this->session->flashdata('success') ?>
  				</div>
  			<?php endif; ?>
+ 		 
+			<div style="background-color: #eee;border:solid 1px #ddd;padding: 10px;margin-bottom: 20px;">
+				<label>Select Store:</label>
+				<?php 
+	                echo store_selector_component(['form-control', 'limit'], "purchases-store-filter");
+	            ?>
+			</div>
+	 
              <table class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
 				<thead>
 					<tr>

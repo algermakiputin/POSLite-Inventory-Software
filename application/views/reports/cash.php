@@ -17,7 +17,7 @@
 
 		<ul class="nav nav-tabs">
 		  <li role="presentation" class="active"><a href="#">Cash</a></li>
-		  <li role="presentation"><a href="<?php echo base_url('reports/credit') ?>">Credits</a></li> 
+		  <li role="presentation"><a href="<?php echo base_url('reports/credit') ?>">Receivables</a></li> 
 		</ul>  
 		<div class="wrapper">
 			<table class="table table-striped table-bordered" id="cash-tbl">

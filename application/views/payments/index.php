@@ -14,7 +14,16 @@
     <div class="col-md-12" style="margin-bottom: 10px;">
         <form class="form-inline" autocomplete="off">
             <div class="form-group">
-                <label>Filter Reports: &nbsp;</label> 
+                <label>Store: &nbsp;</label>
+            </div>
+            <div class="input-group">
+                
+                <?php 
+                    echo store_selector_component(['form-control']);
+                ?>  
+            </div>
+            <div class="form-group">
+                <label>&nbsp; Filter Reports: &nbsp;</label> 
             </div> 
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>

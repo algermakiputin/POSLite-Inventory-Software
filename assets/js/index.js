@@ -849,6 +849,12 @@ $(document).ready(function() {
 					},
 					"targets": 'no-sort',
 					"bSort": false, 
+					drawCallback : function (setting) {
+						var data = JSON.parse(setting.json.extra);
+						console.log(data);
+						$("#total-sales").text(data.total);
+
+					} 
 				})
 
 				$("#cash-store-filter").change(function(e) { 
@@ -1061,8 +1067,15 @@ $(document).ready(function() {
 						paymentsDataTable.columns(1).search(from)
 											.columns(2).search(to)
 											.draw();
-					}
+					} 
 				})
+
+				$("#store-selector").change(function(e) {
+
+					var store_number = $(this).val();
+
+					paymentsDataTable.columns(0).search(store_number).draw();
+				});
 			}
 		}
 
@@ -1390,7 +1403,7 @@ $(document).ready(function() {
 
 	var data = {};
 	data[csrfName] = csrfHash;
-	$("#deliveries_table").DataTable({
+	var deliveries_datatable = $("#deliveries_table").DataTable({
 		processing : true, 
 		serverSide : true, 
 		ajax : {
@@ -1398,6 +1411,13 @@ $(document).ready(function() {
 			url : base_url + "DeliveriesController/datatable",
 			data: data
 		}, 
+	});
+
+	$("#purchases-store-filter").change(function(e) {
+	 
+		var store_number = $(this).val();
+		deliveries_datatable.columns(0).search(store_number).draw();
+
 	});
 
 	$("#btn-group-menu .btn").click(function() {

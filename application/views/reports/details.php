@@ -14,25 +14,27 @@
      <div class="panel panel-default">
  	
          <div class="panel-body">
-         	<table style="font-size: 16px;">
+         	<table class="table table-striped table-bordered table-hover" style="max-width: 380px;">
+                <tr>
+                    <td colspan="2">Sales Summary</td>
+                </tr>
          		<tr>
          			<th>Date:</th>
-         			<td style="border-bottom: padding: 7px 10px;"><?php echo date('Y-m-d', strtotime($sales->date_time)) ?></th>
+         			<td><?php echo date('Y-m-d', strtotime($sales->date_time)) ?></th>
          		</tr>
          		<tr>
          			<th>Customer:</th>
-         			<td style="border-bottom: padding: 7px 10px;"><?php echo $sales->customer_name ?></td>
+         			<td><?php echo $sales->customer_name ?></td>
          		</tr>
          		<tr>
          			<th>Payment Type:&nbsp;&nbsp;&nbsp;</th>
-         			<td style="border-bottom: padding: 7px 10px;"><?php echo $sales->type ?></td>
+         			<td><?php echo $sales->type ?></td>
          		</tr> 
          		<tr>
          			<th>Sales Person:&nbsp;&nbsp;&nbsp;</th>
-         			<td style="border-bottom: padding: 7px 10px;"><?php echo $sales->user_name ?></td>
+         			<td><?php echo $sales->user_name ?></td>
          		</tr> 
-         	</table>
-         	<br/>
+         	</table> 
          	
          	<table class="table table-bordered table-striped">
          		<thead>

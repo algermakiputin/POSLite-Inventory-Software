@@ -219,11 +219,11 @@ class ReportsController extends CI_Controller {
                </div>
 				';
 
-				$order->payment_status = $order->payment_status == 0 ? "Pending Balance" : "Paid";
+			$order->payment_status = $order->payment_status == 0 ? "Pending Balance" : "Paid";
 
 
-
-			$total += $order->total;
+			if ($order->payment_status == "Pending") 
+				$total += $order->total;
 
 			$order->total = currency() . number_format($order->total, 2);
 		}

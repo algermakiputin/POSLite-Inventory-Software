@@ -28,6 +28,13 @@
 							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 							<div class="row">
 								<div class="col-md-3">
+
+									<div class="form-group">
+										<label>Select Store:</label>
+										<?php 
+										echo store_selector_component(['form-control']);
+										?>
+									</div>
 									<div class="form-group">
 										<label>Select Supplier</label>
 										<select class="form-control" name="supplier_id" required="required">
