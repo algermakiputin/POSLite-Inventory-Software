@@ -142,22 +142,33 @@ class DeliveriesController extends CI_Controller
 							->result();
 		  
 		$datasets = array_map(function($delivery) {
+
+			$mark = "";
+
+			if (!$delivery->paid) {
+
+				$mark .= '<li>
+                  	<a href="'. base_url("DeliveriesController/markPaid/" . $delivery->id) .'"><i class="fa fa-money"></i> Mark as Paid</a> 
+                  </li>';
+			}
 			 
-			return [
-				$delivery->id,
+			return [ 
 				date('Y-m-d', strtotime($delivery->date_time)),
 				$delivery->received_by,
 				$delivery->name,
 				currency() . number_format($delivery->total),
 				$delivery->defectives,
+				$delivery->payment_type,
+				$delivery->paid ? "Paid" : "Unpaid",
 				'
 				<div class="dropdown">
               	<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
               	<ul class="dropdown-menu">
-              	
+              		
                   <li>
                   	<a href="'. base_url("deliveries/details/" . $delivery->id) .'"><i class="fa fa-eye"></i> View Details</a> 
                   </li> 
+                  '.$mark.'
                   <li>
                       <a class="delete-data" href="' . base_url('DeliveriesController/destroy/' . $delivery->id ) .'">
                           <i class="fa fa-trash"></i> Delete</a>
@@ -176,5 +187,15 @@ class DeliveriesController extends CI_Controller
 			'data' => $datasets
 		]);
 	}
+
+	public function markPaid($id) {
+
+		$this->db->where('id', $id)
+					->update('delivery', ['paid' => 1]);
+		
+		success("Mark as paid successfully");
+
+		return redirect('deliveries');
+	} 
 
 }

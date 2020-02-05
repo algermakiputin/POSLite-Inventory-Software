@@ -25,16 +25,25 @@
          <div class="panel-heading">
              Purchase Orders
          </div> 
+
          <div class="panel-body"> 
+         
+            <div style="background-color: #eee;padding: 10px;border:solid 1px #ddd;margin-bottom: 20px;">
+                <label>Select Store:</label>
+                <?php 
+                    echo store_selector_component(['form-control', 'limit'], "transfer-purchase-order-filter");
+                ?>
+            </div>
+  
             <table class="table table-responsive table-striped table-hover table-bordered" id="transfer-purchase-order-tbl" width="100%">
                <thead>
                 <tr>
                     <th >P.O. Date</th>
                     <th >P.O. No.</th>
                     <th>Branch / Store</th>
-                    <th >Requested To</th>
-                    <th >Memo</th> 
+                    <th >Requested To</th> 
                     <th>Status</th>
+                    <th >Memo</th>
                     <th >Actions</th>
                  </tr>
          </thead>

@@ -28,12 +28,13 @@
              <table class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
 				<thead>
 					<tr>
-						<th>Delivery ID</th>
 						<th>Delivery Date</th>
 						<th>Received By</th>
 						<th>Supplier</th> 
 						<th>Total Amount</th>
 						<th>Defectives</th>
+						<th>Type</th>
+						<th>Payment</th>
 						<th>Action</th>
 					</tr>
 				</thead>

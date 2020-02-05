@@ -58,7 +58,7 @@ $(document).ready(function() {
 				this.external_po_datatable();
 			},
 			internal_po_datatable: function() {
-				$("#transfer-purchase-order-tbl").DataTable({
+				var transfer_purchase_order_tbl = $("#transfer-purchase-order-tbl").DataTable({
 					processing : true,
 					serverSide : true, 
 					ajax : {
@@ -67,6 +67,13 @@ $(document).ready(function() {
 						data : data
 					},
 				});
+
+				$("#transfer-purchase-order-filter").change(function() {
+
+					var store_number = $(this).val();
+					transfer_purchase_order_tbl.columns(0).search(store_number).draw();
+				})
+
 			},
 			external_po_datatable: function() {
 				$("#transfer-external-purchase-order-tbl").DataTable({

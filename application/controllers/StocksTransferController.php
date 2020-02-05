@@ -43,9 +43,9 @@ class StocksTransferController Extends CI_Controller {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
-		$dataset = []; 
-		$store_number = $this->session->userdata('store_number'); 
-		$store_number = $this->session->userdata('store_number');
+		$dataset = [];  
+		$store_number =  $store = $this->input->post('columns[0][search][value]');
+		$store_number = $store_number ? $store_number : get_store_number();
 
 		$purchase_orders = $this->db->select("purchase_order.*") 
 											->where('purchase_order.type', 'internal')
@@ -79,9 +79,9 @@ class StocksTransferController Extends CI_Controller {
 				$class = "badge-success";
 			}
 
-			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, $po->memo, 
-				"<span class='badge $class'>$status</span>"
-				,
+			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, 
+				"<span class='badge $class'>$status</span>",
+				$po->memo,  
 				'<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     
