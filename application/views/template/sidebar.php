@@ -121,6 +121,9 @@
                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
+                            <a href="<?php echo base_url('reports/sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
+                        </li>
+                        <li>
                             <a href="<?php echo base_url('reports/cash') ?>"><i class="fa fa-circle-o"></i> Cash</a>
                         </li>
                         <li>

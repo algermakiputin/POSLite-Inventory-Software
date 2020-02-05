@@ -34,6 +34,12 @@ class ReportsController extends CI_Controller {
 
 	}
 
+	public function sales_report() {
+		$data['content'] = "reports/sales";
+		$data['total_sales'] = 0;
+		$this->load->view('master', $data);
+	}
+
 	public function description_datatable() {
 		$draw = $this->input->post('draw');
 		

@@ -496,6 +496,12 @@ $(document).ready(function() {
 						$("#total-expense").text('₱' + data.expenses);
 					}
 				});
+
+				$("#sales-store-filter").change(function(e) {
+					var store_number = $(this).val();
+
+					sales_table.columns(2).search(store_number).draw();
+				})
 			}
 		}
 

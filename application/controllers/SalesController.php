@@ -294,7 +294,8 @@ class SalesController extends CI_Controller {
 				'date_time' => get_date_time(),
 				'user_id' => $this->session->userdata('id'),
 				'store_number' => $store_number,
-				'user_name' => $user_name
+				'user_name' => $user_name,
+				'payment_status' => $type == "receivable" ? 0 : 1
 			]);
 
 		$sales_id = $this->db->insert_id();
@@ -462,7 +463,9 @@ class SalesController extends CI_Controller {
 		$totalSales = 0;
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
-		$sales = $this->filterReports($from, $to);
+		$store_number = $this->input->post('columns[2][search][value]') == "" ? get_store_number() : $this->input->post('columns[2][search][value]');
+
+		$sales = $this->filterReports($from, $to, $store_number);
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
@@ -539,12 +542,14 @@ class SalesController extends CI_Controller {
  
 	}
 
-	public function filterReports($from, $to) {
+	public function filterReports($from, $to, $store_number) {
 		$from = $from ? $from : date('Y-m-d');
 		$to = $to ? $to : date('Y-m-d'); 
 
 		return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
 					->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+					->where('payment_status', 1)
+					->where('store_number', $store_number)
 					->order_by('id', 'DESC')
 					->get('sales', $this->start, $this->limit)->result();
 		 

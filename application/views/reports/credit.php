@@ -15,8 +15,10 @@
 	</div>
 	<div class="col-lg-9">
 		<ul class="nav nav-tabs">
+			<li role="presentation"><a href="<?php echo base_url('reports/sales') ?>">Sales</a></li>
 		  <li role="presentation" ><a href="<?php echo base_url('reports/cash') ?>">Cash</a></li>
 		  <li role="presentation" class="active"><a href="">Receivables</a></li> 
+
 		</ul>  
 		<div class="wrapper">
 			<table class="table table-striped table-bordered" id="credits-tbl">
@@ -41,11 +43,11 @@
  			<h4>Filter Report</h4>
  			<div class="form-group">
  				<label>From</label>
- 				<input type="text" autocomplete="off" name="from" class="form-control date-range-filter" id="from" data-date-format="yyyy-mm-dd">
+ 				<input type="text" value="<?php echo date('Y-m-d') ?>" autocomplete="off" name="from" class="form-control date-range-filter" id="from" data-date-format="yyyy-mm-dd">
  			</div>
  			<div class="form-group">
  				<label>To</label>
- 				<input type="text" autocomplete="off" name="from" class="form-control date-range-filter" id="to" data-date-format="yyyy-mm-dd">
+ 				<input type="text" value="<?php echo date('Y-m-d') ?>" autocomplete="off" name="from" class="form-control date-range-filter" id="to" data-date-format="yyyy-mm-dd">
  			</div>
  			<div> 
  				<hr>
