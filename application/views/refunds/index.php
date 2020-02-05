@@ -19,7 +19,7 @@
             <div class="input-group">
                 
                 <?php 
-                    echo store_selector_component(['form-control']);
+                    echo store_selector_component(['form-control', 'filter-left']);
                 ?>  
             </div>
             <div class="form-group">

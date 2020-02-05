@@ -102,7 +102,7 @@
                             <a href="<?php echo base_url('transfer/internal-po') ?>"><i class="fa fa-circle-o"></i> Internal PO</a>
                         </li>  
                         <li>
-                            <a href="<?php echo base_url('transfer/delivery-note') ?>"><i class="fa fa-circle-o"></i> Delivery Notes</a>
+                            <a href="<?php echo base_url('transfer/delivery-notes') ?>"><i class="fa fa-circle-o"></i> Delivery Notes</a>
                         </li>     
                     </ul>
                 </li> 

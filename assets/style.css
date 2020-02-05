@@ -23,6 +23,11 @@ html, body {
   display: inline-block;
 }
 
+.form-control.filter-left {
+  min-width: 200px;
+  border-radius: 5px !important;
+}
+
 .sidebar {
   margin-top: 53px;
 }

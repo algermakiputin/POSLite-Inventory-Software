@@ -56,6 +56,7 @@ $(document).ready(function() {
 			init: function() {
 				this.internal_po_datatable();
 				this.external_po_datatable();
+				this.delivery_notes_datatable();
 			},
 			internal_po_datatable: function() {
 				var transfer_purchase_order_tbl = $("#transfer-purchase-order-tbl").DataTable({
@@ -75,6 +76,25 @@ $(document).ready(function() {
 				})
 
 			},
+			delivery_notes_datatable: function() {
+				var delivery_notes_datatable = $("#delivery-notes-tbl").DataTable({
+					processing : true,
+					serverSide : true, 
+					ajax : {
+						url : base_url + '/StocksTransferController/delivery_notes_dataTable',
+						type : 'POST',
+						data : data
+					},
+					dom:'lrtip'
+				});
+
+				$("#delivery-notes-store-filter").change(function(e) {
+ 
+					var store_number = $(this).val(); 
+					delivery_notes_datatable.columns(0).search(store_number).draw();
+				})
+			},
+
 			external_po_datatable: function() {
 				$("#transfer-external-purchase-order-tbl").DataTable({
 					processing : true,
@@ -221,6 +241,7 @@ $(document).ready(function() {
 						type : 'POST',
 						data : data
 					},
+
 				});
 			},
 			external_po_datatable: function() {

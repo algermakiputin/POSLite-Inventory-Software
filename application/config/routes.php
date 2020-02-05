@@ -63,6 +63,7 @@ $route['print/invoice/(:any)'] = "ReceiptController/invoice/$1";
 
 $route['transfer/external-po'] = "StocksTransferController/external_po";
 $route['transfer/internal-po'] = "StocksTransferController/internal_po";
+$route['transfer/delivery-notes'] = "StocksTransferController/delivery_notes";
 
 $route['supplier/po'] = "PurchaseOrderController/purchase_order";
 $route['po/external'] = "PurchaseOrderController/external_po";

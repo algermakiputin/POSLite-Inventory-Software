@@ -39,6 +39,49 @@ class StocksTransferController Extends CI_Controller {
 
 	}
 
+	public function delivery_notes() {
+
+		$data['content'] = "transfer/delivery_notes";
+		$this->load->view('master', $data);
+
+	}
+
+	public function delivery_notes_dataTable() {
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+		$dataset = [];  
+		$store_number =  $store = $this->input->post('columns[0][search][value]');
+		$store_number = $store_number ? $store_number : get_store_number();
+
+		$delivery_notes = $this->db->where('store_number', $store_number)
+											->get('stocks_transfer', $limit, $start)
+											->result();
+
+		foreach ($delivery_notes as $row) {
+
+			
+
+			$dataset[] = [	
+					date('Y-m-d', strtotime($row->date)),
+					$row->delivery_note, 
+					$row->po_number, 
+					$row->status, 
+					$row->note
+				];
+		}
+
+		$count = $this->db->get("stocks_transfer")->num_rows();
+		
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => count($delivery_notes),
+			'recordsFiltered'	=> $count,
+			'data' => $dataset,
+			
+		]);
+	}
+
 	public function internal_po_dataTable() {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
@@ -213,7 +256,8 @@ class StocksTransferController Extends CI_Controller {
 					'date'	=> get_date_time(),
 					'status'	=> "For Delivery",
 					'po_id' => $po_id,
-					'delivery_note' => $delivery_note_number
+					'delivery_note' => $delivery_note_number,
+					'store_number' => $store_number
 			]);
 
 		$stocks_transfer_id = $this->db->insert_id();

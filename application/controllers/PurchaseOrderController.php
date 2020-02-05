@@ -226,7 +226,10 @@ class PurchaseOrderController Extends CI_Controller {
  		$this->db->trans_begin(); 
 
 		$this->OrderingLevelModel->stocks_transfer($stocks_transfer_orderline, $po->store_number);
+
+
 		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => 'Delivered']);
+		$this->db->where('po_number', $po_number)->update('stocks_transfer', ['status' => 'Delivered']);
 
 		if ($this->db->trans_status() === FALSE)
 		{
