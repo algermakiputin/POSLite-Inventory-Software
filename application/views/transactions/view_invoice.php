@@ -71,6 +71,23 @@
                             </tr>
                             <?php $total+= $order->quantity * $order->price; ?>
                         <?php endforeach; ?>
+
+                        <?php if ($defaultRow): ?>
+
+                            <?php 
+                                for ($i = 0; $i < $defaultRow; $i++) {
+                                    ?>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <?php
+
+                                }
+                            ?>
+                        <?php endif; ?>
                     </tbody> 
                     <tr>
                         <td colspan="2" style="border: 0"></td>

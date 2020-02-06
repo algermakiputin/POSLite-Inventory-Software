@@ -206,6 +206,7 @@ class TransactionsController extends CI_Controller {
 		$data['invoice'] = $invoice;
 		$data['total'] = 0;
 		$data['paid'] = 0;
+		$data['defaultRow'] = 7 - count($orderline);
 		
 		$this->load->view('master', $data);
 	}
@@ -388,6 +389,7 @@ class TransactionsController extends CI_Controller {
 		$data['total'] = 0;
 		$data['paid'] = 0;
 		$data['preference'] = get_preferences();
+		$data['defaultRow'] = 5 - count($orderline);
 		
 		$html = $this->load->view('pdf/invoice', $data, TRUE);
 	 	

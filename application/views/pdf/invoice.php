@@ -1,4 +1,9 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+ <style type="text/css">
+    .peso-sign {
+      font-family: "DejaVu Sans Mono", monospace;
+    }
+  </style>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css'); ?>">
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
@@ -57,17 +62,33 @@
                             <tr>
                                 <td><?php echo $order->quantity; ?></td>
                                 <td><?php echo $order->name; ?></td>
-                                <td class="text-right"><?php echo currency() . number_format($order->price,2); ?></td>
-                                <td class="text-right"><?php echo currency() . number_format($order->quantity * $order->price, 2); ?></td>
+                                <td class="text-right"> <span class="peso-sign">&#x20b1;</span><?php echo number_format($order->price,2); ?></td>
+                                <td class="text-right"> <span class="peso-sign">&#x20b1;</span><?php echo number_format($order->quantity * $order->price, 2); ?></td>
                             </tr>
                             <?php $total+= $order->quantity * $order->price; ?>
                         <?php endforeach; ?>
+                        <?php if ($defaultRow): ?>
+
+                            <?php 
+                                for ($i = 0; $i < $defaultRow; $i++) {
+                                    ?>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <?php
+
+                                }
+                            ?>
+                        <?php endif; ?>
                     </tbody>
                     
                     <tr>
                         <td colspan="2" style="border: 0"></td>
                         <td colspan="1" class="text-right" style="border: 0"><b>TOTAL DUE</b></td>
-                        <td class="text-right" style="border: 0"><?php echo currency() . number_format($total,2) ?></td>
+                        <td class="text-right" style="border: 0"><span class="peso-sign">&#x20b1;</span><?php echo  number_format($total,2) ?></td>
                         
                     </tfoot>
                     
