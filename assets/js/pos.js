@@ -63,11 +63,11 @@ $(document).ready(function() {
 
 		if (type == "cash" || type == "cod") {
 
-			$("#cash-fields").show();
+			$("#payment").prop('disabled', false);
 		
 		}else {
 
-			$("#cash-fields").hide();
+			 $("#payment").prop('disabled', true);
 		}
 
 		transaction_type = type;
@@ -511,6 +511,8 @@ function recount() {
 			var quantity = parseFloat(r.eq(1).find('input').val());
 			var price = r.eq(2).text().substring(1).replace(',','');
 			var discount = parseInt(r.eq(2).find('input').val());
+
+			r.eq(3).text(currency + number_format(price * quantity) + '.00');
 			total += parseFloat(price) * quantity; 
  		 
 			

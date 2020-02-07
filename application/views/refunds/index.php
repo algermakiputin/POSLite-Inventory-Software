@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8" style="margin-bottom: 10px;">
+    <div class="col-md-12" style="margin-bottom: 10px;">
         <form class="form-inline" autocomplete="off">
             <div class="form-group">
                 <label>Store: &nbsp;</label>
@@ -35,12 +35,7 @@
                 <input id="refunds_to" type="text" class="form-control date-range-filter" name="date_range" placeholder="To Date" data-date-format="yyyy-mm-dd">
             </div>
         </form>
-    </div>
-    <div class="col-md-4 text-right">
-        <div style="padding:10px;font-size: 16px;">
-            <b>Total Expenses:</b> <span id="total"></span>
-        </div>
-    </div>
+    </div> 
     <div class="col-lg-12">
      <div class="panel panel-default">
          <div class="panel-heading">

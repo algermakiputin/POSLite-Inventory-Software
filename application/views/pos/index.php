@@ -97,7 +97,7 @@
 						<div class="col-md-12" style="padding: 15px 20px;">
 								<form id="process-transaction">
 									<div class="form-group" style="margin: 0;">
-										<input type="submit" class="btn btn-primary form-control" name="" value="Process order" id="btn" style="font-size: 16.5px;height: 39px;">
+										<input type="submit" class="btn btn-primary form-control" name="" value="Process order" id="btn" style="font-size: 16.5px;height: 39px;border-radius: 0;box-shadow: none;border:0">
 									</div>
 								</form> 
 						</div>
@@ -220,22 +220,22 @@
 		</div>
 
 		<div class="modal" tabindex="-1" role="dialog" id="confirm-transaction-modal">
-			<div class="modal-dialog modal-md" role="document">
+			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title"><i class="fa fa-exchange"></i> Grand Total: <span id="grand_total"></span> </span>
+						<h4 class="modal-title"><i class="fa fa-exchange"></i> Grand Total: <span id="grand_total" style="font-size: 32px;"></span> </span>
 							<!-- <span class="pull-right"> -->
 						</h4>
 					</div>
 					<div class="modal-body">
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-6">
 								<input type="hidden" name="customer_id" id="customer_id" value="0">
 								<input type="hidden" name="supplier_id" id="supplier_id" value="0">
 
 								<div class="form-group">
 								 	<label>Enter Invoice Number:</label>
-								 	<input type="text" name="invoice_number" value="" class="form-control" id="invoice_number">
+								 	<input type="text" name="invoice_number" autocomplete="off" value="" class="form-control" id="invoice_number">
 								 	<input type="hidden" id="valid_invoice" value="0" name="valid_invoice">    
 								</div>
 
@@ -257,8 +257,12 @@
 								 		<?php endforeach; ?> 
 								 	</select>
 								</div>   
+								<div class="form-group">
+									<label>Transaction note:</label>
+									<textarea name="note" id="note" class="form-control" rows="3"></textarea>
+								</div>
 							</div>  
-							<div class="col-md-12" id="cash-fields">
+							<div class="col-md-6" id="cash-fields">
 								<div class="form-group">
 									<label>Enter payment amount:</label>
 									<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off" max="500000" maxlength="6">
@@ -269,11 +273,8 @@
 								</div>
 								
 							</div>  
-							<div class="col-md-12">
-								<div class="form-group">
-									<label>Transaction note:</label>
-									<textarea name="note" id="note" class="form-control" rows="3"></textarea>
-								</div>
+							<div class="col-md-6">
+								
 							</div> 
 						</div>  
 					</div>
