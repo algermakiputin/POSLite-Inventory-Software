@@ -1,6 +1,9 @@
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
+            <li>
+                <a href="<?php echo base_url('dashboard') ?>"><i class="fa fa-table fa-fw"></i> Dashboard</a>
+            </li>
             <li data-step="1" data-intro="In this menu you can select view products and register new product." data-hintPosition="middle-right">
             <a href="#"><i class="glyphicon glyphicon-folder-close fa-fw"></i> Products<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
