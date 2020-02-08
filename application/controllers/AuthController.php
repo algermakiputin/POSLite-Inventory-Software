@@ -89,11 +89,11 @@ class AuthController extends AppController {
 	 
 
 		if ($this->session->userdata('account_type') == "Admin") 
-			return redirect(base_url('items'));
+			return redirect(base_url('dashboard'));
 	 
 
 		if ($this->session->userdata('account_type') == "Clerk") 
-			return redirect(base_url('items'));
+			return redirect(base_url('dashboard'));
 	 
 	}
 

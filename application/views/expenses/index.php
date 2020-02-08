@@ -33,30 +33,28 @@
         </div>
     </div>
     <div class="col-lg-12">
-     <div class="panel panel-default">
-         <div class="panel-heading">
-             <i class="fa fa-money fa-fw"></i> Expenses List
-         </div> 
-         <div class="panel-body"> 
+       <div class="panel panel-default">
+           <div class="panel-heading">
+               <i class="fa fa-money fa-fw"></i> Expenses List
+           </div> 
+           <div class="panel-body"> 
             <table class="table table-responsive table-striped table-hover table-bordered" id="expenses_table" width="100%">
-               <thead>
+             <thead>
                 <tr>
                     <th width="20%">Type</th>
                     <th width="20%">Expense Name</th>
                     <th width="20%">Cost</th>
                     <th width="20%">Date</th> 
                     <th width="20%">Action</th>
-                 </tr>
-         </thead>
-         <tbody>
-            
-        </tbody>
-    </table>
-</div>
+                </tr>
+            </thead>
+                <tbody>
 
-</div>
+                </tbody>
+            </table>
+            </div>
 
-</div>
-
+        </div> 
+    </div> 
 </div>
 
