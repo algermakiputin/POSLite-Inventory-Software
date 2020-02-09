@@ -24,7 +24,7 @@
 	<div class="col-md-4">
 		<div class="panel panel-default">
            <div class="panel-heading">
-               Product Ranking
+               Product Ranking: <?php echo date('Y/m/d') ?>
            </div> 
            <div class="panel-body"> 
             <table class="table table-hover table-striped">
@@ -35,6 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php if ($top_products): ?>
                     <?php foreach ($top_products as $key => $row): ?>
                         <tr>
                             <td><?php echo $key + 1 ?></td>
@@ -42,7 +43,11 @@
                             <td><?php echo $row->qty ?></td>
                         </tr> 
                     <?php endforeach; ?>
-
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="3">Not enough data</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table> 
            </div> 
