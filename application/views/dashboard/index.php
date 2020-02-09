@@ -3,12 +3,12 @@
 		<h1 class="page-header">Dashboard</h1> 
     </div> 
 </div>
-<div class="col-md-12">
-        <?php 
-        echo $this->session->flashdata('errorMessage');
-        echo $this->session->flashdata('successMessage'); 
-        ?>
-    </div>
+ 
+    <?php 
+    echo $this->session->flashdata('errorMessage');
+    echo $this->session->flashdata('successMessage'); 
+    ?>
+  
 
 <div class="row">
 	<div class="col-md-8">
