@@ -48,8 +48,7 @@ class DashboardController extends AppController {
 						(
 							SELECT item_id
 							FROM sales_description 
-							WHERE DATE_FORMAT(sales_description.created_at, '%Y-%m-%d') > '$lastweek'
-							AND DATE_FORMAT(sales_description.created_at, '%Y-%m-%d') <= '$today'
+							WHERE DATE_FORMAT(sales_description.created_at, '%Y-%m-%d') >= '$lastweek'
 						)
 					";
 
@@ -70,7 +69,7 @@ class DashboardController extends AppController {
 		$total_sales = 0;
 
 		$points = 24;
-		$current_time = date('H') + 1;
+		$current_time = date('H') + 1.99;
 		if ($date == date('Y-m-d'))
 			$points = $current_time;
 
