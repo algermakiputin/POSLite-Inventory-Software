@@ -36,6 +36,7 @@ class DashboardController extends AppController {
 
 	private function line_chart($date) {
 
+
 		$sales = $this->db->select("date_format(sales.date_time, '%H.%i') as time, sales.id,sales.id, SUM(sales_description.price * sales_description.quantity) as total_sales")
 								->from('sales')
 								->join('sales_description', 'sales_description.sales_id = sales.id', 'LEFT')
@@ -46,7 +47,19 @@ class DashboardController extends AppController {
 	 
 		$total_sales = 0;
 
-		$dataset = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		$points = 24;
+		$current_time = date('H') + 1;
+		if ($date == date('Y-m-d'))
+			$points = $current_time;
+
+		$dataset = [];
+
+
+		for ($y = 0; $y < $points; $y++) {
+
+			$dataset[$y] = 0;
+		}
+
  	
  		$time_slots = [0.0, 0.59, 1.59, 2.59, 3.59, 4.59, 5.59, 6.59, 7.59, 8.59, 9.59, 10.59, 11.59, 12.59, 13.59, 14.59, 15.59, 16.59, 17.59, 18.59, 19.59, 20.59, 21.59, 22.59, 23.59 ];
 
@@ -57,7 +70,7 @@ class DashboardController extends AppController {
 
 				$time = $row->time;
 
-				if ($time > $time_slots[$i - 1] && $time < $time_slots[$i]) {
+				if ($time > $time_slots[$i - 1] && $time < $time_slots[$i] && array_key_exists($i, $dataset)) {
 
 					$dataset[$i] += $row->total_sales;
 					continue;
@@ -66,6 +79,7 @@ class DashboardController extends AppController {
 			}  
 
 		} 
+
 
 		for ($x = 1; $x < count($dataset); $x++) {
 
