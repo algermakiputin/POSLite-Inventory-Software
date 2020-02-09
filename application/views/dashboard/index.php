@@ -13,45 +13,80 @@ echo $this->session->flashdata('successMessage');
 <div class="row">
 	<div class="col-md-8">
 		<div class="panel panel-default">
-         <div class="panel-heading">
-             Performance
-         </div> 
-         <div class="panel-body"> 
+           <div class="panel-heading">
+               Performance
+           </div> 
+           <div class="panel-body"> 
             <canvas id="performance" width="400"  style="max-height: 500px;"></canvas> 
         </div> 
     </div> 
 </div>
 <div class="col-md-4">
-  <div class="panel panel-default">
-     <div class="panel-heading">
-         Product Ranking: <?php echo date('Y/m/d') ?>
-     </div> 
-     <div class="panel-body"> 
-        <table class="table table-hover table-striped">
-            <thead>
-                <tr>
-                    <th colspan="2">#</th>
-                    <th>Sold</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($top_products): ?>
-                    <?php foreach ($top_products as $key => $row): ?>
+    <div class="row">
+        <div class="col-md-12">
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                   Product Ranking: <?php echo date('Y/m/d') ?>
+               </div> 
+               <div class="panel-body"> 
+                <table class="table table-hover table-striped">
+                    <thead>
                         <tr>
-                            <td><?php echo $key + 1 ?></td>
-                            <td><?php echo $row->name ?></td>
-                            <td><?php echo $row->qty ?></td>
-                        </tr> 
-                    <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="3">Not enough data</td>
+                            <th colspan="2">#</th>
+                            <th>Sold</th>
                         </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table> 
-        </div> 
-    </div> 
+                    </thead>
+                    <tbody>
+                        <?php if ($top_products): ?>
+                            <?php foreach ($top_products as $key => $row): ?>
+                                <tr>
+                                    <td><?php echo $key + 1 ?></td>
+                                    <td><?php echo $row->name ?></td>
+                                    <td><?php echo $row->qty ?></td>
+                                </tr> 
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="3">Not enough data</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table> 
+                </div> 
+            </div> 
+        </div>
+
+
+        <div class="col-md-12">
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                   Diagnoses
+               </div> 
+               <div class="panel-body"> 
+                <table class="table table-hover">
+                   
+                        <thead>
+                            <tr>
+                                <td>Not Selling</td>
+                                <td>Short Stock</td>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td  style="font-size: 24px;padding: 15px">
+                                <span data-toggle="tooltip" title="Number of products that are not selling for the last 7 days"><?php echo $not_selling ?></span>
+                            </td>
+                            <td style="font-size: 24px;padding: 15px">
+                                
+                                <span title="Number of products that stocks are below 15" data-toggle="tooltip"><?php echo $low_stocks ?></span>        
+                            </td>
+                        </tr>
+                    
+                     </table>
+                </div> 
+            </div> 
+        </div>
+
+    </div>
 </div>
 </div>
 
