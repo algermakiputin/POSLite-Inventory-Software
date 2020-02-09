@@ -10,7 +10,12 @@ class DashboardController extends AppController {
 		$data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
 		$data['yesterday'] = json_encode($this->line_chart($yesterday));
 		$data['top_products'] = $this->top10_product();
+		$data['not_selling'] = $this->not_selling_products();
+		$data['low_stocks'] = count(low_stocks());
+		$lastweek = date('Y-m-d', strtotime('-7 days'));
+		$today = date('Y-m-d');
 
+		
 
 		$this->load->view('master', $data);
 	}
@@ -33,6 +38,23 @@ class DashboardController extends AppController {
 		return $sales;
 
 	} 
+
+	public function not_selling_products() {
+
+		$query = "SELECT *
+						FROM items
+						WHERE items.id
+						NOT IN
+						(
+							SELECT item_id
+							FROM sales_description 
+							WHERE DATE_FORMAT(sales_description.created_at, '%Y-%m-%d') > '$lastweek'
+							AND DATE_FORMAT(sales_description.created_at, '%Y-%m-%d') <= '$today'
+						)
+					";
+
+		return $this->db->query($query)->num_rows(); 
+	}
 
 	private function line_chart($date) {
 
