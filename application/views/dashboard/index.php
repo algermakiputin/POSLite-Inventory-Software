@@ -61,13 +61,7 @@
 var ctx = document.getElementById('performance').getContext('2d');
 var dataset1 = <?php echo $dataset ?>;
 var dataset2 = <?php echo $yesterday ?>;
-
-var tooltips = [
-	'00:00 - 0:99',
-	'00:00 - 0:99',
-	'00:00 - 0:99',
-	'00:00 - 0:99',
-];
+ 
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
