@@ -66,7 +66,7 @@ class DashboardController extends AppController {
 
 			$total += $row->total;
 		} 
-		
+
 		return  currency() . number_format($total / $count,2);
  
 		 
@@ -83,6 +83,7 @@ class DashboardController extends AppController {
 							FROM sales_description 
 							WHERE DATE_FORMAT(sales_description.created_at, '%Y-%m-%d') >= '$lastweek'
 						)
+						LIMIT 450
 					";
 
 		return $this->db->query($query)->num_rows(); 
