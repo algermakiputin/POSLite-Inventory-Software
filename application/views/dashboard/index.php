@@ -97,12 +97,11 @@ echo $this->session->flashdata('successMessage');
                     </table>
                 </div> 
             </div> 
-        </div>
-
+        </div> 
     </div>
 </div>
 </div>
-
+<br/>
 <script src="<?php echo base_url('assets/vendor/chart.min.js') ?>"></script>
 
 <script>
