@@ -63,7 +63,7 @@ echo $this->session->flashdata('successMessage');
                    Diagnoses
                </div> 
                <div class="panel-body"> 
-                <table class="table table-hover">
+                    <table class="table table-hover">
                    
                         <thead>
                             <tr>
@@ -81,7 +81,20 @@ echo $this->session->flashdata('successMessage');
                             </td>
                         </tr>
                     
-                     </table>
+                    </table>
+                    <table class="table table-hover">
+                   
+                        <thead>
+                            <tr>
+                                <td>Average Sales Per Day</td> 
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td  style="font-size: 24px;padding: 15px">
+                                <span data-toggle="tooltip" title="Average sales per day for the last 30 days"><?php echo $average_sales_per_day ?></span>
+                            </td> 
+                        </tr> 
+                    </table>
                 </div> 
             </div> 
         </div>
@@ -189,7 +202,7 @@ echo $this->session->flashdata('successMessage');
                             return '₱' + number_format(tooltipItem.yLabel);
                         }
                     }
-                }
+                },
             },
         });
 
