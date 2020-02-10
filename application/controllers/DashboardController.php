@@ -12,10 +12,11 @@ class DashboardController extends AppController {
 		$data['top_products'] = $this->top10_product();
 		$data['not_selling'] = $this->not_selling_products();
 		$data['low_stocks'] = count(low_stocks());
+		$data['average_sales_per_day'] = $this->average_sales_per_day();
 		$lastweek = date('Y-m-d', strtotime('-7 days'));
 		$today = date('Y-m-d');
 
-		
+		;
 
 		$this->load->view('master', $data);
 	}
@@ -38,6 +39,38 @@ class DashboardController extends AppController {
 		return $sales;
 
 	} 
+
+	public function average_sales_per_day() {
+
+		$last_month = date('Y-m-d', strtotime('-30 days'));
+
+		$sales = $this->db->select('sales.id, SUM(sales_description.price * sales_description.quantity) as total')
+								->from('sales')
+								->join('sales_description', 'sales_description.sales_id = sales.id')
+								->group_by('sales.id')
+								->where('DATE_FORMAT(date_time, "%Y-%m-%d") >', $last_month)
+								->get()
+								->result();
+
+		$count = count($sales);
+
+		if ($count < 10) {
+
+			return "Not enough data";
+		}
+
+		$total = 0;
+		$average_sales_per_day = 0;
+
+		foreach ($sales as $row) {
+
+			$total += $row->total;
+		} 
+		
+		return  currency() . number_format($total / $count,2);
+ 
+		 
+	}
 
 	public function not_selling_products() {
 
