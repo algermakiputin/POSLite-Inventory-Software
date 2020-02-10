@@ -23,7 +23,8 @@ body {
 }
 
 #wrapper, #page-wrapper {
-  height: 98%;
+  min-height: 98%;
+  height: auto;
 } 
 
 .product-thumbnail img {
