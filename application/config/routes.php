@@ -62,6 +62,8 @@ $route['expenses/reports'] = "ExpensesController/reports";
 
 $route['dashboard'] = "DashboardController/index";
 
+$route['diagnoses'] = "DashboardController/diagnoses";
+
 $route['default_controller'] = 'AuthController/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

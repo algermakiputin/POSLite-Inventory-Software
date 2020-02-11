@@ -69,12 +69,12 @@
 
 	function low_stocks() {
 		$CI =& get_instance();
-		$running_outofstock = $CI->db->select("items.id, items.name,items.description, ordering_level.quantity")
+		$running_outofstock = $CI->db->select("items.id, items.barcode, items.name,items.description, ordering_level.quantity")
 				->from("items")
 				->join("ordering_level", "ordering_level.item_id = items.id", "left")
 				->where('items.status', 1)
 				->where('ordering_level.quantity >', 0)
-				->where('ordering_level.quantity <=', 10)
+				->where('ordering_level.quantity <=', 15)
 				->get()
 				->result();
 
