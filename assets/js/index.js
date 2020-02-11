@@ -712,7 +712,11 @@ $(document).ready(function() {
 
 					}
 				}); 
-					
+				
+				$("#expenses-store-filter").change(function(e) {
+
+					expensesTable.columns(2).search($(this).val()).draw();
+				})
 			},
 			filterReports: function() {
 				$("#expenses_to").change(function(e) {

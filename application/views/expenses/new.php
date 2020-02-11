@@ -26,6 +26,12 @@
 						 		<?php echo validation_errors(); ?>
 						 	</div>
 						 	<div class="form-group">  
+						 		<label>Select Store</label>
+								<?php 
+									echo store_selector_component(['form-control']);
+								?>
+							</div>
+						 	<div class="form-group">  
 						 		<label>Date</label>
 								<input type="text" required="required" placeholder="Date" name="date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
 							</div>

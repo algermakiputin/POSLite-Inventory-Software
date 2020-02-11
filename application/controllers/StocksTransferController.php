@@ -16,8 +16,7 @@ class StocksTransferController Extends CI_Controller {
 			echo json_encode([
 				'details' => $invoice,
 				'orderline' => $orderline
-			]);
-
+			]); sss
 			
 		}else {
 			echo "0";
@@ -58,10 +57,8 @@ class StocksTransferController Extends CI_Controller {
 											->get('stocks_transfer', $limit, $start)
 											->result();
 
-		foreach ($delivery_notes as $row) {
-
-			
-
+		foreach ($delivery_notes as $row) { 
+			 
 			$dataset[] = [	
 					date('Y-m-d', strtotime($row->date)),
 					$row->delivery_note, 
@@ -114,6 +111,7 @@ class StocksTransferController Extends CI_Controller {
                      </ul>
                      '; 
             $class = "badge-warning";
+            
 			}else if ($status == "Ongoing Transfer") {
 
 				$class = "badge-info";
@@ -129,8 +127,7 @@ class StocksTransferController Extends CI_Controller {
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     
                     '.$mark.'
-                     
-                    
+                      
             </div>'];
 		}
 
@@ -193,11 +190,8 @@ class StocksTransferController Extends CI_Controller {
 				"<span class='badge $class'>$status</span>"
 				,
 				'<div class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-                    
-                    '.$mark.'
-                     
-                    
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a> 
+                    '.$mark.' 
             </div>'];
 		}
 
@@ -234,8 +228,7 @@ class StocksTransferController Extends CI_Controller {
 		if ($validate_dm) {
 			errorMessage("Error: Delivery Note Number Already Exist");
 			return redirect($_SERVER['HTTP_REFERER']);
-		}
- 		
+		} 
 
 		$po_number = $this->input->post('po_number');  
 		$product_id = $this->input->post('product_id[]');
@@ -297,8 +290,7 @@ class StocksTransferController Extends CI_Controller {
 	public function close_external_po($po_number) {
 
 		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => "Closed PO"]);
-		success("Internal PO has been closed successfully");
-
+		success("Internal PO has been closed successfully"); 
 		return redirect('transfer/external-po');
 	}
  

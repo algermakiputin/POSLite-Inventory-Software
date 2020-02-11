@@ -12,14 +12,18 @@ class ExpensesController extends CI_Controller {
 		$start = $this->input->post('start'); 
 		$fromDate = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$toDate = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
+		$store_number = $this->input->post('columns[2][search][value]') == "" ? get_store_number() : $this->input->post('columns[2][search][value]');
 
 		$total = $this->db->select_sum('cost')
 							->from('expenses')
  							->where('date >=',  $fromDate)
 							->where('date <=', $toDate)
+							->where('store_number', $store_number)
  							->get()->row();
+
 		$expenses = $this->db->where('date >=',  $fromDate)
 							->where('date <=', $toDate)
+							->where('store_number', $store_number)
 							->get("expenses")
 							->result();
 
@@ -62,7 +66,8 @@ class ExpensesController extends CI_Controller {
 				'type' => $this->input->post('type'),
 				'cost' => $this->input->post('cost'),
 				'date' => $this->input->post('date'),
-				'name' => $this->input->post('name')
+				'name' => $this->input->post('name'),
+				'store_number' => $this->input->post('store-selector'),
 
 			]);
 			$this->db->insert('expenses', $data);

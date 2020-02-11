@@ -11,10 +11,19 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6" style="margin-bottom: 10px;">
+    <div class="col-md-9" style="margin-bottom: 10px;">
         <form class="form-inline" autocomplete="off">
             <div class="form-group">
-                <label>Filter Reports: &nbsp;</label> 
+                <label>Store: &nbsp;</label>
+            </div>
+            <div class="input-group">
+                
+                <?php 
+                    echo store_selector_component(['form-control', 'filter-left'], "expenses-store-filter");
+                ?>  
+            </div>
+            <div class="form-group">
+                <label>&nbsp; Filter Reports: &nbsp;</label> 
             </div> 
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -27,7 +36,7 @@
             </div>
         </form>
     </div>
-    <div class="col-md-6 text-right">
+    <div class="col-md-3 text-right">
         <div style="padding:10px;font-size: 16px;">
             <b>Total Expenses:</b> <span id="total"></span>
         </div>
