@@ -18,7 +18,7 @@ class AuthController extends AppController {
 
 	 // 	}
 
-		if ($this->session->userdata('log_in')) redirect(base_url('items'));
+		if ($this->session->userdata('log_in')) redirect(base_url('dashboard'));
 		
 
 		// $this->load->dbutil();

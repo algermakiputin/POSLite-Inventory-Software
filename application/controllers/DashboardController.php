@@ -10,7 +10,7 @@ class DashboardController extends AppController {
 		$data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
 		$data['yesterday'] = json_encode($this->line_chart($yesterday));
 		$data['top_products'] = $this->top10_product();
-		$data['not_selling'] = $this->not_selling_products();
+		$data['not_selling'] = $this->not_selling_products()->num_rows();
 		$data['low_stocks'] = count(low_stocks());
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
 		$lastweek = date('Y-m-d', strtotime('-7 days'));
@@ -18,6 +18,14 @@ class DashboardController extends AppController {
 
 		;
 
+		$this->load->view('master', $data);
+	}
+
+	public function diagnoses() {
+
+		$data['content'] = "dashboard/diagnoses";
+		$data['not_selling'] = $this->not_selling_products()->result();
+		$data['low_stocks'] = low_stocks();
 		$this->load->view('master', $data);
 	}
 
@@ -74,8 +82,10 @@ class DashboardController extends AppController {
 
 	public function not_selling_products() {
 
-		$query = "SELECT *
+		$query = "SELECT items.id, items.barcode, items.name, prices.price, ordering_level.quantity
 						FROM items
+						INNER JOIN prices ON prices.item_id = items.id
+						INNER JOIN ordering_level ON ordering_level.item_id = items.id 
 						WHERE items.id
 						NOT IN
 						(
@@ -86,7 +96,7 @@ class DashboardController extends AppController {
 						LIMIT 450
 					";
 
-		return $this->db->query($query)->num_rows(); 
+		return $this->db->query($query); 
 	}
 
 	private function line_chart($date) {

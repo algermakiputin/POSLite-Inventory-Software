@@ -71,16 +71,20 @@ echo $this->session->flashdata('successMessage');
                                 <td>Short Stock</td>
                             </tr>
                         </thead>
+                        
                         <tr>
                             <td  style="font-size: 24px;padding: 15px">
-                                <span data-toggle="tooltip" title="Number of products that are not selling for the last 7 days"><?php echo $not_selling ?></span>
+                                <a href="<?php echo base_url('diagnoses') ?>">
+                                <span style="color: #333" data-toggle="tooltip" title="Number of products that are not selling for the last 7 days"><?php echo $not_selling ?></span>
+                                </a>
                             </td>
                             <td style="font-size: 24px;padding: 15px">
-                                
-                                <span title="Number of products that stocks are below 15" data-toggle="tooltip"><?php echo $low_stocks ?></span>        
+                                <a href="<?php echo base_url('diagnoses') ?>">
+                                <span style="color: #333" title="Number of products that stocks are below 15" data-toggle="tooltip"><?php echo $low_stocks ?></span> 
+                                </a>       
                             </td>
                         </tr>
-                    
+                        
                     </table>
                     <table class="table table-hover">
                    
