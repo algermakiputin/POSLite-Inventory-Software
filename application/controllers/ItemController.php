@@ -19,7 +19,7 @@ class ItemController extends AppController {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));
 		}
-	
+		 
 	}
 
 	public function find() {
