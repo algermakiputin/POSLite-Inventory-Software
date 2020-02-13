@@ -232,7 +232,7 @@ $(document).ready(function() {
 						data : data
 					},
 					columnDefs: [{
-						targets: [1, 8],
+						targets: [1],
 						visible: hide ,
 						searchable:hide
 					} ],
