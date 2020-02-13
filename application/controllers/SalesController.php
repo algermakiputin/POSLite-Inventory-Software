@@ -272,10 +272,7 @@ class SalesController extends CI_Controller {
 					$desc->quantity,
 					'₱' . number_format((float)$desc->price),
 					'₱' . number_format($desc->discount),
-					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount),
-					$this->session->userdata('account_type') == 'Admin' ? '
-						<a class="btn btn-sm btn-danger delete-sale" data-id="'.$desc->id.'" href="'.base_url('SalesController/destroy/') . $desc->id.'">Delete</a>
-					' : 'No Action'
+					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount) 
 				];
 			}
 			$totalSales += $sub_total;

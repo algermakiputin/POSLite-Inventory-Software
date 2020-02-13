@@ -89,8 +89,7 @@
 								<th >Quantity</th>
 								<th >Price</th>
 								<th>Discount</th>
-								<th >Total</th>  
-								<th >Action</th>
+								<th >Total</th>   
 							</tr>
 						</thead>
 						<tbody></tbody>
