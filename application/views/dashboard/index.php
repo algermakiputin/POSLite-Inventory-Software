@@ -162,7 +162,10 @@ echo $this->session->flashdata('successMessage');
                     'rgba(66,139,202,0.4)',
                     'rgba(66,139,202,0.4)',
                     'rgba(66,139,202,0.4)',
+
                     ],
+                    pointStyle: 'line',
+                    pointBackgroundColor: ["red", "blue", "yellow", "green", "purple", "orange"],
                     borderWidth: 2
                 },
                 {
@@ -182,7 +185,8 @@ echo $this->session->flashdata('successMessage');
                     'rgba(0, 0, 0,0.2)',
                     'rgba(0, 0, 0,0.2)'
                     ],
-                    borderWidth: 2
+                    pointStyle: 'line',
+                    borderWidth: 1
                 },
                 ]
             },
