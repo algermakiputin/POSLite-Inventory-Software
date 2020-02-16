@@ -148,7 +148,7 @@ echo $this->session->flashdata('successMessage');
                 datasets: [
                 {
                     label: 'Today ',
-                    data: dataset2,
+                    data: dataset1,
                     backgroundColor: [
                     'rgba(37, 119, 181,1)',
                     'rgba(37, 119, 181,1)',
@@ -175,7 +175,7 @@ echo $this->session->flashdata('successMessage');
                 },
                 {
                     label: 'Yesterday ',
-                    data: dataset1,
+                    data: dataset2,
                     backgroundColor: [
                     'rgba(122, 146, 163,0.5)',
                     'rgba(122, 146, 163,0.5)',
