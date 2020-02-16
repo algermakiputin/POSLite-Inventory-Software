@@ -169,8 +169,8 @@ echo $this->session->flashdata('successMessage');
                     pointBorderColor: "rgba(244,244,244,0.5)",
                     pointHoverBackgroundColor: "rgba(37, 119, 181,1)",
                     pointHoverBorderColor: "rgba(244,244,244,0.5)",
-                    pointRadius: 3,
-            pointHitRadius: 20,
+                    pointRadius: 1,
+            pointHitRadius: 10,
                     borderWidth: 3
                 },
                 {
@@ -195,8 +195,8 @@ echo $this->session->flashdata('successMessage');
                     pointBorderColor: "rgba(244,244,244,0.5)",
                     pointHoverBackgroundColor: "rgba(0, 0, 0,0.2)",
                     pointHoverBorderColor: "rgba(244,244,244,0.5)",
-                    pointRadius: 3,
-            pointHitRadius: 20,
+                    pointRadius: 1,
+            pointHitRadius: 10,
                     borderWidth: 3
                 },
                 ]
