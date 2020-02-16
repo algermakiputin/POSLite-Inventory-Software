@@ -28,4 +28,6 @@ function store_selector_component($classes, $id = "store-selector") {
 
 	return $selector;
 
+	
+
 }

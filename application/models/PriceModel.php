@@ -52,6 +52,25 @@ class PriceModel extends CI_Model {
 
 	public function update($price,$capital, $item_id, $store_number) {
 
+		if ($this->session->userdata('account_type') == "Admin") {
+
+			$stores = $this->db->get('stores')->num_rows();
+			$data = [];
+
+			for ($i = 1; $i <= $stores; $i++) {
+ 
+				$data['store' . $i . '_capital'] = $capital;
+				$data['store' . $i . '_retail'] = $price;
+		 
+		 
+			}
+
+ 			return $this->db->where('item_id', $item_id)->update('prices', $data);
+
+		}
+
+
+
 		$capital_column = "store" . $store_number . "_capital";
 		$retail_column = "store" . $store_number . "_retail";
 

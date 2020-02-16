@@ -431,8 +431,10 @@ class ItemController extends AppController {
 		$productImage = $_FILES['productImage'];
 		$supplier_id = $this->input->post('supplier');
  
+		$this->db->trans_begin(); 
 
 		$this->db->where('item_id', $id)->update('ordering_level', [ get_column_qty() => $stocks]);
+		
 		$price_id = $this->PriceModel->update($updated_price,$capital, $id, $store_number);
 
 		$itemData = [
@@ -446,19 +448,7 @@ class ItemController extends AppController {
 			'barcode' => $barcode
 		];
 
-		$update = $this->ItemModel->update_item($itemData);
-
-
-		if ($this->db->trans_status() === FALSE)
-		{
-		        $this->db->trans_rollback();
-		         
-		        return redirect('/');
-		}
-		 
-		$this->db->trans_commit(); 
-	      
-		$this->db->trans_begin(); 
+		$update = $this->ItemModel->update_item($itemData); 
 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
@@ -488,6 +478,15 @@ class ItemController extends AppController {
 			}
 				
 		} 
+
+		if ($this->db->trans_status() === FALSE)
+		{
+		        $this->db->trans_rollback();
+		         
+		        return redirect('/');
+		}
+		 
+		$this->db->trans_commit(); 
 		return redirect(base_url('items')); 
 	 		
 	}
