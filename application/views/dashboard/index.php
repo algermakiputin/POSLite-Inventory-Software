@@ -148,13 +148,13 @@ echo $this->session->flashdata('successMessage');
                 datasets: [
                 {
                     label: 'Today ',
-                    data: dataset1,
+                    data: dataset2,
                     backgroundColor: [
-                    'rgba(66,139,202,0.4)',
-                    'rgba(66,139,202,0.4)',
-                    'rgba(66,139,202,0.4)',
-                    'rgba(66,139,202,0.4)',
-                    'rgba(66,139,202,0.4)',
+                    'rgba(37, 119, 181,1)',
+                    'rgba(37, 119, 181,1)',
+                    'rgba(37, 119, 181,1)',
+                    'rgba(37, 119, 181,1)',
+                    'rgba(37, 119, 181,1)',
                     ],
                     borderColor: [
                     'rgba(66,139,202,0.5)',
@@ -164,29 +164,40 @@ echo $this->session->flashdata('successMessage');
                     'rgba(66,139,202,0.4)',
 
                     ],
-                    pointStyle: 'line',
-                    pointBackgroundColor: ["red", "blue", "yellow", "green", "purple", "orange"],
-                    borderWidth: 2
+                    pointStyle: 'circle', 
+                    pointBackgroundColor: "rgba(255,255,255,0.4)",
+                    pointBorderColor: "rgba(244,244,244,0.5)",
+                    pointHoverBackgroundColor: "rgba(37, 119, 181,1)",
+                    pointHoverBorderColor: "rgba(244,244,244,0.5)",
+                    pointRadius: 3,
+            pointHitRadius: 20,
+                    borderWidth: 3
                 },
                 {
                     label: 'Yesterday ',
-                    data: dataset2,
+                    data: dataset1,
                     backgroundColor: [
-                    'rgba(0, 0, 0,0.2)',
-                    'rgba(0, 0, 0,0.2)',
-                    'rgba(0, 0, 0,0.2)',
-                    'rgba(0, 0, 0,0.2)',
-                    'rgba(0, 0, 0,0.2)'
+                    'rgba(122, 146, 163,0.5)',
+                    'rgba(122, 146, 163,0.5)',
+                    'rgba(122, 146, 163,0.5)',
+                    'rgba(122, 146, 163,0.5)',
+                    'rgba(122, 146, 163,0.5)'
                     ],
                     borderColor: [
-                    'rgba(0, 0, 0,0.2)',
-                    'rgba(0, 0, 0,0.2)',
-                    'rgba(0, 0, 0,0.2)',
-                    'rgba(0, 0, 0,0.2)',
-                    'rgba(0, 0, 0,0.2)'
-                    ],
-                    pointStyle: 'line',
-                    borderWidth: 1
+                    'rgba(122, 146, 163,0.3)',
+                    'rgba(122, 146, 163,0.3)',
+                    'rgba(122, 146, 163,0.3)',
+                    'rgba(122, 146, 163,0.3)',
+                    'rgba(122, 146, 163,0.3)'
+                    ], 
+                    pointStyle: 'circle', 
+                    pointBackgroundColor: "rgba(255,255,255,0.4)",
+                    pointBorderColor: "rgba(244,244,244,0.5)",
+                    pointHoverBackgroundColor: "rgba(0, 0, 0,0.2)",
+                    pointHoverBorderColor: "rgba(244,244,244,0.5)",
+                    pointRadius: 3,
+            pointHitRadius: 20,
+                    borderWidth: 3
                 },
                 ]
             },
