@@ -16,7 +16,7 @@ class StocksTransferController Extends CI_Controller {
 			echo json_encode([
 				'details' => $invoice,
 				'orderline' => $orderline
-			]); sss
+			]);  
 			
 		}else {
 			echo "0";

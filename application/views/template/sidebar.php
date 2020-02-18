@@ -78,9 +78,7 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-            <?php if ($this->session->userdata('account_type') == "Admin" ||
-                        $this->session->userdata('account_type') == "Cashier"
-                ): ?>
+         
                 <li>
                    <a href="#"><i class="fa fa-exchange fa-fw"></i> Transactions <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level"> 
@@ -114,8 +112,7 @@
                         </li> 
                     </ul>
                 </li>
-               
-            <?php endif; ?>
+                
             <?php if ($this->session->userdata('account_type') == 'Admin'): ?>
                  <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
@@ -188,9 +185,9 @@
             <?php endif; ?>
 
             <?php if (!SITE_LIVE): ?>
-                <li>
-                    <a href="<?php echo base_url('license') ?>"><i class="fa fa-legal"></i> License</a>
-                </li>
+               <!--  <li>
+                    
+                </li> -->
             <!-- <li>
                 <a href="<?php echo base_url('backups') ?>"><i class="fa fa-database"></i> Backup</a>
             </li> -->

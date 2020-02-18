@@ -81,7 +81,7 @@
  
     <?php $this->load->view('template/footer') ?> 
     <footer style="text-align: right;padding: 3px 10px;font-size: 12px;">
-        <p style="color: #333">Developed By: <a href="https://algermakiputin.github.io/portfolio">Alger Makiputin</a></p>
+        <p style="color: #333">Developed By: <a href="https://algermakiputin.github.io/portfolio">Alger Makiputin</a> | <a href="<?php echo base_url('license') ?>"><i class="fa fa-legal"></i> View License</a></p>
     </footer>
 
     

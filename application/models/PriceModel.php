@@ -12,10 +12,14 @@ class PriceModel extends CI_Model {
 
 		$data = array(
 				'price' => $price,
-				'capital' => $capital,
 				'item_id' => $item_id,
 				'date_time' => get_date_time(),
 			);
+
+		if ($capital) {
+
+			$data['capital'] = $capital;
+		}
  
 
 		for ($i = 1; $i <= $stores; $i++) {

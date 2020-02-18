@@ -14,6 +14,13 @@
 		return $CI->session->userdata('store_number');
 	}
 
+	function get_user_role() {
+
+		$CI =& get_instance();
+
+		return $CI->session->userdata('account_type');
+	}
+
 	function get_column_qty() {
 
 		$CI =& get_instance();

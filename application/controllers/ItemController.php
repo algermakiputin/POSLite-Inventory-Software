@@ -102,7 +102,7 @@ class ItemController extends AppController {
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id, $store) ?? 0;
 			$deleteAction = "";
 
-			if ($this->session->userdata('account_type') == "Admin") {
+			if ( get_user_role() == "Admin"  || get_user_role() == "Head_cashier") {
 
 				$deleteAction = '
 						<li>

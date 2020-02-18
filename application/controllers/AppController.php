@@ -30,9 +30,9 @@ class AppController extends CI_Controller {
 
 		$data = [
 			'new' => ['Admin', 'Cashier'],
-			'edit' => ['Admin', 'Cashier', 'Clerk'],
-			'view' => ['Admin', 'Cashier', 'Clerk'],
-			'customers' => ['Admin', 'Cashier', 'Clerk'],
+			'edit' => ['Admin', 'Cashier', 'Head_cashier'],
+			'view' => ['Admin', 'Cashier', 'Head_cashier'],
+			'customers' => ['Admin', 'Cashier', 'Head_cashier'],
 			'expenses' => ['Admin','Cashier'],
 			'user' => ['Admin'],
 			'user_register' => ['Admin'],

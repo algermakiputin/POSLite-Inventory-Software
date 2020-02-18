@@ -40,13 +40,17 @@
 									<?php endforeach; ?>
 								</select>
 							</div>
+							<?php if (get_user_role() == "Admin") : ?>
 							<div class="form-group"> 
 								<label>Capital/Unit:</label>
 								<input value="<?php echo $price->getCapital($item->id, $store_number); ?>" max="500000" type="text" name="capital" class="form-control" required="required" id="capital">
 							</div> 
+							<?php else: ?>
+
+							<?php endif; ?>
 							<div class="form-group"> 
 								<label>Price:</label>
-								<input value="<?php echo $price->getPrice($item->id, $store_number); ?>" max="500000" type="text" name="price" class="form-control" required="required" id="selling-price" data-parsley-gte="#capital">
+								<input value="<?php echo $price->getPrice($item->id, $store_number); ?>" max="500000" type="text" name="price" class="form-control" required="required" id="selling-price" >
 							</div>  
 							<div class="form-group">
 								<label>Supplier:</label>

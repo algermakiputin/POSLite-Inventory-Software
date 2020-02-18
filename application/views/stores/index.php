@@ -21,9 +21,10 @@
             <table class="table table-responsive table-striped table-hover table-bordered datatable"  width="100%">
                <thead>
                     <tr>
-                        <th width="20%">Store #</th>
-                        <th width="20%">Name / Branch</th>
-                        <th width="20%">Actions</th> 
+                        <th>Store #</th>
+                        <th>Name / Branch</th>
+                        <th>Location</th>
+                        <th>Actions</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,7 @@
                         <tr>
                             <td><?php echo $store->number ?></td>
                             <td><?php echo $store->branch ?></td>
+                            <td><?php echo $store->location ?></td>
                             <td><a href="<?php echo base_url('store/edit/' . $store->id) ?>" class="btn btn-primary btn-sm">Edit</a></td>
                         </tr>
                     <?php endforeach; ?>
