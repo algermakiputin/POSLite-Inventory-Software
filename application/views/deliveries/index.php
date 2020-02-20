@@ -23,12 +23,12 @@
 				<?php 
 	                echo store_selector_component(['form-control', 'limit'], "purchases-store-filter");
 	            ?>
-			</div>
-	 
+			</div> 
              <table class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
 				<thead>
 					<tr>
 						<th>Delivery Date</th>
+						<th>Purchase Number</th>
 						<th>Received By</th>
 						<th>Supplier</th> 
 						<th>Total Amount</th>

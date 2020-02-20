@@ -28,7 +28,10 @@
 							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 							<div class="row">
 								<div class="col-md-3">
-
+									<div class="form-group">
+										<label>Purchase Number</label>
+										<input type="text" name="purchase_number" value="<?php echo $purchase_number ?>" readonly class="form-control">
+									</div> 
 									<div class="form-group">
 										<label>Select Store:</label>
 										<?php 
@@ -89,7 +92,7 @@
 											 	<input type="text" name="quantity[]" placeholder="QTY" class="form-control" required="required">
 											</td>
 											<td>
-												<input type="text" name="defective[]" placeholder="Defectives" class="form-control" required="required"> 
+												<input type="text" name="defective[]" placeholder="Defectives" value="0" class="form-control" required="required"> 
 											</td>
 											<td> 
 												<input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> 

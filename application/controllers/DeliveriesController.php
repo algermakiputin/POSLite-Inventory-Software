@@ -9,8 +9,12 @@ class DeliveriesController extends CI_Controller
 	}
 
 	public function new() {
+
+		$purchase_number = get_store_number() . '-0000' . $this->get_max_table_row();
+
 		$this->load->model('PriceModel');
 		$data['page'] = "New Delivery";
+		$data['purchase_number'] = $purchase_number;
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['products'] = json_encode($this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result());
 		 
@@ -36,6 +40,13 @@ class DeliveriesController extends CI_Controller
 		return $this->load->view('master',$data);
 	}
 
+	public function get_max_table_row() {
+
+		$max_id = $this->db->select("MAX(id) as id")->from("delivery")->get()->row()->id;
+
+		return $max_id ? $max_id : 1;				
+	}
+
 
 	public function insert() {
 	 
@@ -48,6 +59,7 @@ class DeliveriesController extends CI_Controller
 		$remarks = $this->input->post("remarks");
 		$store_number = $this->input->post('store-selector');
 		$payment_type = $this->input->post('payment_type');
+		$purchase_number = $this->input->post('purchase_number');
 
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
@@ -55,8 +67,10 @@ class DeliveriesController extends CI_Controller
 			'received_by' => $this->session->userdata('username'),
 			'payment_type'	=> $payment_type,
 			'store_number' => $store_number,
-			'paid'	=> 0
+			'paid'	=> 0,
+			'purchase_number' => $purchase_number
 			);
+
 
 		$data = $this->security->xss_clean($data);
 		$this->db->trans_begin();
@@ -121,6 +135,22 @@ class DeliveriesController extends CI_Controller
 		return redirect(deliveries);
 	}
 
+	public function payment($id) {
+
+		$purchase = $this->db->where('id', $id)->get('delivery')->row();
+
+		$total = $this->db->select("SUM(price * quantities) as total")
+								->from('delivery_details')
+								->where('delivery_id', $purchase->id)
+								->get()
+								->row()->total;
+
+		$data['total'] = $total;
+		$data['purchase'] = $purchase;
+		$data['content'] = "deliveries/payment";
+		$this->load->view('master', $data);
+	}
+
 	public function datatable() {
 
 		$start = $this->input->post('start');
@@ -137,6 +167,8 @@ class DeliveriesController extends CI_Controller
 							->group_by('delivery.id')
 							->order_by('delivery.id', 'DESC')
 							->like('received_by', $search, 'both')
+							->or_like('purchase_number', $search, 'both')
+							->or_like('supplier.name', $search, 'both')
 							->limit($limit, $start)
 							->get()
 							->result();
@@ -154,6 +186,7 @@ class DeliveriesController extends CI_Controller
 			 
 			return [ 
 				date('Y-m-d', strtotime($delivery->date_time)),
+				$delivery->purchase_number,
 				$delivery->received_by,
 				$delivery->name,
 				currency() . number_format($delivery->total),
