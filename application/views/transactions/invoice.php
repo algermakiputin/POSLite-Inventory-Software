@@ -5,6 +5,14 @@
     <!-- /.col-lg-12 -->
 </div>
 <div class="row">   
+    <div class="col-lg-12">
+        <div style="background-color: #eee;padding: 10px;margin-bottom: 20px;">
+            <label>Select Store:</label>
+            <?php 
+                echo store_selector_component(['form-control', 'limit'], "invoice-store-filter");
+            ?>
+        </div>
+    </div>
     <div class="col-lg-12"> 
         <?php if ($this->session->flashdata('success')): ?>
             <div class="form-group"> 

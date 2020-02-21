@@ -36,8 +36,8 @@
             </div>
             <div class="panel-body">    
                 <div class="form-group">
-                    <label>Enter Delivery Note Number</label>
-                    <input type="text" required="required" class="form-control" value="" name="delivery_note_number">
+                    <label>Delivery Note Number</label>
+                    <input type="text" required="required" class="form-control" name="delivery_note_number" readonly value="<?php echo $dm_number ?>">
                     <input type="hidden" name="store_number" id="store-number" readonly="readonly" value="<?php echo $po->store_number ?>">
                     <input type="hidden" name="type" value="internal">
                 </div>

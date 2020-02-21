@@ -50,7 +50,7 @@ class StocksTransferController Extends CI_Controller {
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		$dataset = [];  
-		$store_number =  $store = $this->input->post('columns[0][search][value]');
+		$store_number =  $this->input->post('columns[0][search][value]');
 		$store_number = $store_number ? $store_number : get_store_number();
 
 		$delivery_notes = $this->db->where('store_number', $store_number)
@@ -210,6 +210,8 @@ class StocksTransferController Extends CI_Controller {
 
 		$po = $this->db->where('po_number', $po_number)->get('purchase_order')->row();
 		$orderline = $this->db->where('purchase_order_id', $po->id)->get('purchase_order_line')->result();
+
+ 		$data['dm_number'] = get_store_number() . '-DM0000' . $this->get_max_table_row();
  
 		$data['po'] = $po;
 		$data['orderline'] = $orderline;
@@ -224,6 +226,7 @@ class StocksTransferController Extends CI_Controller {
 		$delivery_note_number = $this->input->post('delivery_note_number');
 
 		$validate_dm = $this->db->where('delivery_note', $delivery_note_number)->get('purchase_order')->num_rows();
+
 
 		if ($validate_dm) {
 			errorMessage("Error: Delivery Note Number Already Exist");
@@ -287,12 +290,21 @@ class StocksTransferController Extends CI_Controller {
 		return redirect('transfer/internal-po');
 	}
 
+	public function get_max_table_row() {
+
+		$max_id = $this->db->select("MAX(id) as id")->from("stocks_transfer")->get()->row()->id;
+
+		return $max_id ? $max_id : 1;				
+	}
+
 	public function close_external_po($po_number) {
 
 		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => "Closed PO"]);
 		success("Internal PO has been closed successfully"); 
 		return redirect('transfer/external-po');
 	}
+
+
  
 
 }

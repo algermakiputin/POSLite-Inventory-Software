@@ -9,7 +9,7 @@
             </div>
         <?php endif; ?>
         <?php if ($this->session->flashdata('error')): ?>
-        <div class="form-group"> 
+            <div class="form-group"> 
                 <div class="alert alert-danger">
                     <?php echo $this->session->flashdata('error') ?>
                 </div>
@@ -19,15 +19,22 @@
 </div>
 <div class="row">  
     <div class="col-lg-12">
-    
-    
-     <div class="panel panel-default">
-         <div class="panel-heading">
-             Purchase Orders
-         </div> 
-         <div class="panel-body"> 
+        <div style="background-color: #eee;padding: 10px;margin-bottom: 20px;">
+            <label>Select Store:</label>
+            <?php 
+            echo store_selector_component(['form-control', 'limit'], "internal-po-store-filter");
+            ?>
+        </div>
+    </div>
+    <div class="col-lg-12"> 
+
+       <div class="panel panel-default">
+           <div class="panel-heading">
+               Purchase Orders
+           </div> 
+           <div class="panel-body"> 
             <table class="table table-responsive table-striped table-hover table-bordered" id="purchase-order-tbl" width="100%">
-               <thead>
+             <thead>
                 <tr>
                     <th >P.O. Date</th>
                     <th >P.O. No.</th>
@@ -37,13 +44,13 @@
                     <th>Delivery Note</th>
                     <th>Status</th>
                     <th >Actions</th>
-                 </tr>
-         </thead>
-         <tbody>
-            
-        </tbody>
-    </table>
-</div>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
 
 </div>
 

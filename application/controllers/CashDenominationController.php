@@ -56,29 +56,29 @@ class CashDenominationController extends AppController {
 						$data[0]->date,
 						$data[0]->staff,
 						currency() .number_format($data[1]->total,2),
-						currency() . number_format($data[0]->total,2)
+						currency() . number_format($data[0]->total,2),
+						'<a href="'.base_url('CashDenominationController/edit/' . $data[0]->id).'" class="btn btn-primary btn-sm">Edit</a>'
 					];
 
 			}else if (count($data) == 1) {
 
+				$col3 = "Not set";
+				$col4 = currency() . number_format($data[0]->total,2);
 
-				if ($data[0]->type == "closing") {
+				if ($data[0]->type != "closing") {
 
-					$history[] = [
+					$col3 = currency() . number_format($data[0]->total,2);
+					$col4 = "Not Set";
+				} 
+ 
+
+				$history[] = [
 						$data[0]->date,
 						$data[0]->staff,
-						"Not set",
-						currency() . number_format($data[0]->total,2)
+						$col3,
+						$col4,
+						'<a href="'.base_url('CashDenominationController/edit/' . $data[0]->id).'" class="btn btn-primary btn-sm">Edit</a>'
 					];
-				}else {
-
-					$history[] = [
-						$data[0]->date,
-						$data[0]->staff,
-						currency() . number_format($data[0]->total,2),
-						"Not set"
-					];
-				}
 			}  
 		}  
 		
@@ -89,6 +89,46 @@ class CashDenominationController extends AppController {
 			'data' => $history
 		]);
  
+	}
+
+	public function edit($id) {
+
+		$denomination = $this->db->where('id', $id)->get('denomination')->row();
+		$cash = $this->db->where('denomination_id', $denomination->id)->get('cash_denomination')->row_array();
+		$data['denomination'] = $denomination;
+		$data['cash'] = $cash;
+		$data['content'] = "denomination/edit";
+		$this->load->view('master', $data);
+	}
+
+	public function update() {
+
+		$data = [
+			'1000_' => $this->input->post('1000'),
+			'500_' => $this->input->post('500'),
+			'100_' => $this->input->post('100'),
+			'50_' => $this->input->post('50'),
+			'10_' => $this->input->post('10'),
+			'5_' => $this->input->post('5'),
+			'1_' => $this->input->post('1'),
+			'0_50' => $this->input->post('0_50'),
+			'0_25' => $this->input->post('0_25'),
+			'0_10' => $this->input->post('0_10'),
+			'0_05' => $this->input->post('0_05'),
+			
+		];
+
+		$denomination_id = $this->input->post('denomination_id');
+
+		$update = $this->db->where('denomination_id', $denomination_id)
+					->update('cash_denomination', $data);
+
+		if ($update)  success("Updated Successfully"); 
+		else errorMessage("Opps something went wrong please try agian later");
+		 
+		return redirect('denomination');
+
+
 	}
 
 	public function closing() {
@@ -110,8 +150,7 @@ class CashDenominationController extends AppController {
 			'store_number' => get_store_number()
 		];	
 
-		$id = $this->db->insert_id();
-
+		 
 		$data = [
 			'1000_' => $this->input->post('1000'),
 			'500_' => $this->input->post('500'),
@@ -124,13 +163,17 @@ class CashDenominationController extends AppController {
 			'0_25' => $this->input->post('0_25'),
 			'0_10' => $this->input->post('0_10'),
 			'0_05' => $this->input->post('0_05'),
-			'denomination_id' => $id
+			
 		];
 
 
 		$this->db->trans_begin(); 
 
 		$this->db->insert('denomination', $info);
+		$id = $this->db->insert_id();
+
+		$data['denomination_id'] = $id;
+
 		$this->db->insert('cash_denomination', $data);
 
 		if ($this->db->trans_status() === FALSE)

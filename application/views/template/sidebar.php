@@ -86,7 +86,7 @@
                             <a href="<?php echo base_url('invoice') ?>"><i class="fa fa-circle-o"></i> Invoice</a>
                         </li>   
                         <li>
-                            <a href="<?php echo base_url('purchase-orders') ?>"><i class="fa fa-circle-o"></i> Internal PO</a>
+                            <a href="<?php echo base_url('internal-po') ?>"><i class="fa fa-circle-o"></i> Internal PO</a>
                         </li>  
                         <li>
                             <a href="<?php echo base_url('supplier/po') ?>"><i class="fa fa-circle-o"></i> New Internal PO</a>

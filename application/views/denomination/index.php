@@ -55,6 +55,7 @@
                     <th>Staff</th>
                     <th>Opening Amount</th>
                     <th>Closing Amount</th>  
+                    <th>Actions</th>
                  </tr>
          </thead>
          <tbody>

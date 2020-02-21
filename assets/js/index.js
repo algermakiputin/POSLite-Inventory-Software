@@ -233,7 +233,7 @@ $(document).ready(function() {
 				})
 			},
 			internal_po_datatable: function() {
-				$("#purchase-order-tbl").DataTable({
+				var purchase_order_tbl = $("#purchase-order-tbl").DataTable({
 					processing : true,
 					serverSide : true, 
 					ajax : {
@@ -243,6 +243,14 @@ $(document).ready(function() {
 					},
 
 				});
+
+				$("#internal-po-store-filter").change(function() {
+
+					var store_number = $(this).val();
+
+					purchase_order_tbl.columns(0).search(store_number).draw();
+					
+				})
 			},
 			external_po_datatable: function() {
 				$("#external-purchase-order-tbl").DataTable({
@@ -794,7 +802,7 @@ $(document).ready(function() {
 			invoice_DataTable : function() {
 				data = {};
 				data[csrfName] = csrfHash;
-				var credits_tbl = $("#invoice_tbl").DataTable({
+				var invoice_tbl = $("#invoice_tbl").DataTable({
 					bProcessing : true,
 					serverSide : true, 
 					ajax : {
@@ -805,7 +813,17 @@ $(document).ready(function() {
 					"targets": 'no-sort',
 					"bSort": false, 
 					 
+				});
+
+				$("#invoice-store-filter").change(function() {
+
+					var store_number = $(this).val();
+
+					invoice_tbl.columns(0).search(store_number).draw();
+
 				})
+
+
 			},
 			standby_order_DataTable : function() {
 				data = {};

@@ -145,16 +145,15 @@ class TransactionsController extends CI_Controller {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]');
+		$store_number = $this->input->post('columns[0][search][value]') == "" ? get_store_number() : $this->input->post('columns[0][search][value]');
 
 		$transactions = $this->db->select("sales.*, SUM(sales_description.price * sales_description.quantity) as total, users.name as username")
 					->from('sales')
 					->join('sales_description', 'sales_description.sales_id = sales.id', 'BOTH')
 					->join('users', 'users.id = sales.user_id') 
 					->like('sales.customer_name', $search, 'BOTH')  
-					->or_where('sales.type', 'invoice')
-					->like('sales.transaction_number', $search, 'BOTH') 
-					->group_by('sales.transaction_number')
-					
+					->where('sales.store_number', $store_number) 
+					->group_by('sales.transaction_number') 
 					->limit($limit, $start)
 					->order_by('id', 'DESC')
 					->get()

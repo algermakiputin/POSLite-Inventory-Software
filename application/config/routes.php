@@ -71,7 +71,7 @@ $route['po/external'] = "PurchaseOrderController/external_po";
 $route['external_po/new'] = "PurchaseOrderController/newExternalPO";
 
 $route['external-po'] = "PurchaseOrderController/external_po_list";
-$route['purchase-orders'] = "PurchaseOrderController/purchase_order_list";
+$route['internal-po'] = "PurchaseOrderController/purchase_order_list";
 $route['po/view/(:any)'] = "PurchaseOrderController/view/$1";
 
 $route['credits'] = "TransactionsController/index";

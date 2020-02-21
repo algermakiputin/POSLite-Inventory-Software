@@ -7,11 +7,15 @@ class PurchaseOrderController Extends CI_Controller {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
+		$store_number =  $this->input->post('columns[0][search][value]');
+		$store_number = $store_number ? $store_number : get_store_number();
+
 		$dataset = [];
 		$type = "internal";
 
 		$purchase_orders = $this->db->select("purchase_order.*") 
 											->where('purchase_order.type', 'internal')
+											->where('store_number', $store_number)
 											->like('purchase_order.po_number', $search, 'BOTH')
 											->order_by("purchase_order.id", 'DESC')
 											->get('purchase_order', $limit, $start) 
