@@ -14,7 +14,7 @@
 			<div class="panel-body"> 
 				<div class="row">
 					<div class="col-md-6">
-						<table class="table table-bordered">
+						<table class="table">
 							<tr>
 								<td colspan="2" style="background-color: #f4f4f5;">Order Information</td>
 							</tr>
@@ -24,18 +24,41 @@
 							</tr>
 							<tr>
 								<th>Date:</th>
-								<td><?php echo $delivery->date_time ?></td>
+								<td><?php echo date('Y-m-d', strtotime($delivery->date_time)) ?></td>
 							</tr>
 							<tr>
 								<th>Received By:</th>
 								<td><?php echo $delivery->received_by ?></td>
 							</tr>
+							<tr>
+								<th>Received By:</th>
+								<td><?php echo $delivery->paid ? "Paid" : "Unpaid" ?></td>
+							</tr>
 						</table>
 					</div>
-				</div>
-
-
-				 <table class="table table-bordered table-hover">
+					<?php if ($delivery->paid): ?>
+					<div class="col-md-6">
+						<table class="table ">
+							<tr>
+								<td colspan="2" style="background-color: #f4f4f5;">Payment Details</td>
+							</tr>
+							<tr >
+								<th>Date:</th>
+								<td> <?php echo $payment->date ?></td>
+							</tr>
+							<tr>
+								<th>Staff:</th>
+								<td><?php echo $payment->staff ?></td>
+							</tr>
+							<tr>
+								<th>Amount:</th>
+								<td><?php echo currency() . number_format($payment->total,2) ?></td>
+							</tr>
+						</table>
+					</div>
+				<?php endif; ?>
+					<div class="col-md-12">
+						<table class="table table-bordered">
 				 	<thead>
 				 		<tr>
 				 			<td colspan="7" style="background-color: #f4f4f5;">Order Summary</td>
@@ -66,6 +89,11 @@
 				 		<td><?php echo currency() . number_format($total,2) ?></td>
 				 	</tr>
 				 </table>
+					</div>
+				</div>
+
+
+				 
 			</div>
 		 
 		</div>

@@ -17,4 +17,11 @@ class PurchasePaymentsModel extends CI_Model {
 
 		return $this->db->insert('purchase_payments', $data);
 	}
+
+	public function fetch_row($purchase_number) {
+
+		return $this->db->where('purchase_number', $purchase_number)
+								->get('purchase_payments')
+								->row();
+	}
 }

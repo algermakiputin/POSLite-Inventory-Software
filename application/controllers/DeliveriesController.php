@@ -5,7 +5,9 @@ class DeliveriesController extends CI_Controller
 
 	public function __construct() {
 		parent::__construct();
-	 
+	 	
+	 	$this->load->model('DeliveryModel');
+	 	$this->load->model('PurchasePaymentsModel');
 	}
 
 	public function new() {
@@ -24,19 +26,18 @@ class DeliveriesController extends CI_Controller
 	}
 
 	public function details($id) {
-		$data['delivery'] = $this->db->select('delivery.*, supplier.name')
-								->from('delivery')
-								->join('supplier', 'supplier.id = delivery.supplier_id')
-								->get()
-								->row();
-		 
-		$data['deliveryDetails'] = $this->db->select("delivery_details.*, items.name as product_name, SUM(delivery_details.price * delivery_details.quantities) as subTotal")
-								->join('items', 'items.id = delivery_details.item_id', 'BOTH')
-								->where('delivery_details.delivery_id', $id)
-								->group_by('delivery_details.id')
-								->get('delivery_details')->result();
+
+		$delivery = $this->DeliveryModel->get_delivery_join_supplier($id);
+		$delivery_details = $this->DeliveryModel->get_delivery_details($id);
+		$payment_details = $this->PurchasePaymentsModel->fetch_row($delivery->purchase_number);
+
+		$data['delivery'] = $delivery;
+		$data['deliveryDetails'] = $delivery_details;
 		$data['total'] = 0;
+		$data['payment'] = $payment_details;
+
 		$data['content'] = "deliveries/details";
+
 		return $this->load->view('master',$data);
 	}
 
@@ -180,7 +181,7 @@ class DeliveriesController extends CI_Controller
 			if (!$delivery->paid) {
 
 				$mark .= '<li>
-                  	<a href="'. base_url("DeliveriesController/markPaid/" . $delivery->id) .'"><i class="fa fa-money"></i> Mark as Paid</a> 
+                  	<a href="'. base_url("deliveries/payment/" . $delivery->id) .'"><i class="fa fa-money"></i> Add Payment</a> 
                   </li>';
 			}
 			 
@@ -197,11 +198,11 @@ class DeliveriesController extends CI_Controller
 				<div class="dropdown">
               	<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
               	<ul class="dropdown-menu">
-              		
+              		'.$mark.'
                   <li>
                   	<a href="'. base_url("deliveries/details/" . $delivery->id) .'"><i class="fa fa-eye"></i> View Details</a> 
                   </li> 
-                  '.$mark.'
+                  
                   <li>
                       <a class="delete-data" href="' . base_url('DeliveriesController/destroy/' . $delivery->id ) .'">
                           <i class="fa fa-trash"></i> Delete</a>

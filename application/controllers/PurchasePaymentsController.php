@@ -28,9 +28,7 @@ class PurchasePaymentsController extends CI_Controller
 		$this->PurchasePaymentsModel->store( $data );
 		$this->db->where('id', $this->input->post('purchase_id'))
 					->update('delivery', ['paid' => 1]);
-
-
-
+ 
 		if ($this->db->trans_status() === FALSE)
 		{
 		   errorMessage("Opps somethingw went wrong please try again later");

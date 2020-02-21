@@ -25,10 +25,10 @@
 						 	<div class="form-group">
 						 		<?php echo validation_errors(); ?>
 						 	</div> 
-						 	<input type="hidden" name="purchase_id" value="<?php echo $purchase->id ?>">
+						 	<input type="hidden" name="purchase_id" readonly value="<?php echo $purchase->id ?>">
 						 	<div class="form-group">
 						 		<label>Purchase Number</label>
-						 		<input type="text" class="form-control" name="purchase_number" value="<?php echo $purchase->purchase_number ?>">
+						 		<input type="text" readonly class="form-control" name="purchase_number" value="<?php echo $purchase->purchase_number ?>">
 						 	</div>
 						 	<div class="form-group">  
 						 		<label>Date</label>
@@ -41,12 +41,12 @@
 						 
 							<div class="form-group">  
 								<label>Payment</label>
-								<input type="number"  required="required" name="payment" id="purchase-payment" class="form-control">
+								<input type="number" data-parsley-gte="#total" data-parsley-gte-message="Payment must be greather or equal to total amount"  required="required" name="payment" id="purchase-payment" class="form-control">
 							</div>
 
 							<div class="form-group">  
 								<label>Change</label>
-								<input type="text"  required="required" name="change" id="purchase-change" class="form-control">
+								<input type="text" value="0"  required="required" name="change" id="purchase-change" class="form-control">
 							</div>
 							<div class="form-group">
 								<input type="submit" name="" value="Save" class="btn btn-primary">
@@ -74,7 +74,9 @@
 			 
 			var payment = parseFloat( $(this).val());
 			var total = parseFloat($("#total").val());
-			var change = parseFloat(payment - total) ?? 0;
+			var change = payment - total;
+
+			change = change > 0 ? change : 0;
 
 
 			if (payment >= total) { 
