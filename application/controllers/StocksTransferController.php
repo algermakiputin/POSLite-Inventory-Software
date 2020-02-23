@@ -25,6 +25,19 @@ class StocksTransferController Extends CI_Controller {
 
 	}
 
+	public function print_dm($id) {
+
+		$dm = $this->db->where('id', $id)->get('stocks_transfer')->row();
+
+		$orderline = $this->db->where('stocks_transfer_id', $dm->id)->get('stocks_transfer_line')->result();
+
+		$data['dm'] = $dm;
+		$data['orderline'] = $orderline;
+		$data['defaultRow'] = 10;
+		$this->load->view('receipt/delivery_note', $data);
+
+	}
+
 	public function internal_po() {
 
 		$data['content'] = "transfer/internal_po";
@@ -56,6 +69,8 @@ class StocksTransferController Extends CI_Controller {
 		$delivery_notes = $this->db->where('store_number', $store_number)
 											->get('stocks_transfer', $limit, $start)
 											->result();
+
+
 
 		foreach ($delivery_notes as $row) { 
 			 
@@ -118,6 +133,18 @@ class StocksTransferController Extends CI_Controller {
 			}else {
 
 				$class = "badge-success";
+			}
+
+			if ( $status != "Request Item" ) {
+
+				$mark = '
+					<ul class="dropdown-menu">
+                  <li>
+                      <a class="print-dm" href="#" data-url="' . base_url("StocksTransferController/print_dm/$po->id") .'">
+                          <i class="fa fa-print"></i> Print</a>
+                  </li>
+                  </ul>
+				';
 			}
 
 			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, 
@@ -209,6 +236,7 @@ class StocksTransferController Extends CI_Controller {
 	public function process($po_number) {
 
 		$po = $this->db->where('po_number', $po_number)->get('purchase_order')->row();
+ 
 		$orderline = $this->db->where('purchase_order_id', $po->id)->get('purchase_order_line')->result();
 
  		$data['dm_number'] = get_store_number() . '-DM0000' . $this->get_max_table_row();

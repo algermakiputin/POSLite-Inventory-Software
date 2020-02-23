@@ -463,10 +463,11 @@ class PurchaseOrderController Extends CI_Controller {
 			'requested_store_name' => $requested_store_name,
 			'status' => $status,
 			'customer_name' => $customer_name,
-			'customer_id'	=> $customer_id
+			'customer_id'	=> $customer_id,
+			'staff' => $this->session->userdata('username')
 		]);
 		
-		$po_id = $this->db->insert_id();
+		$po_id = $this->db->insert_id(); 
 
 		foreach ($products as $key => $product) {
 

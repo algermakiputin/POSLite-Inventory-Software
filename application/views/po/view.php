@@ -27,18 +27,13 @@
            </div> 
            <div class="panel-body" style="line-height: 1.5;padding: 40px 40px 60px 40px"> 
             <div class="row">
-                <div class="col-md-6">
-                    <div><b>Hardware Shop</b></div>
-                    <div>WYC Bldg., J. Hernandez St.</div>
-                    <div>Naga City, Camarines Sur 4400</div>
-                    <div>PH</div>
-                    <div>test@example.com</div>
-                    <div>www.test.com</div>
-                </div> 
+                 
                 <div class="col-md-12">
                     <h3>PURCHASE ORDER</h3>
                 </div>
                 <div class="col-md-4">
+                    <div><b>REQUESTED BY</b></div> 
+                    <div><?php echo $po->staff ? $po->staff : "-- --" ?></div>
                     <div><b>REQUEST FROM</b></div> 
                     <div><?php echo $po->store_name ?></div>
                 </div>

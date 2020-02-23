@@ -75,6 +75,13 @@ $(document).ready(function() {
 					transfer_purchase_order_tbl.columns(0).search(store_number).draw();
 				})
 
+				$("body").on('click', '.print-dm', function(e) {
+
+					var url = $(this).data('url');
+
+					window.open(url,'popUpWindow','height=768,width=1280,left=150,top=150,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+				})
+
 			},
 			delivery_notes_datatable: function() {
 				var delivery_notes_datatable = $("#delivery-notes-tbl").DataTable({

@@ -9,7 +9,7 @@
   <thead>
     <tr><td>
       <div class="header">
-        <h3>RANCE AARON REPUBLICAN HARDWARE COMPANY INC. <span style="float: right;">Sales Invoice</span></h3> 
+        <h3>RANCE AARON REPUBLICAN HARDWARE COMPANY INC. <span style="float: right;">Purchase orderline</span></h3> 
         <div class="col col-6">
           <div class="section-input">
             <h4>Purpose:</h4>
@@ -42,13 +42,13 @@
               <tr>
                 <td>Date &nbsp;</td>
                 <td style="border:solid 1px #000; width: 170px;padding: 3px 5px;">
-                  <?php echo date('Y-m-d', strtotime($invoice->date_time)) ?>
+                  <?php echo date('Y-m-d', strtotime($dm->date)) ?>
                 </td>
               </tr>
               <tr>
-                <td>Invoice Number # &nbsp;&nbsp;</td>
+                <td>Purchase Order Number # &nbsp;&nbsp;</td>
                 <td style="border:solid 1px #000; width: 170px;padding: 3px 5px;">
-                  <?php echo $invoice->transaction_number ?>
+                  <?php echo $dm->po_number ?>
                 </td>
               </tr>
               <tr>
@@ -70,18 +70,16 @@
           <thead>
             <tr class="head">
             <th width="60%" style="border-right: solid 1px #fff;">Description</th>
-            <th width="10%" style="border-right: solid 1px #fff;">QTY</th>
-            <th width="15%" style="border-right: solid 1px #fff;">Unit Price</th>
-            <th width="15%">Total</th>
+            <th width="15%" style="border-right: solid 1px #fff;">QTY</th>
+            <th width="25%" style="border-right: solid 1px #fff;">Remarks</th> 
           </tr>
           </thead>
           <tbody>
             <?php foreach ($orderline as $row): ?>
             <tr>
               <td><?php echo $row->name ?></td>
-              <td><?php echo $row->quantity ?></td>
-              <td><?php echo currency() . number_format($row->price,2) ?></td>
-              <td><?php echo currency() . number_format($row->quantity * $row->price,2) ?></td>
+              <td><?php echo $row->quantity ?></td> 
+              <td></td>
             </tr>
             <?php endforeach; ?>
 
@@ -92,8 +90,7 @@
                   <tr>
                     <td>&nbsp;</td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td></td> 
                   </tr>
                   <?php 
                 }
