@@ -22,7 +22,9 @@ class ReceiptController extends CI_Controller {
 		$data['invoice']	= $invoice;
 		$data['orderline'] = $orderline;
 		$data['defaultRow'] = 10 - count($orderline);
+ 
 
 		$this->load->view('receipt/invoice', $data);
 	}
+
 }
