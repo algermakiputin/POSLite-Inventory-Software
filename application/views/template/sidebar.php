@@ -138,7 +138,8 @@
                     </ul>
                 </li>
             <?php endif; ?>
-            <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
+            <?php if (get_user_role() == "Admin" || get_user_role() == "Supervisor"): ?>
+             <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
                 <a href="#"><i class="fa fa-undo fa-fw"></i> Returns / Refunds<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
@@ -151,6 +152,8 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li> 
+            
+            <?php endif; ?>
             <li data-step="7" data-intro="To organize your inventory you can manage your inventory categories.">
                 <a href="<?php echo base_url('categories') ?>"><i class="glyphicon glyphicon glyphicon-tags fa-fw"></i> Categories</a>
             </li>

@@ -78,6 +78,8 @@ class StocksTransferController Extends CI_Controller {
 					date('Y-m-d', strtotime($row->date)),
 					$row->delivery_note, 
 					$row->po_number, 
+					$row->plate_number,
+					$row->driver,
 					$row->status, 
 					$row->note
 				];
@@ -147,15 +149,19 @@ class StocksTransferController Extends CI_Controller {
 				';
 			}
 
-			$dataset[] = [$po->po_date, $po->po_number, $po->store_name, $po->requested_store_name, 
-				"<span class='badge $class'>$status</span>",
-				$po->memo,  
-				'<div class="dropdown">
-                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-                    
-                    '.$mark.'
-                      
-            </div>'];
+			$dataset[] = [
+					$po->po_date, 
+					$po->po_number, 
+					$po->store_name, 
+					$po->requested_store_name, 
+					"<span class='badge $class'>$status</span>",
+					$po->memo,  
+					'<div class="dropdown">
+	                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+	                    
+	                    '.$mark.'
+	                      
+	            </div>'];
 		}
 
 		$count = $this->db->get("purchase_order")->num_rows();
@@ -271,6 +277,8 @@ class StocksTransferController Extends CI_Controller {
 		$data = [];
 		$store_number = $this->session->userdata('store_number');
 		$po_id = $this->input->post('po_id');
+		$plate_number = $this->input->post('plate_number');
+		$driver = $this->input->post('driver');
 
 		$this->db->trans_begin(); 
 
@@ -281,7 +289,9 @@ class StocksTransferController Extends CI_Controller {
 					'status'	=> "For Delivery",
 					'po_id' => $po_id,
 					'delivery_note' => $delivery_note_number,
-					'store_number' => $store_number
+					'store_number' => $store_number,
+					'plate_number' => $plate_number,
+					'driver'	=> $driver
 			]);
 
 		$stocks_transfer_id = $this->db->insert_id();

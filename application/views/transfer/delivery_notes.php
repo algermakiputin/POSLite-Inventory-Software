@@ -41,6 +41,8 @@
                     <th >Date</th>
                     <th>DM #</th>
                     <th >P.O. #</th>
+                    <th>Plate Number</th>
+                    <th>Driver</th>
                     <th>Status</th>
                     <th >Note</th>  
                  </tr>

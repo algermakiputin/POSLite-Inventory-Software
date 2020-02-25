@@ -51,13 +51,31 @@ class CashDenominationController extends AppController {
 		foreach ($datasets as $data) { 
 
 			if ( count($data) == 2) {
- 
+ 				
+ 				$edit_opening = '<li>
+                         <a href="' . base_url("CashDenominationController/edit/" . $data[1]->id) .'">
+                             <i class="fa fa-edit"></i> Edit Opening</a>
+                     </li>';
+
+            $edit_closing = '<li>
+                         <a href="' . base_url("CashDenominationController/edit/" . $data[0]->id) .'">
+                             <i class="fa fa-edit"></i> Edit Closing</a>
+                     </li>';
+
+
 				$history[] = [
 						$data[0]->date,
 						$data[0]->staff,
 						currency() .number_format($data[1]->total,2),
 						currency() . number_format($data[0]->total,2),
-						'<a href="'.base_url('CashDenominationController/edit/' . $data[0]->id).'" class="btn btn-primary btn-sm">Edit</a>'
+						'<div class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    		'.$edit_opening.'
+                    		'.$edit_closing.'
+                         
+                    </ul>
+                </div>'
 					];
 
 			}else if (count($data) == 1) {
@@ -65,10 +83,20 @@ class CashDenominationController extends AppController {
 				$col3 = "Not set";
 				$col4 = currency() . number_format($data[0]->total,2);
 
+				$edit = '<li>
+                         <a href="' . base_url("CashDenominationController/edit/" . $data[0]->id) .'">
+                             <i class="fa fa-edit"></i> Edit Closing</a>
+                     </li>';
+
 				if ($data[0]->type != "closing") {
 
 					$col3 = currency() . number_format($data[0]->total,2);
 					$col4 = "Not Set";
+
+					$edit = '<li>
+                         <a href="' . base_url("CashDenominationController/edit/" . $data[0]->id) .'">
+                             <i class="fa fa-edit"></i> Edit Opening</a>
+                     </li>';
 				} 
  
 
@@ -77,7 +105,13 @@ class CashDenominationController extends AppController {
 						$data[0]->staff,
 						$col3,
 						$col4,
-						'<a href="'.base_url('CashDenominationController/edit/' . $data[0]->id).'" class="btn btn-primary btn-sm">Edit</a>'
+						'<div class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                   		'.$edit.'
+                         
+                    </ul>
+                </div>'
 					];
 			}  
 		}  
@@ -95,6 +129,7 @@ class CashDenominationController extends AppController {
 
 		$denomination = $this->db->where('id', $id)->get('denomination')->row();
 		$cash = $this->db->where('denomination_id', $denomination->id)->get('cash_denomination')->row_array();
+ 
 		$data['denomination'] = $denomination;
 		$data['cash'] = $cash;
 		$data['content'] = "denomination/edit";
@@ -116,10 +151,14 @@ class CashDenominationController extends AppController {
 			'0_10' => $this->input->post('0_10'),
 			'0_05' => $this->input->post('0_05'),
 			
-		];
+		]; 
+
+		$total = $this->input->post('total');
 
 		$denomination_id = $this->input->post('denomination_id');
 
+		$this->db->where('id', $denomination_id)
+					->update('denomination', ['total' => $total]);
 		$update = $this->db->where('denomination_id', $denomination_id)
 					->update('cash_denomination', $data);
 

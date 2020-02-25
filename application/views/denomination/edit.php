@@ -40,7 +40,7 @@
 						 		<label>Date</label>
 								<p class="lead text-center"><?php echo $denomination->date ?></p>
 								<input type="hidden" name="type" value="opening">
-								<input type="hidden" name="total" value="0" id="total_input">
+								<input type="hidden" name="total" value="<?php echo $denomination->total ?>" id="total_input">
 								<input type="hidden" name="denomination_id" value="<?php echo $denomination->id ?>">
 							</div>
 							<div class="form-group text-center">  
@@ -59,57 +59,57 @@
 						 			<tr>
 						 				<td>1000</td>
 						 				<td><input data-value="1000" type="number" min="0" name="1000" value="<?php echo $cash['1000_'] ?>" class="form-control quantity"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><span class="amount"><?php echo number_format($cash['1000_'] * 1000) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>500</td>
 						 				<td><input data-value="500" type="number" min="0" name="500" value="<?php echo $cash['500_'] ?>" class="form-control quantity"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><span class="amount"><?php echo number_format($cash['500_'] * 500) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>100</td>
 						 				<td><input data-value="100" type="number" min="0" name="100" value="<?php echo $cash['100_'] ?>" class="form-control quantity"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><span class="amount"><?php echo number_format($cash['100_'] * 100) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>50</td>
 						 				<td><input data-value="50" type="number" min="0" name="50" value="<?php echo $cash['50_'] ?>" class="form-control quantity"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><span class="amount"><?php echo number_format($cash['50_'] * 50) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>10</td>
 						 				<td><input data-value="10" type="number" min="0" name="10" value="<?php echo $cash['10_'] ?>" class="form-control quantity"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><span class="amount"><?php echo number_format($cash['10_'] * 10) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>5</td>
 						 				<td><input data-value="5" type="number" min="0" name="5" value="<?php echo $cash['5_'] ?>" class="form-control quantity"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><span class="amount"><?php echo number_format($cash['5_'] * 5) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>1</td>
-						 				<td><input type="number" min="0" value="0" name="1" class="form-control quantity" value="<?php echo $cash['1_'] ?>" data-value="1"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><input type="number" min="0" name="1" class="form-control quantity" value="<?php echo $cash['1_'] ?>" data-value="1"></td>
+						 				<td><span class="amount"><?php echo number_format($cash['1_'] * 1) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>0.50</td>
-						 				<td><input type="number" min="0" value="0" name="0_50" class="form-control quantity" value="<?php echo $cash['0_50'] ?>" data-value="0.50"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><input type="number" min="0" name="0_50" class="form-control quantity" value="<?php echo $cash['0_50'] ?>" data-value="0.50"></td>
+						 				<td><span class="amount"><?php echo number_format($cash['0_50'] * 0.50) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>0.25</td>
-						 				<td><input type="number" min="0" value="0" name="0_25" class="form-control quantity" value="<?php echo $cash['0_25'] ?>" data-value="0.25"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><input type="number" min="0" name="0_25" class="form-control quantity" value="<?php echo $cash['0_25'] ?>" data-value="0.25"></td>
+						 				<td><span class="amount"><?php echo number_format($cash['0_25'] * 0.25) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>0.10</td>
-						 				<td><input type="number" min="0" value="0" name="0_10" class="form-control quantity" data-value="0.10" value="<?php echo $cash['0_10'] ?>"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><input type="number" min="0" name="0_10" class="form-control quantity" data-value="0.10" value="<?php echo $cash['0_10'] ?>"></td>
+						 				<td><span class="amount"><?php echo number_format($cash['0_10'] * 0.10) ?></span></td>
 						 			</tr>
 						 			<tr>
 						 				<td>0.05</td>
-						 				<td><input type="number" min="0" value="0" name="0_05" value="<?php echo $cash['0_05'] ?>" class="form-control quantity" data-value="0.05"></td>
-						 				<td><span class="amount">0</span></td>
+						 				<td><input type="number" min="0" name="0_05" value="<?php echo $cash['0_05'] ?>" class="form-control quantity" data-value="0.05"></td>
+						 				<td><span class="amount"><?php echo number_format($cash['0_05'] * 0.05) ?></span></td>
 						 			</tr>
 						 		</tbody>
 						 	</table>

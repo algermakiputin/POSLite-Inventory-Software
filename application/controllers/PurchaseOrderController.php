@@ -63,7 +63,7 @@ class PurchaseOrderController Extends CI_Controller {
 
 			$mark .= '<li>
                          <a href="' . base_url("po/view/$po->po_number") .'">
-                             <i class="fa fa-plus"></i> View</a>
+                             <i class="fa fa-eye"></i> View</a>
                      </li>';
 
          if ($status == "Request Item" ) {
@@ -178,7 +178,7 @@ class PurchaseOrderController Extends CI_Controller {
                     
                     	<li>
                          <a href="' . base_url("po/view/$po->po_number") .'">
-                             <i class="fa fa-plus"></i> View</a>
+                             <i class="fa fa-eye"></i> View</a>
                      </li>
                      
                     </ul>
