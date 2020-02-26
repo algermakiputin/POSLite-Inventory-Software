@@ -67,6 +67,7 @@ class StocksTransferController Extends CI_Controller {
 		$store_number = $store_number ? $store_number : get_store_number();
 
 		$delivery_notes = $this->db->where('store_number', $store_number)
+											->order_by('id', 'DESC')
 											->get('stocks_transfer', $limit, $start)
 											->result();
 

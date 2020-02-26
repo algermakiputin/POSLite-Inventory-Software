@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">New Sale </h1>
+        <h1 class="page-header">Edit Invoice </h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
@@ -34,32 +34,28 @@
                 <div class="panel-heading">
                     Details
                 </div>
-                <div class="panel-body"> 
-                    <div class="form-group">
-                        <label>Enter External PO Number</label>
-                        <input type="text" required="required" class="form-control" id="external-po-number" name="external_po_number">
-                        <input type="hidden" name="store_number" id="store-number">
-                        <input type="hidden" name="type" value="external">
-                        <input type="hidden" name="total_amount" id="total_amount" value="">
-                    </div> 
+                <div class="panel-body">  
                     <div class="form-group">
                         <label>Invoice Number</label>
-                        <input type="text" required="required" class="form-control" id="invoice" name="invoice">  
+                        <input type="text" required="required" value="<?php echo $invoice->transaction_number ?>" class="form-control" id="invoice" name="invoice">  
                     </div> 
                     <div class="form-group">
                         <label>Customer Name:</label>
-                        <input type="text" readonly required="required" class="form-control" name="customer_name" id="customer_name">
+                        <select class="form-control" required="required" id="customer-select">
+                            <option value="Walk-in Customer">Walk-in Customer</option>
+                            <?php foreach ($customers as $customer): ?>
+                                <option value="<?php echo $customer->name ?>" data-id="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
+                            <?php endforeach; ?> 
+                        </select>
                         <input type="hidden" name="customer_id" readonly required="required" id="customer_id">
                     </div>  
                     <div class="form-group">
                         <label>Transaction Type</label>
-                        <select class="form-control" name="transaction_type"> 
-                            <option value="receivable" selected="selected">Receivable</option>
-                        </select>
+                        <input type="text" name="transaction_type" value="<?php echo $invoice->type ?>" class="form-control" readonly>
                     </div> 
                     <div class="form-group">
                         <label>Note</label>
-                        <input type="text" class="form-control" name="note">
+                        <input type="text" class="form-control" name="note" <?php echo $invoice->note ?>>
                     </div>
                     <div class="form-group ">
                         <button class="btn btn-default btn-sm" type="button" id="enter-external-po">Enter</button>
@@ -81,21 +77,24 @@
                             <th>Sub Total</th> 
                         </thead>
                         <tbody>
+                            <?php foreach ($orderline as $row): ?>
                             <tr>
                                 <td>
-                                    <input type="text" readonly="readonly" autocomplete="off" class="form-control product" required="required" name="product[]">
-                                    <input type="hidden" name="product_id[]">
+                                    <input type="text" readonly="readonly" autocomplete="off" class="form-control product" required="required" name="product[]" value="<?php echo $row->name ?>">
+                                    <input type="hidden" name="product_id[]" value="<?php echo $row->id ?>">
                                 </td>
                                 <td>
-                                    <input type="number" required="required" autocomplete="off" class="form-control quantity" name="quantity[]">
+                                    <input type="number" required="required" value="<?php  echo $row->quantity ?>"  autocomplete="off" class="form-control quantity" name="quantity[]">
                                 </td>
                                 <td>
-                                    <input type="text" required="required" autocomplete="off" class="form-control" name="price[]">
+                                    <input type="text" required="required" autocomplete="off" class="form-control" name="price[]" value="<?php  echo $row->price ?>">
                                 </td>
                                 <td>
-                                    <input type="text" autocomplete="off" class="form-control" name="sub[]" readonly="readonly">
+                                    <input type="text" autocomplete="off" class="form-control" name="sub[]" readonly="readonly" value="<?php  echo $row->price * $row->quantity ?>">
                                 </td> 
                             </tr>
+                           
+                            <?php endforeach; ?> 
                         </tbody>
                         <tfoot>
                             <tr>

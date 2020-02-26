@@ -55,7 +55,7 @@
 									<option value="Admin">Admin</option>
 									<option value="Head_cashier">Head Cashier</option> 
 									<option value="Cashier">Cashier</option> 
-									<option value="Supervisor">Supervisor</option> 
+									<option value="Secretary">Secretary</option> 
 								</select>
 							</div>
 							<div class="form-group">

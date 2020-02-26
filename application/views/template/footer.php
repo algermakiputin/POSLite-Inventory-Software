@@ -22,4 +22,5 @@
 <script src="<?php echo base_url('assets/js/print.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/intro.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/functions.js') ?>"></script> 
+<script src="<?php echo base_url('assets/js/selectize.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/index.js') ?>"></script> 

@@ -45,7 +45,7 @@
 							</div>
 							<div class="form-group text-center">  
 						 		<label>Total</label>
-								<p class="lead text-center"><span id="total">0</span></p>
+								<p class="lead text-center"><span id="total"><?php echo currency() .  number_format($denomination->total) ?></span></p>
 							</div>
 						 	<table class="table table-bordered table-striped">
 						 		<thead>

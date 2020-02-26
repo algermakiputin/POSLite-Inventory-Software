@@ -97,7 +97,7 @@ class AuthController extends AppController {
 		if ($this->session->userdata('account_type') == "Head_cashier") 
 			return redirect(base_url('items'));
 
-		if ($this->session->userdata('account_type') == "Supervisor") 
+		if ($this->session->userdata('account_type') == "Secretary") 
 			return redirect(base_url('items'));
 	 
 	}

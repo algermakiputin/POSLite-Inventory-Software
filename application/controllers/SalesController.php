@@ -10,6 +10,9 @@ class SalesController extends CI_Controller {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));
 		}
+
+		$this->load->model('sales_model');
+		$this->load->model('SalesDescriptionModel');
 	}
 
 	public function find_invoice() {
@@ -228,6 +231,17 @@ class SalesController extends CI_Controller {
 		 
 		return $this->db->where('sales_id', $id)->get('sales_description')->result();
  
+	}
+
+	public function edit($id) {
+
+		$data['content'] = "sales/edit_invoice";
+		$data['invoice'] = $this->sales_model->fetch_row($id);
+		$data['customers'] = $this->db->get('customers')->result();
+		
+		$data['orderline'] = $this->SalesDescriptionModel->fetch_all($id); 
+
+		$this->load->view('master', $data);
 	}
 
 	public function insert() {

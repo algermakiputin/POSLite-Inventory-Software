@@ -31,6 +31,22 @@ $(document).ready(function() {
 
 	var data = {};
 	data[csrfName] = csrfHash;
+
+	var customer_options = $("#customer-select").selectize({
+		create: true, 
+    	 persist: false,
+    	onInitialize: function () {
+			var s = this;
+			this.revertSettings.$children.each(function () {
+			    $.extend(s.options[this.value], $(this).data());
+			});
+	   },
+	   onChange: function (value) {
+	   	console.log(value)
+	   	var option = this.options[value];
+ 			$("#customer_id").val(option.id);
+	   } 
+	});
 	
 	
 	$('[data-toggle="tooltip"]').tooltip();

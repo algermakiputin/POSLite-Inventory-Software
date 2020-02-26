@@ -131,8 +131,8 @@ class ReportsController extends CI_Controller {
 		
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
-		$from = $this->input->post('[columns][0][search][value]');
-		$to = $this->input->post('[columns][1][search][value]');
+		$from = $this->input->post('[columns][0][search][value]') ? $this->input->post('[columns][0][search][value]') : date('Y-m-d');
+		$to = $this->input->post('[columns][1][search][value]') ? $this->input->post('[columns][1][search][value]') : date('Y-m-d');
 		$filter_store = $this->input->post('[columns][2][search][value]');
 
 		$store_number = $filter_store == "" ? get_store_number() : $filter_store;
@@ -195,8 +195,8 @@ class ReportsController extends CI_Controller {
 		
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
-		$from = $this->input->post('[columns][0][search][value]');
-		$to = $this->input->post('[columns][1][search][value]');
+		$from = $this->input->post('[columns][0][search][value]') ? $this->input->post('[columns][0][search][value]') : date('Y-m-d');
+		$to = $this->input->post('[columns][1][search][value]') ? $this->input->post('[columns][1][search][value]') : date('Y-m-d');
 		$filter_store = $this->input->post('[columns][2][search][value]');
 		
 		$store_number = $filter_store == "" ? get_store_number() : $filter_store;
@@ -205,8 +205,7 @@ class ReportsController extends CI_Controller {
 										->where('store_number', $store_number)	
 										->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
 										->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
-										->order_by('id', 'DESC')
-										->order_by('id', 'DESC')
+										->order_by('id', 'DESC') 
 										->get('sales', $start, $limit)
 										->result();
 		$total = 0;
@@ -243,7 +242,12 @@ class ReportsController extends CI_Controller {
  			'actions' => "Total"
 		];
 
-		$data_count = $this->db->where('type !=', 'invoice')->get('sales')->num_rows(); 
+		$data_count = $this->db->where('type', 'receivable')
+										->where('store_number', $store_number)	
+										->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
+										->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to) 
+										->get('sales')
+										->num_rows(); 
 
 		echo $this->datatable->format($draw, $cash, $columns, $data_count, ['total' => currency() . number_format($total,2)]); 
 	}

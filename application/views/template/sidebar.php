@@ -84,7 +84,10 @@
                     <ul class="nav nav-second-level"> 
                         <li>
                             <a href="<?php echo base_url('invoice') ?>"><i class="fa fa-circle-o"></i> Invoice</a>
-                        </li>   
+                        </li>  
+                        <li>
+                            <a href="<?php echo base_url('sales/new') ?>"><i class="fa fa-circle-o"></i> New Invoice</a>
+                        </li>  
                         <li>
                             <a href="<?php echo base_url('internal-po') ?>"><i class="fa fa-circle-o"></i> Internal PO</a>
                         </li>  
@@ -103,15 +106,7 @@
                             <a href="<?php echo base_url('transfer/delivery-notes') ?>"><i class="fa fa-circle-o"></i> Delivery Notes</a>
                         </li>     
                     </ul>
-                </li> 
-                <li >
-                   <a href="#"><i class="fa fa-terminal fa-fw"></i> Sales<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="<?php echo base_url('sales/new') ?>"><i class="fa fa-circle-o"></i> Enter Sales</a>
-                        </li> 
-                    </ul>
-                </li>
+                </li>  
                 
             <?php if ($this->session->userdata('account_type') == 'Admin'): ?>
                  <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
@@ -138,7 +133,7 @@
                     </ul>
                 </li>
             <?php endif; ?>
-            <?php if (get_user_role() == "Admin" || get_user_role() == "Supervisor"): ?>
+            <?php if (get_user_role() == "Admin" || get_user_role() == "Secretary"): ?>
              <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
                 <a href="#"><i class="fa fa-undo fa-fw"></i> Returns / Refunds<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">

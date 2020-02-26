@@ -239,13 +239,13 @@ class PurchaseOrderController Extends CI_Controller {
 		{
 		      $this->db->trans_rollback(); 
 		      errorMessage("Opps! Something Went Wrong please try again later.."); 
-				return redirect('purchase-orders');
+				return redirect('internal-po');
 		}
 		 
 
 		$this->db->trans_commit();  
 		success("PO Marked as delivered successfully"); 
-		return redirect('purchase-orders');
+		return redirect('internal-po');
 
 	}
 
@@ -375,7 +375,7 @@ class PurchaseOrderController Extends CI_Controller {
 		$max_id = $this->db->select("MAX(id) as id")->from("purchase_order")->get()->row()->id;
 		$max_id = $max_id ? $max_id : 0;
 		
-		$po_number = "BN" . date('Y') . '-' . ($max_id + 1);
+		$po_number = get_store_number() . "-PO-" . date('Y') . '-' . ($max_id + 1);
 
 		$products = $this->get_products();
 

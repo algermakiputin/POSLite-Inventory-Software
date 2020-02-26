@@ -33,6 +33,12 @@ class Sales_model extends CI_Model {
 		return false;
 	}
 
+	public function fetch_row($id) {
+
+		return $this->db->where('id', $id)->get('sales')->row();
+
+	}
+
 	public function updateStocks($cart) {
 		$data = json_decode($cart,true);
 		$this->load->database();
