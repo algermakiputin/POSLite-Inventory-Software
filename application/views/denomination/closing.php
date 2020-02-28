@@ -127,7 +127,7 @@
 					<?php echo form_close(); ?>
 				</div>
 				<?php else: ?>
-					<p class="lead">Starting Domination is already set!</p>
+					<p class="lead">Closing Domination is already set..</p>
 				<?php endif; ?>
 				<!-- /.row (nested) -->
 			</div>

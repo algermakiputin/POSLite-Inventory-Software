@@ -22,6 +22,12 @@ class Pos_con extends AppController {
 		$open = $this->validate_opening_denomination();
 		$close = $this->validate_closing_denomination();
 
+		if ($open && $close) {
+			errorMessage("Cash Denomination is already closed, you can start selling again tomorrow"); 
+
+			return redirect('denomination/start');
+		}
+
 
 		if (!$open) {
 			errorMessage("Opening Cash Denomination Must Be set First");

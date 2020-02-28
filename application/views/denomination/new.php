@@ -12,7 +12,7 @@
 				New Cash Denomination
 			</div>
 			<div class="panel-body">
-				<?php if (!$started): ?>
+
 				<div class="row">
 					<div class="col-md-12">
 						<?php if ($this->session->flashdata('success')): ?>
@@ -31,6 +31,10 @@
 					 		</div>
 					 	<?php endif; ?>
 					</div>
+				</div>
+				<?php if (!$started): ?>
+				<div class="row">
+					
 					<?php echo form_open('CashDenominationController/insert', ['method' => 'POST', 'autocomplete' => 'off']) ?> 
 						<div class="col-lg-6 col-md-offset-3">
 						 	
@@ -121,7 +125,7 @@
 					<?php echo form_close(); ?>
 				</div>
 				<?php else: ?>
-					<p class="lead">Starting Cash Denomination is set!</p>
+					<p class="lead">Starting Cash Denomination is set..</p>
 				<?php endif; ?>
 				<!-- /.row (nested) -->
 			</div>

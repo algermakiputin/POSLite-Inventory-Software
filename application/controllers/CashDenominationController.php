@@ -4,8 +4,7 @@ require_once(APPPATH."controllers/AppController.php");
 class CashDenominationController extends AppController {
 
 
-	public function new() {
-
+	public function new() { 
 		$started = $this->validate_opening_denomination(); 
 		$data['started'] = $started;
 		$data['content'] = "denomination/new";

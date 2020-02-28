@@ -80,30 +80,30 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">New Customer</h4>
 			</div>
-			<?php echo form_open('customers/insert', ['method' => 'POST']) ?> 
+			<?php echo form_open('customers/insert', ['method' => 'POST', 'autocomplete' => 'off']) ?> 
 			<div class="modal-body">
 					<input type="hidden" 
 						name="<?php echo $this->security->get_csrf_token_name(); ?>"
 						value="<?php echo $this->security->get_csrf_hash(); ?>">
 					<div class="form-group">
 						<label>Name</label>
-						<input required="required" type="text" class="form-control" name="name">
+						<input required="required" autocomplete="off" type="text" class="form-control" name="name">
 					</div>   
 					<div class="form-group">
 						<label>Address</label>
-						<input type="text" required="required" class="form-control" name="address">
+						<input type="text" class="form-control" name="address">
 					</div>
 					<div class="form-group">
 						<label>City</label>
-						<input type="text" required="required" class="form-control" name="city">
+						<input type="text" class="form-control" name="city">
 					</div>
 					<div class="form-group">
 						<label>Zipcode</label>
-						<input type="text" required="required" class="form-control" name="zipcode">
+						<input type="text" class="form-control" name="zipcode">
 					</div> 
 					<div class="form-group">
 						<label>Number</label>
-						<input type="text" required="required" class="form-control" name="number">
+						<input type="text" class="form-control" name="number">
 					</div> 
 				
 			</div>

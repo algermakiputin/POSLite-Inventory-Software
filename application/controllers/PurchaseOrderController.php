@@ -143,10 +143,7 @@ class PurchaseOrderController Extends CI_Controller {
 
 			if ($po->status == "Open PO") {
 
-				$mark = '<li>
-                         <a href="' . base_url("PurchaseOrderController/external_mark_delivered/$po->po_number") .'">
-                             <i class="fa fa-truck"></i> Mark as delivered</a>
-                     </li>
+				$mark = ' 
                      <li>
                          <a href="' . base_url("PurchaseOrderController/close_external_po/$po->po_number") .'">
                              <i class="fa fa-times"></i> Close PO</a>
@@ -173,14 +170,13 @@ class PurchaseOrderController Extends CI_Controller {
 			$dataset[] = [$po->po_date, $po->po_number, $po->customer_name, $po->memo, "<span class='$class'>$po->status</span>",
 				'<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    '.$mark.'
+                    <ul class="dropdown-menu"> 
                     
                     	<li>
-                         <a href="' . base_url("po/view/$po->po_number") .'">
+                         <a href="' . base_url("po/view/$po->po_number") .'" class="delete-item">
                              <i class="fa fa-eye"></i> View</a>
                      </li>
-                     
+                     '.$mark.'
                     </ul>
             </div>'];
 		}
