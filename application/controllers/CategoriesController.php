@@ -39,8 +39,8 @@ class CategoriesController Extends CI_Controller {
 		 			'name' => $this->security->xss_clean($category),
 		 			'active' => 1
 		 		]);
-		 	$this->session->set_flashdata('success','Category has been added successfully');
-		 	return redirect(base_url('categories'));
+		 	$this->session->set_flashdata('success','New brand has been added successfully');
+		 	return redirect(base_url('brands'));
 		
 		} 	
 		 
@@ -48,7 +48,7 @@ class CategoriesController Extends CI_Controller {
 
 	public function destroy($id) {
 		if(empty($id))  
-			return redirect(base_url('categories'));
+			return redirect(base_url('brands'));
 		
 		$id = $this->security->xss_clean($id);
 		$this->load->model('categories_model');
@@ -58,12 +58,12 @@ class CategoriesController Extends CI_Controller {
  
 	 	if ($this->db->error()['code'] === 1451) {
 	 		$this->session->set_flashdata('error', 'Cannot Delete Category Associated with Item');
-			return redirect(base_url('categories')); 
+			return redirect('brands'); 
 	 	}
 	 
 	 	$this->HistoryModel->insert('Deleted Category: ' . $categoryName);
 			$this->session->set_flashdata('success','Category deleted successfully');
-			return redirect(base_url('categories'));
+			return redirect('brands');
 		
 		 
 	}
@@ -86,7 +86,7 @@ class CategoriesController Extends CI_Controller {
 
 		success("Updated Successfully");
 
-		return redirect('categories');
+		return redirect('brands');
 	}
 }
 ?>

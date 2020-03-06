@@ -138,7 +138,7 @@ $route['items/edit/(:any)'] = "ItemController/edit/$1";
 $route['items/find'] = "ItemController/find";
 $route['items/delete'] = "ItemController/delete";
 
-$route['categories'] = 'CategoriesController/categories';
+$route['brands'] = 'CategoriesController/categories';
 $route['categories/insert'] = 'CategoriesController/insert';
 $route['users'] = 'UsersController/accounts';
 $route['user/edit/(:any)'] = 'UsersController/edit/$1';

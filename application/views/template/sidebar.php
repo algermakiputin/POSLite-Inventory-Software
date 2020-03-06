@@ -150,7 +150,7 @@
             
             <?php endif; ?>
             <li data-step="7" data-intro="To organize your inventory you can manage your inventory categories.">
-                <a href="<?php echo base_url('categories') ?>"><i class="glyphicon glyphicon glyphicon-tags fa-fw"></i> Categories</a>
+                <a href="<?php echo base_url('brands') ?>"><i class="glyphicon glyphicon glyphicon-tags fa-fw"></i> Brands</a>
             </li>
 
             <?php if ($this->session->userdata('account_type') == "Admin"): ?>

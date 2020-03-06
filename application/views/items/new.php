@@ -33,9 +33,9 @@
 								
 							</div>
 							<div class="form-group"> 
-								<label>Category:</label> 
+								<label>Brand:</label> 
 								<select name="category" class="form-control" required="required">
-									<option value="">Select Category</option>
+									<option value="">Select Brand</option>
 									<?php foreach ($category as $cat): ?>
 										<option value="<?php echo $cat->id ?>"> <?php echo ucwords($cat->name) ?> </option>
 									<?php endforeach; ?>

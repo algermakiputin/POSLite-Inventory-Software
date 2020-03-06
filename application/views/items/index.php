@@ -32,7 +32,7 @@
                     <div class="col-md-3">
                         <div>
                             <select name="category" class="form-control filter-items" data-column="2">
-                                <option value="">Filter By Category</option>
+                                <option value="">Filter By Brand</option>
                                 <?php foreach ($categories as $key => $category): ?>
                                     <option value="<?php echo ucwords($category->name) ?>"><?php echo ucwords($category->name) ?></option>
                                 <?php endforeach; ?>
@@ -90,7 +90,7 @@
                 <tr>
                     <th width="8%">&nbsp;</th>
                     <th width="20%">Item Name</th>
-                    <th width="10%">Category</th> 
+                    <th width="10%">Brand</th> 
                     <th width="15%">Capital Per/Item</th>
                     <th width="15%">Retail Price</th>
                     <th width="10%">Stocks</th>
