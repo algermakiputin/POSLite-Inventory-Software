@@ -83,6 +83,11 @@
 						 				<td><span class="amount">0</span></td>
 						 			</tr>
 						 			<tr>
+						 				<td>20</td>
+						 				<td><input data-value="20" type="number" min="0" name="20" value="0" class="form-control quantity"></td>
+						 				<td><span class="amount">0</span></td>
+						 			</tr>
+						 			<tr>
 						 				<td>10</td>
 						 				<td><input data-value="10" type="number" min="0" name="10" value="0" class="form-control quantity"></td>
 						 				<td><span class="amount">0</span></td>

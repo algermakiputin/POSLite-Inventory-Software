@@ -142,6 +142,7 @@ class CashDenominationController extends AppController {
 			'500_' => $this->input->post('500'),
 			'100_' => $this->input->post('100'),
 			'50_' => $this->input->post('50'),
+			'20_' => $this->input->post('20'),
 			'10_' => $this->input->post('10'),
 			'5_' => $this->input->post('5'),
 			'1_' => $this->input->post('1'),
@@ -194,14 +195,14 @@ class CashDenominationController extends AppController {
 			'500_' => $this->input->post('500'),
 			'100_' => $this->input->post('100'),
 			'50_' => $this->input->post('50'),
+			'20_' => $this->input->post('20'),
 			'10_' => $this->input->post('10'),
 			'5_' => $this->input->post('5'),
 			'1_' => $this->input->post('1'),
 			'0_50' => $this->input->post('0_50'),
 			'0_25' => $this->input->post('0_25'),
 			'0_10' => $this->input->post('0_10'),
-			'0_05' => $this->input->post('0_05'),
-			
+			'0_05' => $this->input->post('0_05'), 
 		];
 
 
