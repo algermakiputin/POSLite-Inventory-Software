@@ -410,8 +410,7 @@ class SalesController extends CI_Controller {
 				'user_name' => $user_name
 			]);
 
-		$sales_id = $this->db->insert_id();
-		$sales = $this->security->xss_clean($sales);
+		$sales_id = $this->db->insert_id(); 
 		$column = "store" . $store_number;
 
 		$item_ids = $this->input->post('product_id[]');
@@ -419,14 +418,16 @@ class SalesController extends CI_Controller {
 		$price = $this->input->post('price[]');
 		$product = $this->input->post('product[]'); 
 
+
 		
 		for ($i = 0; $i < count($item_ids); $i++) {
-			$item_id = $sales_id[$i];
+			$item_id = $item_ids[$i];
+
 			$qty = $quantity[$i];
 			$name = $product[$i];
 			$price = $price[$i];
 
-			$transactionProfit = $this->db->where('item_id', $sales_id[$i])->get('prices')->row()->capital;
+			$transactionProfit = $this->db->where('item_id', $item_id)->get('prices')->row()->capital;
 
 			$data[] = [ 
 				'item_id' => $item_id,

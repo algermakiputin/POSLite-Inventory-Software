@@ -26,7 +26,7 @@ class OrderingLevelModel extends CI_Model {
 	}
 
 	public function update_stocks($items, $store_number) {
-
+ 
 		$this->db->trans_begin(); 
 		$column = "store" . $store_number;
 		foreach ($items as $item) {

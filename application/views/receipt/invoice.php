@@ -22,7 +22,7 @@
         <table width="100%" style="margin-bottom: 20px;">
         		<tr>
         			<td width="20%">Customer: </td>
-        			<td width="80%" style="border-bottom: solid 1px #333; padding:3px;">
+      			<td width="80%" style="border-bottom: solid 1px #333; padding:3px;">
                 <?php echo $invoice->customer_name; ?>   
               </td>
         		</tr>
