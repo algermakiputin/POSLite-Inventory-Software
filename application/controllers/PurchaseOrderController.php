@@ -82,10 +82,7 @@ class PurchaseOrderController Extends CI_Controller {
 				'<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                    '.$mark.'
-                    
-                    	
-                     
+                    '.$mark.'  
                     </ul>
             </div>'];
 		}
@@ -103,8 +100,7 @@ class PurchaseOrderController Extends CI_Controller {
 	public function find_external_po() {
 
 		$external_po_number = $this->input->post('external_po_number');
-		$external_po = $this->db->where('po_number', $external_po_number)
-										->where('status', 'Delivered')
+		$external_po = $this->db->where('po_number', $external_po_number) 
 										->get('purchase_order')
 										->row();
 
@@ -114,8 +110,7 @@ class PurchaseOrderController Extends CI_Controller {
 			echo json_encode([
 				'details' => $external_po,
 				'orderline' => $orderline
-			]);
-
+			]); 
 			
 		}else {
 			echo "0";
@@ -173,7 +168,7 @@ class PurchaseOrderController Extends CI_Controller {
                     <ul class="dropdown-menu"> 
                     
                     	<li>
-                         <a href="' . base_url("po/view/$po->po_number") .'" class="delete-item">
+                         <a href="' . base_url("po/view/$po->po_number") .'" >
                              <i class="fa fa-eye"></i> View</a>
                      </li>
                      '.$mark.'
@@ -287,10 +282,10 @@ class PurchaseOrderController Extends CI_Controller {
 
 	public function close_external_po($po_number) {
 
-		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => 'Closed']);
+		$this->db->where('po_number', $po_number)->update('purchase_order', ['status' => 'Closed PO']);
 		success("PO Closed Successfully");
 
-		return redirect('purchase-orders');
+		return redirect('external-po');
 
 	}
 
