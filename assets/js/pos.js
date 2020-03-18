@@ -36,35 +36,24 @@
 							var quantity = 1;
 						 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
 						 	totalAmountDue += parseFloat(subtotal);
-
-						 	if ( parseInt(result.quantity) > 0 ) {
-						 		 
-					  	 		if (itemExist(result.id,result.quantity) == false) {
-						  	 		var quantity = 1;
-								 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
-								 	totalAmountDue += parseFloat(result.subtotal);
-									$("#cart tbody").append(
-											'<tr>' +
-												'<input name="id" type="hidden" value="'+ result.id +'">' +
-												'<td>'+ result.name +'</td>' +
-												'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-												'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-												'<td>'+ result.price +'</td>' +
-									 			
-												'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
-											'</tr>'
-										);
-									recount();
-									$("payment").val('');
-									$("change").val('');
-
-						  	 	}
-						  	 	stockCol.text(parseInt(stocks - 1));
-						  	  
-						 	}else {
-						 		alert("Not enough stocks remaining");
-						 	}
-				 
+ 
+				  	 		var quantity = 1;
+						 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
+						 	totalAmountDue += parseFloat(result.subtotal);
+							$("#cart tbody").append(
+									'<tr>' +
+										'<input name="id" type="hidden" value="'+ result.id +'">' +
+										'<td>'+ result.name +'</td>' +
+										'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+										'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+										'<td>'+ result.price +'</td>' +
+							 			
+										'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
+									'</tr>'
+								);
+							recount();
+							$("payment").val('');
+							$("change").val(''); 
 
 							recount();
 							$("payment").val('');
@@ -95,44 +84,40 @@
 	});
 
 	$("#item-table").on('click', 'tbody tr', function(event) {
-		var id = $(this).find('td').eq(0).text();
-		var name = $(this).find('td').eq(1).text();
-		var stockCol = $(this).find('td').eq(3);
-		var stocks = stockCol.text();
-		var price = $(this).find('td').eq(4).text();
-		var description = $(this).find('td').eq(2).text();
+		var id = $(this).find('input[name="item-id"]').val();
+		var name = $(this).find('td').eq(0).text(); 
+		var price = $(this).find('td').eq(2).text();
+		var description = $(this).find('td').eq(1).text();
 		
-	 	if ( parseInt(stocks.split(' ').join('')) > 0 ) {
-	 		if (id && name && stocks && price) {
-	  	 		if (itemExist(id,stocks) == false) {
-		  	 		var quantity = 1;
-				 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-				 	totalAmountDue += parseFloat(subtotal);
-					$("#cart tbody").append(
-							'<tr>' +
-								'<input name="id" type="hidden" value="'+ id +'">' +
-								'<td>'+ name +'</td>' +
-								'<td><input data-stocks="'+stocks+'" data-remaining="'+stocks+'" data-id="'+id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-								'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-								'<td>'+ price +'</td>' +
-					 			
-								'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
-							'</tr>'
-						);
-					recount();
-					$("payment").val('');
-					$("change").val('');
-		  	 	}
-		  	 	stockCol.text(parseFloat(stocks - 1));
-	  	 	}
-	 	}else {
-	 		alert("Not enough stocks remaining");
+	 
+	 
+ 		if (itemExist(id) == false) {
+	 		var quantity = 1;
+	 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+	 	totalAmountDue += parseFloat(subtotal);
+		$("#cart tbody").append(
+				'<tr>' +
+					'<input name="id" type="hidden" value="'+ id +'">' +
+					'<td>'+ name +'</td>' +
+					'<td><input  data-id="'+id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+					'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
+					'<td>'+ price +'</td>' +
+		 			
+					'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
+				'</tr>'
+			);
+		recount();
+		$("payment").val('');
+		$("change").val('');
 	 	}
+		 
+	   
+	 	 
   	 	
 		
 	})
 
-	function itemExist(itemID,stocks) {
+	function itemExist(itemID) {
 		var table = $("#cart-tbl tbody tr");
 	 	var exist = false;
 		$.each(table, function(index) {
