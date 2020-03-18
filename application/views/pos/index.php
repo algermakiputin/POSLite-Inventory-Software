@@ -49,11 +49,9 @@
 							<label>Select Item</label>
 							<table style="width: 100%" class="table table-bordered table-hover table-striped" id="item-table">
 								<thead>
-									<tr>
-										<td>Item ID</td>
+									<tr> 
 										<td>Item Name</td>
-										<td>Description</td>
-										<td>Stocks</td>
+										<td>Description</td> 
 										<td>Price</td>
 									</tr>
 								</thead>

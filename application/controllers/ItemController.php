@@ -187,14 +187,12 @@ class ItemController extends AppController {
 		$itemCount = $this->db->get('items')->num_rows();
 
 		$datasets = array_map(function($item) use ($orderingLevel){
-			$quantity = $orderingLevel->getQuantity($item->id)->quantity;
+		 
 			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
 			
-			return [
-				$item->id,
-				ucwords($item->name),
-				ucfirst($item->description),
-				$quantity,
+			return [ 
+				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'">',
+				ucfirst($item->description), 
 				'₱'. number_format($price,2)
 			];
 		}, $items);
