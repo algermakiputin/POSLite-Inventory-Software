@@ -83,8 +83,7 @@
                 <tr>
                     <th width="8%">&nbsp;</th>
                     <th width="20%">Item Name</th>
-                    <th width="10%">Category</th> 
-                    <th width="15%">Capital Per/Item</th>
+                    <th width="10%">Category</th>  
                     <th width="15%">Retail Price</th>
                     <th width="10%">Stocks</th>
                     <th width="10%">Total</th> 
