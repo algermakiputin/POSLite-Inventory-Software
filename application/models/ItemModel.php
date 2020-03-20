@@ -41,7 +41,7 @@ class ItemModel extends CI_Model {
 
 	}
 
-	public function update_item($id,$name,$category,$description,$price_id, $image, $supplier_id, $barcode) {
+	public function update_item($id,$name,$category,$description,$price_id, $image, $supplier_id, $barcode, $price) {
 		
 		$item = $this->db->where('id',$id)->get('items')->row(); 
 
@@ -50,7 +50,8 @@ class ItemModel extends CI_Model {
 			'category_id' => $category,
 			'description' => $description,
 			'supplier_id' => $supplier_id,
-			'barcode' => $barcode
+			'barcode' => $barcode,
+			'price'	=> $price
 			);
 
 		$data = $this->security->xss_clean($data);
