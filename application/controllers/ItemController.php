@@ -90,7 +90,7 @@ class ItemController extends AppController {
 		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)->get()->num_rows(); 
 		  
 		$datasets = array_map(function($item) {
-			$itemPrice = $this->PriceModel->getPrice($item->id);
+			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
 			$deleteAction = "";
@@ -127,8 +127,7 @@ class ItemController extends AppController {
 			return [
 				$this->disPlayItemImage($item->image),
 				$item->name,
-				$this->categories_model->getName($item->category_id),
-				'₱' . number_format($itemCapital,2),
+				$this->categories_model->getName($item->category_id), 
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining . ' pcs',
 				currency() . number_format($itemPrice * $stocksRemaining,2), 
@@ -149,8 +148,7 @@ class ItemController extends AppController {
 		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id')
 					->from('items')
 					->join('categories', 'categories.id = items.category_id', 'BOTH')
-					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH')
-					->join('prices', 'prices.item_id = items.id')
+					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
 					->join('ordering_level', 'ordering_level.item_id = items.id')
 					->like('categories.name', $filterCategory, "BOTH") 
 					->like('items.name', $search, "BOTH")
@@ -247,6 +245,8 @@ class ItemController extends AppController {
 		$price = $this->input->post('price'); 
 		$capital = $this->input->post('capital');
 		$productImage = $_FILES['productImage'];
+		$price_label = $this->input->post('price_label[]');
+		$advance_price = $this->input->post('advance_price[]');
 	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
@@ -267,7 +267,8 @@ class ItemController extends AppController {
 				'description' => $description, 
 				'supplier_id' => $supplier_id,
 				'status' => 1,
-				'barcode' => $barcode 
+				'barcode' => $barcode,
+				'price'	=> $price
 			);
 		
 		if ($productImage) {
@@ -279,9 +280,10 @@ class ItemController extends AppController {
 		$data = $this->security->xss_clean($data);
 		$this->db->insert('items', $data);
 		$item_id = $this->db->insert_id();
-		$this->HistoryModel->insert('Register new item: ' . $name);
-		$this->PriceModel->insert($price,$capital, $item_id);
+		$this->HistoryModel->insert('Register new item: ' . $name); 
 		$this->OrderingLevelModel->insert($item_id);
+		$this->PriceModel->insert($price_label, $advance_price, $item_id);
+
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
 
@@ -366,8 +368,11 @@ class ItemController extends AppController {
 	public function edit($id) {
 		$this->userAccess('edit');
 		$id = $this->security->xss_clean($id);
-		$data['item'] = $this->db->where('id', $id)->get('items')->row();
-		$data['price'] = $this->PriceModel;
+ 
+		$data['advance_pricing'] = $this->db->where('item_id', $id)->get('prices')->result();
+
+		
+		$data['item'] = $this->db->where('id', $id)->get('items')->row(); 
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row();
@@ -386,6 +391,9 @@ class ItemController extends AppController {
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
 		$id = strip_tags($this->input->post('id'));
+
+		$price_label = $this->input->post('price_label[]');
+		$advance_price = $this->input->post('advance_price[]');
 
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
@@ -406,8 +414,18 @@ class ItemController extends AppController {
 		}
 
 		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
-		$price_id = $this->PriceModel->update($updated_price,$capital, $id);
-		$update = $this->ItemModel->update_item($id,$updated_name,$updated_category,$updated_desc,$price_id, $upload['upload_data']['file_name'], $supplier_id, $this->input->post('barcode'));
+	 
+		$update = $this->ItemModel->update_item(
+						$id,$updated_name,
+						$updated_category,
+						$updated_desc,
+						$price_id, 
+						$upload['upload_data']['file_name'], 
+						$supplier_id, $this->input->post('barcode'),
+						$updated_price
+					);
+
+		$this->PriceModel->insert($price_label, $advance_price, $id);
 
 		if ($update) {
 			
