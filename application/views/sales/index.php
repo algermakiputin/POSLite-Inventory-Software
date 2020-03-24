@@ -40,26 +40,34 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<div id="widgets">
-					<div class="col-md-<?php echo $widget_column ?>">
+
+					<div class="col-md-3">
+						<div class="sale-widget text-center">
+							From <i class="fa fa-calendar" data-toggle="tooltip" title="Starting date of sales report" style="font-size: 16px;"></i><br>
+							<b><span id="filter-from"><?php echo date('Y-m-d') ?></span></b>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="sale-widget text-center">
+							To <i class="fa fa-calendar" data-toggle="tooltip" title="Ending date of sales report" style="font-size: 16px;"></i><br>
+							<b><span id="filter-to"><?php echo date('Y-m-d') ?></span></b>
+						</div>
+					</div>
+					
+					<div class="col-md-3">
+						<div class="sale-widget text-center">
+							Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
+							<b><span id="total-expense"></span></b>
+						</div>
+					</div>  
+
+					<div class="col-md-3">
 						<div class="sale-widget text-center">
 							Total Sales <i class="fa fa-question-circle" data-toggle="tooltip" title="Total sales is the total amount of sales in a given period of time. Formulated as (Total Number of units sold *(times) price per unit" style="font-size: 16px;"></i><br>
 							<b><span id="total-sales"></span></b>
 						</div>
 					</div>
-					<div class="col-md-<?php echo $widget_column ?>">
-						<div class="sale-widget text-center">
-							Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
-							<b><span id="total-expense"></span></b>
-						</div>
-					</div>
-					<?php if (is_admin()): ?>
-					<div class="col-md-<?php echo $widget_column ?>">
-						<div class="sale-widget text-center">
-							Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Is the profit your store makes after deducting the cost of total expenes and capital or making the product." style="font-size: 16px;"></i><br>
-							<b><span id="total-profit"></span></b>
-						</div>
-					</div> 
-					<?php endif; ?>
+					
 				</div>
 
 				<div class="col-md-6" id="graph-menu" style="display: none;">
@@ -82,8 +90,7 @@
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
-								<th >Date</th>
-								<th >Transaction Profit</th>
+								<th >Date</th> 
 								<th >Staff</th>
 								<th >Item Name</th> 
 								<th >Quantity</th>

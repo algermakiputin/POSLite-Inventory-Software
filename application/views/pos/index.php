@@ -52,7 +52,7 @@
 									<tr> 
 										<td>Item Name</td>
 										<td>Description</td> 
-										<td>Price</td>
+										<td>Base Price</td>
 									</tr>
 								</thead>
 								<tbody> 
@@ -70,10 +70,11 @@
 								<table class="table" id="cart">
 									<thead>
 										<tr>			
-											<th width="50%">Product Name</th>
+											<th width="35%">Product Name</th>
 											<th width="15%">Quantity</th>
 											<th width="15%">Discount</th>
 											<th width="15%">Price</th>
+											<th width="15%">Sub Total</th>
 											<th width="5%"></th>	
 										</tr>
 									</thead>
@@ -221,9 +222,55 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Button trigger modal -->
+ 
+
+<!-- Modal -->
+		<div class="modal fade" id="advance_pricing_modal" tabindex="-1" role="dialog" aria-labelledby="AdvancePricingModal" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="modal-title" id="product-name"><b>Product Name</b></h4>
+		       
+		      </div>
+		      <div class="modal-body"> 
+		        <table class="table table-bordered table-striped table-hover" id="advance_pricing_options">
+		        	<thead>
+		        		<tr>
+		        			<th colspan="3" style="background-color: #f4f4f5;">Pricing Options</th>
+		        		</tr>
+		        		<tr>
+		        			<th>Label</th>
+			        		<th>Price</th>
+			        		<th></th>
+		        		</tr>
+		        	</thead>
+		        	<tbody>  
+		       
+		        	</tbody>
+		        </table>
+
+		        <form class="form-inline" id="add-to-cart-form">
+					  <div class="form-group">
+					  	<input type="hidden" name="item_id" id="item_id">
+					    <label for="quantity-enter">Enter Quantity &nbsp;</label>
+					    <input style="border-radius: 3px;" name="quantity-enter" onfocus="this.value=''" type="number" min="1" value="1" type="number" id="quantity" class="form-control mx-sm-3" aria-describedby="quantity">
+					   
+					  </div>
+					</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        <button type="button" class="btn btn-primary" id="add-product">ADD PRODUCT</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		<script type="text/javascript">
 	        var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
 	        var csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
+
 	    </script>
 		<script type="text/javascript" src="<?php echo base_url('assets/jquery.js') ?>"></script>
 		<script type="text/javascript" src="<?php echo base_url('assets/jquery-ui/jquery-ui.js') ?>"></script>

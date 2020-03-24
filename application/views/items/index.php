@@ -81,13 +81,13 @@
              <table class="table table-responsive table-hover table-bordered" id="item_tbl" width="100%">
                <thead>
                 <tr>
-                    <th width="8%">&nbsp;</th>
-                    <th width="20%">Item Name</th>
-                    <th width="10%">Category</th>  
-                    <th width="15%">Retail Price</th>
-                    <th width="10%">Stocks</th>
-                    <th width="10%">Total</th> 
-                    <th width="12%">Action</th>
+                    <th>&nbsp;</th>
+                    <th>Item Name</th>
+                    <th>Category</th>  
+                    <th>Price</th>
+                    <th>Stocks</th>
+                    <th>Total</th> 
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>

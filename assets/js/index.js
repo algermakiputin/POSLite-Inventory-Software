@@ -249,7 +249,9 @@ $(document).ready(function() {
 								sales_table.columns(0).search(from);
 								sales_table.columns(1).search(to).draw();
 								$("#range").text('Date: ' +to + ' - ' + from);
-								$("#widgets").show();
+								$("#widgets").show(); 
+								$("#filter-from").text(to);
+								$("#filter-to").text(to)
 
 							}else {
 								alert('Select from date');

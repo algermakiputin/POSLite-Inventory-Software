@@ -46,7 +46,7 @@
 								<input type="text" required="required" placeholder="Base Price" name="price" class="form-control" max="500000" id="selling-price">
 							</div>
 
-							<div class="form-group" style="padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5">
+							<div class="form-group advance-pricing-wrapper">
 								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
 							</div>
 							<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="collapse">
