@@ -17,6 +17,12 @@
 	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
 	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
 
+
+	$("body").on('click', '#advance_pricing_options tbody tr', function() {
+  
+  		$(this).find("input[type='radio']").prop('checked', true);
+  	});
+
 	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
@@ -88,34 +94,92 @@
 		var name = $(this).find('td').eq(0).text(); 
 		var price = $(this).find('td').eq(2).text();
 		var description = $(this).find('td').eq(1).text();
-		
-	 
-	 
+		var pricing = $(this).find('input[name="advance_pricing"]').val();
+	 	 
  		if (itemExist(id) == false) {
-	 		var quantity = 1;
-	 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-	 	totalAmountDue += parseFloat(subtotal);
+	 		
+ 			var advance_pricing = JSON.parse(pricing);
+			var enable_ap = Object.keys(advance_pricing).length;
+
+			$("#product-name").text(name);
+			$("#item_id").val(id);
+
+
+			$("#advance_pricing_options tbody").empty(); 
+			$("#advance_pricing_options tbody").append("<tr>" +
+						"<td>Base Price</td>" +
+						"<td>"+price+"</td>" +
+						'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
+					"</tr>"
+					);
+
+			$.each(advance_pricing, function(key, value) {
+
+				$("#advance_pricing_options tbody").append("<tr>" +
+						"<td>"+value.label+"</td>" +
+						"<td>"+ currency + number_format(value.price) +".00</td>" +
+						'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'.00" class="radio"></td>' +
+					"</tr>"
+					);			
+			});
+ 	
+			
+			// var price_options = JSON.parse(pricing);
+			// console.log(price_options);
+			$("#advance_pricing_modal").modal('toggle'); 
+			
+			$("payment").val('');
+			$("change").val('');
+	 	} 
+
+	 	recount();
+	});
+
+	$('#advance_pricing_modal').on('hidden.bs.modal', function () {
+	  	$("#quantity").val(1);
+	});
+
+	$("#add-product").click(function(e) {
+
+		var item_id = $("#item_id").val();
+		var name = $("#product-name").text();
+		var quantity = $("#quantity").val();
+		var price = $("input[name='pricing']:checked").val(); 
+
+
+		if (!quantity)
+			return alert("Quantity is required");
+
+		$("#advance_pricing_modal").modal('toggle');  
+		insert_product(item_id, name, price, quantity);
+
+	})
+
+
+
+	function insert_product(id, name, price, quantity) {
+ 	
+ 		var sub = remove_comma(price.substring(1)) * quantity;
+
 		$("#cart tbody").append(
 				'<tr>' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<td>'+ name +'</td>' +
-					'<td><input  data-id="'+id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
+					'<td><input  data-id="'+id+'" name="qty" type="text" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
 					'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-					'<td>'+ price +'</td>' +
-		 			
+					'<td>'+ price +'</td>' + 
+					'<td>'+ currency + number_format(sub)  +'.00</td>' + 
 					'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
 				'</tr>'
 			);
+ 
 		recount();
-		$("payment").val('');
-		$("change").val('');
-	 	}
-		 
-	   
-	 	 
-  	 	
-		
-	})
+	}
+
+	function remove_comma(str) {
+
+		return str.replace(/,/g, '')
+	}
 
 	function itemExist(itemID) {
 		var table = $("#cart-tbl tbody tr");
@@ -298,11 +362,11 @@
 			$(this).val('');
 		}
 
-	})
+	}) 
 
 	$("#cart").on('focusout','.quantity-box',function(e) {
 		var quantity = parseFloat($(this).val()); 
-		if (isNaN(quantity) || quantity < 0) {
+		if (isNaN(quantity) || quantity < 0 || quantity == "") {
 			$(this).val(1);
 		 
 			calculateRemainingStocks($(this).data('stocks') - 1, $(this).data('id'))
@@ -330,36 +394,36 @@
 		if (!isNaN(quantity) && quantity != 0 || $(this).val() == "") {
 			var row = $("#item-table").find('td').text() == itemID;
 
-			if (quantity <= parseInt(currentStocks)) {
-				var row = $(this).parents("tr");
-				var priceCol = row.find('td').eq(2);
-				var price = priceCol.text().substring(1);
-				var subtotal = parseInt(quantity) * parseFloat(price);
-				calculateRemainingStocks(remaining,itemID);
-				return recount();
-			}
-			
-			alert('Not enough stocks only ' + currentStocks + ' remaining.');
-			$(this).val(1);
-			calculateRemainingStocks(currentStocks - 1,itemID);
+			 
+			var row = $(this).parents("tr");
+			var priceCol = row.find('td').eq(2);
+			var price = priceCol.text().substring(1);
+			var subtotal = parseInt(quantity) * parseFloat(price);
+			calculateRemainingStocks(remaining,itemID);
 			return recount();
+		 
+			
+		 
 		}
 
 		
 	})
 
 
-	$("#cart").on("blur focusout focus", ".quantity-box", function() {
-
-		if ($(this).val() == "" || isNaN(parseInt($(this).val()))) {
-			$(this).val(1);
-			var quantity = parseInt(1);
-			var currentStocks = $(this).data('stocks');
-			var itemID = $(this).data('id'); 
-			calculateRemainingStocks(currentStocks - quantity,itemID);
-			return recount();
-		}
+	$("#cart").on("blur focusout", ".quantity-box", function() {
+  
+		var quantity = parseInt(1);
+		var currentStocks = $(this).data('stocks');
+		var itemID = $(this).data('id'); 
+		calculateRemainingStocks(currentStocks - quantity,itemID);
+		return recount();
+	   
 	}); 
+
+	$("#cart").on("focus", ".quantity-box", function(e) {
+
+		$(this).val('');
+	})
 
 
 	/*
@@ -396,6 +460,7 @@
 			var discount = parseInt(r.eq(2).find('input').val());
 			total += parseFloat(price) * quantity;
 
+			r.eq(4).text(currency + number_format(price * quantity) + '.00');
 			discountAmount += isNaN(discount) == true ? 0 : discount ;
 			
 		}

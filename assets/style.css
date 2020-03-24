@@ -10,6 +10,10 @@ html, body {
 
 }
 
+.advance-pricing-wrapper {
+  padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5;
+}
+
 .sidebar {
   margin-top: 53px;
 }
