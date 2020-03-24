@@ -45,14 +45,14 @@
 								<input value="<?php echo $item->price ?>" max="500000" type="text" name="price" class="form-control" required="required" id="selling-price">
 							</div>  
 
-							<?php if (!$advance_pricing): ?>
+						 	<?php if (!$advance_pricing): ?>
 							<div class="form-group" style="padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5">
 								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
 							</div>
-							<?php endif; ?>
+						 	<?php endif; ?>
 
-							<?php if ($advance_pricing): ?>
-							<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field">
+							
+							<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="<?php echo $class ?>">
 								<legend>Advance Pricing</legend>
 								<table class="table table-bordered table-striped" id="advance-pricing-tbl">
 									<thead>
@@ -62,6 +62,13 @@
 										</tr>
 									</thead>
 									<tbody>
+										<?php if (!$advance_pricing): ?>
+											<tr>
+												<td><input type="text" value="<?php echo $price->label ?>" placeholder="Price Label" class="form-control" name="price_label[]"></td>
+												<td><input type="text" value="<?php echo $price->price ?>" placeholder="Price" class="form-control" name="advance_price[]"></td>
+												<td width="30px"><i class="fa fa-trash remove-row"></i></td>
+											</tr>
+										<?php endif; ?>
 										<?php foreach ($advance_pricing as $price): ?>
 											<tr>
 												<td><input type="text" value="<?php echo $price->label ?>" placeholder="Price Label" class="form-control" name="price_label[]"></td>
@@ -75,8 +82,7 @@
 								<div class="text-right">
 									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD PRICE</button>
 								</div>
-							</fieldset>
-							<?php endif; ?>
+							</fieldset> 
 							<div class="form-group">
 								<label>Supplier:</label>
 								<select name="supplier" class="form-control">
@@ -139,12 +145,9 @@
 		$("body").on('click','.remove-row', function(e) {
 
 			var row_count = $("#advance-pricing-tbl tbody tr").length;
-
-			if (row_count > 1) {
-				$(this).parents('tr').remove();
-			}else {
-				alert('at least 1 Price is required');
-			}
+ 
+			$(this).parents('tr').remove();
+			 
 			
 		});
 			

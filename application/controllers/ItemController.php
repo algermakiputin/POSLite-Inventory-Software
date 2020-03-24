@@ -185,13 +185,14 @@ class ItemController extends AppController {
 		$itemCount = $this->db->get('items')->num_rows();
 
 		$datasets = array_map(function($item) use ($orderingLevel){
-		 
-			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
-			
+		  
+			$advance_price = json_encode($this->db->where('item_id', $item->id)->get('prices')->result());
+
+
 			return [ 
 				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'">',
 				ucfirst($item->description), 
-				'₱'. number_format($price,2)
+				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'>"
 			];
 		}, $items);
 
@@ -371,6 +372,7 @@ class ItemController extends AppController {
  
 		$data['advance_pricing'] = $this->db->where('item_id', $id)->get('prices')->result();
 
+		$data['class'] = $data['advance_pricing'] ? '' : 'collapse';
 		
 		$data['item'] = $this->db->where('id', $id)->get('items')->row(); 
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
