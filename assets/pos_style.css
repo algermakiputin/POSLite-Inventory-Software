@@ -7,6 +7,10 @@ body {
 	font-family: "Roboto", Arial, serif, sans-serif !important;
 }
 
+#item-table_length {
+	float: left;
+}
+
 .navbar {
 	background-color: #333;
 /*	background: #333;*/

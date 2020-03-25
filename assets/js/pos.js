@@ -81,6 +81,7 @@
 		processing : true, 
 		serverSide : true,
 		 "bPaginate": true,
+		 dom: "lftpr",
 		pagin:true,
 		ajax : {
 			url : base_url + 'items/data',
