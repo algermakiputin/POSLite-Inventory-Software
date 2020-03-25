@@ -10,6 +10,26 @@ html, body {
 
 }
 
+
+.navbar-header {
+  width: 250px;
+  background-color: #444;
+}
+.navbar-static-top {
+  margin-bottom: 0;
+  background-color: #333;
+  border-bottom: solid #ddd;
+  padding: 2px 0;
+}
+
+.navbar-default .navbar-brand {
+  color: #f4f4f5;
+}
+
+.advance-pricing-wrapper {
+  padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5;
+}
+
 .sidebar {
   margin-top: 53px;
 }

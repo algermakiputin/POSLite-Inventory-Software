@@ -2,17 +2,30 @@
 
 class PriceModel extends CI_Model { 
 
-	public function insert($price,$capital, $item_id) {
- 
-		$data = array(
-				'price' => $price,
-				'capital' => $capital,
+	public function insert($price_label, $advance_price, $item_id) {
+
+		
+ 		$this->db->where('item_id', $item_id)->delete('prices');
+
+ 		foreach ($price_label as $key => $label) {
+
+
+ 			if (!price_label || !$advance_price[$key])
+ 				continue;
+ 			 
+
+ 			$data = array(
+ 				'label' => $label,
+				'price' => $advance_price[$key],
+				'capital' => 0,
 				'item_id' => $item_id,
 				'date_time' => get_date_time(),
 			);
-		$data = $this->security->xss_clean($data);
-		$this->db->insert('prices', $data);
-		return $this->db->insert_id();
+
+			$data = $this->security->xss_clean($data);
+			$this->db->insert('prices', $data);
+ 		}
+		
 	}
 
 	public function getPrice($id) {

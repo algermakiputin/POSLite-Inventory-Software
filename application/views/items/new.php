@@ -40,15 +40,36 @@
 										<option value="<?php echo $cat->id ?>"> <?php echo ucwords($cat->name) ?> </option>
 									<?php endforeach; ?>
 								</select>
-							</div>
+							</div> 
 							<div class="form-group">  
-									<label>Capital/Unit:</label>
-								<input type="text" required="required" placeholder="Capital Per Unit" name="capital" class="form-control" max="500000" id="capital">
+								<label>Base Price:</label>
+								<input type="text" required="required" placeholder="Base Price" name="price" class="form-control" max="500000" id="selling-price">
 							</div>
-							<div class="form-group">  
-								<label>Retail Price:</label>
-								<input type="text" required="required" placeholder="Price" name="price" class="form-control" data-parsley-gte-message="Retail Price Must be greather or equal to capital" max="500000" id="selling-price" data-parsley-gte="#capital">
-							</div>  
+
+							<div class="form-group advance-pricing-wrapper">
+								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
+							</div>
+							<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="collapse">
+								<legend>Advance Pricing</legend>
+								<table class="table table-bordered table-striped" id="advance-pricing-tbl">
+									<thead>
+										<tr>
+											<th>Label</th>
+											<th>Price</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type="text" placeholder="Price Label" class="form-control" name="price_label[]"></td>
+											<td><input type="text" placeholder="Price" class="form-control" name="advance_price[]"></td>
+											<td width="30px"><i class="fa fa-trash remove-row"></i></td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="text-right">
+									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD PRICE</button>
+								</div>
+							</fieldset>
 							<div class="form-group">  
 									<label>Supplier:</label>
 								<select name="supplier" class="form-control" required="required"> 
@@ -91,3 +112,34 @@
 	</div>
 	<!-- /.col-lg-12 -->
 </div>  
+
+
+<script type="text/javascript">
+	
+	$(document).ready(function(e) {
+
+		$("#add-price").click(function(e) {
+
+			$("#advance-pricing-tbl tbody").append("<tr>" + 
+					'<td><input type="text" placeholder="Price Label" class="form-control" name="price_label[]"></td>' +
+					'<td><input type="text" placeholder="Price" class="form-control" name="advance_price[]"></td>' + 
+					'<td width="30px"><i class="fa fa-trash remove-row"></i></td>' +
+				"</tr>");
+		});
+
+		$("body").on('click','.remove-row', function(e) {
+
+			var row_count = $("#advance-pricing-tbl tbody tr").length;
+
+			if (row_count > 1) {
+				$(this).parents('tr').remove();
+			}else {
+				alert('at least 1 Price is required');
+			}
+			
+		});
+			
+	})
+
+
+</script>
