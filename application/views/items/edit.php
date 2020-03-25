@@ -39,15 +39,50 @@
 										</option>
 									<?php endforeach; ?>
 								</select>
-							</div>
-							<div class="form-group"> 
-								<label>Capital/Unit:</label>
-								<input value="<?php echo $price->getCapital($item->id); ?>" max="500000" type="text" name="capital" class="form-control" required="required" id="capital">
 							</div> 
 							<div class="form-group"> 
-								<label>Price:</label>
-								<input value="<?php echo $price->getPrice($item->id); ?>" max="500000" type="text" name="price" class="form-control" required="required" id="selling-price" data-parsley-gte="#capital">
+								<label>Base Price:</label>
+								<input value="<?php echo $item->price ?>" max="500000" type="text" name="price" class="form-control" required="required" id="selling-price">
 							</div>  
+
+						 	<?php if (!$advance_pricing): ?>
+							<div class="form-group" style="padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5">
+								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
+							</div>
+						 	<?php endif; ?>
+
+							
+							<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="<?php echo $class ?>">
+								<legend>Advance Pricing</legend>
+								<table class="table table-bordered table-striped" id="advance-pricing-tbl">
+									<thead>
+										<tr>
+											<th>Label</th>
+											<th>Price</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php if (!$advance_pricing): ?>
+											<tr>
+												<td><input type="text" value="<?php echo $price->label ?>" placeholder="Price Label" class="form-control" name="price_label[]"></td>
+												<td><input type="text" value="<?php echo $price->price ?>" placeholder="Price" class="form-control" name="advance_price[]"></td>
+												<td width="30px"><i class="fa fa-trash remove-row"></i></td>
+											</tr>
+										<?php endif; ?>
+										<?php foreach ($advance_pricing as $price): ?>
+											<tr>
+												<td><input type="text" value="<?php echo $price->label ?>" placeholder="Price Label" class="form-control" name="price_label[]"></td>
+												<td><input type="text" value="<?php echo $price->price ?>" placeholder="Price" class="form-control" name="advance_price[]"></td>
+												<td width="30px"><i class="fa fa-trash remove-row"></i></td>
+											</tr>
+										<?php endforeach; ?>
+										
+									</tbody>
+								</table>
+								<div class="text-right">
+									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD PRICE</button>
+								</div>
+							</fieldset> 
 							<div class="form-group">
 								<label>Supplier:</label>
 								<select name="supplier" class="form-control">
@@ -93,4 +128,31 @@
 	</div>
 	<!-- /.col-lg-12 -->
 </div>  
+
+<script type="text/javascript">
+	
+	$(document).ready(function(e) {
+
+		$("#add-price").click(function(e) {
+
+			$("#advance-pricing-tbl tbody").append("<tr>" + 
+					'<td><input type="text" placeholder="Price Label" class="form-control" name="price_label[]"></td>' +
+					'<td><input type="number" placeholder="Price" class="form-control" name="advance_price[]"></td>' + 
+					'<td width="30px"><i class="fa fa-trash remove-row"></i></td>' +
+				"</tr>");
+		});
+
+		$("body").on('click','.remove-row', function(e) {
+
+			var row_count = $("#advance-pricing-tbl tbody tr").length;
+ 
+			$(this).parents('tr').remove();
+			 
+			
+		});
+			
+	})
+
+
+</script>
  
