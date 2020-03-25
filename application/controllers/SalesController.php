@@ -200,7 +200,7 @@ class SalesController extends CI_Controller {
 		$sales = $this->security->xss_clean($sales);
 
 		foreach ($sales as $sale) {
-			$transactionProfit = $this->db->where('item_id', $sale['id'])->get('prices')->row()->capital;
+			$transactionProfit = 0;
 			$data[] = [ 
 				'item_id' => $sale['id'],
 				'quantity' => $sale['quantity'],
@@ -265,8 +265,7 @@ class SalesController extends CI_Controller {
 				$saleProfit = (($desc->price - $desc->profit) * $desc->quantity) - $desc->discount;
 				$transactionProfit += $saleProfit;
 				$datasets[] = [ 
-					date('Y-m-d', strtotime($sale->date_time)), 
-					'₱' . number_format($saleProfit),
+					date('Y-m-d', strtotime($sale->date_time)),  
 					$staff,
 					$desc->name,
 					$desc->quantity,

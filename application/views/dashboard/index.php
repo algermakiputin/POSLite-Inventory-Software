@@ -22,13 +22,14 @@ echo $this->session->flashdata('successMessage');
     </div> 
 </div>
 <div class="col-md-4">
-    <div class="row">
+    <div class="row"> 
         <div class="col-md-12">
            <div class="panel panel-default">
                <div class="panel-heading">
                    Product Ranking: <?php echo date('Y/m/d') ?>
                </div> 
                <div class="panel-body"> 
+                
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
@@ -63,6 +64,7 @@ echo $this->session->flashdata('successMessage');
                    Diagnoses
                </div> 
                <div class="panel-body"> 
+                   
                     <table class="table table-hover">
                    
                         <thead>
