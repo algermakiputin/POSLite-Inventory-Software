@@ -11,8 +11,32 @@
         ?>
     </div>
 </div>
-<div class="row"> 
 
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <select class="form-control filter-items" data-column="7" name="test">
+                <option value="">Filter By Supplier</option>
+                <?php foreach ($suppliers as $supplier): ?>
+                    <option value="<?php echo $supplier->name ?>"><?php echo $supplier->name ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <select class="form-control filter-items" data-column="2" name="test">
+                <option value="">Filter By Category</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?php echo $category->name ?>"><?php echo $category->name ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div> 
+</div>
+<div class="row">  
+
+     
     <div class="col-lg-12">
      <div class="panel panel-default">
 
@@ -28,6 +52,7 @@
                 <tr>
                     <th>&nbsp;</th>
                     <th>Item Name</th>
+                    <th>Supplier</th>
                     <th>Category</th>  
                     <th>Price</th>
                     <th>Stocks</th>

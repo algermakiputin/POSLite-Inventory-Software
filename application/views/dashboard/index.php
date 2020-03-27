@@ -74,7 +74,7 @@ echo $this->session->flashdata('successMessage');
                             </tr>
                         </thead>
                         
-                        <tr>
+                        <tr style="background-color: #f9f9f9;">
                             <td  style="font-size: 24px;padding: 15px">
                                 <a href="<?php echo base_url('diagnoses') ?>">
                                 <span style="color: #333" data-toggle="tooltip" title="Number of products that are not selling for the last 7 days"><?php echo $not_selling ?></span>

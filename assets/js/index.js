@@ -98,31 +98,28 @@ $(document).ready(function() {
 						{
 							extend: 'copyHtml5',
 							filename : 'Inventory Report',
-							title : 'Inventory',
-							messageTop : 'Inventory Report',
+							title : 'Inventory', 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7 ]
+								columns: [ 1, 2, 3,4,5,6 ]
 							},
 						},
 						{
 							extend: 'excelHtml5',
 							filename : 'Inventory',
-							title : 'Inventory Report',
-							messageTop : 'Inventory Report',
+							title : 'Inventory Report', 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7 ]
+								columns: [ 1, 2, 3,4,5,6 ]
 							},
 						},
 						{
 							extend: 'pdfHtml5',
 							filename : 'Inventory Report',
-							title : 'Inventory',
-							messageTop : 'Inventory Report',
+							title : 'Inventory', 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7 ]
+								columns: [ 1, 2, 3,4,5,6 ]
 							},
 
 						},
@@ -143,18 +140,7 @@ $(document).ready(function() {
 			},
 			dataTableFilter : function() {
 				$(".filter-items").change(function() {
-					let column = $(this).data('column');
-
-					if (column == 4) {
-						itemTable.columns(5).search('');
-					}
-
-					if (column == 5) 
-					{
-						itemTable.columns(4).search('');
-						
-					}
-
+					let column = $(this).data('column'); 
 					itemTable.columns(column).search(this.value).draw();
 
 						
