@@ -79,16 +79,14 @@ class ItemController extends AppController {
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
 		$filterCategory = $this->input->post('columns[2][search][value]');
-		$filterSupplier = $this->input->post('columns[7][search][value]');
-		$sortPrice = $this->input->post('columns[4][search][value]');
-		$sortStocks = $this->input->post('columns[5][search][value]');
-
+		$filterSupplier = $this->input->post('columns[7][search][value]');  
 
 		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
 												->limit($limit, $start)->get()->result();
  
 		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)->get()->num_rows(); 
-		  
+		 
+
 		$datasets = array_map(function($item) {
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
@@ -127,6 +125,7 @@ class ItemController extends AppController {
 			return [
 				$this->disPlayItemImage($item->image),
 				$item->name,
+				$item->supplier,
 				$this->categories_model->getName($item->category_id), 
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining . ' pcs',
@@ -145,7 +144,8 @@ class ItemController extends AppController {
 	}
 
 	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks) {
-		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id')
+
+		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier')
 					->from('items')
 					->join('categories', 'categories.id = items.category_id', 'BOTH')
 					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
@@ -153,11 +153,6 @@ class ItemController extends AppController {
 					->like('categories.name', $filterCategory, "BOTH") 
 					->like('items.name', $search, "BOTH")
 					->like('supplier.name', $filterSupplier, "BOTH");
-
-		if ($sortPrice)
-			$query->order_by('prices.price',$sortPrice); 
-		if ($sortStocks)
-			$query->order_by('ordering_level.quantity',$sortStocks);
 
 		return $query;
 	}
