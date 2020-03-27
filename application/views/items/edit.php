@@ -42,7 +42,7 @@
 							</div> 
 							<div class="form-group"> 
 								<label>Base Price:</label>
-								<input value="<?php echo $item->price ?>" max="500000" type="text" name="price" class="form-control" required="required" id="selling-price">
+								<input value="<?php echo $item->price ?>" type="text" name="price" class="form-control" required="required" id="selling-price">
 							</div>  
 
 						 	<?php if (!$advance_pricing): ?>
