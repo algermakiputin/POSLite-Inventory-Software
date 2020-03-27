@@ -10,6 +10,10 @@ html, body {
 
 }
 
+.lighter-bg {
+  background-color: #f9f9f9;
+}
+
 
 .navbar-header {
   width: 250px;

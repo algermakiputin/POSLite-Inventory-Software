@@ -176,11 +176,6 @@
 		recount();
 	}
 
-	function remove_comma(str) {
-
-		return str.replace(/,/g, '')
-	}
-
 	function itemExist(itemID) {
 		var table = $("#cart-tbl tbody tr");
 	 	var exist = false;
@@ -213,15 +208,14 @@
 		var change = $("#change").val();
  	 
  		if (row) {
-
- 			var totalAmountDue = parseFloat($("#amount-total").text().substring(1).replace(',',''));
+ 
 	 
 			if (parseFloat(payment) >= parseFloat(totalAmountDue)) {
 		 		
 	 			for (i = 0; i < row; i++) {
 					var r = $("#cart tbody tr").eq(i).find('td');
 					var quantity = r.eq(1).find('input').val();
-					var price = r.eq(3).text().substring(1).replace(',','');
+					var price = remove_comma(r.eq(3).text().substring(1));
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
@@ -313,7 +307,7 @@
 
 		var cart = $("#cart tbody tr").length;
 		if (cart) {
-			var totalAmountDue = parseFloat($("#amount-total").text().substring(1).replace(',',''));
+ 
 
 			if (payment >= totalAmountDue) {
 		 	
@@ -456,7 +450,7 @@
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
 			var quantity = parseFloat(r.eq(1).find('input').val());
-			var price = r.eq(3).text().substring(1).replace(',','');
+			var price = remove_comma(r.eq(3).text().substring(1));
 			var discount = parseInt(r.eq(2).find('input').val());
 			total += parseFloat(price) * quantity;
 
@@ -464,8 +458,11 @@
 			discountAmount += isNaN(discount) == true ? 0 : discount ;
 			
 		}
+
+
 		totalDiscount = discountAmount;
 		totalAmountDue = total - discountAmount;
+
 		
 		$("#amount-discount").text(currency + totalDiscount.toFixed(2));
 		$("#amount-total").text("₱" + number_format(totalAmountDue.toFixed(2)));
@@ -523,4 +520,9 @@ function number_format(number, decimals, dec_point, thousands_point) {
     number = splitNum.join(dec_point);
 
     return number;
+}
+
+function remove_comma(str) {
+
+	return str.replace(/,/g, '')
 }
