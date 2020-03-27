@@ -80,18 +80,23 @@ class ItemController extends AppController {
 		$items = $this->dataFilter($search, $start, $limit);
 		$filterCategory = $this->input->post('columns[2][search][value]');
 		$filterSupplier = $this->input->post('columns[7][search][value]');  
+		$inventory__total = 0;
 
 		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
 												->limit($limit, $start)->get()->result();
  
 		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)->get()->num_rows(); 
-		 
+		
+		$datasets = [];
 
-		$datasets = array_map(function($item) {
+		foreach ($items as $item) {
+
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
 			$deleteAction = "";
+			$inventory__total += $item->price * $stocksRemaining;
+
 			if ($this->session->userdata('account_type') == "Admin") {
 
 				$deleteAction = '
@@ -120,9 +125,11 @@ class ItemController extends AppController {
                         
                         '.$deleteAction.'
                     </ul>
-                </div>';
+                </div>'; 
 
-			return [
+
+         
+			$datasets[] = [
 				$this->disPlayItemImage($item->image),
 				$item->name,
 				$item->supplier,
@@ -133,13 +140,14 @@ class ItemController extends AppController {
 				$actions
 			];
 
-		}, $items);
+		} 
 
 		echo json_encode([
 			'draw' => $this->input->post('draw'),
 			'recordsTotal' => count($datasets),
 			'recordsFiltered' => $itemCount,
-			'data' => $datasets
+			'data' => $datasets,
+			'total' => number_format($inventory__total,2)
 		]);
 	}
 
