@@ -9,7 +9,7 @@ class DashboardController extends AppController {
  		$this->load->model('sales_model');
  		$this->load->model('ExpensesModel');
 
-
+ 		ini_set('display_errors', 'On');
  		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
 		$data['content'] = 'dashboard/index';
 		// $data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
