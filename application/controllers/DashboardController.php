@@ -20,7 +20,8 @@ class DashboardController extends AppController {
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
 		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
 		$data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
-		$data['expenses'] = number_format( number_format($this->ExpensesModel->total, 2) );
+		$data['expenses'] = number_format( number_format($this->ExpensesModel->annual_expenses()->total, 2) );
+ 
 		$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
 
 		$lastweek = date('Y-m-d', strtotime('-7 days'));
