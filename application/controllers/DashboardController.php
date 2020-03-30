@@ -3,19 +3,20 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH."controllers/AppController.php");
 class DashboardController extends AppController {
 
-	public function index() {
+
+	public function dashboard() {
  		
  		$yesterday = date('Y-m-d', strtotime("-1 day"));
+ 		$lastweek = date('Y-m-d', strtotime('-7 days'));
  		$today = date('Y-m-d');
 
-		$data['content'] = 'dashboard/index';
+		$data['content'] = 'dashboard/dashboard';
 		$data['dataset'] = json_encode( $this->line_chart( $today ) ); 
 		$data['yesterday'] = json_encode( $this->line_chart( $yesterday ) );
 		$data['top_products'] = $this->top10_product();
-		$data['not_selling'] = $this->not_selling_products()->num_rows();
+		$data['not_selling'] = $this->not_selling_products( $lastweek )->num_rows();
 		$data['low_stocks'] = count(low_stocks());
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
-		$lastweek = date('Y-m-d', strtotime('-7 days'));
 		 
 		$this->load->view('master', $data);
 	}
@@ -47,33 +48,33 @@ class DashboardController extends AppController {
 	// 	$this->load->view('master', $data);
 	// }
 
-	public function dashboard() {
+	// public function dashboard() {
 
-		$this->load->model('sales_model');
- 		$this->load->model('ExpensesModel');
+	// 	$this->load->model('sales_model');
+ // 		$this->load->model('ExpensesModel');
 
 
- 		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
-		$data['content'] = 'dashboard/dashboard';
-		$data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
-		$data['yesterday'] = json_encode($this->line_chart($yesterday));
-		$data['top_products'] = $this->top10_product();
-		$data['not_selling'] = $this->not_selling_products()->num_rows();
-		$data['low_stocks'] = count(low_stocks());
-		$data['no_stocks'] = count(noStocks());
-		$data['average_sales_per_day'] = $this->average_sales_per_day();
-		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
-		$data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
-		$data['expenses'] =  number_format($this->ExpensesModel->annual_expenses()->total, 2);
+ // 		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
+	// 	$data['content'] = 'dashboard/dashboard';
+	// 	$data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
+	// 	$data['yesterday'] = json_encode($this->line_chart($yesterday));
+	// 	$data['top_products'] = $this->top10_product();
+	// 	$data['not_selling'] = $this->not_selling_products()->num_rows();
+	// 	$data['low_stocks'] = count(low_stocks());
+	// 	$data['no_stocks'] = count(noStocks());
+	// 	$data['average_sales_per_day'] = $this->average_sales_per_day();
+	// 	$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
+	// 	$data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
+	// 	$data['expenses'] =  number_format($this->ExpensesModel->annual_expenses()->total, 2);
  
-		$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
+	// 	$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
 
-		$lastweek = date('Y-m-d', strtotime('-7 days'));
-		$today = date('Y-m-d');
+	// 	$lastweek = date('Y-m-d', strtotime('-7 days'));
+	// 	$today = date('Y-m-d');
  
 
-		$this->load->view('master', $data);
-	}
+	// 	$this->load->view('master', $data);
+	// }
 
 	public function diagnoses() {
 
@@ -105,6 +106,8 @@ class DashboardController extends AppController {
 
 	public function average_sales_per_day() {
 
+		$total = 0;
+		$average_sales_per_day = 0;
 		$last_month = date('Y-m-d', strtotime('-30 days'));
 
 		$sales = $this->db->select('sales.id, SUM(sales_description.price * sales_description.quantity) as total')
@@ -121,9 +124,7 @@ class DashboardController extends AppController {
 
 			return "Not enough data";
 		}
-
-		$total = 0;
-		$average_sales_per_day = 0;
+ 
 
 		foreach ($sales as $row) {
 
@@ -135,7 +136,7 @@ class DashboardController extends AppController {
 		 
 	}
 
-	public function not_selling_products() {
+	public function not_selling_products($lastweek) {
 
 		$query = "SELECT items.id, items.barcode, items.name, prices.price, ordering_level.quantity
 						FROM items
