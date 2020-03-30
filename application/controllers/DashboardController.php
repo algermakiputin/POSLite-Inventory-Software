@@ -25,8 +25,7 @@ class DashboardController extends AppController {
 
 		$lastweek = date('Y-m-d', strtotime('-7 days'));
 		$today = date('Y-m-d');
-
-		;
+ 
 
 		$this->load->view('master', $data);
 	}
