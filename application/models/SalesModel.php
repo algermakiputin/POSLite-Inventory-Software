@@ -1,6 +1,6 @@
 <?php
 
-class Sales_model extends CI_Model {
+class SalesModel extends CI_Model {
 
 	public function insert_sales($records, $customer_id) { 
 		
