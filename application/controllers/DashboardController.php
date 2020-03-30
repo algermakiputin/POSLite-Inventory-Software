@@ -5,19 +5,18 @@ class DashboardController extends AppController {
 
 	public function index() {
  		
- 		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
+ 		$yesterday = date('Y-m-d', strtotime("-1 day"));
+ 		$today = date('Y-m-d');
+
 		$data['content'] = 'dashboard/index';
-		$data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
-		$data['yesterday'] = json_encode($this->line_chart($yesterday));
+		$data['dataset'] = json_encode( $this->line_chart( $today ) ); 
+		$data['yesterday'] = json_encode( $this->line_chart( $yesterday ) );
 		$data['top_products'] = $this->top10_product();
 		$data['not_selling'] = $this->not_selling_products()->num_rows();
 		$data['low_stocks'] = count(low_stocks());
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
 		$lastweek = date('Y-m-d', strtotime('-7 days'));
-		$today = date('Y-m-d');
-
-		;
-
+		 
 		$this->load->view('master', $data);
 	}
 	// public function index() {
