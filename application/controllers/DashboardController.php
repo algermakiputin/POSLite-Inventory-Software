@@ -18,12 +18,13 @@ class DashboardController extends AppController {
 		$data['not_selling'] = $this->not_selling_products()->num_rows();
 		$data['low_stocks'] = count(low_stocks());
 		$data['no_stocks'] = count(noStocks());
+
+
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
 		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
 		$data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
 		$data['expenses'] = number_format( number_format($this->ExpensesModel->total, 2) );
 		$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
-
  
 
 		$this->load->view('master', $data);
