@@ -24,8 +24,6 @@ class DashboardController extends AppController {
 		$data['expenses'] = 0;//number_format( number_format($this->ExpensesModel->total, 2) );
 		$data['revenue'] = 0;//number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
 
-		$lastweek = date('Y-m-d', strtotime('-7 days'));
-		$today = date('Y-m-d');
  
 
 		$this->load->view('master', $data);
@@ -93,6 +91,8 @@ class DashboardController extends AppController {
 
 	public function not_selling_products() {
 
+		$lastweek = date('Y-m-d', strtotime('-7 days')); 
+		
 		$query = "SELECT items.id, items.barcode, items.name, prices.price, ordering_level.quantity
 						FROM items
 						INNER JOIN prices ON prices.item_id = items.id
