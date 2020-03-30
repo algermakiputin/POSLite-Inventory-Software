@@ -26,7 +26,6 @@ class DashboardController extends AppController {
 		$data['expenses'] = number_format( number_format($this->ExpensesModel->total, 2) );
 		$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
  
-
 		$this->load->view('master', $data);
 	}
 
