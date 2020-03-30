@@ -5,8 +5,7 @@ require_once(APPPATH."controllers/AppController.php");
 class DashboardController extends AppController {
 
 	public function index() {
- 		
- 		echo "test";
+ 		 
  		$this->load->model('sales_model');
  		$this->load->model('ExpensesModel');
 
@@ -27,7 +26,7 @@ class DashboardController extends AppController {
 
  
 
-		// $this->load->view('master', $data);
+		$this->load->view('master', $data);
 	}
 
 	public function diagnoses() {
