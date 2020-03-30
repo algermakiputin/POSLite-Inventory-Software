@@ -17,11 +17,14 @@
                     </li>
                     <li><a href="#short_stocks" data-toggle="tab">Short Stocks</a>
                     </li> 
+                    <li><a href="#out_of_stocks" data-toggle="tab">Out of Stocks</a>
+                    </li> 
                 </ul>
 
-                <div class="tab-content clearfix">
+                <div class="tab-content clearfix" id="diagnoses_tab">
                   <div class="tab-pane active" id="not_selling">
-                      <h3>Number of products that are not selling for the last 7 days</h3>
+                      <h4>These products are not selling well in the last 7 days</h4>
+                      <hr>
                       <table class="table table-bordered table-hover table-striped datatable"> 
                           <thead>
                               <tr>
@@ -44,7 +47,8 @@
                       </table>
                   </div>
                   <div class="tab-pane" id="short_stocks">
-                      <h3>Number of products that stocks are below 15</h3>
+                      <h4>Time to restock</h4>
+                      <hr>
                       <table class="table table-bordered table-hover table-striped datatable"> 
                           <thead>
                               <tr>
@@ -64,6 +68,28 @@
                           </tbody>
                       </table>
                   </div> 
+                  <div class="tab-pane" id="out_of_stocks">
+                      <h4>Run out of stocks</h4>
+                      <hr>
+                      <table class="table table-bordered table-hover table-striped datatable"> 
+                          <thead>
+                              <tr>
+                                    <th>Barcode</th>
+                                    <th>Name</th>
+                                    <th>Stocks</th> 
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <?php foreach ($out_of_stocks as $item): ?>
+                                <tr>
+                                    <td><?php echo $item->barcode ?></td>
+                                    <td><?php echo $item->name ?></td>
+                                    <td><?php echo $item->quantity ?> Remaining</td> 
+                                </tr>
+                              <?php endforeach; ?>
+                          </tbody>
+                      </table>
+                  </div>
               </div>
           </div>
       </div>
@@ -71,13 +97,4 @@
   </div> 
 </div> 
 </div>
-
-<style type="text/css">
-    
-    .nav-pills>li { 
-        display: inline-block;
-        width: 48%;
-        background-color: #f4f4f5;
-    }
-</style>
-
+ 
