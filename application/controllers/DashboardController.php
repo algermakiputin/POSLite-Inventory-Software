@@ -10,22 +10,22 @@ class DashboardController extends AppController {
 
 
  		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
-		$data['content'] = 'dashboard/index';
-		// $data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
-		// $data['yesterday'] = json_encode($this->line_chart($yesterday));
-		// $data['top_products'] = $this->top10_product();
-		// $data['not_selling'] = $this->not_selling_products()->num_rows();
-		// $data['low_stocks'] = count(low_stocks());
-		// $data['no_stocks'] = count(noStocks());
-		// $data['average_sales_per_day'] = $this->average_sales_per_day();
-		// $data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
-		// $data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
-		// $data['expenses'] =  number_format($this->ExpensesModel->annual_expenses()->total, 2);
+		$data['content'] = 'expenses/new';
+		$data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
+		$data['yesterday'] = json_encode($this->line_chart($yesterday));
+		$data['top_products'] = $this->top10_product();
+		$data['not_selling'] = $this->not_selling_products()->num_rows();
+		$data['low_stocks'] = count(low_stocks());
+		$data['no_stocks'] = count(noStocks());
+		$data['average_sales_per_day'] = $this->average_sales_per_day();
+		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
+		$data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
+		$data['expenses'] =  number_format($this->ExpensesModel->annual_expenses()->total, 2);
  
-		// $data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
+		$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
 
-		// $lastweek = date('Y-m-d', strtotime('-7 days'));
-		// $today = date('Y-m-d');
+		$lastweek = date('Y-m-d', strtotime('-7 days'));
+		$today = date('Y-m-d');
  
 
 		$this->load->view('master', $data);
