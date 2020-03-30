@@ -9,7 +9,7 @@ echo $this->session->flashdata('errorMessage');
 echo $this->session->flashdata('successMessage'); 
 ?>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-3">
         <div class="widget-box">
             <h3>Orders</h3>
@@ -34,7 +34,7 @@ echo $this->session->flashdata('successMessage');
             <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $revenue ?></span>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="row">
 	<div class="col-md-8">
