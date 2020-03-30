@@ -1,9 +1,8 @@
 <?php
+
 class Sales_model extends CI_Model {
 
-	public function insert_sales($records,$customer_id) {
-
-		$this->load->database();
+	public function insert_sales($records, $customer_id) { 
 		
 		date_default_timezone_set("Asia/Manila");
 		 
@@ -43,8 +42,7 @@ class Sales_model extends CI_Model {
 	}
 
 	public function get_sales( $date ) {
-
-
+ 
 		return $this->db->select("SUM((sales_description.price * sales_description.quantity) - sales_description.discount) as total")
 					->from('sales_description')
 					->where('DATE_FORMAT(created_at, "%Y-%m-%d") = ', $date)
@@ -54,8 +52,9 @@ class Sales_model extends CI_Model {
 	}
 
 	public function updateStocks($cart) {
+
 		$data = json_decode($cart,true);
-		$this->load->database();
+ 
 		foreach ($data as $stock) {
 			$id = $stock[0];
 			$quantity = $stock[2];
@@ -66,7 +65,7 @@ class Sales_model extends CI_Model {
 	}
 	public function daily_sales_report() {
 		$date = date('Y-m-d');
-		$this->load->database();
+ 
 		$sql = $this->db->where('DATE_FORMAT(date_time,"%Y-%m-%d")',$date)->get('sales');
 		return $sql->result();
 	}
@@ -75,7 +74,6 @@ class Sales_model extends CI_Model {
 		$monday = date('d.m.Y',strtotime('last monday'));
 		$sunday = date('d.m.Y',strtotime('next sunday'));
 	 
-		$this->load->database();
 		$sql = $this->db->where('DATE_FORMAT(date_time,"%d.%m.%Y") BETWEEN "'. $monday .'" AND "'.$sunday.'"')->get('sales');
 		
 		return $sql->result();
@@ -84,15 +82,14 @@ class Sales_model extends CI_Model {
 	public function monthly_sales_report() {
 		$firstDayOfMonth = date('01-m-Y');
 		$lastDayOfMonth = date('t-m-Y');
-
-		$this->load->database();
+ 
 		$sql = $this->db->where('DATE_FORMAT(date_time,"%d.%m.%Y") BETWEEN "'. $firstDayOfMonth .'" AND "'.$lastDayOfMonth.'"')->get('sales');
 		return $sql->result();
 	}
 
 	public function yearly_sales_report() {
 		$year= date('Y');
-		$this->load->database();
+
 		$sql = $this->db->where('DATE_FORMAT(date_time,"%Y")', $year)->get('sales');
 		return $sql->result();
 	}
