@@ -10,7 +10,7 @@ class DashboardController extends AppController {
 
 
  		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
-		$data['content'] = 'dashboard/index';
+		$data['content'] = 'dashboard/dashboard';
 		// $data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
 		// $data['yesterday'] = json_encode($this->line_chart($yesterday));
 		// $data['top_products'] = $this->top10_product();
