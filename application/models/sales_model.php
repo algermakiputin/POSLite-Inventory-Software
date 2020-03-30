@@ -33,6 +33,26 @@ class Sales_model extends CI_Model {
 		return false;
 	}
 
+	public function get_annual_sales($year) {
+
+		return $this->db->select("SUM((sales_description.price * sales_description.quantity) - sales_description.discount) as total")
+					->from('sales_description')
+					->where('DATE_FORMAT(created_at, "%Y") = ', $year)
+					->get()
+					->row();
+	}
+
+	public function get_sales( $date ) {
+
+
+		return $this->db->select("SUM((sales_description.price * sales_description.quantity) - sales_description.discount) as total")
+					->from('sales_description')
+					->where('DATE_FORMAT(created_at, "%Y-%m-%d") = ', $date)
+					->get()
+					->row();
+
+	}
+
 	public function updateStocks($cart) {
 		$data = json_decode($cart,true);
 		$this->load->database();
