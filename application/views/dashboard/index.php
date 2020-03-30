@@ -9,6 +9,32 @@ echo $this->session->flashdata('errorMessage');
 echo $this->session->flashdata('successMessage'); 
 ?>
 
+<div class="row">
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Orders</h3>
+            Today: <span class="result"><?php echo $orders ?></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Sales</h3>
+            <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $sales; ?></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Expenses</h3>
+            <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $expenses ?></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Revenue</h3>
+            <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $revenue ?></span>
+        </div>
+    </div>
+</div>
 
 <div class="row">
 	<div class="col-md-8">
@@ -71,6 +97,7 @@ echo $this->session->flashdata('successMessage');
                             <tr>
                                 <td>Not Selling</td>
                                 <td>Short Stock</td>
+                                <td>Out of stocks</td>
                             </tr>
                         </thead>
                         
@@ -83,6 +110,11 @@ echo $this->session->flashdata('successMessage');
                             <td style="font-size: 24px;padding: 15px">
                                 <a href="<?php echo base_url('diagnoses') ?>">
                                 <span style="color: #333" title="Number of products that stocks are below 15" data-toggle="tooltip"><?php echo $low_stocks ?></span> 
+                                </a>       
+                            </td>
+                            <td style="font-size: 24px;padding: 15px">
+                                <a href="<?php echo base_url('diagnoses') ?>">
+                                <span style="color: #333" title="Run out of stocks" data-toggle="tooltip"><?php echo $no_stocks ?></span> 
                                 </a>       
                             </td>
                         </tr>
@@ -152,11 +184,11 @@ echo $this->session->flashdata('successMessage');
                     label: 'Today ',
                     data: dataset1,
                     backgroundColor: [
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
+                    'rgba(37, 119, 181,0.8)',
+                    'rgba(37, 119, 181,0.8)',
+                    'rgba(37, 119, 181,0.8)',
+                    'rgba(37, 119, 181,0.8)',
+                    'rgba(37, 119, 181,0.8)',
                     ],
                     borderColor: [
                     'rgba(66,139,202,0.5)',
