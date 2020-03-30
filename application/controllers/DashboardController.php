@@ -1,31 +1,33 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH."controllers/AppController.php");
-
 class DashboardController extends AppController {
 
 	public function index() {
- 		 
+ 		
  		$this->load->model('sales_model');
  		$this->load->model('ExpensesModel');
 
- 		ini_set('display_errors', 'On');
+
  		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
 		$data['content'] = 'dashboard/index';
-		// $data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
-		// $data['yesterday'] = json_encode($this->line_chart($yesterday));
-		// $data['top_products'] = $this->top10_product();
-		// $data['not_selling'] = $this->not_selling_products()->num_rows();
-		// $data['low_stocks'] = count(low_stocks());
-		// $data['no_stocks'] = count(noStocks());
+		$data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
+		$data['yesterday'] = json_encode($this->line_chart($yesterday));
+		$data['top_products'] = $this->top10_product();
+		$data['not_selling'] = $this->not_selling_products()->num_rows();
+		$data['low_stocks'] = count(low_stocks());
+		$data['no_stocks'] = 1//count(noStocks());
+		$data['average_sales_per_day'] = $this->average_sales_per_day();
+		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
+		$data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
+		$data['expenses'] = number_format( number_format($this->ExpensesModel->total, 2) );
+		$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
 
+		$lastweek = date('Y-m-d', strtotime('-7 days'));
+		$today = date('Y-m-d');
 
-		// $data['average_sales_per_day'] = $this->average_sales_per_day();
-		// $data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
-		// $data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
-		// $data['expenses'] = number_format( number_format($this->ExpensesModel->total, 2) );
-		// $data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
- 
+		;
+
 		$this->load->view('master', $data);
 	}
 
@@ -90,8 +92,6 @@ class DashboardController extends AppController {
 	}
 
 	public function not_selling_products() {
-
-		$lastweek = date('Y-m-d', strtotime('-7 days')); 
 
 		$query = "SELECT items.id, items.barcode, items.name, prices.price, ordering_level.quantity
 						FROM items
