@@ -6,7 +6,7 @@ class DashboardController extends AppController {
 
 	public function dashboard() {
  		
- 		$this->load->model('sales_model');
+ 		$this->load->model('Sales_model');
 		$this->load->model('ExpensesModel');
 
  		$yesterday = date('Y-m-d', strtotime("-1 day"));
