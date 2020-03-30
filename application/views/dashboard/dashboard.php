@@ -8,7 +8,32 @@
 echo $this->session->flashdata('errorMessage');
 echo $this->session->flashdata('successMessage'); 
 ?>
-
+<div class="row">
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Orders</h3>
+            Today: <span class="result"><?php echo $orders ?></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Sales</h3>
+            <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $sales; ?></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Expenses</h3>
+            <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $expenses ?></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Revenue</h3>
+            <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $revenue ?></span>
+        </div>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-8">
