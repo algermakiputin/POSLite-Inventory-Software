@@ -21,7 +21,7 @@ echo $this->session->flashdata('successMessage');
         </div> 
     </div> 
 </div>
-<!-- <div class="col-md-4">
+<div class="col-md-4">
     <div class="row"> 
         <div class="col-md-12">
            <div class="panel panel-default">
@@ -105,7 +105,7 @@ echo $this->session->flashdata('successMessage');
             </div> 
         </div> 
     </div>
-</div> -->
+</div>
 </div>
 <br/>
 <script src="<?php echo base_url('assets/vendor/chart.min.js') ?>"></script>
