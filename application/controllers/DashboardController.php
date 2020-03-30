@@ -5,8 +5,8 @@ class DashboardController extends AppController {
 
 	public function index() {
  		
- 		// $this->load->model('sales_model');
- 		// $this->load->model('ExpensesModel');
+ 		$this->load->model('sales_model');
+ 		$this->load->model('ExpensesModel');
 
 
  		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
