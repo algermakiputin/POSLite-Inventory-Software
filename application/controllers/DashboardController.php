@@ -20,6 +20,7 @@ class DashboardController extends AppController {
 		$data['not_selling'] = $this->not_selling_products( $lastweek )->num_rows();
 		$data['low_stocks'] = count(low_stocks());
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
+		$data['no_stocks'] = count(noStocks());
 
 		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
 		$data['sales'] = number_format($this->SalesModel->get_sales(date('Y-m-d'))->total,2);

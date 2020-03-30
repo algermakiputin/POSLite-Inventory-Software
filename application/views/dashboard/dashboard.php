@@ -96,6 +96,7 @@ echo $this->session->flashdata('successMessage');
                             <tr>
                                 <td>Not Selling</td>
                                 <td>Short Stock</td>
+                                <td>Out of stocks</td>
                             </tr>
                         </thead>
                         
@@ -108,6 +109,11 @@ echo $this->session->flashdata('successMessage');
                             <td style="font-size: 24px;padding: 15px">
                                 <a href="<?php echo base_url('diagnoses') ?>">
                                 <span style="color: #333" title="Number of products that stocks are below 15" data-toggle="tooltip"><?php echo $low_stocks ?></span> 
+                                </a>       
+                            </td>
+                            <td style="font-size: 24px;padding: 15px">
+                                <a href="<?php echo base_url('diagnoses') ?>">
+                                <span style="color: #333" title="Run out of stocks" data-toggle="tooltip"><?php echo $no_stocks ?></span> 
                                 </a>       
                             </td>
                         </tr>
