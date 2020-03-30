@@ -87,8 +87,9 @@ class DashboardController extends AppController {
 
 	public function diagnoses() {
 
+		$lastweek = date('Y-m-d', strtotime('-7 days'));
 		$data['content'] = "dashboard/diagnoses";
-		$data['not_selling'] = $this->not_selling_products()->result();
+		$data['not_selling'] = $this->not_selling_products($lastweek)->result();
 		$data['out_of_stocks'] = noStocks();
 		$data['low_stocks'] = low_stocks();
 		$this->load->view('master', $data);
