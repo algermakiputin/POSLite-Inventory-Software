@@ -6,7 +6,7 @@ class DashboardController extends AppController {
 
 	public function dashboard() {
  		
- 		//$this->load->model('Sales_model');
+ 		$this->load->model('Sales_model');
 		$this->load->model('ExpensesModel');
 
  		$yesterday = date('Y-m-d', strtotime("-1 day"));
@@ -21,7 +21,7 @@ class DashboardController extends AppController {
 		$data['low_stocks'] = count(low_stocks());
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
 
-		// $data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
+		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
 		 
 		$this->load->view('master', $data);
 	}
