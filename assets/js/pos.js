@@ -23,6 +23,8 @@
   		$(this).find("input[type='radio']").prop('checked', true);
   	});
 
+
+
 	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
 	$(document).pos();
 	$(document).on('scan.pos.barcode', function(event){
@@ -154,6 +156,18 @@
 		insert_product(item_id, name, price, quantity);
 
 	})
+
+	$(document).on('keyup', function(e) {
+
+  		if (e.keyCode === 13) {
+
+  			if ($("#advance_pricing_modal").hasClass("in")) {
+
+  				$("#add-product").click();
+  				
+  			}
+  		}
+  	})
 
 
 
