@@ -8,7 +8,7 @@ class DashboardController extends AppController {
  		
  		echo "test";
  		$this->load->model('sales_model');
- 		//$this->load->model('ExpensesModel');
+ 		$this->load->model('ExpensesModel');
 
 
  		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
@@ -18,12 +18,12 @@ class DashboardController extends AppController {
 		$data['top_products'] = $this->top10_product();
 		$data['not_selling'] = $this->not_selling_products()->num_rows();
 		$data['low_stocks'] = count(low_stocks());
-		$data['no_stocks'] = 1;//count(noStocks());
+		$data['no_stocks'] = count(noStocks());
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
-		$data['orders'] = 0;//$this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
-		$data['sales'] = 0;//number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
-		$data['expenses'] = 0;//number_format( number_format($this->ExpensesModel->total, 2) );
-		$data['revenue'] = 0;//number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
+		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
+		$data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
+		$data['expenses'] = number_format( number_format($this->ExpensesModel->total, 2) );
+		$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
 
  
 
