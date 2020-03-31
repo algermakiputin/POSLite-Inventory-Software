@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Products
-            <span class="pull-right" style="font-size: 22px;margin-top: 10px;">Inventory Value: ₱<span id="total"><?php echo $total; ?></span></span>
+            
         </h1> 
     </div>
     <div class="col-md-12">
@@ -33,6 +33,9 @@
             </select>
         </div>
     </div> 
+    <div class="col-md-6">
+        <span class="pull-right" style="font-size: 22px;">Inventory Value: ₱<span id="total"><?php echo $total; ?></span></span>
+    </div>
 </div>
 <div class="row">  
 
