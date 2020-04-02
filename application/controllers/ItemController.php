@@ -158,6 +158,7 @@ class ItemController extends AppController {
 					->join('categories', 'categories.id = items.category_id', 'BOTH')
 					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
 					->join('ordering_level', 'ordering_level.item_id = items.id')
+					->order_by('items.id', 'DESC')
 					->like('categories.name', $filterCategory, "BOTH") 
 					->like('items.name', $search, "BOTH")
 					->like('supplier.name', $filterSupplier, "BOTH");
