@@ -56,8 +56,15 @@ html, body {
 .navbar-static-top {
   margin-bottom: 0;
   background-color: #333;
-  border-bottom: solid #ddd;
-  padding: 2px 0;
+  border-bottom: solid #ddd; 
+}
+
+.navbar-top-links li a {
+  padding: 17px 15px;
+}
+
+.navbar-header {
+  height: 53px;
 }
 
 .navbar-default .navbar-brand {
@@ -69,7 +76,7 @@ html, body {
 }
 
 .sidebar {
-  margin-top: 53px;
+  margin-top: 55px;
 }
 
 body {
