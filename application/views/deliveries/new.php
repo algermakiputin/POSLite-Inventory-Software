@@ -39,7 +39,7 @@
 									</div>
 									<div class="form-group">
 										<label>Delivery Date</label>
-										<input type="date" name="delivery_date" class="form-control">
+										<input type="text" autocomplete="delivery_date" autocomplete="off" placeholder="YYYY-mm-dd" name="delivery_date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
 									</div> 
 								</div>
 								<div class="col-md-9">
@@ -65,7 +65,7 @@
 											</td>
 											<td> 
 
-												<input type="date"  name="expiry_date[]" class="form-control" required="required"> 
+												<input type="text" placeholder="YYYY-mm-dd" name="expiry_date[]" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" required="required"> 
 											</td>
 											
 											<td>
@@ -149,6 +149,13 @@
 			})
 			rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
 			index++;
+
+			$('.date-range-filter').datepicker({
+					useCurrent : false,
+					todayHighlight: true,
+    				toggleActive: true,
+    				autoclose: true,
+				});
 
 		});
 
