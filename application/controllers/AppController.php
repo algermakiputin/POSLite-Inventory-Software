@@ -6,7 +6,50 @@ class AppController extends CI_Controller {
  
       parent::__construct();  
 
+      if ( $this->trial_days_remaining() > 14 ) {
 
+      	return redirect('trial/expired');
+      }
+    }
+
+    public function check_trial() {
+
+    	return $this->db->where('id', 1)->get('settings')->row();
+
+    }
+
+    public function start_trial_view() {
+ 
+    	$this->load->view('trial/index');
+    }
+
+    public function trial_days_remaining() {
+
+    	// check how many days trial left
+
+    	$today = strtotime(date('Y-m-d'));
+
+   
+    	$start = $this->db->where('id', 1)
+    				->get('settings')
+    				->row()
+    				->start;
+ 
+    	$days_left =  $today - $start;
+
+    
+    	return $days_left / ( 60 * 60 * 24);
+ 
+    }
+
+    public function start_trial() {
+
+    	$this->db->where('id', 1)
+    				->set(['start' => strtotime(date('Y-m-d'))])
+    				->update('settings');
+
+    	$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Your 14 days free trial has started! you can now start using and exploring POSLite awesome features.</div>');
+    	return redirect('login');
     }
 
     public function licenseControl () {

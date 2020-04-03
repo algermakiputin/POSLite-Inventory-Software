@@ -4,8 +4,8 @@ require_once(APPPATH."controllers/AppController.php");
 class DashboardController extends AppController {
 
 
-	public function dashboard() {
- 		
+	public function dashboard() { 
+ 
  		$this->load->model('SalesModel');
 		$this->load->model('ExpensesModel');
 

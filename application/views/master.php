@@ -12,8 +12,7 @@
 
 </head>
 
-<body>
-
+<body> 
         <div class="spinner-wrapper">
             <div class="loader"></div>
         </div>
@@ -49,8 +48,7 @@
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
-                </li>
-                
+                </li> 
                 <?php if (!SITE_LIVE) : ?>
                     <?php if ( $this->config->item('license') == "bronze" || $this->config->item('license') == "silver" ): ?>
                        <li>

@@ -75,6 +75,8 @@ $route['sales'] = 'SalesController/sales';
 $route['sales/report'] ='SalesController/reports';
 $route['sales/graph-filter'] = 'SalesController/graphFilter';
 
+$route['start-trial'] = "AppController/start_trial_view";
+
 $route['items'] = 'ItemController/items';
 $route['items/new'] = 'ItemController/new';
 $route['items/insert'] = 'ItemController/insert';
