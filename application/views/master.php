@@ -32,6 +32,9 @@
             <ul class="nav navbar-top-links navbar-right">
                
                 <!-- /.dropdown --> 
+                <li >
+                    <a href="#" onclick="event.preventDefault(); javascript:introJs().start()">Trial 14 Days Left</a>
+                </li>
                  <li >
                     <a href="#" onclick="event.preventDefault(); javascript:introJs().start()">Start Tour</a>
                 </li>
