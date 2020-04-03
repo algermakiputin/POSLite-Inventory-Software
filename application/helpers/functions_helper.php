@@ -12,6 +12,24 @@
 		return date('Y-m-d H:i:s');
 	}
 
+	function get_trial_days_remaning() {
+
+		$CI =& get_instance();
+
+		$today = strtotime(date('Y-m-d') . " +14 days");
+
+   
+    	$start = $CI->db->where('id', 1)
+    				->get('settings')
+    				->row()
+    				->start;
+ 
+    	$days_left =  $today - $start;
+
+    
+    	return $days_left / ( 60 * 60 * 24);
+	}
+
 	function homeDir()
 	{
 	    if(isset($_SERVER['HOME'])) {
@@ -114,7 +132,7 @@
 				'customers' => 5000000
 			];
 
-		$license = $CI->config->item('license');
+		$license = 'bronze';
 
 		$count = $CI->db->get($table)->num_rows();
 

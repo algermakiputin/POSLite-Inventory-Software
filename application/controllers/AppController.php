@@ -1,15 +1,17 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 class AppController extends CI_Controller {
 
 	public function __construct() {
  
       parent::__construct();  
 
-      if ( $this->trial_days_remaining() > 14 ) {
+      if ( $this->trial_days_remaining() >= 14 ) {
 
       	return redirect('trial/expired');
       }
+
     }
 
     public function check_trial() {
@@ -27,18 +29,7 @@ class AppController extends CI_Controller {
 
     	// check how many days trial left
 
-    	$today = strtotime(date('Y-m-d'));
-
-   
-    	$start = $this->db->where('id', 1)
-    				->get('settings')
-    				->row()
-    				->start;
- 
-    	$days_left =  $today - $start;
-
-    
-    	return $days_left / ( 60 * 60 * 24);
+    	return get_trial_days_remaning();
  
     }
 
@@ -53,6 +44,8 @@ class AppController extends CI_Controller {
     }
 
     public function licenseControl () {
+
+        return false;
     	  
     	if (!SITE_LIVE) {
     		if (!file_exists(homeDir() . '/profile.txt')) {

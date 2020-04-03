@@ -122,3 +122,5 @@ $route['activate'] = 'LicenseController/activate';
 $route['users'] = "UsersController/users";
 
 $route['login'] = 'AuthController/login';
+
+$route['trial/expired'] = "TrialController/trial_ended";

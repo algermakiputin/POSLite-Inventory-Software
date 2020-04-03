@@ -33,7 +33,7 @@
                
                 <!-- /.dropdown --> 
                 <li >
-                    <a href="#" onclick="event.preventDefault(); javascript:introJs().start()">Trial 14 Days Left</a>
+                    <a href="#" onclick="javascript:void(0)" class="bg-primary" style="font-weight: bold;color: #fff;">Trial <?php echo 14 -get_trial_days_remaning() ?> Days Left</a>
                 </li>
                  <li >
                     <a href="#" onclick="event.preventDefault(); javascript:introJs().start()">Start Tour</a>
