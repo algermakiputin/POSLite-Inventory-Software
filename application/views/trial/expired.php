@@ -14,7 +14,7 @@
 			<h1>Your trial has ended</h1>
 			<p class="lead">Your POSLite free trial is over, you can continue using POSLite by purchasing the full version.</p>
 			
-			<p>Price may vary depending on your requirements.</p>
+			<p>Price may vary accoring to your requirements.</p>
 			<a href="https://m.me/poslitesoftware" class="btn btn-primary btn-lg" style="border-radius: 0;">CONTACT US</a>
 		</div>
 	</div>

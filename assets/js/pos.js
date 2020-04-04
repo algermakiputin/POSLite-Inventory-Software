@@ -41,31 +41,39 @@
 					success : function(data) {
 						if (data) {
 							var result = JSON.parse(data);
-							var quantity = 1;
-						 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-						 	totalAmountDue += parseFloat(subtotal);
- 
-				  	 		var quantity = 1;
-						 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
-						 	totalAmountDue += parseFloat(result.subtotal);
-							$("#cart tbody").append(
-									'<tr>' +
-										'<input name="id" type="hidden" value="'+ result.id +'">' +
-										'<td>'+ result.name +'</td>' +
-										'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-										'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-										'<td>'+ result.price +'</td>' +
-							 			
-										'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
-									'</tr>'
-								);
-							recount();
-							$("payment").val('');
-							$("change").val(''); 
+							var name = result.name;
+							var id = result.id;
+							var price = result.price;
 
-							recount();
+							var advance_pricing = JSON.parse(result.advance_pricing);
+							var enable_ap = Object.keys(advance_pricing).length;
+
+							$("#product-name").text(name);
+							$("#item_id").val(id);
+
+
+							$("#advance_pricing_options tbody").empty(); 
+							$("#advance_pricing_options tbody").append("<tr>" +
+										"<td>Base Price</td>" +
+										"<td>"+price+"</td>" +
+										'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
+									"</tr>"
+									);
+
+							$.each(advance_pricing, function(key, value) {
+
+								$("#advance_pricing_options tbody").append("<tr>" +
+										"<td>"+value.label+"</td>" +
+										"<td>"+ currency + number_format(value.price) +".00</td>" +
+										'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'.00" class="radio"></td>' +
+									"</tr>"
+									);			
+							});
+				 	 
+							$("#advance_pricing_modal").modal('toggle');  
 							$("payment").val('');
 							$("change").val('');
+		 
 						}else 
 							alert('No item found in the database');
 					 

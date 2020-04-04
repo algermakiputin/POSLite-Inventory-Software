@@ -32,7 +32,8 @@ class ItemController extends AppController {
 					'name' => $item->name,
 					'price' => '₱' . $price,
 					'quantity' => $quantity,
-					'id' => $item->id
+					'id' => $item->id,
+					'advance_pricing' => json_encode($this->db->where('item_id', $item->id)->get('prices')->result())
 				]) ;
 		} 
 		return;

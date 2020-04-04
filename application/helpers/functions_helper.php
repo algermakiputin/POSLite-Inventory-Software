@@ -16,7 +16,7 @@
 
 		$CI =& get_instance();
 
-		$today = strtotime(date('Y-m-d') . " +14 days");
+		$today = strtotime(date('Y-m-d'));
 
    
     	$start = $CI->db->where('id', 1)

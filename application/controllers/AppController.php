@@ -43,9 +43,9 @@ class AppController extends CI_Controller {
     	return redirect('login');
     }
 
-    public function licenseControl () {
+    public function licenseControl() {
 
-        return false;
+      return false;
     	  
     	if (!SITE_LIVE) {
     		if (!file_exists(homeDir() . '/profile.txt')) {
