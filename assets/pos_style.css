@@ -23,6 +23,11 @@ body {
 	margin-bottom: 13px;
 }
 
+#advance_pricing_options tbody tr:hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+
 .remove {
 	font-size: 13px;
 }
