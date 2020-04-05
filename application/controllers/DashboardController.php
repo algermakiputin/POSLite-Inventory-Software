@@ -1,8 +1,18 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH."controllers/AppController.php");
-class DashboardController extends AppController {
 
+class DashboardController extends AppController {
+ 	
+ 	public function __construct() {
+
+ 		parent::__construct();
+
+ 		if (!$this->session->userdata('log_in')) {
+			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
+			redirect(base_url('login'));
+		}
+ 	}
 
 	public function dashboard() {
  		
