@@ -56,7 +56,8 @@
                     <th>&nbsp;</th>
                     <th>Item Name</th>
                     <th>Supplier</th>
-                    <th>Category</th>  
+                    <th>Category</th> 
+                    <th>Capital</th> 
                     <th>Price</th>
                     <th>Stocks</th>
                     <th>Total</th> 
