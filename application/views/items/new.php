@@ -42,8 +42,12 @@
 								</select>
 							</div> 
 							<div class="form-group">  
-								<label>Base Price:</label>
-								<input type="text" required="required" placeholder="Base Price" name="price" class="form-control" max="500000" id="selling-price">
+								<label>Capital Price:</label>
+								<input type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" id="selling-price">
+							</div>
+							<div class="form-group">  
+								<label>Retail Price:</label>
+								<input type="text" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price">
 							</div>
 
 							<div class="form-group advance-pricing-wrapper">

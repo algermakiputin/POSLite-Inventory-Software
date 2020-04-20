@@ -211,6 +211,7 @@ class SalesController extends CI_Controller {
 				'profit' => $transactionProfit,
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(),
+				'capital' => $sale['capital']
 			];
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
@@ -244,6 +245,8 @@ class SalesController extends CI_Controller {
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
+		$gross = 0;
+		$goodsCost = 0;
 		$expenses = $this->db->select("SUM(cost) as total")
 							->where('date >=', $from)
 							->where('date <=', $to)
@@ -257,35 +260,47 @@ class SalesController extends CI_Controller {
 		foreach ($sales as $sale) {
 			$sales_description = $this->db->where('sales_id', $sale->id)->get('sales_description')->result();
 			$sub_total = 0;
+
 			foreach ($sales_description as $desc) {
-		 		$item = $this->db->where('id', $desc->item_id)->get('items')->row();
+		 	 
 		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
 		 		$staff = $user ? $user->username : 'Not found';
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
-				$saleProfit = (($desc->price - $desc->profit) * $desc->quantity) - $desc->discount;
+				$saleProfit = $desc->price - $desc->capital * $desc->quantity;
 				$transactionProfit += $saleProfit;
 				$datasets[] = [ 
 					date('Y-m-d', strtotime($sale->date_time)),  
 					$staff,
 					$desc->name,
 					$desc->quantity,
-					'₱' . number_format((float)$desc->price),
-					'₱' . number_format($desc->discount),
-					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount) 
+					'₱' . number_format($desc->capital,2),
+					'₱' . number_format($desc->price,2),
+					'₱' . number_format($desc->discount,2),
+					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount, 2),
+					'₱' . number_format($saleProfit, 2)
 				];
+
+				$goodsCost += ($desc->capital * $desc->quantity);
 			}
-			$totalSales += $sub_total;
+
+			$totalSales += $sub_total; 
+			
 		}
+
+		$gross = $totalSales - $goodsCost;
+
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
 				'recordsTotal' => $count,
 				'recordsFiltered' => $count,
 				'data' => $datasets,
-				'total_sales' => number_format($totalSales),
+				'total_sales' => number_format($totalSales,2),
 				'from' => $from,
 				'to' => $to,
-				'profit' => number_format($transactionProfit), 
-				'expenses' => number_format($totalExpenses)
+				'profit' => number_format($transactionProfit,2), 
+				'expenses' => number_format($totalExpenses,2),
+				'gross' => number_format($gross,2),
+				'goodsCost' => number_format($goodsCost, 2)
 			]);
 
 	}

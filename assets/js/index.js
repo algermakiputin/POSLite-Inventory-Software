@@ -101,7 +101,7 @@ $(document).ready(function() {
 							title : 'Inventory', 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6 ]
+								columns: [ 1, 2, 3,4,5,6,7 ]
 							},
 						},
 						{
@@ -110,7 +110,7 @@ $(document).ready(function() {
 							title : 'Inventory Report', 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6 ]
+								columns: [ 1, 2, 3,4,5,6,7 ]
 							},
 						},
 						{
@@ -119,7 +119,7 @@ $(document).ready(function() {
 							title : 'Inventory', 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6 ]
+								columns: [ 1, 2, 3,4,5,6,7 ]
 							},
 
 						},
@@ -249,8 +249,10 @@ $(document).ready(function() {
 						var data = setting.json; 
 						$("#total-sales").text('₱' + data.total_sales);
 						$("#total-profit").text('₱' + data.profit);
+						$("#total-gross").text('₱' + data.gross);
 						$("#total-lost").text('₱' + data.lost);
 						$("#total-expense").text('₱' + data.expenses);
+						$("#total-goods-cost").text('₱' + data.goodsCost);
 					}
 				});
 			}
