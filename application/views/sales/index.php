@@ -39,20 +39,8 @@
 
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-				<div id="widgets">
-
-					<div class="col-md-3">
-						<div class="sale-widget text-center">
-							From <i class="fa fa-calendar" data-toggle="tooltip" title="Starting date of sales report" style="font-size: 16px;"></i><br>
-							<b><span id="filter-from"><?php echo date('Y-m-d') ?></span></b>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="sale-widget text-center">
-							To <i class="fa fa-calendar" data-toggle="tooltip" title="Ending date of sales report" style="font-size: 16px;"></i><br>
-							<b><span id="filter-to"><?php echo date('Y-m-d') ?></span></b>
-						</div>
-					</div>
+				<div id="widgets"> 
+					 
 					
 					<div class="col-md-3">
 						<div class="sale-widget text-center">
@@ -67,6 +55,20 @@
 							<b><span id="total-sales"></span></b>
 						</div>
 					</div>
+
+					<div class="col-md-3">
+						<div class="sale-widget text-center">
+							Cost of Goods Sold <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
+							<b><span id="total-goods-cost"></span></b>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="sale-widget text-center">
+							Gross Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
+							<b><span id="total-gross"></span></b>
+						</div>
+					</div> 
 					
 				</div>
 
@@ -94,9 +96,11 @@
 								<th >Staff</th>
 								<th >Item Name</th> 
 								<th >Quantity</th>
+								<th >Capital</th>
 								<th >Price</th>
-								<th>Discount</th>
+								<th>Discount</th> 
 								<th >Total</th>   
+								<th> Transaction Profit</th>
 							</tr>
 						</thead>
 						<tbody></tbody>

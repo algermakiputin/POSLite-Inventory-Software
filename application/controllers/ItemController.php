@@ -32,7 +32,8 @@ class ItemController extends AppController {
 					'name' => $item->name,
 					'price' => '₱' . $price,
 					'quantity' => $quantity,
-					'id' => $item->id
+					'id' => $item->id,
+					'capital' => $item->capital
 				]) ;
 		} 
 		return;
@@ -134,6 +135,7 @@ class ItemController extends AppController {
 				$item->name,
 				$item->supplier,
 				$this->categories_model->getName($item->category_id), 
+				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining . ' pcs',
 				currency() . number_format($itemPrice * $stocksRemaining,2), 
@@ -194,7 +196,8 @@ class ItemController extends AppController {
 
 
 			return [ 
-				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'">',
+				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'"> ' . 
+				'<input type="hidden" name="capital" value="'.$item->capital.'">',
 				ucfirst($item->description), 
 				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'>"
 			];
@@ -213,8 +216,9 @@ class ItemController extends AppController {
 	public function dataFilter($search, $start, $limit) {
 	 
 		return $this->db->where('status', 1)
+							->order_by('id', "DESC")
 							->like('name',$search, 'BOTH')
-							->get('items', $limit, $start)
+							->get('items', $limit, $start) 
 							->result();
 	 
 	}
@@ -273,7 +277,8 @@ class ItemController extends AppController {
 				'supplier_id' => $supplier_id,
 				'status' => 1,
 				'barcode' => $barcode,
-				'price'	=> $price
+				'price'	=> $price,
+				'capital' => $capital
 			);
 		
 		if ($productImage) {
@@ -428,7 +433,8 @@ class ItemController extends AppController {
 						$price_id, 
 						$upload['upload_data']['file_name'], 
 						$supplier_id, $this->input->post('barcode'),
-						$updated_price
+						$updated_price,
+						$capital
 					);
 
 		$this->PriceModel->insert($price_label, $advance_price, $id);

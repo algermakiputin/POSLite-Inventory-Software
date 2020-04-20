@@ -41,7 +41,11 @@
 								</select>
 							</div> 
 							<div class="form-group"> 
-								<label>Base Price:</label>
+								<label>Capital Price:</label>
+								<input value="<?php echo $item->capital ?>" type="text" name="capital" class="form-control" required="required" id="capital-price">
+							</div> 
+							<div class="form-group"> 
+								<label>Retail Price:</label>
 								<input value="<?php echo $item->price ?>" type="text" name="price" class="form-control" required="required" id="selling-price">
 							</div>  
 

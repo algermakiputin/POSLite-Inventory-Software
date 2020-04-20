@@ -253,6 +253,7 @@
 
 		        <form class="form-inline" id="add-to-cart-form">
 					  <div class="form-group">
+					  	<input type="hidden" name="capital" id="capital" value="0">
 					  	<input type="hidden" name="item_id" id="item_id">
 					    <label for="quantity-enter">Enter Quantity &nbsp;</label>
 					    <input style="border-radius: 3px;" name="quantity-enter" onfocus="this.value=''" type="number" min="1" value="1" type="number" id="quantity" class="form-control mx-sm-3" aria-describedby="quantity">
