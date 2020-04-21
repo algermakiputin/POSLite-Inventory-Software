@@ -52,7 +52,7 @@
 									<tr> 
 										<td>Item Name</td>
 										<td>Description</td> 
-										<td>Base Price</td>
+										<td>Price</td>
 									</tr>
 								</thead>
 								<tbody> 
