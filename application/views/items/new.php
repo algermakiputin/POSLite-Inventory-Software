@@ -54,7 +54,8 @@
 								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
 							</div>
 							<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="collapse">
-								<legend>Advance Pricing</legend>
+								<legend>Advance Pricing </legend>
+								<p>Enables you to set different prices for a product. Ex wholeslage price or different prices for every group of customers</p>
 								<table class="table table-bordered table-striped" id="advance-pricing-tbl">
 									<thead>
 										<tr>

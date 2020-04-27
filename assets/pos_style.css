@@ -3,9 +3,23 @@
 body {
 	margin:0;
 	overflow: hidden; 
-	font-size: 1.54em;
+	font-size: 1.71em;
 	font-family: "Roboto", Arial, serif, sans-serif !important;
 }
+
+.navbar-nav > li > a {
+	border:solid 1px #555;
+	border-radius: 5px;
+	margin-left: 5px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+	background-color: #444;
+	color: #fff;
+}
+
+.navbar-nav > li > a:hover {
+	color: #000;
+} 
 
 .navbar {
 	background-color: #333;

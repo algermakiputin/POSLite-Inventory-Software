@@ -13,7 +13,8 @@ class Pos_con extends AppController {
 		}
 	}
 	public function pos(){
-		 
+		
+ 
 		$this->load->model('ItemModel'); 
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
