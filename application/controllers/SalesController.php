@@ -191,12 +191,18 @@ class SalesController extends CI_Controller {
 		$this->load->model("PriceModel");
 		$this->db->trans_begin();
 
+		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
+		$transaction_number = "TRN" . sprintf("%04s", ((int)$last_sales_id + 1 )  ); 
+
 		$this->db->insert('sales',[
 				'id' => null ,
 				'date_time' => get_date_time(),
-				'user_id' => $this->session->userdata('id')
+				'user_id' => $this->session->userdata('id'),
+				'transaction_number' => $transaction_number
 			]);
 		$sales_id = $this->db->insert_id();
+
+
 		$sales = $this->security->xss_clean($sales);
 
 		foreach ($sales as $sale) {
@@ -211,7 +217,8 @@ class SalesController extends CI_Controller {
 				'profit' => $transactionProfit,
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(),
-				'capital' => $sale['capital']
+				'capital' => $sale['capital'],
+				
 			];
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
@@ -229,7 +236,7 @@ class SalesController extends CI_Controller {
 		}
 		 
 		$this->db->trans_commit(); 
-		echo $sales_id;
+		echo $transaction_number;
 		return;
 	}
 
@@ -339,6 +346,32 @@ class SalesController extends CI_Controller {
 		 
 	}
 
+	public function find() {
+
+		$transaction_number = $this->input->post('transaction_number');
+ 
+
+		$sales = $this->db->where('transaction_number', $transaction_number)
+								->get('sales')
+								->row();
+ 
+
+		if (!$sales) {
+ 			echo 0;
+			return false;
+		}
+
+
+		$sales_description = $this->db->where('sales_id', $sales->id)
+												->get('sales_description')
+												->result();
+		 
+		echo json_encode([
+			'sales' => $sales,
+			'orderline' => $sales_description
+		]);
+	}
+
 	public function details() {
 		$id = $this->input->post('id');
 		$datasets = [];
@@ -357,6 +390,60 @@ class SalesController extends CI_Controller {
 		}
 		echo json_encode($datasets);
 		return;
+	}
+
+
+	/*
+		Get daily transactions for logged in user
+	*/
+	public function get_daily_transactions() {
+
+		$date = date('Y-m-d');
+		$user_id = $this->session->userdata('id');
+
+		$datasets = [];
+
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+
+		$sales = $this->db->select("sales.*, SUM(sales_description.price * sales_description.quantity) as total")
+								->from('sales')
+								->join('sales_description', 'sales_description.sales_id = sales.id')
+								->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") =', $date)
+								->where('sales.user_id', $user_id)
+								->like("sales.transaction_number", $search, "BOTH")
+								->group_by('sales.id')
+								->order_by('id', 'DESC')
+								->limit($limit,$start)
+								->get();
+
+		
+		$count = $sales->num_rows();
+
+		$sales = $sales->result();
+
+
+		foreach ($sales as $sale) {
+
+			$datasets[] = [
+					date('Y-m-d h:i:s A', strtotime($sale->date_time)),
+					$sale->transaction_number, 
+					$this->session->userdata('username'),
+					currency() . number_format($total->total, 2),
+					"<button class='btn btn-sm btn-primary edit-transaction' data-id='". $sale->id ."'>Edit</button>"
+				];
+		}
+
+
+
+		echo json_encode([
+				'draw' => $this->input->post('draw'),
+				'recordsTotal' => $count,
+				'recordsFiltered' => $count,
+				'data' => $datasets, 
+			]);
+
 	}
 }
 ?>

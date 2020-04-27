@@ -6,162 +6,377 @@
 	var totalAmountDue = 0;
 	var totalDiscount = 0;
 	var transactionComplete = false;
-	var currency = '₱';
+	var currency = '₱'; 
+ 	var data = {};
+	data[csrfName] = csrfHash;
+
+	(function() {
+
+		var cart = {
+
+			init: function() {
+				this.loadProducts();
+				this.selectProduct();
+				this.orders();
+			},
+
+			loadProducts: function() {
+
+				var item_table = $("#item-table").DataTable({
+					processing : true, 
+					serverSide : true,
+					 "bPaginate": true,
+					pagin:true,
+					ajax : {
+						url : base_url + 'items/data',
+						data : data,
+						type : 'POST'
+					},
+				});
+			},
+			selectProduct: function() {
+
+				$("#item-table").on('click', 'tbody tr', function(event) {
+					var id = $(this).find('input[name="item-id"]').val();
+					var name = $(this).find('td').eq(0).text(); 
+					var price = $(this).find('td').eq(2).text();
+					var description = $(this).find('td').eq(1).text();
+					var pricing = $(this).find('input[name="advance_pricing"]').val();
+					var capital = $(this).find('input[name="capital"]').val();
+				 	 
+			 		if (itemExist(id) == false) {
+				 		
+			 			var advance_pricing = JSON.parse(pricing);
+						var enable_ap = Object.keys(advance_pricing).length;
+
+						$("#product-name").text(name);
+						$("#item_id").val(id);
+						$("#capital").val(capital);
 
 
-	var dHeight = parseInt($(document).height());
+						$("#advance_pricing_options tbody").empty(); 
+						$("#advance_pricing_options tbody").append("<tr>" +
+									"<td>SRP</td>" +
+									"<td>"+price+"</td>" +
+									'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
+								"</tr>"
+								);
+
+						$.each(advance_pricing, function(key, value) {
+
+							$("#advance_pricing_options tbody").append("<tr>" +
+									"<td>"+value.label+"</td>" +
+									"<td>"+ currency + number_format(value.price) +".00</td>" +
+									'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'.00" class="radio"></td>' +
+								"</tr>"
+								);			
+						});
+			 	
+						
+						// var price_options = JSON.parse(pricing);
+						// console.log(price_options);
+						$("#advance_pricing_modal").modal('toggle'); 
+						
+						$("payment").val('');
+						$("change").val('');
+				 	} 
+
+				 	recount();
+				});
+			},
+			orders: function() {
+
+				var orders_table = $("#transaction-history-tbl").DataTable({
+					processing : true,
+					serverSide : true,
+					ajax: {
+						url: base_url + "SalesController/get_daily_transactions",
+						data: data,
+						type: 'POST'
+					}
+
+				});
+
+			}
+		}
+
+		var general = {
+
+			init: function() {
+
+				var dHeight = parseInt($(document).height());
  	
-	dHeight = dHeight - 60;
-	$(".header .box").css('height', dHeight + 'px');
-	$(".header .box").css('overflow-y', 'auto');
-	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
-	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
+				dHeight = dHeight - 60;
+				$(".header .box").css('height', dHeight + 'px');
+				$(".header .box").css('overflow-y', 'auto');
+				$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
+				$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
 
 
-	$("body").on('click', '#advance_pricing_options tbody tr', function() {
-  
-  		$(this).find("input[type='radio']").prop('checked', true);
-  	});
+				$("body").on('click', '#advance_pricing_options tbody tr', function() {
+			  
+			  		$(this).find("input[type='radio']").prop('checked', true);
+			  	});
 
 
-
-	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
-	$(document).pos();
-	$(document).on('scan.pos.barcode', function(event){
-		if (license === "silver" || license === "gold") {
-			if (event.code.length > 5) {
-				data = {};
-				data[csrfName] = csrfHash;
-				data['code'] = event.code;
+			  	$(document).on('keyup', function(e) {
 			
-				$.ajax({
-					type : 'POST',
-					url : base_url + 'items/find',
-					data : data,
-					success : function(data) {
-						if (data) {
+			  		if (e.keyCode === 13) {
+
+			  			if ($("#advance_pricing_modal").hasClass("in")) {
+
+			  				$("#add-product").click();
+			  				
+			  			}
+			  		}
+
+			  		if (e.keyCode == 119) {
+
+			  			$("#transactions-modal").modal("toggle");
+			  		} 
+
+			  		if (e.keyCode == 118) {
+
+			  			$("#return-modal").modal("toggle");
+			  		}
+			  	});
+
+			}
+		}
+
+		var scanner = {
+
+			init: function() {
+			 
+				$(document).pos();
+				$(document).on('scan.pos.barcode', function(event){
+					if (license === "silver" || license === "gold") {
+						if (event.code.length > 5) {
+							data = {};
+							data[csrfName] = csrfHash;
+							data['code'] = event.code;
+						
+							$.ajax({
+								type : 'POST',
+								url : base_url + 'items/find',
+								data : data,
+								success : function(data) {
+									if (data) {
+
+										let result = JSON.parse(data);
+										if ( itemExist(result.id))
+											return false;
+
+										let id = result.id;
+										let name  = result.name
+										let quantity = 1;
+										let capital = result.capital;
+										let price = result.price;
+									 	let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+									 	totalAmountDue += parseFloat(subtotal);
+			 
+							  	 	 	
+							  	 	 	let advance_pricing = result.advance_pricing;
+										let enable_ap = Object.keys(advance_pricing).length;
+
+										$("#product-name").text(name);
+										$("#item_id").val(id);
+										$("#capital").val(capital);
+
+
+										$("#advance_pricing_options tbody").empty(); 
+										$("#advance_pricing_options tbody").append("<tr>" +
+													"<td>SRP</td>" +
+													"<td>"+price+"</td>" +
+													'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
+												"</tr>"
+												);
+
+										$.each(advance_pricing, function(key, value) {
+
+											$("#advance_pricing_options tbody").append("<tr>" +
+													"<td>"+value.label+"</td>" +
+													"<td>"+ currency + number_format(value.price) +".00</td>" +
+													'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'.00" class="radio"></td>' +
+												"</tr>"
+												);			
+										});
+							 	 
+										// var price_options = JSON.parse(pricing);
+										// console.log(price_options);
+										$("#advance_pricing_modal").modal('toggle'); 
+										recount();
+										$("payment").val('');
+										$("change").val(''); 
+
+										recount();
+										$("payment").val('');
+										$("change").val('');
+									}else 
+										alert('No item found in the database');
+								 
+								}
+							})
+						}
+					} else {
+						alert("Your license does not support Barcode Feature, Upgrade Now!");
+					}
+				}); 
+			}
+		}
+
+		var returns = {
+
+			init: function() {
+
+				this.return_validation_qty();
+				this.find_order();
+				this.process_return();
+
+			},
+			find_order: function() {
+				$("#return-btn").click(function(e) {
+
+					let transaction_number = $("#transaction_number").val();
+					let data = {};
+					data[csrfName] = csrfHash;
+					data['transaction_number'] = transaction_number;
+					$.ajax({
+						type : "POST",
+						url: base_url + '/SalesController/find',
+						data: data,
+						success: function(data) {
+
+							if (data == 0) {
+
+								return alert("No order found");
+							}
 
 							let result = JSON.parse(data);
-							if ( itemExist(result.id))
-								return false;
+							let table = $("#orderline tbody");
+							table.empty();
 
-							let id = result.id;
-							let name  = result.name
-							let quantity = 1;
-							let capital = result.capital;
-							let price = result.price;
-						 	let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-						 	totalAmountDue += parseFloat(subtotal);
- 
-				  	 	 	
-				  	 	 	let advance_pricing = result.advance_pricing;
-							let enable_ap = Object.keys(advance_pricing).length;
+							$("#orderline").fadeIn();
 
-							$("#product-name").text(name);
-							$("#item_id").val(id);
-							$("#capital").val(capital);
+							$("#label-transaction-number").text(result.sales.transaction_number);
+							$("#label-date").text(result.sales.date_time);
 
 
-							$("#advance_pricing_options tbody").empty(); 
-							$("#advance_pricing_options tbody").append("<tr>" +
-										"<td>SRP</td>" +
-										"<td>"+price+"</td>" +
-										'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
-									"</tr>"
-									);
-
-							$.each(advance_pricing, function(key, value) {
-
-								$("#advance_pricing_options tbody").append("<tr>" +
-										"<td>"+value.label+"</td>" +
-										"<td>"+ currency + number_format(value.price) +".00</td>" +
-										'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'.00" class="radio"></td>' +
-									"</tr>"
-									);			
+							$.each(result.orderline, function(key, value) {
+						 
+								table.append('<tr data-item="'+value.item_id+'" data-orderline="'+value.id+'">'+ 
+									'<td width="25%">'+value.name+'</td>' +
+									'<td width="15%">'+value.quantity+'</td>' +
+									'<td width="20%">' + 
+										'<select class="form-control" name="condition[]">' +
+											'<option value="good">Good</option>' +
+											'<option value="damaged">Damaged</option>' +
+										'</select>' +
+									'</td>' +
+									'<td width="30%">' + 
+										'<input type="text" placeholder="Leave blank if not returned" class="form-control return_quantity" name="return_quantity[]" >' +
+									'</td>' +
+								'</tr>'); 
 							});
-				 	 
-							// var price_options = JSON.parse(pricing);
-							// console.log(price_options);
-							$("#advance_pricing_modal").modal('toggle'); 
-							recount();
-							$("payment").val('');
-							$("change").val(''); 
+ 
 
-							recount();
-							$("payment").val('');
-							$("change").val('');
-						}else 
-							alert('No item found in the database');
-					 
-					}
+						},
+						error: function(error) {
+
+							alert("Opps something went wrong please try agian later");
+						}
+
+					});
 				})
+			},
+			return_validation_qty: function() {
+
+				$("body").on("keyup", '.return_quantity', function(e) {
+
+					var row = $(this).parents('tr');
+					var qty = parseInt(row.find('td').eq(1).text());
+					let return_qty = parseInt($(this).val());
+
+					if (return_qty > qty) {
+
+						$(this).val('');
+						alert("Return quantity must not be greather than quantity ordered");
+						
+					}
+				});
+			},
+			process_return: function() {
+ 
+				$("#submit-return").click(function(e) { 
+
+					let rows = $("#orderline tbody tr");
+					var dataset = {};
+					dataset[csrfName] = csrfHash;
+					dataset['data'] = [];
+ 					
+ 					$.each(rows, function(key, value) {
+ 			 			
+ 			 			console.log(value)
+ 						let val = $(value); 
+ 						let item_id = val.data("item");
+ 						let orderline_id = val.data('orderline');
+ 						let return_qty = val.find("td").eq(3).find("input").val();
+ 						let condition = val.find("select option:selected").val();
+ 						let product_name = val.find('td').eq(0).text();
+
+ 						if (!return_qty) {
+ 							return;
+ 						}
+
+ 						dataset['data'].push({
+ 							item_id: item_id,
+ 							orderline_id: orderline_id,
+ 							return_qty: return_qty,
+ 							condition: condition,
+ 							name: product_name
+ 						});
+
+ 					});
+
+ 					console.log(dataset);
+
+ 					$.ajax({
+ 						type: 'POST',
+ 						url: base_url + 'ReturnsController/insert',
+ 						data: dataset,
+ 						success: function(data) {
+
+ 							if (data == 1) {
+
+ 								alert(0)
+ 							}else {
+
+ 								alert("Opps something went wrong please try agian...");
+ 							}
+ 						},
+ 						error: function(error) {
+ 							alert("Opps someting went wrong please try again");
+ 						}
+ 					})
+				});
+				
+
 			}
-		} else {
-			alert("Your license does not support Barcode Feature, Upgrade Now!");
-		}
-	}); 
-	
-	data = {};
-	data[csrfName] = csrfHash;
-	var item_table = $("#item-table").DataTable({
-		processing : true, 
-		serverSide : true,
-		 "bPaginate": true,
-		pagin:true,
-		ajax : {
-			url : base_url + 'items/data',
-			data : data,
-			type : 'POST'
-		},
+		} 
+
+		general.init();
+		scanner.init();
+		cart.init();
+		returns.init(); 
+
+	})();
+
+
+	$("#open-transactions").click(function(e) {
+
+		$("#transactions-modal").modal("toggle");
 	});
 
-	$("#item-table").on('click', 'tbody tr', function(event) {
-		var id = $(this).find('input[name="item-id"]').val();
-		var name = $(this).find('td').eq(0).text(); 
-		var price = $(this).find('td').eq(2).text();
-		var description = $(this).find('td').eq(1).text();
-		var pricing = $(this).find('input[name="advance_pricing"]').val();
-		var capital = $(this).find('input[name="capital"]').val();
-	 	 
- 		if (itemExist(id) == false) {
-	 		
- 			var advance_pricing = JSON.parse(pricing);
-			var enable_ap = Object.keys(advance_pricing).length;
-
-			$("#product-name").text(name);
-			$("#item_id").val(id);
-			$("#capital").val(capital);
-
-
-			$("#advance_pricing_options tbody").empty(); 
-			$("#advance_pricing_options tbody").append("<tr>" +
-						"<td>SRP</td>" +
-						"<td>"+price+"</td>" +
-						'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
-					"</tr>"
-					);
-
-			$.each(advance_pricing, function(key, value) {
-
-				$("#advance_pricing_options tbody").append("<tr>" +
-						"<td>"+value.label+"</td>" +
-						"<td>"+ currency + number_format(value.price) +".00</td>" +
-						'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'.00" class="radio"></td>' +
-					"</tr>"
-					);			
-			});
- 	
-			
-			// var price_options = JSON.parse(pricing);
-			// console.log(price_options);
-			$("#advance_pricing_modal").modal('toggle'); 
-			
-			$("payment").val('');
-			$("change").val('');
-	 	} 
-
-	 	recount();
-	});
 
 	$('#advance_pricing_modal').on('hidden.bs.modal', function () {
 	  	$("#quantity").val(1);
@@ -183,21 +398,6 @@
 		insert_product(item_id, name, price, quantity, capital);
 
 	})
-
-	$(document).on('keyup', function(e) {
-
-  		if (e.keyCode === 13) {
-
-  			if ($("#advance_pricing_modal").hasClass("in")) {
-
-  				$("#add-product").click();
-  				
-  			}
-  		}
-  	})
-
-
-
 	function insert_product(id, name, price, quantity, capital) {
  	
  		var sub = remove_comma(price.substring(1)) * quantity;
@@ -341,7 +541,6 @@
  		}
  		
  		return alert('Please add some items');
- 		
 		
 	})
 
@@ -432,15 +631,12 @@
 		if (!isNaN(quantity) && quantity != 0 || $(this).val() == "") {
 			var row = $("#item-table").find('td').text() == itemID;
 
-			 
 			var row = $(this).parents("tr");
 			var priceCol = row.find('td').eq(2);
 			var price = priceCol.text().substring(1);
 			var subtotal = parseInt(quantity) * parseFloat(price);
 			calculateRemainingStocks(remaining,itemID);
 			return recount();
-		 
-			
 		 
 		}
 
