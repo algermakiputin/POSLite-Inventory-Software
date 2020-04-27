@@ -60,13 +60,13 @@ class AuthController extends AppController {
 			
 			if ($verifyPassword) {
 				$userdata = array( 
-					'id' => "$verify_login->id",
-					'username' => "$verify_login->username",
+					'id' => $verify_login->id,
+					'username' => $verify_login->username,
 					'log_in' => true,
-					'account_type' => "$verify_login->account_type"
+					'account_type' => $verify_login->account_type
 					);
 				$this->db->insert('history', [
-						'user_id' => $userdata['id'],
+						'user_id' => $verify_login->id,
 						'action' => 'Log in',
 					]);
 				$this->session->set_userdata($userdata);
