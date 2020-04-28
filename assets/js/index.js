@@ -212,7 +212,7 @@ $(document).ready(function() {
 					processing : true,
 					bsearchable : true,
 					paging : false,
-					dom : 'lrtip',
+					dom : 'Blrtip',
 					ajax : {
 						url : base_url + 'sales/report',
 						type : 'POST',
@@ -223,6 +223,56 @@ $(document).ready(function() {
 						visible: hide ,
 						searchable:hide
 					} ],
+					buttons: [
+						{
+							extend: 'copyHtml5',
+							filename : 'Sales Report',
+							title : 'Sales Report', 
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0,1, 2, 3,4,5,6,7,8,9 ]
+							},
+						},
+						{
+							extend: 'excelHtml5',
+							filename : 'Sales Report',
+							title : function() {
+								return $("#min-date").val() + " - " + $("#max-date").val() + " Sales Report";
+							}, 
+							messageTop: function() {
+								return "TOTAL SALES: " + $("#total-sales").text();
+							},
+							messageBottom: function() {
+
+								return "GROSS PROFIT: " + $("#total-gross").text()
+
+							},
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0,1, 2, 3,4,5,6,7,8,9 ]
+							},
+						},
+						{
+							extend: 'pdfHtml5',
+							filename : 'Sales Report',
+							title : function() {
+								return $("#min-date").val() + " - " + $("#max-date").val() + " Sales Report";
+							}, 
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0,1, 2, 3,4,5,6,7,8,9 ]
+							},
+							messageTop: function() {
+								return "TOTAL SALES: " + $("#total-sales").text();
+							},
+							messageBottom: function() {
+
+								return "GROSS PROFIT: " + $("#total-gross").text()
+
+							}
+
+						},
+					],
 					initComplete : function(settings, json) {
 						
 						$("#total-sales").text('₱' + json.total_sales);
