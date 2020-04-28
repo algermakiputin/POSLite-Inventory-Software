@@ -6,10 +6,13 @@
 
 html, body {
   height: 99%;
-  width: 100%;
+  width: 100%; 
 
 }
 
+#page-wrapper {
+  font-size: 1.1em;
+}
 
 #diagnoses_tab .tab-pane {
 

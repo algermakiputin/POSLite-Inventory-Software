@@ -76,7 +76,7 @@
 									<th width="15%">Quantity</th>
 									<th width="15%">Discount</th>
 									<th width="15%">Price</th>
-									<th width="15%">Sub Total</th>
+									<th width="15%">Sub</th>
 									<th width="5%"></th>	
 								</tr>
 							</thead>
@@ -87,7 +87,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 15px 25px;">
+				<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 0 25px 15px 25px;">
 					<div>Total Discount: <span id="amount-discount" class="pull-right">00.00</span></div> 
 					<div style="">Grand Total:<span id="amount-total" class="pull-right">00.00</span></div>
 
@@ -95,15 +95,15 @@
 				<div class="col-md-12" style="padding: 15px 25px;">
 					<form id="process-form">
 						<div class="form-group">
-							<input type="text" class="form-control" name="" placeholder="Enter Payment" id="payment" autocomplete="off">
+							<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment" id="payment" autocomplete="off">
 						</div>
 						<div class="form-group">
 
-							<input readonly="readonly" type="text" class="form-control" name="" placeholder="Change:" id="change" autocomplete="off">
+							<input readonly="readonly" type="text" class="form-control input-lg" name="" placeholder="Change:" id="change" autocomplete="off">
 
 						</div>
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary form-control" name="" value="Process" id="btn" >
+							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process" id="btn" >
 						</div>
 					</form>
 				</div>
@@ -114,7 +114,7 @@
 	</div>
 	<div class="clearfix"></div>
 </div>
-<div class="modal fade" id="discount-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal " id="discount-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -225,7 +225,7 @@
 	</div>
 </div>
 
-<div class="modal fade" id="transactions-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal " id="transactions-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -251,11 +251,11 @@
 	</div>
 </div>
 
-<div class="modal fade" id="return-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal " id="return-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Return Form</h4> 
+				<h4 class="modal-title"><i class="fa fa-undo"></i> Return Form</h4> 
 			</div>
 			<div class="modal-body">
 				<form> 
@@ -269,8 +269,8 @@
 
 				</form>
 
-				<div> 
-					<table class="table table-bordered table-striped" id="orderline" style="display: none;">
+				<div style="display: none;" id="orderline-wrapper"> 
+					<table class="table table-bordered table-striped" id="orderline" >
 						<thead>
 							<tr>
 								<th colspan="2">Transaction Number: <span class="pull-right" id="label-transaction-number"></span></th>
@@ -342,7 +342,7 @@
 	</div>
 </div>
 
-<div class="modal fade" id="advance_pricing_modal" tabindex="-1" role="dialog" aria-labelledby="AdvancePricingModal" aria-hidden="true">
+<div class="modal" id="advance_pricing_modal" tabindex="-1" role="dialog" aria-labelledby="AdvancePricingModal" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">

@@ -18,16 +18,16 @@
 			<div class="col-md-6" >
 				<div class="form-group">
 					<div class="input-group input-daterange">
-						<input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+						<input type="text" id="min-date" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
 						<div class="input-group-addon">to</div>
-						<input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:" data-date-min-date="2019-04-18" >
+						<input type="text" id="max-date" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:" data-date-min-date="2019-04-18" >
 					</div>
 				</div>
 			</div>
 			<div class="col-md-3 text-right">
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
-				</div>
+				</div> -->
 			</div>
 		</div> 
 
@@ -96,6 +96,7 @@
 								<th >Staff</th>
 								<th >Item Name</th> 
 								<th >Quantity</th>
+								<th> Returned</th>
 								<th >Capital</th>
 								<th >Price</th>
 								<th>Discount</th> 

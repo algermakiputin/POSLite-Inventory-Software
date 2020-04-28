@@ -8,6 +8,8 @@
 	var transactionComplete = false;
 	var currency = '₱'; 
  	var data = {};
+ 	var item_table;
+ 	var orders_table;
 	data[csrfName] = csrfHash;
 
 	(function() {
@@ -22,11 +24,12 @@
 
 			loadProducts: function() {
 
-				var item_table = $("#item-table").DataTable({
+				item_table = $("#item-table").DataTable({
 					processing : true, 
 					serverSide : true,
 					 "bPaginate": true,
 					pagin:true,
+					pagingType: "full",
 					ajax : {
 						url : base_url + 'items/data',
 						data : data,
@@ -86,14 +89,15 @@
 			},
 			orders: function() {
 
-				var orders_table = $("#transaction-history-tbl").DataTable({
+				orders_table = $("#transaction-history-tbl").DataTable({
 					processing : true,
 					serverSide : true,
 					ajax: {
 						url: base_url + "SalesController/get_daily_transactions",
 						data: data,
 						type: 'POST'
-					}
+					},
+					pagingType: 'full'
 
 				});
 
@@ -109,7 +113,7 @@
 				dHeight = dHeight - 60;
 				$(".header .box").css('height', dHeight + 'px');
 				$(".header .box").css('overflow-y', 'auto');
-				$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
+				$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 45)) + 'px');
 				$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
 
 
@@ -132,7 +136,8 @@
 
 			  		if (e.keyCode == 119) {
 
-			  			$("#transactions-modal").modal("toggle");
+			  			$("#open-transactions").click(); 
+			  			
 			  		} 
 
 			  		if (e.keyCode == 118) {
@@ -256,7 +261,7 @@
 							let table = $("#orderline tbody");
 							table.empty();
 
-							$("#orderline").fadeIn();
+							$("#orderline-wrapper").fadeIn();
 
 							$("#label-transaction-number").text(result.sales.transaction_number);
 							$("#label-date").text(result.sales.date_time);
@@ -264,7 +269,7 @@
 
 							$.each(result.orderline, function(key, value) {
 						 
-								table.append('<tr data-item="'+value.item_id+'" data-orderline="'+value.id+'">'+ 
+								table.append('<tr data-item="'+value.item_id+'" data-orderline="'+value.id+'" data-sales="'+value.sales_id+'">'+ 
 									'<td width="25%">'+value.name+'</td>' +
 									'<td width="15%">'+value.quantity+'</td>' +
 									'<td width="20%">' + 
@@ -323,6 +328,7 @@
  						let return_qty = val.find("td").eq(3).find("input").val();
  						let condition = val.find("select option:selected").val();
  						let product_name = val.find('td').eq(0).text();
+ 						let sales_id = val.data('sales');
 
  						if (!return_qty) {
  							return;
@@ -333,12 +339,16 @@
  							orderline_id: orderline_id,
  							return_qty: return_qty,
  							condition: condition,
- 							name: product_name
+ 							name: product_name,
+ 							sales_id: sales_id
  						});
 
  					});
 
- 					console.log(dataset);
+ 					 
+
+ 					if ( !Object.keys(dataset['data']).length )
+ 						return alert("Return quantity is empty");
 
  					$.ajax({
  						type: 'POST',
@@ -347,8 +357,9 @@
  						success: function(data) {
 
  							if (data == 1) {
-
- 								alert(0)
+ 								$("#orderline-wrapper").hide();
+ 								$("#transaction_number").val('');
+ 								alert("Return saved successfully");
  							}else {
 
  								alert("Opps something went wrong please try agian...");
@@ -374,7 +385,9 @@
 
 	$("#open-transactions").click(function(e) {
 
+
 		$("#transactions-modal").modal("toggle");
+		orders_table.draw();
 	});
 
 
