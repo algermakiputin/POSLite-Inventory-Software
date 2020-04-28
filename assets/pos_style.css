@@ -17,6 +17,12 @@ body {
 	color: #fff;
 }
 
+#orderline-wrapper {
+
+	max-height: 450px;
+	overflow: auto;
+}
+
 .navbar-nav > li > a:hover {
 	color: #000;
 } 

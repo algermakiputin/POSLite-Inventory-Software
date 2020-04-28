@@ -273,13 +273,14 @@ class SalesController extends CI_Controller {
 		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
 		 		$staff = $user ? $user->username : 'Not found';
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
-				$saleProfit = $desc->price - $desc->capital * $desc->quantity;
+				$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity);
 				$transactionProfit += $saleProfit;
 				$datasets[] = [ 
 					date('Y-m-d', strtotime($sale->date_time)),  
 					$staff,
 					$desc->name,
 					$desc->quantity,
+					$desc->returned,
 					'₱' . number_format($desc->capital,2),
 					'₱' . number_format($desc->price,2),
 					'₱' . number_format($desc->discount,2),
