@@ -430,8 +430,7 @@ class SalesController extends CI_Controller {
 					date('Y-m-d h:i:s A', strtotime($sale->date_time)),
 					$sale->transaction_number, 
 					$this->session->userdata('username'),
-					currency() . number_format($sale->sub, 2),
-					"<button class='btn btn-sm btn-primary edit-transaction' data-id='". $sale->id ."'>Edit</button>"
+					currency() . number_format($sale->sub, 2)
 				];
 		}
 
