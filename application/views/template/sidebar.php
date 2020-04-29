@@ -69,6 +69,9 @@
                         <li>
                             <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url('returns') ?>"><i class="fa fa-circle-o"></i> Returns</a>
+                        </li>
                     </ul>
                 </li>
             <?php endif; ?>

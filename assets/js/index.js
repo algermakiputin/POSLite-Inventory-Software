@@ -534,6 +534,72 @@ $(document).ready(function() {
 
 		}
 
+		var returns_table;
+		var returns = {
+ 
+			init: function() {
+
+				this.dataTable();
+				this.filter();
+
+			},
+
+			dataTable: function() {
+
+				returns_table = $("#returns_table").DataTable({
+					searching : true,
+					ordering : false, 
+					serverSide : true,
+					info : false,
+					processing : true,
+					bsearchable : true, 
+					dom : 'lfrtBp',
+					ajax : {
+						url : base_url + 'ReturnsController/datatable',
+						type : 'POST',
+						data : data
+					},
+					buttons: [ 
+						{
+							extend: 'excelHtml5',
+							filename : 'Expenses',
+							title : "Returns Report",
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0,1, 2, 3,4 ]
+							}, 
+						},
+						{
+							extend: 'pdfHtml5',
+							filename : 'Returns Report',
+							title : "Returns",
+							className : "btn btn-default btn-sm",
+							exportOptions: {
+								columns: [ 0, 1, 2, 3,4 ]
+							}, 
+						},
+					], 
+
+				});
+			},
+
+			filter: function() {
+
+				$("#returns_to").change(function(e) {
+
+					let to = $(this).val();
+					let date_from = $("#returns_from").val();
+
+					if ( !date_from )
+						return alert( "Select starting date");
+
+					returns_table.columns(0).search(date_from)
+									.columns(1).search(to)
+									.draw();
+				})
+			}
+		}
+
 		var dateTimePickers = {
 			init : function() {
 				this.initDatePickers();
@@ -570,6 +636,7 @@ $(document).ready(function() {
 		sales.init();
 		customers.init();
 		suppliers.init();
+		returns.init();
 	 
 	})();
 

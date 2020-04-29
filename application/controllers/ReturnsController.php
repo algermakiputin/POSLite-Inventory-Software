@@ -37,7 +37,46 @@ class ReturnsController extends CI_Controller {
 
     public function view() {
 
+        $data['content'] = "returns/view";
+        $this->load->view('master', $data);
+    }
 
+    public function datatable() {
+
+        $this->load->model('ReturnsModel');
+
+        $start = $this->input->post('start');
+        $limit = $this->input->post('length');
+        $search = $this->input->post('search[value]'); 
+        $draw = $this->input->post('draw');
+        $from = $this->input->post('columns[0][search][value]') == "" ? date("Y-m-d") : $this->input->post('columns[0][search][value]');
+        $to = $this->input->post('columns[1][search][value]') == "" ? date("Y-m-d") : $this->input->post('columns[1][search][value]');  
+        $datasets = []; 
+
+
+
+        $returns = $this->ReturnsModel->get($limit, $start, $from, $to);
+        $count = $this->ReturnsModel->count();
+
+
+        foreach ($returns as $return) {
+
+            $datasets[] = [
+                $return->date,
+                $return->name,
+                $return->item_condition,
+                $return->quantity,
+                $return->reason
+            ];
+        }
+
+
+        echo json_encode([
+            'draw' => $draw,
+            'recordsTotal' => count($datasets),
+            'recordsFiltered' => $count,
+            'data' => $datasets
+        ]);
     }
 
 }
