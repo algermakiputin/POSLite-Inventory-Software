@@ -194,8 +194,7 @@ class SalesController extends CI_Controller {
 		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
 		$transaction_number = "TRN" . sprintf("%04s", ((int)$last_sales_id + 1 )  ); 
 
-		$this->db->insert('sales',[
-				'id' => null ,
+		$this->db->insert('sales',[ 
 				'date_time' => get_date_time(),
 				'user_id' => $this->session->userdata('id'),
 				'transaction_number' => $transaction_number
