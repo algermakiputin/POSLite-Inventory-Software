@@ -144,14 +144,14 @@
 						<div class="r-header text-center">
 							<h3>Receipt</h3>
 							<div class="row">
-								<div class="col-md-4 text-left">
+								<div class="col-md-5 text-left">
 									<div>Transaction Number:</div>
 									<div>Date: <span></span></div>
 									<div>Cashier:</div>
 									<div>Time:</div>
 
 								</div>
-								<div class="col-md-8 text-left">
+								<div class="col-md-7 text-left">
 									<div id="r-id">005250</div>
 									<div id="r-date"><?php echo date('m/d/Y') ?></div>
 									<div id="r-cashier">Cashier</div>
