@@ -238,8 +238,7 @@
 							<th>Date Time</th>
 							<th>Transaction Number</th> 
 							<th>Staff</th>
-							<th>Total</th>
-							<th>Actions</th>
+							<th>Total</th> 
 						</tr>
 					</thead>
 				</table>
