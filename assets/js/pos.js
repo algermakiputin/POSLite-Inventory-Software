@@ -270,16 +270,19 @@
 							$.each(result.orderline, function(key, value) {
 						 
 								table.append('<tr data-item="'+value.item_id+'" data-orderline="'+value.id+'" data-sales="'+value.sales_id+'">'+ 
-									'<td width="25%">'+value.name+'</td>' +
-									'<td width="15%">'+value.quantity+'</td>' +
-									'<td width="20%">' + 
+									'<td>'+value.name+'</td>' +
+									'<td>'+value.quantity+'</td>' +
+									'<td>' + 
 										'<select class="form-control" name="condition[]">' +
 											'<option value="good">Good</option>' +
 											'<option value="damaged">Damaged</option>' +
 										'</select>' +
 									'</td>' +
-									'<td width="30%">' + 
+									'<td>' + 
 										'<input type="text" placeholder="Leave blank if not returned" class="form-control return_quantity" name="return_quantity[]" >' +
+									'</td>' +
+									'<td>' +
+										'<input type="text" class="form-control" name="reason">' +
 									'</td>' +
 								'</tr>'); 
 							});
@@ -329,6 +332,7 @@
  						let condition = val.find("select option:selected").val();
  						let product_name = val.find('td').eq(0).text();
  						let sales_id = val.data('sales');
+ 						let reason = val.find("input[name='reason']").val();
 
  						if (!return_qty) {
  							return;
@@ -340,7 +344,8 @@
  							return_qty: return_qty,
  							condition: condition,
  							name: product_name,
- 							sales_id: sales_id
+ 							sales_id: sales_id,
+ 							reason: reason
  						});
 
  					});

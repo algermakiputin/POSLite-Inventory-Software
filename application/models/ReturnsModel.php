@@ -21,9 +21,27 @@ class ReturnsModel extends CI_Model {
     					'item_condition'	=> $row['condition'],
     					'quantity'	=> $row['return_qty'],
     					'sales_description_id'	=> $row['orderline_id'],
-    					'sales_id' => $row['sales_id']
+    					'sales_id' => $row['sales_id'],
+                        'date' => date('Y-m-d'),
+                        'reason'    => $row['reason']
     			]);
     	}
 
 	}
+
+    public function get($limit, $start, $from, $to) {
+
+        return $this->db->order_by('id', 'DESC')
+                    ->where("date <=", $to)
+                    ->where("date >=", $from)
+                    ->get('returns',$limit, $start)
+                    ->result();
+
+    }
+
+    public function count() {
+
+        return $this->db->get('returns')
+                        ->num_rows();
+    }
 }

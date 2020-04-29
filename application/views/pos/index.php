@@ -273,7 +273,7 @@
 					<table class="table table-bordered table-striped" id="orderline" >
 						<thead>
 							<tr>
-								<th colspan="2">Transaction Number: <span class="pull-right" id="label-transaction-number"></span></th>
+								<th colspan="3">Transaction Number: <span class="pull-right" id="label-transaction-number"></span></th>
 								<th colspan="2">Date <span class="pull-right" id="label-date">10/10/1995</span></th>
 							</tr>
 							<tr> 
@@ -281,6 +281,7 @@
 								<th>Quantity</th>
 								<th>Condition</th>
 								<th>Return Qty</th>
+								<th>Reason</th>
 							</tr>
 						</thead>
 						<tbody>
