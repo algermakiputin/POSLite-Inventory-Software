@@ -42,7 +42,7 @@
 				$("#item-table").on('click', 'tbody tr', function(event) {
 					var id = $(this).find('input[name="item-id"]').val();
 					var name = $(this).find('td').eq(0).text(); 
-					var price = $(this).find('td').eq(2).text();
+					var price = $(this).find('td').eq(3).text();
 					var description = $(this).find('td').eq(1).text();
 					var pricing = $(this).find('input[name="advance_pricing"]').val();
 					var capital = $(this).find('input[name="capital"]').val();
@@ -155,8 +155,10 @@
 			 
 				$(document).pos();
 				$(document).on('scan.pos.barcode', function(event){
+
+					console.log(event);
 					if (license === "silver" || license === "gold") {
-						if (event.code.length > 5) {
+						if (event.code.length > 6) {
 							data = {};
 							data[csrfName] = csrfHash;
 							data['code'] = event.code;
@@ -402,6 +404,7 @@
 
 	$("#add-product").click(function(e) {
 
+		e.preventDefault();
 		var item_id = $("#item_id").val();
 		var name = $("#product-name").text();
 		var quantity = $("#quantity").val();
@@ -413,6 +416,8 @@
 			return alert("Quantity is required");
 
 		$("#advance_pricing_modal").modal('toggle');  
+		$("#payment").val('');
+		$("#change").val('');
 		insert_product(item_id, name, price, quantity, capital);
 
 	})

@@ -54,6 +54,7 @@
 							<tr> 
 								<td>Item Name</td>
 								<td>Description</td> 
+								<td>Quantity</td>
 								<td>Price</td>
 							</tr>
 						</thead>
