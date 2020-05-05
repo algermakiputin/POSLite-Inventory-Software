@@ -113,8 +113,8 @@
 				dHeight = dHeight - 60;
 				$(".header .box").css('height', dHeight + 'px');
 				$(".header .box").css('overflow-y', 'auto');
-				$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 45)) + 'px');
-				$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
+				$("#cart-tbl").css('min-height', (dHeight - ( 231 + 65)) + 'px');
+				$("#cart-tbl").css('max-height', (dHeight - ( 150 + 231)) + 'px');
 
 
 				$("body").on('click', '#advance_pricing_options tbody tr', function() {
@@ -717,7 +717,8 @@
 			var discount = parseInt(r.eq(2).find('input').val());
 			total += parseFloat(price) * quantity;
 
-			r.eq(4).text(currency + number_format(price * quantity) + '.00');
+			r.eq(4).text(currency + number_format(price * quantity - discount) + '.00');
+
 			discountAmount += isNaN(discount) == true ? 0 : discount ;
 			
 		}
