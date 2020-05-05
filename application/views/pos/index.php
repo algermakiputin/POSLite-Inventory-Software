@@ -66,7 +66,7 @@
 			</div>
 			<div class="col-sm-5 box">
 
-				<h3 class="text-left">
+				<h3 >
 					<span  class="">Grand Total: <span id="amount-total">00.00</span></span>
 
 					<span  class="pull-right" style="display: none;">Discount: <span id="amount-discount">00.00</span></span>
