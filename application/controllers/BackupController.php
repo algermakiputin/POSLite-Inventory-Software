@@ -51,6 +51,7 @@ class BackupController extends CI_Controller {
 
 		$sql = file_get_contents($file['tmp_name']);
 
+		dd($sql);
 		if (!$sql)
 			return redirect('/');
 
