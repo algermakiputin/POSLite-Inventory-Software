@@ -66,10 +66,10 @@
 			</div>
 			<div class="col-sm-5 box">
 
-				<h3 >
-					<span  class="">Grand Total: <span id="amount-total">00.00</span></span>
+				<h3 > Order Details
+					<!-- <span  class="">Grand Total: <span id="amount-total">00.00</span></span>
 
-					<span  class="pull-right" style="display: none;">Discount: <span id="amount-discount">00.00</span></span>
+					<span  class="pull-right" style="display: none;">Discount: <span id="amount-discount">00.00</span></span> -->
 				</h3>
 
 				<div class="content" style="padding-bottom: 10px">
@@ -85,18 +85,17 @@
 									<th width="5%"></th>	
 								</tr>
 							</thead>
-							<tbody>
+							<tbody >
 
 							</tbody>
 						</table>
 					</div>
 				</div>
 
-				<!-- <div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 0 25px 15px 25px;">
-					<div>Total Discount: <span id="amount-discount" class="pull-right">00.00</span></div> 
+				<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 5px 25px 15px 25px;"> 
 					<div style="">Grand Total:<span id="amount-total" class="pull-right">00.00</span></div>
 
-				</div> -->
+				</div>
 				<div class="col-md-12" style="padding: 15px 25px;">
 					<form id="process-form">
 						<div class="form-group">
