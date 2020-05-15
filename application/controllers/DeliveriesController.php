@@ -12,7 +12,10 @@ class DeliveriesController extends CI_Controller
 		$this->load->model('PriceModel');
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
-		$data['products'] = json_encode($this->db->select('items.id as data, items.name as value, prices.capital')->join('prices', 'prices.item_id = items.id')->get('items')->result());
+		$data['products'] = json_encode(
+									$this->db->select('items.id as data, items.name as value, items.capital') 
+												->get('items')
+												->result());
 		 
  		$data['content'] = "deliveries/new";
 		$this->load->view('master',$data);
