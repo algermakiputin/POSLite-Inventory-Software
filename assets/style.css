@@ -1,12 +1,13 @@
 @import url("fonts/font.css");
 
 .form-control {
-  border-radius: 1px;
+  border-radius: 5px;
 }
 
 html, body {
   height: 99%;
   width: 100%; 
+  color: #141823;
 
 }
 
