@@ -25,7 +25,7 @@
 					<span class="navbar-text">Current User:  <span id="user"><?php echo $this->session->userdata['username'] ?></span>
 				</span>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#" id="return"><i class="fa fa-undo"></i> Return (F7)</a></li>
+					<li><a href="#" id="return" ><i class="fa fa-undo"></i> Return (F7)</a></li>
 					<li><a href="#" id="open-transactions"><i class="fa fa-exchange"></i> Transactions (F8)</a></li>
 					<li><a href="<?php echo base_url('items') ?>"><i class="glyphicon glyphicon-folder-close fa-fw"></i> Go to Inventory</a></li>
 					<li class="dropdown">
