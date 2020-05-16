@@ -123,6 +123,13 @@
 			  	});
 
 
+				$("#return").click(function(e) {
+
+					e.preventDefault();
+
+					$("#return-modal").modal("toggle");
+				})
+
 			  	$(document).on('keyup', function(e) {
 			
 			  		if (e.keyCode === 13) {
