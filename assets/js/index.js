@@ -303,6 +303,7 @@ $(document).ready(function() {
 						$("#total-lost").text('₱' + data.lost);
 						$("#total-expense").text('₱' + data.expenses);
 						$("#total-goods-cost").text('₱' + data.goodsCost);
+						$("#total-net").text('₱' + data.net);
 					}
 				});
 			}
