@@ -114,7 +114,7 @@
 				$(".header .box").css('height', dHeight + 'px');
 				$(".header .box").css('overflow-y', 'auto');
 				$("#cart-tbl").css('min-height', (dHeight - ( 231 + 95)) + 'px');
-				$("#cart-tbl").css('max-height', (dHeight - ( 150 + 256)) + 'px');
+				$("#cart-tbl").css('max-height', (dHeight - ( 150 + 261)) + 'px');
 
 
 				$("body").on('click', '#advance_pricing_options tbody tr', function() {
@@ -122,13 +122,6 @@
 			  		$(this).find("input[type='radio']").prop('checked', true);
 			  	});
 
-
-				$("#return").click(function(e) {
-
-					e.preventDefault();
-
-					$("#return-modal").modal("toggle");
-				})
 
 			  	$(document).on('keyup', function(e) {
 			
@@ -210,7 +203,7 @@
 
 											$("#advance_pricing_options tbody").append("<tr>" +
 													"<td>"+value.label+"</td>" +
-													"<td>"+ currency + number_format(value.price) +".00</td>" +
+													"<td>"+ currency + (value.price) +"</td>" +
 													'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'.00" class="radio"></td>' +
 												"</tr>"
 												);			
@@ -584,7 +577,7 @@
 
 			if (payment >= totalAmountDue) {
 		 	
-				return $("#change").val((payment - totalAmountDue).toFixed(2));
+				return $("#change").val((payment - totalAmountDue));
 			} 
 
 			return $("#change").val('Insufficient Amount');
@@ -724,7 +717,7 @@
 			var discount = parseInt(r.eq(2).find('input').val());
 			total += parseFloat(price) * quantity;
 
-			r.eq(4).text(currency + number_format(price * quantity - discount) + '.00');
+			r.eq(4).text(currency + number_format(price * quantity - discount));
 
 			discountAmount += isNaN(discount) == true ? 0 : discount ;
 			
@@ -735,8 +728,8 @@
 		totalAmountDue = total - discountAmount;
 
 		
-		$("#amount-discount").text(currency + totalDiscount.toFixed(2));
-		$("#amount-total").text("₱" + number_format(totalAmountDue.toFixed(2)));
+		$("#amount-discount").text(currency + totalDiscount);
+		$("#amount-total").text("₱" + number_format(totalAmountDue));
 	}
 
  
@@ -764,6 +757,8 @@
  
 
 function number_format(number, decimals, dec_point, thousands_point) {
+ 	
+ 	toFixed = "";
 
     if (number == null || !isFinite(number)) {
         throw new TypeError("number is not valid");
@@ -782,6 +777,9 @@ function number_format(number, decimals, dec_point, thousands_point) {
         thousands_point = ',';
     }
 
+    if (number % 1 === 0)
+    	toFixed = ".00";
+
     number = parseFloat(number).toFixed(decimals);
 
     number = number.replace(".", dec_point);
@@ -790,7 +788,10 @@ function number_format(number, decimals, dec_point, thousands_point) {
     splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_point);
     number = splitNum.join(dec_point);
 
-    return number;
+
+
+
+    return number + toFixed;
 }
 
 function remove_comma(str) {

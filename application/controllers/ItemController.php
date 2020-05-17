@@ -195,7 +195,7 @@ class ItemController extends AppController {
 		$datasets = array_map(function($item) use ($orderingLevel){
 		  
 			$advance_price = json_encode(
-								$this->db->select('FORMAT(price, 2) as price')
+								$this->db->select('price, label')
 											->where('item_id', $item->id)
 											->get('prices')
 											->result());
