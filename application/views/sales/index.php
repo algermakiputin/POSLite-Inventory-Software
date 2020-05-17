@@ -42,31 +42,37 @@
 				<div id="widgets"> 
 					 
 					
-					<div class="col-md-3">
+					<div class="col-md-2 col-md-offset-1">
 						<div class="sale-widget text-center">
 							Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
 							<b><span id="total-expense"></span></b>
 						</div>
 					</div>  
 
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<div class="sale-widget text-center">
 							Total Sales <i class="fa fa-question-circle" data-toggle="tooltip" title="Total sales is the total amount of sales in a given period of time. Formulated as (Total Number of units sold *(times) price per unit" style="font-size: 16px;"></i><br>
 							<b><span id="total-sales"></span></b>
 						</div>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<div class="sale-widget text-center">
 							Cost of Goods Sold <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
 							<b><span id="total-goods-cost"></span></b>
 						</div>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<div class="sale-widget text-center">
-							Gross Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
+							Gross Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Gross Profit is the total amount a company makes after deducting the costs associated with making and selling its products." style="font-size: 16px;"></i><br>
 							<b><span id="total-gross"></span></b>
+						</div>
+					</div> 
+					<div class="col-md-2">
+						<div class="sale-widget text-center">
+							Net Income <i class="fa fa-question-circle" data-toggle="tooltip" title="Net Income is equal to total revenue after expenses." style="font-size: 16px;"></i><br>
+							<b><span id="total-net"></span></b>
 						</div>
 					</div> 
 					

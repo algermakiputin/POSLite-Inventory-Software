@@ -307,7 +307,8 @@ class SalesController extends CI_Controller {
 				'profit' => number_format($transactionProfit,2), 
 				'expenses' => number_format($totalExpenses,2),
 				'gross' => number_format($gross,2),
-				'goodsCost' => number_format($goodsCost, 2)
+				'goodsCost' => number_format($goodsCost, 2),
+				'net' => number_format($gross - $total)
 			]);
 
 	}
