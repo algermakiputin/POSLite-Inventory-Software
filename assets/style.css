@@ -22,6 +22,13 @@ html, body {
 
 }
 
+@media (min-width: 992px) {
+  #widgets .col-md-2 {
+      width: 20% !important;
+  }
+
+}
+
 .widget-box {
   padding: 20px;
   border:solid 1px rgba(0,0,0,0.2); 

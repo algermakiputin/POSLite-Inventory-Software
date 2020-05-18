@@ -50,25 +50,26 @@ class BackupController extends CI_Controller {
 		$file = $_FILES['file'];
 
 		$sql = file_get_contents($file['tmp_name']);
-
-		dd($sql);
+ 
 		if (!$sql)
 			return redirect('/');
 
 		$sql = $this->encryption->decrypt($sql); 
 
+		dd($sql);
 		$rows = explode(";", $sql);
-  
+
 
 		$this->db->trans_start();
  
- 		$this->truncate_tables();
+ 		$this->empty_all(); 
 
 		foreach ($rows as $key => $query) {
  		
 			if ( strpos($query, "INSERT INTO") ) {
- 	
-				$this->db->query($query);
+ 				
+
+				$this->db->query(trim($query));
 			}
 		} 
  	
@@ -89,26 +90,19 @@ class BackupController extends CI_Controller {
 
 	}
 
-	public function truncate_tables() {
-
-		$tables = ['backup', 'categories', 'customers', 'delivery', 'delivery_details', 'expenses', 'history', 'items', 'memberships', 'ordering_level', 'payments', 'prices', 'purchase_order', 'purchase_order_line', 'sales', 'sales_description', 'settings', 'supplier', 'users'];
-
-
-		$this->db->trans_start();
-
-		foreach ($tables as $table) {
-
-			$this->db->empty_table($table);
-		}
+	function empty_all()
+	{
+	  $query = $this->db->query("SHOW TABLES");
+	  $name = $this->db->database;
 
 
-		$this->db->trans_complete();
-		
-		if ($this->db->trans_status() !== FALSE) {
-			return true;
-		}
+	  foreach ($query->result_array() as $row)
+	  {
 
-		return false;
-
+	    $table = $row['Tables_in_' . $name];
+	    $this->db->query("TRUNCATE " . $table);
+	    $this->db->query("ALTER TABLE ".$table." AUTO_INCREMENT = 1");
+	  }
+	  $this->output->set_output("Database emptyed");
 	}
 }
