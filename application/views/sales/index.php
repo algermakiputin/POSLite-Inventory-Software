@@ -42,7 +42,7 @@
 				<div id="widgets"> 
 					 
 					
-					<div class="col-md-2 col-md-offset-1">
+					<div class="col-md-2">
 						<div class="sale-widget text-center">
 							Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
 							<b><span id="total-expense"></span></b>
