@@ -36,9 +36,36 @@
 	}
 
 	function get_license() {
-		$CI =& get_instance();
-		$CI->load->config('license');
-		return $CI->config->item('license');
+	 
+		return "gold";
+	}
+
+
+	function get_license_values() {
+
+		$data['bronze'] = [
+				'items' => 200,
+				'users' => 2,
+				'customers' => 200,
+			];
+
+		$data['silver'] = [
+				'items' => 2000,
+				'users' => 3,
+				'customers' => 2000
+			];
+			
+
+		$data['gold'] = [
+				'items' => 5000000,
+				'users' => 200,
+				'customers' => 5000000
+			];
+
+
+		return $data;
+
+	 
 	}
 
 	function profile() {
@@ -91,32 +118,18 @@
 		$CI->session->set_flashdata('success', $message);
 	}
 
+ 	
+
+
 	function license($table) {
 		$CI =& get_instance();
 		 
 
-		$data['bronze'] = [
-				'items' => 200,
-				'users' => 2,
-				'customers' => 200,
-			];
-
-		$data['silver'] = [
-				'items' => 2000,
-				'users' => 2,
-				'customers' => 2000
-			];
-			
-
-		$data['gold'] = [
-				'items' => 5000000,
-				'users' => 200,
-				'customers' => 5000000
-			];
-
-		$license = $CI->config->item('license');
+		$license = get_license();
 
 		$count = $CI->db->get($table)->num_rows();
+
+		$data = get_license_values();
 
 	 
 		if ($count > $data[$license][$table] ) {
