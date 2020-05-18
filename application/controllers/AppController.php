@@ -50,12 +50,12 @@ class AppController extends CI_Controller {
 	}
 
 	public function upgrade() {
-		 
+		  
+		$data['license'] = get_license();
+		$data['limits'] = get_license_values();
+ 
 
-		$license = get_license();
-		 
-		$data['license'] = $license;
-		$this->load->view('upgrade/index', $license);
+		$this->load->view('upgrade/index', $data);
 	}
 
 }
