@@ -61,9 +61,9 @@
                         <!--FEATURE LIST START-->
                         <div class="generic_feature_list">
                             <ul>
-                                <li><span>200</span> Products</li>
-                                <li><span>200</span> Customers</li>
-                                <li><span>15</span> Categories</li>
+                                <li><span><?php echo $limits['bronze']['items'] ?></span> Products</li>
+                                <li><span><?php echo $limits['bronze']['customers'] ?></span> Customers</li>
+                                <li><span><?php echo $limits['bronze']['users'] ?></span> Users</li>
                                 <li><span>Barcode Support</span> No</li>
                                 <li><span>Database Backup</span> No</li>
                                 <li><span>Advance Features</span> No</li>
@@ -127,9 +127,9 @@
                         <!--FEATURE LIST START-->
                         <div class="generic_feature_list">
                             <ul>
-                                <li><span>2000</span> Products</li>
-                                <li><span>2000</span> Customers</li>
-                                <li><span>50</span> Categories</li>
+                                <li><span><?php echo $limits['silver']['items'] ?></span> Products</li>
+                                <li><span><?php echo $limits['silver']['customers'] ?></span> Customers</li>
+                                <li><span><?php echo $limits['silver']['users'] ?></span> Users</li>
                                 <li><span>Barcode Support</span> YES</li>
                                 <li><span>Database Backup</span> YES</li>
                                 <li><span>Advance Features</span> YES</li>
@@ -140,9 +140,11 @@
                         
                         <!--BUTTON START-->
                         <div class="generic_price_btn clearfix"> 
-                            <?php if ( $this->config->item('license') == "silver" ): ?>
-                            <a class="" href="" style="background-color: #eee;border:solid 1px #ddd;color: #ccc">Current License</a>
+
+                            <?php if ( $license === "silver" ): ?>
+                                <a class="" href="" style="background-color: #eee;border:solid 1px #ddd;color: #ccc">Current License</a>
                             <?php else: ?>
+                                <?php echo $license; ?>
                                 <a class="" href="https://m.me/poslitesoftware" target="__blank">Sign up</a>
                             <?php endif; ?>
                         </div>
@@ -220,7 +222,7 @@
         </div>
     </section>             
     <footer>
-        <p class="text-center" style="margin-top: 20px;">Sign up button will redirect to our facebook messenger, see you there! <a href="<?php echo base_url('items') ?>">return to inventory</a></p>
+        <p class="text-center" style="margin-top: 50px;font-size: 18px">Sign up button will redirect to our facebook messenger, see you there! <a href="<?php echo base_url('items') ?>">return to inventory</a></p>
     </footer>
 </div>
 </body>

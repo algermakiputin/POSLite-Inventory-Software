@@ -31,7 +31,11 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-               
+                <?php if ( get_license() != "gold"): ?>
+                    <li> 
+                        <a href="<?php echo base_url('upgrade') ?>" class=" btn-primary">Upgrade License</a>
+                    </li> 
+                <?php endif; ?>
                 <!-- /.dropdown --> 
                  <li >
                     <a href="#" onclick="event.preventDefault(); javascript:introJs().start()">Start Tour</a>
