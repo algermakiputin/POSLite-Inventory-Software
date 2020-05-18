@@ -83,22 +83,31 @@ class ItemController extends AppController {
 		$items = $this->dataFilter($search, $start, $limit);
 		$filterCategory = $this->input->post('columns[2][search][value]');
 		$filterSupplier = $this->input->post('columns[7][search][value]');  
-		$inventory__total = 0;
+	 
 
 		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
-												->limit($limit, $start)->get()->result();
+												->limit($limit, $start)
+												->get()
+												->result();
  
 		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)->get()->num_rows(); 
 		
 		$datasets = [];
+
+		$inventory__total = $this->db->select("SUM(items.capital * ordering_level.quantity) as total")
+								->from('items')
+								->join('ordering_level', 'ordering_level.item_id = items.id')
+								->get()
+								->row()
+								->total;
+
 
 		foreach ($items as $item) {
 
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
-			$deleteAction = "";
-			$inventory__total += $item->capital * $stocksRemaining;
+			$deleteAction = ""; 
 
 			if ($this->session->userdata('account_type') == "Admin") {
 
