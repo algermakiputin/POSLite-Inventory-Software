@@ -204,7 +204,7 @@
 											$("#advance_pricing_options tbody").append("<tr>" +
 													"<td>"+value.label+"</td>" +
 													"<td>"+ currency + (value.price) +"</td>" +
-													'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'.00" class="radio"></td>' +
+													'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
 												"</tr>"
 												);			
 										});
