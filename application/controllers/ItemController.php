@@ -241,6 +241,12 @@ class ItemController extends AppController {
 	}
 
 	public function new() {
+
+		$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+
+		echo $generator->getBarcode('4807', $generator::TYPE_CODE_128);
+
+		die();
 		$this->userAccess('new');
 		$this->load->model('categories_model'); 
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();

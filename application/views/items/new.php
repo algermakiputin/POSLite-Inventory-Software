@@ -25,8 +25,15 @@
 						<div class="col-lg-6 col-md-offset-2 ">
 							<div class="form-group">
 								<label>Barcode:</label>
-								<input type="text" placeholder="Item Barcode" required="required" class="form-control" name="barcode" value="">
+							 <div class="input-group">
+							   <input type="text" placeholder="Barcode" required="required" class="form-control" name="barcode">
+							   <div class="input-group-btn">
+							      <button class="btn btn-success" type="button">
+							        <i class="fa fa-barcode"></i> Generate Barcode
+							      </button>
+							   </div>
 							</div>
+							</div> 
 							<div class="form-group"> 
 								<label>Item Name:</label>					 
 								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
