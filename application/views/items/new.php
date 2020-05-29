@@ -6,13 +6,13 @@
 </div>
 <!-- /.row -->
 <div class="row">
-	 <div class="col-md-12">
-        <?php 
-        echo $this->session->flashdata('errorMessage');
-        echo $this->session->flashdata('successMessage');
-    
-        ?>
-    </div>
+	<div class="col-md-12">
+		<?php 
+		echo $this->session->flashdata('errorMessage');
+		echo $this->session->flashdata('successMessage');
+
+		?>
+	</div>
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -23,16 +23,17 @@
 					<?php echo form_open_multipart('items/insert', array('data-parsley-validate' => 'true', 'id' => 'item-form', 'method' => 'POST')) ?>
 					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate id="item-form">
 						<div class="col-lg-6 col-md-offset-2 ">
+							<input type="hidden" name="barcode_generated" value="0" id="barcode_generated">
 							<div class="form-group">
 								<label>Barcode:</label>
-							 <div class="input-group">
-							   <input type="text" placeholder="Barcode" required="required" class="form-control" name="barcode">
-							   <div class="input-group-btn">
-							      <button class="btn btn-success" type="button">
-							        <i class="fa fa-barcode"></i> Generate Barcode
-							      </button>
-							   </div>
-							</div>
+								<div class="input-group">
+									<input type="text" placeholder="Barcode" id="barcode" required="required" class="form-control" name="barcode">
+									<div class="input-group-btn">
+										<button class="btn btn-success" type="button" id="barcode-gen">
+											 Generate Barcode
+										</button>
+									</div>
+								</div>
 							</div> 
 							<div class="form-group"> 
 								<label>Item Name:</label>					 
@@ -83,7 +84,7 @@
 								</div>
 							</fieldset>
 							<div class="form-group">  
-									<label>Supplier:</label>
+								<label>Supplier:</label>
 								<select name="supplier" class="form-control" required="required"> 
 									<option value="">Select Supplier</option>
 									<?php foreach ($suppliers as $supplier): ?>
@@ -114,44 +115,69 @@
 								</label>
 							</div>
 						</div>
-					<?php echo form_close(); ?>
+						<?php echo form_close(); ?>
+					</div>
+					<!-- /.row (nested) -->
 				</div>
-				<!-- /.row (nested) -->
+				<!-- /.panel-body -->
 			</div>
-			<!-- /.panel-body -->
+			<!-- /.panel -->
 		</div>
-		<!-- /.panel -->
-	</div>
-	<!-- /.col-lg-12 -->
-</div>  
+		<!-- /.col-lg-12 -->
+	</div>  
 
 
-<script type="text/javascript">
-	
-	$(document).ready(function(e) {
+	<script type="text/javascript">
 
-		$("#add-price").click(function(e) {
+		var barcode_number = '<?php echo $barcode_number ?>';
 
-			$("#advance-pricing-tbl tbody").append("<tr>" + 
+		$(document).ready(function(e) {
+
+			$("#add-price").click(function(e) {
+
+				$("#advance-pricing-tbl tbody").append("<tr>" + 
 					'<td><input type="text" placeholder="Price Label" class="form-control" name="price_label[]"></td>' +
 					'<td><input type="text" placeholder="Price" class="form-control" name="advance_price[]"></td>' + 
 					'<td width="30px"><i class="fa fa-trash remove-row"></i></td>' +
-				"</tr>");
-		});
+					"</tr>");
+			});
 
-		$("body").on('click','.remove-row', function(e) {
+			$("body").on('click','.remove-row', function(e) {
 
-			var row_count = $("#advance-pricing-tbl tbody tr").length;
+				var row_count = $("#advance-pricing-tbl tbody tr").length;
 
-			if (row_count > 1) {
-				$(this).parents('tr').remove();
-			}else {
-				alert('at least 1 Price is required');
-			}
+				if (row_count > 1) {
+					$(this).parents('tr').remove();
+				}else {
+					alert('at least 1 Price is required');
+				}
+
+			});
+
+
+			$("#barcode-gen").click(function(e) {
+
+				let val = $("#barcode_generated").val();
+
+				val = val == 1 ? 0 : 1;
+
+				$("#barcode_generated").val( val );
+				
+
+				if ( val  == 1) {
+					$(this).text("Remove");
+					$("#barcode").val(barcode_number);
+					$("#barcode").attr("readonly", true);
+				}
+				else  {
+
+					$(this).text("Generate Barcode"); 
+					$("#barcode").val('');
+					$("#barcode").attr("readonly", false);
+				}
+			})
 			
-		});
-			
-	})
+		})
 
 
-</script>
+	</script>

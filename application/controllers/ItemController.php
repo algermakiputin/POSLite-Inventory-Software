@@ -241,19 +241,22 @@ class ItemController extends AppController {
 	}
 
 	public function new() {
-
-		$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
-
-		echo $generator->getBarcode('4807', $generator::TYPE_CODE_128);
-
-		die();
+ 
 		$this->userAccess('new');
 		$this->load->model('categories_model'); 
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'new_item';
 		$data['content'] = "items/new";  
+		$data['barcode_number'] = $this->generate_barcode();
 		$this->load->view('master', $data);
+	}
+
+	public function generate_barcode() {
+
+		$last_id = $this->db->select("max(id) as max")->get('barcodes')->row()->max;
+
+		return  "480" . sprintf("%08s", ((int)$last_id + 1 )  ) . "7";
 	}
 
 	public function generateBarcode() { 
@@ -279,6 +282,7 @@ class ItemController extends AppController {
 		$productImage = $_FILES['productImage'];
 		$price_label = $this->input->post('price_label[]');
 		$advance_price = $this->input->post('advance_price[]');
+		$generate_barcode = $this->input->post('barcode_generated');
 	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
@@ -316,6 +320,15 @@ class ItemController extends AppController {
 		$this->HistoryModel->insert('Register new item: ' . $name); 
 		$this->OrderingLevelModel->insert($item_id);
 		$this->PriceModel->insert($price_label, $advance_price, $item_id);
+
+		if ($generate_barcode == "1") {
+
+			$this->db->insert("barcodes", [
+					'barcode'	=> $barcode,
+					'item_name'	=> $name,
+					'item_id'	=> $item_id
+				]);
+		}
 
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
@@ -411,6 +424,9 @@ class ItemController extends AppController {
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row();
 		$data['content'] = "items/edit";
+		$data['barcode_number'] = $this->generate_barcode();
+		$data['barcode_generated'] = $this->db->where('item_id', $id)->get('barcodes')->row(); 
+
 		$this->load->view('master', $data);
 	}
 
@@ -436,6 +452,12 @@ class ItemController extends AppController {
 		$productImage = $_FILES['productImage'];
 		$supplier_id = $this->input->post('supplier');
 
+		$barcode = $this->input->post('barcode');
+		$barcode_generated = $this->input->post('barcode_generated');
+
+
+		$this->db->trans_begin();
+
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
 			$currentImagePath = './uploads/' . $fileName;
@@ -447,35 +469,53 @@ class ItemController extends AppController {
 			 
 		}
 
+		if ( $barcode_generated == 1) {
+
+			$this->db->insert('barcodes', [
+					'barcode' => $barcode,
+					'item_name' => $updated_name,
+					'item_id' => $id
+				]);
+		}
+
 		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
 	 
-		$update = $this->ItemModel->update_item(
+		$this->ItemModel->update_item(
 						$id,$updated_name,
 						$updated_category,
 						$updated_desc,
 						$price_id, 
 						$upload['upload_data']['file_name'], 
-						$supplier_id, $this->input->post('barcode'),
+						$supplier_id, 
+						$barcode,
 						$updated_price,
 						$capital
 					);
 
 		$this->PriceModel->insert($price_label, $advance_price, $id);
 
-		if ($update) {
-			
-			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
-			if ($item->name != $updated_name)
-				$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
-			 
-			if ($item->description != $updated_desc)
-				$this->HistoryModel->insert('Change '.$item->name.' Description: ' . $item->description . ' to ' . $updated_desc);
-			if ($currentPrice != $updated_price) 
-					$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
-				if ($item->category_id != $updated_category) 
-					$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
-			return redirect(base_url('items'));
+		
+		if ($this->db->trans_status() === FALSE) {
+	        $this->db->trans_rollback();
+	        $this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Something went wrong please try again.</div>');
+	        return redirect('items');
 		}
+		 
+		$this->db->trans_commit();  
+		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
+
+		if ($item->name != $updated_name)
+			$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
+		 
+		if ($item->description != $updated_desc)
+			$this->HistoryModel->insert('Change '.$item->name.' Description: ' . $item->description . ' to ' . $updated_desc);
+		if ($currentPrice != $updated_price) 
+				$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
+			if ($item->category_id != $updated_category) 
+				$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
+		
+		return redirect(base_url('items'));
+		
 	 		
 	}
 

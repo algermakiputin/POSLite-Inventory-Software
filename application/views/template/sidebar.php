@@ -11,8 +11,11 @@
                         <a href="<?php echo base_url('items') ?>"><i class="fa fa-circle-o"></i> View Products</a>
                     </li>
                     <?php if ( is_admin()): ?>
-                        <li>
+                    <li>
                         <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Product</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('barcodes/print') ?>" target="__blank"><i class="fa fa-circle-o"></i> Print Barcode</a>
                     </li>
                     <?php endif; ?>
                 </ul>

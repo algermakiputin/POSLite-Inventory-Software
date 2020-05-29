@@ -155,12 +155,14 @@ class UsersController extends AppController {
 
 			if ($password == $confirm_password) { 
 				$encrypt_password = password_hash($password,PASSWORD_DEFAULT); 
+
 				$data['password'] = $encrypt_password;
 			} 
 		}
- 
+
 		$this->db->where('id', $this->user_id)
-				->update("users", $data);
+					->update("users", $data);
+					
 		return redirect('users');
 	}
 

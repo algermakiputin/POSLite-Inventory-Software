@@ -95,6 +95,8 @@ $route['pos'] = 'pos_con/pos';
 
 $route['returns'] = "ReturnsController/view";
 
+$route['barcodes/print'] = "BarcodesController/export";
+
 $route['categories/get'] = 'CategoriesController/get';
 
 $route['customers'] = "CustomersController/index";

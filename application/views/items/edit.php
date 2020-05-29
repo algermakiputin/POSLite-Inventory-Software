@@ -14,11 +14,27 @@
 			<div class="panel-body">
 				<div class="row">
 					<?php echo form_open_multipart('items/update', array('method' => 'post', 'id' => 'item-form')) ?>
+
 						<div class="col-lg-6 col-md-offset-2">
+							<?php if ( !$barcode_generated ): ?>
+								<input type="hidden" name="barcode_generated" value="0" id="barcode_generated">
+								<div class="form-group">
+									<label>Barcode:</label>
+									<div class="input-group">
+										<input type="text" value="<?php echo $item->barcode ?>" placeholder="Barcode" id="barcode" required="required" class="form-control" name="barcode">
+										<div class="input-group-btn">
+											<button class="btn btn-success" type="button" id="barcode-gen">
+												 Generate Barcode
+											</button>
+										</div>
+									</div>
+								</div>
+							<?php else: ?>
 							<div class="form-group"> 
 								<label>Barcode:</label>
-								<input type="text"  value="<?php echo $item->barcode; ?>" name="barcode" class="form-control" required="required"> 
+								<input type="text" <?php echo $barcode_generated ? "readonly" : "" ?> value="<?php echo $item->barcode; ?>" name="barcode" class="form-control" required="required"> 
 							</div>
+							<?php endif; ?>
 							<div class="form-group"> 
 								<label>Item Name:</label>
 								<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control" required="required">
@@ -137,6 +153,7 @@
 	
 	$(document).ready(function(e) {
 
+		var barcode_number = '<?php echo $barcode_number ?>';
 		$("#add-price").click(function(e) {
 
 			$("#advance-pricing-tbl tbody").append("<tr>" + 
@@ -154,6 +171,28 @@
 			 
 			
 		});
+
+		$("#barcode-gen").click(function(e) {
+
+				let val = $("#barcode_generated").val();
+
+				val = val == 1 ? 0 : 1;
+
+				$("#barcode_generated").val( val );
+				
+
+				if ( val  == 1) {
+					$(this).text("Remove");
+					$("#barcode").val(barcode_number);
+					$("#barcode").attr("readonly", true);
+				}
+				else  {
+
+					$(this).text("Generate Barcode"); 
+					$("#barcode").val('');
+					$("#barcode").attr("readonly", false);
+				}
+			})
 			
 	})
 
