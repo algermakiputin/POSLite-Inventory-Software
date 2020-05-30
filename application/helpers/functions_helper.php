@@ -7,6 +7,41 @@
 		die();
 	}
 
+	function expiry() {
+
+		//Current Time - 1 month in seconds
+		$expiry = time() - 2592000;
+
+		//We set the start date here manually
+		$start_time = strtotime("2020-05-30");
+
+		$datediff = $expiry - $start_time;
+		$days = round($datediff / (60 * 60 * 24));
+
+		$days_remaining = 0 - $days ;
+  
+		if ($expiry > $start_time) {
+
+			die("Your 1 month trial has expired <a href='https://m.me/poslitesoftware'>Contact Us</a> To get the full version");
+		}
+
+	}
+
+	function get_days_remaining() {
+
+		$expiry = time() - 2592000;
+
+		//We set the start date here manually
+		$start_time = strtotime("2020-05-30");
+
+		$datediff = $expiry - $start_time;
+		$days = round($datediff / (60 * 60 * 24));
+
+		return 0 - $days ;
+
+
+	}
+
 	function get_date_time() {
 
 		return date('Y-m-d H:i:s');
@@ -37,7 +72,7 @@
 
 	function get_license() {
 	 
-		return "gold";
+		return "silver";
 	}
 
 

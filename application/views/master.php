@@ -37,6 +37,9 @@
                     </li> 
                 <?php endif; ?>
                 <!-- /.dropdown --> 
+                <li >
+                    <a href="#" onclick="event.preventDefault();" style="background-color: #f4f4f5;">Trial Remaining: <?php echo get_days_remaining() ?> Days</a>
+                </li>
                  <li >
                     <a href="#" onclick="event.preventDefault(); javascript:introJs().start()">Start Tour</a>
                 </li>

@@ -15,7 +15,8 @@ class DashboardController extends AppController {
  	}
 
 	public function dashboard() {
- 		
+ 		  
+ 
  		$this->load->model('SalesModel');
 		$this->load->model('ExpensesModel');
 
