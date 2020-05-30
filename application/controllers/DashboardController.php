@@ -12,6 +12,8 @@ class DashboardController extends AppController {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));
 		}
+
+		$this->licenseControl();
  	}
 
 	public function dashboard() {
