@@ -18,19 +18,19 @@ echo $this->session->flashdata('successMessage');
     <div class="col-md-3">
         <div class="widget-box">
             <h3>Sales</h3>
-            <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $sales; ?></span>
+            Today: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $sales; ?></span>
         </div>
     </div>
     <div class="col-md-3">
         <div class="widget-box">
             <h3>Expenses</h3>
-            <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $expenses ?></span>
+            This year: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $expenses ?></span>
         </div>
     </div>
     <div class="col-md-3">
         <div class="widget-box">
             <h3>Revenue</h3>
-            <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $revenue ?></span>
+            This year: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $revenue ?></span>
         </div>
     </div>
 </div>
