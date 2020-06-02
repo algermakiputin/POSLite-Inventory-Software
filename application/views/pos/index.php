@@ -99,7 +99,7 @@
 				<div class="col-md-12" style="padding: 15px 25px;">
 					<form id="process-form">
 						<div class="form-group">
-							<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment" id="payment" autocomplete="off">
+							<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment (F1)" id="payment" autocomplete="off">
 						</div>
 						<div class="form-group">
 
@@ -107,7 +107,7 @@
 
 						</div>
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process" id="btn" >
+							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process (Enter)" id="btn" >
 						</div>
 					</form>
 				</div>
