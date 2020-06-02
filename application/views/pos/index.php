@@ -99,7 +99,7 @@
 				<div class="col-md-12" style="padding: 15px 25px;">
 					<form id="process-form">
 						<div class="form-group">
-							<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment" id="payment" autocomplete="off">
+							<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment (F1)" id="payment" autocomplete="off">
 						</div>
 						<div class="form-group">
 
@@ -107,7 +107,7 @@
 
 						</div>
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process" id="btn" >
+							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process (Enter)" id="btn" >
 						</div>
 					</form>
 				</div>
@@ -147,31 +147,34 @@
 					<div id="receipt">
 						<div class="r-header text-center">
 							<h3>Receipt</h3>
-							<div class="row">
-								<div class="col-md-5 text-left">
-									<div>Transaction Number:</div>
-									<div>Date: <span></span></div>
-									<div>Cashier:</div>
-									<div>Time:</div>
-
-								</div>
-								<div class="col-md-7 text-left">
-									<div id="r-id">005250</div>
-									<div id="r-date"><?php echo date('m/d/Y') ?></div>
-									<div id="r-cashier">Cashier</div>
-									<div id="r-time"><?php echo date('h:i a') ?></div> 
-								</div>
-							</div>
+							<table class="text-left">
+								<tr>
+									<td>Transaction Number: &nbsp;&nbsp;</td>
+									<td><div id="r-id">005250</div></td>
+								</tr>
+								<tr>
+									<td>Date: &nbsp;&nbsp;</td>
+									<td><div id="r-date"><?php echo date('m/d/Y') ?></div></td>
+								</tr>
+								<tr>
+									<td>Cashier: &nbsp;&nbsp;</td>
+									<td><div id="r-cashier">Cashier</div></td>
+								</tr>
+								<tr>
+									<td>Time: &nbsp;&nbsp;</td>
+									<td><div id="r-time"><?php echo date('h:i a') ?></div> </td>
+								</tr>
+							</table> 
 							<div class="clearfix"></div>
 						</div>
 						<div class="r-body">
 							<table class="table table-striped" id="r-items-table">
 								<thead>
 									<tr> 
-										<th>Item Name</th>
+										<th>Item </th>
 										<th>Price</th>
-										<th>Quantity</th>
-										<th>Sub Total</th>
+										<th>Qty</th>
+										<th>Sub</th>
 									</tr>
 								</thead>
 								<tbody>

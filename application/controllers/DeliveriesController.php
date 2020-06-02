@@ -124,6 +124,7 @@ class DeliveriesController extends CI_Controller
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
+		
 		$count = $this->db->get('delivery')->num_rows();
 	 	
 	 	$deliveries = $this->db->select("delivery.*, supplier.name, SUM(delivery_details.quantities * delivery_details.price) as total, SUM(delivery_details.defectives) as defectives")
