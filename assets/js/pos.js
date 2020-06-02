@@ -122,6 +122,11 @@
 			  		$(this).find("input[type='radio']").prop('checked', true);
 			  	});
 
+
+				$("#return").click(function(e) {
+
+					$("#return-modal").modal("toggle");
+				});
  
 			  	$("body").on('keydown', function(e) {
 					 
