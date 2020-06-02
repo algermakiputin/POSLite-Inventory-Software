@@ -1,3 +1,20 @@
+body {
+	background: red;
+}
+
+.text-left {
+	text-align: right;
+}
+.row .col-md-5 {
+	float: left;
+	width: 40%;
+}
+
+.row .col-md-7 {
+	float: right;
+	width: 60%;
+}
+
 .col-md-4 {
 	text-align: left;
 	float: left;
