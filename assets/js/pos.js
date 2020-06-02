@@ -737,7 +737,7 @@
 	$("#print").click(function(){
 		$("#receipt").print({
 	        	globalStyles: true,
-	        	mediaPrint: false,
+	        	mediaPrint: true,
 	        	stylesheet: base_url + 'assets/receipt.css',
 	        	noPrintSelector: ".no-print",
 	        	iframe: true,
@@ -745,7 +745,7 @@
 	        	prepend: null,
 	        	manuallyCopyFormValues: true,
 	        	deferred: $.Deferred(),
-	        	timeout: 500,
+	        	timeout: 300,
 	        	title: 'Receipt',
 	        	doctype: '<!doctype html>'
 		});
