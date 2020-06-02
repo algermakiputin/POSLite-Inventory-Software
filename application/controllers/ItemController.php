@@ -108,8 +108,9 @@ class ItemController extends AppController {
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
 			$deleteAction = ""; 
-
+			$barcode_action = "";
 			if ($this->session->userdata('account_type') == "Admin") {
+
 
 				$deleteAction = '
 						<li>
@@ -127,9 +128,20 @@ class ItemController extends AppController {
 					    </li>';
 			}
 
+			$barcode_generated = $this->db->where('item_id', $item->id)->get('barcodes')->row();
+
+			if ($barcode_generated)
+				$barcode_action = '
+							<li>
+                         <a href="' . base_url("BarcodesController/create/$item->id") .'">
+                             <i class="fa fa-barcode"></i> Print Barcode </a>
+                     </li>
+							';
+
 			$actions = '<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu">
+                     '.$barcode_action.'
                     	<li>
                             <a href="' . base_url("items/stock-in/$item->id") .'">
                                 <i class="fa fa-plus"></i> Stock In</a>
