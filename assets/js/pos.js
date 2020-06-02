@@ -122,25 +122,40 @@
 			  		$(this).find("input[type='radio']").prop('checked', true);
 			  	});
 
+ 
+			  	$("body").on('keydown', function(e) {
+					 
 
-			  	$(document).on('keyup', function(e) {
-			
 			  		if (e.keyCode === 13) {
+
+			  			e.preventDefault();
 
 			  			if ($("#advance_pricing_modal").hasClass("in")) {
 
 			  				$("#add-product").click();
 			  				
+			  			}else{
+
+			  				$("#process-form").submit();
 			  			}
 			  		}
 
+			  		if (e.keyCode === 112) {
+			  			e.preventDefault();
+			  			
+			  			$("#payment").focus();
+
+			  		}
+
 			  		if (e.keyCode == 119) {
+			  			e.preventDefault();
 
 			  			$("#open-transactions").click(); 
 			  			
 			  		} 
 
 			  		if (e.keyCode == 118) {
+			  			e.preventDefault();
 
 			  			$("#return-modal").modal("toggle");
 			  		}
