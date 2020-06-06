@@ -27,7 +27,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#" id="return" ><i class="fa fa-undo"></i> Return (F7)</a></li>
 					<li><a href="#" id="open-transactions"><i class="fa fa-exchange"></i> Transactions (F8)</a></li>
-					<li><a href="<?php echo base_url('items') ?>"><i class="glyphicon glyphicon-folder-close fa-fw"></i> Go to Inventory</a></li>
+					<li><a href="<?php echo base_url('expenses/new') ?>"><i class="fa fa-money fa-fw"></i> Expenses</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> <span class="caret"></span></a>
 						<ul class="dropdown-menu">
