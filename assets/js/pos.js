@@ -128,43 +128,7 @@
 					$("#return-modal").modal("toggle");
 				});
  
-			  	$("body").on('keydown', function(e) {
-					 
-
-			  		if (e.keyCode === 13) {
-
-			  			e.preventDefault();
-
-			  			if ($("#advance_pricing_modal").hasClass("in")) {
-
-			  				$("#add-product").click();
-			  				
-			  			}else{
-
-			  				$("#process-form").submit();
-			  			}
-			  		}
-
-			  		if (e.keyCode === 112) {
-			  			e.preventDefault();
-			  			
-			  			$("#payment").focus();
-
-			  		}
-
-			  		if (e.keyCode == 119) {
-			  			e.preventDefault();
-
-			  			$("#open-transactions").click(); 
-			  			
-			  		} 
-
-			  		if (e.keyCode == 118) {
-			  			e.preventDefault();
-
-			  			$("#return-modal").modal("toggle");
-			  		}
-			  	});
+			 
 
 			}
 		}
@@ -172,17 +136,24 @@
 		var scanner = {
 
 			init: function() {
-			 
+			 	
+			 	document.addEventListener('textInput', function (e){
+				    if(e.data.length >= 6){
+
+				    		alert(0)
+				        console.log('IR scan textInput', e.data);
+				        e.preventDefault();
+				    }
+				});
 				$(document).pos();
 				$(document).on('scan.pos.barcode', function(event){
-
-					console.log(event);
+ 
 					if (license === "silver" || license === "gold") {
 						if (event.code.length > 6) {
 							data = {};
 							data[csrfName] = csrfHash;
 							data['code'] = event.code;
-						
+						 
 							$.ajax({
 								type : 'POST',
 								url : base_url + 'items/find',
@@ -249,6 +220,43 @@
 						alert("Your license does not support Barcode Feature, Upgrade Now!");
 					}
 				}); 
+
+
+				 	$("body").keydown(function( e ) {
+
+				 		if (e.keyCode === 13) {
+	 						
+
+				  			if ($("#advance_pricing_modal").hasClass("in")) {
+
+				  				$("#add-product").click();
+				  				
+				  			}  
+				  		 	
+				  		} 
+
+				  		if (e.keyCode == 113) {
+
+				  			$("#process-form").submit();
+				  		}
+
+				  		if (e.keyCode === 112) { 
+				  		 
+				  			$("#payment").focus();
+				  			return false; 
+				  			 
+				  		}
+
+				  		if (e.keyCode == 119) { 
+				  			
+				  			$("#open-transactions").click();  
+				  		} 
+
+				  		if (e.keyCode == 118) { 
+				  			
+				  			$("#return-modal").modal("toggle"); 
+				  		}
+				 	});
 			}
 		}
 
