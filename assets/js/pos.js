@@ -136,15 +136,7 @@
 		var scanner = {
 
 			init: function() {
-			 	
-			 	document.addEventListener('textInput', function (e){
-				    if(e.data.length >= 6){
-
-				    		alert(0)
-				        console.log('IR scan textInput', e.data);
-				        e.preventDefault();
-				    }
-				});
+			 	 
 				$(document).pos();
 				$(document).on('scan.pos.barcode', function(event){
  
