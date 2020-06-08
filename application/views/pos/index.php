@@ -52,10 +52,10 @@
 					<table style="width: 100%" class="table table-bordered table-hover table-striped" id="item-table">
 						<thead>
 							<tr> 
-								<td>Item Name</td>
-								<td>Description</td> 
-								<td>Quantity</td>
-								<td>Price</td>
+								<td width="45%">Item Name</td>
+								<td width="25%">Description</td> 
+								<td width="15%">Quantity</td>
+								<td width="15%">Price</td>
 							</tr>
 						</thead>
 						<tbody> 
@@ -107,7 +107,7 @@
 
 						</div>
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process (F2)" id="btn" >
+							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process (Enter)" id="btn" >
 						</div>
 					</form>
 				</div>
