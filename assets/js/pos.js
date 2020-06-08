@@ -40,6 +40,8 @@
 			selectProduct: function() {
 
 				$("#item-table").on('click', 'tbody tr', function(event) {
+
+
 					var id = $(this).find('input[name="item-id"]').val();
 					var name = $(this).find('td').eq(0).text(); 
 					var price = $(this).find('td').eq(3).text();
@@ -52,6 +54,7 @@
 			 			var advance_pricing = JSON.parse(pricing);
 						var enable_ap = Object.keys(advance_pricing).length;
 
+						$("input[name='quantity-enter']").focus();
 						$("#product-name").text(name);
 						$("#item_id").val(id);
 						$("#capital").val(capital);
@@ -79,7 +82,7 @@
 						// var price_options = JSON.parse(pricing);
 						// console.log(price_options);
 						$("#advance_pricing_modal").modal('toggle'); 
-						
+						$("#quantity").focus();
 						$("payment").val('');
 						$("change").val('');
 				 	} 
@@ -194,7 +197,9 @@
 							 	 
 										// var price_options = JSON.parse(pricing);
 										// console.log(price_options);
+
 										$("#advance_pricing_modal").modal('toggle'); 
+										$("#quantity").focus();
 										recount();
 										$("payment").val('');
 										$("change").val(''); 
@@ -223,14 +228,13 @@
 
 				  				$("#add-product").click();
 				  				
-				  			}  
+				  			}  else {
+
+				  				$("#process-form").submit();
+				  			}
 				  		 	
 				  		} 
-
-				  		if (e.keyCode == 113) {
-
-				  			$("#process-form").submit();
-				  		}
+ 
 
 				  		if (e.keyCode === 112) { 
 				  		 
