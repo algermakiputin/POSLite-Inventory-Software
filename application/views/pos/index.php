@@ -246,6 +246,7 @@
 							<th>Transaction Number</th> 
 							<th>Staff</th>
 							<th>Total</th> 
+							<th>Receipt</th>
 						</tr>
 					</thead>
 				</table>

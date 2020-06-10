@@ -32,7 +32,7 @@
 						 	 
 							<div class="form-group">
 								<label># of Barcodes</label>  
-								<input type="text" required="required" id="number" placeholder="Number" value="0" name="number" class="form-control">
+								<input type="number" min="1" required="required" id="number" placeholder="Number" value="1" name="number" class="form-control">
 							</div>
 							<input type="hidden" name="item_id" value="<?php echo $barcode->item_id ?>" id="item_id">
 						  

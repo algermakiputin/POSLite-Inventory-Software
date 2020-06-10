@@ -11,6 +11,27 @@ class SalesController extends CI_Controller {
 			redirect(base_url('login'));
 		}
 	}
+
+	public function receipt($id) {
+ 		
+ 		$sales = $this->db->where('id', $id)->get('sales')->row();
+
+ 		if (!$sales)
+ 			return redirect('/');
+
+ 		$orderline = $this->db->where('sales_id', $sales->id)->get('sales_description')->result();
+
+ 		$sales_person = $this->db->where('id', $sales->user_id)->get('users')->row();
+
+ 		$sales_person = $sales_person ? $sales_person->name : "Not found";
+
+ 		$data['total'] = 0;
+ 		$data['sale'] = $sales;
+ 		$data['orderline'] = $orderline;
+ 		$data['sales_person'] = $sales_person;
+
+		$this->load->view('sales/receipt', $data);
+	} 
  
 
 	public function sales () {
@@ -431,7 +452,13 @@ class SalesController extends CI_Controller {
 					date('Y-m-d h:i:s A', strtotime($sale->date_time)),
 					$sale->transaction_number, 
 					$this->session->userdata('username'),
-					currency() . number_format($sale->sub, 2)
+					currency() . number_format($sale->sub, 2),
+					'<a 
+						class="btn btn-primary btn-sm" 
+						target="popup" 
+						onclick="window.open(\''.base_url('SalesController/receipt/' . $sale->id).' \', \'popup\', \'width=800,height=800\' )">
+					 	View Receipt
+						</a>'
 				];
 		}
 
