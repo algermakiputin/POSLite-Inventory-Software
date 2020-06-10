@@ -139,10 +139,52 @@
 		var scanner = {
 
 			init: function() {
-			 	 
+			 	
+			 	$("body").keydown(function( e ) {
+
+
+				 		if (e.keyCode === 13) {
+	 						
+
+
+				  			if ($("#advance_pricing_modal").hasClass("in")) {
+
+				  				$("#add-product").click();
+				  				
+				  			}  else {
+ 
+				  				
+				  			}
+				  		 	
+				  		} 
+
+				  		if (e.keyCode === 13 && e.altKey) {
+
+				  			$("#process-form").submit();
+				  		}
+ 
+
+				  		if (e.keyCode === 112) { 
+				  		 
+				  			$("#payment").focus();
+				  			return false; 
+				  			 
+				  		}
+
+				  		if (e.keyCode == 119) { 
+				  			
+				  			$("#open-transactions").click();  
+				  		} 
+
+				  		if (e.keyCode == 118) { 
+				  			
+				  			$("#return-modal").modal("toggle"); 
+				  		}
+				 	});
+
 				$(document).pos();
 				$(document).on('scan.pos.barcode', function(event){
- 
+ 			 
 					if (license === "silver" || license === "gold") {
 						if (event.code.length > 6) {
 							data = {};
@@ -219,40 +261,7 @@
 				}); 
 
 
-				 	$("body").keydown(function( e ) {
-
-				 		if (e.keyCode === 13) {
-	 						
-
-				  			if ($("#advance_pricing_modal").hasClass("in")) {
-
-				  				$("#add-product").click();
-				  				
-				  			}  else {
-
-				  				$("#process-form").submit();
-				  			}
-				  		 	
-				  		} 
- 
-
-				  		if (e.keyCode === 112) { 
-				  		 
-				  			$("#payment").focus();
-				  			return false; 
-				  			 
-				  		}
-
-				  		if (e.keyCode == 119) { 
-				  			
-				  			$("#open-transactions").click();  
-				  		} 
-
-				  		if (e.keyCode == 118) { 
-				  			
-				  			$("#return-modal").modal("toggle"); 
-				  		}
-				 	});
+				 	
 			}
 		}
 
@@ -349,8 +358,7 @@
 					dataset['data'] = [];
  					
  					$.each(rows, function(key, value) {
- 			 			
- 			 			console.log(value)
+ 			 			 
  						let val = $(value); 
  						let item_id = val.data("item");
  						let orderline_id = val.data('orderline');
@@ -407,10 +415,11 @@
 		} 
 
 		general.init();
-		scanner.init();
+		
 		cart.init();
 		returns.init(); 
 
+		scanner.init();
 	})();
 
 
