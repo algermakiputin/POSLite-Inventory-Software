@@ -25,9 +25,12 @@ class DeliveriesController extends CI_Controller
 	public function details($id) {
 		$data['delivery'] = $this->db->select('delivery.*, supplier.name')
 								->from('delivery')
+
 								->join('supplier', 'supplier.id = delivery.supplier_id')
+								->where('delivery.id', $id)
 								->get()
 								->row();
+
 		 
 		$data['deliveryDetails'] = $this->db->select("delivery_details.*, items.name as product_name, SUM(delivery_details.price * delivery_details.quantities) as subTotal")
 								->join('items', 'items.id = delivery_details.item_id', 'BOTH')
