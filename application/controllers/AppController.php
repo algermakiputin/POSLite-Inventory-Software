@@ -6,7 +6,18 @@ class AppController extends CI_Controller {
  
       parent::__construct();  
 
+      $this->cashier_restrictions();
 
+    }
+
+    public function cashier_restrictions() {
+
+    	$uri = uri_string();
+    	$restricted_page = ['dashboard', 'items','customers', 'sales', 'returns','categories', 'backups'];
+
+    	if ( in_array( $uri , $restricted_page ))
+    		die('Sorry, You Are Not Allowed to Access This Page.' . '<a href="'.base_url('pos').'">Return to POS</a>');
+  
     }
 
     public function licenseControl () {
@@ -52,11 +63,13 @@ class AppController extends CI_Controller {
 	public function upgrade() {
 		  
 		$data['license'] = get_license();
-		$data['limits'] = get_license_values();
- 
+		$data['limits'] = get_license_values(); 
 
 		$this->load->view('upgrade/index', $data);
 	}
+
+
+
 
 }
  
