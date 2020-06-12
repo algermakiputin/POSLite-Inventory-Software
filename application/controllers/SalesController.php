@@ -1,6 +1,7 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class SalesController extends CI_Controller {
+require_once(APPPATH."controllers/AppController.php");
+class SalesController extends AppController {
 
 	public function __construct() {
 
@@ -10,6 +11,7 @@ class SalesController extends CI_Controller {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));
 		}
+
 	}
 
 	public function receipt($id) {

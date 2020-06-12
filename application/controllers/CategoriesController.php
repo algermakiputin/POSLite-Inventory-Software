@@ -1,6 +1,7 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class CategoriesController Extends CI_Controller {
+require_once(APPPATH."controllers/AppController.php");
+class CategoriesController Extends AppController {
 
 	public function __construct() {
 		parent::__construct();

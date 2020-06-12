@@ -1,10 +1,12 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class CustomersController Extends CI_Controller {
+require_once(APPPATH."controllers/AppController.php");
+class CustomersController Extends AppController {
 
 	public function __construct() {
 		parent::__construct();
 		$this->load->config('license');
+		
 	}
 	
 	public function index() {
