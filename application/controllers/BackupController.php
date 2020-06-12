@@ -1,6 +1,7 @@
 <?php 
-
-class BackupController extends CI_Controller {
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+require_once(APPPATH."controllers/AppController.php");
+class BackupController extends AppController {
 
 	public function index() {
 		
