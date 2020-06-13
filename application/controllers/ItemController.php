@@ -148,7 +148,7 @@ class ItemController extends AppController {
 				$this->categories_model->getName($item->category_id), 
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
-				$stocksRemaining . ' pcs',
+				$stocksRemaining,
 				currency() . number_format($item->capital * $stocksRemaining,2), 
 				$actions
 			];
