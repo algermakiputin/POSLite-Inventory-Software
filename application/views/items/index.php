@@ -57,6 +57,8 @@
                     <th>Item Name</th>
                     <th>Supplier</th>
                     <th>Category</th> 
+                    <th>Location</th>
+                    <th>Unit</th>
                     <th>Capital</th> 
                     <th>Price</th>
                     <th>Stocks</th>
