@@ -146,6 +146,8 @@ class ItemController extends AppController {
 				$item->name,
 				$item->supplier,
 				$this->categories_model->getName($item->category_id), 
+				$item->location,
+				$item->main_unit,
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining,
@@ -273,6 +275,8 @@ class ItemController extends AppController {
 		$productImage = $_FILES['productImage'];
 		$price_label = $this->input->post('price_label[]');
 		$advance_price = $this->input->post('advance_price[]');
+		$unit = $this->input->post('unit');
+		$location = $this->input->post('location');
 	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
@@ -295,7 +299,9 @@ class ItemController extends AppController {
 				'status' => 1,
 				'barcode' => $barcode,
 				'price'	=> $price,
-				'capital' => $capital
+				'capital' => $capital,
+				'main_unit' => $unit,
+				'location' => $location
 			);
 		
 		if ($productImage) {
@@ -429,6 +435,8 @@ class ItemController extends AppController {
 		$reorder = $this->input->post('reorder');
 		$productImage = $_FILES['productImage'];
 		$supplier_id = $this->input->post('supplier');
+		$unit = $this->input->post('unit');
+		$location = $this->input->post('location');
 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
@@ -451,7 +459,9 @@ class ItemController extends AppController {
 						$upload['upload_data']['file_name'], 
 						$supplier_id, $this->input->post('barcode'),
 						$updated_price,
-						$capital
+						$capital,
+						$unit,
+						$location
 					);
 
 		$this->PriceModel->insert($price_label, $advance_price, $id);
