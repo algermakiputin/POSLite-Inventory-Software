@@ -16,8 +16,8 @@
 					<?php echo form_open_multipart('items/update', array('method' => 'post', 'id' => 'item-form')) ?>
 						<div class="col-lg-6 col-md-offset-2">
 							<div class="form-group"> 
-								<label>Barcode:</label>
-								<input type="text"  value="<?php echo $item->barcode; ?>" name="barcode" class="form-control" required="required"> 
+								<label>Barcode: <i title="You can use barcode scanner to automatically insert the barcode number below" class="fa fa-info-circle"></i></label>
+								<input type="text"  value="<?php echo $item->barcode; ?>" id="barcode" name="barcode" class="form-control" required="required"> 
 							</div>
 							<div class="form-group"> 
 								<label>Item Name:</label>
@@ -133,9 +133,21 @@
 	<!-- /.col-lg-12 -->
 </div>  
 
+<script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function(e) {
+
+		$(document).pos();
+
+		$(document).on('scan.pos.barcode', function(event){
+		  
+				if (event.code.length > 6) { 
+					 
+					 $("#barcode").val(event.code);
+				}
+		}); 
+
 
 		$("#add-price").click(function(e) {
 
