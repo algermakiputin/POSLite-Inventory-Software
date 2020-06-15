@@ -215,10 +215,11 @@ class ItemController extends AppController {
 			$quantity = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
 
 			return [ 
-				$item->main_unit . ' ' . ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'"> ' . 
+				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'"> ' . 
 				'<input type="hidden" name="capital" value="'.$item->capital.'">',
 				ucfirst($item->description), 
 				$quantity,
+				$item->main_unit,
 				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'>"
 			];
 		}, $items);
