@@ -44,10 +44,11 @@
 
 					var id = $(this).find('input[name="item-id"]').val();
 					var name = $(this).find('td').eq(0).text(); 
-					var price = $(this).find('td').eq(3).text();
+					var price = $(this).find('td').eq(4).text();
 					var description = $(this).find('td').eq(1).text();
 					var pricing = $(this).find('input[name="advance_pricing"]').val();
 					var capital = $(this).find('input[name="capital"]').val();
+					var item_unit = $(this).find('td').eq(3).text();
 				 	 
 			 		if (itemExist(id) == false) {
 				 		
@@ -58,7 +59,7 @@
 						$("#product-name").text(name);
 						$("#item_id").val(id);
 						$("#capital").val(capital);
-
+						$("#item_unit").val(item_unit);
 
 						$("#advance_pricing_options tbody").empty(); 
 						$("#advance_pricing_options tbody").append("<tr>" +
@@ -443,7 +444,9 @@
 		var quantity = $("#quantity").val();
 		var price = $("input[name='pricing']:checked").val(); 
 		let capital = $("#capital").val();
+		let unit = $("#item_unit").val();
 
+		
 
 		if (!quantity)
 			return alert("Quantity is required");
@@ -451,10 +454,10 @@
 		$("#advance_pricing_modal").modal('toggle');  
 		$("#payment").val('');
 		$("#change").val('');
-		insert_product(item_id, name, price, quantity, capital);
+		insert_product(item_id, name, price, quantity, capital, unit);
 
 	})
-	function insert_product(id, name, price, quantity, capital) {
+	function insert_product(id, name, price, quantity, capital, unit) {
  	
  		var sub = remove_comma(price.substring(1)) * quantity;
 
@@ -462,6 +465,7 @@
 				'<tr>' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<input name="capital" type="hidden" value="'+ capital +'">' +
+					'<input name="item_unit" type="hidden" value="'+ unit +'">' +
 					'<td>'+ name +'</td>' +
 					'<td><input  data-id="'+id+'" name="qty" type="text" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
 					'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
@@ -514,7 +518,8 @@
 					var r = $("#cart tbody tr").eq(i).find('td');
 					var quantity = r.eq(1).find('input').val();
 					var price = remove_comma(r.eq(3).text().substring(1));
-					var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val()
+					var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val();
+					var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
@@ -522,7 +527,8 @@
 							name : r.eq(0).text(),
 							subtotal : parseFloat(price) * parseInt(quantity),
 							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
-							capital : capital
+							capital : capital,
+							unit: main_unit
 						};
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);
@@ -536,6 +542,7 @@
 					$("#r-items-table tbody").append(
 							'<tr>' + 
 								'<td>'+value.name +'</td>' +
+								'<td>'+value.unit +'</td>' +
 								'<td>'+currency+ number_format(value.price) +'</td>' +
 								'<td>'+value.quantity+'</td>' +
 								'<td>'+currency+ number_format(value.subtotal)+'</td>' +
