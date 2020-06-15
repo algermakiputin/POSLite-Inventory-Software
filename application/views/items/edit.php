@@ -148,9 +148,21 @@
 	<!-- /.col-lg-12 -->
 </div>  
 
+<script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function(e) {
+
+		$(document).pos();
+
+		$(document).on('scan.pos.barcode', function(event){
+		  
+				if (event.code.length > 6) { 
+					 
+					 $("#barcode").val(event.code);
+				}
+		}); 
+
 
 		$("#add-price").click(function(e) {
 
