@@ -45,10 +45,7 @@
 								<label>Stock Location:</label>
 								<input type="text" required="required" placeholder="Location" name="location" class="form-control">
 							</div>
-							<div class="form-group col-md-6">  
-								<label>Unit:</label>
-								<input type="text" required="required" placeholder="Unit" name="unit" class="form-control">
-							</div>
+							
 							<div class="form-group col-md-6">  
 								<label>Capital Price:</label>
 								<input type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" id="selling-price">
@@ -56,6 +53,10 @@
 							<div class="form-group col-md-6">  
 								<label>Retail Price:</label>
 								<input type="text" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price">
+							</div>
+							<div class="form-group col-md-6">  
+								<label>Unit:</label>
+								<input type="text" required="required" placeholder="Unit" name="unit" class="form-control">
 							</div>
 
 							<div class="form-group col-md-6">  
