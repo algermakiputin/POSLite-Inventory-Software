@@ -41,10 +41,7 @@
 									<label>Stock Location:</label>
 									<input type="text" value="<?php echo $item->location ?>" required="required" placeholder="Location" name="location" class="form-control">
 								</div>
-								<div class="form-group col-md-6"> 
-									<label>Unit:</label>
-									<input type="text" value="<?php echo $item->main_unit; ?>" name="unit" class="form-control" required="required"> 
-								</div>
+								
 								<div class="form-group col-md-6"> 
 									<label>Capital Price:</label>
 									<input value="<?php echo $item->capital ?>" type="text" name="capital" class="form-control" required="required" id="capital-price">
@@ -53,6 +50,10 @@
 									<label>Retail Price:</label>
 									<input value="<?php echo $item->price ?>" type="text" name="price" class="form-control" required="required" id="selling-price">
 								</div>  
+								<div class="form-group col-md-6"> 
+									<label>Unit:</label>
+									<input type="text" value="<?php echo $item->main_unit; ?>" name="unit" class="form-control" required="required"> 
+								</div>
 
 								<div class="form-group col-md-6">
 									<label>Supplier:</label>
