@@ -143,6 +143,7 @@ class ItemController extends AppController {
          
 			$datasets[] = [
 				$this->disPlayItemImage($item->image),
+				$item->barcode,
 				$item->name,
 				$item->supplier,
 				$this->categories_model->getName($item->category_id), 

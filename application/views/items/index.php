@@ -54,6 +54,7 @@
                <thead>
                 <tr>
                     <th>&nbsp;</th>
+                    <th>Barcode</th>
                     <th>Item Name</th>
                     <th>Supplier</th>
                     <th>Category</th> 
