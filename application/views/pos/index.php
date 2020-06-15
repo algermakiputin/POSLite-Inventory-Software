@@ -52,9 +52,10 @@
 					<table style="width: 100%" class="table table-bordered table-hover table-striped" id="item-table">
 						<thead>
 							<tr> 
-								<td width="45%">Item Name</td>
-								<td width="25%">Description</td> 
+								<td width="40%">Item Name</td>
+								<td width="20%">Description</td> 
 								<td width="15%">Quantity</td>
+								<td width="10%">Unit</td>
 								<td width="15%">Price</td>
 							</tr>
 						</thead>
@@ -172,6 +173,7 @@
 								<thead>
 									<tr> 
 										<th>Item </th>
+										<th>Unit</th>
 										<th>Price</th>
 										<th>Qty</th>
 										<th>Sub</th>
@@ -376,6 +378,7 @@
 
 				<form class="form-inline" id="add-to-cart-form">
 					<div class="form-group">
+						<input type="hidden" name="item_unit" id="item_unit">
 						<input type="hidden" name="capital" id="capital" value="0">
 						<input type="hidden" name="item_id" id="item_id">
 						<label for="quantity-enter">Enter Quantity &nbsp;</label>
