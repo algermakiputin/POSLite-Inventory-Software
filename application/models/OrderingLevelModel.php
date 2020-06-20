@@ -1,5 +1,5 @@
 <?php 
-
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class OrderingLevelModel extends CI_Model { 
 
 	public function insert( $item_id ) {

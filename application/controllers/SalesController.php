@@ -217,11 +217,15 @@ class SalesController extends AppController {
 
 		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
 		$transaction_number = "TRN" . sprintf("%04s", ((int)$last_sales_id + 1 )  ); 
+		$customer_id = $this->input->post('customer_id');
+		$customer_name = $this->input->post('customer_name');
 
 		$this->db->insert('sales',[ 
 				'date_time' => get_date_time(),
 				'user_id' => $this->session->userdata('id'),
-				'transaction_number' => $transaction_number
+				'transaction_number' => $transaction_number,
+				'customer_id' => $customer_id,
+				'customer_name' => $customer_name
 			]);
 		$sales_id = $this->db->insert_id();
 

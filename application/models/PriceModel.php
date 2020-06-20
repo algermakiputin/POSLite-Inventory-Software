@@ -1,5 +1,5 @@
 <?php 
-
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class PriceModel extends CI_Model { 
 
 	public function insert($price_label, $advance_price, $item_id) {

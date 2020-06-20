@@ -1,5 +1,5 @@
 <?php 
-
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class ReturnsModel extends CI_Model {
 
 	public function insert($data, $OrderingLevelModel) {

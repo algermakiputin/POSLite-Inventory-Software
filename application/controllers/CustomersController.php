@@ -5,6 +5,8 @@ class CustomersController Extends AppController {
 
 	public function __construct() {
 		parent::__construct();
+		
+		$this->load->model('CustomersModel');
 		$this->load->config('license');
 		
 	}
@@ -17,6 +19,21 @@ class CustomersController Extends AppController {
  		$data['controller'] = $this;
 		$this->load->view('master',$data);
 
+
+	}
+
+	public function select() {
+
+		$q = $this->input->post('q');
+
+		$customers = $this->db->select('id, name as text')
+									->from('customers')
+									->like('name', $q, 'BOTH')
+									->get()
+									->result();
+
+		echo json_encode($customers);
+		die();
 
 	}
 
@@ -119,5 +136,7 @@ class CustomersController Extends AppController {
 		$customer = $this->db->where('id',$this->input->post('id'))->get('customers')->row();
 		echo json_encode($customer);
 	}
+
+
 
 }

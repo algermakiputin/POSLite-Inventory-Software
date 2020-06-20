@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class SalesModel extends CI_Model {
 
 	public function insert_sales($records, $customer_id) { 

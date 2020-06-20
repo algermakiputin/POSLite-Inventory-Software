@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
-
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/select2.min.css'); ?>">
 	<meta name="license" content="<?php echo get_license(); ?>">
 	<meta name="base_url" content="<?php echo base_url() ?>">
 	<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
@@ -105,6 +105,8 @@
 				</div>
 				<div class="col-md-12" style="padding: 15px 25px;">
 					<form id="process-form">
+						<input type="hidden" name="customer_name" id="customer_name">
+						<input type="hidden" name="customer_id" id="customer_id">
 						<div class="form-group">
 							<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment (F1)" id="payment" autocomplete="off">
 						</div>
@@ -266,24 +268,24 @@
 	</div>
 </div>
 
-<div class="modal " id="customer-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
+<div class="modal " id="customer-modal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Select Customer</h4> 
+				<h4 class="modal-title text-center">Select Customer</h4> 
 			</div>
-			<div class="modal-body">
+			<div class="modal-body" style="padding: 30px;">
 			 	<form>
 			 		<div class="form-group">
-			 			<label>Customer</label>
-			 			<select>
+			 			<label>Customer:</label>
+			 			<select class="form-control" id="select-customer">
 			 				
 			 			</select>
 			 		</div>
 			 	</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+				<button id="complete-transaction"  data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing Order" type="button" class="btn btn-info" data-dismiss="modal">Complete Transaction</button> 
 			</div>
 		</div>
 	</div>
@@ -437,6 +439,8 @@
 <script src="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/print.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/select2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/pos.js') ?>"></script>
+
 </body>
 </html>

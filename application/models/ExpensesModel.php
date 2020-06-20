@@ -1,5 +1,5 @@
 <?php 
-
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class ExpensesModel extends CI_Model {
 
 	public function annual_expenses() {
