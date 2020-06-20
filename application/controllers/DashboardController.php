@@ -110,12 +110,12 @@ class DashboardController extends AppController {
 
 	private function top10_product() {
 
-		$date = date('Y-m-d');
+		$date = date('Y-m');
 
 		$sales = $this->db->select('SUM(quantity) as qty, name, SUM(quantity * price) as revenue')
 								->from('sales_description')
 								->group_by('item_id')
-								->where('DATE_FORMAT(created_at, "%Y-%m-%d") =', $date)
+								->where('DATE_FORMAT(created_at, "%Y-%m") =', $date)
 								->where('quantity >=', 1)
 								->order_by('qty', "DESC")
 								->limit(10)

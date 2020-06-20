@@ -51,7 +51,7 @@ echo $this->session->flashdata('successMessage');
         <div class="col-md-12">
            <div class="panel panel-default">
                <div class="panel-heading">
-                   Product Ranking: <?php echo date('Y/m/d') ?>
+                   Product Ranking: <?php echo date('F Y') ?>
                </div> 
                <div class="panel-body"> 
                 
