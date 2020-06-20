@@ -33,12 +33,12 @@ class DashboardController extends AppController {
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
 		$data['no_stocks'] = count(noStocks());
 
-		$annual_expenses = $this->ExpensesModel->daily_expenses()->total;
-		$annual_sales = $this->SalesModel->daily_sales(date('d'))->total;
+		$daily_expenses = $this->ExpensesModel->daily_expenses()->total;
+		$daily_sales = $this->SalesModel->daily_sales(date('d'))->total;
 
 		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
 		$data['sales'] = number_format($this->SalesModel->get_sales(date('Y-m-d'))->total,2);
-		$data['expenses'] =  number_format($annual_expenses, 2);
+		$data['expenses'] =  number_format($daily_expenses, 2);
 		$data['inventory_value'] = number_format( $this->ItemModel->inventory_value(), 2);
 		 
 		$this->load->view('master', $data);
