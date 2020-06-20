@@ -59,25 +59,25 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td> 
+											<td width="30%"> 
 												<input type="text" name="product[]" class="form-control product" placeholder="Type Product Name">
 												<input type="hidden" name="product_id[]" >
 											</td>
-											<td> 
+											<td width="15%"> 
 
 												<input type="text" placeholder="YYYY-mm-dd" name="expiry_date[]" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" required="required"> 
 											</td>
 											
-											<td>
+											<td width="15%">
 												<input type="text" name="price[]" placeholder="Price Per Unit" class="form-control" required="required">
 											</td>
-											<td>
+											<td width="10%">
 											 	<input type="text" name="quantity[]" placeholder="QTY" class="form-control" required="required">
 											</td>
-											<td>
+											<td width="15%">
 												<input type="text" name="defective[]" placeholder="Defectives" class="form-control" required="required"> 
 											</td>
-											<td> 
+											<td width="15%"> 
 												<input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> 
 											</td>
 											<td></td>

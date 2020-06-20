@@ -53,13 +53,17 @@
 							<td><?php echo $row->quantity; ?></td>
 							<td><?php echo currency() . number_format($row->price * $row->quantity, 2); ?></td>
 						</tr>
-						<?php $total+= $row->price * $row->quantity; ?>
+						<?php 
+							$total+= $row->price * $row->quantity; 
+							$discount += $row->discount;
+						?>
 					<?php endforeach; ?>
 				</tbody>
 			</table>
 			<hr>
 			<div class="text-right">  
-				<div>Grand Total <span id="r-total-amount"><?php echo currency() . number_format( $total, 2 ) ?> </span></div> 
+				<div><b>Total Discount</b> <span id="r-total-amount"><?php echo currency() . number_format( $discount, 2 ) ?> </span></div> 
+				<div><b>Grand Total</b> <span id="r-total-amount"><?php echo currency() . number_format( $total, 2 ) ?> </span></div> 
 			</div>
 
 			<div class="r-footer text-center">
