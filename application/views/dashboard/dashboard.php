@@ -17,20 +17,20 @@ echo $this->session->flashdata('successMessage');
     </div>
     <div class="col-md-3">
         <div class="widget-box">
-            <h3>Sales</h3>
+            <h3>Revenue</h3>
             Today: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $sales; ?></span>
         </div>
     </div>
     <div class="col-md-3">
         <div class="widget-box">
             <h3>Expenses</h3>
-            This year: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $expenses ?></span>
+            Today: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $expenses ?></span>
         </div>
     </div>
     <div class="col-md-3">
         <div class="widget-box">
-            <h3>Revenue</h3>
-            This year: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $revenue ?></span>
+            <h3>Total Inventory</h3>
+            Current: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $inventory_value ?></span>
         </div>
     </div>
 </div>
@@ -58,7 +58,8 @@ echo $this->session->flashdata('successMessage');
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th colspan="2">#</th>
+                            <th colspan="">#</th>
+                            <th>Product Name</th>
                             <th>Sold</th>
                         </tr>
                     </thead>
@@ -139,6 +140,11 @@ echo $this->session->flashdata('successMessage');
 </div>
 </div>
 <br/>
+<style type="text/css">
+    .panel-heading {
+        font-weight: bold;
+    }
+</style>
 <script src="<?php echo base_url('assets/vendor/chart.min.js') ?>"></script>
 
 <script>
