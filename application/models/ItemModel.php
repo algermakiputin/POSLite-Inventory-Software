@@ -11,6 +11,16 @@ class ItemModel extends CI_Model {
 					->get()
 					->result(); 
 	}
+
+	public function inventory_value() {
+
+		return $this->db->select("SUM(items.capital * ordering_level.quantity) as total")
+												->from('items')
+												->join('ordering_level', 'ordering_level.item_id = items.id')
+												->get()
+												->row()
+												->total;
+	}
  
 	public function deleteItem($id) {
 

@@ -94,12 +94,9 @@ class ItemController extends AppController {
 		
 		$datasets = [];
 
-		$inventory__total = $this->db->select("SUM(items.capital * ordering_level.quantity) as total")
-								->from('items')
-								->join('ordering_level', 'ordering_level.item_id = items.id')
-								->get()
-								->row()
-								->total;
+		$this->load->model('ItemModel');
+
+		$inventory__total = $this->ItemModel->inventory_value();
 
 
 		foreach ($items as $item) {
