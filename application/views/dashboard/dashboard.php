@@ -183,11 +183,11 @@ echo $this->session->flashdata('successMessage');
                     label: 'Today ',
                     data: dataset1,
                     backgroundColor: [
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
+                    'rgba(37, 119, 181,0.55)',
+                    'rgba(37, 119, 181,0.55)',
+                    'rgba(37, 119, 181,0.55)',
+                    'rgba(37, 119, 181,0.55)',
+                    'rgba(37, 119, 181,0.55)',
                     ],
                     borderColor: [
                     'rgba(66,139,202,0.5)',
@@ -198,12 +198,12 @@ echo $this->session->flashdata('successMessage');
 
                     ],
                     pointStyle: 'circle', 
-                    pointBackgroundColor: "rgba(255,255,255,0.4)",
-                    pointBorderColor: "rgba(244,244,244,0.5)",
-                    pointHoverBackgroundColor: "rgba(37, 119, 181,1)",
-                    pointHoverBorderColor: "rgba(244,244,244,0.5)",
+                    pointBackgroundColor: "rgba(255,255,255,0.1)",
+                    pointBorderColor: "rgba(244,244,244,0.1)",
+                    pointHoverBackgroundColor: "rgba(37, 119, 181,0.1)",
+                    pointHoverBorderColor: "rgba(244,244,244,0.1)",
                     pointRadius: 1,
-            pointHitRadius: 10,
+                    pointHitRadius: 10,
                     borderWidth: 3
                 },
                 {
