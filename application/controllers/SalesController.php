@@ -28,6 +28,7 @@ class SalesController extends AppController {
  		$sales_person = $sales_person ? $sales_person->name : "Not found";
 
  		$data['total'] = 0;
+ 		$data['discount'] = 0;
  		$data['sale'] = $sales;
  		$data['orderline'] = $orderline;
  		$data['sales_person'] = $sales_person;

@@ -21,23 +21,21 @@
 
             <li data-step="2" data-intro="This menu takes you to the customer page where you can manage your customers.">
                 <a href="<?php echo base_url('customers') ?>"><i class="fa fa-table fa-fw"></i> Customers</a>
-            </li>
-            <?php if (is_admin()): ?>
-            <li data-step="3" data-intro="This menu will takes you to the suppliers page where you can manage your suppliers.">
-                <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-industry fa-fw"></i> Suppliers</a>
-            </li>
-            <?php endif; ?>
+            </li> 
             <?php if ($this->session->userdata('account_type') == "Admin"): ?>
                 <li data-step="4" data-intro="If you have products delivered, you can save it here.">
-                    <a href="#"><i class="fa fa-truck fa-fw"></i> Deliveries<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-industry fa-fw"></i> Supplier<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Deliveries</a>
+                            <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-circle-o"></i> Suppliers</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Supplier Deliveries</a>
                         </li>
                         
                         <?php if ($this->session->userdata('account_type') == "Admin"): ?>
                             <li>
-                                    <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Delivery</a>
+                                    <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Supplier Delivery</a>
                                 </li>
                         <?php endif; ?>
                          
