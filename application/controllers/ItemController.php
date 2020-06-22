@@ -22,6 +22,70 @@ class ItemController extends AppController {
 		 
 	}
 
+	public function top100_products() {
+
+		$products = $this->db->select('items.*, sales_description.item_id, SUM(sales_description.quantity) as total')
+									->from('items')
+									->join('sales_description', 'sales_description.item_id = items.id', 'LEFT')
+									->where('date_format(sales_description.created_at, "%Y") =', date('Y'))
+									->group_by('items.id')
+									->order_by('total', 'DESC')
+									->limit(100)
+									->get()
+									->result();
+ 		return $products;
+	}
+
+
+	public function data() {
+		$orderingLevel = $this->OrderingLevelModel;
+		$price = $this->PriceModel;
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+		$draw = $this->input->post('draw');
+
+
+		if ($draw == 1) {
+			$items = $this->top100_products();
+		}else {
+
+			$items = $this->dataFilter($search, $start, $limit);
+		}
+
+
+		$itemCount = $this->db->get('items')->num_rows();
+
+		$datasets = array_map(function($item) use ($orderingLevel){
+		  
+			$advance_price = json_encode(
+								$this->db->select('price, label')
+											->where('item_id', $item->id)
+											->get('prices')
+											->result());
+
+			$quantity = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
+
+			return [ 
+				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'"> ' . 
+				'<input type="hidden" name="capital" value="'.$item->capital.'">',
+				ucfirst($item->description), 
+				$quantity,
+				$item->main_unit,
+				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'>"
+			];
+		}, $items);
+
+		$count = count($datasets);
+
+		echo json_encode([
+				'draw' => $this->input->post('draw'),
+				'recordsTotal' => $count,
+				'recordsFiltered' => $itemCount,
+				'data' => $datasets
+			]);
+	}
+
 	public function find() {
 		$barcode = $this->input->post('code');
 		$item = $this->db->where('barcode', $barcode)->get('items')->row();
@@ -195,44 +259,7 @@ class ItemController extends AppController {
 		$this->load->view('master', $data);
 	}
 
-	public function data() {
-		$orderingLevel = $this->OrderingLevelModel;
-		$price = $this->PriceModel;
-		$start = $this->input->post('start');
-		$limit = $this->input->post('length');
-		$search = $this->input->post('search[value]'); 
-		$items = $this->dataFilter($search, $start, $limit);
-		$itemCount = $this->db->get('items')->num_rows();
-
-		$datasets = array_map(function($item) use ($orderingLevel){
-		  
-			$advance_price = json_encode(
-								$this->db->select('price, label')
-											->where('item_id', $item->id)
-											->get('prices')
-											->result());
-
-			$quantity = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
-
-			return [ 
-				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'"> ' . 
-				'<input type="hidden" name="capital" value="'.$item->capital.'">',
-				ucfirst($item->description), 
-				$quantity,
-				$item->main_unit,
-				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'>"
-			];
-		}, $items);
-
-		$count = count($datasets);
-
-		echo json_encode([
-				'draw' => $this->input->post('draw'),
-				'recordsTotal' => $count,
-				'recordsFiltered' => $itemCount,
-				'data' => $datasets
-			]);
-	}
+	
 
 	public function dataFilter($search, $start, $limit) {
 	 

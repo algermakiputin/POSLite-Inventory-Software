@@ -8,7 +8,13 @@ body {
 	color: #141823 ;
 }
 
+.menu-wrapper {
+	padding: 10px 20px;
+}
  
+div.dataTables_processing {
+	top: 200px!important;
+}
 
 #cart th {
 	background-color: #f4f4f5;
@@ -16,7 +22,19 @@ body {
 	top: 0;
 	left: 0; 
 	z-index: 100;
+}
 
+#item-table #header td {
+	background-color: #f4f4f5;
+	position: sticky;
+	top: -20px;
+	left: 0; 
+	z-index: 100;
+}
+
+#item-table-wrapper {
+	overflow:auto;
+	border-bottom: solid 1px #eee;
 }
 
 
@@ -31,13 +49,16 @@ body {
 }
 
 .select2-selection__rendered {
-    line-height: 35px !important;
+    line-height: 35px ;
 }
 .select2-container .select2-selection--single {
-    height: 35px !important;
+    height: 35px ;
 }
 .select2-selection__arrow {
-    height: 34px !important;
+    height: 34px ;
+}
+.select2-container--default .select2-selection--single {
+  border-color: #ddd;
 }
 
 .modal-title {

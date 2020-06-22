@@ -46,6 +46,31 @@ $(document).ready(function() {
 		sessionStorage.setItem("demo", false);
 	}
 
+	$("#select-customer").select2({ 
+		ajax: {
+			method: "POST",
+			url: base_url + 'CustomersController/select',
+			dataType: 'json',
+			data: function ( params ) {
+
+				let data = {};
+				data[csrfName] = csrfHash;
+				data['q'] = params.term
+				
+				return data;
+			},
+			processResults: function (data) {
+
+		      // Transforms the top-level key of the response object from 'items' to 'results'
+		      return {
+		        results: data
+		      };
+		    }, 
+
+		}, 
+		placeholder: "Select Customer"
+	});
+
 	(function() {
 		var itemTable;
 		var items = {		
@@ -176,6 +201,7 @@ $(document).ready(function() {
 			init : function() {
 				this.deletePurchaseItem();
 				this.salesDataTable();
+				this.customer_datatable();
 			},
 			deletePurchaseItem : function() {
 
@@ -306,6 +332,43 @@ $(document).ready(function() {
 						$("#total-net").text('₱' + data.net);
 					}
 				});
+			},
+
+			customer_datatable: function() {
+				var customer_sales_table = $("#customer_sales_table").DataTable({
+					ajax: {
+						url: base_url + 'SalesController/customer_datatable',
+						type: 'POST',
+						data: data,
+					}, 
+					searching : true,
+					ordering : false,
+					bLengthChange :false,
+					serverSide : true,
+					info : false,
+					processing : true,
+					bsearchable : true,
+					paging : false,
+					dom : 'lrtip',
+					drawCallback: function(settings) {
+					 
+						$("#customer-total-sales").text(settings.json.total); 
+					}
+				});
+
+				$("#customer-run-reports").click(function(e) {
+
+					var sales_from = $("#customer_from").val();
+					var sales_to = $("#customer_to").val();
+					var customer_id = $("#select-customer").val();
+
+					customer_sales_table.columns(0).search(sales_from)
+												.columns(1).search(sales_to)
+												.columns(2).search(customer_id)
+												.draw();
+
+				})
+
 			}
 		}
 

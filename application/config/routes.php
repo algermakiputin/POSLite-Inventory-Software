@@ -93,6 +93,8 @@ $route['logout'] = 'AuthController/logout';
 $route['users/history'] = 'UsersController/history';
 $route['pos'] = 'pos_con/pos';
 
+$route['sales/customer'] = "SalesController/customer";
+
 $route['returns'] = "ReturnsController/view";
 
 $route['categories/get'] = 'CategoriesController/get';

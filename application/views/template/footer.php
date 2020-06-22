@@ -19,5 +19,6 @@
 <script src="<?php echo base_url('assets/vendor/parsley.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/preview-image.js') ?>"></script> 
 <script src="<?php echo base_url('assets/js/jquery-confirm.min.js') ?>"></script> 
+<script type="text/javascript" src="<?php echo base_url('assets/js/select2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/intro.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/index.js') ?>"></script> 

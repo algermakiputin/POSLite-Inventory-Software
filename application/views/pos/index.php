@@ -4,12 +4,13 @@
 	<title>POS - Sales And Inventory Management System</title>
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/logo/poslite.png') ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/bootstrap/css/bootstrap.css'); ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/select2.min.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/pos_style.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/jquery-ui/jquery-ui.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/select2.min.css'); ?>">
+	
 	<meta name="license" content="<?php echo get_license(); ?>">
 	<meta name="base_url" content="<?php echo base_url() ?>">
 	<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
@@ -53,11 +54,11 @@
 
 				<h3>List of Items</h3>
 
-				<div class="content">
+				<div class="content" id="item-table-wrapper">
 					<label>Select Item</label>
 					<table style="width: 100%" class="table table-bordered table-hover table-striped" id="item-table">
 						<thead>
-							<tr> 
+							<tr id="header"> 
 								<td width="40%">Item Name</td>
 								<td width="20%">Description</td> 
 								<td width="15%">Quantity</td>
@@ -68,6 +69,18 @@
 						<tbody> 
 						</tbody>
 					</table>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div id="wrapper1" class="menu-wrapper">
+							
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div id="wrapper2" class="menu-wrapper">
+							
+						</div>
+					</div>
 				</div>
 
 			</div>
@@ -272,21 +285,28 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title text-center">Select Customer</h4> 
+				<h4 class="modal-title text-center">Customer Selection</h4> 
 			</div>
 			<div class="modal-body" style="padding: 30px;">
 			 	<form>
-			 		<div class="form-group">
-			 			<label>Customer:</label>
-			 			<select class="form-control" id="select-customer">
-			 				
-			 			</select>
-			 		</div>
+			 		<label>Select Customer</label>
+			 		<div class="input-group">
+					  <select class="form-control" id="select-customer"> 
+					  </select>            
+					  <span class="input-group-btn">
+					    <button 
+					    	class="btn btn-info" 
+					    	type="button"  
+					    	tabindex="-1"	
+					    	id="complete-transaction"  data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing Order"
+					    	>Complete</button>
+					  </span>
+					</div> 
 			 	</form>
-			</div>
-			<div class="modal-footer">
-				<button id="complete-transaction"  data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing Order" type="button" class="btn btn-info" data-dismiss="modal">Complete Transaction</button> 
-			</div>
+			</div> 
+			<div class="modal-footer"> 
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
 		</div>
 	</div>
 </div>

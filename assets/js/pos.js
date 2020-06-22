@@ -37,6 +37,11 @@
 						data : data,
 						type : 'POST'
 					},
+					iDisplayLength: 100,
+					initComplete: function() {
+						$("#item-table_info").appendTo("#wrapper1");
+						$("#item-table_paginate").appendTo("#wrapper2");
+					}
 				});
 			},
 			selectProduct: function() {
@@ -121,6 +126,8 @@
 				$(".header .box").css('overflow-y', 'auto');
 				$("#cart-tbl").css('min-height', (dHeight - ( 231 + 95)) + 'px');
 				$("#cart-tbl").css('max-height', (dHeight - ( 150 + 261)) + 'px');
+
+				$("#item-table-wrapper").css('max-height', dHeight - 300 + 'px');
 
 
 				$("body").on('click', '#advance_pricing_options tbody tr', function() {
@@ -679,13 +686,17 @@
 				totalDiscount = 0;
 
 				$("#complete-transaction").button('reset');
+				$("#customer-modal").modal('toggle');
 			 	
 			},
 			error: function() {
 				alert("Opps someting went wrong please reload the page and try agian");
 				$("#complete-transaction").button('reset');
+				$("#customer-modal").modal('toggle');
 			}
 		})
+
+
 		return;
 		 
 	}

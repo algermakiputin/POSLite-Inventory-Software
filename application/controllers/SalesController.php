@@ -14,6 +14,52 @@ class SalesController extends AppController {
 
 	}
 
+	public function customer_datatable() {
+
+		$this->load->model('SalesModel');
+
+		$from = $this->input->post('columns[0][search][value]');
+		$to = $this->input->post('columns[1][search][value]');  
+		$customer_id = $this->input->post('columns[2][search][value]');  
+		$sales = $this->SalesModel->customer($from, $to, $customer_id);
+		$total_sales = 0;
+		$datasets = [];
+	 	
+
+		foreach ($sales as $sale) {
+
+			$total = $this->db->select('SUM((price * quantity) - discount) as total')
+									->where('sales_id', $sale->id)
+									->get('sales_description')
+									->row()->total;
+
+			$total_sales += $total;
+			$user = $this->db->where('id', $sale->user_id)
+									->get('users')
+									->row()->name;
+
+			$datasets[] = [
+					$sale->transaction_number,
+					$sale->date_time,
+					$user,
+					currency() . number_format($total, 2),
+					"<a target='__blank' href='". base_url('SalesController/sales_view/'  . $sale->id) ."' class='btn popup btn-sm btn-primary'>View Details</a>"
+				];	
+
+			
+		}
+
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => 0,
+			'recordsFiltered' => 0,
+			'data' => $datasets, 
+			'total' => currency() . number_format($total_sales, 2)
+		]);
+ 		
+
+	}
+
 	public function receipt($id) {
 
  		$sales = $this->db->where('id', $id)->get('sales')->row();
@@ -35,6 +81,12 @@ class SalesController extends AppController {
 
 		$this->load->view('sales/receipt', $data);
 	} 
+
+	public function customer() {
+
+		$data['content'] = "sales/customer";
+		$this->load->view('master', $data);
+	}
  
 
 	public function sales () {
@@ -401,6 +453,27 @@ class SalesController extends AppController {
 		]);
 	}
 
+	public function sales_view( $id ) {
+
+		$sale = $this->db->where('id', $id)
+								->get('sales')
+								->row();
+ 
+		if (!$sale)
+			return redirect('/');
+
+		$orderline = $this->db->where('sales_id', $sale->id)
+									->get('sales_description')
+									->result();
+
+		$data['sale'] = $sale;
+		$data['orderline'] = $orderline;
+		$data['total'] = 0;
+		$data['salesperson'] = $this->db->where('id', $sale->user_id)->get('users')->name;
+		$data['content'] = "sales/details";
+		$this->load->view('master', $data);
+	}
+ 
 	public function details() {
 		$id = $this->input->post('id');
 		$datasets = [];

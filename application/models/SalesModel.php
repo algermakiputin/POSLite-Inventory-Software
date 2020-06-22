@@ -93,5 +93,20 @@ class SalesModel extends CI_Model {
 		$sql = $this->db->where('DATE_FORMAT(date_time,"%Y")', $year)->get('sales');
 		return $sql->result();
 	}
+
+	public function customer($from, $to, $customer_id) {
+
+		$from = $from ? $from : date('Y-m-d');
+		$to = $to ? $to : date('Y-m-d');
+
+		$sales = $this->db->where('customer_id', $customer_id)
+								->where('date_format(date_time, "%Y-%m-%d") >=', $from)
+								->where('date_format(date_time, "%Y-%m-%d") <=', $to)
+								->get('sales')
+								->result();
+ 
+
+		return $sales;
+	}
 }
 ?>
