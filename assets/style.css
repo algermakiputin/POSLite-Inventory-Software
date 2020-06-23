@@ -61,15 +61,12 @@ html, body {
 }
 
 
-@media screen (min-width: 800px) {
+@media screen (min-width: 768px) {
 
   .navbar-header {
     width: 250px;
     background-color: #444;
-  }
-  .sidebar {
-    margin-top: 55px;
-  }
+  } 
 }
 .navbar-static-top {
   margin-bottom: 0;
