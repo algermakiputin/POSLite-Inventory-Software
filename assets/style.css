@@ -61,9 +61,15 @@ html, body {
 }
 
 
-.navbar-header {
-  width: 250px;
-  background-color: #444;
+@media screen (min-width: 800px) {
+
+  .navbar-header {
+    width: 250px;
+    background-color: #444;
+  }
+  .sidebar {
+    margin-top: 55px;
+  }
 }
 .navbar-static-top {
   margin-bottom: 0;
@@ -87,9 +93,7 @@ html, body {
   padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5;
 }
 
-.sidebar {
-  margin-top: 55px;
-}
+
 
 body {
   overflow-x: hidden;
