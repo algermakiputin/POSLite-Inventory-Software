@@ -299,8 +299,7 @@ class SalesController extends AppController {
 				$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity);
 				$transactionProfit += $saleProfit;
 				$datasets[] = [ 
-					date('Y-m-d', strtotime($sale->date_time)),  
-					$staff,
+					date('Y-m-d h:i:s A', strtotime($sale->date_time)),   
 					$desc->name,
 					$desc->quantity,
 					$desc->returned,

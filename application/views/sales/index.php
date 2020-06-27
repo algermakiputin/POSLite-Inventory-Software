@@ -100,8 +100,7 @@
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
-								<th >Date</th> 
-								<th >Staff</th>
+								<th >Date Time</th>  
 								<th >Item Name</th> 
 								<th >Quantity</th>
 								<th> Returned</th>
