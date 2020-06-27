@@ -8,6 +8,7 @@
 	<style type="text/css">
 		#receipt {
 			width: 480px;
+			padding: 10px;
 		}
 
 	</style>
@@ -62,8 +63,9 @@
 			</table>
 			<hr>
 			<div class="text-right">  
-				<div><b>Total Discount</b> <span id="r-total-amount"><?php echo currency() . number_format( $discount, 2 ) ?> </span></div> 
-				<div><b>Grand Total</b> <span id="r-total-amount"><?php echo currency() . number_format( $total, 2 ) ?> </span></div> 
+				<div>Sub Total:  <span id="r-total-amount"><?php echo currency() . number_format( $total, 2 ) ?> </span></div> 
+				<div>Discount:  <span id="r-total-amount"><?php echo currency() . number_format( $discount, 2 ) ?> </span></div> 
+				<div>Grand Total:  <span id="r-total-amount"><?php echo currency() . number_format( $total - $discount, 2 ) ?> </span></div> 
 			</div>
 
 			<div class="r-footer text-center">
