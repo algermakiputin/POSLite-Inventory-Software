@@ -521,8 +521,7 @@
 					var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val();
 					var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
 					var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
-
-					alert(discount)
+ 
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
