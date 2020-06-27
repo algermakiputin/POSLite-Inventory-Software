@@ -40,25 +40,7 @@
 										<option value="<?php echo $cat->id ?>"> <?php echo ucwords($cat->name) ?> </option>
 									<?php endforeach; ?>
 								</select>
-							</div> 
-							<div class="form-group col-md-6">  
-								<label>Stock Location:</label>
-								<input type="text" required="required" placeholder="Location" name="location" class="form-control">
-							</div>
-							
-							<div class="form-group col-md-6">  
-								<label>Capital Price:</label>
-								<input type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" id="selling-price">
-							</div>
-							<div class="form-group col-md-6">  
-								<label>Retail Price:</label>
-								<input type="text" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price">
-							</div>
-							<div class="form-group col-md-6">  
-								<label>Unit:</label>
-								<input type="text" required="required" placeholder="Unit" name="unit" class="form-control">
-							</div>
-
+							</div>  
 							<div class="form-group col-md-6">  
 									<label>Supplier:</label>
 								<select name="supplier" class="form-control" required="required"> 
@@ -70,6 +52,17 @@
 									<?php endforeach; ?>
 								</select>
 							</div>
+							
+							<div class="form-group col-md-6">  
+								<label>Capital Price:</label>
+								<input type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" id="selling-price">
+							</div>
+							<div class="form-group col-md-6">  
+								<label>Retail Price:</label>
+								<input type="text" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price">
+							</div> 
+
+							
 							<div class="col-md-12">
 								<div class="form-group advance-pricing-wrapper">
 								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
