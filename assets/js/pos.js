@@ -520,12 +520,15 @@
 					var price = remove_comma(r.eq(3).text().substring(1));
 					var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val();
 					var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
+					var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
+
+					alert(discount)
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
 							price : price,
 							name : r.eq(0).text(),
-							subtotal : parseFloat(price) * parseInt(quantity),
+							subtotal : parseFloat(price) * parseInt(quantity) - parseFloat(discount),
 							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
 							capital : capital,
 							unit: main_unit
