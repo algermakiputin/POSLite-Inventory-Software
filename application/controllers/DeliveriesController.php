@@ -73,8 +73,7 @@ class DeliveriesController extends CI_Controller
 				'item_id'	=> $products_id[$key],
 				'quantities' => $quantity[$key],
 				'delivery_id' => $delivery_id,
-				'price'	=>	$price[$key],
-				'expiry_date' => $expiry_date[$key],
+				'price'	=>	$price[$key], 
 				'defectives' => $defectives[$key],
 				'remarks'	=> $remarks[$key]
 			);
@@ -145,7 +144,7 @@ class DeliveriesController extends CI_Controller
 			 
 			return [
 				$delivery->id,
-				$delivery->date_time,
+				date('Y-m-d', strtotime($delivery->date_time)),
 				$delivery->received_by,
 				$delivery->name,
 				currency() . number_format($delivery->total),
