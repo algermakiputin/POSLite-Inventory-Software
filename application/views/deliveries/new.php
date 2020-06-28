@@ -48,8 +48,7 @@
 								<table class="table table-bordered" id="deliveryDetailsTable">
 									<thead>
 										<tr>
-											<th>Enter Product</th>
-											<th>Expiry Date</th>
+											<th>Enter Product</th> 
 											<th>Price/unit</th>
 											<th>QTY</th>
 											<th>Defective</th>
@@ -59,25 +58,21 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td width="30%"> 
+											<td width="35%"> 
 												<input type="text" name="product[]" class="form-control product" placeholder="Type Product Name">
 												<input type="hidden" name="product_id[]" >
-											</td>
-											<td width="15%"> 
-
-												<input type="text" placeholder="YYYY-mm-dd" name="expiry_date[]" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" required="required"> 
-											</td>
+											</td> 
 											
 											<td width="15%">
 												<input type="text" name="price[]" placeholder="Price Per Unit" class="form-control" required="required">
 											</td>
-											<td width="10%">
+											<td width="15%">
 											 	<input type="text" name="quantity[]" placeholder="QTY" class="form-control" required="required">
 											</td>
 											<td width="15%">
 												<input type="text" name="defective[]" placeholder="Defectives" class="form-control" required="required"> 
 											</td>
-											<td width="15%"> 
+											<td width="18%"> 
 												<input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> 
 											</td>
 											<td></td>
