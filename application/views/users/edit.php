@@ -35,6 +35,7 @@
 									<option value="">Select Account Type</option>
 									<option <?php echo $user->account_type == "Admin" ? "selected" : '' ?> >Admin</option>
 									<option <?php echo $user->account_type == "Cashier" ? "selected" : '' ?>>Cashier</option> 
+									<option <?php echo $user->account_type == "Receiver" ? "selected" : '' ?>>Receiver</option>
 								</select>
 							</div>
 							<div class="form-group">

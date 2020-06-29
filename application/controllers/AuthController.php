@@ -91,13 +91,10 @@ class AuthController extends AppController {
 			return redirect(base_url('pos'));
 	 
 
-		if ($this->session->userdata('account_type') == "Admin") 
+		if ( $this->session->userdata('account_type') == "Admin" || $this->session->userdata('account_type') == "Receiver" ) 
 			return redirect(base_url('dashboard'));
 	 
-
-		if ($this->session->userdata('account_type') == "Clerk") 
-			return redirect(base_url('dashboard'));
-	 
+ 
 	}
 
 	public function logout() {

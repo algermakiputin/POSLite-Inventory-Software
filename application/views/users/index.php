@@ -13,11 +13,13 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<?php if($this->session->flashdata('errorMessage')): ?>
-					<div class="col-lg-12">
-						<?php echo $this->session->flashdata('errorMessage');?> 
+					 <div class="col-md-12">
+					        <?php 
+					        echo $this->session->flashdata('errorMessage');
+					        echo $this->session->flashdata('successMessage'); 
+					        ?>
+					    </div>
 					</div>
-					<?php endif; ?>
 					<div class="col-lg-3">
 						 
 						<?php echo form_open('UsersController/register_account'); ?> 
@@ -43,6 +45,7 @@
 								<select required="required" name="account_type" class="form-control">
 									<option value="">Select Account Type</option>
 									<option>Admin</option>
+									<option>Receiver</option> 
 									<option>Cashier</option> 
 								</select>
 							</div>
