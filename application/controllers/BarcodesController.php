@@ -23,12 +23,22 @@ class BarcodesController extends AppController {
 
 		$data['generator'] = $generator;
 		$data['barcode'] = $barcodes;
-		$data['number'] = $number;
-		$data['content'] = "barcodes/export";
+		$data['number'] = $number; 
 
 		$this->load->view('barcodes/export', $data);
 
  
+	}
+
+	public function export_all() {
+
+		$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+		$barcodes = $this->db->get('barcodes')->result();
+
+		$data['generator'] = $generator;
+		$data['barcodes'] = $barcodes;
+		
+		$this->load->view('barcodes/export_all', $data);
 	}
 
 	public function create($id) {
