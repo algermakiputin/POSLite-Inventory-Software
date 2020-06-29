@@ -9,7 +9,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Delivery Details
+				<a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-undo"></i> Back</a> &nbsp; Delivery Details
 			</div>
 			<div class="panel-body"> 
 				<div class="row">

@@ -22,7 +22,7 @@
             <li data-step="2" data-intro="This menu takes you to the customer page where you can manage your customers.">
                 <a href="<?php echo base_url('customers') ?>"><i class="fa fa-table fa-fw"></i> Customers</a>
             </li> 
-            <?php if ($this->session->userdata('account_type') == "Admin"): ?>
+            <?php if ($this->session->userdata('account_type') == "Admin" || $this->session->userdata('account_type') == "Receiver" ): ?>
                 <li data-step="4" data-intro="If you have products delivered, you can save it here.">
                     <a href="#"><i class="fa fa-industry fa-fw"></i> Supplier<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -31,14 +31,10 @@
                         </li>
                         <li>
                             <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Supplier Deliveries</a>
-                        </li>
-                        
-                        <?php if ($this->session->userdata('account_type') == "Admin"): ?>
-                            <li>
-                                    <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Supplier Delivery</a>
-                                </li>
-                        <?php endif; ?>
-                         
+                        </li> 
+                        <li>
+                            <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Supplier Delivery</a>
+                        </li>  
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>

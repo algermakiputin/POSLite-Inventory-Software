@@ -24,7 +24,8 @@
 								<p><?php echo $this->session->flashdata('error') ?></p>
 							</div>
 						<?php endif; ?> 
-						<form action="<?php echo base_url('delivery/insert') ?>" method="POST">
+						<form action="<?php echo base_url('DeliveriesController/update') ?>" method="POST">
+							<input type="hidden" name="delivery_id" value="<?php echo $delivery->id ?>">
 							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 							<div class="row">
 								<div class="col-md-3">
@@ -33,13 +34,13 @@
 										<select class="form-control" name="supplier_id" required="required">
 											<option value="">Select Supplier</option>
 											<?php foreach ( $suppliers as $supplier ): ?>
-												<option value="<?php echo $supplier->id ?>"><?php echo $supplier->name ?></option>
+												<option value="<?php echo $supplier->id ?>" <?php if ($delivery->supplier_id == $supplier->id) echo "selected" ?>><?php echo $supplier->name ?></option>
 											<?php endforeach; ?>
 										</select>
 									</div>
 									<div class="form-group">
 										<label>Delivery Date</label>
-										<input type="text" autocomplete="delivery_date" autocomplete="off" placeholder="YYYY-mm-dd" name="delivery_date" class="form-control date-range-filter" id="delivery_date" autocomplete="off" data-date-format="yyyy-mm-dd">
+										<input type="text" value="<?php echo date('Y-m-d', strtotime($delivery->date_time)) ?>" autocomplete="delivery_date" autocomplete="off" placeholder="YYYY-mm-dd" name="delivery_date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
 									</div> 
 								</div>
 								<div class="col-md-9">
@@ -57,26 +58,28 @@
 										</tr>
 									</thead>
 									<tbody>
+										<?php foreach ($details as $order): ?>
 										<tr>
 											<td width="35%"> 
-												<input type="text" name="product[]" class="form-control product" placeholder="Type Product Name">
-												<input type="hidden" name="product_id[]" >
+												<input type="text" name="product[]" value="<?php echo $order->name ?>" class="form-control product" placeholder="Type Product Name">
+												<input type="hidden" value="<?php echo $order->item_id ?>" name="product_id[]">
 											</td> 
 											
 											<td width="15%">
-												<input type="text" autocomplete="off" name="price[]" placeholder="Price Per Unit" class="form-control" required="required">
+												<input type="text" name="price[]" value="<?php echo $order->price ?>" readonly placeholder="Price Per Unit" class="form-control" required="required">
 											</td>
 											<td width="15%">
-											 	<input type="number" name="quantity[]" autocomplete="off" min="0" value="0" placeholder="QTY" class="form-control" required="required">
+											 	<input type="text" name="quantity[]" value="<?php echo $order->quantities ?>" placeholder="QTY" class="form-control" required="required">
 											</td>
 											<td width="15%">
-												<input type="number" name="defective[]" autocomplete="off" min="0" value="0" placeholder="Defectives" class="form-control" required="required"> 
+												<input type="text" name="defective[]" value="<?php echo $order->defectives ?>" placeholder="Defectives" class="form-control" required="required"> 
 											</td>
 											<td width="18%"> 
-												<input type="text" autocomplete="off" class="form-control" placeholder="Additional Info" name="remarks[]"> 
+												<input type="text" class="form-control" value="<?php echo $order->remarks ?>" placeholder="Additional Info" name="remarks[]"> 
 											</td>
 											<td></td>
 										</tr>
+										<?php endforeach; ?>
 									</tbody>
 								</table>
 								<div class="text-right">
@@ -87,9 +90,8 @@
 							</div>
 							
 							<div class="form-group text-right">
-									 
-								<button type="reset" class="btn btn-info">Clear</button>
-								<input type="submit" name="" class="btn btn-primary" required="required">
+									  
+								<input type="submit" value="Update" name="" class="btn btn-primary" required="required">
 							</div>
 		 
 						</form>
@@ -142,6 +144,12 @@
 					$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
 				}
 			})
+
+			rowIndex.find(".product").val('');
+			rowIndex.find("input[name='price']").val('');
+			rowIndex.find("input[name='product_id']").val('');
+			rowIndex.find("input[name='remarks']").val('');
+			rowIndex.find("input[name='defective']").val('');
 			rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
 			index++;
 
