@@ -1,6 +1,7 @@
 <?php 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class ExpensesController extends CI_Controller {
+require_once(APPPATH."controllers/AppController.php");
+class ExpensesController extends AppController {
 
 	public function index() {
 	 	$data['content'] = 'expenses/index';

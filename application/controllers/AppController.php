@@ -6,7 +6,7 @@ class AppController extends CI_Controller {
  
       parent::__construct();  
 
-      $this->cashier_restrictions();
+      $this->user_restrictions();
 
     }
 
@@ -14,16 +14,18 @@ class AppController extends CI_Controller {
         
     }
 
-    public function cashier_restrictions() {
+    public function user_restrictions() {
 
     	$uri = uri_string();
-    	$restricted_page = ['dashboard', 'items','customers', 'sales', 'returns','categories', 'backups'];
+ 
+    	$restricted_page_cashier = ['dashboard', 'items','customers', 'sales', 'returns','categories', 'backups'];
+    	$restricted_page_receiver = ['dashboard', 'items','customers', 'sales', 'returns','categories', 'backups', 'expenses', 'expenses/new', 'pos'];
 
-    	if ( in_array( $uri , $restricted_page ) && $this->session->userdata('account_type') == "Cashier")
+    	if ( in_array( $uri , $restricted_page_cashier ) && $this->session->userdata('account_type') == "Cashier")
     		die('<h1>Opps! You Are Not Allowed to Access This Page.</h1><p>' . '<a href="'.base_url('pos').'">Return to POS</a> </p>');
 
 
-    	if ( in_array( $uri , $restricted_page ) && $this->session->userdata('account_type') == "Receiver") {
+    	if ( in_array( $uri , $restricted_page_receiver ) && $this->session->userdata('account_type') == "Receiver") {
     		die('<h1>Opps! You Are Not Allowed to Access This Page.</h1></p>' . '<a href="'.base_url('deliveries').'">Return to Deliveries</a></p>');
     	}
   
