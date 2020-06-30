@@ -76,23 +76,26 @@ class AuthController extends AppController {
 			}
 			
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Incorrects Login Name Or Password</div>');
-			return redirect(base_url('login'));
+			return redirect( 'login' );
 			
 		} 
 		
 		$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Incorrect Login Name Or Password</div>');
-		return redirect(base_url('login'));
+		return redirect( 'login' );
 		 
 		 
 	}
 
 	public function redirectUser() {
 		if ($this->session->userdata('account_type') == "Cashier")  
-			return redirect(base_url('pos'));
+			return redirect( 'pos' );
 	 
 
-		if ( $this->session->userdata('account_type') == "Admin" || $this->session->userdata('account_type') == "Receiver" ) 
-			return redirect(base_url('dashboard'));
+		if ( $this->session->userdata('account_type') == "Admin") 
+			return redirect( 'dashboard' );
+
+		if ( $this->session->userdata('account_type') == "Receiver" )
+			return redirect( 'deliveries' );
 	 
  
 	}
