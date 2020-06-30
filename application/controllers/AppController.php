@@ -10,13 +10,22 @@ class AppController extends CI_Controller {
 
     }
 
+    public function __destruct() {
+        
+    }
+
     public function cashier_restrictions() {
 
     	$uri = uri_string();
     	$restricted_page = ['dashboard', 'items','customers', 'sales', 'returns','categories', 'backups'];
 
     	if ( in_array( $uri , $restricted_page ) && $this->session->userdata('account_type') == "Cashier")
-    		die('Sorry, You Are Not Allowed to Access This Page.' . '<a href="'.base_url('pos').'">Return to POS</a>');
+    		die('<h1>Opps! You Are Not Allowed to Access This Page.</h1><p>' . '<a href="'.base_url('pos').'">Return to POS</a> </p>');
+
+
+    	if ( in_array( $uri , $restricted_page ) && $this->session->userdata('account_type') == "Receiver") {
+    		die('<h1>Opps! You Are Not Allowed to Access This Page.</h1></p>' . '<a href="'.base_url('deliveries').'">Return to Deliveries</a></p>');
+    	}
   
     }
 
