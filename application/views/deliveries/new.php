@@ -41,15 +41,15 @@
 										</div>
 										<div class="form-group">
 											<label>Delivery Date</label>
-											<input type="text" autocomplete="off"  placeholder="Delivery Date" name="delivery_date" class="form-control date-range-filter" id="delivery_date" autocomplete="off" data-date-format="yyyy-mm-dd">
+											<input type="text" autocomplete="off" required  placeholder="Delivery Date" name="delivery_date" class="form-control date-range-filter" id="delivery_date" autocomplete="off" data-date-format="yyyy-mm-dd">
 										</div> 
 										<div class="form-group">
 											<label>Due Date</label>
-											<input type="text" autocomplete="off" autocomplete="off" placeholder="Due Date" name="due_date" class="form-control date-range-filter" id="due_date" autocomplete="off" data-date-format="yyyy-mm-dd">
+											<input type="text" autocomplete="off" required autocomplete="off" placeholder="Due Date" name="due_date" class="form-control date-range-filter" id="due_date" autocomplete="off" data-date-format="yyyy-mm-dd">
 										</div> 
 										<div class="form-group">
 											<label>Payment Status</label>
-											<select name="payment_status" class="form-control">
+											<select name="payment_status" required class="form-control">
 												<option value="Pending">Pending</option>
 												<option value="Paid">Paid</option>
 											</select>
@@ -73,7 +73,7 @@
 									<tbody>
 										<tr>
 											<td width="35%"> 
-												<input type="text" name="product[]" class="form-control product" placeholder="Type Product Name">
+												<input type="text" required name="product[]" class="form-control product" placeholder="Type Product Name">
 												<input type="hidden" name="product_id[]" >
 											</td> 
 											
