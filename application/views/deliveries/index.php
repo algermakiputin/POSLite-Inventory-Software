@@ -20,13 +20,14 @@
  			<?php endif; ?>
              <table class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
 				<thead>
-					<tr>
-						<th>Delivery ID</th>
-						<th>Delivery Date</th>
+					<tr> 
+						<th>Date</th>
 						<th>Received By</th>
+						<th>Due Date</th>
 						<th>Supplier</th> 
 						<th>Total Amount</th>
 						<th>Defectives</th>
+						<th>Payment Status</th>
 						<th>Action</th>
 					</tr>
 				</thead>

@@ -30,6 +30,14 @@
 								<th>Received By:</th>
 								<td><?php echo $delivery->received_by ?></td>
 							</tr>
+							<tr>
+								<th>Due Date:</th>
+								<td><?php echo $delivery->due_date ?></td>
+							</tr>
+							<tr>
+								<th>Payment Status:</th>
+								<td><?php echo $delivery->payment_status ?></td>
+							</tr>
 						</table>
 					</div>
 				</div>
