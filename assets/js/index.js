@@ -807,7 +807,25 @@ $(document).ready(function() {
 			type : "POST",
 			url : base_url + "DeliveriesController/datatable",
 			data: data
-		}, 
+		},  
+		columns: [
+			{ name: "date_time" },
+			{ name: "received_by"},
+			{ name: "due_date" },
+			{ name: "name"},
+			{ name: "total"},
+			{ name: "defectives"},
+			{ name: "payment_status"},
+			{ name: "defectives"}
+		],
+		"order": [[ 0, "desc" ]],
+		columnDefs: [
+		   { orderable: false, targets: -1 },
+		   { orderable: false, targets: -2 }
+		],
+		language: {
+	        searchPlaceholder: "Search by receiver"
+	    }
 	});
 
 	$("#btn-group-menu .btn").click(function() {
