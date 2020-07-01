@@ -11,6 +11,20 @@ html, body {
 
 }
 
+.table {
+  width: 100%!important;
+}
+
+.has-feedback .fa {
+  line-height: 29px;
+}
+
+
+#deliveries_table_length,
+#deliveries_table_filter {
+  display: none;
+}
+
 #page-wrapper {
   font-size: 1.1em;
 }

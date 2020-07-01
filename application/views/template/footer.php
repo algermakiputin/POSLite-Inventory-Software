@@ -18,5 +18,7 @@
 <script src="<?php echo base_url('assets/vendor/parsley.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/preview-image.js') ?>"></script> 
 <script src="<?php echo base_url('assets/js/jquery-confirm.min.js') ?>"></script> 
-<script src="<?php echo base_url('assets/js/intro.js') ?>"></script> 
+<script src="<?php echo base_url('assets/js/intro.js') ?>"></script>  
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script src="<?php echo base_url('assets/js/index.js') ?>"></script> 

@@ -18,13 +18,7 @@ $(document).ready(function() {
 		}
 	});
 
-	// $("#side-menu a").click(function() {
-
-	// 	if ($(this).attr('href') != "#") {
-	// 		$(".spinner-wrapper").show();
-	// 	}
-	// })
-	 
+	$('input[name="dates"]').daterangepicker();
 
 	$("body").show();
 	$("form").parsley();	
@@ -807,7 +801,7 @@ $(document).ready(function() {
 			type : "POST",
 			url : base_url + "DeliveriesController/datatable",
 			data: data
-		}, 
+		},   
 	});
 
 	$("#btn-group-menu .btn").click(function() {

@@ -18,6 +18,24 @@
  					<?php echo $this->session->flashdata('success') ?>
  				</div>
  			<?php endif; ?>
+ 				<div class="toolbar">
+ 					<div class="row">
+ 						<div class="col-md-3">
+ 							<div class="form-group">
+ 								<select class="form-control">
+ 									<option value="">Filter by Supplier</option>
+ 								</select>
+ 							</div>
+ 						</div>
+ 						<div class="col-md-3">
+ 							<div class="form-group has-feedback">
+ 								<input type="text" name="dates" class="form-control" placeholder="From Date">
+ 								 <i class="fa fa-calendar form-control-feedback"></i>
+ 							</div>
+ 						</div>
+ 						 
+ 					</div>
+ 				</div>
              <table class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
 				<thead>
 					<tr>
