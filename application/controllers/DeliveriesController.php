@@ -52,14 +52,19 @@ class DeliveriesController extends CI_Controller
 		$quantity = $this->input->post("quantity");
 		$defectives = $this->input->post("defective");
 		$remarks = $this->input->post("remarks");
+		$due_date = $this->input->post('due_date');
+		$payment_status = $this->input->post('payment_status');
   
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
 			'date_time' => $this->input->post('delivery_date'),
-			'received_by' => $this->session->userdata('username')
+			'received_by' => $this->session->userdata('username'),
+			'due_date' => $due_date,
+			'payment_status' => $payment_status
 			);
 
 		$data = $this->security->xss_clean($data);
+
 		$this->db->trans_begin();
 		$this->db->insert('delivery',$data);
 		$delivery_id = $this->db->insert_id();
@@ -129,13 +134,18 @@ class DeliveriesController extends CI_Controller
 		$search = $this->input->post('search[value]'); 
 		
 		$count = $this->db->get('delivery')->num_rows();
-	 	
+
+		$columns = ['date_time', 'received_by', 'due_date', 'name', 'total', 'defectives', 'payment_status', 'defectives', '', 'id'];
+	 	$order_column = $this->input->post('order[0][column]');
+	 	$order = $this->input->post('order[0][dir]');
+	 	$order = $order == "" ? 8 : $order;
+
 	 	$deliveries = $this->db->select("delivery.*, supplier.name, SUM(delivery_details.quantities * delivery_details.price) as total, SUM(delivery_details.defectives) as defectives")
 							->from('delivery') 
 							->join('supplier', 'supplier.id = delivery.supplier_id', 'both')
 							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
 							->group_by('delivery.id')
-							->order_by('delivery.id', 'DESC')
+							->order_by($columns[$order_column], $order)
 							->like('received_by', $search, 'both')
 							->limit($limit, $start)
 							->get()
@@ -156,13 +166,14 @@ class DeliveriesController extends CI_Controller
                           <i class="fa fa-trash"></i> Delete</a>
                   </li>';
 
-			return [
-				$delivery->id,
+			return [ 
 				date('Y-m-d', strtotime($delivery->date_time)),
 				$delivery->received_by,
+				$delivery->due_date,
 				$delivery->name,
 				currency() . number_format($delivery->total),
 				$delivery->defectives,
+				$delivery->payment_status == "Paid" ? "<span class='badge badge-success'>Paid</span>" : "<span class='badge badge-warning'>Pending</span>",
 				'
 				<div class="dropdown">
               	<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
@@ -214,6 +225,9 @@ class DeliveriesController extends CI_Controller
 		$quantity = $this->input->post("quantity");
 		$defectives = $this->input->post("defective");
 		$remarks = $this->input->post("remarks");
+		$due_date = $this->input->post('due_date');
+		$payment_status = $this->input->post('payment_status');
+		$supplier = $this->input->post('supplier_id');
   
 		$this->rollback_delivery($id);
  
@@ -222,7 +236,12 @@ class DeliveriesController extends CI_Controller
 		$delivery_id = $id;
 		$orderDetails = array();
 
-	
+		$this->db->where('id', $id)->update('delivery', [
+				'supplier_id' => $supplier,
+				'payment_status' => $payment_status,
+				'due_date' => $due_date
+			]);
+
 
 		foreach ($products as $key => $product) {
 			if (!$products_id[$key])

@@ -28,23 +28,37 @@
 							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 							<div class="row">
 								<div class="col-md-3">
-									<div class="form-group">
-										<label>Select Supplier</label>
-										<select class="form-control" name="supplier_id" required="required">
-											<option value="">Select Supplier</option>
-											<?php foreach ( $suppliers as $supplier ): ?>
-												<option value="<?php echo $supplier->id ?>"><?php echo $supplier->name ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-									<div class="form-group">
-										<label>Delivery Date</label>
-										<input type="text" autocomplete="delivery_date" autocomplete="off" placeholder="YYYY-mm-dd" name="delivery_date" class="form-control date-range-filter" id="delivery_date" autocomplete="off" data-date-format="yyyy-mm-dd">
-									</div> 
+									<fieldset>
+										<legend>Delivery Details</legend>
+											<div class="form-group">
+											<label>Select Supplier</label>
+											<select class="form-control" name="supplier_id" required="required">
+												<option value="">Select Supplier</option>
+												<?php foreach ( $suppliers as $supplier ): ?>
+													<option value="<?php echo $supplier->id ?>"><?php echo $supplier->name ?></option>
+												<?php endforeach; ?>
+											</select>
+										</div>
+										<div class="form-group">
+											<label>Delivery Date</label>
+											<input type="text" autocomplete="off"  placeholder="Delivery Date" name="delivery_date" class="form-control date-range-filter" id="delivery_date" autocomplete="off" data-date-format="yyyy-mm-dd">
+										</div> 
+										<div class="form-group">
+											<label>Due Date</label>
+											<input type="text" autocomplete="off" autocomplete="off" placeholder="Due Date" name="due_date" class="form-control date-range-filter" id="due_date" autocomplete="off" data-date-format="yyyy-mm-dd">
+										</div> 
+										<div class="form-group">
+											<label>Payment Status</label>
+											<select name="payment_status" class="form-control">
+												<option value="Pending">Pending</option>
+												<option value="Paid">Paid</option>
+											</select>
+										</div> 
+									</fieldset>
 								</div>
 								<div class="col-md-9">
 									<fieldset>
-								<legend>Delivery Details</legend>
+								<legend>Order Details</legend>
 								<table class="table table-bordered" id="deliveryDetailsTable">
 									<thead>
 										<tr>
@@ -85,7 +99,7 @@
 							</fieldset>
 								</div>
 							</div>
-							
+							<hr>
 							<div class="form-group text-right">
 									 
 								<button type="reset" class="btn btn-info">Clear</button>
