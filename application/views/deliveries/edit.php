@@ -42,15 +42,15 @@
 										</div>
 										<div class="form-group">
 											<label>Delivery Date</label>
-											<input type="text" value="<?php echo date('Y-m-d', strtotime($delivery->date_time)) ?>" autocomplete="off" autocomplete="off" placeholder="Delivery Date" name="delivery_date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
+											<input type="text" value="<?php echo date('Y-m-d', strtotime($delivery->date_time)) ?>" autocomplete="off" autocomplete="off" required placeholder="Delivery Date" name="delivery_date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
 										</div> 
 										<div class="form-group">
 											<label>Due Date</label>
-											<input type="text" autocomplete="off" autocomplete="off" placeholder="Due Date" name="due_date" class="form-control date-range-filter" id="due_date" value="<?php echo $delivery->due_date ?>" autocomplete="off" data-date-format="yyyy-mm-dd">
+											<input type="text" required autocomplete="off" autocomplete="off" placeholder="Due Date" name="due_date" class="form-control date-range-filter" id="due_date" value="<?php echo $delivery->due_date ?>" autocomplete="off" data-date-format="yyyy-mm-dd">
 										</div> 
 										<div class="form-group">
 											<label>Payment Status</label>
-											<select name="payment_status" class="form-control">
+											<select name="payment_status" class="form-control" required>
 												<option value="Pending" <?php echo $delivery->payment_status == "Pending" ? "selected" : "" ?> >Pending</option>
 												<option value="Paid" <?php echo  $delivery->payment_status == "Paid" ? "selected" : "" ?>>Paid</option>
 											</select>
