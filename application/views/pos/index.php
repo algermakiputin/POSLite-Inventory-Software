@@ -60,8 +60,7 @@
 							<tr> 
 								<td width="40%">Item Name</td>
 								<td width="20%">Description</td> 
-								<td width="15%">Quantity</td>
-								<td width="10%">Unit</td>
+								<td width="15%">Quantity</td> 
 								<td width="15%">Price</td>
 							</tr>
 						</thead>
@@ -178,8 +177,7 @@
 							<table class="table table-striped" id="r-items-table">
 								<thead>
 									<tr> 
-										<th>Item </th>
-										<th>Unit</th>
+										<th>Item </th> 
 										<th>Price</th>
 										<th>Qty</th>
 										<th>Sub</th>

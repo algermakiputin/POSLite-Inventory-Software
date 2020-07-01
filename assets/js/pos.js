@@ -44,7 +44,7 @@
 
 					var id = $(this).find('input[name="item-id"]').val();
 					var name = $(this).find('td').eq(0).text(); 
-					var price = $(this).find('td').eq(4).text();
+					var price = $(this).find('td').eq(3).text();
 					var description = $(this).find('td').eq(1).text();
 					var pricing = $(this).find('input[name="advance_pricing"]').val();
 					var capital = $(this).find('input[name="capital"]').val();
@@ -543,8 +543,7 @@
 			 	 
 					$("#r-items-table tbody").append(
 							'<tr>' + 
-								'<td>'+value.name +'</td>' +
-								'<td>'+value.unit +'</td>' +
+								'<td>'+value.name +'</td>' + 
 								'<td>'+currency+ number_format(value.price) +'</td>' +
 								'<td>'+value.quantity+'</td>' +
 								'<td>'+currency+ number_format(value.subtotal)+'</td>' +

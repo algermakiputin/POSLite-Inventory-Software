@@ -213,8 +213,7 @@ class ItemController extends AppController {
 				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'"> ' . 
 				'<input type="hidden" name="capital" value="'.$item->capital.'">',
 				ucfirst($item->description), 
-				$quantity,
-				$item->main_unit,
+				$quantity, 
 				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'>"
 			];
 		}, $items);
