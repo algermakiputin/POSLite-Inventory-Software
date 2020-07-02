@@ -12,17 +12,15 @@ class BarcodesController extends AppController {
 
 
 
-		$barcodes = $this->db->where('item_id', $id)
-									->get('barcodes')
-									->row();
+		$item = $this->db->where('id', $id)->get('items')->row();
 
-		if ( !$barcodes )
+		if ( !$item )
 			return "No barcode found";
 
 
 
 		$data['generator'] = $generator;
-		$data['barcode'] = $barcodes;
+		$data['barcode'] = $item;
 		$data['number'] = $number; 
 
 		$this->load->view('barcodes/export', $data);
@@ -33,7 +31,9 @@ class BarcodesController extends AppController {
 	public function export_all() {
 
 		$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
-		$barcodes = $this->db->get('barcodes')->result();
+		$barcodes = $this->db->order_by('id','DESC')->get('items')->result();
+
+
 
 		$data['generator'] = $generator;
 		$data['barcodes'] = $barcodes;
@@ -43,10 +43,10 @@ class BarcodesController extends AppController {
 
 	public function create($id) {
 
-		$barcode = $this->db->where('item_id', $id)->get('barcodes')->row();
+		$item = $this->db->where('id', $id)->get('items')->row();
 
 		$data['content'] = "barcodes/create";
-		$data['barcode'] = $barcode;
+		$data['barcode'] = $item;
 		$this->load->view('master', $data);
 	}
 

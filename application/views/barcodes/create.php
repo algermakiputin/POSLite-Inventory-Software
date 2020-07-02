@@ -27,14 +27,14 @@
 						 	</div>
 						 	<div class="form-group">  
 						 		<label>Item Name</label>
-								<input type="text" class="form-control" name="name" readonly="readonly"  value="<?php echo $barcode->item_name; ?>">
+								<input type="text" class="form-control" name="name" readonly="readonly"  value="<?php echo $barcode->name; ?>">
 							</div>
 						 	 
 							<div class="form-group">
 								<label># of Barcodes</label>  
 								<input type="number" min="1" required="required" id="number" placeholder="Number" value="1" name="number" class="form-control">
 							</div>
-							<input type="hidden" name="item_id" value="<?php echo $barcode->item_id ?>" id="item_id">
+							<input type="hidden" name="item_id" value="<?php echo $barcode->id ?>" id="item_id">
 						  
 							<div class="form-group">
 								<input type="submit" name="" value="Print" class="btn btn-primary"> 

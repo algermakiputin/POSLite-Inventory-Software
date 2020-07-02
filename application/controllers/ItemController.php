@@ -107,12 +107,15 @@ class ItemController extends AppController {
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
-			$deleteAction = ""; 
-			$barcode_action = "";
+			$deleteAction = "";  
 			if ($this->session->userdata('account_type') == "Admin") {
 
 
 				$deleteAction = '
+							<li>
+                         <a href="' . base_url("BarcodesController/create/$item->id") .'">
+                             <i class="fa fa-barcode"></i> Print Barcode </a>
+                     </li>
 						<li>
                         	<a href="'.base_url("items/edit/$item->id").'"><i class="fa fa-edit"></i> Edit</a> 
                         </li>
@@ -129,19 +132,11 @@ class ItemController extends AppController {
 			}
 
 			$barcode_generated = $this->db->where('item_id', $item->id)->get('barcodes')->row();
-
-			if ($barcode_generated)
-				$barcode_action = '
-							<li>
-                         <a href="' . base_url("BarcodesController/create/$item->id") .'">
-                             <i class="fa fa-barcode"></i> Print Barcode </a>
-                     </li>
-							';
+ 
 
 			$actions = '<div class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                     '.$barcode_action.'
+                    <ul class="dropdown-menu"> 
                     	<li>
                             <a href="' . base_url("items/stock-in/$item->id") .'">
                                 <i class="fa fa-plus"></i> Stock In</a>
