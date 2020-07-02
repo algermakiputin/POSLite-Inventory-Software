@@ -53,7 +53,9 @@ class DeliveriesController extends CI_Controller
 		$defectives = $this->input->post("defective");
 		$remarks = $this->input->post("remarks");
 		$due_date = $this->input->post('due_date');
-		$payment_status = $this->input->post('payment_status');
+		$payment_status = $this->input->post('payment_status'); 
+
+
   
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
@@ -81,7 +83,8 @@ class DeliveriesController extends CI_Controller
 				'price'	=>	$price[$key], 
 				'defectives' => $defectives[$key],
 				'remarks'	=> $remarks[$key],
-				'name' => $products[$key]
+				'name' => $products[$key],
+				'expiry_date' => $expiry_date[$key]
 			);
  			//Update Product Quantities
 			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
@@ -227,7 +230,7 @@ class DeliveriesController extends CI_Controller
 		$remarks = $this->input->post("remarks");
 		$due_date = $this->input->post('due_date');
 		$payment_status = $this->input->post('payment_status');
-		$supplier = $this->input->post('supplier_id');
+		$supplier = $this->input->post('supplier_id'); 
   
 		$this->rollback_delivery($id);
  
@@ -254,7 +257,8 @@ class DeliveriesController extends CI_Controller
 				'price'	=>	$price[$key], 
 				'defectives' => $defectives[$key],
 				'remarks'	=> $remarks[$key],
-				'name' => $products[$key]
+				'name' => $products[$key],
+				'expiry_date' => $expiry_date[$key]
 			);
  			//Update Product Quantities
 			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
@@ -267,6 +271,7 @@ class DeliveriesController extends CI_Controller
 	 	if ( $this->db->trans_status() === FALSE ) {
 			 
 	        $this->db->trans_rollback();
+	        dd($this->db->error());
 	        $this->session->set_flashdata('error', 'Opps! something went wrong please try again');
 				return redirect('deliveries');
 		} 
