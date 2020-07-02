@@ -63,7 +63,8 @@
 									<thead>
 										<tr>
 											<th>Enter Product</th> 
-											<th>Price/unit</th>
+											<th>Expiry Date</th>
+											<th>Price/unit</th> 
 											<th>QTY</th>
 											<th>Defective</th>
 											<th>Remarks</th>
@@ -76,17 +77,20 @@
 												<input type="text" required name="product[]" class="form-control product" placeholder="Type Product Name">
 												<input type="hidden" name="product_id[]" >
 											</td> 
-											
 											<td width="15%">
+											 	<input type="text" name="expiry_date[]" autocomplete="off" data-date-format="yyyy-mm-dd" placeholder="Expiry Date" class="form-control date-range-filter" required="required">
+											</td>
+											<td width="12%">
 												<input type="text" autocomplete="off" name="price[]" placeholder="Price Per Unit" class="form-control" required="required">
 											</td>
-											<td width="15%">
+											
+											<td width="10%">
 											 	<input type="number" name="quantity[]" autocomplete="off" min="0" value="0" placeholder="QTY" class="form-control" required="required">
 											</td>
-											<td width="15%">
+											<td width="10%">
 												<input type="number" name="defective[]" autocomplete="off" min="0" value="0" placeholder="Defectives" class="form-control" required="required"> 
 											</td>
-											<td width="18%"> 
+											<td width="16%"> 
 												<input type="text" autocomplete="off" class="form-control" placeholder="Additional Info" name="remarks[]"> 
 											</td>
 											<td></td>

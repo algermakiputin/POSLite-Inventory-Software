@@ -64,6 +64,7 @@
 									<thead>
 										<tr>
 											<th>Enter Product</th> 
+											<th>Expiry Date</th>
 											<th>Price/unit</th>
 											<th>QTY</th>
 											<th>Defective</th>
@@ -78,8 +79,10 @@
 												<input type="text" name="product[]" autocomplete="off" value="<?php echo $order->name ?>" class="form-control product" placeholder="Type Product Name">
 												<input type="hidden" autocomplete="off" value="<?php echo $order->item_id ?>" name="product_id[]">
 											</td> 
-											
 											<td width="15%">
+											 	<input type="text" name="expiry_date[]" data-date-format="yyyy-mm-dd" value="<?php echo $order->expiry_date ?>" autocomplete="off" placeholder="Expiry Date" class="form-control date-range-filter" required="required">
+											</td>
+											<td width="12%">
 												<input type="text" name="price[]" autocomplete="off" value="<?php echo $order->price ?>" readonly placeholder="Price Per Unit" class="form-control" required="required">
 											</td>
 											<td width="15%">
@@ -88,7 +91,7 @@
 											<td width="15%">
 												<input type="text" name="defective[]" autocomplete="off" value="<?php echo $order->defectives ?>" placeholder="Defectives" class="form-control" required="required"> 
 											</td>
-											<td width="18%"> 
+											<td width="16%"> 
 												<input type="text" class="form-control" autocomplete="off" value="<?php echo $order->remarks ?>" placeholder="Additional Info" name="remarks[]"> 
 											</td>
 											<td></td>
@@ -165,6 +168,7 @@
 			rowIndex.find("input[name='remarks']").val('');
 			rowIndex.find("input[name='defective']").val('');
 			rowIndex.find("input[name='quantity[]']").val('');
+			rowIndex.find("input[name='expiry_date[]']").val('');
 			rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
 			index++;
 
