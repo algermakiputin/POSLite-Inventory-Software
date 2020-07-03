@@ -828,7 +828,7 @@ $(document).ready(function() {
 	    }
 	});
 
-	$("#expiry_date_table").DataTable({
+	var expiry_date_table = $("#expiry_date_table").DataTable({
 		processing : true, 
 		serverSide : true, 
 		responsive: true,
@@ -842,6 +842,16 @@ $(document).ready(function() {
 	    },
 	    ordering:false
 	});
+
+	$("#filter_expiry").change(function() {
+ 
+		expiry_date_table.columns(0).search($(this).val()).draw();
+	})
+
+	$("#search_expiry").keydown(function(e) {
+
+		expiry_date_table.search($(this).val()).draw();
+	})
 
 	$("#btn-group-menu .btn").click(function() {
 		$('.btn-group .btn').removeClass('active');
