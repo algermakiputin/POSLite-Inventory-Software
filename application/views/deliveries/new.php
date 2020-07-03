@@ -143,6 +143,8 @@
 		$(".product").autocomplete({
 			lookup: products,
 			onSelect: function(suggestion) { 
+
+				console.log(suggestion);
 				$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
 				$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
 			}
