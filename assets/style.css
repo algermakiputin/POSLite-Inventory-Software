@@ -22,6 +22,11 @@ html, body {
 
 }
 
+#expiry_date_table_length,
+#expiry_date_table_filter {
+  display: none;
+}
+
 @media (min-width: 992px) {
   #widgets .col-md-2 {
       width: 20% !important;

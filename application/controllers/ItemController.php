@@ -53,24 +53,60 @@ class ItemController extends AppController {
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
-		
+		$datasets = [];
+		// 1 - Expiring in 1 Month
+		// 2 - Expiring in 3 Months
+		// 3 - Expiring in 6 Months
+		// 4 - Expired (Past 3 Months)
+		$filter = $this->input->post('columns[0][search][value]');
+		$filter = $filter ? $filter : 1;
+ 
 		$row_count = $this->db->select('delivery_details.*, ordering_level.quantity')
 									->from('delivery_details')
 									->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id') 
 									->get()
-									->num_rows();
+									->num_rows(); 
+
+
+		$this->db->select('delivery_details.*, ordering_level.quantity');
+		$this->db->from('delivery_details');
+		$this->db->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id');
+		$this->db->order_by('expiry_date', "DESC");
+
+		$current_date = date('Y-m-d');
+		$days = 10;
+ 		 
+		// Option 1
+		if ( $filter != 4) {
+
+			if ($filter == 1)
+				$days = 30;
+
+			else if ($filter == 2)
+				$days = 91;
+
+			else if ( $filter == 3)
+				$days = 182;
+  
+			$span = date('Y-m-d', strtotime('+ ' . $days .' days', strtotime( $current_date )));
  
+			$this->db->where('expiry_date >', $current_date);
+			$this->db->where('expiry_date <', $span);
 
-		$datasets = [];
+		}else {
 
-		$deliveries = $this->db->select('delivery_details.*, ordering_level.quantity')
-										->from('delivery_details')
-										->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id')
-										->order_by('expiry_date', "DESC")
-										->like('delivery_details.name', $search, 'BOTH') 
-										->limit($limit, $start)
-										->get()
-										->result();
+			$span = date('Y-m-d', strtotime('-90 days', strtotime( $current_date )));
+			$this->db->where('expiry_date <', $current_date);
+			$this->db->where('expiry_date >', $span);
+
+		}
+ 
+		$this->db->order_by('expiry_date', 'DESC');
+		$this->db->like('delivery_details.name', $search, 'BOTH');
+		$this->db->limit($limit, $start);
+ 
+		$deliveries = $this->db->get()->result();
+  
 
 		foreach ($deliveries as $delivery) {
 

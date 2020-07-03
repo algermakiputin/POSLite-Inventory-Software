@@ -18,6 +18,20 @@
                Products Expiry Date Records
            </div> 
            <div class="panel-body"> 
+                <div class="row">
+                    <div class="col-md-6">
+                        <select class="form-control" style="max-width: 230px;font-size: 14px;display: inline-block;" id="filter_expiry">
+                            <option value="1">Expiring in 1 Month</option>
+                            <option value="2">Expiring in 3 Month</option>
+                            <option value="3">Expiring in 6 Month</option>
+                            <option value="4">Expired (Past 3 Months)</option>
+                        </select> &nbsp;&nbsp;
+                        <input type="text" class="form-control" placeholder="Search by Product Name" id="search_expiry" style="max-width: 230px;display: inline-block;font-size: 14px;" name="">
+                    </div>
+                    <div class="col-md-6 text-right">
+                        
+                    </div>
+                </div>
                 <table id="expiry_date_table" class="table table-bordered table-striped"  width="100%">
                     <thead>
                         <th>Delivery Date</th>
