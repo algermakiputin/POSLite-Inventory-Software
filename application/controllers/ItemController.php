@@ -59,8 +59,9 @@ class ItemController extends AppController {
 									->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id') 
 									->get()
 									->num_rows();
+ 
 
-		$dataset = [];
+		$datasets = [];
 
 		$deliveries = $this->db->select('delivery_details.*, ordering_level.quantity')
 										->from('delivery_details')
