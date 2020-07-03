@@ -84,6 +84,7 @@ $route['items/data'] = "ItemController/data";
 $route['items/edit/(:any)'] = "ItemController/edit/$1";
 $route['items/find'] = "ItemController/find";
 $route['items/delete'] = "ItemController/delete";
+$route['items/expiry'] = "ItemController/expiry_view";
 
 $route['categories'] = 'CategoriesController/categories';
 $route['categories/insert'] = 'CategoriesController/insert';

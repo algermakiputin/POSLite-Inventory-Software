@@ -828,6 +828,21 @@ $(document).ready(function() {
 	    }
 	});
 
+	$("#expiry_date_table").DataTable({
+		processing : true, 
+		serverSide : true, 
+		responsive: true,
+		ajax : {
+			type : "POST",
+			url : base_url + "ItemController/expiry_datatable",
+			data: data
+		},  
+		language: {
+	        searchPlaceholder: "Search by Product Name"
+	    },
+	    ordering:false
+	});
+
 	$("#btn-group-menu .btn").click(function() {
 		$('.btn-group .btn').removeClass('active');
 		$(this).addClass('active');

@@ -15,6 +15,9 @@
                         <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Product</a>
                     </li>
                     <?php endif; ?>
+                    <li>
+                        <a href="<?php echo base_url('items/expiry') ?>"><i class="fa fa-circle-o"></i> Product Expiry</a>
+                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
