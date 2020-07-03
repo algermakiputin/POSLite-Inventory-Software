@@ -18,8 +18,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$('input[name="dates"]').daterangepicker();
-
 	$("body").show();
 	$("form").parsley();	
 	
@@ -793,7 +791,7 @@ $(document).ready(function() {
 
 	var data = {};
 	data[csrfName] = csrfHash;
-	$("#deliveries_table").DataTable({
+	var deliveries_table = $("#deliveries_table").DataTable({
 		processing : true, 
 		serverSide : true, 
 		responsive: true,
@@ -801,8 +799,23 @@ $(document).ready(function() {
 			type : "POST",
 			url : base_url + "DeliveriesController/datatable",
 			data: data
-		},   
+		} 
 	});
+
+	$("#delivery_filter_supplier").change(function() {
+			
+		deliveries_table.columns(0).search($(this).val()).draw();
+	})
+
+	$('input[name="dates"]').daterangepicker({
+    opens: 'left'
+	 	}, function(start, end, label) {
+
+	 		deliveries_table.columns(1).search(start.format('YYYY-MM-DD'))
+	 							.columns(2).search(end.format('YYYY-MM-DD'))
+	 							.draw();
+     	}
+  	);
 
 	$("#btn-group-menu .btn").click(function() {
 		$('.btn-group .btn').removeClass('active');

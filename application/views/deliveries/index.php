@@ -22,14 +22,17 @@
  					<div class="row">
  						<div class="col-md-3">
  							<div class="form-group">
- 								<select class="form-control">
+ 								<select class="form-control" id="delivery_filter_supplier">
  									<option value="">Filter by Supplier</option>
+ 									<?php foreach ($supplier as $row): ?>
+ 										<option value="<?php echo $row->id ?>"><?php echo $row->name ?> </option>
+ 									<?php endforeach; ?>
  								</select>
  							</div>
  						</div>
  						<div class="col-md-3">
  							<div class="form-group has-feedback">
- 								<input type="text" name="dates" class="form-control" placeholder="From Date">
+ 								<input type="text" name="dates" class="form-control" placeholder="Date Period">
  								 <i class="fa fa-calendar form-control-feedback"></i>
  							</div>
  						</div>
@@ -49,32 +52,7 @@
 					</tr>
 				</thead>
 
-				<tbody>
-				 	<?php foreach($deliveries as $delivery): ?> 
-						<tr>
-							<td><?php echo $delivery->id ?></td>
-							<td><?php echo $delivery->date_time ?></td>
-							<td><?php echo $delivery->received_by ?></td>
-							<td><?php echo $delivery->name ?></td>
-							<td>₱<?php echo number_format($delivery->total) ?></td>
-							<td><?php echo $delivery->defectives ?></td>
-							<td>
-								<div class="dropdown">
-		                    	<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-		                    	<ul class="dropdown-menu">
-		                    	
-		                        <li>
-		                        	<a href="<?php echo base_url("deliveries/details/" . $delivery->id) ?>"><i class="fa fa-eye"></i> View Details</a> 
-		                        </li> 
-		                        <li>
-		                            <a class="delete-data" href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $delivery->id ?>">
-		                                <i class="fa fa-trash"></i> Delete</a>
-		                        </li>
-		                    	</ul>
-				            </div> 
-							</td>
-						</tr>
-					<?php endforeach; ?>  
+				<tbody> 
 				</tbody>
 			</table>
 			

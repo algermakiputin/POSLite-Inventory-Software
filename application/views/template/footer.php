@@ -19,6 +19,6 @@
 <script src="<?php echo base_url('assets/js/preview-image.js') ?>"></script> 
 <script src="<?php echo base_url('assets/js/jquery-confirm.min.js') ?>"></script> 
 <script src="<?php echo base_url('assets/js/intro.js') ?>"></script>  
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/daterangepicker.min.css')?>">
+<script src="<?php echo base_url('assets/js/daterangepicker.min.js') ?>"></script>  
 <script src="<?php echo base_url('assets/js/index.js') ?>"></script> 

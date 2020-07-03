@@ -100,14 +100,11 @@ class DeliveriesController extends CI_Controller
 	}
 
 	public function index() {
-	
-		$deliveries = $this->db->select("delivery.*, supplier.name, SUM(delivery_details.quantities * delivery_details.price) as total, SUM(delivery_details.defectives) as defectives")
-							->from('delivery') 
-							->join('supplier', 'supplier.id = delivery.supplier_id', 'both')
-							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
-							->group_by('delivery.id')
-							->get()->result();
- 
+	 
+ 		$data['supplier'] = $this->db->select('id, name')
+ 											->from('supplier')
+ 											->get()
+ 											->result();
 		$data['deliveries'] = $deliveries;
  		$data['content'] = "deliveries/index";
 		$this->load->view('master',$data);
@@ -127,7 +124,10 @@ class DeliveriesController extends CI_Controller
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
-		
+		$supplier_id = $this->input->post('columns[0][search][value]');
+		$from = $this->input->post('columns[1][search][value]') ? $this->input->post('columns[1][search][value]') : date('Y-m-d');
+		$to = $this->input->post('columns[2][search][value]') ? $this->input->post('columns[2][search][value]') : date('Y-m-d');
+
 		$count = $this->db->get('delivery')->num_rows();
 	 	
 	 	$deliveries = $this->db->select("delivery.*, supplier.name, SUM(delivery_details.quantities * delivery_details.price) as total, SUM(delivery_details.defectives) as defectives")
@@ -136,10 +136,15 @@ class DeliveriesController extends CI_Controller
 							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
 							->group_by('delivery.id')
 							->order_by('delivery.id', 'DESC')
+							->where('date_format(date_time, "%Y-%m-%d") >=', $from)
+							->where('date_format(date_time, "%Y-%m-%d") <=', $to)
+							->like('supplier_id', $supplier_id, 'BOTH')
 							->like('received_by', $search, 'both')
 							->limit($limit, $start)
 							->get()
 							->result();
+
+
 		  
 		$datasets = array_map(function($delivery) {
 			
