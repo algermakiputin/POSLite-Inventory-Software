@@ -41,6 +41,62 @@ class ItemController extends AppController {
 		return;
 	}
 
+	public function expiry_view() {
+
+		$data['content'] = "items/expiry";
+		$this->load->view('master', $data);
+	}
+
+	public function expiry_datatable() {
+
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+		$items = $this->dataFilter($search, $start, $limit);
+		$row_count = $this->db->get('delivery_details')->num_rows();
+		$dataset = [];
+
+		$deliveries = $this->db->select('delivery_details.*, ordering_level.quantity')
+										->from('delivery_details')
+										->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id')
+										->order_by('expiry_date', "DESC")
+										->limit($limit, $start)
+										->get()
+										->result();
+
+		foreach ($deliveries as $delivery) {
+
+
+			$expiry = date_create($delivery->expiry_date);
+			$now = date_create(date('Y-m-d'));
+			$days_diff = date_diff( $now, $expiry);
+			$days_diff = $days_diff->format('%a');
+
+			$expiry_status = $days_diff . " days";
+
+			if (!$days_diff)
+				$expiry_status = "<span class='badge badge-warning'>Expired<span>";
+ 
+			$datasets[] = [
+				date('Y-m-d h:i:s A', strtotime($delivery->date)),
+				$delivery->expiry_date,
+				$expiry_status,
+				$delivery->name,
+				$delivery->quantities,
+				$delivery->quantity
+			];
+		}
+
+
+
+		echo json_encode([
+				'draw' => $this->input->post('draw'),
+				'recordsTotal' => count($dataset),
+				'recordsFiltered' => $row_count,
+				'data' => $datasets
+			]);
+	}
+
    public function do_upload($file)
     { 
         $config['upload_path']          = './uploads/';
