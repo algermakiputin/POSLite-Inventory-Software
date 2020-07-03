@@ -70,11 +70,11 @@ class ItemController extends AppController {
 			$expiry = date_create($delivery->expiry_date);
 			$now = date_create(date('Y-m-d'));
 			$days_diff = date_diff( $now, $expiry);
-			$days_diff = $days_diff->format('%a');
+		 
 
-			$expiry_status = $days_diff . " days";
+			$expiry_status = $days_diff->format('%a') . " days";
 
-			if (!$days_diff)
+			if ($days_diff->format('%R') == "-")
 				$expiry_status = "<span class='badge badge-warning'>Expired<span>";
  
 			$datasets[] = [
