@@ -53,7 +53,13 @@ class ItemController extends AppController {
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
-		$row_count = $this->db->get('delivery_details')->num_rows();
+		
+		$row_count = $this->db->select('delivery_details.*, ordering_level.quantity')
+									->from('delivery_details')
+									->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id')
+									->get()
+									->num_rows();
+
 		$dataset = [];
 
 		$deliveries = $this->db->select('delivery_details.*, ordering_level.quantity')
@@ -91,7 +97,7 @@ class ItemController extends AppController {
 
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
-				'recordsTotal' => count($dataset),
+				'recordsTotal' => $row_count,
 				'recordsFiltered' => $row_count,
 				'data' => $datasets
 			]);

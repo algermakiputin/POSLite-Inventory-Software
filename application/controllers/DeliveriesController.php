@@ -136,7 +136,14 @@ class DeliveriesController extends CI_Controller
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		
-		$count = $this->db->get('delivery')->num_rows();
+		$count = $this->db->select("delivery.*, supplier.name")
+								->from('delivery') 
+								->join('supplier', 'supplier.id = delivery.supplier_id', 'both')
+								->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
+								->get()
+								->num_rows();
+
+
 
 		$columns = ['date_time', 'received_by', 'due_date', 'name', 'total', 'defectives', 'payment_status', 'defectives', '', 'id'];
 	 	$order_column = $this->input->post('order[0][column]');
@@ -195,7 +202,7 @@ class DeliveriesController extends CI_Controller
 
 		echo json_encode([
 			'draw' => $this->input->post('draw'),
-			'recordsTotal' => count($datasets),
+			'recordsTotal' => $count,
 			'recordsFiltered' => $count,
 			'data' => $datasets
 		]);
