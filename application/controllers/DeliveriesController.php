@@ -272,7 +272,7 @@ class DeliveriesController extends CI_Controller
 	 	if ( $this->db->trans_status() === FALSE ) {
 			 
 	        $this->db->trans_rollback();
-	        dd($this->db->error());
+	        
 	        $this->session->set_flashdata('error', 'Opps! something went wrong please try again');
 				return redirect('deliveries');
 		} 

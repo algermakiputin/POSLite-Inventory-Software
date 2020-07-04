@@ -1,7 +1,7 @@
 <div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">Expiry Date</h1>
-	</div> 
+    <div class="col-lg-12">
+        <h1 class="page-header">Expiry Date</h1>
+    </div> 
     <div class="col-md-12">
         <?php if ($this->session->flashdata('success')): ?>
             <div class="alert alert-success">
@@ -24,7 +24,8 @@
                             <option value="1">Expiring in 1 Month</option>
                             <option value="2">Expiring in 3 Month</option>
                             <option value="3">Expiring in 6 Month</option>
-                            <option value="4">Expired (Past 3 Months)</option>
+                            <option value="4">Expiring in 1 Year</option>
+                            <option value="5">Expired (Past 3 Months)</option>
                         </select> &nbsp;&nbsp;
                         <input type="text" class="form-control" placeholder="Search by Product Name" id="search_expiry" style="max-width: 230px;display: inline-block;font-size: 14px;" name="">
                     </div>
