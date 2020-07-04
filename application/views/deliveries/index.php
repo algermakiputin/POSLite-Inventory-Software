@@ -32,32 +32,7 @@
 					</tr>
 				</thead>
 
-				<tbody>
-				 	<?php foreach($deliveries as $delivery): ?> 
-						<tr>
-							<td><?php echo $delivery->id ?></td>
-							<td><?php echo $delivery->date_time ?></td>
-							<td><?php echo $delivery->received_by ?></td>
-							<td><?php echo $delivery->name ?></td>
-							<td>₱<?php echo number_format($delivery->total) ?></td>
-							<td><?php echo $delivery->defectives ?></td>
-							<td>
-								<div class="dropdown">
-		                    	<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
-		                    	<ul class="dropdown-menu">
-		                    	
-		                        <li>
-		                        	<a href="<?php echo base_url("deliveries/details/" . $delivery->id) ?>"><i class="fa fa-eye"></i> View Details</a> 
-		                        </li> 
-		                        <li>
-		                            <a class="delete-data" href="<?php echo base_url('DeliveriesController/destroy/') ?><?php echo $delivery->id ?>">
-		                                <i class="fa fa-trash"></i> Delete</a>
-		                        </li>
-		                    	</ul>
-				            </div> 
-							</td>
-						</tr>
-					<?php endforeach; ?>  
+				<tbody> 
 				</tbody>
 			</table>
 			
