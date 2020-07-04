@@ -66,48 +66,15 @@ class ItemController extends AppController {
 									->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id') 
 									->get()
 									->num_rows(); 
-
-
-		$this->db->select('delivery_details.*, ordering_level.quantity');
-		$this->db->from('delivery_details');
-		$this->db->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id');
-		$this->db->order_by('expiry_date', "DESC");
-
-		$current_date = date('Y-m-d');
-		$days = 10;
  		 
 		// Option 1
-		if ( $filter != 4) {
 
-			if ($filter == 1)
-				$days = 30;
+		$deliveries = $this->product_expiry_query($filter, $limit, $start, $search)->result();
 
-			else if ($filter == 2)
-				$days = 91;
 
-			else if ( $filter == 3)
-				$days = 182;
-  
-			$span = date('Y-m-d', strtotime('+ ' . $days .' days', strtotime( $current_date )));
- 
-			$this->db->where('expiry_date >', $current_date);
-			$this->db->where('expiry_date <', $span);
+		$num_rows = $this->product_expiry_query($filter, null, null, $search)->num_rows();
 
-		}else {
-
-			$span = date('Y-m-d', strtotime('-90 days', strtotime( $current_date )));
-			$this->db->where('expiry_date <', $current_date);
-			$this->db->where('expiry_date >', $span);
-
-		}
- 
-		$this->db->order_by('expiry_date', 'DESC');
-		$this->db->like('delivery_details.name', $search, 'BOTH');
-		$this->db->limit($limit, $start);
- 
-		$deliveries = $this->db->get()->result();
-  
-
+		 
 		foreach ($deliveries as $delivery) {
 
 
@@ -121,7 +88,7 @@ class ItemController extends AppController {
 				$expiry_status = "<span class='badge badge-warning'>Expired<span>";
  
 			$datasets[] = [
-				date('Y-m-d h:i:s A', strtotime($delivery->date)),
+				date('Y-m-d h:i:s A', strtotime($delivery->delivery_date)),
 				$delivery->expiry_date,
 				$expiry_status,
 				$delivery->name,
@@ -130,14 +97,58 @@ class ItemController extends AppController {
 			];
 		}
 
-
-
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
-				'recordsTotal' => $row_count,
-				'recordsFiltered' => $row_count,
+				'recordsTotal' => count($datasets),
+				'recordsFiltered' => $num_rows,
 				'data' => $datasets
 			]);
+	}
+
+	public function product_expiry_query($filter, $limit, $start, $search ) {
+
+		$current_date = date('Y-m-d');
+		$days = 10;
+
+		$this->db->select('delivery_details.*, ordering_level.quantity');
+		$this->db->from('delivery_details');
+		$this->db->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id');
+		$this->db->order_by('expiry_date', "DESC");
+
+		if ( $filter != 5) {
+
+			if ($filter == 1)
+				$days = 30;
+
+			else if ($filter == 2)
+				$days = 91;
+
+			else if ( $filter == 3)
+				$days = 182;
+
+			else if ( $filter == 4)
+				$days = 365;
+  
+			$span = date('Y-m-d', strtotime('+ ' . $days .' days', strtotime( $current_date )));
+ 
+			$this->db->where('expiry_date >', $current_date);
+			$this->db->where('expiry_date <', $span);
+
+		}else {
+
+			$span = date('Y-m-d', strtotime('-90 days', strtotime( $current_date )));
+			$this->db->where('expiry_date <', $current_date);
+			$this->db->where('expiry_date >', $span);
+
+		}
+ 		
+
+		$this->db->order_by('expiry_date', 'DESC');
+		$this->db->like('delivery_details.name', $search, 'BOTH');
+		$this->db->limit($limit, $start);
+ 	
+
+		return $this->db->get();
 	}
 
    public function do_upload($file)
