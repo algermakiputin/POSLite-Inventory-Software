@@ -109,14 +109,7 @@ class DeliveriesController extends CI_Controller
 
 	public function index() {
 	
-		$deliveries = $this->db->select("delivery.*, supplier.name, SUM(delivery_details.quantities * delivery_details.price) as total, SUM(delivery_details.defectives) as defectives")
-							->from('delivery') 
-							->join('supplier', 'supplier.id = delivery.supplier_id', 'both')
-							->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
-							->group_by('delivery.id')
-							->get()->result();
- 
-		$data['deliveries'] = $deliveries;
+	 
  		$data['content'] = "deliveries/index";
 		$this->load->view('master',$data);
 		 
