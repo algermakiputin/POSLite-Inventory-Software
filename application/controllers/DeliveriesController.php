@@ -129,8 +129,9 @@ class DeliveriesController extends CI_Controller
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		
-		$count = $this->db->select("delivery.*, supplier.name")
+		$count = $this->db->select("delivery.*")
 								->from('delivery') 
+								->group_by('delivery.id')
 								->join('supplier', 'supplier.id = delivery.supplier_id', 'both')
 								->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
 								->get()
