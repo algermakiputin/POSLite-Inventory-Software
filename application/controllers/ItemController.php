@@ -265,7 +265,7 @@ class ItemController extends AppController {
 
 		echo json_encode([
 			'draw' => $this->input->post('draw'),
-			'recordsTotal' => count($datasets),
+			'recordsTotal' => $itemCount,
 			'recordsFiltered' => $itemCount,
 			'data' => $datasets,
 			'total' => number_format($inventory__total,2)
@@ -332,7 +332,7 @@ class ItemController extends AppController {
 
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
-				'recordsTotal' => $count,
+				'recordsTotal' => $itemCount,
 				'recordsFiltered' => $itemCount,
 				'data' => $datasets
 			]);
