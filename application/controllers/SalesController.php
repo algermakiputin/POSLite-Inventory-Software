@@ -21,7 +21,7 @@ class SalesController extends AppController {
  		if (!$sales)
  			return redirect('/');
 
- 		$orderline = $this->db->where('sales_id', $sales->id)->get('sales_description')->result();
+ 		$orderline = $this->db->where('transaction_number', $sales->transaction_number)->get('sales_description')->result();
 
  		$sales_person = $this->db->where('id', $sales->user_id)->get('users')->row();
 
