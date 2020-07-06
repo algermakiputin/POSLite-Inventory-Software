@@ -160,16 +160,18 @@ class SalesController extends AppController {
 						->result();
 			
 		    	if ($sales) {
+
 		    		foreach ($sales as $sale) {
-			    		$description = $this->getSalesDescription($sale->id);
+			    		$description = $this->getSalesDescription($sale->transaction_number);
 			    		
-					foreach ( $description as $descr) {
-						$item = $this->db->where('id', $descr->item_id)->get('items')->row();
-						$total += $descr->price * $descr->quantity;
-					}	
-				}
+						foreach ( $description as $descr) {
+							$item = $this->db->where('barcode', $descr->barcode)->get('items')->row();
+							$total += $descr->price * $descr->quantity;
+						}	
+					}
 
 				$datasets[$date->format($format)][] = round($total,2);
+		    	
 		    	}else {
 		    		$datasets[$date->format($format)][] = 0;
 		    	}
@@ -225,11 +227,13 @@ class SalesController extends AppController {
 			]);
 
 		$sales = $this->security->xss_clean($sales);
+ 
 
 		foreach ($sales as $sale) {
 			$transactionProfit = 0;
+
 			$data[] = [ 
-				'barcode' => $sale['id'],
+				'item_id' => $sale['id'],
 				'quantity' => $sale['quantity'],
 				'transaction_number' => $transaction_number, 
 				'price' => $sale['price'],
@@ -239,11 +243,12 @@ class SalesController extends AppController {
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(),
 				'capital' => $sale['capital'],
+				'barcode' => $sale['barcode']
 				
 			];
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
-			$this->db->where('item_id', $sale['id']);
+			$this->db->where('barcode', $sale['barcode']);
 			$this->db->update('ordering_level');
 		}
  

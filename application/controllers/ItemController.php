@@ -320,7 +320,8 @@ class ItemController extends AppController {
 			$quantity = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
 
 			return [ 
-				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->barcode.'"> ' . 
+				ucwords($item->name) . '<input type="hidden" name="barcode" value="'.$item->barcode.'"> ' . 
+				 '<input type="hidden" name="item-id" value="'.$item->barcode.'"> ' .
 				'<input type="hidden" name="capital" value="'.$item->capital.'">',
 				ucfirst($item->description), 
 				$quantity, 
@@ -367,6 +368,8 @@ class ItemController extends AppController {
 		}
 		return $code;
 	}
+
+
 
 	public function insert() {
 		license('items');
@@ -418,7 +421,7 @@ class ItemController extends AppController {
 		$this->db->insert('items', $data);
 		$item_id = $this->db->insert_id();
 		$this->HistoryModel->insert('Register new item: ' . $name); 
-		$this->OrderingLevelModel->insert($item_id);
+		$this->OrderingLevelModel->insert($item_id, $barcode);
 		$this->PriceModel->insert($price_label, $advance_price, $item_id);
 
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 

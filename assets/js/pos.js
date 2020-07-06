@@ -41,7 +41,7 @@
 
 				$("#item-table").on('click', 'tbody tr', function(event) {
 
-
+					var barcode = $(this).find('input[name="barcode"]').val();
 					var id = $(this).find('input[name="item-id"]').val();
 					var name = $(this).find('td').eq(0).text(); 
 					var price = $(this).find('td').eq(3).text();
@@ -60,6 +60,7 @@
 						$("#item_id").val(id);
 						$("#capital").val(capital);
 						$("#item_unit").val(item_unit);
+						$("#barcode").val(barcode);
 
 						$("#advance_pricing_options tbody").empty(); 
 						$("#advance_pricing_options tbody").append("<tr>" +
@@ -440,6 +441,7 @@
 
 		e.preventDefault();
 		var item_id = $("#item_id").val();
+		var barcode = $("#barcode").val()
 		var name = $("#product-name").text();
 		var quantity = $("#quantity").val();
 		var price = $("input[name='pricing']:checked").val(); 
@@ -454,15 +456,16 @@
 		$("#advance_pricing_modal").modal('toggle');  
 		$("#payment").val('');
 		$("#change").val('');
-		insert_product(item_id, name, price, quantity, capital, unit);
+		insert_product(barcode, item_id, name, price, quantity, capital, unit);
 
 	})
-	function insert_product(id, name, price, quantity, capital, unit) {
+	function insert_product(barcode, id, name, price, quantity, capital, unit) {
  	
  		var sub = remove_comma(price.substring(1)) * quantity;
 
 		$("#cart tbody").append(
 				'<tr>' +
+					'<input name="barcode" type="hidden" value="'+ barcode +'">' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<input name="capital" type="hidden" value="'+ capital +'">' +
 					'<input name="item_unit" type="hidden" value="'+ unit +'">' +
@@ -499,6 +502,7 @@
 		return exist;
 	}
 
+	// Process Transaction
 	$("#process-form").submit(function(e) {
 		e.preventDefault();
 		var row = $("#cart tbody tr").length;
@@ -521,8 +525,10 @@
 					var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val();
 					var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
 					var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
+					var barcode = $("#cart tbody tr").eq(i).find('input[name="barcode"]').val();
  
 					var arr = {
+							barcode: barcode,
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
 							price : price,
@@ -532,9 +538,13 @@
 							capital : capital,
 							unit: main_unit
 						};
+
+						console.log(arr);
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);
 				}
+
+
 
 				total_amount -= totalDiscount;
 				// Receipt Items
