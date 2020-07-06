@@ -320,7 +320,7 @@ class ItemController extends AppController {
 			$quantity = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
 
 			return [ 
-				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'"> ' . 
+				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->barcode.'"> ' . 
 				'<input type="hidden" name="capital" value="'.$item->capital.'">',
 				ucfirst($item->description), 
 				$quantity, 
