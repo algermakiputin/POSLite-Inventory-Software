@@ -10,17 +10,14 @@ class ReturnsController extends CI_Controller {
     }
 
     public function insert() {
-
-    	$this->load->model("OrderingLevelModel");
+ 
         $this->load->model("ReturnsModel");
 
     	$data = $this->input->post('data'); 
-
       
     	$this->db->trans_begin();
 
-    	
-        $this->ReturnsModel->insert($data, $this->OrderingLevelModel);
+        $this->ReturnsModel->insert($data);
 
 
     	if ($this->db->trans_status() === FALSE) {

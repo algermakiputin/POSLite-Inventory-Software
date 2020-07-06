@@ -306,7 +306,7 @@
 
 							$.each(result.orderline, function(key, value) {
 						 
-								table.append('<tr data-item="'+value.item_id+'" data-orderline="'+value.id+'" data-sales="'+value.sales_id+'">'+ 
+								table.append('<tr data-item="'+value.barcode+'" data-orderline="'+value.id+'" data-sales="'+value.transaction_number+'">'+ 
 									'<td>'+value.name+'</td>' +
 									'<td>'+value.quantity+'</td>' +
 									'<td>' + 
@@ -362,12 +362,12 @@
  					$.each(rows, function(key, value) {
  			 			 
  						let val = $(value); 
- 						let item_id = val.data("item");
+ 						let barcode = val.data("item");
  						let orderline_id = val.data('orderline');
  						let return_qty = val.find("td").eq(3).find("input").val();
  						let condition = val.find("select option:selected").val();
  						let product_name = val.find('td').eq(0).text();
- 						let sales_id = val.data('sales');
+ 						let transaction_number = val.data('sales');
  						let reason = val.find("input[name='reason']").val();
 
  						if (!return_qty) {
@@ -375,12 +375,12 @@
  						}
 
  						dataset['data'].push({
- 							item_id: item_id,
+ 							barcode: barcode,
  							orderline_id: orderline_id,
  							return_qty: return_qty,
  							condition: condition,
  							name: product_name,
- 							sales_id: sales_id,
+ 							transaction_number: transaction_number,
  							reason: reason
  						});
 

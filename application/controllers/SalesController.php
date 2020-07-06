@@ -301,6 +301,7 @@ class SalesController extends AppController {
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
 				$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity) - $desc->discount;
 				$transactionProfit += $saleProfit;
+				
 				$datasets[] = [ 
 					date('Y-m-d h:i:s A', strtotime($sale->date_time)),   
 					$desc->name,
@@ -377,19 +378,16 @@ class SalesController extends AppController {
 
 		$transaction_number = $this->input->post('transaction_number');
  
-
 		$sales = $this->db->where('transaction_number', $transaction_number)
 								->get('sales')
 								->row();
  
-
 		if (!$sales) {
  			echo 0;
 			return false;
 		}
 
-
-		$sales_description = $this->db->where('sales_id', $sales->id)
+		$sales_description = $this->db->where('transaction_number', $sales->transaction_number)
 												->get('sales_description')
 												->result();
 		 

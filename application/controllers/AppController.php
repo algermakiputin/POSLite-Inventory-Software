@@ -16,6 +16,9 @@ class AppController extends CI_Controller {
 
     public function export_products() {
 
+    	header('Access-Control-Allow-Origin: *');
+    	header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+
     	$this->load->dbutil();
 
 		// Backup your entire database and assign it to a variable
