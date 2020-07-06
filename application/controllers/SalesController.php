@@ -203,9 +203,9 @@ class SalesController extends AppController {
 		return $sunday = strtotime(date("Y-m-d h:i:s")." -6 days");
 	}
 
-	public function getSalesDescription($id) {
+	public function getSalesDescription($transaction_number) {
 		 
-		return $this->db->where('sales_id', $id)->get('sales_description')->result();
+		return $this->db->where('transaction_number', $transaction_number)->get('sales_description')->result();
  
 	}
 
@@ -223,17 +223,15 @@ class SalesController extends AppController {
 				'user_id' => $this->session->userdata('id'),
 				'transaction_number' => $transaction_number
 			]);
-		$sales_id = $this->db->insert_id();
-
 
 		$sales = $this->security->xss_clean($sales);
 
 		foreach ($sales as $sale) {
 			$transactionProfit = 0;
 			$data[] = [ 
-				'item_id' => $sale['id'],
+				'barcode' => $sale['id'],
 				'quantity' => $sale['quantity'],
-				'sales_id' => $sales_id, 
+				'transaction_number' => $transaction_number, 
 				'price' => $sale['price'],
 				'name' => $sale['name'],
 				'discount' => $sale['discount'],
@@ -288,7 +286,7 @@ class SalesController extends AppController {
 		}
 
 		foreach ($sales as $sale) {
-			$sales_description = $this->db->where('sales_id', $sale->id)->get('sales_description')->result();
+			$sales_description = $this->db->where('transaction_number', $sale->transaction_number)->get('sales_description')->result();
 			$sub_total = 0;
 
 			foreach ($sales_description as $desc) {
@@ -433,7 +431,7 @@ class SalesController extends AppController {
 
 		$sales = $this->db->select("sales.*, SUM(sales_description.price * sales_description.quantity) as sub")
 								->from('sales')
-								->join('sales_description', 'sales_description.sales_id = sales.id')
+								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number')
 								->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") =', $date)
 								->where('sales.user_id', $user_id)
 								->like("sales.transaction_number", $search, "BOTH")
