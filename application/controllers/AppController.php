@@ -14,6 +14,43 @@ class AppController extends CI_Controller {
         
     }
 
+    public function export_products() {
+
+    	$this->load->dbutil();
+
+		// Backup your entire database and assign it to a variable
+
+
+			$this->load->dbutil();
+
+		// Backup your entire database and assign it to a variable
+		$prefs = array(    // Array of tables to backup.
+					'tables' => array('items','prices', 'ordering_level', 'categories', 'supplier'),
+		        'ignore'        => array(),                     // List of tables to omit from the backup
+		        'format'        => 'txt',                       // gzip, zip, txt
+		        'filename'      => 'mybackup.sql',              // File name - NEEDED ONLY WITH ZIP FILES
+		        'add_drop'      => TRUE,                        // Whether to add DROP TABLE statements to backup file
+		        'add_insert'    => TRUE,                        // Whether to add INSERT data to backup file
+		        'newline'       => "\n"                         // Newline character used in backup file
+		);
+
+		$backup = $this->dbutil->backup($prefs);
+
+		echo $backup;
+
+		return;
+
+    }
+
+
+    public function load_products() {
+
+    	$query;
+
+    	return $this->db->query($query);
+
+    }
+ 
     public function user_restrictions() {
 
     	$uri = uri_string();

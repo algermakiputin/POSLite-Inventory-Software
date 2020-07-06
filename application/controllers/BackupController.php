@@ -38,6 +38,8 @@ class BackupController extends AppController {
 		);
 
 		$backup = $this->dbutil->backup($prefs);
+
+		dd($backup);
 		$encrypted_backup = $this->encryption->encrypt($backup); 
 		
 		$handle = fopen($filename, 'w') or die('Cannot open file:  '.$my_file);
