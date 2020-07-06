@@ -63,7 +63,7 @@ class DashboardController extends AppController {
 
 		$sales = $this->db->select('SUM(quantity) as qty, name, SUM(quantity * price) as revenue')
 								->from('sales_description')
-								->group_by('item_id')
+								->group_by('barcode')
 								->where('DATE_FORMAT(created_at, "%Y-%m") =', $date)
 								->where('quantity >=', 1)
 								->order_by('qty', "DESC")
@@ -84,7 +84,7 @@ class DashboardController extends AppController {
 
 		$sales = $this->db->select('sales.id, SUM(sales_description.price * sales_description.quantity) as total')
 								->from('sales')
-								->join('sales_description', 'sales_description.sales_id = sales.id')
+								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number')
 								->group_by('sales.id')
 								->where('DATE_FORMAT(date_time, "%Y-%m-%d") >', $last_month)
 								->get()
@@ -117,7 +117,7 @@ class DashboardController extends AppController {
 						WHERE items.id
 						NOT IN
 						(
-							SELECT item_id
+							SELECT barcode
 							FROM sales_description 
 							WHERE DATE_FORMAT(sales_description.created_at, '%Y-%m-%d') >= '$lastweek'
 						)
@@ -132,7 +132,7 @@ class DashboardController extends AppController {
 
 		$sales = $this->db->select("date_format(sales.date_time, '%H.%i') as time, sales.id,sales.id, SUM(sales_description.price * sales_description.quantity) as total_sales")
 								->from('sales')
-								->join('sales_description', 'sales_description.sales_id = sales.id', 'LEFT')
+								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number', 'LEFT')
 								->where('date_format(sales.date_time, "%Y-%m-%d") =', $date)
 								->group_by('sales.id')
 								->get()
