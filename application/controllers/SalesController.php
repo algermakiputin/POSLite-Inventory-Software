@@ -275,7 +275,7 @@ class SalesController extends AppController {
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
 		$sales = $this->filterReports($from, $to); 
-		
+
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
@@ -290,17 +290,17 @@ class SalesController extends AppController {
 		if ($expenses) {
 			$totalExpenses = $expenses->total;
 		}
+ 
 
 		foreach ($sales as $sale) {
 			 
 		 	 
 	 		$user = $this->db->where('id', $sale->user_id)->get('users')->row();
 	 		$staff = $user ? $user->username : 'Not found';
-
-			$sub_total += ((float)$sale->quantity * (float) $sale->price) - $sale->discount;
+ 
 			$saleProfit = ($sale->price - $sale->capital) * ($sale->quantity) - $sale->discount;
 			$transactionProfit += $saleProfit;
-			
+
 			$datasets[] = [ 
 				date('Y-m-d h:i:s A', strtotime($sale->date_time)),   
 				$sale->name,
@@ -316,7 +316,7 @@ class SalesController extends AppController {
 			$goodsCost += ($sale->capital * $sale->quantity);
 		 
 
-			$totalSales += $sub_total; 
+			$totalSales += ((float)$sale->quantity * (float) $sale->price) - $sale->discount; 
 			
 		}
 
