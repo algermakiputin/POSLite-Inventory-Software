@@ -45,8 +45,6 @@ class DashboardController extends AppController {
 	}
  	
 
- 
-
 	public function diagnoses() {
 
 		$lastweek = date('Y-m-d', strtotime('-7 days'));
@@ -63,7 +61,7 @@ class DashboardController extends AppController {
 
 		$sales = $this->db->select('SUM(quantity) as qty, name, SUM(quantity * price) as revenue')
 								->from('sales_description')
-								->group_by('barcode')
+								->group_by('transaction_number')
 								->where('DATE_FORMAT(created_at, "%Y-%m") =', $date)
 								->where('quantity >=', 1)
 								->order_by('qty', "DESC")
@@ -71,7 +69,7 @@ class DashboardController extends AppController {
 								->get()
 								->result();
  
-		
+	 
 		return $sales;
 
 	} 

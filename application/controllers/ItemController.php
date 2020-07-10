@@ -530,6 +530,7 @@ class ItemController extends AppController {
 		$updated_desc = strip_tags($this->input->post('description'));
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
+		$barcode = $this->input->post('barcode');
 		$id = strip_tags($this->input->post('id'));
 
 		$price_label = $this->input->post('price_label[]');
@@ -555,7 +556,7 @@ class ItemController extends AppController {
 			 
 		}
 
-		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
+		$this->db->where('barcode', $barcode)->update('ordering_level', ['quantity' => $stocks]);
 	 
 		$update = $this->ItemModel->update_item(
 						$id,$updated_name,
