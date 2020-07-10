@@ -87,7 +87,7 @@ echo $this->session->flashdata('successMessage');
         <div class="col-md-12">
            <div class="panel panel-default">
                <div class="panel-heading">
-                   Diagnoses
+                   <i class="fa fa-question-circle" title="Identify products status"></i> Diagnoses
                </div> 
                <div class="panel-body"> 
                    
@@ -124,7 +124,7 @@ echo $this->session->flashdata('successMessage');
                    
                         <thead>
                             <tr>
-                                <td>Average Sales Per Day</td> 
+                                <td><i class="fa fa-question-circle" title="Average sales per day for the last 30 days"></i> Average Sales Per Day</td> 
                             </tr>
                         </thead>
                         <tr>
