@@ -15,9 +15,9 @@
                         <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Product</a>
                     </li>
                     <?php endif; ?>
-                    <li>
+                <!--     <li>
                         <a href="<?php echo base_url('items/expiry') ?>"><i class="fa fa-circle-o"></i> Product Expiry</a>
-                    </li>
+                    </li> -->
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
@@ -39,7 +39,7 @@
             <?php endif; ?>
 
             <li>
-                <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Purchase Order<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Deliveries<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                    
                     <li>

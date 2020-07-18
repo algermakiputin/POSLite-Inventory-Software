@@ -55,8 +55,6 @@ class DeliveriesController extends CI_Controller
 		$due_date = $this->input->post('due_date');
 		$payment_status = $this->input->post('payment_status'); 
 
-
-  
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
 			'date_time' => $this->input->post('delivery_date'),
@@ -86,6 +84,7 @@ class DeliveriesController extends CI_Controller
 				'name' => $products[$key],
 				'expiry_date' => $expiry_date[$key]
 			);
+			
  			//Update Product Quantities
 			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
 			$this->db->where('item_id', $products_id[$key]);

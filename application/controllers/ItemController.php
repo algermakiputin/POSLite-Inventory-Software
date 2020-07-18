@@ -35,7 +35,8 @@ class ItemController extends AppController {
 					'quantity' => $quantity,
 					'id' => $item->id,
 					'capital' => $item->capital,
-					'advance_pricing' => $advance_pricing
+					'advance_pricing' => $advance_pricing,
+					'barcode' => $item->barcode
 				]) ;
 		} 
 		return;

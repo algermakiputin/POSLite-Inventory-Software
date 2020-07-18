@@ -186,7 +186,7 @@
 
 				$(document).pos();
 				$(document).on('scan.pos.barcode', function(event){
- 			 
+
 					if (license === "silver" || license === "gold") {
 						if (event.code.length > 6) {
 							data = {};
@@ -202,7 +202,7 @@
 
 										let result = JSON.parse(data);
 										if ( itemExist(result.id))
-											return false;
+											return false; 
 
 										let id = result.id;
 										let name  = result.name
@@ -218,8 +218,8 @@
 
 										$("#product-name").text(name);
 										$("#item_id").val(id);
-										$("#capital").val(capital);
-
+										$("#capital").val(capital);	
+										$("#barcode").val(result.barcode);
 
 										$("#advance_pricing_options tbody").empty(); 
 										$("#advance_pricing_options tbody").append("<tr>" +
@@ -252,7 +252,7 @@
 										$("payment").val('');
 										$("change").val('');
 									}else 
-										alert('No item found in the database');
+										alert('No item found in the database or try again');
 								 
 								}
 							})
