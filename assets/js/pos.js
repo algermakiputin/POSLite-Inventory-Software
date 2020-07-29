@@ -516,13 +516,7 @@
 		})
 
 		return exist;
-	}
-
-	$("form").submit(function(e) {
-		alert(0)
-		return false;
-		e.preventDefault();
-	})
+	} 
 
 	// Process Transaction
 	$("#process-form").submit(function(e) {
