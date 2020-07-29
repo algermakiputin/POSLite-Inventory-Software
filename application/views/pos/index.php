@@ -403,7 +403,7 @@
 					</tbody>
 				</table>
 
-				<form class="form-inline" id="add-to-cart-form">
+				<div class="form-inline" id="add-to-cart-form">
 					<div class="form-group">
 						<input type="hidden" name="item_unit" id="item_unit">
 						<input type="hidden" name="capital" id="capital" value="0">
@@ -413,7 +413,7 @@
 						<input style="border-radius: 3px;" name="quantity-enter" onfocus="this.value=''" type="number" min="1" value="1" type="number" id="quantity" class="form-control mx-sm-3" aria-describedby="quantity">
 
 					</div>
-				</form>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -425,7 +425,7 @@
 <script type="text/javascript">
 	var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
 	var csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
-
+	var items = <?=json_encode($items) ?>;
 </script>
 <script type="text/javascript" src="<?php echo base_url('assets/jquery.js') ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/jquery-ui/jquery-ui.js') ?>"></script>
@@ -434,7 +434,7 @@
 <script src="<?php echo base_url('assets/vendor/datatables/js/jquery.dataTables.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/jquery.scannerdetection.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/print.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/pos.js') ?>"></script>
 </body>

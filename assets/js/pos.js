@@ -184,85 +184,101 @@
 				  		}
 				 	});
 
-				$(document).pos();
-				$(document).on('scan.pos.barcode', function(event){
+					$(document).scannerDetection({ 
+  
+					timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+					avgTimeByChar: 40, // it's not a barcode if a character takes longer than 100ms  
+					endChar: [13],
+					onComplete: function(barcode, qty){
 
-					if (license === "silver" || license === "gold") {
-						if (event.code.length > 6) {
+
+
+						if (license === "silver" || license === "gold") {
+
 							data = {};
 							data[csrfName] = csrfHash;
-							data['code'] = event.code;
-						 
-							$.ajax({
-								type : 'POST',
-								url : base_url + 'items/find',
-								data : data,
-								success : function(data) {
-									if (data) {
+							data['code'] = barcode;
 
-										let result = JSON.parse(data);
-										if ( itemExist(result.id))
-											return false; 
+							for (i = 0; i < items.length;i++) {
+								var item = items[i];
 
-										let id = result.id;
-										let name  = result.name
-										let quantity = 1;
-										let capital = result.capital;
-										let price = result.price;
-									 	let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-									 	totalAmountDue += parseFloat(subtotal);
-			 
-							  	 	 	
-							  	 	 	let advance_pricing = result.advance_pricing;
-										let enable_ap = Object.keys(advance_pricing).length;
+								if (item.barcode == barcode) {
 
-										$("#product-name").text(name);
-										$("#item_id").val(id);
-										$("#capital").val(capital);	
-										$("#barcode").val(result.barcode);
+									if ( itemExist(item.id)){
+										return false;
+									}
 
-										$("#advance_pricing_options tbody").empty(); 
+
+									let id = item.id;
+									let name  = item.name
+									let quantity = 1;
+									let capital = item.capital;
+									let price = currency + number_format(item.price);
+									$("#barcode").val(item.barcode);
+									let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+									totalAmountDue += parseFloat(subtotal);
+
+
+									let advance_pricing = item.advance_pricing;
+									let enable_ap = Object.keys(advance_pricing).length;
+
+									$("#product-name").text(name);
+									$("#item_id").val(id);
+									$("#capital").val(capital);
+
+
+									$("#advance_pricing_options tbody").empty(); 
+									$("#advance_pricing_options tbody").append("<tr>" +
+										"<td>SRP</td>" +
+										"<td>"+price+"</td>" +
+										'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
+										"</tr>"
+										);
+
+									$.each(advance_pricing, function(key, value) {
+
 										$("#advance_pricing_options tbody").append("<tr>" +
-													"<td>SRP</td>" +
-													"<td>"+price+"</td>" +
-													'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
-												"</tr>"
-												);
+											"<td>"+value.label+"</td>" +
+											"<td>"+ currency + (value.price) +"</td>" +
+											'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
+											"</tr>"
+											);			
+									});
 
-										$.each(advance_pricing, function(key, value) {
+									// var price_options = JSON.parse(pricing);
+									// console.log(price_options);
 
-											$("#advance_pricing_options tbody").append("<tr>" +
-													"<td>"+value.label+"</td>" +
-													"<td>"+ currency + (value.price) +"</td>" +
-													'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
-												"</tr>"
-												);			
-										});
-							 	 
-										// var price_options = JSON.parse(pricing);
-										// console.log(price_options);
+									$("#advance_pricing_modal").modal('toggle'); 
+									$("#quantity").focus();
+									recount();
+									$("payment").val('');
+									$("change").val(''); 
 
-										$("#advance_pricing_modal").modal('toggle'); 
-										$("#quantity").focus();
-										recount();
-										$("payment").val('');
-										$("change").val(''); 
+									recount();
+									$("payment").val('');
+									$("change").val('');
 
-										recount();
-										$("payment").val('');
-										$("change").val('');
-									}else 
-										alert('No item found in the database or try again');
-								 
+									return;
 								}
-							})
+							}
+
+							return alert("No item found in the database");
+
+
 						}
-					} else {
-						alert("Your license does not support Barcode Feature, Upgrade Now!");
-					}
-				}); 
+
+				    } // main callback function	,
+				    ,
+				    onError: function(string, qty) {
 
 
+
+				    }
+ 
+				 });
+
+
+			
 				 	
 			}
 		}
@@ -501,6 +517,12 @@
 
 		return exist;
 	}
+
+	$("form").submit(function(e) {
+		alert(0)
+		return false;
+		e.preventDefault();
+	})
 
 	// Process Transaction
 	$("#process-form").submit(function(e) {
