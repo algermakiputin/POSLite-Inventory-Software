@@ -1,136 +1,201 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Product: <?php echo $item->name; ?></h1>
+		<h1 class="page-header"><?php echo $item->name ?></h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
 <div class="row">
+	<div class="col-md-12">
+		<?php 
+		echo $this->session->flashdata('errorMessage');
+		echo $this->session->flashdata('successMessage');
+
+		?>
+	</div>
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Edit Product
+				Register Item
 			</div>
 			<div class="panel-body">
+
 				<div class="row">
-					<?php echo form_open_multipart('items/update', array('method' => 'post', 'id' => 'item-form')) ?>
-						<div class="col-lg-6 col-md-offset-2">
+					<?php echo form_open_multipart('items/update', array('data-parsley-validate' => 'true', 'id' => 'item-form', 'method' => 'POST')) ?>
+				 
+						<div class="col-lg-6 col-md-offset-2 ">
+							<h3>Product Information</h3>
 							<div class="row">
-								<div class="form-group col-md-12"> 
-									<label>Barcode:</label>
-									<input type="text"  value="<?php echo $item->barcode; ?>" name="barcode" class="form-control" required="required"> 
+								<div class="col-md-2">
+									*Serial
 								</div>
-								<div class="form-group col-md-12"> 
-									<label>Item Name:</label>
-									<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control" required="required">
-									<input type="hidden" name="id" value="<?php echo $item->id ?>">
+								<div class="col-md-10">
+									<div class="form-group">
+										<input autocomplete="off" value="<?php echo $item->barcode ?>" type="text" placeholder="Serial" required="required" class="form-control" name="barcode" value="">
+									</div>
 								</div>
-								
-								<div class="form-group col-md-12"> 
-									<label>Category:</label>
-									<select name="category" class="form-control" required="required">
-										<option value="">Select Category</option>
-										<?php foreach ($categories as $cat): ?>
-											<option value="<?php echo $cat->id ?>" <?php echo $cat->id == $item->category_id ? "selected" : '' ?>> 
-												<?php echo ucwords($cat->name) ?> 
-											</option>
-										<?php endforeach; ?>
-									</select>
-								</div>  
-								<div class="form-group col-md-12">
-									<label>Supplier:</label>
-									<select name="supplier" class="form-control">
-										<?php foreach ($suppliers as $supplier): ?>
-											<option value="<?php echo $supplier->id; ?>" <?php echo $item->supplier_id == $supplier->id ? 'Selected' : '' ?>>
-												<?php echo $supplier->name ?>
-											</option>
-										<?php endforeach; ?>
-									</select>
+								<input type="hidden" name="id" value="<?php echo $item->id ?>">
+								<div class="col-md-2">
+									*Product
 								</div>
-								<div class="form-group col-md-12"> 
-									<label>Capital Price:</label>
-									<input value="<?php echo $item->capital ?>" type="text" name="capital" class="form-control" required="required" id="capital-price">
-								</div> 
-								<div class="form-group col-md-12"> 
-									<label>Retail Price:</label>
-									<input value="<?php echo $item->price ?>" type="text" name="price" class="form-control" required="required" id="selling-price">
-								</div>   
+								<div class="col-md-10">
+									<div class="form-group">
+										<input autocomplete="off" value="<?php echo $item->name ?>" required="required" type="text" placeholder="Product" name="product" class="form-control">
+									</div>
+								</div>
 
-								
-								<div class="form-group col-md-12"> 
-									<label>Stocks:</label>
-									<input type="text" value="<?php echo $stocks->quantity; ?>" name="stocks" class="form-control" required="required">
-									<input type="hidden" name="id" value="<?php echo $item->id ?>">
+								<div class="col-md-2">
+									*Category
 								</div>
-							 	<div class="col-md-12">
-							 		<?php if (!$advance_pricing): ?>
-								<div class="form-group" style="padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5">
-									<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
+								<div class="col-md-10">
+									<div class="form-group">
+										<select name="category" class="form-control" required="required">
+											<option value="">Select Category</option>
+											<?php foreach ($category as $cat): ?>
+												<option <?php echo $item->category_id == $cat->id ? "selected" : "" ?> value="<?php echo $cat->id ?>"> <?php echo ucwords($cat->name) ?> </option>
+											<?php endforeach; ?>
+										</select>
+									</div>
 								</div>
-							 	<?php endif; ?>
 
-								
-								<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="<?php echo $class ?>">
-									<legend>Advance Pricing</legend>
-									<table class="table table-bordered table-striped" id="advance-pricing-tbl">
-										<thead>
-											<tr>
-												<th>Label</th>
-												<th>Price</th>
-											</tr>
-										</thead>
-										<tbody>
-											<?php if (!$advance_pricing): ?>
-												<tr>
-													<td><input type="text" value="<?php echo $price->label ?>" placeholder="Price Label" class="form-control" name="price_label[]"></td>
-													<td><input type="text" value="<?php echo $price->price ?>" placeholder="Price" class="form-control" name="advance_price[]"></td>
-													<td width="30px"><i class="fa fa-trash remove-row"></i></td>
-												</tr>
+								<div class="col-md-2">
+									*Supplier
+								</div>
+								<div class="col-md-10">
+									<div class="form-group">   
+										<select name="supplier" class="form-control" required="required"> 
+											<option value="">Select Supplier</option>
+											<?php foreach ($suppliers as $supplier): ?>
+												<option <?php echo $item->supplier_id == $supplier->id ? "selected" : "" ?> value="<?php echo $supplier->id ?>">
+													<?php echo ucwords($supplier->name) ?>
+												</option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									*Capital Price
+								</div>
+								<div class="col-md-10">
+									<div class="form-group">   
+										<input autocomplete="off" type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" value="<?php echo $item->capital ?>" id="selling-price">
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									*Retail Price
+								</div>
+								<div class="col-md-10">
+									<div class="form-group">   
+										<input type="text" autocomplete="off" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price" value="<?php echo $item->price ?>">
+									</div> 
+								</div>
+
+							</div>
+							<table width="100%">   
+							</table>
+						 
+						</div> 
+						<div class="col-lg-4">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group" style="margin-top: 30px;">
+										<div class="productImage" id="imagePreview">
+											<?php if ($item->image && file_exists('./uploads/' . $item->image)): ?>
+												<img style="width: inherit;height: inherit;" src="<?php echo base_url('uploads/' . $item->image) ?>">
 											<?php endif; ?>
-											<?php foreach ($advance_pricing as $price): ?>
+										</div>
+										<label>Product Image
+											<input type="file" name="productImage" id="productImage" class="form-control">
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-offset-2 ">
+							<div class="row">
+								<div class="col-md-2">
+									Product Variations
+								</div>
+								<div class="col-md-10">
+									<div class="form-group advance-pricing-wrapper">
+										<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">
+											<?php if ( $variations): ?>
+												Variations
+											<?php else: ?>
+												Enable Product Variation
+											<?php endif; ?>
+										</button>
+									</div>
+									
+								</div>
+
+								
+							</div> 
+							
+						</div> 
+						<div class="col-md-7 col-md-offset-3">
+							<fieldset style="background-color: #fafafa;" id="advance-pricing-field" class="<?php if ( !$variations) echo "collapse" ?>">
+								<legend>Variation List</legend>
+								<p>Enables you to set different prices for a product. Ex wholeslage price or different prices for every group of customers</p>
+								<table class="table table-bordered table-striped" id="advance-pricing-tbl">
+									<thead>
+										<tr>
+											<th width="35%">Serial</th> 
+											<th width="35%">Name</th>
+											<th width="15%">Price</th>
+											<th width="15%">Stocks</th> 
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php if ( !$variations ): ?>
+										<tr>
+											<td><input type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>
+											<td><input type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>
+											<td><input type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>
+											<td><input type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>
+											<td width="30px"><i class="fa fa-trash remove-row"></i></td>
+										</tr>
+										<?php else: ?>
+											<?php foreach ( $variations as $variation ): ?>
 												<tr>
-													<td><input type="text" value="<?php echo $price->label ?>" placeholder="Price Label" class="form-control" name="price_label[]"></td>
-													<td><input type="text" value="<?php echo $price->price ?>" placeholder="Price" class="form-control" name="advance_price[]"></td>
+													<td><input value="<?php echo $variation->serial ?>" type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>
+													<td><input value="<?php echo $variation->name ?>" type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>
+													<td><input value="<?php echo $variation->price ?>" type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>
+													<td><input value="<?php echo $variation->stocks ?>" type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>
 													<td width="30px"><i class="fa fa-trash remove-row"></i></td>
 												</tr>
 											<?php endforeach; ?>
-											
-										</tbody>
-									</table>
-									<div class="text-right">
-										<button class="btn btn-default btn-sm" type="button" id="add-price">ADD PRICE</button>
+										<?php endif; ?>
+									</tbody>
+								</table>
+								<div class="text-right">
+									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD Variation</button>
+								</div>
+							</fieldset>
+						</div>
+					 
+						<div class="col-md-6 col-md-offset-2">
+							<div class="row">
+								<div class="col-md-2">
+									Description
+								</div>
+								<div class="col-md-10">
+									<div class="form-group">  
+										<textarea rows="5" autocomplete="off" maxlength="150" placeholder="Description" class="form-control" name="description" required="required"><?php echo $item->description ?></textarea>
 									</div>
-								</fieldset> 
-							 	</div>
-								
-								<div class="form-group col-md-12"> 
-									<label>Description:</label>
-									<textarea required="required" rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
 								</div>
-								<div class="form-group col-md-12"> 
-									<button class="btn btn-primary">Update</button>
-								</div>
-
 							</div>
 						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<div class="productImage" id="imagePreview">
-									<?php if ($item->image && file_exists('./uploads/' . $item->image)): ?>
-										<img style="width: inherit;height: inherit;" src="<?php echo base_url('uploads/' . $item->image) ?>">
-									<?php endif; ?>
-								</div>
-								<br/>
-								<label>Change Image
-									<input type="file" name="productImage" id="productImage" class="form-control">
-								</label>
+					 
+						<div class="row">  
+							<div class="form-group col-md-6 col-md-offset-2 text-right"> 
+								<button class="btn btn-primary" type="submit">Update</button> 
 							</div>
 						</div>
 					<?php echo form_close(); ?>
-					
-					<!-- /.col-lg-6 (nested) -->
-					
-					<!-- /.col-lg-6 (nested) -->
 				</div>
 				<!-- /.row (nested) -->
 			</div>
@@ -149,34 +214,37 @@
 		$(document).pos();
 
 		$(document).on('scan.pos.barcode', function(event){
-		  
-				if (event.code.length > 6) { 
-					 
-					 $("#barcode").val(event.code);
-				}
-		}); 
 
+			if (event.code.length > 6) { 
+
+				$("#barcode").val(event.code);
+			}
+		}); 
 
 		$("#add-price").click(function(e) {
 
 			$("#advance-pricing-tbl tbody").append("<tr>" + 
-					'<td><input type="text" placeholder="Price Label" class="form-control" name="price_label[]"></td>' +
-					'<td><input type="number" placeholder="Price" class="form-control" name="advance_price[]"></td>' + 
-					'<td width="30px"><i class="fa fa-trash remove-row"></i></td>' +
+				'<td><input type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>' +
+				'<td><input type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>' + 
+				'<td><input type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>' + 
+				'<td><input type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>' + 
+				'<td width="30px"><i class="fa fa-trash remove-row"></i></td>' +
 				"</tr>");
 		});
 
 		$("body").on('click','.remove-row', function(e) {
 
 			var row_count = $("#advance-pricing-tbl tbody tr").length;
- 
-			$(this).parents('tr').remove();
-			 
+
+			if (row_count > 1) {
+				$(this).parents('tr').remove();
+			}else {
+				alert('at least 1 Price is required');
+			}
 			
 		});
-			
+
 	})
 
 
 </script>
- 

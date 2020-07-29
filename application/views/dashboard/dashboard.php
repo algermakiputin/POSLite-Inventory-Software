@@ -144,6 +144,9 @@ echo $this->session->flashdata('successMessage');
     .panel-heading {
         font-weight: bold;
     }
+    label {
+        font-weight: normal;
+    }
 </style>
 <script src="<?php echo base_url('assets/vendor/chart.min.js') ?>"></script>
 

@@ -375,7 +375,7 @@ class ItemController extends AppController {
 	public function insert() {
 		license('items');
 	
-		$name = $this->input->post('name');
+		$name = $this->input->post('product');
 		$category = $this->input->post('category');
 		$description = $this->input->post('description');
 		$supplier_id = $this->input->post('supplier');
@@ -383,12 +383,16 @@ class ItemController extends AppController {
 		$price = $this->input->post('price'); 
 		$capital = $this->input->post('capital');
 		$productImage = $_FILES['productImage'];
-		$price_label = $this->input->post('price_label[]');
-		$advance_price = $this->input->post('advance_price[]');
+
+		$variation_serials = $this->input->post('variation_serial[]');
+		$variation_names = $this->input->post('variation_name[]');
+		$variation_price = $this->input->post('variation_price[]');
+		$variation_stocks = $this->input->post('variation_stocks[]');
+
 		$unit = $this->input->post('unit');
 		$location = $this->input->post('location');
 	 
-		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
+		$this->form_validation->set_rules('product', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
 		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]|trim|strip_tags');
 		$this->form_validation->set_rules('barcode', 'Barcode', 'required|is_unique[items.barcode]|trim|strip_tags');
@@ -423,7 +427,29 @@ class ItemController extends AppController {
 		$item_id = $this->db->insert_id();
 		$this->HistoryModel->insert('Register new item: ' . $name); 
 		$this->OrderingLevelModel->insert($item_id, $barcode);
-		$this->PriceModel->insert($price_label, $advance_price, $item_id);
+		// $this->PriceModel->insert($price_label, $advance_price, $item_id);
+
+		foreach ( $variation_serials as $key => $serial ) {
+
+			$name = $variation_names[$key];
+			$price = $variation_price[$key];
+			$stocks = $variation_stocks[$key];
+
+			if ( $serial && $name && $price && $stocks) {
+
+				$this->db->insert('variations', [
+						'serial' => $serial,
+						'name'	=> $name,
+						'price'	=> $price,
+						'stocks'	=> $stocks,
+						'item_id' => $item_id
+					]);
+
+			}else {
+				continue;
+			}
+
+		}
 
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
@@ -514,16 +540,18 @@ class ItemController extends AppController {
 		$data['class'] = $data['advance_pricing'] ? '' : 'collapse';
 		
 		$data['item'] = $this->db->where('id', $id)->get('items')->row(); 
-		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
+		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row();
 		$data['content'] = "items/edit";
+		$data['variations'] = $this->db->where('item_id', $id)->get('variations')->result();
+
 		$this->load->view('master', $data);
 	}
 
 	public function update() {
 		
-		//validation Form
+		//validation Form 
 		$this->updateFormValidation();
 		$this->load->model('HistoryModel');
  		$updated_name = strip_tags($this->input->post('name'));
@@ -545,6 +573,11 @@ class ItemController extends AppController {
 		$supplier_id = $this->input->post('supplier');
 		$unit = $this->input->post('unit');
 		$location = $this->input->post('location');
+
+		$variation_serials = $this->input->post('variation_serial[]');
+		$variation_names = $this->input->post('variation_name[]');
+		$variation_price = $this->input->post('variation_price[]');
+		$variation_stocks = $this->input->post('variation_stocks[]');
 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
@@ -568,9 +601,36 @@ class ItemController extends AppController {
 						$supplier_id, $this->input->post('barcode'),
 						$updated_price,
 						$capital
-					);
+					); 
 
-		$this->PriceModel->insert($price_label, $advance_price, $id);
+		 
+		if ( $variation_serials ) {
+
+			$this->db->where('item_id', $id)->delete('variations');
+
+			foreach ( $variation_serials as $key => $serial ) {
+
+				$name = $variation_names[$key];
+				$price = $variation_price[$key];
+				$stocks = $variation_stocks[$key];
+ 
+				if ( $serial && $name && $price && $stocks) {
+
+					$this->db->insert('variations', [
+							'serial' => $serial,
+							'name'	=> $name,
+							'price'	=> $price,
+							'stocks'	=> $stocks,
+							'item_id' => $id
+						]);
+
+				}else {
+					continue;
+				}
+
+			}
+		}
+		
 
 		if ($update) {
 			
@@ -591,7 +651,7 @@ class ItemController extends AppController {
 
 	public function updateFormValidation() {
 		
-		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]');
+		$this->form_validation->set_rules('product', 'Product Name', 'required|max_length[100]');
 		$this->form_validation->set_rules('category', 'Category', 'required|max_length[150]');
 		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]');
 		$this->form_validation->set_rules('price', 'Price', 'required|max_length[500000]'); 
