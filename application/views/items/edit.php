@@ -27,11 +27,11 @@
 							<h3>Product Information</h3>
 							<div class="row">
 								<div class="col-md-2">
-									*Serial
+									*Product ID
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">
-										<input autocomplete="off" value="<?php echo $item->barcode ?>" type="text" placeholder="Serial" required="required" class="form-control" name="barcode" value="">
+										<input autocomplete="off" readonly value="<?php echo $item->barcode ?>" type="text" placeholder="Serial" required="required" class="form-control" name="barcode" value="">
 									</div>
 								</div>
 								<input type="hidden" name="id" value="<?php echo $item->id ?>">
@@ -152,26 +152,27 @@
 									<tbody>
 										<?php if ( !$variations ): ?>
 										<tr>
-											<td><input type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>
+											<td><input type="hidden" name="variation_id[]" value="0"><input type="hidden" name="variation_new[]" value="1"> <input type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>
 											<td><input type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>
 											<td><input type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>
 											<td><input type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>
-											<td width="30px"><i class="fa fa-trash remove-row"></i></td>
+											<td width="30px"><i class="fa fa-trash variation-remove-row"></i></td>
 										</tr>
 										<?php else: ?>
 											<?php foreach ( $variations as $variation ): ?>
 												<tr>
-													<td><input value="<?php echo $variation->serial ?>" type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>
+													<td><input type="hidden" name="variation_id[]" value="<?php echo $variation->id ?>"><input type="hidden" name="variation_new[]" value="0"><input value="<?php echo $variation->serial ?>" type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>
 													<td><input value="<?php echo $variation->name ?>" type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>
 													<td><input value="<?php echo $variation->price ?>" type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>
 													<td><input value="<?php echo $variation->stocks ?>" type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>
-													<td width="30px"><i class="fa fa-trash remove-row"></i></td>
+													<td width="30px"><i data-id="<?php echo $variation->id ?>" class="fa fa-trash variation-remove-row"></i></td>
 												</tr>
 											<?php endforeach; ?>
 										<?php endif; ?>
 									</tbody>
 								</table>
 								<div class="text-right">
+									<button class="btn btn-primary btn-sm" type="button" id="update-variation">Update</button>
 									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD Variation</button>
 								</div>
 							</fieldset>
@@ -224,24 +225,12 @@
 		$("#add-price").click(function(e) {
 
 			$("#advance-pricing-tbl tbody").append("<tr>" + 
-				'<td><input type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>' +
+				'<td><input type="hidden" name="variation_id[]" value="0"><input type="hidden" name="variation_new[]" value="1"><input type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>' +
 				'<td><input type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>' + 
 				'<td><input type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>' + 
 				'<td><input type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>' + 
 				'<td width="30px"><i class="fa fa-trash remove-row"></i></td>' +
 				"</tr>");
-		});
-
-		$("body").on('click','.remove-row', function(e) {
-
-			var row_count = $("#advance-pricing-tbl tbody tr").length;
-
-			if (row_count > 1) {
-				$(this).parents('tr').remove();
-			}else {
-				alert('at least 1 Price is required');
-			}
-			
 		});
 
 	})

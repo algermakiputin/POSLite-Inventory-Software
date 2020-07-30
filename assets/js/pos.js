@@ -202,19 +202,19 @@
 							for (i = 0; i < items.length;i++) {
 								var item = items[i];
 
-								if (item.barcode == barcode) {
+								if (item.serial == barcode) {
 
 									if ( itemExist(item.id)){
 										return false;
 									}
 
 
-									let id = item.id;
+									let id = item.serial;
 									let name  = item.name
 									let quantity = 1;
 									let capital = item.capital;
 									let price = currency + number_format(item.price);
-									$("#barcode").val(item.barcode);
+									$("#barcode").val(item.serial);
 									let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
 									totalAmountDue += parseFloat(subtotal);
 

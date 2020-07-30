@@ -24,15 +24,15 @@ class Pos_con extends AppController {
 		$data['categoryModel'] = $this->categories_model;
 		$data['orderingLevel'] = $this->OrderingLevelModel;  
  		$data['customers'] = $this->db->get('customers')->result();
- 		$items = $this->db->select('items.*, ordering_level.quantity as quantity')
- 								->from('items')
- 								->join('ordering_level', 'ordering_level.item_id = items.id')
- 								->get()
- 								->result(); 
+ 		$items = $this->db->select('items.*, variations.*')
+							->from('items')
+							->join('variations', 'variations.item_id = items.id', 'LEFT')   
+							->get() 
+							->result(); 
  		 
  		foreach ($items as $item) {
 
- 			$item->advance_pricing = $this->db->where('item_id', $item->id)->get('prices')->result(); 
+ 			$item->advance_pricing = []; 
  		}
 
  		$data['items'] = $items;

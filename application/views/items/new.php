@@ -25,13 +25,13 @@
 				 
 						<div class="col-lg-6 col-md-offset-2 ">
 							<h3>Product Information</h3>
-							<div class="row">
+							<div class="row"> 
 								<div class="col-md-2">
-									*Serial
+									*Product ID
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">
-										<input autocomplete="off" type="text" placeholder="Serial" required="required" class="form-control" name="barcode" value="">
+										<input autocomplete="off" value="<?php echo $barcode ?>" readonly type="text" placeholder="Parent Serial" required="required" class="form-control" name="barcode" value="">
 									</div>
 								</div>
 
@@ -118,7 +118,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group advance-pricing-wrapper">
-										<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Product Variation</button>
+										<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field"> Product Variation</button>
 									</div>
 									
 								</div>
@@ -128,7 +128,7 @@
 							
 						</div> 
 						<div class="col-md-7 col-md-offset-3">
-							<fieldset style="background-color: #fafafa;" id="advance-pricing-field" class="collapse">
+							<fieldset style="background-color: #fafafa;" id="advance-pricing-field" class="collapse in">
 								<legend>Variation List</legend>
 								<p>Enables you to set different prices for a product. Ex wholeslage price or different prices for every group of customers</p>
 								<table class="table table-bordered table-striped" id="advance-pricing-tbl">
@@ -143,10 +143,10 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td><input type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>
-											<td><input type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>
-											<td><input type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>
-											<td><input type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>
+											<td><input required type="text" autocomplete="off" placeholder="Serial" class="form-control" name="variation_serial[]"></td>
+											<td><input required type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>
+											<td><input required type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>
+											<td><input required type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>
 											<td width="30px"><i class="fa fa-trash remove-row"></i></td>
 										</tr>
 									</tbody>

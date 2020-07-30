@@ -11,6 +11,10 @@ html, body {
 
 }
 
+.variation-remove-row:hover {
+  cursor: pointer;
+}
+
 #page-wrapper {
   font-size: 1.1em;
 }

@@ -25,9 +25,18 @@ class ItemController extends AppController {
 	public function find() {
 		$barcode = $this->input->post('code');
 		$item = $this->db->where('barcode', $barcode)->get('items')->row();
+
+		$item = $this->db->select('items.*, variations.*')
+							->from('items')
+							->join('variations', 'variations.item_id = items.id', 'LEFT')  
+							->where('serial', $barcode)
+							->get() 
+							->row();
 		if ($item) {
-			$quantity = (int)$this->OrderingLevelModel->getQuantity($item->id)->quantity; 
-			$advance_pricing = $this->db->where('item_id', $item->id)->get('prices')->result();
+			// $quantity = (int)$this->OrderingLevelModel->getQuantity($item->id)->quantity; 
+			// $advance_pricing = $this->db->where('item_id', $item->id)->get('prices')->result();
+			$advance_pricing = [];
+			$quantity = $item->stocks;
 
 			echo json_encode([
 					'name' => $item->name,
@@ -172,9 +181,8 @@ class ItemController extends AppController {
 
     }
 
-	public function items () { 
- 
-		 
+	public function items () {  
+		
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'inventory';
@@ -214,7 +222,7 @@ class ItemController extends AppController {
 
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
-			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
+			$stocksRemaining = $item->stocks;
 			$deleteAction = ""; 
 
 			if ($this->session->userdata('account_type') == "Admin") {
@@ -257,7 +265,7 @@ class ItemController extends AppController {
 				$this->categories_model->getName($item->category_id),
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
-				$stocksRemaining,
+				$item->stocks,
 				currency() . number_format($item->capital * $stocksRemaining,2), 
 				$actions
 			];
@@ -275,10 +283,11 @@ class ItemController extends AppController {
 
 	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks) {
 
-		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier')
+		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier, SUM(variations.stocks) as stocks')
 					->from('items')
 					->join('categories', 'categories.id = items.category_id', 'BOTH')
 					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
+					->join('variations', 'variations.item_id = items.id')
 					->join('ordering_level', 'ordering_level.item_id = items.id')
 					->order_by('items.id', 'DESC')
 					->like('categories.name', $filterCategory, "BOTH") 
@@ -321,11 +330,11 @@ class ItemController extends AppController {
 			$quantity = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
 
 			return [ 
-				ucwords($item->name) . '<input type="hidden" name="barcode" value="'.$item->barcode.'"> ' . 
-				 '<input type="hidden" name="item-id" value="'.$item->barcode.'"> ' .
+				ucwords($item->name) . '<input type="hidden" name="barcode" value="'.$item->serial.'"> ' . 
+				 '<input type="hidden" name="item-id" value="'.$item->serial.'"> ' .
 				'<input type="hidden" name="capital" value="'.$item->capital.'">',
 				ucfirst($item->description), 
-				$quantity, 
+				$item->stocks, 
 				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'>"
 			];
 		}, $items);
@@ -340,12 +349,26 @@ class ItemController extends AppController {
 			]);
 	}
 
+	public function test() {
+
+		dd (
+			$this->db->select('items.*, variations.*')
+						->from('items')
+						->join('variations', 'variations.item_id = items.id', 'LEFT') 
+						->get()
+						->result()
+		);
+	}
+
 	public function dataFilter($search, $start, $limit) {
 	 
-		return $this->db->where('status', 1)
-							->order_by('id', "DESC")
-							->like('name',$search, 'BOTH')
-							->get('items', $limit, $start) 
+		return $this->db->select('items.*, variations.*')
+							->from('items')
+							->join('variations', 'variations.item_id = items.id', 'LEFT') 
+							->order_by('items.id', "DESC")
+							->like('items.name',$search, 'BOTH')
+							->limit($limit, $start)
+							->get() 
 							->result();
 	 
 	}
@@ -353,10 +376,15 @@ class ItemController extends AppController {
 	public function new() {
 		$this->userAccess('new');
 		$this->load->model('categories_model'); 
+
+		$last_item_id = $this->db->select_max('id')->get('items')->row()->id;
+		
+
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'new_item';
 		$data['content'] = "items/new";  
+		$data['barcode'] = "1100" . sprintf("%04s", ((int)$last_item_id + 1 )  );
 		$this->load->view('master', $data);
 	}
 
@@ -429,27 +457,35 @@ class ItemController extends AppController {
 		$this->OrderingLevelModel->insert($item_id, $barcode);
 		// $this->PriceModel->insert($price_label, $advance_price, $item_id);
 
-		foreach ( $variation_serials as $key => $serial ) {
+		// Insert Main Variation 
 
-			$name = $variation_names[$key];
-			$price = $variation_price[$key];
-			$stocks = $variation_stocks[$key];
+		if ( $variation_serials ) {
 
-			if ( $serial && $name && $price && $stocks) {
+			foreach ( $variation_serials as $key => $serial ) {
 
-				$this->db->insert('variations', [
-						'serial' => $serial,
-						'name'	=> $name,
-						'price'	=> $price,
-						'stocks'	=> $stocks,
-						'item_id' => $item_id
-					]);
+				$name = $variation_names[$key];
+				$price = $variation_price[$key];
+				$stocks = $variation_stocks[$key];
 
-			}else {
-				continue;
+				if ( $serial && $name && $price && $stocks) {
+
+					$this->db->insert('variations', [
+							'serial' => $serial,
+							'name'	=> $name,
+							'price'	=> $price,
+							'stocks'	=> $stocks,
+							'item_id' => $item_id
+						]);
+
+				}else {
+					continue;
+				}
+
 			}
 
 		}
+
+		
 
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
@@ -572,12 +608,7 @@ class ItemController extends AppController {
 		$productImage = $_FILES['productImage'];
 		$supplier_id = $this->input->post('supplier');
 		$unit = $this->input->post('unit');
-		$location = $this->input->post('location');
-
-		$variation_serials = $this->input->post('variation_serial[]');
-		$variation_names = $this->input->post('variation_name[]');
-		$variation_price = $this->input->post('variation_price[]');
-		$variation_stocks = $this->input->post('variation_stocks[]');
+		$location = $this->input->post('location'); 
 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
@@ -602,35 +633,7 @@ class ItemController extends AppController {
 						$updated_price,
 						$capital
 					); 
-
-		 
-		if ( $variation_serials ) {
-
-			$this->db->where('item_id', $id)->delete('variations');
-
-			foreach ( $variation_serials as $key => $serial ) {
-
-				$name = $variation_names[$key];
-				$price = $variation_price[$key];
-				$stocks = $variation_stocks[$key];
- 
-				if ( $serial && $name && $price && $stocks) {
-
-					$this->db->insert('variations', [
-							'serial' => $serial,
-							'name'	=> $name,
-							'price'	=> $price,
-							'stocks'	=> $stocks,
-							'item_id' => $id
-						]);
-
-				}else {
-					continue;
-				}
-
-			}
-		}
-		
+  
 
 		if ($update) {
 			

@@ -638,6 +638,112 @@ $(document).ready(function() {
 			}
 		} 
 
+		var variations = {
+
+			init: function() {
+
+				this.remove();
+				this.update();
+			}, 
+			remove: function() {
+				$("body").on('click','.variation-remove-row', function(e) {
+
+					var row = $(this).parents('tr');
+					var id = $(this).data('id');
+					var confirm = window.confirm("Action Cannot be Undo. Are you sure you want to delete this variation?")
+					let data = {};
+					data[csrfName] = csrfHash;
+					data['id'] = id;
+
+					if ( confirm ) {
+					 	
+					 	$.ajax({
+
+					 		type: "POST",
+					 		url: base_url + 'VariationsController/delete',
+					 		data: data,
+					 		success: function(data) {
+					 			alert(data);
+					 			row.remove();
+					 		},
+					 		error: function(data) { 
+					 			alert("Opps something went wrong please try again later");
+					 		}
+					 		
+					 	})
+						
+					 
+
+					}
+
+					
+					
+				});
+			},
+			update: function() {
+
+				$("#update-variation").click(function(e) {
+
+					var serials = $("input[name='variation_serial[]']");
+					var names = $("input[name='variation_name[]']");
+					var prices = $("input[name='variation_price[]']");
+					var stocks = $("input[name='variation_stocks[]']");
+					var variation_new = $("input[name='variation_new[]']"); 
+					var variation_ids = $("input[name='variation_id[]']"); 
+					var item_id = $("input[name='id']").val();
+					var button = $(this);
+					button.button('loading');
+					var dataset = [];
+
+					$.each(serials, function(key, value) {
+
+						let serial = $(serials[key]).val();
+						let name = $(names[key]).val();
+						let price = $(prices[key]).val();
+						let stock = $(stocks[key]).val();
+						let new_variation = $(variation_new[key]).val();
+						let variation_id = $(variation_ids[key]).val();
+
+						if ( serial && name && price && stock ) {
+							dataset.push({
+								serial: serial,
+								name: name,
+								price: price,
+								stock: stock,
+								new_variation: new_variation,
+								variation_id: variation_id
+							});
+						}	
+						
+
+					})
+
+					if ( Object.keys(dataset).length ) {
+
+						let data = {};
+						data[csrfName] = csrfHash;
+						data['dataset'] = dataset;
+						data['item_id'] = item_id;
+						$.ajax({
+							type: "POST",
+							url: base_url + 'VariationsController/update',
+							data: data,
+							success: function(data) {
+								alert(data);
+								button.button('reset')
+							},
+							error: function(data) {
+								alert(data);
+							}
+						})
+					}
+
+					;
+				})
+			}
+		}
+
+		variations.init();
 		expenses.init();
 		dateTimePickers.init();
 		items.init();

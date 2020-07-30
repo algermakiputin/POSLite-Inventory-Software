@@ -14,9 +14,9 @@ class ItemModel extends CI_Model {
 
 	public function inventory_value() {
 
-		return $this->db->select("SUM(items.capital * ordering_level.quantity) as total")
+		return $this->db->select("SUM(variations.stocks) * items.capital as total")
 												->from('items')
-												->join('ordering_level', 'ordering_level.item_id = items.id')
+												->join('variations', 'variations.item_id = items.id')
 												->get()
 												->row()
 												->total;
