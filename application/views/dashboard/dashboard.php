@@ -158,7 +158,7 @@ echo $this->session->flashdata('successMessage');
         var dataset1 = <?php echo $dataset ?>;
         var dataset2 = <?php echo $yesterday ?>;
 
-        var myChart = new Chart(ctx, {
+        var myChart = new Chart(ctx, { 
             type: 'line',
             data: {
                 labels: [ 
@@ -185,7 +185,7 @@ echo $this->session->flashdata('successMessage');
                 '',
                 '',
                 '',
-                '23'
+                '24' 
                 ],
                 datasets: [
                 {
