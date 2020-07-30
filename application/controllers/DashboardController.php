@@ -127,20 +127,22 @@ class DashboardController extends AppController {
 		return $this->db->query($query); 
 	}
 
-	private function line_chart($date) {
+	public function line_chart($date = null) {
 
+		$date = $date ? $date : date('Y-m-d');
 
 		$sales = $this->db->select("date_format(sales.date_time, '%H.%i') as time, sales.id,sales.id, SUM(sales_description.price * sales_description.quantity) as total_sales")
 								->from('sales')
 								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number', 'LEFT')
 								->where('date_format(sales.date_time, "%Y-%m-%d") =', $date)
 								->group_by('sales.id')
+								->order_by('time', 'ASC')
 								->get()
 								->result(); 
 	 
 		$total_sales = 0;
 
-		$points = 24;
+		$points = 26;
 		$current_time = date('H') + 1.99;
 		if ($date == date('Y-m-d'))
 			$points = $current_time;
@@ -154,30 +156,33 @@ class DashboardController extends AppController {
 		}
 
  	
- 		$time_slots = [0.0, 0.59, 1.59, 2.59, 3.59, 4.59, 5.59, 6.59, 7.59, 8.59, 9.59, 10.59, 11.59, 12.59, 13.59, 14.59, 15.59, 16.59, 17.59, 18.59, 19.59, 20.59, 21.59, 22.59, 23.59 ];
+ 		$time_slots = [0.0, 0.59, 1.59, 2.59, 3.59, 4.59, 5.59, 6.59, 7.59, 8.59, 9.59, 10.59, 11.59, 12.59, 13.59, 14.59, 15.59, 16.59, 17.59, 18.59, 19.59, 20.59, 21.59, 22.59, 24.59 ];
 
 		foreach ($sales as $row) {
 			
  		
-			for ($i = 1; $i < count($time_slots); $i++) {
+			for ($i = 0; $i < count($time_slots); $i++) {
+
+
 
 				$time = $row->time;
-
-				if ($time > $time_slots[$i - 1] && $time < $time_slots[$i] && array_key_exists($i, $dataset)) {
+ 
+				if ($time >= $time_slots[$i - 1] && $time <= $time_slots[$i] && array_key_exists($i, $dataset)) {
 
 					$dataset[$i] += $row->total_sales;
-					continue;
-				}
-
+ 					
+ 					 
+				} 
 			}  
 
-		} 
+		}  
 
 
 		for ($x = 1; $x < count($dataset); $x++) {
 
 			$dataset[$x] = $dataset[$x - 1] + $dataset[$x];
 		}
+ 
 
 		return $dataset;
 	}
