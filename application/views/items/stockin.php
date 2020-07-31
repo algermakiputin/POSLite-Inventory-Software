@@ -19,13 +19,15 @@
 						echo $this->session->flashdata('errorMessage');
 						echo $this->session->flashdata('successMessage');
 						?>
+						<?php foreach ( $variations as $variation): ?>
 						<div class="form-group"> 
-							<label>Add Stocks:</label>
+							<label><?php echo $variation->name; ?></label>
 							<input type="hidden" name="item_name" value="<?php echo $item_info->name; ?>">
-							<input type="number" <?php if(SITE_LIVE) echo 'max="500"'; ?> name="stocks" class="form-control" placeholder="Enter Stocks To Add">
+							<input type="hidden" name="serials[]" value="<?php echo $variation->serial ?>">
+							<input type="number" autocomplete="off" <?php if(SITE_LIVE) echo 'max="500"'; ?> name="stocks[]" class="form-control" placeholder="Enter Stocks To Add">
 							<input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
 						</div>
-						 
+						<?php endforeach; ?>
 						<div class="form-group"> 
 							<button class="btn btn-primary">Stock In</button>
 						</div>

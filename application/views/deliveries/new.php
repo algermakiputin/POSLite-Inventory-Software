@@ -85,10 +85,10 @@
 											</td>
 											
 											<td width="10%">
-											 	<input type="number" name="quantity[]" autocomplete="off" min="0" value="0" placeholder="QTY" class="form-control" required="required">
+											 	<input type="number" name="quantity[]" autocomplete="off" min="0" value="1" value="0" placeholder="QTY" class="form-control" required="required">
 											</td>
 											<td width="10%">
-												<input type="number" name="defective[]" autocomplete="off" min="0" value="0" placeholder="Defectives" class="form-control" required="required"> 
+												<input type="number" name="defective[]" autocomplete="off" value="0" min="0" value="0" placeholder="Defectives" class="form-control" required="required"> 
 											</td>
 											<td width="16%"> 
 												<input type="text" autocomplete="off" class="form-control" placeholder="Additional Info" name="remarks[]"> 

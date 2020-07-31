@@ -220,6 +220,9 @@ class ItemController extends AppController {
 
 		foreach ($items as $item) {
 
+			if ( $item->name == "")
+				continue;
+
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$stocksRemaining = $item->stocks;
@@ -256,7 +259,6 @@ class ItemController extends AppController {
                 </div>'; 
 
 
-         
 			$datasets[] = [
 				$this->disPlayItemImage($item->image),
 				$item->barcode,
@@ -283,16 +285,16 @@ class ItemController extends AppController {
 
 	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks) {
 
-		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier, SUM(variations.stocks) as stocks')
-					->from('items')
-					->join('categories', 'categories.id = items.category_id', 'BOTH')
-					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
-					->join('variations', 'variations.item_id = items.id')
-					->join('ordering_level', 'ordering_level.item_id = items.id')
-					->order_by('items.id', 'DESC')
-					->like('categories.name', $filterCategory, "BOTH") 
-					->like('items.name', $search, "BOTH")
-					->like('supplier.name', $filterSupplier, "BOTH");
+		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier, SUM(stocks) as stocks')
+								->from('items')
+								->join('categories', 'categories.id = items.category_id', 'BOTH')
+								->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
+								->join('variations', 'variations.item_id = items.id', 'LEFT') 
+								->group_by('items.id')  
+								->order_by('items.id', 'DESC')
+								->like('categories.name', $filterCategory, "BOTH") 
+								->like('items.name', $search, "BOTH")
+								->like('supplier.name', $filterSupplier, "BOTH");
 
 		return $query;
 	}
@@ -366,7 +368,7 @@ class ItemController extends AppController {
 							->from('items')
 							->join('variations', 'variations.item_id = items.id', 'LEFT') 
 							->order_by('items.id', "DESC")
-							->like('items.name',$search, 'BOTH')
+							->like('variations.name',$search, 'BOTH')
 							->limit($limit, $start)
 							->get() 
 							->result();
@@ -384,7 +386,7 @@ class ItemController extends AppController {
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'new_item';
 		$data['content'] = "items/new";  
-		$data['barcode'] = "1100" . sprintf("%04s", ((int)$last_item_id + 1 )  );
+		$data['barcode'] = "11" . sprintf("%04s", ((int)$last_item_id + 1 )  );
 		$this->load->view('master', $data);
 	}
 
@@ -533,6 +535,7 @@ class ItemController extends AppController {
 		$data['orderingLevel'] = $this->OrderingLevelModel;
 		$data['categoryModel'] = $this->categories_model;
 		$data['content'] = "items/stockin";
+		$data['variations'] = $this->db->where('item_id', $id)->get('variations')->result();
 		$this->load->view('master', $data);
 	}
 
@@ -541,6 +544,8 @@ class ItemController extends AppController {
 		$itemID = $this->input->post('item_id');
 		$itemName = $this->input->post('item_name');
 		$stocks = $this->input->post('stocks');
+		$serials = $this->input->post('serials[]');
+		$stocks = $this->input->post('stocks[]');
 
 		if (SITE_LIVE) {
 
@@ -551,18 +556,33 @@ class ItemController extends AppController {
 			}
 		}
 
+		$this->db->trans_begin();
+
 		$this->load->model('HistoryModel'); 
 		$this->load->model('OrderingLevelModel');
 
-		$update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
-		$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
-		if ($update) {
-			$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
-			return redirect(base_url('items'));
+		foreach ( $serials as $key => $serial ) {
+
+			$this->db->set('stocks', 'stocks+' . $stocks[$key], FALSE);
+			$this->db->where('serial', $serial);
+			$this->db->update('variations'); 
 		}
 
-		$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
+		$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
+
+
+		if ($this->db->trans_status() === FALSE) {
+		      $this->db->trans_rollback();
+		      $this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
+				return redirect(base_url('items'));
+		}
+		 
+		$this->db->trans_commit(); 
+		$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
 		return redirect(base_url('items'));
+ 
+
+		
 		
 		 
 	}	

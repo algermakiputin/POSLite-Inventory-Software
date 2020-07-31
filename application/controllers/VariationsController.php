@@ -60,7 +60,7 @@ class VariationsController extends AppController {
 		if ($this->db->trans_status() === FALSE) {
 		      
 		      $this->db->trans_rollback();
-		      echo "Opps something went wrong please try again later";
+		      echo "Error: Duplicate Serial Code";
 		      return;
 		}
 

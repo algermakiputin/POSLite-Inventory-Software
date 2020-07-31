@@ -12,10 +12,17 @@ class DeliveriesController extends CI_Controller
 		$this->load->model('PriceModel');
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
+		// $data['products'] = json_encode(
+		// 							$this->db->select('items.id as data, items.name as value, items.capital') 
+		// 										->get('items')
+		// 		 
 		$data['products'] = json_encode(
-									$this->db->select('items.id as data, items.name as value, items.capital') 
-												->get('items')
-												->result());
+										$this->db->select('variations.serial as data, variations.name as value, items.capital')
+										->from('items')
+										->join('variations', 'variations.item_id = items.id', 'LEFT')  
+										->get() 
+										->result()
+									);	
 		 
  		$data['content'] = "deliveries/new";
 		$this->load->view('master',$data);
@@ -55,6 +62,8 @@ class DeliveriesController extends CI_Controller
 		$due_date = $this->input->post('due_date');
 		$payment_status = $this->input->post('payment_status'); 
 
+
+
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
 			'date_time' => $this->input->post('delivery_date'),
@@ -86,9 +95,9 @@ class DeliveriesController extends CI_Controller
 			);
 			
  			//Update Product Quantities
-			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
-			$this->db->where('item_id', $products_id[$key]);
-			$this->db->update('ordering_level'); 
+			$this->db->set('stocks', 'stocks+' . $quantity[$key], FALSE);
+			$this->db->where('serial', $products_id[$key]);
+			$this->db->update('variations'); 
 		}
   
 		$this->db->insert_batch('delivery_details', $orderDetails);

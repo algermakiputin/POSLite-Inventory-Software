@@ -247,9 +247,9 @@ class SalesController extends AppController {
 				
 			];
 			
-			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
-			$this->db->where('barcode', $sale['barcode']);
-			$this->db->update('ordering_level');
+			$this->db->set('stocks', "stocks - $sale[quantity]" , false);
+			$this->db->where('serial', $sale['barcode']);
+			$this->db->update('variations');
 		}
  
 
