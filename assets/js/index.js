@@ -644,6 +644,7 @@ $(document).ready(function() {
 
 				this.remove();
 				this.update();
+				this.export_variations();
 			}, 
 			remove: function() {
 				$("body").on('click','.variation-remove-row', function(e) {
@@ -740,7 +741,12 @@ $(document).ready(function() {
 
 					;
 				})
+			},
+			export_variations: function(e) {
+
+				 window.location.href = base_url + "VariationsController/export_variations";
 			}
+
 		}
 
 		variations.init();

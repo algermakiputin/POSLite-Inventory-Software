@@ -18,7 +18,8 @@
 		"guzzlehttp/psr7": "^1.5",
 		"phpmailer/phpmailer": "^6.0",
 		"nesbot/carbon": "^1.36",
-		"vlucas/phpdotenv": "^3.6"
+		"vlucas/phpdotenv": "^3.6",
+		"phpoffice/phpspreadsheet": "^1.14"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

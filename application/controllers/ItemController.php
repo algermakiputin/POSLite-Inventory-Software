@@ -228,6 +228,8 @@ class ItemController extends AppController {
 			$stocksRemaining = $item->stocks;
 			$deleteAction = ""; 
 
+			$variations = $this->db->where('item_id', $item->id)->get('variations')->result();
+
 			if ($this->session->userdata('account_type') == "Admin") {
 
 				$deleteAction = '
@@ -258,6 +260,19 @@ class ItemController extends AppController {
                     </ul>
                 </div>'; 
 
+         $variations_list = "";
+
+         foreach ($variations as $variation) {
+
+         	$variations_list .= "<div>$variation->name: $variation->stocks</div>";
+         }
+
+         $stocks_view = "<span class='stocks-wrapper'>" .
+					$item->stocks.
+					"<div class='hover-show'>"  .
+						$variations_list . 
+					"</div>" .
+				"</span>";
 
 			$datasets[] = [
 				$this->disPlayItemImage($item->image),
@@ -267,7 +282,7 @@ class ItemController extends AppController {
 				$this->categories_model->getName($item->category_id),
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
-				$item->stocks,
+				$stocks_view,
 				currency() . number_format($item->capital * $stocksRemaining,2), 
 				$actions
 			];

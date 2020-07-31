@@ -3,15 +3,14 @@
 class ReturnsModel extends CI_Model {
 
 	public function insert($data) {
- 	   
-
+ 	    
  		foreach ($data as $row) {
 
     		if ($row['condition'] == "good")  {
 
-                $this->db->set('quantity', 'quantity+' . $row['return_qty'], FALSE);
-                $this->db->where('barcode', $row['barcode']); 
-                $this->db->update('ordering_level'); 
+                $this->db->set('stocks', 'stocks+' . $row['return_qty'], FALSE);
+                $this->db->where('serial', $row['barcode']); 
+                $this->db->update('variations'); 
             }
     		
 

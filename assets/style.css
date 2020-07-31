@@ -15,6 +15,25 @@ html, body {
   cursor: pointer;
 }
 
+.stocks-wrapper{ 
+  position: relative;
+
+}
+
+.stocks-wrapper:hover .hover-show {
+  display: block;
+}
+.hover-show { 
+  position: absolute;
+  bottom: -62px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  background: #fff;
+  display: none;
+  padding: 10px;
+  width: auto;
+  min-width: 220px;
+}
+
 #page-wrapper {
   font-size: 1.1em;
 }

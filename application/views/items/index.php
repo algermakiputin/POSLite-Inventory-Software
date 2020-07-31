@@ -13,27 +13,30 @@
 </div>
 
 <div class="row">
-    <div class="col-md-3">
-        <div class="form-group">
-            <select class="form-control filter-items " data-column="7" name="test">
-                <option value="">Filter By Supplier</option>
-                <?php foreach ($suppliers as $supplier): ?>
-                    <option value="<?php echo $supplier->name ?>"><?php echo $supplier->name ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <select class="form-control filter-items" data-column="2" name="test">
-                <option value="">Filter By Category</option>
-                <?php foreach ($categories as $category): ?>
-                    <option value="<?php echo $category->name ?>"><?php echo $category->name ?></option>
-                <?php endforeach; ?>
-            </select>
+    <div class="col-md-8">
+        <div class="form-inline" autocomplete="off" style="margin-bottom: 12px;">
+            <div class="form-group">
+                <select class="form-control filter-items " data-column="7" name="test">
+                    <option value="">Filter By Supplier</option>
+                    <?php foreach ($suppliers as $supplier): ?>
+                        <option value="<?php echo $supplier->name ?>"><?php echo $supplier->name ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>  
+            <div class="form-group">
+                <select class="form-control filter-items" data-column="2" name="test">
+                    <option value="">Filter By Category</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?php echo $category->name ?>"><?php echo $category->name ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="button" id="export_variations"><i class="fa fa-file-excel-o"></i> Export Variations</button>
+            </div>
         </div>
     </div> 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <span class="pull-right" style="font-size: 22px;">Inventory Value: ₱<span id="total"><?php echo $total; ?></span></span>
     </div>
 </div>

@@ -1,6 +1,11 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH."controllers/AppController.php");
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+
 class VariationsController extends AppController {
 
 	public function delete() {
@@ -68,5 +73,44 @@ class VariationsController extends AppController {
 		echo "Variations Updated Successfully";
 		return;
 		 
+	}
+
+	public function export_variations( $from = null, $to =null ) {
+
+		$from = $from ? $from : date('Y-m-d');
+		$to = $to ? $to : date('Y-m-d');
+
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->setCellValue('A1', 'Serial');
+		$sheet->setCellValue('B1', 'Product');
+		$sheet->setCellValue('C1', 'Capital');
+		$sheet->setCellValue('D1', 'Price');
+		$sheet->setCellValue('E1', 'Stocks'); 
+
+
+		$variations = $this->db->select('items.*, variations.*')
+									->from('items')
+									->join('variations', 'variations.item_id = items.id')
+									->get()
+									->result();
+ 
+		foreach ($variations as $key => $row ) {
+
+			$i = 2 + $key;
+	
+			$sheet->setCellValue('A' . $i, $row->serial);
+			$sheet->setCellValue('B' . $i, $row->name);
+			$sheet->setCellValue('C' . $i, currency() . number_format($row->capital, 2));
+			$sheet->setCellValue('D' . $i, currency() . number_format($row->price,2));
+			$sheet->setCellValue('E' . $i, $row->stocks);  	
+		}
+
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="DeliveriesReport-'.$from . ' - ' . $to.'.xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$writer = new Xlsx($spreadsheet);
+		$writer->save('php://output');	
 	}
 }
