@@ -278,6 +278,7 @@ class ItemController extends AppController {
 				$this->disPlayItemImage($item->image),
 				$item->barcode,
 				$item->name,
+				$item->condition_status,
 				$item->supplier,
 				$this->categories_model->getName($item->category_id),
 				'₱' . number_format($item->capital,2),
@@ -428,6 +429,7 @@ class ItemController extends AppController {
 		$price = $this->input->post('price'); 
 		$capital = $this->input->post('capital');
 		$productImage = $_FILES['productImage'];
+		$condition = $this->input->post('condition');
 
 		$variation_serials = $this->input->post('variation_serial[]');
 		$variation_names = $this->input->post('variation_name[]');
@@ -450,6 +452,8 @@ class ItemController extends AppController {
 			return redirect(base_url('items/new'));
 		}
 
+		$this->db->trans_begin();
+
 		$data = array(
 				'name' => $name,
 				'category_id' => $category,
@@ -458,7 +462,8 @@ class ItemController extends AppController {
 				'status' => 1,
 				'barcode' => $barcode,
 				'price'	=> $price,
-				'capital' => $capital
+				'capital' => $capital,
+				'condition_status' => $condition
 			);
 		
 		if ($productImage) {
@@ -486,13 +491,18 @@ class ItemController extends AppController {
 
 				if ( $serial && $name && $price && $stocks) {
 
-					$this->db->insert('variations', [
+					if ( ! $this->db->insert('variations', [
 							'serial' => $serial,
 							'name'	=> $name,
 							'price'	=> $price,
 							'stocks'	=> $stocks,
 							'item_id' => $item_id
-						]);
+						])) {
+ 
+						$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Duplicate Serial Entry for "'.$serial.'"</div>'); 
+						return redirect(base_url('items'));
+					}
+
 
 				}else {
 					continue;
@@ -503,6 +513,20 @@ class ItemController extends AppController {
 		}
 
 		
+		if ($this->db->trans_status() === FALSE)
+		{
+		      $this->db->trans_rollback();
+
+		      $error = $this->db->_error_message();
+		      dd($error);
+			   if($error['code'] == 1062){
+			      $msg = 'Registro duplicado';
+			   }
+		      $this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps something went wrong please try again later</div>'); 
+				return redirect(base_url('items'));
+		}
+		 
+		$this->db->trans_commit();
 
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
@@ -632,6 +656,7 @@ class ItemController extends AppController {
 		$capital = strip_tags($this->input->post('capital'));
 		$barcode = $this->input->post('barcode');
 		$id = strip_tags($this->input->post('id'));
+		$condition = $this->input->post('condition');
 
 		$price_label = $this->input->post('price_label[]');
 		$advance_price = $this->input->post('advance_price[]');
@@ -666,7 +691,8 @@ class ItemController extends AppController {
 						$upload['upload_data']['file_name'], 
 						$supplier_id, $this->input->post('barcode'),
 						$updated_price,
-						$capital
+						$capital,
+						$condition
 					); 
   
 

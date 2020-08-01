@@ -91,6 +91,17 @@
 										<input type="text" autocomplete="off" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price" value="<?php echo $item->price ?>">
 									</div> 
 								</div>
+								<div class="col-md-2">
+									*Condition
+								</div>
+								<div class="col-md-10">
+									<div class="form-group">   
+										<select class="form-control" name="condition">
+											<option>Brand New</option>
+											<option>Used</option>
+										</select>
+									</div>
+								</div>
 
 							</div>
 							<table width="100%">   
@@ -185,7 +196,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">  
-										<textarea rows="5" autocomplete="off" maxlength="150" placeholder="Description" class="form-control" name="description" required="required"><?php echo $item->description ?></textarea>
+										<textarea rows="5" autocomplete="off" maxlength="150" placeholder="Description" class="form-control" name="description"><?php echo $item->description ?></textarea>
 									</div>
 								</div>
 							</div>

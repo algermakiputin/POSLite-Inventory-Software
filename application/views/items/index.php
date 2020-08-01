@@ -59,6 +59,7 @@
                     <th>&nbsp;</th>
                     <th>ID</th>
                     <th>Item Name</th>
+                    <th>Condition</th>
                     <th>Supplier</th>
                     <th>Category</th>  
                     <th>Capital</th> 

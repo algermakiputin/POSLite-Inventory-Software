@@ -91,6 +91,17 @@
 										<input type="text" autocomplete="off" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price">
 									</div> 
 								</div>
+								<div class="col-md-2">
+									*Condition
+								</div>
+								<div class="col-md-10">
+									<div class="form-group">   
+										<select class="form-control" name="condition">
+											<option>Brand New</option>
+											<option>Used</option>
+										</select>
+									</div>
+								</div>
 
 							</div>
 							<table width="100%">   
@@ -156,6 +167,7 @@
 								</div>
 							</fieldset>
 						</div>
+
 					 
 						<div class="col-md-6 col-md-offset-2">
 							<div class="row">
@@ -164,7 +176,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">  
-										<textarea rows="5" autocomplete="off" maxlength="150" placeholder="Description" class="form-control" name="description" required="required"></textarea>
+										<textarea rows="5" autocomplete="off" maxlength="150" placeholder="Description" class="form-control" name="description"></textarea>
 									</div>
 								</div>
 							</div>
