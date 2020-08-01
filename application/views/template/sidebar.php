@@ -102,8 +102,12 @@
                 <a href="#"><i class="fa fa-cog fa-fw"></i> System <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
+                    <a href="<?php echo base_url('settings') ?>"><i class="fa fa-circle-o"></i> Settings</a>
+                    </li> 
+                    <li>
                         <a href="<?php echo base_url('backups') ?>"><i class="fa fa-circle-o"></i> Backups</a>
                     </li> 
+
                 </ul>
             </li>
 

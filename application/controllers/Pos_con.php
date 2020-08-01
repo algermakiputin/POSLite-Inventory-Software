@@ -36,7 +36,7 @@ class Pos_con extends AppController {
  		}
 
  		$data['items'] = $items;
-
+ 		$data['settings'] = $this->db->get('settings')->row();
 		$this->load->view('pos/index',$data);
 	}
 }

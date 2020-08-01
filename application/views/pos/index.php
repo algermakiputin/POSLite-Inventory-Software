@@ -152,8 +152,16 @@
 				<div class="col-md-7">
 					<div id="receipt">
 						<div class="r-header text-center">
-							<h3>Receipt</h3>
+							<h3><?php echo $settings->business_name ?></h3>
+							<div id="business-info" class="text-center">
+								<div><?php echo $settings->business_address ?></div> 
+								<div><?php echo $settings->contact ?></div>
+								<div><?php echo $settings->email ?></div>
+							</div>
 							<table class="text-left">
+								<tr>
+									<th colspan="2">RECEIPT</th> 
+								</tr>
 								<tr>
 									<td>Transaction Number: &nbsp;&nbsp;</td>
 									<td><div id="r-id">005250</div></td>
