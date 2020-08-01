@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Delivery</h1>
+		<h1 class="page-header">Settings</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -9,7 +9,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				New Delivery
+				Business Details
 			</div>
 			<div class="panel-body">
 				<div class="row">
@@ -19,20 +19,31 @@
 								<p><?php echo $this->session->flashdata('success') ?></p>
 							</div>
 						<?php endif; ?> 
-						<form action="<?php echo base_url('settings/update') ?>" method="POST" enctype="multipart/form-data">
+						<?php if ($this->session->flashdata('error')): ?>
+							<div class="alert alert-danger">
+								<p><?php echo $this->session->flashdata('error') ?></p>
+							</div>
+						<?php endif; ?> 
+						<?php echo form_open("SettingsController/update") ?>
 							<div class="form-group">
-								<label>Background Color</label>
-								<input type="color" value="<?php echo $color; ?>" name="color" class="form-control" id="color">
+								<label>Business Name</label>
+								<input type="text" value="<?php echo $settings->business_name ?>" autocomplete="off" name="business_name" class="form-control" id="color">
 							</div>
 							<div class="form-group">
-								<label>Logo</label>
-								<input type="file" <?php echo $logo; ?> name="logo">
+								<label>Business Address</label>
+								<input type="text"value="<?php echo $settings->business_address ?>" autocomplete="off" name="business_address" class="form-control">
+							</div>
+						 	<div class="form-group">
+								<label>Contact</label>
+								<input type="text"value="<?php echo $settings->contact ?>" autocomplete="off" name="contact" class="form-control">
 							</div>
 							<div class="form-group">
-								<input type="submit" name="" value="Save" class="btn btn-primary">
-								<input type="submit" name="reset" class="btn btn-info" value="Reset Color">
+								<label>Email</label>
+								<input type="email"value="<?php echo $settings->email ?>" autocomplete="off" name="email" class="form-control">
 							</div>
-		 
+		 					<div class="form-group"> 
+								<input type="submit" class="btn btn-primary btn-sm" value="Update">
+							</div>
 						</form>
 					</div>
 					<!-- /.col-lg-6 (nested) -->

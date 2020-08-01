@@ -3,17 +3,8 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class SettingsController extends CI_Controller { 
 
 	public function index() {
-		$data['content'] = "settings/index"; 
-
-		if ($settings = $this->db->where('id', '1')->get('settings')->row()) {
-
-			$data['color'] = $settings->background;
-			$data['logo'] = $settings->logo;
-		}else {
-			$data['color'] = "";
-			$data['logo'] = "";
-		}
-	 
+		$data['content'] = "settings/index";  
+		$data['settings'] = $this->db->get('settings')->row(); 
 		$this->load->view('master',$data);;
 	}
 
@@ -40,42 +31,30 @@ class SettingsController extends CI_Controller {
         }
     }
 
-    public function update() {
+     public function update() {
 
-    	if ($this->input->post('reset')) {
-    		
-    		$this->db->where('id', '1')->update('settings', ['background' => '']);
-    		return redirect('settings');
-    	}
+        $business_name = $this->input->post('business_name');
+        $business_address = $this->input->post('business_address');
+        $contact = $this->input->post('contact');
+        $email = $this->input->post('email');
 
+        $update = $this->db->where('id', 1)
+                            ->update('settings', [
+                            'business_name' => $business_name,
+                            'business_address' => $business_address,
+                            'contact' => $contact,
+                            'email' => $email
+                        ]);
 
+        if ( $update ) {
 
-    	$settings = $this->db->where('id', '1')->get('settings')->row();
+            success("Business Info updated successfully");
+            return redirect('settings');
+        }
 
-    	if ($_FILES['logo']['name'] != "") {
+        error("Opps something went wrong please try again later");
+        return redirect('settings');
 
-    		if ($logo = $this->do_upload()) {
-
-    			$this->db->where('id', '1')->update('settings', [
-    									'logo' => $logo
-    								]);
-
-    			return redirect('/settings');
-
-    		}
-    	}
-
-    	if ($this->input->post('color') && $this->input->post('color') != $settings->background) {
-    		
-            $this->db->where('id', '1')->update('settings', [
-    									'background' => $this->input->post('color')
-    								]);
-
-    			return redirect('/settings');
-    	}
-
-    	return redirect('/settings');
-    	
     }
 
 }
