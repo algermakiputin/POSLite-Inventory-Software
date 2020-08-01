@@ -103,7 +103,7 @@ $(document).ready(function() {
 							title : 'Inventory', 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7,8 ]
+								columns: [ 1, 2, 3,4,5,6,7,8,9 ]
 							},
 						},
 						{
@@ -112,7 +112,7 @@ $(document).ready(function() {
 							title : 'Inventory Report', 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7,8 ]
+								columns: [ 1, 2, 3,4,5,6,7,8,9 ]
 							},
 						},
 						{
@@ -121,7 +121,7 @@ $(document).ready(function() {
 							title : 'Inventory', 
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7,8 ]
+								columns: [ 1, 2, 3,4,5,6,7,8,9 ]
 							},
 
 						},
@@ -141,6 +141,12 @@ $(document).ready(function() {
 					},
 					responsive: true,
 				})
+
+				$("#condition").change(function(e) {
+
+					itemTable.columns(1).search($(this).val()).draw();
+					
+				});
 			},
 			dataTableFilter : function() {
 				$(".filter-items").change(function() {
@@ -149,6 +155,8 @@ $(document).ready(function() {
 
 						
 				});
+
+
 			},
 			clearDataTableFilter : function() {
 				$("#clear-filter").click(function(e) {
@@ -744,7 +752,25 @@ $(document).ready(function() {
 			},
 			export_variations: function(e) {
 
-				 window.location.href = base_url + "VariationsController/export_variations";
+				$("#export_variations").click(function(e) {
+					var category_id = $("#category").val();
+					var condition = $("#condition").val();
+
+					var url = base_url + "VariationsController/export_variations/" + category_id + '/' + condition;
+
+					 
+					// window.location.href = url ;
+
+
+					// $.ajax({
+					// 	type: "GET",
+					// 	url: url,
+					// 	success: function(data) {
+					// 		alert("success");
+					// 	}
+					// })
+				})
+				
 			}
 
 		}

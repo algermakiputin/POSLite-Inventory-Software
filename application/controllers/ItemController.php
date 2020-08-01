@@ -202,14 +202,14 @@ class ItemController extends AppController {
 		$items = $this->dataFilter($search, $start, $limit);
 		$filterCategory = $this->input->post('columns[2][search][value]');
 		$filterSupplier = $this->input->post('columns[7][search][value]');  
-	 
+	 	$condition = $this->input->post('columns[1][search][value]');
 
-		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
+		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $condition)
 												->limit($limit, $start)
 												->get()
 												->result();
  
-		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)->get()->num_rows(); 
+		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $condition)->get()->num_rows(); 
 		
 		$datasets = [];
 
@@ -280,7 +280,7 @@ class ItemController extends AppController {
 				$item->name,
 				$item->condition_status,
 				$item->supplier,
-				$this->categories_model->getName($item->category_id),
+				$item->cat_name,
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
 				$stocks_view,
@@ -299,17 +299,20 @@ class ItemController extends AppController {
 		]);
 	}
 
-	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks) {
+	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $condition) {
 
-		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier, SUM(stocks) as stocks')
+		$conditions = ["Brand New", "Used"];
+
+		$query = $this->db->select('items.*,categories.name as cat_name,supplier.id as cat_id, supplier.name as supplier, SUM(stocks) as stocks')
 								->from('items')
 								->join('categories', 'categories.id = items.category_id', 'BOTH')
 								->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
 								->join('variations', 'variations.item_id = items.id', 'LEFT') 
 								->group_by('items.id')  
 								->order_by('items.id', 'DESC')
-								->like('categories.name', $filterCategory, "BOTH") 
+								->like('items.category_id', $filterCategory, "BOTH") 
 								->like('items.name', $search, "BOTH")
+								->like('items.condition_status', $conditions[$condition], "BOTH")
 								->like('supplier.name', $filterSupplier, "BOTH");
 
 		return $query;
@@ -649,7 +652,7 @@ class ItemController extends AppController {
 		//validation Form 
 		$this->updateFormValidation();
 		$this->load->model('HistoryModel');
- 		$updated_name = strip_tags($this->input->post('name'));
+ 		$updated_name = strip_tags($this->input->post('product'));
 		$updated_category = strip_tags($this->input->post('category'));
 		$updated_desc = strip_tags($this->input->post('description'));
 		$updated_price = strip_tags($this->input->post('price')); 
@@ -681,7 +684,7 @@ class ItemController extends AppController {
 			 
 		}
 
-		$this->db->where('barcode', $barcode)->update('ordering_level', ['quantity' => $stocks]);
+		// $this->db->where('barcode', $barcode)->update('ordering_level', ['quantity' => $stocks]);
 	 
 		$update = $this->ItemModel->update_item(
 						$id,$updated_name,

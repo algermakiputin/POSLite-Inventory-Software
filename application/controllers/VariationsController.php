@@ -75,10 +75,11 @@ class VariationsController extends AppController {
 		 
 	}
 
-	public function export_variations( $from = null, $to =null ) {
+	public function export_variations() {
 
-		$from = $from ? $from : date('Y-m-d');
-		$to = $to ? $to : date('Y-m-d');
+	 	$category_id = $this->input->get('category');
+	 	$condition = $this->input->get('condition');
+ 
 
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
@@ -87,11 +88,15 @@ class VariationsController extends AppController {
 		$sheet->setCellValue('C1', 'Capital');
 		$sheet->setCellValue('D1', 'Price');
 		$sheet->setCellValue('E1', 'Stocks'); 
+		$sheet->setCellValue('F1', 'Condition'); 
 
+		$conditions = ["Brand New", "Used"];
 
 		$variations = $this->db->select('items.*, variations.*')
-									->from('items')
+									->from('items') 
 									->join('variations', 'variations.item_id = items.id')
+									->like('items.condition_status', $conditions[$condition], "BOTH")
+									->like('items.category_id', $category_id, "BOTH") 
 									->get()
 									->result();
  
@@ -104,6 +109,7 @@ class VariationsController extends AppController {
 			$sheet->setCellValue('C' . $i, currency() . number_format($row->capital, 2));
 			$sheet->setCellValue('D' . $i, currency() . number_format($row->price,2));
 			$sheet->setCellValue('E' . $i, $row->stocks);  	
+			$sheet->setCellValue('F' . $i, $row->condition_status);  
 		}
 
 		header('Content-Type: application/vnd.ms-excel');

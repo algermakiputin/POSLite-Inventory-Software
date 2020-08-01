@@ -15,6 +15,7 @@
 <div class="row">
     <div class="col-md-8">
         <div class="form-inline" autocomplete="off" style="margin-bottom: 12px;">
+             <form method="GET" action="<?php echo base_url('VariationsController/export_variations') ?>">
             <div class="form-group">
                 <select class="form-control filter-items " data-column="7" name="test">
                     <option value="">Filter By Supplier</option>
@@ -24,16 +25,24 @@
                 </select>
             </div>  
             <div class="form-group">
-                <select class="form-control filter-items" data-column="2" name="test">
+                <select class="form-control filter-items" data-column="2" name="category" id="category">
                     <option value="">Filter By Category</option>
                     <?php foreach ($categories as $category): ?>
-                        <option value="<?php echo $category->name ?>"><?php echo $category->name ?></option>
+                        <option value="<?php echo $category->id ?>"><?php echo $category->name ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">
-                <button class="btn btn-default" type="button" id="export_variations"><i class="fa fa-file-excel-o"></i> Export Variations</button>
+                <select class="form-control" data-column="8" name="condition" id="condition">
+                    <option value="">Filter By Condition</option>
+                    <option value="0">Brand New</option>
+                    <option value="1">Used</option>
+                </select>
             </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default" type="button" id="export_variations"><i class="fa fa-file-excel-o"></i> Export Variations</button> 
+            </div>
+            </form>
         </div>
     </div> 
     <div class="col-md-4">
