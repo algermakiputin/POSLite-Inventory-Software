@@ -25,7 +25,7 @@
                   <div class="tab-pane active" id="not_selling">
                       <h4>These products are not selling well in the last 7 days</h4>
                       <hr>
-                      <table class="table table-bordered table-hover table-striped datatable"> 
+                      <table class="table table-bordered table-hover table-striped datatable" width="100%"> 
                           <thead>
                               <tr>
                                     <th width="15%">Barcode</th>
@@ -49,7 +49,7 @@
                   <div class="tab-pane" id="short_stocks">
                       <h4>Time to restock</h4>
                       <hr>
-                      <table class="table table-bordered table-hover table-striped datatable"> 
+                      <table class="table table-bordered table-hover table-striped datatable" width="100%"> 
                           <thead>
                               <tr>
                                     <th>Barcode</th>
@@ -71,7 +71,7 @@
                   <div class="tab-pane" id="out_of_stocks">
                       <h4>Run out of stocks</h4>
                       <hr>
-                      <table class="table table-bordered table-hover table-striped datatable"> 
+                      <table class="table table-bordered table-hover table-striped datatable" width="100%"> 
                           <thead>
                               <tr>
                                     <th>Barcode</th>

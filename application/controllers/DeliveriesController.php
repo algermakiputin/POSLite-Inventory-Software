@@ -39,11 +39,13 @@ class DeliveriesController extends CI_Controller
 								->row();
 
 		 
-		$data['deliveryDetails'] = $this->db->select("delivery_details.*, items.name as product_name, SUM(delivery_details.price * delivery_details.quantities) as subTotal")
-								->join('items', 'items.id = delivery_details.item_id', 'BOTH')
+		$data['deliveryDetails'] = $this->db->select("delivery_details.*, variations.name as product_name, SUM(delivery_details.price * delivery_details.quantities) as subTotal")
+								->join('variations', 'variations.serial = delivery_details.item_id', 'BOTH')
 								->where('delivery_details.delivery_id', $id)
 								->group_by('delivery_details.id')
-								->get('delivery_details')->result();
+								->get('delivery_details')
+								->result();
+
 		$data['total'] = 0;
 		$data['content'] = "deliveries/details";
 		return $this->load->view('master',$data);
