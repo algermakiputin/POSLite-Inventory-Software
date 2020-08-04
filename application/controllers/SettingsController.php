@@ -15,13 +15,15 @@ class SettingsController extends CI_Controller {
         $business_address = $this->input->post('business_address');
         $contact = $this->input->post('contact');
         $email = $this->input->post('email');
+        $facebook = $this->input->post('facebook');
 
         $update = $this->db->where('id', 1)
                             ->update('settings', [
                             'business_name' => $business_name,
                             'business_address' => $business_address,
                             'contact' => $contact,
-                            'email' => $email
+                            'email' => $email,
+                            'facebook' => $facebook
                         ]);
 
         if ( $update ) {

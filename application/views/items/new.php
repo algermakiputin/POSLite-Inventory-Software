@@ -102,7 +102,18 @@
 										</select>
 									</div>
 								</div>
-
+								<div class="col-md-2">
+									*Warranty Information
+								</div>
+								<div class="col-md-10">
+									<div class="form-group">   
+										<select class="form-control" name="warranty">
+											<option>7 Days Warranty</option>
+											<option>1 Year Warranty</option>
+											<option>No Warranty</option>
+										</select>
+									</div>
+								</div>
 							</div>
 							<table width="100%">   
 							</table>

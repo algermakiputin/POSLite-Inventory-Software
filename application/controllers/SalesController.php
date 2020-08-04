@@ -32,7 +32,8 @@ class SalesController extends AppController {
  		$data['sale'] = $sales;
  		$data['orderline'] = $orderline;
  		$data['sales_person'] = $sales_person;
-
+ 		$data['settings'] = $this->db->get('settings')->row();
+ 		
 		$this->load->view('sales/receipt', $data);
 	} 
  
@@ -243,7 +244,8 @@ class SalesController extends AppController {
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(),
 				'capital' => $sale['capital'],
-				'barcode' => $sale['barcode']
+				'barcode' => $sale['barcode'],
+				'warranty' => $sale['warranty']
 				
 			];
 			

@@ -232,10 +232,10 @@ class ItemController extends AppController {
 
 			if ($this->session->userdata('account_type') == "Admin") {
 
-				$deleteAction = '
+				$deleteAction = ' 
 						<li>
-                        	<a href="'.base_url("items/edit/$item->id").'"><i class="fa fa-edit"></i> Edit</a> 
-                        </li>
+                  	<a href="'.base_url("items/edit/$item->id").'"><i class="fa fa-edit"></i> Edit</a> 
+                  </li>
 						<li>
                         	<a onclick="(this).nextSibling.submit()" class="delete-item" href="#">
 					            <i class="fa fa-trash"></i>
@@ -245,7 +245,7 @@ class ItemController extends AppController {
 
                         	'.form_close().'
                         	</form> 
-					    </li>';
+					   </li>';
 			}
 
 			$actions = '<div class="dropdown">
@@ -351,7 +351,8 @@ class ItemController extends AppController {
 			$quantity = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
 
 			return [ 
-				ucwords($item->name) . '<input type="hidden" name="barcode" value="'.$item->serial.'"> ' . 
+				$item->serial,
+				ucwords($item->name) . '<input type="hidden" name="barcode" value="'.$item->serial.'"> ' .  '<input type="hidden" name="warranty" value="'.$item->warranty.'"> ' .
 				 '<input type="hidden" name="item-id" value="'.$item->serial.'"> ' .
 				'<input type="hidden" name="capital" value="'.$item->capital.'">',
 				ucfirst($item->description), 
@@ -387,7 +388,8 @@ class ItemController extends AppController {
 							->from('items')
 							->join('variations', 'variations.item_id = items.id', 'LEFT') 
 							->order_by('items.id', "DESC")
-							->like('variations.name',$search, 'BOTH')
+							// ->like('variations.name',$search, 'BOTH')
+							->like('variations.serial',$search, 'BOTH')
 							->limit($limit, $start)
 							->get() 
 							->result();
@@ -433,6 +435,7 @@ class ItemController extends AppController {
 		$capital = $this->input->post('capital');
 		$productImage = $_FILES['productImage'];
 		$condition = $this->input->post('condition');
+		$warranty = $this->input->post('warranty');
 
 		$variation_serials = $this->input->post('variation_serial[]');
 		$variation_names = $this->input->post('variation_name[]');
@@ -466,10 +469,12 @@ class ItemController extends AppController {
 				'barcode' => $barcode,
 				'price'	=> $price,
 				'capital' => $capital,
-				'condition_status' => $condition
+				'condition_status' => $condition,
+				'warranty' => $warranty
 			);
 		
 		if ($productImage) {
+
 			$upload = $this->do_upload('productImage');
 			if (array_key_exists('upload_data', $upload)) 
 				$data['image'] = $upload['upload_data']['file_name'];
@@ -650,6 +655,24 @@ class ItemController extends AppController {
 		$this->load->view('master', $data);
 	}
 
+	public function view($id) {
+		$this->userAccess('edit');
+		$id = $this->security->xss_clean($id);
+ 
+		$data['advance_pricing'] = $this->db->where('item_id', $id)->get('prices')->result();
+
+		$data['class'] = $data['advance_pricing'] ? '' : 'collapse';
+		
+		$data['item'] = $this->db->where('id', $id)->get('items')->row(); 
+		$data['category'] = $this->db->where('active',1)->get('categories')->result();
+		$data['suppliers'] = $this->db->get('supplier')->result();
+		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row();
+		$data['content'] = "items/view";
+		$data['variations'] = $this->db->where('item_id', $id)->get('variations')->result();
+
+		$this->load->view('master', $data);
+	}
+
 	public function update() {
 		
 		//validation Form 
@@ -663,6 +686,7 @@ class ItemController extends AppController {
 		$barcode = $this->input->post('barcode');
 		$id = strip_tags($this->input->post('id'));
 		$condition = $this->input->post('condition');
+		$warranty = $this->input->post('warranty');
 
 		$price_label = $this->input->post('price_label[]');
 		$advance_price = $this->input->post('advance_price[]');
@@ -698,7 +722,8 @@ class ItemController extends AppController {
 						$supplier_id, $this->input->post('barcode'),
 						$updated_price,
 						$capital,
-						$condition
+						$condition,
+						$warranty
 					); 
   
 

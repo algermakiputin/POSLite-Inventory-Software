@@ -77,6 +77,7 @@ $route['sales/report'] ='SalesController/reports';
 $route['sales/graph-filter'] = 'SalesController/graphFilter';
 
 $route['items'] = 'ItemController/items';
+$route['items/view/(:any)'] = 'ItemController/view/$1';
 $route['items/new'] = 'ItemController/new';
 $route['items/insert'] = 'ItemController/insert';
 $route['items/stock-in/(:any)'] = 'ItemController/stock_in/$1';

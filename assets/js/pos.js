@@ -35,20 +35,25 @@
 						data : data,
 						type : 'POST'
 					},
+					language: {
+						searchPlaceholder: "Search Serial"
+					}
 				});
 			},
 			selectProduct: function() {
 
 				$("#item-table").on('click', 'tbody tr', function(event) {
 
-					var barcode = $(this).find('input[name="barcode"]').val();
+					var barcode = $(this).find('td').eq(0).text();
 					var id = $(this).find('input[name="item-id"]').val();
-					var name = $(this).find('td').eq(0).text(); 
-					var price = $(this).find('td').eq(3).text();
-					var description = $(this).find('td').eq(1).text();
+					var warranty = $(this).find('input[name="warranty"]').val();
+					var name = $(this).find('td').eq(1).text(); 
+					var price = $(this).find('td').eq(4).text();
+					var description = $(this).find('td').eq(2).text();
 					var pricing = $(this).find('input[name="advance_pricing"]').val();
 					var capital = $(this).find('input[name="capital"]').val();
 					var item_unit = $(this).find('td').eq(3).text();
+
 				 	 
 			 		if (itemExist(id) == false) {
 				 		
@@ -61,6 +66,7 @@
 						$("#capital").val(capital);
 						$("#item_unit").val(item_unit);
 						$("#barcode").val(barcode);
+						$("#warranty").val(warranty);
 
 						$("#advance_pricing_options tbody").empty(); 
 						$("#advance_pricing_options tbody").append("<tr>" +
@@ -463,7 +469,7 @@
 		var price = $("input[name='pricing']:checked").val(); 
 		let capital = $("#capital").val();
 		let unit = $("#item_unit").val();
-
+		let warranty = $("#warranty").val();
 		
 
 		if (!quantity)
@@ -472,10 +478,10 @@
 		$("#advance_pricing_modal").modal('toggle');  
 		$("#payment").val('');
 		$("#change").val('');
-		insert_product(barcode, item_id, name, price, quantity, capital, unit);
+		insert_product(barcode, item_id, name, price, quantity, capital, unit, warranty);
 
 	})
-	function insert_product(barcode, id, name, price, quantity, capital, unit) {
+	function insert_product(barcode, id, name, price, quantity, capital, unit, warranty) {
  	
  		var sub = remove_comma(price.substring(1)) * quantity;
 
@@ -484,6 +490,7 @@
 					'<input name="barcode" type="hidden" value="'+ barcode +'">' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<input name="capital" type="hidden" value="'+ capital +'">' +
+					'<input name="warranty" type="hidden" value="'+ warranty +'">' +
 					'<input name="item_unit" type="hidden" value="'+ unit +'">' +
 					'<td>'+ name +'</td>' +
 					'<td><input  data-id="'+id+'" name="qty" type="text" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
@@ -542,7 +549,8 @@
 					var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
 					var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
 					var barcode = $("#cart tbody tr").eq(i).find('input[name="barcode"]').val();
- 
+ 					var warranty = $("#cart tbody tr").eq(i).find('input[name="warranty"]').val();
+
 					var arr = {
 							barcode: barcode,
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
@@ -552,7 +560,8 @@
 							subtotal : parseFloat(price) * parseInt(quantity) - parseFloat(discount),
 							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
 							capital : capital,
-							unit: main_unit
+							unit: main_unit,
+							warranty: warranty
 						};
 
 						console.log(arr);
@@ -569,9 +578,10 @@
 			 	 
 					$("#r-items-table tbody").append(
 							'<tr>' + 
-								'<td>'+value.name +'</td>' + 
-								'<td>'+currency+ number_format(value.price) +'</td>' +
-								'<td>'+value.quantity+'</td>' +
+								'<td>' + value.barcode + '</td>' +
+								'<td width="30%">' +value.quantity+ 'x ' +value.name + '<br>['+value.warranty+']' +'</td>' + 
+								'<td>'+currency+ value.price +'</td>' +
+								 
 								'<td>'+currency+ number_format(value.subtotal)+'</td>' +
 							'</tr>'
 						);

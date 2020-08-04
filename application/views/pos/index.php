@@ -58,10 +58,11 @@
 					<table style="width: 100%" class="table table-bordered table-hover table-striped" id="item-table">
 						<thead>
 							<tr> 
-								<td width="40%">Item Name</td>
+								<td width="20%">Serial</td>
+								<td width="30%">Product</td>
 								<td width="20%">Description</td> 
-								<td width="15%">Quantity</td> 
-								<td width="15%">Price</td>
+								<td width="10%">QTY</td> 
+								<td width="10%">Price</td>
 							</tr>
 						</thead>
 						<tbody> 
@@ -150,15 +151,17 @@
 			</div>
 			<div class="modal-body">
 				<div class="col-md-7">
+					 
 					<div id="receipt">
 						<div class="r-header text-center">
 							<h3><?php echo $settings->business_name ?></h3>
 							<div id="business-info" class="text-center">
 								<div><?php echo $settings->business_address ?></div> 
 								<div><?php echo $settings->contact ?></div>
+								<div><?php echo $settings->facebook ?></div>
 								<div><?php echo $settings->email ?></div>
 							</div>
-							<table class="text-left">
+							<table class="text-left" width="100%">
 								<tr>
 									<th colspan="2">RECEIPT</th> 
 								</tr>
@@ -182,13 +185,13 @@
 							<div class="clearfix"></div>
 						</div>
 						<div class="r-body">
-							<table class="table table-striped" id="r-items-table">
+							<table class="table table-striped" id="r-items-table" width="100%">
 								<thead>
 									<tr> 
-										<th>Item </th> 
-										<th>Price</th>
-										<th>Qty</th>
-										<th>Sub</th>
+										<th width="25%">Serial </th> 
+										<th width="45%">Product </th> 
+										<th width="15%">Price</th> 
+										<th width="15%">Sub</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -208,7 +211,7 @@
 							</div>
 						</div>
 
-					</div>
+					</div> 
 				</div>
 				<div class="col-md-5">
 					<h4 class="">Transaction Summary</h3> 
@@ -417,6 +420,7 @@
 						<input type="hidden" name="capital" id="capital" value="0">
 						<input type="hidden" name="item_id" id="item_id">
 						<input type="hidden" name="barcode" id="barcode">
+						<input type="hidden" name="warranty" id="warranty">
 						<label for="quantity-enter">Enter Quantity &nbsp;</label>
 						<input style="border-radius: 3px;" name="quantity-enter" onfocus="this.value=''" type="number" min="1" value="1" type="number" id="quantity" class="form-control mx-sm-3" aria-describedby="quantity">
 

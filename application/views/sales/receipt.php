@@ -3,20 +3,31 @@
 <head>
 	<title>Receipt</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/bootstrap/css/bootstrap.css'); ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/pos_style.css') ?>">
 </head>
 <body>
 	<style type="text/css">
 		#receipt {
-			width: 480px;
-			padding: 10px;
+			width: 100%;
+			max-width: 380px;
+			padding: 20px;
+			overflow: hidden;
 		}
 
 	</style>
 	<div id="receipt">
 		<div class="r-header text-center">
 			<h3>Receipt</h3>
-			<br>
+			<div id="business-info" class="text-center">
+				<div><?php echo $settings->business_address ?></div> 
+				<div><?php echo $settings->contact ?></div>
+				<div><?php echo $settings->facebook ?></div>
+				<div><?php echo $settings->email ?></div>
+			</div>
 			<table class="text-left">
+				<tr>
+					<th colspan="2">RECEIPT</th> 
+				</tr>
 				<tr>
 					<td>Transaction Number: &nbsp;&nbsp;</td>
 					<td><div id="r-id"><?php echo $sale->transaction_number ?></div></td>
@@ -37,21 +48,21 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="r-body">
-			<table class="table table-striped" id="r-items-table">
+			<table class="table table-striped" id="r-items-table" width="100%">
 				<thead>
 					<tr> 
-						<th>Item </th>
-						<th>Price</th>
-						<th>Qty</th>
+						<th>Serial</th>
+						<th>Product </th>
+						<th>Price</th> 
 						<th>Sub</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($orderline as $row): ?>
 						<tr>
-							<td><?php echo $row->name; ?></td>
-							<td><?php echo currency() . number_format($row->price, 2); ?></td>
-							<td><?php echo $row->quantity; ?></td>
+							<td><?php echo $row->barcode; ?></td>
+							<td><?php echo $row->quantity . "x " . $row->name . "<br>[" . $row->warranty; ?>]</td>
+							<td><?php echo currency() . number_format($row->price, 2); ?></td> 
 							<td><?php echo currency() . number_format($row->price * $row->quantity, 2); ?></td>
 						</tr>
 						<?php 
@@ -87,7 +98,7 @@
 			$("#print").click(function(){
 				$("#receipt").print({
 			        	globalStyles: true,
-			        	mediaPrint: false,
+			        	mediaPrint: true,
 			        	stylesheet: base_url + 'assets/receipt.css',
 			        	noPrintSelector: ".no-print",
 			        	iframe: true,

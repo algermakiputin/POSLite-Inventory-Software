@@ -31,8 +31,7 @@ class DeliveriesController extends CI_Controller
 
 	public function details($id) {
 		$data['delivery'] = $this->db->select('delivery.*, supplier.name')
-								->from('delivery')
-
+								->from('delivery') 
 								->join('supplier', 'supplier.id = delivery.supplier_id')
 								->where('delivery.id', $id)
 								->get()
@@ -45,6 +44,8 @@ class DeliveriesController extends CI_Controller
 								->group_by('delivery_details.id')
 								->get('delivery_details')
 								->result();
+
+
 
 		$data['total'] = 0;
 		$data['content'] = "deliveries/details";
@@ -86,7 +87,7 @@ class DeliveriesController extends CI_Controller
 				continue;
 			
 			$orderDetails[] = array(
-				'item_id'	=> $products_id[$key],
+				'item_id'	=> $products[$key],
 				'quantities' => $quantity[$key],
 				'delivery_id' => $delivery_id,
 				'price'	=>	$price[$key], 

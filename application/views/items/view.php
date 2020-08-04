@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header"><?php echo $item->name ?></h1>
+		<h1 class="page-header">Products</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -16,7 +16,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Register Item
+				Product Details
 			</div>
 			<div class="panel-body">
 
@@ -40,7 +40,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">
-										<input autocomplete="off" value="<?php echo $item->name ?>" required="required" type="text" placeholder="Product" name="product" class="form-control">
+										<input autocomplete="off" readonly value="<?php echo $item->name ?>" required="required" type="text" placeholder="Product" name="product" class="form-control">
 									</div>
 								</div>
 
@@ -49,7 +49,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">
-										<select name="category" class="form-control" required="required">
+										<select name="category" class="form-control" required="required" readonly>
 											<option value="">Select Category</option>
 											<?php foreach ($category as $cat): ?>
 												<option <?php echo $item->category_id == $cat->id ? "selected" : "" ?> value="<?php echo $cat->id ?>"> <?php echo ucwords($cat->name) ?> </option>
@@ -63,7 +63,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">   
-										<select name="supplier" class="form-control" required="required"> 
+										<select name="supplier" class="form-control" required="required" readonly> 
 											<option value="">Select Supplier</option>
 											<?php foreach ($suppliers as $supplier): ?>
 												<option <?php echo $item->supplier_id == $supplier->id ? "selected" : "" ?> value="<?php echo $supplier->id ?>">
@@ -79,7 +79,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">   
-										<input autocomplete="off" type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" value="<?php echo $item->capital ?>" id="selling-price">
+										<input autocomplete="off" readonly="readonly" type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" value="<?php echo $item->capital ?>" id="selling-price">
 									</div>
 								</div>
 
@@ -88,7 +88,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">   
-										<input type="text" autocomplete="off" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price" value="<?php echo $item->price ?>">
+										<input type="text" autocomplete="off" readonly required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price" value="<?php echo $item->price ?>">
 									</div> 
 								</div>
 								<div class="col-md-2">
@@ -96,7 +96,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">   
-										<select class="form-control" name="condition">
+										<select class="form-control" name="condition" readonly>
 											<option>Brand New</option>
 											<option>Used</option>
 										</select>
@@ -106,8 +106,8 @@
 									*Warranty Information
 								</div>
 								<div class="col-md-10">
-									<div class="form-group">   
-										<select class="form-control" name="warranty">
+									<div class="form-group" readonly>   
+										<select class="form-control" name="warranty" readonly>
 											<option>7 Days Warranty</option>
 											<option>1 Year Warranty</option>
 											<option>No Warranty</option>
@@ -127,10 +127,7 @@
 											<?php if ($item->image && file_exists('./uploads/' . $item->image)): ?>
 												<img style="width: inherit;height: inherit;" src="<?php echo base_url('uploads/' . $item->image) ?>">
 											<?php endif; ?>
-										</div>
-										<label>Product Image
-											<input type="file" name="productImage" id="productImage" class="form-control">
-										</label>
+										</div> 
 									</div>
 								</div>
 							</div>
@@ -178,7 +175,7 @@
 											<td><input type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>
 											<td><input type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>
 											<td><input type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>
-											<td width="30px"><i class="fa fa-trash variation-remove-row"></i></td>
+									 
 										</tr>
 										<?php else: ?>
 											<?php foreach ( $variations as $variation ): ?>
@@ -187,16 +184,12 @@
 													<td><input value="<?php echo $variation->name ?>" type="text" autocomplete="off" placeholder="Name" class="form-control" name="variation_name[]"></td>
 													<td><input value="<?php echo $variation->price ?>" type="text" autocomplete="off" placeholder="Price" class="form-control" name="variation_price[]"></td>
 													<td><input value="<?php echo $variation->stocks ?>" type="text" autocomplete="off" placeholder="Stocks" class="form-control" name="variation_stocks[]"></td>
-													<td width="30px"><i data-id="<?php echo $variation->id ?>" class="fa fa-trash variation-remove-row"></i></td>
+													 
 												</tr>
 											<?php endforeach; ?>
 										<?php endif; ?>
 									</tbody>
-								</table>
-								<div class="text-right">
-									<button class="btn btn-primary btn-sm" type="button" id="update-variation">Update</button>
-									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD VARIATION</button>
-								</div>
+								</table> 
 							</fieldset>
 						</div>
 					 
@@ -207,15 +200,14 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">  
-										<textarea rows="5" autocomplete="off" maxlength="150" placeholder="Description" class="form-control" name="description"><?php echo $item->description ?></textarea>
+										<textarea rows="5" readonly autocomplete="off" maxlength="150" placeholder="Description" class="form-control" name="description"><?php echo $item->description ?></textarea>
 									</div>
 								</div>
 							</div>
 						</div>
-					 
-						<div class="row">  
+					  	<div class="row">  
 							<div class="form-group col-md-6 col-md-offset-2 text-right"> 
-								<button class="btn btn-primary" type="submit">Update</button> 
+								<a href="<?php echo base_url('items/edit/' . $item->id) ?>" class="btn btn-primary" type="submit">Edit</a> 
 							</div>
 						</div>
 					<?php echo form_close(); ?>

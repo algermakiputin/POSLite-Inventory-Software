@@ -85,11 +85,13 @@ header {
 }
 
 #receipt {
-	box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
-	padding: 20px 50px;
-	max-height: 400px;
+	box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.2);
+	padding: 20px 40px;
+ 
 	overflow: auto;
 	font-size: 12px;
+	width: 100%;
+		max-width: 450px;
 }
 
 .r-header {

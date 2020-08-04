@@ -62,7 +62,8 @@ class ItemModel extends CI_Model {
 			$barcode, 
 			$price, 
 			$capital,
-			$condition
+			$condition,
+			$warranty
 		) {
 		
 		$item = $this->db->where('id',$id)->get('items')->row(); 
@@ -75,7 +76,8 @@ class ItemModel extends CI_Model {
 			'barcode' => $barcode,
 			'price'	=> $price,
 			'capital' => $capital,
-			'condition_status' => $condition
+			'condition_status' => $condition,
+			'warranty' => $warranty
 			);
 
 		$data = $this->security->xss_clean($data);

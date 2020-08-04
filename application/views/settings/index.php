@@ -25,6 +25,7 @@
 							</div>
 						<?php endif; ?> 
 						<?php echo form_open("SettingsController/update") ?>
+							<p>Leave blank if not applicable</p>
 							<div class="form-group">
 								<label>Business Name</label>
 								<input type="text" value="<?php echo $settings->business_name ?>" autocomplete="off" name="business_name" class="form-control" id="color">
@@ -36,6 +37,10 @@
 						 	<div class="form-group">
 								<label>Contact</label>
 								<input type="text"value="<?php echo $settings->contact ?>" autocomplete="off" name="contact" class="form-control">
+							</div>
+							<div class="form-group">
+								<label>Facebook Link</label>
+								<input type="text"value="<?php echo $settings->facebook ?>" autocomplete="off" name="facebook" class="form-control">
 							</div>
 							<div class="form-group">
 								<label>Email</label>
