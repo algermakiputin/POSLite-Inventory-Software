@@ -163,7 +163,7 @@
 									</tbody>
 								</table>
 								<div class="text-right">
-									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD PRICE</button>
+									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD VARIATION</button>
 								</div>
 							</fieldset>
 						</div>

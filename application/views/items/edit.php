@@ -184,7 +184,7 @@
 								</table>
 								<div class="text-right">
 									<button class="btn btn-primary btn-sm" type="button" id="update-variation">Update</button>
-									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD Variation</button>
+									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD VARIATION</button>
 								</div>
 							</fieldset>
 						</div>

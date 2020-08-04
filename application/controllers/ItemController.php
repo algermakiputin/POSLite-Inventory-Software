@@ -605,6 +605,9 @@ class ItemController extends AppController {
 
 		foreach ( $serials as $key => $serial ) {
 
+			if ( !$stocks[$key])
+				continue;
+			
 			$this->db->set('stocks', 'stocks+' . $stocks[$key], FALSE);
 			$this->db->where('serial', $serial);
 			$this->db->update('variations'); 
