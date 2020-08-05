@@ -8,6 +8,7 @@ body {
 	color: #141823 ;
 }
 
+
 #cart th {
 	background-color: #f4f4f5;
 	position: sticky;
@@ -91,7 +92,8 @@ header {
 	overflow: auto;
 	font-size: 12px;
 	width: 100%;
-		max-width: 450px;
+	max-width: 450px;
+	max-height: 550px;
 }
 
 .r-header {

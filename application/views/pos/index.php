@@ -188,10 +188,8 @@
 							<table class="table table-striped" id="r-items-table" width="100%">
 								<thead>
 									<tr> 
-										<th width="25%">Serial </th> 
-										<th width="45%">Product </th> 
-										<th width="15%">Price</th> 
-										<th width="15%">Sub</th>
+										<th width="75%">Description</th> 
+										<th width="25%" class="text-right">Sub Total</th>  
 									</tr>
 								</thead>
 								<tbody>
@@ -208,6 +206,7 @@
 
 							<div class="r-footer">
 								<p>Thank you for shopping at our store</p>
+								<p>REG TIN# 196-427-050-003</p>
 							</div>
 						</div>
 

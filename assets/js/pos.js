@@ -11,7 +11,7 @@
  	var item_table;
  	var orders_table;
 	data[csrfName] = csrfHash;
-
+ 
 	(function() {
 
 		var cart = {
@@ -579,11 +579,9 @@
 			 	 
 					$("#r-items-table tbody").append(
 							'<tr>' + 
-								'<td>' + value.barcode + '</td>' +
-								'<td width="30%">' +value.quantity+ 'x ' +value.name + '<br>['+value.warranty+']' +'</td>' + 
-								'<td>'+currency+ value.price +'</td>' +
-								 
-								'<td>'+currency+ number_format(value.subtotal)+'</td>' +
+								'<td>' + value.barcode + '<br>[' + value.warranty  + '] ' + value.name +   '<br>' + value.quantity + 'x ' + currency + value.price +  '</td>' +
+								  
+								'<td class="text-right">'+currency+ number_format(value.subtotal)+'</td>' +
 							'</tr>'
 						);
 				});
@@ -815,7 +813,7 @@
 	$("#print").click(function(){
 		$("#receipt").print({
 	        	globalStyles: true,
-	        	mediaPrint: false,
+	        	mediaPrint: true,
 	        	stylesheet: base_url + 'assets/receipt.css',
 	        	noPrintSelector: ".no-print",
 	        	iframe: true,
