@@ -9,16 +9,20 @@
 	<style type="text/css">
 		#receipt {
 			width: 100%;
-			max-width: 380px;
-			padding: 20px;
-			overflow: hidden;
+			max-width: 450px!important; 
+			margin: 0;
+
+			padding: 0px!important; 
+			overflow: visible;
+			max-height: 100%!important;
 		}
 
 	</style>
+	<button id="print" class="btn btn-default">Print</button>
 	<div id="receipt">
 		<div class="r-header text-center">
 			<h3>Receipt</h3>
-			<div id="business-info" class="text-center">
+			<div id="business-info" class="text-center" style="font-size: 14px;">
 				<div><?php echo $settings->business_address ?></div> 
 				<div><?php echo $settings->contact ?></div>
 				<div><?php echo $settings->facebook ?></div>
@@ -29,7 +33,7 @@
 					<th colspan="2">RECEIPT</th> 
 				</tr>
 				<tr>
-					<td>Transaction Number: &nbsp;&nbsp;</td>
+					<td>TR#: &nbsp;&nbsp;</td>
 					<td><div id="r-id"><?php echo $sale->transaction_number ?></div></td>
 				</tr>
 				<tr>
@@ -51,18 +55,18 @@
 			<table class="table table-striped" id="r-items-table" width="100%">
 				<thead>
 					<tr> 
-						<th>Serial</th>
-						<th>Product </th>
-						<th>Price</th> 
-						<th>Sub</th>
+						<th width="75%">Description</th> 
+						<th width="25%">Sub Total</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($orderline as $row): ?>
 						<tr>
-							<td><?php echo $row->barcode; ?></td>
-							<td><?php echo $row->quantity . "x " . $row->name . "<br>[" . $row->warranty; ?>]</td>
-							<td><?php echo currency() . number_format($row->price, 2); ?></td> 
+							<td>
+								<?php echo $row->barcode; ?> <br>
+								[<?php echo $row->warranty ?>] <?php echo $row->name ?><br>
+								<?php echo $row->quantity ?>x <?php echo currency() . number_format($row->price,2) ?>
+							</td> 
 							<td><?php echo currency() . number_format($row->price * $row->quantity, 2); ?></td>
 						</tr>
 						<?php 
@@ -86,7 +90,7 @@
 		</div>
  	</div>
 
- 	<button id="print" class="btn btn-default">Print</button>
+ 	
 	<script type="text/javascript" src="<?php echo base_url('assets/jquery.js') ?>"></script>
 	<script src="<?php echo base_url('assets/js/print.js') ?>"></script>
 	<script type="text/javascript">
