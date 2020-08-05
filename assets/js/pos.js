@@ -222,6 +222,7 @@
 									let price = currency + number_format(item.price);
 									$("#barcode").val(item.serial);
 									let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+									var warranty = item.warranty;
 									totalAmountDue += parseFloat(subtotal);
 
 
@@ -231,7 +232,7 @@
 									$("#product-name").text(name);
 									$("#item_id").val(id);
 									$("#capital").val(capital);
-
+									$("#warranty").val(warranty);
 
 									$("#advance_pricing_options tbody").empty(); 
 									$("#advance_pricing_options tbody").append("<tr>" +
