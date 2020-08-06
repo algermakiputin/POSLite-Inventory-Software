@@ -160,6 +160,7 @@
 								<div><?php echo $settings->contact ?></div>
 								<div><?php echo $settings->facebook ?></div>
 								<div><?php echo $settings->email ?></div>
+								<div>NONVAT REG TIN#196-427-050-003</div>
 							</div>
 							<table class="text-left" width="100%">
 								<tr>
@@ -205,8 +206,7 @@
 							</div>
 
 							<div class="r-footer">
-								<p>Thank you for shopping at our store</p>
-								<p>REG TIN# 196-427-050-003</p>
+								<p>Thank you for shopping at our store</p> 
 							</div>
 						</div>
 
