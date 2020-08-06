@@ -155,26 +155,18 @@ class SalesController extends AppController {
 
 		foreach($daterange as $date){
 	 	  	
-		 	$sales = $this->db->where('DATE_FORMAT(date_time,"'.$sqlDateFormat.'") =', $date->format($dateFormat)) 
-						->get('sales')
-						->result();
+		 	$sales = $this->db->select('SUM(price * quantity) as total_sales')
+		 						->from('sales_description')
+		 						->where('DATE_FORMAT(created_at,"'.$sqlDateFormat.'") =', $date->format($dateFormat)) 
+								->get()
+								->row();
 			
-		    	if ($sales) {
-		    		foreach ($sales as $sale) {
-			    		$description = $this->getSalesDescription($sale->id);
-			    		
-					foreach ( $description as $descr) {
-						$item = $this->db->where('id', $descr->item_id)->get('items')->row();
-						$total += $descr->price * $descr->quantity;
-					}	
-				}
+		   
+			$total += $sales->total_sales;
+			$datasets[$date->format($format)][] = round($total,2);
+	     
 
-				$datasets[$date->format($format)][] = round($total,2);
-		    	}else {
-		    		$datasets[$date->format($format)][] = 0;
-		    	}
-
-		    	$total = 0;
+	    	$total = 0;
 		} 
 		return $datasets;
 	}
