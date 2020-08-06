@@ -388,8 +388,9 @@ class ItemController extends AppController {
 							->from('items')
 							->join('variations', 'variations.item_id = items.id', 'LEFT') 
 							->order_by('items.id', "DESC")
-							// ->like('variations.name',$search, 'BOTH')
-							->like('variations.serial',$search, 'BOTH')
+							//->like([ 'variations.name' => $search, 'variations.serial' => $search])
+							->like('variations.name',$search, 'BOTH')
+							->or_like('variations.serial',$search, 'BOTH')
 							->limit($limit, $start)
 							->get() 
 							->result();

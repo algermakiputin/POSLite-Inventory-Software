@@ -187,7 +187,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="form-group">  
-										<textarea rows="5" autocomplete="off" maxlength="150" placeholder="Description" class="form-control" name="description"></textarea>
+										<textarea rows="5" required="required" autocomplete="off" maxlength="150" placeholder="Description" class="form-control" name="description"></textarea>
 									</div>
 								</div>
 							</div>
