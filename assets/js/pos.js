@@ -49,6 +49,12 @@
 					var pricing = $(this).find('input[name="advance_pricing"]').val();
 					var capital = $(this).find('input[name="capital"]').val();
 					var item_unit = $(this).find('td').eq(3).text();
+					var stocks = $(this).find('td').eq(2).text();
+
+					if ( parseInt(stocks) <= 0) {
+
+						return alert("Not enough stocks");
+					}
 				 	 
 			 		if (itemExist(id) == false) {
 				 		
@@ -60,6 +66,7 @@
 						$("#item_id").val(id);
 						$("#capital").val(capital);
 						$("#item_unit").val(item_unit);
+						$("#stocks").val(stocks);
 
 						$("#advance_pricing_options tbody").empty(); 
 						$("#advance_pricing_options tbody").append("<tr>" +
@@ -445,29 +452,33 @@
 		var price = $("input[name='pricing']:checked").val(); 
 		let capital = $("#capital").val();
 		let unit = $("#item_unit").val();
-
+		var stocks = $("#stocks").val();
 		
+		if (parseFloat(quantity) > parseFloat(stocks)) {
 
+			alert("Not enough stocks");
+			return  $("#quantity").val(1);
+		}
 		if (!quantity)
 			return alert("Quantity is required");
 
 		$("#advance_pricing_modal").modal('toggle');  
 		$("#payment").val('');
 		$("#change").val('');
-		insert_product(item_id, name, price, quantity, capital, unit);
+		insert_product(item_id, name, price, quantity, capital, unit, stocks);
 
 	})
-	function insert_product(id, name, price, quantity, capital, unit) {
- 	
+	function insert_product(id, name, price, quantity, capital, unit, stocks) {
+ 		 
  		var sub = remove_comma(price.substring(1)) * quantity;
 
 		$("#cart tbody").append(
 				'<tr>' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<input name="capital" type="hidden" value="'+ capital +'">' +
-					'<input name="item_unit" type="hidden" value="'+ unit +'">' +
+					'<input name="item_unit" type="hidden" value="'+ unit +'">' + 
 					'<td>'+ name +'</td>' +
-					'<td><input  data-id="'+id+'" name="qty" type="text" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
+					'<td><input  data-id="'+id+'" name="qty" type="text" data-stocks="'+stocks+'" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
 					'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
 					'<td>'+ price +'</td>' + 
 					'<td>'+ currency + number_format(sub)  +'.00</td>' + 
@@ -481,11 +492,22 @@
 	function itemExist(itemID) {
 		var table = $("#cart-tbl tbody tr");
 	 	var exist = false;
+
 		$.each(table, function(index) {
 			id = ($(this).find('[name="id"]').val());
+
 			if (id == itemID) {
-				qtyCol = $(this).find('[name="qty"]');
-				qty = parseInt(qtyCol.val());
+				let qtyCol = $(this).find('[name="qty"]');
+				let current_stocks = qtyCol.data('stocks');
+
+				let qty = parseInt(qtyCol.val());
+
+				if ( parseFloat(qty) >= parseFloat(current_stocks) ) {
+					alert("Not enough stocks");
+					qtyCol.val(current_stocks);
+					exist = true;
+					return recount();
+				}
 
 				qtyCol.val(qty + 1);
 		 		recount();
@@ -667,12 +689,16 @@
 
 	$("#cart").on('focusout','.quantity-box',function(e) {
 		var quantity = parseFloat($(this).val()); 
+		var current_stocks = $(this).data('stocks');
+
 		if (isNaN(quantity) || quantity < 0 || quantity == "") {
 			$(this).val(1);
 		 
 			calculateRemainingStocks($(this).data('stocks') - 1, $(this).data('id'))
 			return quantity = 1; 
 		}
+
+
 	})
 
  	$("#cart").on('input', '.quantity-box', function(e) {
@@ -686,8 +712,14 @@
 		var currentStocks = $(this).data('stocks');
 		var itemID = $(this).data('id');
 		var remaining = $(this).data('stocks') - quantity;
+ 		
+ 		if ( remaining < 0) {
+ 			alert("Not enough stocks");
+ 			return $(this).val(1);
+ 		}
 
 		$(this).data('remaining', remaining);
+
 		if (isNaN(quantity) || quantity < 0) {
 			return quantity = 1; 
 		}
