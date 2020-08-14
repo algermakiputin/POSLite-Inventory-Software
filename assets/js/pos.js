@@ -70,7 +70,7 @@
 
 						$("#advance_pricing_options tbody").empty(); 
 						$("#advance_pricing_options tbody").append("<tr>" +
-									"<td>SRP</td>" +
+									"<td>Retail Price</td>" +
 									"<td>"+price+"</td>" +
 									'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
 								"</tr>"
@@ -229,7 +229,7 @@
 
 										$("#advance_pricing_options tbody").empty(); 
 										$("#advance_pricing_options tbody").append("<tr>" +
-													"<td>SRP</td>" +
+													"<td>Retail Price</td>" +
 													"<td>"+price+"</td>" +
 													'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
 												"</tr>"
