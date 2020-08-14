@@ -598,38 +598,52 @@
 						$("#btn").button('loading');
 					},
 					success : function(data) { 
-		 				transactionComplete = true;
-		 				var total = parseFloat(total_amount);
-		 			 	var d = new Date();
-		 				$("#payment-modal").modal('toggle');
-						$("#loader").hide();
-						//Transaction Summary 
-		
-						$("#summary-payment").text( currency + number_format(payment));
-						$("#summary-change").text( currency + number_format(change));
-					 	$("#summary-discount").text(currency + number_format(totalDiscount));
-						$("#summary-total").text( currency + number_format(total_amount) )
-						
-						//Fill In Receipt 
-						$("#r-payment").text( currency + number_format(payment));
-						$("#r-change").text( currency + number_format(change));
-						$("#r-cashier").text($("#user").text()); 
-						$("#r-total-amount").text( currency + number_format(total_amount) )
-						$("#r-discount").text(currency + number_format(totalDiscount));
-						$("#r-id").text(data);
-						$("#r-time").text(d.toLocaleTimeString());
 
-					 	$("#cart tbody").empty();
-					 	$("#payment").val('');
-					 	$("#change").val('');
-					 	$("#amount-due").text(''); 
-					 	$("#amount-total").text('');
-					 	$("#amount-discount").text('');
+						var result = JSON.parse(data);
 
-					 	item_table.clear().draw();
-					 	$("#btn").button('reset');
-					 	totalAmountDue = 0;  
-						totalDiscount = 0
+						if (result.status == 'success') {
+
+							transactionComplete = true;
+			 				var total = parseFloat(total_amount);
+			 			 	var d = new Date();
+			 				$("#payment-modal").modal('toggle');
+							$("#loader").hide();
+							//Transaction Summary 
+			
+							$("#summary-payment").text( currency + number_format(payment));
+							$("#summary-change").text( currency + number_format(change));
+						 	$("#summary-discount").text(currency + number_format(totalDiscount));
+							$("#summary-total").text( currency + number_format(total_amount) )
+							
+							//Fill In Receipt 
+							$("#r-payment").text( currency + number_format(payment));
+							$("#r-change").text( currency + number_format(change));
+							$("#r-cashier").text($("#user").text()); 
+							$("#r-total-amount").text( currency + number_format(total_amount) )
+							$("#r-discount").text(currency + number_format(totalDiscount));
+							$("#r-id").text(data);
+							$("#r-time").text(d.toLocaleTimeString());
+
+						 	$("#cart tbody").empty();
+						 	$("#payment").val('');
+						 	$("#change").val('');
+						 	$("#amount-due").text(''); 
+						 	$("#amount-total").text('');
+						 	$("#amount-discount").text('');
+
+						 	item_table.clear().draw();
+						 	
+						 	totalAmountDue = 0;  
+							totalDiscount = 0;
+						}else if ( result.status == 'stock_out') {
+
+							alert(result.message);
+						}else {
+
+							alert("Opps something went try again later");
+						}
+
+		 				$("#btn").button('reset');
 					 	
 					}
 				})

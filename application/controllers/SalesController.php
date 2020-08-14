@@ -249,9 +249,23 @@ class SalesController extends AppController {
 				
 			];
 			
-			$this->db->set('stocks', "stocks - $sale[quantity]" , false);
-			$this->db->where('serial', $sale['barcode']);
-			$this->db->update('variations');
+			$update_stocks = $this->db->set('stocks', "stocks - $sale[quantity]" , false)
+												->where('serial', $sale['barcode'])
+												->update('variations');
+
+			if ( !$update_stocks ) {
+
+				$current_stocks = $this->db->select('stocks')
+													->from('variations')
+													->where('serial', $sale['barcode'])
+													->get()
+													->row()->stocks;
+
+				echo json_encode([
+					'status' => "stock_out",
+					'message' => "OOPPPSS!! Not enough stocks for " . trim($sale['name']) . ": " . $current_stocks . "stocks  remaining"
+				]);
+			}
 		}
  
 
@@ -264,7 +278,7 @@ class SalesController extends AppController {
 		}
 		 
 		$this->db->trans_commit(); 
-		echo $transaction_number;
+		echo json_encode(['status' => 'success', 'transaction_number' => $transaction_number]);
 		return;
 	}
 
