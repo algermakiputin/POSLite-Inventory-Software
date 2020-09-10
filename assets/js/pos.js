@@ -621,7 +621,7 @@
 							$("#r-cashier").text($("#user").text()); 
 							$("#r-total-amount").text( currency + number_format(total_amount) )
 							$("#r-discount").text(currency + number_format(totalDiscount));
-							$("#r-id").text(data);
+							$("#r-id").text(data.transaction_number);
 							$("#r-time").text(d.toLocaleTimeString());
 
 						 	$("#cart tbody").empty();
