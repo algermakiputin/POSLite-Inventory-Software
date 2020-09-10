@@ -16,7 +16,7 @@ class ExpensesModel extends CI_Model {
 
 		return $this->db->select("SUM(cost) as total")
 					->from('expenses')
-					->where("DATE_FORMAT(date, '%d') =", date('d'))
+					->where("DATE_FORMAT(date, '%Y-%m-%d') =", date('Y-m-d'))
 					->get()
 					->row();
 
