@@ -887,7 +887,7 @@ $(document).ready(function() {
 		if (key) {
 			$.ajax({
 				type : 'POST',
-				url : 'https://poslite-license.herokuapp.com/index.php/LicenseController/validateLicense',
+				url : 'https://license.poslitesoftware.com/index.php/LicenseController/validateLicense',
 				data : ajaxData,
 				beforeSend : function() {
 					$("#key-submit").button('loading');
