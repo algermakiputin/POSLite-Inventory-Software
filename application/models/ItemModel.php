@@ -14,12 +14,13 @@ class ItemModel extends CI_Model {
 
 	public function inventory_value() {
 
-		return $this->db->select("SUM(variations.stocks) * items.capital as total")
-												->from('items')
-												->join('variations', 'variations.item_id = items.id')
-												->get()
-												->row()
-												->total;
+		$variations =  $this->db->select("SUM(variations.stocks * items.capital) as total")
+								->from('variations')
+								->join('items', 'items.id = variations.item_id')
+								->get()
+								->row();
+								
+		return $variations->total;
 	}
  
 	public function deleteItem($id) {

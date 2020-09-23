@@ -191,6 +191,8 @@ class ItemController extends AppController {
 		$data['categories'] = $this->categories_model->getCategories();
 		$data['orderingLevel'] = $this->OrderingLevelModel;
 		$data['content'] = "items/index";
+		$data['inventory_value'] = number_format( $this->ItemModel->inventory_value(), 2);
+
 		$this->load->view('master', $data);
 
 	}
@@ -208,16 +210,14 @@ class ItemController extends AppController {
 												->limit($limit, $start)
 												->get()
 												->result();
- 
+		 	
+
 		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $condition)->get()->num_rows(); 
 		
 		$datasets = [];
 
 		$this->load->model('ItemModel');
-
-		$inventory__total = $this->ItemModel->inventory_value();
-
-
+ 
 		foreach ($items as $item) {
 
 			if ( $item->name == "")
@@ -225,7 +225,7 @@ class ItemController extends AppController {
 
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
-			$stocksRemaining = $item->stocks;
+			$stocksRemaining = 0;
 			$deleteAction = ""; 
 
 			$variations = $this->db->where('item_id', $item->id)->get('variations')->result();
@@ -264,6 +264,7 @@ class ItemController extends AppController {
 
          foreach ($variations as $variation) {
 
+         	$stocksRemaining += $variation->stocks;
          	$variations_list .= "<div>$variation->name: $variation->stocks</div>";
          }
 
@@ -294,8 +295,7 @@ class ItemController extends AppController {
 			'draw' => $this->input->post('draw'),
 			'recordsTotal' => $itemCount,
 			'recordsFiltered' => $itemCount,
-			'data' => $datasets,
-			'total' => number_format($inventory__total,2)
+			'data' => $datasets 
 		]);
 	}
 

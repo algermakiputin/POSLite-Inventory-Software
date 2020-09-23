@@ -46,7 +46,7 @@
         </div>
     </div> 
     <div class="col-md-4">
-        <span class="pull-right" style="font-size: 22px;">Inventory Value: ₱<span id="total"><?php echo $total; ?></span></span>
+        <span class="pull-right" style="font-size: 22px;">Inventory Value: ₱<span id="total"><?php echo $inventory_value; ?></span></span>
     </div>
 </div>
 <div class="row">  

@@ -128,7 +128,7 @@ $(document).ready(function() {
 					],
 					initComplete : function(settings, json) {
 						  
-						$("#total").text(json.total);
+						// $("#total").text(json.total);
 						$.previewImage({
 						   'xOffset': 30,  // x-offset from cursor
 						   'yOffset': -270,  // y-offset from cursor
