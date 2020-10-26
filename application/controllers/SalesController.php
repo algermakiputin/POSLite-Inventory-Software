@@ -455,8 +455,7 @@ class SalesController extends AppController {
 		$sales = $this->db->select("sales.*, SUM(sales_description.price * sales_description.quantity) as sub")
 								->from('sales')
 								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number')
-								->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") =', $date)
-								->where('sales.user_id', $user_id)
+						 
 								->like("sales.transaction_number", $search, "BOTH")
 								->group_by('sales.id')
 								->order_by('id', 'DESC')
