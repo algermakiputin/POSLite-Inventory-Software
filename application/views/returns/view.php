@@ -37,6 +37,7 @@
              <thead>
                 <tr>
                     <th>Date</th>
+                    <th>Transaction Number</th>
                     <th>Name</th>
                     <th>Condition</th>  
                     <th>Returned Quantity</th>

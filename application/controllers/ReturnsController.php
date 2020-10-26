@@ -60,6 +60,7 @@ class ReturnsController extends CI_Controller {
 
             $datasets[] = [
                 $return->date,
+                $return->transaction_number,
                 $return->name,
                 $return->item_condition,
                 $return->quantity,

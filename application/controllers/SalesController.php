@@ -319,6 +319,7 @@ class SalesController extends AppController {
 
 			$datasets[] = [ 
 				date('Y-m-d h:i:s A', strtotime($sale->date_time)),   
+				$sale->transaction_number,
 				$sale->name,
 				$sale->quantity,
 				$sale->returned,
