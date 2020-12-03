@@ -54,6 +54,7 @@ class DashboardController extends AppController {
 		$data['not_selling'] = $this->not_selling_products($lastweek)->result();
 		$data['out_of_stocks'] = noStocks();
 		$data['low_stocks'] = low_stocks();
+		$data['active'] = $this->input->get('active');
 		$this->load->view('master', $data);
 	}
 
@@ -70,8 +71,7 @@ class DashboardController extends AppController {
 								->limit(10)
 								->get()
 								->result();
- 
-		
+
 		return $sales;
 
 	} 
@@ -110,21 +110,28 @@ class DashboardController extends AppController {
 
 	public function not_selling_products($lastweek) {
 
-		$query = "SELECT items.id, items.barcode, items.name, prices.price, ordering_level.quantity
-						FROM items
-						INNER JOIN prices ON prices.item_id = items.id
-						INNER JOIN ordering_level ON ordering_level.item_id = items.id 
-						WHERE items.id
-						NOT IN
-						(
-							SELECT barcode
-							FROM sales_description 
-							WHERE DATE_FORMAT(sales_description.created_at, '%Y-%m-%d') >= '$lastweek'
-						)
-						LIMIT 450
-					";
+		/*
+			1. Query Sold products last month
+			2. Select All products that are not in the selling products
+			3. Return the Query
 
-		return $this->db->query($query); 
+		*/
+		$selling_products = $this->db->select('barcode')
+												->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $lastweek)
+												->get('sales_description')
+												->result();
+
+		$selling_products = array_column($selling_products, 'barcode');
+ 
+		$not_selling_products = $this->db->select("items.*, ordering_level.quantity")
+													->from('items')
+													->join('ordering_level', 'ordering_level.item_id = items.id')
+													->where_not_in('items.barcode', $selling_products)
+													->get();
+				
+		return $not_selling_products;
+
+	 
 	}
 
 	public function line_chart($date = null) {
