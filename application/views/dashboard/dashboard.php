@@ -108,12 +108,12 @@ echo $this->session->flashdata('successMessage');
                                 </a>
                             </td>
                             <td style="font-size: 24px;padding: 15px">
-                                <a href="<?php echo base_url('diagnoses') ?>">
+                                <a href="<?php echo base_url('diagnoses?active=2') ?>">
                                 <span style="color: #333" title="Number of products that stocks are below 15" data-toggle="tooltip"><?php echo $low_stocks ?></span> 
                                 </a>       
                             </td>
                             <td style="font-size: 24px;padding: 15px">
-                                <a href="<?php echo base_url('diagnoses') ?>">
+                                <a href="<?php echo base_url('diagnoses?active=3') ?>">
                                 <span style="color: #333" title="Run out of stocks" data-toggle="tooltip"><?php echo $no_stocks ?></span> 
                                 </a>       
                             </td>
