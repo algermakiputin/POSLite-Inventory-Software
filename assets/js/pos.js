@@ -161,15 +161,11 @@
 				  				
 				  			}  else {
  
-				  				
+				  				$("#process-form").submit();
 				  			}
 				  		 	
 				  		} 
-
-				  		if (e.keyCode === 13 && e.altKey) {
-
-				  			$("#process-form").submit();
-				  		}
+ 
  
 
 				  		if (e.keyCode === 112) { 
@@ -622,7 +618,8 @@
 				})
 				return;
 			}  
-			
+
+			$("#payment").focus();
 			return alert("Insufficient Amount");
  		}
  		
