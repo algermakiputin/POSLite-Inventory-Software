@@ -116,7 +116,7 @@ class DashboardController extends AppController {
 			3. Return the Query
 
 		*/
-		$selling_products = $this->db->select('item_id')
+		$selling_products = $this->db->select('barcode')
 												->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $lastweek)
 												->get('sales_description')
 												->result();
@@ -124,12 +124,12 @@ class DashboardController extends AppController {
 
 		if ( $selling_products )  {
 
-			$selling_products = array_column($selling_products, 'item_id');
+			$selling_products = array_column($selling_products, 'barcode');
 
 			$not_selling_products = $this->db->select("items.*, ordering_level.quantity")
 													->from('items')
 													->join('ordering_level', 'ordering_level.item_id = items.id')
-													->where_not_in('items.id', $selling_products)
+													->where_not_in('items.barcode', $selling_products)
 													->get();
 		}else {
 
