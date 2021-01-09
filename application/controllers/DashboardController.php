@@ -129,7 +129,7 @@ class DashboardController extends AppController {
 			$not_selling_products = $this->db->select("items.*, ordering_level.quantity")
 													->from('items')
 													->join('ordering_level', 'ordering_level.item_id = items.id')
-													->where_not_in('items.barcode', $selling_products)
+													->where_not_in('items.id', $selling_products)
 													->get();
 		}else {
 
