@@ -142,7 +142,40 @@
 		</div>
 	</div>
 </div>
-<div class="modal" tabindex="-1" role="dialog" id="payment-modal">
+
+<div class="modal fade" id="payment-modal" tabindex="-1" role="dialog" aria-labelledby="payment-modal" aria-hidden="true">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="exampleModalLabel">Payment Details</h3> 
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>Select Customer (Optional)</label>
+					<select class="form-control" id="customer">
+						<option value="">Select Customer</option>
+						<?php  foreach ($customers as $customer): ?>
+							<option value="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Payment Type</label>
+					<select class="form-control" id="payment-type">
+						<option value="cash">Cash</option>
+						<option value="credit">Credit</option>
+					</select>
+				</div>
+			 
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+				<button id="payment-button" type="button" class="btn btn-primary" >Complete Transaction</button> 
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="receipt-modal">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">

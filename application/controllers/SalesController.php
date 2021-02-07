@@ -204,6 +204,11 @@ class SalesController extends AppController {
 	public function insert() {
 		$data = [];
 		$sales = $this->input->post('sales');
+		$payment_type = $this->input->post('payment_type');
+		$customer_name = $this->input->post('customer_name');
+		$customer_id = $this->input->post('customer_id');
+		$total = $this->input->post('total');
+
 		$this->load->model("PriceModel");
 		$this->db->trans_begin();
 
@@ -213,8 +218,11 @@ class SalesController extends AppController {
 		$this->db->insert('sales',[ 
 				'date_time' => get_date_time(),
 				'user_id' => $this->session->userdata('id'),
-				'transaction_number' => $transaction_number
-			]);
+				'transaction_number' => $transaction_number,
+				'customer_id' => $customer_id,
+				'payment_type' => $payment_type,
+				'customer_name' => $customer_name
+ 			]);
 
 		$sales = $this->security->xss_clean($sales);
 
@@ -238,13 +246,29 @@ class SalesController extends AppController {
 			$this->db->where('item_id', $sale['id']);
 			$this->db->update('ordering_level');
 		}
+
+		if ( $payment_type == "credit") {
+
+			$this->db->insert('credits', array(
+				'transaction_number' => $transaction_number,
+				'name' => $customer_name,
+				'total' => $total,
+				'date' => date('Y-m-d H:i:s'),
+				'customer_id' => $customer_id
+			));
+		}
  
 
 		$this->db->insert_batch('sales_description', $data);
 
+
+
 		if ($this->db->trans_status() === FALSE)
-		{
+		{	
+
 		        $this->db->trans_rollback();
+
+
 		        return false;
 		}
 		 

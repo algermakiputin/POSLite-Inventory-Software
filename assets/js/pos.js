@@ -152,21 +152,38 @@
 
 
 				 		if (e.keyCode === 13) {
-	 						
-
-
+	 						 
 				  			if ($("#advance_pricing_modal").hasClass("in")) {
 
 				  				$("#add-product").click();
 				  				
-				  			}  else {
+				  			}  else { 
+				  			 
+								var row = $("#cart tbody tr").length; 
+								var payment = $("#payment").val(); 
+						 	 
+						 		if (row) { 
+						 			
+									if (parseFloat(payment) >= parseFloat(totalAmountDue)) { 
+
+										$("#payment-modal").modal("toggle");
+
+									}else {
+
+										alert("Insufficient Amount");
+									}
+								}else {
+
+									alert("Please add some items");
+								}
+ 								
+ 								return false;
  
 				  				$("#process-form").submit();
 				  			}
 				  		 	
 				  		} 
- 
- 
+  
 
 				  		if (e.keyCode === 112) { 
 				  		 
@@ -185,6 +202,24 @@
 				  			$("#return-modal").modal("toggle"); 
 				  		}
 				 	});
+
+			 	$("#payment-button").click(function(e) {
+
+			 		var customer = $("#customer").val();
+			 		var payment_type = $("#payment-type").val();
+			 		var customer_name = $("#customer option:selected").text();
+
+			 		if ( payment_type == "credit" && customer == "")
+			 			return alert("Customer is required when payment type is credit");
+
+
+			 		$("#customer").val("");
+			 		$("#payment-type").val("cash");  
+					$("#payment-modal").modal("toggle");
+
+					process_transaction(customer, customer_name);
+
+			 	});
 
 				$(document).pos();
 				$(document).on('scan.pos.barcode', function(event){
@@ -516,21 +551,21 @@
 
 		return exist;
 	}
+ 
 
-	$("#process-form").submit(function(e) {
-		e.preventDefault();
+	function process_transaction(customer_id, customer_name) {
+
 		var row = $("#cart tbody tr").length;
 		var sales = [];
-		var customer_id = $("#customer-id").val();
 		var total_amount = 0;
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val();
 		var change = $("#change").val();
- 	 
- 		if (row) {
+		var payment_type = $("#payment_type").val();
  
-	 
-			if (parseFloat(payment) >= parseFloat(totalAmountDue)) {
+ 		if (row) { 
+
+			if (parseFloat(payment) >= parseFloat(totalAmountDue)) { 
 		 		
 	 			for (i = 0; i < row; i++) {
 					var r = $("#cart tbody tr").eq(i).find('td');
@@ -549,6 +584,7 @@
 							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
 							capital : capital,
 							unit: main_unit
+
 						};
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);
@@ -572,7 +608,13 @@
 
 				var data = {};
 				data['sales'] = sales;
+				data['customer_id'] = customer_id;
+				data['payment_type'] = payment_type;
+				data['customer_name'] = customer_name; 
+				data['total'] = totalAmountDue;
+
 				data[csrfName] = csrfHash;
+				
 				$.ajax({
 					type : 'POST',
 					data : data,
@@ -584,7 +626,7 @@
 		 				transactionComplete = true;
 		 				var total = parseFloat(total_amount);
 		 			 	var d = new Date();
-		 				$("#payment-modal").modal('toggle');
+		 				$("#receipt-modal").modal('toggle');
 						$("#loader").hide();
 						//Transaction Summary 
 		
@@ -624,8 +666,7 @@
  		}
  		
  		return alert('Please add some items');
-		
-	})
+	}
 
 	$("#payment").keyup(function() {
 
