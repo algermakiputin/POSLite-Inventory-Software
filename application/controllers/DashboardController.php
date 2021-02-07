@@ -82,30 +82,21 @@ class DashboardController extends AppController {
 		$average_sales_per_day = 0;
 		$last_month = date('Y-m-d', strtotime('-30 days'));
 
-		$sales = $this->db->select('sales.id, SUM(sales_description.price * sales_description.quantity) as total')
-								->from('sales')
-								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number')
-								->group_by('sales.id')
-								->where('DATE_FORMAT(date_time, "%Y-%m-%d") >', $last_month)
-								->get()
-								->result();
 
-		$count = count($sales);
-
-		if ($count < 10) {
-
+		$total = $this->db->select("SUM(sales_description.price * sales_description.quantity) as total")
+					->from('sales_description')
+					->where('DATE_FORMAT(created_at, "%Y-%m-%d") >', $last_month)
+					->get()
+					->row()
+					->total;
+	 
+		
+		if ( !$total ) 
 			return "Not enough data";
-		}
- 
+  
 
-		foreach ($sales as $row) {
-
-			$total += $row->total;
-		} 
-
-		return  currency() . number_format($total / $count,2);
- 
-		 
+		return  currency() . number_format($total / 30 ,2);
+   
 	}
 
 	public function not_selling_products($lastweek) {
