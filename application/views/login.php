@@ -9,7 +9,7 @@
 </head>
 <body >
  
-<div class="col1">
+<!-- <div class="col1">
 	<div class="quote-wrapper"> 
    
 		<blockquote>
@@ -18,17 +18,25 @@
 </blockquote>
    
 	</div>
-</div>
-<div class="col2">
-	
-	<?php
+</div> -->
+<header>
+	<div class="container">
+		<nav class="navbar">
+			 <a href="" class="navbar-brand"><img src="<?php echo base_url('assets/images/logo.png') ?>"  width="85"></a>
+		</nav>
+	</div>
+</header>
+<main>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<?php
 	$attributes = array( 
 	'class' => 'form-signin'
 	);
 	?> 
 
 	<?php echo form_open('AuthController/login_validation',$attributes )?> 
-	<img src="<?php echo base_url('assets/images/logo.png') ?>" class="site-branding" width="140" style="display: block;margin:auto;">
+ 
 	<br>
 	<div class="body">
 		<h2 class="text-center">Sign In</h2>
@@ -46,7 +54,7 @@
 		<div class="form-group">
 			<div class="input-group">
 				<span class="input-group-addon"><i class="fa fa-user " aria-hidden="true"></i></span>
-				<input autocomplete="off" id="username" type="text" class="form-control input-md" name="username" placeholder="Username" required="required" data-parsley-errors-container="#username-error">
+				<input autocomplete="off" id="username" type="text" class="form-control input-md" name="username" placeholder="Username" required="required" data-parsley-errors-container="#username-error" autocomplete="off">
 				<div class="clearfix"></div>
 
 			</div>
@@ -55,7 +63,7 @@
 		<div class="form-group">
 			<div class="input-group ">
 				<span class="input-group-addon"><i class="fa fa-key " aria-hidden="true"></i></span>
-				<input autocomplete="off" id="password" type="password" class="form-control input-md" name="password" placeholder="Password" required="required" data-parsley-errors-container="#password-error">
+				<input autocomplete="off" id="password" type="password" class="form-control input-md" name="password" placeholder="Password" required="required" data-parsley-errors-container="#password-error" autocomplete="off">
 			</div>      
 			<span id="password-error"></span>
 		</div>
@@ -75,10 +83,12 @@
 			</div> 
 		 	<h5></h5>
 		<?php endif; ?>
-		<p class="text-center" style="color: #777">&copy; <?php echo date('Y-m-d') ?> All Rights Reserved <br> Developed by: <a href="https://algermakiputin.github.io/portfolio">Alger Makiputin</a></p>
+		<p class="text-center" style="color: #777">&copy; <?php echo date('Y') ?> All Rights Reserved <br> Developed by: <a target="__blank" href="https://algermakiputin.dev">Alger Makiputin</a></p>
 		<?php echo form_close() ?>
 	</div>
-</div> 
+		</div>
+	</div>
+</main>
 	
 
 <?php $this->load->view('template/footer'); ?>
