@@ -120,4 +120,19 @@ class CustomersController Extends AppController {
 		echo json_encode($customer);
 	}
 
+	public function select() {
+
+		$q = $this->input->get('search');
+
+		$customer = $this->db->select('id as id, name as text')
+									->from('customers')
+									->like('name', $q,'BOTH')
+									->get()
+									->result_array();
+ 
+		echo json_encode($customer);
+
+	 
+	}
+
 }

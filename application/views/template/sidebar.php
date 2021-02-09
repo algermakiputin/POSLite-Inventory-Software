@@ -77,6 +77,9 @@
                         <li>
                             <a href="<?php echo base_url('returns') ?>"><i class="fa fa-circle-o"></i> Returns</a>
                         </li>
+                        <li>
+                            <a href="<?php echo base_url('reports/credits') ?>"><i class="fa fa-circle-o"></i> Credits</a>
+                        </li>
                     </ul>
                 </li>
             <?php endif; ?>

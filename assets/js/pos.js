@@ -208,16 +208,20 @@
 			 		var customer = $("#customer").val();
 			 		var payment_type = $("#payment-type").val();
 			 		var customer_name = $("#customer option:selected").text();
+			 		var due_date = $("#due_date").val();
 
 			 		if ( payment_type == "credit" && customer == "")
 			 			return alert("Customer is required when payment type is credit");
 
 
+			 		if ( payment_type == "credit" && due_date == "")
+			 			return alert("Due date is required");
+
 			 		$("#customer").val("");
 			 		$("#payment-type").val("cash");  
 					$("#payment-modal").modal("toggle");
 
-					process_transaction(customer, customer_name);
+					process_transaction(customer, customer_name, payment_type, due_date);
 
 			 	});
 
@@ -553,15 +557,14 @@
 	}
  
 
-	function process_transaction(customer_id, customer_name) {
+	function process_transaction(customer_id, customer_name, payment_type, due_date) {
 
 		var row = $("#cart tbody tr").length;
 		var sales = [];
 		var total_amount = 0;
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val();
-		var change = $("#change").val();
-		var payment_type = $("#payment_type").val();
+		var change = $("#change").val(); 
  
  		if (row) { 
 
@@ -612,6 +615,7 @@
 				data['payment_type'] = payment_type;
 				data['customer_name'] = customer_name; 
 				data['total'] = totalAmountDue;
+				data['due_date'] = due_date;
 
 				data[csrfName] = csrfHash;
 				
@@ -667,6 +671,14 @@
  		
  		return alert('Please add some items');
 	}
+
+	$("#payment-type").change(function(e) {
+
+		if ( $(this).val() == "credit") 
+			return $("#due-date-wrapper").show();
+	
+		return $("#due-date-wrapper").hide();
+	})
 
 	$("#payment").keyup(function() {
 

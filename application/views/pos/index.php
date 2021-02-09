@@ -166,6 +166,10 @@
 						<option value="credit">Credit</option>
 					</select>
 				</div>
+				<div class="form-group" id="due-date-wrapper">
+					<label>Due Date</label>
+					<input type="date"  name="due_date" id="due_date" class="form-control">
+				</div>
 			 
 			</div>
 			<div class="modal-footer">

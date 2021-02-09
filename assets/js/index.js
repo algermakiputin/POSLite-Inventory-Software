@@ -638,6 +638,40 @@ $(document).ready(function() {
 			}
 		} 
 
+		var credits = {
+
+			init: function() {
+
+				this.datatable();
+			},
+			datatable: function(e) {
+
+				var credits_datatable = $("#credits_datatable").DataTable({
+					searching : true,
+					ordering : false, 
+					serverSide : true, 
+					processing : true,
+					bsearchable : true, 
+					responsive: true, 
+					ajax : {
+						url : base_url + 'CreditsController/credits_datatable',
+						type : 'POST',
+						data : data
+					}
+				});
+
+
+				$("#customer-select").on("change.select2", function(e) {
+ 
+					var id = $(this).val();
+
+					credits_datatable.columns(0).search(id).draw();
+
+				});
+			}
+
+		}
+
 		expenses.init();
 		dateTimePickers.init();
 		items.init();
@@ -645,6 +679,7 @@ $(document).ready(function() {
 		customers.init();
 		suppliers.init();
 		returns.init();
+		credits.init();
 	 
 	})();
 
@@ -917,7 +952,37 @@ $(document).ready(function() {
 				}
 			})
 		}
-	})
+	});
+
+
+	$('#customer-select').select2({
+	  ajax: {
+	    url: base_url + "/CustomersController/select",
+	    dataType: 'json',
+	    delay: 250,
+	    data: function (params) {
+	      var query = {
+	        search: params.term 
+	      }
+
+	      // Query parameters will be ?search=[term]&type=public
+	      return query;
+	    },
+	    params: { 
+		        contentType: "application/json; charset=utf-8"
+		   },
+	    processResults: function(response) {
+ 
+	    
+	    	return {
+	    		results: (response)
+	    	};
+
+	    },
+	    cache: true
+
+	  }
+	});
 
 	
 })

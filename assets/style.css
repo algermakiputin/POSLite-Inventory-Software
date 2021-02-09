@@ -11,6 +11,13 @@ html, body {
 
 }
 
+.select2-container--default .select2-selection--single {
+
+      border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    height: 31px;
+}
+
 #page-wrapper {
   font-size: 1.1em;
 }

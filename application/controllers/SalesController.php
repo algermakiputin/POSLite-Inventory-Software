@@ -208,6 +208,7 @@ class SalesController extends AppController {
 		$customer_name = $this->input->post('customer_name');
 		$customer_id = $this->input->post('customer_id');
 		$total = $this->input->post('total');
+		$due_date = $this->input->post('due_date');
 
 		$this->load->model("PriceModel");
 		$this->db->trans_begin();
@@ -254,7 +255,8 @@ class SalesController extends AppController {
 				'name' => $customer_name,
 				'total' => $total,
 				'date' => date('Y-m-d H:i:s'),
-				'customer_id' => $customer_id
+				'customer_id' => $customer_id,
+				'due_date' => $due_date
 			));
 		}
  

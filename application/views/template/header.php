@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css") ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/vendor/morrisjs/morris.css") ?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/introjs.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/select2.min.css')?>">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style.css')?>">
 
 <script src="<?php echo base_url('assets/vendor/jquery/jquery.min.js'); ?>"></script> 
