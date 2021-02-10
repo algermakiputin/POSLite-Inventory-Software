@@ -8,9 +8,16 @@
                 <?php echo $this->session->flashdata('success') ?>
             </div>
         <?php endif; ?>
+
+        <?php if ($this->session->flashdata('error')): ?>
+            <div class="alert alert-danger">
+                <?php echo $this->session->flashdata('error') ?>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 <div class="row">
+
     <div class="col-md-12" style="margin-bottom: 10px;">
         <form class="form-inline" autocomplete="off">
             <div class="form-group">
@@ -28,12 +35,12 @@
             </div> 
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                <input id="expenses_from" type="text" class="form-control date-range-filter" name="email" placeholder="From Date" data-date-format="yyyy-mm-dd">
+                <input id="credit_from" autocomplete="off" type="text" class="form-control date-range-filter" name="credit_from" placeholder="From Date" data-date-format="yyyy-mm-dd">
             </div>
             &nbsp;
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                <input id="expenses_to" type="text" class="form-control date-range-filter" name="email" placeholder="To Date" data-date-format="yyyy-mm-dd">
+                <input id="credit_to" autocomplete="off" type="text" class="form-control date-range-filter" name="credit_to" placeholder="To Date" data-date-format="yyyy-mm-dd">
             </div>
         </form>
     </div>
@@ -47,11 +54,14 @@
             <table class="table table-responsive table-striped table-hover table-bordered" id="credits_datatable" width="100%">
              <thead>
                 <tr>
-                    <th width="20%">Date</th>
-                    <th width="20%">Customer</th>
-                    <th width="20%">Invoice#</th>
-                    <th width="20%">Due Date</th> 
-                    <th width="20%">Action</th>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Invoice#</th>
+                    <th>Due Date</th> 
+                    <th>Total</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
                 <tbody>

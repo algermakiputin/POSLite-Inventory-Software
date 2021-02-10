@@ -16,8 +16,16 @@ class CreditsController extends CI_Controller {
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]');
 		$customer_id = $this->input->post('columns[0][search][value]');     
+		$from = $this->input->post('columns[1][search][value]');  
+		$to = $this->input->post('columns[2][search][value]');  
+
+		$from = $from == "" ? date('Y-m-1') : $from;
+		$to = $to == "" ? date('Y-m-t') : $to;
+
 
 		$credits = $this->db->where('customer_id', $customer_id)
+									->where('date >=', $from)
+									->where('date <=', $to)
 									->get('credits')
 									->result();
 
@@ -25,12 +33,37 @@ class CreditsController extends CI_Controller {
 
 		foreach ( $credits as $credit ) {
 
+			$actions = '<div class="dropdown">
+                    		<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
+                    		<ul class="dropdown-menu">
+                    		<li>
+                            <a href="' . base_url("PaymentsController/pay/$credit->id") .'">
+                                <i class="fa fa-plus"></i> Add Payment </a>
+                        </li>
+                         
+                    		</ul>
+                		</div>'; 
+
+         $status = "<span class='label label-pill label-warning'>Unpaid</span>";
+
+         if ( $credit->status == 1) {
+
+         	$status = "<span class='label label-pill label-success'>Paid</span>";
+      	
+      	}else  if ( $credit->status == 0 && strtotime(date("Y-m-d")) > strtotime($credit->due_date)) {
+
+      		$status = "<span class='label label-pill label-danger'>Payment Due</span>";
+      	}
+
 			$dataset[] = [
-				$credit->date,
+				date('Y-m-d', strtotime($credit->date)),
 				$credit->name,
 				$credit->transaction_number,
 				$credit->due_date,
-				""
+				currency() .number_format($credit->total,2),
+				currency() . number_format($credit->total - $credit->paid,2),
+				$status,
+				$actions
 			];
 		}
 

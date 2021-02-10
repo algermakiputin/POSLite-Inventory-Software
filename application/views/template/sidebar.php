@@ -22,9 +22,19 @@
                 <!-- /.nav-second-level -->
             </li>
 
-            <li data-step="2" data-intro="This menu takes you to the customer page where you can manage your customers.">
-                <a href="<?php echo base_url('customers') ?>"><i class="fa fa-table fa-fw"></i> Customers</a>
-            </li> 
+            <li  >
+                <a href="#"><i class="fa fa-user fa-fw"></i> Customers<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('customers') ?>"><i class="fa fa-circle-o"></i> View Customers</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('reports/credits') ?>"><i class="fa fa-circle-o"></i> Credits</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
             <?php if ($this->session->userdata('account_type') == "Admin" || $this->session->userdata('account_type') == "Receiver" ): ?>
                 <li data-step="4" data-intro="If you have products delivered, you can save it here.">
                     <a href="#"><i class="fa fa-industry fa-fw"></i> Supplier<span class="fa arrow"></span></a>
@@ -76,10 +86,7 @@
                         </li>
                         <li>
                             <a href="<?php echo base_url('returns') ?>"><i class="fa fa-circle-o"></i> Returns</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url('reports/credits') ?>"><i class="fa fa-circle-o"></i> Credits</a>
-                        </li>
+                        </li> 
                     </ul>
                 </li>
             <?php endif; ?>

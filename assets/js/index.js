@@ -668,6 +668,17 @@ $(document).ready(function() {
 					credits_datatable.columns(0).search(id).draw();
 
 				});
+
+				$("#credit_to").change(function(){
+
+					var credit_to = $(this).val();
+					var credit_from = $("#credit_from").val();
+
+					credits_datatable.columns(1).search(credit_from)
+											.column(2).search(credit_to)
+											.draw();
+
+				});
 			}
 
 		}

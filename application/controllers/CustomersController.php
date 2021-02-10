@@ -15,9 +15,8 @@ class CustomersController Extends AppController {
 		$data['customers'] = $this->db->order_by('id','DESC')->get('customers')->result();
  		$data['content'] = "customers/index";
  		$data['controller'] = $this;
-		$this->load->view('master',$data);
-
-
+		$this->load->view('master',$data); 
+		
 	}
 
 	public function insert() { 
@@ -133,6 +132,11 @@ class CustomersController Extends AppController {
 		echo json_encode($customer);
 
 	 
+	}
+
+	public function history() {
+
+
 	}
 
 }

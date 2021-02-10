@@ -256,7 +256,8 @@ class SalesController extends AppController {
 				'total' => $total,
 				'date' => date('Y-m-d H:i:s'),
 				'customer_id' => $customer_id,
-				'due_date' => $due_date
+				'due_date' => date('Y-m-d h:i:s', strtotime($due_date)),
+				'status' => 0
 			));
 		}
  
