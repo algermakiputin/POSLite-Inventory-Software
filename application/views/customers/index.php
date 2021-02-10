@@ -42,7 +42,7 @@
 										<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
 										<ul class="dropdown-menu">
 										 	<li>
-												<a title="Credit and Payment Records" class="pointer edit" data-toggle="modal" data-target="#customer-edit" data-id="<?php echo $customer->id ?>"> 
+												<a title="Credit and Payment Records" href="<?php echo base_url('customer/records/' . $customer->id) ?>" target="blank"> 
 													<i class="fa fa-refresh"></i> Credits/Payments
 												</a>
 											</li>

@@ -107,6 +107,7 @@ $route['customers/open/(:any)'] = "CustomersController/open/$1";
 $route['customers/find'] = "CustomersController/find";
 $route['customers/update'] = "CustomersController/update";
 $route['customers/open-membership'] = "CustomersController/openMembership";
+$route['customer/records/(:any)'] = "CustomersController/records/$1";
 
 $route['suppliers'] = "SuppliersController/index";
 $route['suppliers/insert'] = "SuppliersController/insert";

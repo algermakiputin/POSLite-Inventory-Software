@@ -134,8 +134,18 @@ class CustomersController Extends AppController {
 	 
 	}
 
-	public function history() {
+	public function records($customer_id) {
 
+		$credits = $this->db->where('customer_id', $customer_id) 
+									->order_by('date', 'DESC')
+									->get('credits')
+									->result();
+
+		$data['customer'] = $this->db->where('id', $customer_id)->get('customers')->row();
+		$data['credits'] = $credits;
+ 	
+
+		$this->load->view('customers/records', $data);
 
 	}
 

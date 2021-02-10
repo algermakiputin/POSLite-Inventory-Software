@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label>Filter Customer: &nbsp;</label> 
             </div> 
-            <div class="input-group">
+            <div class="input-group" id="select-wrapper">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                 <select id="customer-select" type="text" class="form-control " name="customer-select" style="min-width: 180px">
                     <option value="">Search...</option>
