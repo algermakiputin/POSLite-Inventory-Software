@@ -31,6 +31,9 @@
                     <li>
                         <a href="<?php echo base_url('reports/credits') ?>"><i class="fa fa-circle-o"></i> Credits</a>
                     </li>
+                    <li>
+                        <a href="<?php echo base_url('reports/payments') ?>"><i class="fa fa-circle-o"></i> Payments</a>
+                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
