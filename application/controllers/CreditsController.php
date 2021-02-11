@@ -26,6 +26,7 @@ class CreditsController extends CI_Controller {
 		$credits = $this->db->where('customer_id', $customer_id)
 									->where('date >=', $from)
 									->where('date <=', $to)
+									->order_by('id', 'DESC')
 									->get('credits')
 									->result();
 
@@ -58,7 +59,7 @@ class CreditsController extends CI_Controller {
 			$dataset[] = [
 				date('Y-m-d', strtotime($credit->date)),
 				$credit->name,
-				$credit->transaction_number,
+				"<a target='__blank' href=". base_url("SalesController/customer_receipt/" . $credit->transaction_number) .">$credit->transaction_number</a>",
 				$credit->due_date,
 				currency() .number_format($credit->total,2),
 				currency() . number_format($credit->total - $credit->paid,2),

@@ -642,6 +642,8 @@
 						//Fill In Receipt 
 						$("#r-payment").text( currency + number_format(payment));
 						$("#r-change").text( currency + number_format(change));
+						$("#r-customer-name").text( payment_type);
+						$("#r-payment-type").text( customer_name);
 						$("#r-cashier").text($("#user").text()); 
 						$("#r-total-amount").text( currency + number_format(total_amount) )
 						$("#r-discount").text(currency + number_format(totalDiscount));

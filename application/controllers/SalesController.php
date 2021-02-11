@@ -18,18 +18,39 @@ class SalesController extends AppController {
 
  		$sales = $this->db->where('id', $id)->get('sales')->row();
 
- 		dd($sales);
+
  		if (!$sales)
  			return redirect('/');
 
- 		$orderline = $this->db->where('sales_id', $sales->id)->get('sales_description')->result();
+ 		$orderline = $this->db->where('transaction_number', $sales->transaction_number)->get('sales_description')->result();
 
  		$sales_person = $this->db->where('id', $sales->user_id)->get('users')->row();
 
  		$sales_person = $sales_person ? $sales_person->name : "Not found";
+ 		
+ 		$data['total'] = 0;
+ 		$data['discount'] = 0;
+ 		$data['sale'] = $sales;
+ 		$data['orderline'] = $orderline;
+ 		$data['sales_person'] = $sales_person;
+
+		$this->load->view('sales/receipt', $data);
+	} 
+
+	public function customer_receipt($transaction_number) {
+
+ 		$sales = $this->db->where('transaction_number', $transaction_number)->get('sales')->row();
 
 
- 		dd($orderline);
+ 		if (!$sales)
+ 			return redirect('/');
+
+ 		$orderline = $this->db->where('transaction_number', $sales->transaction_number)->get('sales_description')->result();
+
+ 		$sales_person = $this->db->where('id', $sales->user_id)->get('users')->row();
+
+ 		$sales_person = $sales_person ? $sales_person->name : "Not found";
+ 		
  		$data['total'] = 0;
  		$data['discount'] = 0;
  		$data['sale'] = $sales;

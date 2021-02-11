@@ -33,6 +33,14 @@
 					<td>Time: &nbsp;&nbsp;</td>
 					<td><div id="r-time"><?php echo date('h:i a', strtotime($sale->date_time)) ?></div> </td>
 				</tr>
+				<tr>
+					<td>Payment Type: &nbsp;&nbsp;</td>
+					<td><div><?php echo $sale->payment_type ?></div> </td>
+				</tr>
+				<tr>
+					<td>Customer Name: &nbsp;&nbsp;</td>
+					<td><div ><?php echo $sale->customer_name ?></div> </td>
+				</tr>
 			</table> 
 			<div class="clearfix"></div>
 		</div>

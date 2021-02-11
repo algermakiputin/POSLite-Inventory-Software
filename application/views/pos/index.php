@@ -215,6 +215,15 @@
 									<td>Time: &nbsp;&nbsp;</td>
 									<td><div id="r-time"><?php echo date('h:i a') ?></div> </td>
 								</tr>
+
+								<tr>
+									<td>Payment Type: &nbsp;&nbsp;</td>
+									<td><div id="r-payment-type"></div> </td>
+								</tr>
+								<tr>
+									<td>Customer Name: &nbsp;&nbsp;</td>
+									<td><div id="r-customer-name"></div> </td>
+								</tr>
 							</table> 
 							<div class="clearfix"></div>
 						</div>
