@@ -19,6 +19,18 @@
           position: fixed;
           bottom: 0;
       }
+
+      .widget {
+        margin-bottom: 20px;
+
+      }
+
+      .widget b {
+        display: block;
+        border-bottom: solid 1px #ddd;
+        margin-bottom:5px;
+
+      }
       @page {
           margin: 4mm
       }
@@ -36,6 +48,8 @@
           width: 70%;
           float: left;
         }
+
+
  
     }
 </style> 
@@ -45,11 +59,28 @@
 <body id="main_div">
 
   <div class="page-header" style="text-align: center">
-    Credit Records
+    <h4>Credit Records</h4>
     <br/>
-    <button type="button" id="printPageButton" onClick="printDiv()" style="background: pink">
+     
+
+    <form class="form-inline no-print" autocomplete="off">
+        <div class="form-group">
+            <label>Filter Date: &nbsp;</label> 
+        </div> 
+        <div class="form-group">
+            <select class="form-control" style="max-width: 200px;" id="filter-date">
+              <option value="0" <?php  echo $past_days == 90 ? "selected" : "" ?> >Past 3 Months</option>
+              <option value="1" <?php  echo $past_days == 180 ? "selected" : "" ?>>Past 6 Months</option>
+              <option value="2" <?php  echo $past_days == 365 ? "selected" : "" ?>>Past 12 Months</option> 
+            </select>
+        </div>
+        &nbsp;
+        <div class="form-group">
+          <button type="button" id="printPageButton" onClick="printDiv()"  class="btn btn-primary">
       PRINT ME!
-  </button>
+    </button>
+        </div>
+    </form>
 </div>
 
 <div class="page-footer">
@@ -72,8 +103,32 @@
     <td>
       <div class="row">
             <div class="col-md-4">
+
+                <div class="widget">
+                  <b>Date:</b>
+                  <?php echo date('Y-m-d') ?>
+                </div>
             
-                10/10/2022
+                <div class="widget">
+                  <b>Customer:</b>
+                  <?php echo $customer->name ?>
+                </div>
+
+                <div class="widget">
+                  <b>Records:</b>
+                  <?php 
+                    if ( $past_days == 90) {
+
+                      echo "Past 3 Months";
+                    }else if ( $past_days == 180) {
+
+                      echo "Past 6 months";
+                    }else if ( $past_days == 365) {
+
+                      echo "Past 1 Year";
+                    }
+                   ?>
+                </div> 
             </div>
          
             <div class="col-md-8">
@@ -89,19 +144,23 @@
                     </thead>
                     <tbody> 
                         <?php foreach ($credits as $credit): ?>
+                            <?php 
+                              $sub = $credit->total - $credit->paid;  
+                              $total += $sub;
+                            ?>
                             <tr>
                                 <td><?php echo $credit->transaction_number ?></td>
                                 <td><?php echo $credit->date ?></td>
                                 <td><?php echo $credit->due_date ?></td> 
                                 <td><?php echo currency() . number_format($credit->total,2) ?></td> 
-                                <td><?php echo currency() . number_format($credit->total - $credit->paid,2) ?></td> 
+                                <td><?php echo currency() . number_format( $sub ,2) ?></td> 
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
         </div>
-</td>
+  </td>
 </tr>
 </tbody>
 
@@ -109,7 +168,28 @@
   <tr>
     <td>
       <!--place holder for the fixed-position footer-->
-      <div class="page-footer-space"></div>
+      <div class="page-footer-space">
+        <div class="row">
+          <div class="col-md-4">
+            &nbsp;
+          </div>
+          <div class="col-md-8">
+            <table width="100%" class="table">
+              <tr>
+                <th>Subtotal</th>
+                <td class="text-right"><?php echo currency() . number_format($total, 2) ?></td>
+              </tr>
+ 
+
+              <tr>
+                <th>Total Due</th>
+                <td class="text-right"><?php echo currency() . number_format($total, 2) ?></td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+      </div>
   </td>
 </tr>
 </tfoot>
@@ -121,8 +201,11 @@
 <script src="<?php echo base_url('assets/js/print.js') ?>"></script>
 
 <script type="text/javascript">
-      $("#printPageButton").click(function(){
-    $("body").print({
+      
+      $(document).ready(function() {
+
+        $("#printPageButton").click(function(){
+          $("body").print({
             globalStyles: true,
             mediaPrint: false,
             stylesheet: "<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css') ?>",
@@ -135,8 +218,16 @@
             timeout: 400,
             title: 'Receipt',
             doctype: '<!doctype html>'
-    });
-  })
+          });
+        });
+
+
+        console.log(window.location.href);
+        $("#filter-date").change(function(e) {
+
+          window.location.href = "<?php echo $url ?>" + '?q=' + $(this).val();
+        })
+      })
 </script>
 
 </html>

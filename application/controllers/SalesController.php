@@ -18,6 +18,7 @@ class SalesController extends AppController {
 
  		$sales = $this->db->where('id', $id)->get('sales')->row();
 
+ 		dd($sales);
  		if (!$sales)
  			return redirect('/');
 
@@ -27,6 +28,8 @@ class SalesController extends AppController {
 
  		$sales_person = $sales_person ? $sales_person->name : "Not found";
 
+
+ 		dd($orderline);
  		$data['total'] = 0;
  		$data['discount'] = 0;
  		$data['sale'] = $sales;

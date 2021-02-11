@@ -136,14 +136,34 @@ class CustomersController Extends AppController {
 
 	public function records($customer_id) {
 
+		$date_filter = $this->input->get('q');
+
+		$past_days = 90;
+
+		if ($date_filter == 1) {
+
+			$past_days = 180;
+
+		}else if ( $date_filter == 2) {
+
+			$past_days = 365;
+
+		} 
+
+ 
+
 		$credits = $this->db->where('customer_id', $customer_id) 
+									->where('date_format(date, "%Y-%m-%d") >=',  date('Y-m-d', strtotime("today - $past_days days")))
 									->order_by('date', 'DESC')
 									->get('credits')
 									->result();
 
 		$data['customer'] = $this->db->where('id', $customer_id)->get('customers')->row();
 		$data['credits'] = $credits;
- 	
+ 		$data['total'] = 0;
+ 		$data['past_days'] = $past_days;
+ 		$data['url'] = base_url('customer/records/' . $customer_id);
+
 
 		$this->load->view('customers/records', $data);
 
