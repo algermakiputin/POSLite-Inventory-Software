@@ -94,7 +94,7 @@ class PaymentsController extends CI_Controller {
  				$payment->customer_name, 
  				currency() . number_format($payment->total,2),
  				currency() . number_format($payment->payment,2),
- 				'<a href="#" class="btn btn-danger delete-data btn-sm">Delete</a>'
+ 				'<a href="'. base_url('/PaymentsController/destroy/' . $payment->id). '" class="btn btn-danger delete-data btn-sm">Delete</a>'
  			];
  		}
 
@@ -114,13 +114,21 @@ class PaymentsController extends CI_Controller {
  									->where('payments.date >=', $from)
  									->where('payments.date <=', $to)
  									->join('credits', 'credits.id = payments.credit_id')
+ 									->order_by('date', 'DESC')
  									->limit($limit, $start)
  									->get();
 	}
 
 	public function destroy($id) {
 
-	
+		$payment = $this->db->where('id', $id)->get('payments')->row();
+
+		$this->db->set('paid', "paid - $payment->payment")->where('id', $payment->credit_id)->update('credits');
+		$this->db->where('id', $id)->delete('payments');
+
+		showErrorMessage("Payment deleted successfully");
+		return redirect('reports/payments');
+
 	}
 
 	public function reports() {
