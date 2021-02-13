@@ -11,6 +11,19 @@ html, body {
 
 }
 
+#sales_table {
+  display: block;
+  max-height: 550px;
+  overflow-y: scroll;
+}
+
+#sales_table thead tr th {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
 #select-wrapper .select2-container--default .select2-selection--single {
 
       border-top-left-radius: 0px;

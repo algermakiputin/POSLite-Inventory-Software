@@ -699,11 +699,42 @@ $(document).ready(function() {
 					processing : true,
 					bsearchable : true, 
 					responsive: true, 
+					dom : 'lrtB',
 					ajax : {
 						url : base_url + 'PaymentsController/datatable',
 						type : 'POST',
 						data : data
+					},
+					buttons: [
+					{
+						extend: 'copyHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 1, 2, 3,4 ]
+						},
+					},
+					{
+						extend: 'excelHtml5',
+						filename : 'Inventory',
+						title : 'Inventory Report', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 1, 2, 3,4 ]
+						},
+					},
+					{
+						extend: 'pdfHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 1, 2, 3,4 ]
+						},
+
 					}
+					]
 				});
 
 

@@ -656,7 +656,7 @@
 					 	$("#amount-due").text(''); 
 					 	$("#amount-total").text('');
 					 	$("#amount-discount").text('');
-
+					 	$("#due-date-wrapper").hide();
 					 	item_table.clear().draw();
 					 	$("#btn").button('reset');
 					 	totalAmountDue = 0;  

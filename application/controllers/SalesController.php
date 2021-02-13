@@ -313,6 +313,8 @@ class SalesController extends AppController {
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
 		$sales = $this->filterReports($from, $to);
+
+ 
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
@@ -327,37 +329,35 @@ class SalesController extends AppController {
 		if ($expenses) {
 			$totalExpenses = $expenses->total;
 		}
-
-		foreach ($sales as $sale) {
-			$sales_description = $this->db->where('transaction_number', $sale->transaction_number)->get('sales_description')->result();
+ 
+		foreach ($sales as $desc) {
+		 	
 			$sub_total = 0;
+ 
+	 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
+	 		$staff = $user ? $user->username : 'Not found';
+			$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
+			$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity) - $desc->discount;
+			$transactionProfit += $saleProfit;
+			$datasets[] = [ 
+				date('Y-m-d h:i:s A', strtotime($desc->created_at)),   
+				$desc->name,
+				$desc->quantity,
+				$desc->returned,
+				'₱' . number_format($desc->capital,2),
+				'₱' . number_format($desc->price,2),
+				'₱' . number_format($desc->discount,2),
+				'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount, 2),
+				'₱' . number_format($saleProfit, 2)
+			];
 
-			foreach ($sales_description as $desc) {
-		 	 
-		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
-		 		$staff = $user ? $user->username : 'Not found';
-				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
-				$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity) - $desc->discount;
-				$transactionProfit += $saleProfit;
-				$datasets[] = [ 
-					date('Y-m-d h:i:s A', strtotime($sale->date_time)),   
-					$desc->name,
-					$desc->quantity,
-					$desc->returned,
-					'₱' . number_format($desc->capital,2),
-					'₱' . number_format($desc->price,2),
-					'₱' . number_format($desc->discount,2),
-					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount, 2),
-					'₱' . number_format($saleProfit, 2)
-				];
-
-				$goodsCost += ($desc->capital * $desc->quantity);
-			}
-
+			$goodsCost += ($desc->capital * $desc->quantity);
+	 
 			$totalSales += $sub_total; 
 			
 		}
 
+	
 		$gross = $totalSales - $goodsCost;
 
 		echo json_encode([
@@ -404,10 +404,11 @@ class SalesController extends AppController {
 		$from = $from ? $from : date('Y-m-d');
 		$to = $to ? $to : date('Y-m-d'); 
 
-		return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
-					->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
-					->order_by('id', 'DESC')
-					->get('sales', $this->start, $this->limit)->result();
+		return $this->db->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $to)
+								->order_by('id', 'DESC')
+								->get('sales_description', $this->start, $this->limit)
+								->result();
 		 
 	}
 

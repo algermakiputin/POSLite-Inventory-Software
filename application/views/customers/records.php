@@ -150,8 +150,8 @@
                             ?>
                             <tr>
                                 <td><?php echo $credit->transaction_number ?></td>
-                                <td><?php echo $credit->date ?></td>
-                                <td><?php echo $credit->due_date ?></td> 
+                                <td><?php echo date('Y-m-d', strtotime($credit->date)) ?></td>
+                                <td><?php echo date('Y-m-d', strtotime($credit->due_date)) ?></td> 
                                 <td><?php echo currency() . number_format($credit->total,2) ?></td> 
                                 <td><?php echo currency() . number_format( $sub ,2) ?></td> 
                             </tr>

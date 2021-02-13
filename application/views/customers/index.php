@@ -43,7 +43,7 @@
 										<ul class="dropdown-menu">
 										 	<li>
 												<a title="Credit and Payment Records" href="<?php echo base_url('customer/records/' . $customer->id) ?>" target="blank"> 
-													<i class="fa fa-refresh"></i> Credits/Payments
+													<i class="fa fa-refresh"></i> View Credits
 												</a>
 											</li>
 											<li>

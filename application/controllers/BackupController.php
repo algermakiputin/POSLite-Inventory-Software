@@ -57,7 +57,8 @@ class BackupController extends AppController {
 			return redirect('/');
 
 		$sql = $this->encryption->decrypt($sql); 
-     
+     	
+     	dd($sql);
      
 		$rows = explode(";", $sql);
 
