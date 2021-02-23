@@ -21,11 +21,12 @@
 				<table class="table table-striped table-bordered table-hover table-responsive" id="customer_table">
 					<thead>
 						<tr>
-							<th width="10%">Name</th>
-							<th width="10%">Gender</th>
-							<th width="10%">Home Address</th>  
-							<th width="10%">Contact Number</th>
-							<th width="10%">Action</th>
+							<th>Name</th>
+							<th>Gender</th>
+							<th>Home Address</th>  
+							<th>Contact Number</th>
+							<th>Note</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,6 +38,7 @@
 								<td><?php echo $customer->gender ?></td>
 								<td><?php echo $customer->home_address ?></td> 
 								<td><?php echo $customer->contact_number ?></td>
+								<td><?php echo $customer->note ?></td>
 								<td> 
 									<div class="dropdown">
 										<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
@@ -88,6 +90,7 @@
 						name="<?php echo $this->security->get_csrf_token_name(); ?>"
 						value="<?php echo $this->security->get_csrf_hash(); ?>">
 					<div class="form-group">
+						<label>Name</label>
 						<input required="required" type="text" class="form-control" name="name" placeholder="Name">
 					</div> 
 					<div class="form-group">
@@ -97,12 +100,20 @@
 					</div>
 
 					<div class="form-group">
+						<label>Home Address</label>
 						<input type="text" required="required" class="form-control" name="home_address" placeholder="Home Address">
 					</div>
+					
 					 
 					<div class="form-group">
+						<label>Contact Number</label>
 						<input type="text" required="required" class="form-control" name="mobileNumber" placeholder="Contact Number">
 					</div> 
+
+					<div class="form-group">
+						<label>Note</label><br/>
+						<textarea class="form-control" name="note" rows="3"></textarea>
+					</div>
 				
 			</div>
 			<div class="modal-footer">
@@ -146,6 +157,10 @@
 					<div class="form-group">
 						<label>Contact Number</label>
 						<input type="text" class="form-control" name="contact_number" placeholder="Contact Number">
+					</div>
+					<div class="form-group">
+						<label>Note</label>
+						<textarea class="form-control" name="note" rows="3"></textarea>
 					</div>
 					<div class="form-group">
 						<button class="btn btn-primary">Save</button>

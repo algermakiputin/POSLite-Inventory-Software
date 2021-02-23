@@ -361,6 +361,8 @@ $(document).ready(function() {
 								$("#customer-edit input[name='home_address']").val(customer.home_address);
 
 								$("#customer-edit input[name='contact_number']").val(customer.contact_number);
+
+								$("#customer-edit input[name='note']").val(customer.note);
 							}
 
 						});

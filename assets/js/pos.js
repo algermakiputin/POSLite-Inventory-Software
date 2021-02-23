@@ -3,9 +3,11 @@
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr('content');
 	var license = $("meta[name='license']").attr('content');
+	var subTotal = 0;
 	var totalAmountDue = 0;
 	var totalDiscount = 0;
 	var transactionComplete = false;
+	var discountAmount = 0;
 	var currency = '₱'; 
  	var data = {};
  	var item_table;
@@ -124,8 +126,8 @@
 				dHeight = dHeight - 60;
 				$(".header .box").css('height', dHeight + 'px');
 				$(".header .box").css('overflow-y', 'auto');
-				$("#cart-tbl").css('min-height', (dHeight - ( 231 + 95)) + 'px');
-				$("#cart-tbl").css('max-height', (dHeight - ( 150 + 261)) + 'px');
+				$("#cart-tbl").css('min-height', (dHeight - ( 225 )) + 'px');
+				$("#cart-tbl").css('max-height', (dHeight - (   261)) + 'px');
 
 
 				$("body").on('click', '#advance_pricing_options tbody tr', function() {
@@ -164,14 +166,11 @@
 						 	 
 						 		if (row) { 
 						 			
-									if (parseFloat(payment) >= parseFloat(totalAmountDue)) { 
+									$("#payment-modal").modal("toggle");
 
-										$("#payment-modal").modal("toggle");
-
-									}else {
-
-										alert("Insufficient Amount");
-									}
+										$("#payment-label").html(currency + number_format(totalAmountDue));
+			 
+ 
 								}else {
 
 									alert("Please add some items");
@@ -205,8 +204,11 @@
 
 			 	$("#payment-button").click(function(e) {
 
+			 		e.preventDefault();
+
 			 		var customer = $("#customer").val();
 			 		var payment_type = $("#payment-type").val();
+			 		var customer_id = $("#customer").val();
 			 		var customer_name = $("#customer option:selected").text();
 			 		var due_date = $("#due_date").val();
 
@@ -218,8 +220,14 @@
 			 			return alert("Due date is required");
 
 			 		$("#customer").val("");
-			 		$("#payment-type").val("cash");  
-					$("#payment-modal").modal("toggle");
+			 		$("#payment-type").val("cash");   
+					$("#payment-modal").modal({backdrop: 'static', keyboard: false, "show": true,});
+
+				 	 
+
+					if ( customer_id == "") {
+						customer_name = "";
+					}
 
 					process_transaction(customer, customer_name, payment_type, due_date);
 
@@ -465,6 +473,39 @@
 		scanner.init();
 	})();
 
+	$("#customer").change(function(e) {
+
+		var note = $(this).find("option:selected").data("note");
+ 
+		$("#note").val(note);
+	});
+
+	// Discount Calculator
+	$("body").on("input", "#discount" , function() {
+ 		
+		if ( $(this).val() == "") {
+
+			totalAmountDue = subTotal;
+		}else {
+
+			var discount_percentage = parseInt($(this).val());
+
+			if ( discount_percentage > 100)
+				return alert("Discount must not greather than 100"); 
+
+			discountAmount = ( discount_percentage / 100 ) * subTotal;
+
+			console.log(subTotal);
+			console.log(discountAmount);
+			totalAmountDue = subTotal - discountAmount;
+
+		}
+ 
+
+		$("#payment-label").text( currency + number_format(totalAmountDue));
+ 
+	})
+
 
 	$("#open-transactions").click(function(e) {
 
@@ -563,123 +604,161 @@
 		var sales = [];
 		var total_amount = 0;
 		// var discount = $("#amount-discount").text();
-		var payment = $("#payment").val();
-		var change = $("#change").val(); 
- 
+		var payment = $("#payment").val() == "" ? 0 : $("#payment").val();
+		var change = $("#change").val();
+
+		var discount_percentage = $("#discount").val();
+ 		
+
  		if (row) { 
-
-			if (parseFloat(payment) >= parseFloat(totalAmountDue)) { 
-		 		
-	 			for (i = 0; i < row; i++) {
-					var r = $("#cart tbody tr").eq(i).find('td');
-					var quantity = r.eq(1).find('input').val();
-					var price = remove_comma(r.eq(3).text().substring(1));
-					var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val();
-					var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
-					var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
+ 	 
+ 			if ( payment_type == "cash") {
  
-					var arr = {
-							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
-							quantity : quantity, 
-							price : price,
-							name : r.eq(0).text(),
-							subtotal : parseFloat(price) * parseInt(quantity) - parseFloat(discount),
-							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
-							capital : capital,
-							unit: main_unit
 
-						};
-					total_amount += parseFloat(price) * parseInt(quantity);
-					sales.push(arr);
+ 				if (  parseFloat(payment) < parseFloat(totalAmountDue) ) { 
+
+ 
+					$("#payment").focus();
+					return alert("Insufficient Amount");
+					  
 				}
+ 			}
 
-				total_amount -= totalDiscount;
-				// Receipt Items
-				$("#r-items-table tbody").empty();
-				$.each(sales, function(key, value) {
-			 	 
-					$("#r-items-table tbody").append(
-							'<tr>' + 
-								'<td>'+value.name +'</td>' + 
-								'<td>'+currency+ number_format(value.price) +'</td>' +
-								'<td>'+value.quantity+'</td>' +
-								'<td>'+currency+ number_format(value.subtotal)+'</td>' +
-							'</tr>'
-						);
-				});
+			
+		 		
+ 			for (i = 0; i < row; i++) {
+				var r = $("#cart tbody tr").eq(i).find('td');
+				var quantity = r.eq(1).find('input').val();
+				var price = remove_comma(r.eq(3).text().substring(1));
+				var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val();
+				var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
+				var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
+
+				var arr = {
+						id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
+						quantity : quantity, 
+						price : price,
+						name : r.eq(0).text(),
+						subtotal : parseFloat(price) * parseInt(quantity) - parseFloat(discount),
+						discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
+						capital : capital,
+						unit: main_unit
+
+					};
+				total_amount += parseFloat(price) * parseInt(quantity);
+				sales.push(arr);
+			}
+
+			total_amount -= totalDiscount;
+			// Receipt Items
+			$("#r-items-table tbody").empty();
+			$.each(sales, function(key, value) {
+		 	 
+				$("#r-items-table tbody").append(
+						'<tr>' + 
+							'<td>'+value.name +'</td>' + 
+							'<td>'+currency+ number_format(value.price) +'</td>' +
+							'<td>'+value.quantity+'</td>' +
+							'<td>'+currency+ number_format(value.subtotal)+'</td>' +
+						'</tr>'
+					);
+			});
 
 
-				var data = {};
-				data['sales'] = sales;
-				data['customer_id'] = customer_id;
-				data['payment_type'] = payment_type;
-				data['customer_name'] = customer_name; 
-				data['total'] = totalAmountDue;
-				data['due_date'] = due_date;
+			var data = {};
+			data['sales'] = sales;
+			data['customer_id'] = customer_id;
+			data['payment_type'] = payment_type;
+			data['customer_name'] = customer_name; 
+			data['total'] = subTotal;
+			data['amount_due'] = totalAmountDue;
+			data['due_date'] = due_date;
+			data['discount'] = discount_percentage;
 
-				data[csrfName] = csrfHash;
-				
-				$.ajax({
-					type : 'POST',
-					data : data,
-					url : base_url + 'SalesController/insert',
-					beforeSend : function() {
-						$("#btn").button('loading');
-					},
-					success : function(data) { 
-		 				transactionComplete = true;
-		 				var total = parseFloat(total_amount);
-		 			 	var d = new Date();
-		 				$("#receipt-modal").modal('toggle');
-						$("#loader").hide();
-						//Transaction Summary 
-		
-						$("#summary-payment").text( currency + number_format(payment));
-						$("#summary-change").text( currency + number_format(change));
-					 	$("#summary-discount").text(currency + number_format(totalDiscount));
-						$("#summary-total").text( currency + number_format(total_amount) )
-						
-						//Fill In Receipt 
-						$("#r-payment").text( currency + number_format(payment));
-						$("#r-change").text( currency + number_format(change));
-						$("#r-customer-name").text( payment_type);
-						$("#r-payment-type").text( customer_name);
-						$("#r-cashier").text($("#user").text()); 
-						$("#r-total-amount").text( currency + number_format(total_amount) )
-						$("#r-discount").text(currency + number_format(totalDiscount));
-						$("#r-id").text(data);
-						$("#r-time").text(d.toLocaleTimeString());
 
-					 	$("#cart tbody").empty();
-					 	$("#payment").val('');
-					 	$("#change").val('');
-					 	$("#amount-due").text(''); 
-					 	$("#amount-total").text('');
-					 	$("#amount-discount").text('');
-					 	$("#due-date-wrapper").hide();
-					 	item_table.clear().draw();
-					 	$("#btn").button('reset');
-					 	totalAmountDue = 0;  
-						totalDiscount = 0
-					 	
+			data[csrfName] = csrfHash;
+			
+			$.ajax({
+				type : 'POST',
+				data : data,
+				url : base_url + 'SalesController/insert',
+				beforeSend : function() {
+					$("#btn").button('loading');
+				},
+				success : function(data) { 
+	 				transactionComplete = true;
+	 				var total = parseFloat(total_amount);
+	 			 	var d = new Date();
+	 				$("#receipt-modal").modal('toggle');
+					$("#loader").hide();
+					//Transaction Summary 
+	
+					$("#summary-payment").text( currency + number_format(payment));
+					$("#summary-change").text( currency + number_format(change));
+				 	$("#summary-discount").text(currency + number_format(totalDiscount));
+					$("#summary-total").text( currency + number_format(total_amount) )
+					
+					//Fill In Receipt 
+					$("#r-payment").text( currency + number_format(payment));
+					$("#r-change").text( currency + change);
+					$("#r-customer-name").text(customer_name );
+					$("#r-payment-type").text(payment_type );
+					$("#r-cashier").text($("#user").text()); 
+					$("#r-total-amount").text( currency + number_format(total_amount) )
+					$("#r-discount").text(currency + number_format(discountAmount));
+					$("#r-id").text(data);
+					$("#r-time").text(d.toLocaleTimeString());
+
+					if ( discount_percentage ) {
+
+						$("#r-discount-percentage").text(discount_percentage + "%");
 					}
-				})
-				return;
-			}  
 
-			$("#payment").focus();
-			return alert("Insufficient Amount");
+				 	$("#cart tbody").empty();
+				 	$("#payment").val('');
+				 	$("#change").val('');
+				 	$("#amount-due").text(''); 
+				 	$("#amount-total").text('');
+				 	$("#amount-discount").text('');
+				 	$("#due-date-wrapper").hide();
+				 	item_table.clear().draw();
+				 	$("#btn").button('reset');
+				 	totalAmountDue = 0;  
+					totalDiscount = 0
+
+					$("#payment-input-wrapper").show();
+
+					$("#due-date-wrapper").hide();
+					$("#discount").val('');
+				 	
+				}
+			})
+
+			$("#payment-modal").modal("toggle");
+			return;
+			  
+
+			
  		}
  		
  		return alert('Please add some items');
 	}
 
 	$("#payment-type").change(function(e) {
+ 
+		if ( $(this).val() == "credit") {
 
-		if ( $(this).val() == "credit") 
-			return $("#due-date-wrapper").show();
-	
-		return $("#due-date-wrapper").hide();
+			$("#due-date-wrapper").show();
+			$("#payment-input-wrapper").hide();
+
+		} 
+		else {
+
+			$("#payment-input-wrapper").show();
+
+			$("#due-date-wrapper").hide();
+		}
+
 	})
 
 	$("#payment").keyup(function() {
@@ -692,7 +771,7 @@
 
 			if (payment >= totalAmountDue) {
 		 	
-				return $("#change").val((payment - totalAmountDue));
+				return $("#change").val(number_format(payment - totalAmountDue));
 			} 
 
 			return $("#change").val('Insufficient Amount');
@@ -832,8 +911,7 @@
 	*/
 	function recount() {
 		var row = $("#cart tbody tr").length;
-		var total = 0;
-		var discountAmount = 0;
+		var total = 0; 
 
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
@@ -848,12 +926,10 @@
 			
 		}
 
-
-		totalDiscount = discountAmount;
-		totalAmountDue = total - discountAmount;
+		totalAmountDue = total;
+		subTotal = total;
 
 		
-		$("#amount-discount").text(currency + totalDiscount);
 		$("#amount-total").text("₱" + number_format(totalAmountDue));
 	}
 

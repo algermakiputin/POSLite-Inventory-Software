@@ -71,8 +71,10 @@
 			</table>
 			<hr>
 			<div class="text-right">  
+				<div>Discount:  <span id="r-total-amount"><?php echo $sale->discount ?>% </span></div> 
+				<div>Discount Amount:  <span id="r-total-amount"><?php echo currency() . number_format( $discount, 2 ) ?> </span></div> 
 				<div>Sub Total:  <span id="r-total-amount"><?php echo currency() . number_format( $total, 2 ) ?> </span></div> 
-				<div>Discount:  <span id="r-total-amount"><?php echo currency() . number_format( $discount, 2 ) ?> </span></div> 
+				
 				<div>Grand Total:  <span id="r-total-amount"><?php echo currency() . number_format( $total - $discount, 2 ) ?> </span></div> 
 			</div>
 

@@ -233,6 +233,8 @@ class SalesController extends AppController {
 		$customer_id = $this->input->post('customer_id');
 		$total = $this->input->post('total');
 		$due_date = $this->input->post('due_date');
+		$discount = $this->input->post('discount');
+		$amount_due = $this->input->post('amount_due');
 
 		$this->load->model("PriceModel");
 		$this->db->trans_begin();
@@ -246,7 +248,10 @@ class SalesController extends AppController {
 				'transaction_number' => $transaction_number,
 				'customer_id' => $customer_id,
 				'payment_type' => $payment_type,
-				'customer_name' => $customer_name
+				'customer_name' => $customer_name,
+				'discount' => $discount,
+				'amount_due' => $amount_due,
+				'total' => $total
  			]);
 
 		$sales = $this->security->xss_clean($sales);

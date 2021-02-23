@@ -28,6 +28,7 @@ class CustomersController Extends AppController {
 				'outlet_location' => strip_tags($this->input->post('outlet_location')),
 				'outlet_address' => strip_tags($this->input->post('outlet_address')), 
 				'contact_number' => strip_tags($this->input->post('mobileNumber')),
+				'note' => $this->input->post('note'),
 				'membership' => ''
  
 			);
@@ -100,6 +101,7 @@ class CustomersController Extends AppController {
 				'outlet_location' => strip_tags($this->input->post('outlet_location')),
 				'outlet_address' => strip_tags($this->input->post('outlet_address')), 
 				'contact_number' => strip_tags($this->input->post('contact_number')),
+				'note' => $this->input->post('note')
 			);
 
 		$data = $this->security->xss_clean($data);
