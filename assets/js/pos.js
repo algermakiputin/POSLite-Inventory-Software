@@ -695,8 +695,8 @@
 	
 					$("#summary-payment").text( currency + number_format(payment));
 					$("#summary-change").text( currency + number_format(change));
-				 	$("#summary-discount").text(currency + number_format(totalDiscount));
-					$("#summary-total").text( currency + number_format(total_amount) )
+				 	$("#summary-discount").text(currency + number_format(discountAmount));
+					$("#summary-total").text( currency + number_format(totalAmountDue) )
 					
 					//Fill In Receipt 
 					$("#r-payment").text( currency + number_format(payment));
@@ -704,7 +704,7 @@
 					$("#r-customer-name").text(customer_name );
 					$("#r-payment-type").text(payment_type );
 					$("#r-cashier").text($("#user").text()); 
-					$("#r-total-amount").text( currency + number_format(total_amount) )
+					$("#r-total-amount").text( currency + number_format(totalAmountDue) )
 					$("#r-discount").text(currency + number_format(discountAmount));
 					$("#r-id").text(data);
 					$("#r-time").text(d.toLocaleTimeString());
