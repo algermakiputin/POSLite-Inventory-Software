@@ -481,6 +481,17 @@
 	});
 
 	// Discount Calculator
+
+	$("#discount_type").change(function(e) {
+
+		$("#discount").val("");
+
+		totalAmountDue = totalAmountDue + discountAmount;
+		discountAmount = 0;
+		$("#payment-label").text( currency + number_format(totalAmountDue));
+
+	});
+
 	$("body").on("input", "#discount" , function() {
  		
 		if ( $(this).val() == "") {
@@ -488,16 +499,28 @@
 			totalAmountDue = subTotal;
 		}else {
 
-			var discount_percentage = parseInt($(this).val());
+			var discount_type = $("#discount_type").val();
+			var discount = parseInt($(this).val());
 
-			if ( discount_percentage > 100)
+			if ( discount_type == "percentage" ) {
+
+				if ( discount > 100)
 				return alert("Discount must not greather than 100"); 
 
-			discountAmount = ( discount_percentage / 100 ) * subTotal;
+				discountAmount = ( discount / 100 ) * subTotal; 
+	 
+				totalAmountDue = subTotal - discountAmount;
 
-			console.log(subTotal);
-			console.log(discountAmount);
-			totalAmountDue = subTotal - discountAmount;
+			}else if ( discount_type == "fixed") {
+ 
+ 				
+ 				if ( discount > totalAmountDue)
+ 					alert("Discount must not be greather than the total amount due");
+
+ 				discountAmount = discount;
+				totalAmountDue = subTotal - discount;
+
+			}
 
 		}
  
@@ -673,8 +696,7 @@
 			data['total'] = subTotal;
 			data['amount_due'] = totalAmountDue;
 			data['due_date'] = due_date;
-			data['discount'] = discount_percentage;
-
+			data['discount'] = discountAmount;
 
 			data[csrfName] = csrfHash;
 			
@@ -693,14 +715,21 @@
 					$("#loader").hide();
 					//Transaction Summary 
 	
-					$("#summary-payment").text( currency + number_format(payment));
-					$("#summary-change").text( currency + number_format(change));
+					
 				 	$("#summary-discount").text(currency + number_format(discountAmount));
 					$("#summary-total").text( currency + number_format(totalAmountDue) )
 					
 					//Fill In Receipt 
-					$("#r-payment").text( currency + number_format(payment));
-					$("#r-change").text( currency + change);
+					
+					if ( payment_type == "cash") {
+
+						$("#r-payment").text( currency + number_format(payment));
+						$("#r-change").text( currency + change);
+
+						$("#summary-payment").text( currency + number_format(payment));
+						$("#summary-change").text( currency + number_format(change));
+					}
+
 					$("#r-customer-name").text(customer_name );
 					$("#r-payment-type").text(payment_type );
 					$("#r-cashier").text($("#user").text()); 
@@ -709,10 +738,7 @@
 					$("#r-id").text(data);
 					$("#r-time").text(d.toLocaleTimeString());
 
-					if ( discount_percentage ) {
-
-						$("#r-discount-percentage").text(discount_percentage + "%");
-					}
+				 
 
 				 	$("#cart tbody").empty();
 				 	$("#payment").val('');

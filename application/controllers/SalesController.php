@@ -16,7 +16,7 @@ class SalesController extends AppController {
 
 	public function receipt($id) {
 
- 		$sales = $this->db->where('id', $id)->get('sales')->row();
+ 		$sales = $this->db->where('transaction_number', $id)->get('sales')->row();
 
 
  		if (!$sales)
@@ -269,6 +269,7 @@ class SalesController extends AppController {
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(),
 				'capital' => $sale['capital'],
+				'sales_id' => $last_sales_id + 1
 				
 			];
 			
@@ -426,12 +427,10 @@ class SalesController extends AppController {
 								->get('sales')
 								->row();
  
-
 		if (!$sales) {
  			echo 0;
 			return false;
 		}
-
 
 		$sales_description = $this->db->where('sales_id', $sales->id)
 												->get('sales_description')
@@ -505,7 +504,7 @@ class SalesController extends AppController {
 					'<a 
 						class="btn btn-primary btn-sm" 
 						target="popup" 
-						onclick="window.open(\''.base_url('SalesController/receipt/' . $sale->id).' \', \'popup\', \'width=800,height=800\' )">
+						onclick="window.open(\''.base_url('SalesController/receipt/' . $sale->transaction_number).' \', \'popup\', \'width=800,height=800\' )">
 					 	View Receipt
 						</a>'
 				];

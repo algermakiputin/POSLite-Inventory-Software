@@ -90,7 +90,7 @@ class PaymentsController extends CI_Controller {
 
  			$dataset[] = [
  				$payment->date,
- 				"<a href='".base_url('SalesController/customer_receipt/' . $payment->transaction_number)."'>$payment->transaction_number</a>",
+ 				"<a target='__blank' href='".base_url('SalesController/customer_receipt/' . $payment->transaction_number)."'>$payment->transaction_number</a>",
  				$payment->customer_name, 
  				currency() . number_format($payment->total,2),
  				currency() . number_format($payment->payment,2),

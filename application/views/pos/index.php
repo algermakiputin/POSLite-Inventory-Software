@@ -106,7 +106,7 @@
 					<form id="process-form">
 						
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process (Enter)" id="btn" >
+							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process (Enter)" id="btn"  onclick="return false;">
 						</div>
 					</form>
 				</div>
@@ -171,9 +171,23 @@
 						<option value="credit">Credit</option>
 					</select>
 				</div>
-				<div class="form-group">
-					<label>Discount Percentage</label>
-					<input type="number" min="0" max="100" class="form-control" name="discount" autocomplete="off" id="discount" placeholder="Discount Percentage">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Discount Type</label>
+							<select name="discount_type" class="form-control" id="discount_type">
+								<option value="fixed">Fixed</option>
+								<option value="percentage">Percentage</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label> Discount</label>
+							<input type="number" min="0" max="100" class="form-control" name="discount" autocomplete="off" id="discount" placeholder="Discount">
+						</div>
+					</div>
 				</div>
 				<div id="payment-input-wrapper">
 					<div class="form-group">
@@ -265,8 +279,7 @@
 								</tbody>
 							</table>
 							<hr>
-							<div class="text-right"> 
-								<div>Discount: <span id="r-discount-percentage"></span></div>
+							<div class="text-right">  
 								<div>Discount Amount: <span id="r-discount"></span></div>
 								<div>Grand Total <span id="r-total-amount"></span></div>
 								<div>Payment: <span id="r-payment"></span></div>
