@@ -51,8 +51,8 @@
 										<div class="form-group">
 											<label>Payment Status</label>
 											<select name="payment_status" class="form-control" required>
-												<option value="Pending" <?php echo $delivery->payment_status == "Pending" ? "selected" : "" ?> >Pending</option>
-												<option value="Paid" <?php echo  $delivery->payment_status == "Paid" ? "selected" : "" ?>>Paid</option>
+												<option value="0" <?php echo $delivery->payment_status == 0 ? "selected" : "" ?> >Pending</option>
+												<option value="1" <?php echo  $delivery->payment_status == 1 ? "selected" : "" ?>>Paid</option>
 											</select>
 										</div>
 									</fieldset>

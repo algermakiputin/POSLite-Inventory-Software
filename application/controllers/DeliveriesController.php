@@ -178,7 +178,7 @@ class DeliveriesController extends CI_Controller
 				$delivery->name,
 				currency() . number_format($delivery->total),
 				$delivery->defectives,
-				$delivery->payment_status == "Paid" ? "<span class='badge badge-success'>Paid</span>" : "<span class='badge badge-warning'>Pending</span>",
+				$delivery->payment_status == 1 ? "<span class='badge badge-success'>Paid</span>" : "<span class='badge badge-warning'>Pending</span>",
 				'
 				<div class="dropdown">
               	<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
@@ -241,6 +241,7 @@ class DeliveriesController extends CI_Controller
 		$delivery_id = $id;
 		$orderDetails = array();
 
+
 		$this->db->where('id', $id)->update('delivery', [
 				'supplier_id' => $supplier,
 				'payment_status' => $payment_status,
@@ -260,8 +261,8 @@ class DeliveriesController extends CI_Controller
 				'defectives' => $defectives[$key],
 				'remarks'	=> $remarks[$key],
 				'name' => $products[$key],
-				'expiry_date' => $expiry_date[$key]
-			);
+				'expiry_date' => $expiry_date[$key] 
+			); 
  			//Update Product Quantities
 			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
 			$this->db->where('item_id', $products_id[$key]);

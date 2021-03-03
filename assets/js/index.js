@@ -234,7 +234,7 @@ $(document).ready(function() {
 						title : 'Sales Report', 
 						className : "btn btn-default btn-sm",
 						exportOptions: {
-							columns: [ 0,1, 2, 3,4,5,6,7,8,9 ]
+							columns: [ 0,1, 2, 3,4,5,6,7,8 ]
 						},
 					},
 					{
@@ -253,7 +253,7 @@ $(document).ready(function() {
 						},
 						className : "btn btn-default btn-sm",
 						exportOptions: {
-							columns: [ 0,1, 2, 3,4,5,6,7,8,9 ]
+							columns: [ 0,1, 2, 3,4,5,6,7,8 ]
 						},
 					},
 					{
@@ -264,7 +264,7 @@ $(document).ready(function() {
 						}, 
 						className : "btn btn-default btn-sm",
 						exportOptions: {
-							columns: [ 0,1, 2, 3,4,5,6,7,8,9 ]
+							columns: [ 0,1, 2, 3,4,5,6,7,8 ]
 						},
 						messageTop: function() {
 							return "TOTAL SALES: " + $("#total-sales").text();
