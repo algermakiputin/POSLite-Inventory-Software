@@ -19,6 +19,11 @@ class LicenseController extends CI_Controller {
 		$this->load->view('template/footer');
 	}
 
+	public function expired() { 
+
+    	$this->load->view('template/expired');
+    }
+
 	public function activateLicense() {
 
 		$data = $this->input->post('data');

@@ -8,6 +8,10 @@ class AppController extends CI_Controller {
 
       $this->user_restrictions();
 
+      if ( renewal()[0] == "expired" ) {
+
+      	return redirect('/expired');
+      }
     }
 
     public function __destruct() {

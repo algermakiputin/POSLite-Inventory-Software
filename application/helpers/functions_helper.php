@@ -12,6 +12,23 @@
 		return date('Y-m-d H:i:s');
 	}
 
+	function renewal() {
+
+		$renewal_date = new DateTime(date('Y-03-20')); 
+		$today_date = new DateTime(date('Y-m-d'));
+
+		$intervalDays = $renewal_date->diff($today_date)->days; 
+ 
+		if ( $today_date < $renewal_date && $intervalDays < 30) {
+
+			return ["renewal_due", $renewal_date->format('Y-m-d')];
+ 
+		}else {
+
+			return ["expired"];
+		}
+	}
+
 	function homeDir()
 	{
 	    if(isset($_SERVER['HOME'])) {
