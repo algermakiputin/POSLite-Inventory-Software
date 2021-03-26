@@ -355,7 +355,7 @@
 
 							$.each(result.orderline, function(key, value) {
 						 
-								table.append('<tr data-item="'+value.item_id+'" data-orderline="'+value.id+'" data-sales="'+value.sales_id+'">'+ 
+								table.append('<tr data-item="'+value.barcode+'" data-orderline="'+value.id+'" data-sales="'+value.sales_id+'">'+ 
 									'<td>'+value.name+'</td>' +
 									'<td>'+value.quantity+'</td>' +
 									'<td>' + 
