@@ -65,6 +65,10 @@ $route['dashboard'] = "DashboardController/dashboard";
 
 $route['diagnoses'] = "DashboardController/diagnoses";
 
+$route['reports/credits'] = "CreditsController/reports";
+$route['reports/payments'] = "PaymentsController/reports";
+
+
 $route['default_controller'] = 'AuthController/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
@@ -107,6 +111,7 @@ $route['customers/open/(:any)'] = "CustomersController/open/$1";
 $route['customers/find'] = "CustomersController/find";
 $route['customers/update'] = "CustomersController/update";
 $route['customers/open-membership'] = "CustomersController/openMembership";
+$route['customer/records/(:any)'] = "CustomersController/records/$1";
 
 $route['suppliers'] = "SuppliersController/index";
 $route['suppliers/insert'] = "SuppliersController/insert";

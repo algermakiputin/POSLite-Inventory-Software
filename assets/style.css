@@ -11,6 +11,29 @@ html, body {
 
 }
 
+#sales_table {
+  display: block;
+  max-height: 550px;
+  overflow-y: scroll;
+}
+
+#sales_table thead tr th {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#select-wrapper .select2-container--default .select2-selection--single {
+
+      border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px; 
+}
+
+.select2-container--default .select2-selection--single {
+  height: 31px;
+}
+
 #page-wrapper {
   font-size: 1.1em;
 }

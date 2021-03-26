@@ -33,6 +33,14 @@
 					<td>Time: &nbsp;&nbsp;</td>
 					<td><div id="r-time"><?php echo date('h:i a', strtotime($sale->date_time)) ?></div> </td>
 				</tr>
+				<tr>
+					<td>Payment Type: &nbsp;&nbsp;</td>
+					<td><div><?php echo $sale->payment_type ?></div> </td>
+				</tr>
+				<tr>
+					<td>Customer Name: &nbsp;&nbsp;</td>
+					<td><div ><?php echo $sale->customer_name ?></div> </td>
+				</tr>
 			</table> 
 			<div class="clearfix"></div>
 		</div>
@@ -62,10 +70,11 @@
 				</tbody>
 			</table>
 			<hr>
-			<div class="text-right">  
+			<div class="text-right">   
+				<div>Discount Amount:  <span id="r-total-amount"><?php echo currency() . number_format( $sale->discount, 2 ) ?> </span></div> 
 				<div>Sub Total:  <span id="r-total-amount"><?php echo currency() . number_format( $total, 2 ) ?> </span></div> 
-				<div>Discount:  <span id="r-total-amount"><?php echo currency() . number_format( $discount, 2 ) ?> </span></div> 
-				<div>Grand Total:  <span id="r-total-amount"><?php echo currency() . number_format( $total - $discount, 2 ) ?> </span></div> 
+				
+				<div>Grand Total:  <span id="r-total-amount"><?php echo currency() . number_format( $sale->amount_due, 2 ) ?> </span></div> 
 			</div>
 
 			<div class="r-footer text-center">

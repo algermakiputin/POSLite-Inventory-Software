@@ -104,16 +104,9 @@
 				</div>
 				<div class="col-md-12" style="padding: 15px 25px;">
 					<form id="process-form">
+						
 						<div class="form-group">
-							<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment (F1)" id="payment" autocomplete="off">
-						</div>
-						<div class="form-group">
-
-							<input readonly="readonly" type="text" class="form-control input-lg" name="" placeholder="Change:" id="change" autocomplete="off">
-
-						</div>
-						<div class="form-group">
-							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process (Enter)" id="btn" >
+							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process (Enter)" id="btn"  onclick="return false;">
 						</div>
 					</form>
 				</div>
@@ -142,7 +135,86 @@
 		</div>
 	</div>
 </div>
-<div class="modal" tabindex="-1" role="dialog" id="payment-modal">
+
+<div class="modal fade" id="payment-modal" tabindex="-1" role="dialog" aria-labelledby="payment-modal" aria-hidden="true">
+	<div class="modal-dialog modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title" id="exampleModalLabel">Payment Details <span class="pull-right" id="payment-label"></span></h3> 
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Select Customer (Optional)</label>
+							<select class="form-control form-control-lg" id="customer">
+								<option value="">Select Customer</option>
+								<?php  foreach ($customers as $customer): ?>
+									<option data-note="<?php echo $customer->note ?>" value="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group" id="note-wrapper" >
+							<label>Note:</label>
+							<input type="text" readonly class="form-control" id="note" name="note">
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="form-group">
+					<label>Payment Type</label>
+					<select class="form-control form-control-lg" id="payment-type">
+						<option value="cash">Cash</option>
+						<option value="credit">Credit</option>
+					</select>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Discount Type</label>
+							<select name="discount_type" class="form-control" id="discount_type">
+								<option value="fixed">Fixed</option>
+								<option value="percentage">Percentage</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label> Discount</label>
+							<input type="number" min="0" max="100" class="form-control" name="discount" autocomplete="off" id="discount" placeholder="Discount">
+						</div>
+					</div>
+				</div>
+				<div id="payment-input-wrapper">
+					<div class="form-group">
+						<label>Payment</label>
+						<input type="text" class="form-control  form-control-lg" name="" placeholder="Enter Payment (F1)" id="payment" autocomplete="off">
+					</div>
+					<div class="form-group">
+						<label>Change</label>
+						<input readonly="readonly" type="text" class="form-control  form-control-lg" name="" placeholder="Change:" id="change" autocomplete="off">
+
+					</div>
+				</div>
+				
+				<div class="form-group" id="due-date-wrapper">
+					<label>Due Date</label>
+					<input type="date"  name="due_date" id="due_date" class="form-control">
+				</div>
+			 
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+				<button id="payment-button" type="button" class="btn btn-primary" >Complete Transaction</button> 
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="receipt-modal">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -178,6 +250,17 @@
 									<td>Time: &nbsp;&nbsp;</td>
 									<td><div id="r-time"><?php echo date('h:i a') ?></div> </td>
 								</tr>
+
+								
+								<tr>
+									<td>Customer Name: &nbsp;&nbsp;</td>
+									<td><div id="r-customer-name"></div> </td>
+								</tr>
+
+								<tr>
+									<td>Payment Type: &nbsp;&nbsp;</td>
+									<td><div id="r-payment-type"></div> </td>
+								</tr>
 							</table> 
 							<div class="clearfix"></div>
 						</div>
@@ -196,8 +279,8 @@
 								</tbody>
 							</table>
 							<hr>
-							<div class="text-right"> 
-								<div>Discount: <span id="r-discount"></span></div>
+							<div class="text-right">  
+								<div>Discount Amount: <span id="r-discount"></span></div>
 								<div>Grand Total <span id="r-total-amount"></span></div>
 								<div>Payment: <span id="r-payment"></span></div>
 								<div>Change: <span id="r-change"></span></div>

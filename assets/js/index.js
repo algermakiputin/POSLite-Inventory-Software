@@ -24,7 +24,7 @@ $(document).ready(function() {
 	// 		$(".spinner-wrapper").show();
 	// 	}
 	// })
-	 
+
 
 	$("body").show();
 	$("form").parsley();	
@@ -36,13 +36,13 @@ $(document).ready(function() {
 		responsive: true
 	});
 
- 	if (site_live == 1) {
- 		if (!sessionStorage.getItem("demo")) {
-	 		introJs().start().oncomplete(endDemo)
-							.onskip(endDemo)
-							.onexit(endDemo);
-	 	}
- 	}
+	if (site_live == 1) {
+		if (!sessionStorage.getItem("demo")) {
+			introJs().start().oncomplete(endDemo)
+			.onskip(endDemo)
+			.onexit(endDemo);
+		}
+	}
 	function endDemo() {
 		sessionStorage.setItem("demo", false);
 	}
@@ -90,52 +90,52 @@ $(document).ready(function() {
 					"targets": 'no-sort',
 					"bSort": false,
 					columnDefs: [
-						{ 
-							targets: [3,6], 
-							visible: hide,
-							searchable: hide
-						},
+					{ 
+						targets: [3,6], 
+						visible: hide,
+						searchable: hide
+					},
 					],
 					buttons: [
-						{
-							extend: 'copyHtml5',
-							filename : 'Inventory Report',
-							title : 'Inventory', 
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7,8 ]
-							},
+					{
+						extend: 'copyHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 1, 2, 3,4,5,6,7,8 ]
 						},
-						{
-							extend: 'excelHtml5',
-							filename : 'Inventory',
-							title : 'Inventory Report', 
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7,8 ]
-							},
+					},
+					{
+						extend: 'excelHtml5',
+						filename : 'Inventory',
+						title : 'Inventory Report', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 1, 2, 3,4,5,6,7,8 ]
 						},
-						{
-							extend: 'pdfHtml5',
-							filename : 'Inventory Report',
-							title : 'Inventory', 
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6,7,8 ]
-							},
+					},
+					{
+						extend: 'pdfHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 1, 2, 3,4,5,6,7,8 ]
+						},
 
-						},
+					},
 					],
 					initComplete : function(settings, json) {
-						  
+
 						$("#total").text(json.total);
 						$.previewImage({
 						   'xOffset': 30,  // x-offset from cursor
 						   'yOffset': -270,  // y-offset from cursor
 						   'fadeIn': 1000, // delay in ms. to display the preview
 						   'css': {        // the following css will be used when rendering the preview image.
-					
-						   'border': '2px solid black', 
+
+						   	'border': '2px solid black', 
 						   }
 						});
 					},
@@ -147,7 +147,7 @@ $(document).ready(function() {
 					let column = $(this).data('column'); 
 					itemTable.columns(column).search(this.value).draw();
 
-						
+
 				});
 			},
 			clearDataTableFilter : function() {
@@ -228,54 +228,54 @@ $(document).ready(function() {
 						searchable:hide
 					} ],
 					buttons: [
-						{
-							extend: 'copyHtml5',
-							filename : 'Sales Report',
-							title : 'Sales Report', 
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 0,1, 2, 3,4,5,6,7,8,9 ]
-							},
+					{
+						extend: 'copyHtml5',
+						filename : 'Sales Report',
+						title : 'Sales Report', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0,1, 2, 3,4,5,6,7,8 ]
 						},
-						{
-							extend: 'excelHtml5',
-							filename : 'Sales Report',
-							title : function() {
-								return $("#min-date").val() + " - " + $("#max-date").val() + " Sales Report";
-							}, 
-							messageTop: function() {
-								return "TOTAL SALES: " + $("#total-sales").text();
-							},
-							messageBottom: function() {
-
-								return "GROSS PROFIT: " + $("#total-gross").text()
-
-							},
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 0,1, 2, 3,4,5,6,7,8,9 ]
-							},
+					},
+					{
+						extend: 'excelHtml5',
+						filename : 'Sales Report',
+						title : function() {
+							return $("#min-date").val() + " - " + $("#max-date").val() + " Sales Report";
+						}, 
+						messageTop: function() {
+							return "TOTAL SALES: " + $("#total-sales").text();
 						},
-						{
-							extend: 'pdfHtml5',
-							filename : 'Sales Report',
-							title : function() {
-								return $("#min-date").val() + " - " + $("#max-date").val() + " Sales Report";
-							}, 
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 0,1, 2, 3,4,5,6,7,8,9 ]
-							},
-							messageTop: function() {
-								return "TOTAL SALES: " + $("#total-sales").text();
-							},
-							messageBottom: function() {
+						messageBottom: function() {
 
-								return "GROSS PROFIT: " + $("#total-gross").text()
-
-							}
+							return "GROSS PROFIT: " + $("#total-gross").text()
 
 						},
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0,1, 2, 3,4,5,6,7,8 ]
+						},
+					},
+					{
+						extend: 'pdfHtml5',
+						filename : 'Sales Report',
+						title : function() {
+							return $("#min-date").val() + " - " + $("#max-date").val() + " Sales Report";
+						}, 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0,1, 2, 3,4,5,6,7,8 ]
+						},
+						messageTop: function() {
+							return "TOTAL SALES: " + $("#total-sales").text();
+						},
+						messageBottom: function() {
+
+							return "GROSS PROFIT: " + $("#total-gross").text()
+
+						}
+
+					},
 					],
 					initComplete : function(settings, json) {
 						
@@ -316,18 +316,18 @@ $(document).ready(function() {
 		var jQueryConfirm = {
 			deleteConfimation : function(title,content, callbackFunction) {
 				$.confirm({
-				    title: title,
-				    content: content,
-				    buttons: {
-				        confirm: {
-				        	text : 'Delete',
-				        	btnClass : 'btn btn-danger',
-				        	action : callbackFunction
-				        },
-				        cancel: function () {
-				            $.alert('Canceled!');
-				        } 
-				    }
+					title: title,
+					content: content,
+					buttons: {
+						confirm: {
+							text : 'Delete',
+							btnClass : 'btn btn-danger',
+							action : callbackFunction
+						},
+						cancel: function () {
+							$.alert('Canceled!');
+						} 
+					}
 				});
 			}
 		}
@@ -346,25 +346,27 @@ $(document).ready(function() {
 						Set Data
 						1 - csrfname and token
 						2 - customer ID
-					*/
-					var data = {};
-					data[csrfName] = csrfHash;
-					data['id'] = id;
-					$.ajax({
-						type : 'POST',
-						url : base_url + 'customers/find',
-						data : data,
-						success : function(data) {
-							var customer = JSON.parse(data); 
-							$("#customer-edit input[name='name']").val(customer.name); 
-							$('input:radio[name="gender"]').filter('[value="'+customer.gender+'"]').attr('checked', true);
-							$("#customer-edit input[name='home_address']").val(customer.home_address);
- 
-							$("#customer-edit input[name='contact_number']").val(customer.contact_number);
-						}
+						*/
+						var data = {};
+						data[csrfName] = csrfHash;
+						data['id'] = id;
+						$.ajax({
+							type : 'POST',
+							url : base_url + 'customers/find',
+							data : data,
+							success : function(data) {
+								var customer = JSON.parse(data); 
+								$("#customer-edit input[name='name']").val(customer.name); 
+								$('input:radio[name="gender"]').filter('[value="'+customer.gender+'"]').attr('checked', true);
+								$("#customer-edit input[name='home_address']").val(customer.home_address);
 
-					});
-				})
+								$("#customer-edit input[name='contact_number']").val(customer.contact_number);
+
+								$("#customer-edit input[name='note']").val(customer.note);
+							}
+
+						});
+					})
 			},
 			graphSales : function() {
 
@@ -433,7 +435,7 @@ $(document).ready(function() {
 
 			},
 			edit : function(){
-		 
+
 				$("#supplier_table").on('click','.edit',function() {
 					var id = $(this).data('id');
 					var data = {};
@@ -484,36 +486,36 @@ $(document).ready(function() {
 						data : data
 					},
 					buttons: [ 
-						{
-							extend: 'excelHtml5',
-							filename : 'Expenses',
-							title : function() {
-								return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
-							 	
-							}, 
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 0,1, 2, 3 ]
-							},
-							messageTop: function() {
-								return "Total: " + $("#total").text();
-							}
+					{
+						extend: 'excelHtml5',
+						filename : 'Expenses',
+						title : function() {
+							return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
+
+						}, 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0,1, 2, 3 ]
 						},
-						{
-							extend: 'pdfHtml5',
-							filename : 'Expenses Report',
-							title : function() {
-								return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
-							 	
-							},
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 0, 1, 2, 3 ]
-							},
-							messageTop: function() {
-								return "Total: " + $("#total").text();
-							}
+						messageTop: function() {
+							return "Total: " + $("#total").text();
+						}
+					},
+					{
+						extend: 'pdfHtml5',
+						filename : 'Expenses Report',
+						title : function() {
+							return 'Expenses Report: ' + $("#expenses_from").val() + ' - ' + $("#expenses_to").val();
+
 						},
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0, 1, 2, 3 ]
+						},
+						messageTop: function() {
+							return "Total: " + $("#total").text();
+						}
+					},
 					],
 					drawCallback: function(setting) {
 						var data = setting.json;
@@ -522,7 +524,7 @@ $(document).ready(function() {
 
 					}
 				}); 
-					
+
 			},
 			filterReports: function() {
 				$("#expenses_to").change(function(e) {
@@ -531,8 +533,8 @@ $(document).ready(function() {
 					
 					if (fromDate && toDate && toDate >= fromDate) {
 						expensesTable.columns(0).search(fromDate)
-									.columns(1).search(toDate)
-									.draw();
+						.columns(1).search(toDate)
+						.draw();
 					}else {
 						alert("From date is empty or from date is greather than to date");
 					}
@@ -543,7 +545,7 @@ $(document).ready(function() {
 
 		var returns_table;
 		var returns = {
- 
+
 			init: function() {
 
 				this.dataTable();
@@ -568,24 +570,24 @@ $(document).ready(function() {
 						data : data
 					},
 					buttons: [ 
-						{
-							extend: 'excelHtml5',
-							filename : 'Expenses',
-							title : "Returns Report",
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 0,1, 2, 3,4 ]
-							}, 
-						},
-						{
-							extend: 'pdfHtml5',
-							filename : 'Returns Report',
-							title : "Returns",
-							className : "btn btn-default btn-sm",
-							exportOptions: {
-								columns: [ 0, 1, 2, 3,4 ]
-							}, 
-						},
+					{
+						extend: 'excelHtml5',
+						filename : 'Expenses',
+						title : "Returns Report",
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0,1, 2, 3,4 ]
+						}, 
+					},
+					{
+						extend: 'pdfHtml5',
+						filename : 'Returns Report',
+						title : "Returns",
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 0, 1, 2, 3,4 ]
+						}, 
+					},
 					], 
 
 				});
@@ -602,8 +604,8 @@ $(document).ready(function() {
 						return alert( "Select starting date");
 
 					returns_table.columns(0).search(date_from)
-									.columns(1).search(to)
-									.draw();
+					.columns(1).search(to)
+					.draw();
 				})
 			}
 		}
@@ -616,27 +618,150 @@ $(document).ready(function() {
 				$('.date-range-filter').datepicker({
 					useCurrent : false,
 					todayHighlight: true,
-    				toggleActive: true,
-    				autoclose: true,
+					toggleActive: true,
+					autoclose: true,
 				});
 
-				 $("#datetimepicker6").on("dp.change", function (e) {
-			        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-			    });
-			    $("#datetimepicker7").on("dp.change", function (e) {
-			        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-			    });
+				$("#datetimepicker6").on("dp.change", function (e) {
+					$('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+				});
+				$("#datetimepicker7").on("dp.change", function (e) {
+					$('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+				});
 
 				$("#min-date").change(function(e){
 					$("#max-date").datepicker({
 						startDate : new Date(),
 						todayHighlight: true,
-	    				toggleActive: true,
-	    				autoclose: true,
+						toggleActive: true,
+						autoclose: true,
 					})
 				})
 			}
 		} 
+
+		var credits = {
+
+			init: function() {
+
+				this.datatable();
+			},
+			datatable: function(e) {
+
+				var credits_datatable = $("#credits_datatable").DataTable({
+					searching : true,
+					ordering : false, 
+					serverSide : true, 
+					processing : true,
+					bsearchable : true, 
+					responsive: true, 
+					ajax : {
+						url : base_url + 'CreditsController/credits_datatable',
+						type : 'POST',
+						data : data
+					}
+				});
+
+
+				$("#customer-select").on("change.select2", function(e) {
+
+					var id = $(this).val();
+
+					credits_datatable.columns(0).search(id).draw();
+
+				});
+
+				$("#credit_to").change(function(){
+
+					var credit_to = $(this).val();
+					var credit_from = $("#credit_from").val();
+
+					credits_datatable.columns(1).search(credit_from)
+					.column(2).search(credit_to)
+					.draw();
+
+				});
+			}
+
+		}
+
+
+		var payments = {
+
+			init: function() {
+
+				this.datatable();
+			},
+			datatable: function(e) {
+
+				var payments_datatable = $("#payments_datatable").DataTable({
+					searching : true,
+					ordering : false, 
+					serverSide : true, 
+					processing : true,
+					bsearchable : true, 
+					responsive: true, 
+					dom : 'lrtB',
+					ajax : {
+						url : base_url + 'PaymentsController/datatable',
+						type : 'POST',
+						data : data
+					},
+					buttons: [
+					{
+						extend: 'copyHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 1, 2, 3,4 ]
+						},
+					},
+					{
+						extend: 'excelHtml5',
+						filename : 'Inventory',
+						title : 'Inventory Report', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 1, 2, 3,4 ]
+						},
+					},
+					{
+						extend: 'pdfHtml5',
+						filename : 'Inventory Report',
+						title : 'Inventory', 
+						className : "btn btn-default btn-sm",
+						exportOptions: {
+							columns: [ 1, 2, 3,4 ]
+						},
+
+					}
+					]
+				});
+
+
+				$("#customer-select-payments").on("change.select2", function(e) {
+
+					var id = $(this).val();
+
+					payments_datatable.columns(0).search(id).draw();
+
+				});
+
+				$("#payments_to").change(function(){
+
+					var credit_to = $(this).val();
+					var credit_from = $("#payments_from").val();
+
+					payments_datatable.columns(1).search(credit_from)
+					.column(2).search(credit_to)
+					.draw();
+
+				});
+			}
+
+		}
+
 
 		expenses.init();
 		dateTimePickers.init();
@@ -645,7 +770,9 @@ $(document).ready(function() {
 		customers.init();
 		suppliers.init();
 		returns.init();
-	 
+		credits.init();
+		payments.init();
+
 	})();
 
 	$("#customer_table").on('click', '.renew', function() {
@@ -700,7 +827,7 @@ $(document).ready(function() {
 
 		}
 	});
-	 
+
 
 	$("#mail").click(function() {
 		var button = $(this);
@@ -809,23 +936,23 @@ $(document).ready(function() {
 			data: data
 		},  
 		columns: [
-			{ name: "date_time" },
-			{ name: "received_by"},
-			{ name: "due_date" },
-			{ name: "name"},
-			{ name: "total"},
-			{ name: "defectives"},
-			{ name: "payment_status"},
-			{ name: "defectives"}
+		{ name: "date_time" },
+		{ name: "received_by"},
+		{ name: "due_date" },
+		{ name: "name"},
+		{ name: "total"},
+		{ name: "defectives"},
+		{ name: "payment_status"},
+		{ name: "defectives"}
 		],
 		"order": [[ 0, "desc" ]],
 		columnDefs: [
-		   { orderable: false, targets: -1 },
-		   { orderable: false, targets: -2 }
+		{ orderable: false, targets: -1 },
+		{ orderable: false, targets: -2 }
 		],
 		language: {
-	        searchPlaceholder: "Search by receiver"
-	    }
+			searchPlaceholder: "Search by receiver"
+		}
 	});
 
 	var expiry_date_table = $("#expiry_date_table").DataTable({
@@ -838,13 +965,13 @@ $(document).ready(function() {
 			data: data
 		},  
 		language: {
-	        searchPlaceholder: "Search by Product Name"
-	    },
-	    ordering:false
+			searchPlaceholder: "Search by Product Name"
+		},
+		ordering:false
 	});
 
 	$("#filter_expiry").change(function() {
- 
+
 		expiry_date_table.columns(0).search($(this).val()).draw();
 	})
 
@@ -893,7 +1020,7 @@ $(document).ready(function() {
 					$("#key-submit").button('loading');
 				},
 				success : function(data) {
-					 
+
 					if (data ) {
 						var result = JSON.parse(data);
 						jsonData['data'] = result;
@@ -903,11 +1030,11 @@ $(document).ready(function() {
 							url : base_url + 'LicenseController/activateLicense',
 							data : jsonData,
 							success : function(data) {
-								 window.location.href = data;
+								window.location.href = data;
 							}
 						})
 					} else {
-					 	alert('Invalid License Key');
+						alert('Invalid License Key');
 					}
 
 					$("#key-submit").button('reset');
@@ -917,7 +1044,66 @@ $(document).ready(function() {
 				}
 			})
 		}
-	})
+	});
+
+
+	$('#customer-select').select2({
+		ajax: {
+			url: base_url + "/CustomersController/select",
+			dataType: 'json',
+			delay: 250,
+			data: function (params) {
+				var query = {
+					search: params.term 
+				}
+
+	      // Query parameters will be ?search=[term]&type=public
+	      return query;
+	   },
+	   params: { 
+	   	contentType: "application/json; charset=utf-8"
+	   },
+	   processResults: function(response) {
+
+
+		   	return {
+		   		results: (response)
+		   	};
+
+		   },
+		   cache: true
+
+		}
+	});
+
+	$('#customer-select-payments').select2({
+		ajax: {
+			url: base_url + "/CustomersController/select",
+			dataType: 'json',
+			delay: 250,
+			data: function (params) {
+				var query = {
+					search: params.term 
+				}
+
+	      // Query parameters will be ?search=[term]&type=public
+	      return query;
+	   },
+	   params: { 
+	   	contentType: "application/json; charset=utf-8"
+	   },
+	   processResults: function(response) {
+
+
+		   	return {
+		   		results: (response)
+		   	};
+
+		   },
+		   cache: true
+
+		}
+	});
 
 	
 })

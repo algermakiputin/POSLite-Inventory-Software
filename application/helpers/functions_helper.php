@@ -135,7 +135,10 @@
 		$CI->session->set_flashdata('success', $message);
 	}
 
- 	
+ 	function showErrorMessage($message) {
+		$CI =& get_instance();
+		$CI->session->set_flashdata('error', $message);
+	}
 
 
 	function license($table) {
