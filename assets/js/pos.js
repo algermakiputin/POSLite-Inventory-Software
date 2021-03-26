@@ -149,6 +149,27 @@
 		var scanner = {
 
 			init: function() {
+
+				$("#btn").click(function(e) {
+ 					var row = $("#cart tbody tr").length; 
+								var payment = $("#payment").val(); 
+						 	 
+						 		if (row) { 
+						 			
+									$("#payment-modal").modal("toggle");
+
+										$("#payment-label").html(currency + number_format(totalAmountDue));
+			 
+ 
+								}else {
+
+									alert("Please add some items");
+								}
+ 								
+ 								return false;
+ 
+				  				$("#process-form").submit();
+				})
 			 	
 			 	$("body").keydown(function( e ) {
 
