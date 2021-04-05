@@ -73,9 +73,9 @@
         <div id="page-wrapper">
             <?php 
                  
-                if ($renewal = renewal()[0] == "renewal_due"){
+                if ($renewal = renewal()[0] === "renewal_due"){
                     echo ("<div class='alert alert-info' style='margin-top:10px;margin-bottom:0'>
-                        <p><i class='fa fa-info-circle'></i> <span class='text-danger'>Renewal due date: ". $renewal[1] . " </span>. To renew your subscription please message us at our facebook page: <a target='__blank' href='https://facebook.com/poslitesoftware'>https://facebook.com/poslitesoftware</a></p>
+                        <p><i class='fa fa-info-circle'></i> <span class='text-danger'>Renewal due date: ". renewal()[1] . " </span>. To renew your subscription please message us at our facebook page: <a target='__blank' href='https://facebook.com/poslitesoftware'>https://facebook.com/poslitesoftware</a></p>
                     </div>");
                 }
             ?>

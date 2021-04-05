@@ -20,9 +20,12 @@ class LicenseController extends CI_Controller {
 	}
 
 	public function expired() { 
-
+		if ( renewal()[0] !== "expired" ) {
+			return redirect("/");
+		}
+		
     	$this->load->view('template/expired');
-    }
+   }
 
 	public function activateLicense() {
 
