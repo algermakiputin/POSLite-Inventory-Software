@@ -7,9 +7,9 @@ class AppController extends CI_Controller {
       parent::__construct();  
 
       $this->user_restrictions();
-
-      if ( renewal()[0] == "expired" ) {
-
+ 	 
+      if ( renewal()[0] === "expired" ) {
+      
       	return redirect('/expired');
       }
     }
