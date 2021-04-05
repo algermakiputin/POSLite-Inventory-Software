@@ -14,19 +14,24 @@
 
 	function renewal() {
 
-		$renewal_date = new DateTime(date('Y-03-20')); 
+		$renewal_date = new DateTime(date('2021-04-30')); 
 		$today_date = new DateTime(date('Y-m-d'));
 
 		$intervalDays = $renewal_date->diff($today_date)->days; 
- 
-		if ( $today_date < $renewal_date && $intervalDays < 30) {
 
-			return ["renewal_due", $renewal_date->format('Y-m-d')];
- 
-		}else {
 
-			return ["expired"];
-		}
+	 	if ($renewal_date > $today_date && $intervalDays > 30) {
+	 		return [0];
+
+	 	}else if ($renewal_date > $today_date && $intervalDays < 30) {
+	 	 
+	 		 return ["renewal_due", $renewal_date->format('Y-m-d')];
+
+	 	}else if ( $today_date >= $renewal_date) {
+
+	 		return ['expired'];
+	 	}
+
 	}
 
 	function homeDir()
