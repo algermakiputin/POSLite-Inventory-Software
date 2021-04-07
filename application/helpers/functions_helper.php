@@ -14,7 +14,7 @@
 
 	function renewal() {
 
-		$renewal_date = new DateTime(date('2021-04-30')); 
+		$renewal_date = new DateTime(date('2022-04-1')); 
 		$today_date = new DateTime(date('Y-m-d'));
 
 		$intervalDays = $renewal_date->diff($today_date)->days; 
