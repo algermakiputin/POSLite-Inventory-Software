@@ -7,10 +7,7 @@ class AuthController extends AppController {
 		parent::__construct();
 		$this->load->helper('file'); 
 		$this->licenseControl();
-
-
-		
-		
+ 
 	}
 	public function login() { 
 		
