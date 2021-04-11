@@ -5,78 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Login Template</title>
+  <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/logo/poslite.png') ?>" />
+	<title>Login - POSLite Inventory Mangement Software</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <style>
-    body {
-     background-color: #f4f4f4;
-    }
-    /* .card {
-      max-width: 980px;
-      margin: auto;
-    } */
-    .logo {
-      margin-bottom: 20px;
-    }
-    .login-card form {
-      max-width: 326px;
-    }
-    .login-card .form-control {
-      border: 1px solid #d5dae2;
-    padding: 15px 25px;
-    margin-bottom: 20px;
-    min-height: 45px;
-    font-size: 13px;
-    line-height: 15;
-    font-weight: normal;
-    }
-    #login {
-      padding: 13px 20px 12px;
-      background-color: #000;
-      border-radius: 4px;
-      font-size: 17px;
-      font-weight: bold;
-      line-height: 20px;
-      color: #fff;
-      }
-      .login-card-description {
-        font-size: 25px;
-        color: #000;
-        font-weight: normal;
-        margin-bottom: 23px;
-      }
-      .login-card-footer-nav  {
-        font-size: 14px;
-        color: #919aa3;
-          }
-
-          .login-card-footer-nav a  {
-            text-decoration:underline;
-            color: #919aa3;
-          }
-          .login-card .card-body {
-              padding: 80px 60px 60px;
-          }
-          .login-card-img  {
-          border-radius: 0;
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          -o-object-fit: cover;
-          object-fit: cover;
-        }
-
-      @media only screen and (max-width:800px) {
-
-        
-      }
-
-      @media only screen and (max-width:500px) {
-        .col-md-5 {
-          display: none;
-        }
-      }
-  </style>
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/login.css')?>">
 </head>
 <body>
   <main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
