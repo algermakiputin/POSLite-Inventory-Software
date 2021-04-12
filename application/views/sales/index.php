@@ -160,7 +160,7 @@
 	window.onload = function() {
 		var labels = JSON.parse('<?php echo json_encode(array_keys($dataset)) ?>');
 		var totalSales = JSON.parse('<?php echo json_encode(array_values($dataset)) ?>');
-
+	 
 		var ctx = document.getElementById("myChart");
 		var myChart = new Chart(ctx, {
 			type: 'line',
@@ -187,7 +187,7 @@
 						ticks: {
 							beginAtZero:true,
 							callback : function(value, index, values) {
-								return '₱' + (number_format(parseFloat(values)));
+								return '₱' + (number_format(parseFloat(value)));
 
 							}
 						}
