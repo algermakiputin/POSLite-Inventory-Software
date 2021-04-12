@@ -110,70 +110,100 @@ class SalesController extends AppController {
 	}
 
 	public function graphSales($range = "week") {
+
+		$data = [];
+  
+		if ( $range == "week") {
+
+			$dataset = [];
+			$day = date('w');
+			$week_end = date("Y-m-d");
+			$week_start = date("Y-m-d", strtotime("-7 days"));
 	 
-		if ($range == "week") {
-			$currentDate = date('Y-m-d');
-			$lastWeek = date('Y-m-d', $this->lastWeek());
-			$begin = new DateTime( $lastWeek );
-			$end = new DateTime( $currentDate );
-			$end = $end->modify( '+1 day' );
-			$format = "D, d";
-			$sqlDateFormat = "%Y-%m-%d";
-			$dateFormat = 'Y-m-d';
-			$int = "P1D";
+            
+			$start = new DateTime($week_start);
+			$end = new DateTime($week_end);
+ 
+			$sales = $this->db->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $week_start)
+							->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $week_end)
+							->get('sales_description')
+							->result();
+		  
+			for ( $i = $start; $i <= $end; $i->modify('+1 day') ) {
 
-		}else if ($range == "month") {
-			$firstMonth = date('Y-1-1');
-			$lastMonth = date('Y-12-1');
-			$begin = new DateTime($firstMonth);
-			$end = new DateTime($lastMonth);
-			$end->modify('last day of this month');
-			$format = "M";
-			$sqlDateFormat = "%Y-%m";
-			$dateFormat = "Y-m";
-			$int = "P1M";
-		}else if ($range == "year") {
-		 
-			$firstMonth = date('2016-1-1');
-		 
-			$lastMonth = date('Y-12-1');
-			$begin = new DateTime($firstMonth);
-			$end = new DateTime($lastMonth);
+				$date = $i->format('Y-m-d');
+				$totalSales = 0;
 
-			$end->modify('last day of this month');
-			$format = "Y";
-			$sqlDateFormat = "%Y";
-			$dateFormat = "Y";
-			$int = "P1Y";
-		}
-		
-		$datasets = [];
+				foreach ($sales as $sale) {
 
-		$interval = new DateInterval($int);
-		$daterange = new DatePeriod($begin, $interval ,$end);
-		$total = 0;
+					$saleDate = date('Y-m-d', strtotime($sale->created_at));
 
-		foreach($daterange as $date){
-	 	  	
-		 	$sales = $this->db->select('SUM(price * quantity) as total_sales')
-		 						->from('sales_description')
-		 						->where('DATE_FORMAT(created_at,"'.$sqlDateFormat.'") =', $date->format($dateFormat)) 
-								->get()
-								->row();
+					if ( $date == $saleDate) {
+
+						$totalSales += $sale->quantity * $sale->price;
+					}
+				}
+
+				$data[$date] = $totalSales;
+			}
+			 
+		} else if ( $range == "month") {
+
+			$end = date("Y-m");
+			$start = date("Y-m", strtotime("-12 months")); 
+
+			$sales = $this->db->where('DATE_FORMAT(created_at, "%Y-%m") >=', $start)
+							->where('DATE_FORMAT(created_at, "%Y-%m") <=', $end)
+							->get('sales_description')
+							->result();
+			$months = ['January', 'February', 'March', 'April','May','June','July','August','September','October','November','December'];
+			for ($i = 1; $i <= 12; $i++) {
+
+				$totalSales = 0;
+				foreach ($sales as $sale ) {
+
+					$month = date("m", strtotime($sale->created_at));
+
+					if ( (int)$month == $i) {
+						$totalSales += $sale->quantity * $sale->price;
+					} 
+
+				}
+				
+				$data[$months[$i - 1]] = $totalSales;
+			}
+
+		} else if ( $range == "year") {
+			$start = 2019;
+			$end = date("Y");
+
+			$sales = $this->db->where("DATE_FORMAT(created_at,'%Y') >=", $start)
+							->where("DATE_FORMAT(created_at,'%Y') <=", $end)
+							->get('sales_description')
+							->result();
 			
-		   
-			$total += $sales->total_sales;
-			$datasets[$date->format($format)][] = round($total,2);
-	     
+			for ($i = $start; $i <= $end; $i++) {
 
-	    	$total = 0;
-		} 
-		return $datasets;
+				$totalSale = 0;
+				foreach ($sales as $sale) {
+
+					$year = date("Y", strtotime($sale->created_at));
+
+					if ( $year == $i) {
+
+						$totalSales += $sale->quantity * $sale->price;
+					}
+				}
+
+				$data[$i] = $totalSales;
+			}
+		}
+
+		return $data;
 	}
 
 	public function graphFilter() {
-		$type = $this->input->post('type');
-
+		$type = $this->input->post('type'); 
 		echo json_encode($this->graphSales($type));
 
 		return;
@@ -368,14 +398,12 @@ class SalesController extends AppController {
 		$sales = $this->db->where('transaction_number', $transaction_number)
 								->get('sales')
 								->row();
- 
-
+  
 		if (!$sales) {
  			echo 0;
 			return false;
 		}
-
-
+ 
 		$sales_description = $this->db->where('sales_id', $sales->id)
 												->get('sales_description')
 												->result();
