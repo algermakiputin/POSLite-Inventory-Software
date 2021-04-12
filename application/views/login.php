@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +45,7 @@
                   <input name="login" id="login" class="btn btn-block login-btn mb-4" type="submit" value="Login">
               <?php echo form_close(); ?>
                 <nav class="login-card-footer-nav">
-                  <a href="https://www.poslitesoftware.com/terms-conditions">Terms of use.</a>
+                  <a href="https://www.poslitesoftware.com/terms-conditions">Terms of use</a> |
                   &copy;2021 Developed By:<a href="https://algermakiputin.dev"> Alger Makiputin</a>
                 </nav>
             </div>
@@ -54,7 +53,6 @@
         </div>
       </div> 
     </div>
-  </main> 
- 
+  </main>  
 </body>
 </html>
