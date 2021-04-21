@@ -10,7 +10,7 @@
             Diagnose
         </div> 
         <div class="panel-body">  
-            <div id="exTab1" class="container"> 
+            <div id="exTab1"> 
                 <ul  class="nav nav-pills">
                     <li class="<?php echo $active == "" ? 'active' : '' ?>">
                         <a  href="#not_selling" data-toggle="tab">Not Selling</a>

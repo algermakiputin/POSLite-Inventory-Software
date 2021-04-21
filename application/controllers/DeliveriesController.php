@@ -178,7 +178,7 @@ class DeliveriesController extends CI_Controller
 				$delivery->name,
 				currency() . number_format($delivery->total),
 				$delivery->defectives,
-				$delivery->payment_status == "Paid" ? "<span class='badge badge-success'>Paid</span>" : "<span class='badge badge-warning'>Pending</span>",
+				$delivery->payment_status == 1 ? "<span class='badge badge-success'>Paid</span>" : "<span class='badge badge-warning'>Pending</span>",
 				'
 				<div class="dropdown">
               	<a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
@@ -231,7 +231,7 @@ class DeliveriesController extends CI_Controller
 		$defectives = $this->input->post("defective");
 		$remarks = $this->input->post("remarks");
 		$due_date = $this->input->post('due_date');
-		$payment_status = $this->input->post('payment_status');
+		$payment_status = $this->input->post('payment_status') == "Paid" ? 1 : 0;
 		$supplier = $this->input->post('supplier_id'); 
   
 		$this->rollback_delivery($id);
