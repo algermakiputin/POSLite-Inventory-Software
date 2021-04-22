@@ -1,19 +1,20 @@
-@import url("fonts/font.css");
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600&display=swap');
 
 .form-control {
   border-radius: 2.5px;
 }
 
-html, body {
+body {
   height: 99%;
   width: 100%; 
   color: #141823;
+  overflow-x: hidden;
+  margin-bottom: -20px;
+  border-collapse: collapse;
+  font-family: "Lato", Arial, serif, sans-serif !important;
+  display: none;
 
-}
-
-#page-wrapper {
-  font-size: 1.1em;
-}
+} 
 
 #diagnoses_tab .tab-pane {
 
@@ -66,7 +67,7 @@ html, body {
 }
 
 
-@media screen (min-width: 768px) {
+@media screen and(min-width: 768px) {
 
   .navbar-header {
     width: 250px;
@@ -93,18 +94,7 @@ html, body {
 
 .advance-pricing-wrapper {
   padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5;
-}
-
-
-
-body {
-  overflow-x: hidden;
-  margin-bottom: -20px;
-  border-collapse: collapse;
-  /* font-family: "Roboto", Arial, serif, sans-serif !important; */
-  display: none;
-}
-
+} 
 #wrapper, #page-wrapper {
   min-height: 98%;
   height: auto;
@@ -132,8 +122,7 @@ body {
   background: #eee;
   background-size: cover;
   background-size: 300px 300px;
-  background-repeat: no-repeat;
-
+  background-repeat: no-repeat; 
   height: 300px;
   width: 300px;
 }
@@ -143,7 +132,15 @@ body {
 }
 
 .product-thumbnail {
-  width: 45px;height: 45px;background: #eee;margin: auto ;text-align: center;display: flex;justify-content: center;align-content: center;flex-direction: column;">
+  width: 45px;
+  height: 45px;
+  background: #eee;
+  margin: auto ;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
                                 
 }
 
