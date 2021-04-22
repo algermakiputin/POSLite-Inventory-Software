@@ -15,7 +15,7 @@
       <div class="card login-card">
         <div class="row no-gutters">
           <div class="col-md-5">
-            <img  src="<?php echo base_url('assets/images/login-bg.jpg') ?>" alt="login" class="login-card-img">
+            <img  src="<?php echo base_url('assets/images/login.jpg') ?>" alt="login" class="login-card-img">
           </div>
           <div class="col-md-7">
             <div class="card-body">
@@ -36,7 +36,7 @@
               <?php echo form_open('AuthController/login_validation' )?> 
                   <div class="form-group">
                     <label for="username" class="sr-only">Username</label>
-                    <input type="text" name="username" class="form-control" required placeholder="Username">
+                    <input type="text" name="username" class="form-control" autocomplete="off" required placeholder="Username">
                   </div>
                   <div class="form-group mb-4">
                     <label for="password" class="sr-only">Password</label>
