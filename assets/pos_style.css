@@ -1,76 +1,73 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600&display=swap');
-
 body {
-	margin:0;
-	overflow: hidden; 
-	font-size: 1.71em;
-	font-family: "Lato", Arial, serif, sans-serif !important;
-	color: #141823; 
+    margin: 0;
+    overflow: hidden;
+    font-size: 16px;
+    font-family: "Lato", Arial, serif, sans-serif !important;
+    color: #141823;
 }
- 
 
 #cart th {
-	background-color: #f4f4f5;
-	position: sticky;
-	top: 0;
-	left: 0; 
-	z-index: 100;
-
+    background-color: #f4f4f5;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
 }
 
 #business-info {
-	max-width: 250px;
-   margin: auto;
-   margin-bottom: 20px;
+    max-width: 250px;
+    margin: auto;
+    margin-bottom: 20px;
 }
 
-
-.navbar-nav > li > a {
-	border:solid 1px #555;
-	border-radius: 5px;
-	margin-left: 5px;
-	padding-top: 14px;
-	padding-bottom: 14px;
-	background-color: #444;
-	color: #fff;
+.navbar-nav>li>a {
+    border: solid 1px #555;
+    border-radius: 5px;
+    margin-left: 5px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background-color: #444;
+    color: #fff;
 }
 
 #orderline-wrapper {
-
-	max-height: 450px;
-	overflow: auto;
+    max-height: 450px;
+    overflow: auto;
 }
 
-.navbar-nav > li > a:hover {
-	color: #000;
-} 
+.navbar-nav>li>a:hover {
+    color: #000;
+}
 
 .navbar {
-	background-color: #333;
-/*	background: #333;*/
-	border-radius: 0;
-	border: solid 0 1px 0 1px #000;
-	color: #fff;
-	margin: 0;
-	padding: 0 20px;
+    background-color: #333;
+    /*	background: #333;*/
+    border-radius: 0;
+    border: solid 0 1px 0 1px #000;
+    color: #fff;
+    margin: 0;
+    padding: 0 20px;
 }
+
 .navbar .navbar-text {
-	color: #ddd;
-	margin-left: 0;
-	margin-top: 13px;
-	margin-bottom: 13px;
+    color: #ddd;
+    margin-left: 0;
+    margin-top: 13px;
+    margin-bottom: 13px;
 }
 
 #advance_pricing_options tbody tr:hover {
-	background-color: #eee;
-	cursor: pointer;
+    background-color: #eee;
+    cursor: pointer;
 }
 
 .remove {
-	font-size: 13px;
+    font-size: 13px;
 }
+
 .remove:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .modal {
@@ -78,176 +75,173 @@ body {
 }
 
 .pos-btn-singout {
-  float: right; margin-top: 6px; margin-right: 20px;
+    float: right;
+    margin-top: 6px;
+    margin-right: 20px;
 }
+
 header {
-	height: 60px;
-	background: #2d2626;
+    height: 60px;
+    background: #2d2626;
 }
 
 #receipt {
-	box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
-	padding: 20px 50px;
-	max-height: 400px;
-	overflow: auto;
-	font-size: 12px;
+    box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+    padding: 20px 50px;
+    max-height: 400px;
+    overflow: auto;
+    font-size: 12px;
 }
 
 .r-header {
-	margin-bottom: 10px;
-	
+    margin-bottom: 10px;
 }
 
-
 .r-footer {
-	text-align: center;
-	margin: 30px 0;
-	font-weight: bold;
+    text-align: center;
+    margin: 30px 0;
+    font-weight: bold;
 }
 
 .r-header h3 {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 #left .btn {
-	width: 28%;
-	border-radius: 0;
+    width: 28%;
+    border-radius: 0;
 }
 
 .header h3 {
-	margin: 0;
-	padding: 15px 20px;
-	text-align: center;
-	background: #337ab7;
-	/*background-color: #b1cfe9;*/
-	color: #ffffff;
-	/*color: #000000;*/ 
+    margin: 0;
+    padding: 15px 20px;
+    text-align: center;
+    background: #337ab7;
+    /*background-color: #b1cfe9;*/
+    color: #ffffff;
+    /*color: #000000;*/
 }
 
 .header h3.text-left {
-	text-align: left;
+    text-align: left;
 }
 
 .header .box {
-	border: solid 1px #ddd;
-	padding: 0;
-
+    border: solid 1px #ddd;
+    padding: 0;
 }
 
 .box .content {
-	padding: 20px;
+    padding: 20px;
 }
 
 .header .box.rightnone {
-	border-right: none;
+    border-right: none;
 }
 
 #item-table {
-	border-radius: 5px;
+    border-radius: 5px;
 }
 
 #item-table tr:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 #item-details {
-	padding: 20px 0;
+    padding: 20px 0;
+}
 
-}
 #item-details tr td:first-child {
-	width: 20%;
+    width: 20%;
 }
-.table > tbody > tr > td {
-	border: none !important;
+
+.table>tbody>tr>td {
+    border: none !important;
 }
 
 .main {
-	padding: 0 20px 20px 20px;
-	border-radius: 5px;
+    padding: 0 20px 20px 20px;
+    border-radius: 5px;
 }
 
 .cart {
-	min-height: 250px;
-	padding: 10px;
-	border:solid 0.5px silver;
-
+    min-height: 250px;
+    padding: 10px;
+    border: solid 0.5px silver;
 }
 
 #cart tr td {
-	background: #fff;
-	border-bottom: solid 1px #eee !important;
+    background: #fff;
+    border-bottom: solid 1px #eee !important;
 }
 
 #cart-tbl {
     background-color: #f4f4f5;
     border: solid 1px #eee;
-	overflow: auto;
-	position: relative;
-	border-radius: 5px; 
-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+    overflow: auto;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
 }
 
 #cart {
-	max-height: 330px;
+    max-height: 330px;
 }
 
 #total_amount {
-	float: right;
+    float: right;
 }
 
 .input {
-	height: 200px;
-	border-collapse: collapse;
+    height: 200px;
+    border-collapse: collapse;
 }
 
-
-
 .input #left {
-	padding: 25px 20px;
-	border:solid 0.5px silver;
-	min-height: 210px;
-	border-top: 0;
-
+    padding: 25px 20px;
+    border: solid 0.5px silver;
+    min-height: 210px;
+    border-top: 0;
 }
 
 .quantity-box {
-	border: none;
-	max-width: 50px;
+    border: none;
+    max-width: 50px;
 }
 
 .discount-input {
-	border: none;
-	max-width: 55px;
+    border: none;
+    max-width: 55px;
 }
- 
-.input #right {
-	padding: 20px;
-	border:solid 0.5px silver;
-	border-top: 0;
-	border-left: 0;
-	min-height: 210px;
 
-} 
+.input #right {
+    padding: 20px;
+    border: solid 0.5px silver;
+    border-top: 0;
+    border-left: 0;
+    min-height: 210px;
+}
 
 #name {
-	font-size: 18px;
-	padding: 10px;
+    font-size: 18px;
+    padding: 10px;
 }
 
 #prc {
-	font-size: 18px;
-	padding: 10px;
+    font-size: 18px;
+    padding: 10px;
 }
 
 #process-form input {
-	border-radius: 0;
-	min-height: 35px;
-	border-radius: 5px;
+    border-radius: 0;
+    min-height: 35px;
+    border-radius: 5px;
 }
 
 .form-control[readonly] {
-	background: #ffffff;
+    background: #ffffff;
 }
+
 
 /*#process-form .btn-primary {
 	background-color: #00b050;
