@@ -468,7 +468,7 @@
  		 
  		var sub = remove_comma(price.substring(1)) * quantity;
 
-		$("#cart tbody").append(
+		$("#cart tbody").prepend(
 				'<tr>' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<input name="capital" type="hidden" value="'+ capital +'">' +
