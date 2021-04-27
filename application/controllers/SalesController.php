@@ -14,6 +14,105 @@ class SalesController extends AppController {
 
 	}
 
+	public function index() {
+
+		$data['content'] = 'sales/reports';
+		$data['daily'] = $this->getDailySales();
+		$data['todaysSales'] = $this->getTodaysSales();
+		$data['todaysProfit'] = $this->getTodaysProfit();
+		$data['bestEver'] = $this->bestSales();
+		$data['allTimeSales'] = $this->allTimeSales();
+		$this->load->view('master', $data);
+	}
+
+	public function getTodaysSales() {
+
+		$date = date("Y-m-d");
+		$sales = $this->db->select("SUM(quantity * price) as total")
+							->from('sales_description')
+							->where('DATE_FORMAT(created_at, "%Y-%m-%d") =', $date)
+							->get()
+							->row();
+	 
+		return currency() . number_format($sales->total,2) ?? 0; 
+
+	}
+
+	public function bestSales() {
+
+		$year = date('Y');
+		$sales = $this->db->query('
+					SELECT SUM(price * quantity) as total
+					FROM sales_description
+					GROUP BY DATE_FORMAT(created_at, "%'.$year.'-%m-%d")
+					ORDER BY total DESC
+					LIMIT 1
+				')->row();
+	 
+		return currency() . number_format($sales->total,2) ?? 0; 
+	}
+
+	public function allTimeSales() {
+		
+		$sales = $this->db->select("SUM(price * quantity) as total")
+							->from('sales_description') 
+							->get()
+							->row();
+	 
+		return currency() . number_format($sales->total,2) ?? 0;
+	}
+
+	public function getTodaysProfit() {
+
+		$date = date("Y-m-d");
+		$profit = $this->db->select("SUM((price - capital) * quantity) as total")
+							->from('sales_description')
+							->where('DATE_FORMAT(created_at, "%Y-%m-%d") =', $date)
+							->get()
+							->row();
+	 
+		return currency() . number_format($profit->total,2) ?? 0;
+	}
+
+	public function getDailySales() {
+
+		$today = new DateTime(date('Y-m-d'));
+		$last30Days = new DateTime(date('Y-m-d', strtotime('-30 days')));
+ 
+		$sales = $this->db->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $last30Days->format("Y-m-d"))
+							->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $today->format("Y-m-d"))
+							->get('sales_description')
+							->result();
+	 
+		$data = $this->initDates("day", $last30Days, $today);
+ 
+		foreach ( $sales as $sale) {
+
+			$data['sales'][date("F j", strtotime($sale->created_at))] += $sale->quantity * $sale->price;
+			$data['profit'][date("F j", strtotime($sale->created_at))] += ($sale->price - $sale->capital) * $sale->quantity;
+		} 
+
+		return $data;
+	}
+
+	public function initDates($interval, $from, $to) {
+
+		$sales = array();
+		$profit = array();
+
+		for ( $i = $from; $i <= $to; $i->modify('+1 ' . $interval)) {
+ 
+			$sales[$i->format("F j")] = 0;
+			$profit[$i->format("F j")] = 0;
+		}
+
+		return array(
+			'sales' => $sales,
+			'profit' => $profit
+		);
+	}
+ 
+
 	public function receipt($id) {
 
  		$sales = $this->db->where('id', $id)->get('sales')->row();
@@ -111,11 +210,11 @@ class SalesController extends AppController {
 
 	public function graphSales($range = "week") {
 
-		$data = [];
+		$data = (object) array();
   
 		if ( $range == "week") {
 
-			$dataset = [];
+			$dataset = (object) array();
 			$day = date('w');
 			$week_end = date("Y-m-d");
 			$week_start = date("Y-m-d", strtotime("-7 days"));
@@ -156,7 +255,7 @@ class SalesController extends AppController {
 							->where('DATE_FORMAT(created_at, "%Y-%m") <=', $end)
 							->get('sales_description')
 							->result();
-			$months = ['January', 'February', 'March', 'April','May','June','July','August','September','October','November','December'];
+			$months = array('January', 'February', 'March', 'April','May','June','July','August','September','October','November','December');
 			for ($i = 1; $i <= 12; $i++) {
 
 				$totalSales = 0;
@@ -240,20 +339,20 @@ class SalesController extends AppController {
 		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
 		$transaction_number = "TRN" . sprintf("%04s", ((int)$last_sales_id + 1 )  ); 
 
-		$this->db->insert('sales',[ 
-				'date_time' => get_date_time(),
-				'user_id' => $this->session->userdata('id'),
-				'transaction_number' => $transaction_number
-			]);
+		$this->db->insert('sales',array(
+			'date_time' => get_date_time(),
+			'user_id' => $this->session->userdata('id'),
+			'transaction_number' => $transaction_number
+		));
 
 		$sales = $this->security->xss_clean($sales);
 
 		foreach ($sales as $sale) {
 			$transactionProfit = 0;
-			$data[] = [ 
+			$data[] = array(
 				'barcode' => $sale['id'],
 				'quantity' => $sale['quantity'],
-				'transaction_number' => $transaction_number, 
+				'transaction_number' => $transaction_number,
 				'price' => $sale['price'],
 				'name' => $sale['name'],
 				'discount' => $sale['discount'],
@@ -261,8 +360,7 @@ class SalesController extends AppController {
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(),
 				'capital' => $sale['capital'],
-				
-			];
+			);
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
 			$this->db->where('item_id', $sale['id']);
@@ -318,8 +416,8 @@ class SalesController extends AppController {
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
 				$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity) - $desc->discount;
 				$transactionProfit += $saleProfit;
-				$datasets[] = [ 
-					date('Y-m-d h:i:s A', strtotime($sale->date_time)),   
+				$datasets[] = array(
+					date('Y-m-d h:i:s A', strtotime($sale->date_time)),
 					$desc->name,
 					$desc->quantity,
 					$desc->returned,
@@ -328,7 +426,7 @@ class SalesController extends AppController {
 					'₱' . number_format($desc->discount,2),
 					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount, 2),
 					'₱' . number_format($saleProfit, 2)
-				];
+				);
 
 				$goodsCost += ($desc->capital * $desc->quantity);
 			}
@@ -339,20 +437,20 @@ class SalesController extends AppController {
 
 		$gross = $totalSales - $goodsCost;
 
-		echo json_encode([
-				'draw' => $this->input->post('draw'),
-				'recordsTotal' => $count,
-				'recordsFiltered' => $count,
-				'data' => $datasets,
-				'total_sales' => number_format($totalSales,2),
-				'from' => $from,
-				'to' => $to,
-				'profit' => number_format($transactionProfit,2), 
-				'expenses' => number_format($totalExpenses,2),
-				'gross' => number_format($gross,2),
-				'goodsCost' => number_format($goodsCost, 2),
-				'net' => number_format($gross - $totalExpenses,2 )
-			]);
+		echo json_encode(array(
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => $count,
+			'recordsFiltered' => $count,
+			'data' => $datasets,
+			'total_sales' => number_format($totalSales,2),
+			'from' => $from,
+			'to' => $to,
+			'profit' => number_format($transactionProfit,2),
+			'expenses' => number_format($totalExpenses,2),
+			'gross' => number_format($gross,2),
+			'goodsCost' => number_format($goodsCost, 2),
+			'net' => number_format($gross - $totalExpenses,2 )
+		));
 
 	}
 
@@ -422,13 +520,13 @@ class SalesController extends AppController {
 			$item = $this->db->where('id', $desc->item_id)->get('items')->row();
 			$price = $this->db->where('item_id', $item->id)->get('prices')->row()->price;
 			$sub_total = (int)$price * (int)$desc->quantity;
-			$datasets[] = [
+			$datasets[] = (object) array(
 				$item->id,
 				$item->name,
 				$price,
 				$desc->quantity,
 				$sub_total
-			];
+			);
 		}
 		echo json_encode($datasets);
 		return;
@@ -484,12 +582,12 @@ class SalesController extends AppController {
 
 
 
-		echo json_encode([
-				'draw' => $this->input->post('draw'),
-				'recordsTotal' => $count,
-				'recordsFiltered' => $count,
-				'data' => $datasets, 
-			]);
+		echo json_encode(array(
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => $count,
+			'recordsFiltered' => $count,
+			'data' => $datasets,
+		));
 
 	}
 }

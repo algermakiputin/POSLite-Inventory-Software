@@ -97,7 +97,6 @@ body {
     height: auto;
     font-size: 14.5;
 }
-
 .product-thumbnail img {
     height: inherit;
     width: inherit;
@@ -313,4 +312,42 @@ legend {
     left: 50%;
     top: 40%;
     transform: translate(-50%, -50%);
+}
+.pad-0 {
+    padding: 0;
+}
+#sales-tabs {
+    margin-top: 5px;
+} 
+ 
+#sales-tabs li:first-child.active a {
+    border-left: 0;
+ 
+}
+
+#sales-tabs-content .tab-pane {
+    padding: 15px;
+}
+
+#summary-wrapper {
+    margin:30px;
+}
+.sales-widget {
+    text-align: center;
+    border-right:solid 1px #eee;
+  
+}
+
+.sales-widget .title {
+    font-size: 14px; 
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sales-widget .amount {
+    font-size: 20px;
+}
+
+.sales-widget .caption { 
+    font-size: 12px;
 }
