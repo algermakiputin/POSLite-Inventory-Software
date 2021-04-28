@@ -1,25 +1,29 @@
  
-<h1 class="page-header">Sales Report</h1>
+<div class="row">
+ <div class="col-md-12">
+ <h1 class="page-header">Sales Report</h1>
+ </div>
+</div>
 
 <div class="panel panel-default">
     <div class="panel-heading">Sales overview</div>
     <div class="panel-body pad-0" >
         <ul class="nav nav-tabs" id="sales-tabs">
             <li class="active"><a data-toggle="tab" href="#home">Daily</a></li>
-            <li><a data-toggle="tab" href="#menu1">Weekly</a></li>
-            <li><a data-toggle="tab" href="#menu2">Monthly</a></li>
+            <li><a data-toggle="tab" href="#menu1" id="tab2">Weekly</a></li>
+            <li><a data-toggle="tab" href="#menu2" id="tab3">Monthly</a></li>
         </ul> 
         <div class="tab-content" id="sales-tabs-content">
             <div id="home" class="tab-pane fade in active">
                  <div style="height:300px;">
-                 <canvas id="dailyChart" height="400"></canvas>
+                    <canvas id="dailyChart" height="400"></canvas>
                 </div>
             </div>
             <div id="menu1" class="tab-pane fade">
-                 
+                <canvas id="weeklyChart" height="400"></canvas>
             </div>
             <div id="menu2" class="tab-pane fade">
-                 
+            <canvas id="monthlyChart" height="400"></canvas>
             </div>
         </div>
         
@@ -93,11 +97,12 @@
                 xAxes: [{
                     ticks: {
                         callback: function(tick, index, array) {
-                            return (index % 6) ? "" : tick;
+                            return (index % 4) ? "" : tick;
                         },
                         autoSkip: false,
-                maxRotation: 0,
-                minRotation: 0
+                        maxRotation: 0,
+                        minRotation: 0,
+                        beginAtZero: true
                     }
                 }]
             }
@@ -109,5 +114,106 @@
             options: dailyChartOptions
         })
 
+
+
+        $("#tab2").click(function(e) {
+            var url = '<?php echo base_url('SalesController/getWeeklySales') ?>';
+            $.get(url, function(data, status) {
+                
+                var result = JSON.parse(data);
+                var weeklyChart = $("#weeklyChart")[0].getContext('2d');
+                console.log(result)
+                var weeklyChartData = {
+                    labels: result.labels,
+                    datasets: [
+                        {
+                            label: ' Sales',
+                            data: result.sales,
+                            backgroundColor: 'rgba(37, 119, 181,0.65)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Profit',
+                            data: result.profit,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderWidth: 1
+                        }
+                    ]
+                    
+                } 
+                var weeklyChartOptions = { 
+                    responsive: true,
+                    maintainAspectRatio:false,
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                callback: function(tick, index, array) {
+                                    return (index % 6) ? "" : tick;
+                                },
+                                autoSkip: false,
+                                maxRotation: 0,
+                                minRotation: 0
+                            }
+                        }]
+                    }
+                }
+                var dailyBarChart = new Chart(weeklyChart, { 
+                    type:'bar',
+                    data: weeklyChartData, 
+                    options: weeklyChartOptions
+                });
+            })
+           
+        })
+
+        $("#tab3").click(function(e) {
+            var url = '<?php echo base_url('SalesController/getMonthlySales') ?>';
+            $.get(url, function(data, status) {
+                
+                var result = JSON.parse(data);
+                var weeklyChart = $("#monthlyChart")[0].getContext('2d');
+           
+                var monthlyChartData = {
+                    labels: result.labels,
+                    datasets: [
+                        {
+                            label: ' Sales',
+                            data: result.sales,
+                            backgroundColor: 'rgba(37, 119, 181,0.65)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Profit',
+                            data: result.profit,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderWidth: 1
+                        }
+                    ]
+                    
+                } 
+                var monthlyChartOptions = { 
+                    responsive: true,
+                    maintainAspectRatio:false,
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                callback: function(tick, index, array) {
+                                    return (index % 3) ? "" : tick;
+                                },
+                                autoSkip: false,
+                                maxRotation: 0,
+                                minRotation: 0
+                            }
+                        }]
+                    }
+                }
+                var dailyBarChart = new Chart(weeklyChart, { 
+                    type:'bar',
+                    data: monthlyChartData, 
+                    options: monthlyChartOptions
+                });
+            })
+           
+        })
     })
 </script>

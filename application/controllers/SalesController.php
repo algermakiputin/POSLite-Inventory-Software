@@ -25,6 +25,69 @@ class SalesController extends AppController {
 		$this->load->view('master', $data);
 	}
 
+	public function getMonthlySales() {
+
+		$lastYear = new DateTime( date("Y-m-d", strtotime("-1 year")) );
+		$today = new DateTime( date('Y-m-d'));
+
+		$sales = $this->db->where('DATE_FORMAT(created_at, "%Y-m-d") >=', $lastYear->format("Y-m-d"))
+							->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $today->format('Y-m-d'))
+							->get('sales_description')
+							->result();
+		
+		$data = $this->initDates("month", $lastYear, $today, 'Y M');
+	
+		foreach ( $sales as $sale) {
+
+			$data['sales'][date("Y M", strtotime($sale->created_at))] += $sale->price * $sale->quantity;
+			$data['profit'][date("Y M", strtotime($sale->created_at))] += ($sale->price - $sale->capital) * $sale->quantity;
+		}
+
+		$data['labels'] = array_keys($data['sales']);
+		$data['sales'] = array_values($data['sales']);
+		$data['profit'] = array_values($data['profit']);
+
+		echo json_encode($data);
+	}
+
+	public function getWeeklySales() {
+		
+	 
+		$lastHalfQuarter = new DateTime( date("Y-m-d", strtotime("-24 weeks")) );
+		$today = new DateTime( date("Y-m-d") );
+		$sales = $this->db->where("DATE_FORMAT(created_at, '%Y-%m-%d') >=", $lastHalfQuarter->format('Y-m-d'))
+							->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $today->format('Y-m-d'))
+							->get('sales_description')
+							->result();
+
+		$data = $this->initDates("weeks", $lastHalfQuarter, $today, 'Y-m-d');
+	 
+		foreach ( $data['sales'] as $key => $row) {
+			
+		 
+			$start = (new DateTime($key))->modify('-7 days')->format('Y-m-d');
+			$end = date("Y-m-d", strtotime($key));
+ 
+			foreach ( $sales as $sale) {
+
+				$saleDate = strtotime($sale->created_at);
+
+				if ( $saleDate >= strtotime($start) && $saleDate <= strtotime($end) ) {
+					 
+					$data['sales'][$key] += $sale->quantity * $sale->price ;	
+					$data['profit'][$key] += ($sale->price - $sale->capital) * $sale->quantity;
+				}	
+			
+			}
+
+		}
+		
+		$data['labels'] = array_keys($data['sales']);
+		$data['sales'] = array_values($data['sales']);
+		$data['profit'] = array_values($data['profit']);
+		echo json_encode($data);
+	}
+
 	public function getTodaysSales() {
 
 		$date = date("Y-m-d");
@@ -33,6 +96,11 @@ class SalesController extends AppController {
 							->where('DATE_FORMAT(created_at, "%Y-%m-%d") =', $date)
 							->get()
 							->row();
+
+		foreach ($sales as $sale) {
+
+			$created_at = strtotime($sale->created_at);
+		}
 	 
 		return currency() . number_format($sales->total,2) ?? 0; 
 
@@ -77,7 +145,7 @@ class SalesController extends AppController {
 	public function getDailySales() {
 
 		$today = new DateTime(date('Y-m-d'));
-		$last30Days = new DateTime(date('Y-m-d', strtotime('-30 days')));
+		$last30Days = new DateTime(date('Y-m-d', strtotime('-20 days')));
  
 		$sales = $this->db->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $last30Days->format("Y-m-d"))
 							->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $today->format("Y-m-d"))
@@ -88,22 +156,22 @@ class SalesController extends AppController {
  
 		foreach ( $sales as $sale) {
 
-			$data['sales'][date("F j", strtotime($sale->created_at))] += $sale->quantity * $sale->price;
-			$data['profit'][date("F j", strtotime($sale->created_at))] += ($sale->price - $sale->capital) * $sale->quantity;
+			$data['sales'][date("M j", strtotime($sale->created_at))] += $sale->quantity * $sale->price;
+			$data['profit'][date("M j", strtotime($sale->created_at))] += ($sale->price - $sale->capital) * $sale->quantity;
 		} 
 
 		return $data;
 	}
 
-	public function initDates($interval, $from, $to) {
+	public function initDates($interval, $from, $to, $format = "M j") {
 
 		$sales = array();
 		$profit = array();
-
+		
 		for ( $i = $from; $i <= $to; $i->modify('+1 ' . $interval)) {
  
-			$sales[$i->format("F j")] = 0;
-			$profit[$i->format("F j")] = 0;
+			$sales[$i->format($format)] = 0;
+			$profit[$i->format($format)] = 0;
 		}
 
 		return array(
