@@ -205,8 +205,7 @@ class SalesController extends AppController {
  
 
 	public function sales () {
-		$data['widget_column'] = is_admin() ? 4 : 6;
-		$data['dataset'] = $this->graphSales();
+		$data['widget_column'] = is_admin() ? 4 : 6; 
 		$data['content'] = "sales/index";
 		$this->load->view('master',$data);
 		 
