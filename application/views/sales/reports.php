@@ -162,8 +162,7 @@
                     data: weeklyChartData, 
                     options: weeklyChartOptions
                 });
-            })
-           
+            }) 
         })
 
         $("#tab3").click(function(e) {

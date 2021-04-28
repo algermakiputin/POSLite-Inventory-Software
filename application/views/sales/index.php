@@ -1,36 +1,23 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Sales Reports</h1>
+		<h1 class="page-header">Sales Logs</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
-<div class="row"> 
-	 
-		<div class="col-md-3">
+<div class="row">  
+	<div class="col-md-12">
+		<form class="form-inline" action="/action_page.php">
 			<div class="form-group">
-				<div class="btn-group" id="btn-group-menu" role="group" aria-label="Basic example">
-					<button type="button" class="btn btn-default " data-id="graph">Graphical View</button>
-					<button type="button" class="btn btn-default active" data-id="table">Table View</button> 
-				</div>
+				<label for="email">Filter Reports:</label>
+				<input id="min-date" type="text" placeholder="Starting Date" class="form-control date-range-filter" id="min-date" data-date-format="yyyy-mm-dd">
 			</div>
-		</div>
-		<div  id="table-menu">
-			<div class="col-md-6" >
-				<div class="form-group">
-					<div class="input-group input-daterange">
-						<input type="text" id="min-date" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
-						<div class="input-group-addon">to</div>
-						<input type="text" id="max-date" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:" data-date-min-date="2019-04-18" >
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 text-right">
-				<!-- <div class="form-group">
-					<button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
-				</div> -->
-			</div>
-		</div> 
-
+			<div class="form-group">
+				&nbsp;
+				<input id="max-date" type="text" placeholder="Ending Date" class="form-control date-range-filter" id="max-date" data-date-format="yyyy-mm-dd">
+			</div> 
+		</form>
+		<br/>
+	</div> 
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -40,9 +27,9 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<div id="widgets"> 
-					 
 					
-					<div class="row">
+					
+					<div class="row"> 
 						<div class="col-md-3">
 							<div class="sale-widget text-center">
 								Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
