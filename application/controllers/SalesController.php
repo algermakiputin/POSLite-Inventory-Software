@@ -569,7 +569,7 @@ class SalesController extends AppController {
 			return false;
 		}
  
-		$sales_description = $this->db->where('sales_id', $sales->id)
+		$sales_description = $this->db->where('transaction_number', $transaction_number)
 												->get('sales_description')
 												->result();
 		 
