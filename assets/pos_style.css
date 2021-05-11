@@ -8,46 +8,9 @@ body {
 	color: #141823; 
 }
 
-#due-date-wrapper {
-	display: none;
+#item-table_length {
+	float: left;
 }
- 
-
-#cart th {
-	background-color: #f4f4f5;
-	position: sticky;
-	top: 0;
-	left: 0; 
-	z-index: 100;
-
-}
-
-#business-info {
-	max-width: 250px;
-   margin: auto;
-   margin-bottom: 20px;
-}
-
-
-.navbar-nav > li > a {
-	border:solid 1px #555;
-	border-radius: 5px;
-	margin-left: 5px;
-	padding-top: 14px;
-	padding-bottom: 14px;
-	background-color: #444;
-	color: #fff;
-}
-
-#orderline-wrapper {
-
-	max-height: 450px;
-	overflow: auto;
-}
-
-.navbar-nav > li > a:hover {
-	color: #000;
-} 
 
 .navbar {
 	background-color: #333;

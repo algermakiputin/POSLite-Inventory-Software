@@ -1,4 +1,4 @@
-	$(document).ready(function() {
+$(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr('content');
@@ -336,169 +336,21 @@
 				 	
 			}
 		}
-
-		var returns = {
-
-			init: function() {
-
-				this.return_validation_qty();
-				this.find_order();
-				this.process_return();
-
-			},
-			find_order: function() {
-				$("#return-btn").click(function(e) {
-
-					let transaction_number = $("#transaction_number").val();
-					let data = {};
-					data[csrfName] = csrfHash;
-					data['transaction_number'] = transaction_number;
-					$.ajax({
-						type : "POST",
-						url: base_url + '/SalesController/find',
-						data: data,
-						success: function(data) {
-
-							if (data == 0) {
-
-								return alert("No order found");
-							}
-
-							let result = JSON.parse(data);
-							let table = $("#orderline tbody");
-							table.empty();
-
-							$("#orderline-wrapper").fadeIn();
-
-							$("#label-transaction-number").text(result.sales.transaction_number);
-							$("#label-date").text(result.sales.date_time);
-
-
-							$.each(result.orderline, function(key, value) {
-						 
-								table.append('<tr data-item="'+value.barcode+'" data-orderline="'+value.id+'" data-sales="'+value.sales_id+'">'+ 
-									'<td>'+value.name+'</td>' +
-									'<td>'+value.quantity+'</td>' +
-									'<td>' + 
-										'<select class="form-control" name="condition[]">' +
-											'<option value="good">Good</option>' +
-											'<option value="damaged">Damaged</option>' +
-										'</select>' +
-									'</td>' +
-									'<td>' + 
-										'<input type="text" placeholder="Leave blank if not returned" class="form-control return_quantity" name="return_quantity[]" >' +
-									'</td>' +
-									'<td>' +
-										'<input type="text" class="form-control" name="reason">' +
-									'</td>' +
-								'</tr>'); 
-							});
- 
-
-						},
-						error: function(error) {
-
-							alert("Opps something went wrong please try agian later");
-						}
-
-					});
-				})
-			},
-			return_validation_qty: function() {
-
-				$("body").on("keyup", '.return_quantity', function(e) {
-
-					var row = $(this).parents('tr');
-					var qty = parseInt(row.find('td').eq(1).text());
-					let return_qty = parseInt($(this).val());
-
-					if (return_qty > qty) {
-
-						$(this).val('');
-						alert("Return quantity must not be greather than quantity ordered");
-						
-					}
-				});
-			},
-			process_return: function() {
- 
-				$("#submit-return").click(function(e) { 
-
-					let rows = $("#orderline tbody tr");
-					var dataset = {};
-					dataset[csrfName] = csrfHash;
-					dataset['data'] = [];
- 					
- 					$.each(rows, function(key, value) {
- 			 			 
- 						let val = $(value); 
- 						let item_id = val.data("item");
- 						let orderline_id = val.data('orderline');
- 						let return_qty = val.find("td").eq(3).find("input").val();
- 						let condition = val.find("select option:selected").val();
- 						let product_name = val.find('td').eq(0).text();
- 						let sales_id = val.data('sales');
- 						let reason = val.find("input[name='reason']").val();
-
- 						if (!return_qty) {
- 							return;
- 						}
-
- 						dataset['data'].push({
- 							item_id: item_id,
- 							orderline_id: orderline_id,
- 							return_qty: return_qty,
- 							condition: condition,
- 							name: product_name,
- 							sales_id: sales_id,
- 							reason: reason
- 						});
-
- 					});
-
- 					 
-
- 					if ( !Object.keys(dataset['data']).length )
- 						return alert("Return quantity is empty");
-
- 					$.ajax({
- 						type: 'POST',
- 						url: base_url + 'ReturnsController/insert',
- 						data: dataset,
- 						success: function(data) {
-
- 							if (data == 1) {
- 								$("#orderline-wrapper").hide();
- 								$("#transaction_number").val('');
- 								alert("Return saved successfully");
- 							}else {
-
- 								alert("Opps something went wrong please try agian...");
- 							}
- 						},
- 						error: function(error) {
- 							alert("Opps someting went wrong please try again");
- 						}
- 					})
-				});
-				
-
-			}
-		} 
-
-		general.init();
-		
-		cart.init();
-		returns.init(); 
-
-		scanner.init();
-	})();
-
-	$("#customer").change(function(e) {
-
-		var note = $(this).find("option:selected").data("note");
- 
-		$("#note").val(note);
+	}); 
+	
+	data = {};
+	data[csrfName] = csrfHash;
+	var item_table = $("#item-table").DataTable({
+		processing : true, 
+		serverSide : true,
+		 "bPaginate": true,
+		 dom: "lftpr",
+		pagin:true,
+		ajax : {
+			url : base_url + 'items/data',
+			data : data,
+			type : 'POST'
+		},
 	});
 
 	// Discount Calculator
