@@ -1,6 +1,6 @@
 <div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">Dashboard</h1> 
+    <div class="col-lg-12">
+        <h1 class="page-header">Dashboard</h1> 
     </div> 
 </div>
 
@@ -8,11 +8,36 @@
 echo $this->session->flashdata('errorMessage');
 echo $this->session->flashdata('successMessage'); 
 ?>
-
+<div class="row">
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Orders</h3>
+            Today: <span class="result"><?php echo $orders ?></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Revenue</h3>
+            Today: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $sales; ?></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Expenses</h3>
+            Today: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $expenses ?></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="widget-box">
+            <h3>Total Inventory</h3>
+            Current: <span class="currency"><?php echo currency(); ?></span> <span class="result"><?php echo $inventory_value ?></span>
+        </div>
+    </div>
+</div>
 
 <div class="row">
-	<div class="col-md-8">
-		<div class="panel panel-default">
+    <div class="col-md-8">
+        <div class="panel panel-default">
            <div class="panel-heading">
                Performance
            </div> 
@@ -26,14 +51,15 @@ echo $this->session->flashdata('successMessage');
         <div class="col-md-12">
            <div class="panel panel-default">
                <div class="panel-heading">
-                   Product Ranking: <?php echo date('Y/m/d') ?>
+                   Product Ranking: <?php echo date('F Y') ?>
                </div> 
                <div class="panel-body"> 
                 
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th colspan="2">#</th>
+                            <th colspan="">#</th>
+                            <th>Product Name</th>
                             <th>Sold</th>
                         </tr>
                     </thead>
@@ -61,7 +87,7 @@ echo $this->session->flashdata('successMessage');
         <div class="col-md-12">
            <div class="panel panel-default">
                <div class="panel-heading">
-                   Diagnoses
+                   <i class="fa fa-question-circle" title="Identify products status"></i> Diagnoses
                </div> 
                <div class="panel-body"> 
                    
@@ -71,18 +97,24 @@ echo $this->session->flashdata('successMessage');
                             <tr>
                                 <td>Not Selling</td>
                                 <td>Short Stock</td>
+                                <td>Out of stocks</td>
                             </tr>
                         </thead>
                         
-                        <tr>
+                        <tr style="background-color: #f9f9f9;">
                             <td  style="font-size: 24px;padding: 15px">
                                 <a href="<?php echo base_url('diagnoses') ?>">
                                 <span style="color: #333" data-toggle="tooltip" title="Number of products that are not selling for the last 7 days"><?php echo $not_selling ?></span>
                                 </a>
                             </td>
                             <td style="font-size: 24px;padding: 15px">
-                                <a href="<?php echo base_url('diagnoses') ?>">
+                                <a href="<?php echo base_url('diagnoses?active=2') ?>">
                                 <span style="color: #333" title="Number of products that stocks are below 15" data-toggle="tooltip"><?php echo $low_stocks ?></span> 
+                                </a>       
+                            </td>
+                            <td style="font-size: 24px;padding: 15px">
+                                <a href="<?php echo base_url('diagnoses?active=3') ?>">
+                                <span style="color: #333" title="Run out of stocks" data-toggle="tooltip"><?php echo $no_stocks ?></span> 
                                 </a>       
                             </td>
                         </tr>
@@ -92,7 +124,7 @@ echo $this->session->flashdata('successMessage');
                    
                         <thead>
                             <tr>
-                                <td>Average Sales Per Day</td> 
+                                <td><i class="fa fa-question-circle" title="Average sales per day for the last 30 days"></i> Average Sales Per Day</td> 
                             </tr>
                         </thead>
                         <tr>
@@ -108,6 +140,11 @@ echo $this->session->flashdata('successMessage');
 </div>
 </div>
 <br/>
+<style type="text/css">
+    .panel-heading {
+        font-weight: bold;
+    }
+</style>
 <script src="<?php echo base_url('assets/vendor/chart.min.js') ?>"></script>
 
 <script>
@@ -152,11 +189,11 @@ echo $this->session->flashdata('successMessage');
                     label: 'Today ',
                     data: dataset1,
                     backgroundColor: [
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
-                    'rgba(37, 119, 181,1)',
+                    'rgba(37, 119, 181,0.55)',
+                    'rgba(37, 119, 181,0.55)',
+                    'rgba(37, 119, 181,0.55)',
+                    'rgba(37, 119, 181,0.55)',
+                    'rgba(37, 119, 181,0.55)',
                     ],
                     borderColor: [
                     'rgba(66,139,202,0.5)',
@@ -167,12 +204,12 @@ echo $this->session->flashdata('successMessage');
 
                     ],
                     pointStyle: 'circle', 
-                    pointBackgroundColor: "rgba(255,255,255,0.4)",
-                    pointBorderColor: "rgba(244,244,244,0.5)",
-                    pointHoverBackgroundColor: "rgba(37, 119, 181,1)",
-                    pointHoverBorderColor: "rgba(244,244,244,0.5)",
+                    pointBackgroundColor: "rgba(255,255,255,0.1)",
+                    pointBorderColor: "rgba(244,244,244,0.1)",
+                    pointHoverBackgroundColor: "rgba(37, 119, 181,0.1)",
+                    pointHoverBorderColor: "rgba(244,244,244,0.1)",
                     pointRadius: 1,
-            pointHitRadius: 10,
+                    pointHitRadius: 10,
                     borderWidth: 3
                 },
                 {

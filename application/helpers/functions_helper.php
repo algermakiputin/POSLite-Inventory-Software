@@ -12,6 +12,28 @@
 		return date('Y-m-d H:i:s');
 	}
 
+	function renewal() {
+
+		$renewal_date = new DateTime(date('2021-04-30')); 
+		$today_date = new DateTime(date('Y-m-d'));
+
+		$intervalDays = $renewal_date->diff($today_date)->days; 
+
+
+	 	if ($renewal_date > $today_date && $intervalDays > 30) {
+	 		return [0];
+
+	 	}else if ($renewal_date > $today_date && $intervalDays < 30) {
+	 	 
+	 		 return ["renewal_due", $renewal_date->format('Y-m-d')];
+
+	 	}else if ( $today_date >= $renewal_date) {
+
+	 		return ['expired'];
+	 	}
+
+	}
+
 	function homeDir()
 	{
 	    if(isset($_SERVER['HOME'])) {
@@ -36,9 +58,36 @@
 	}
 
 	function get_license() {
-		$CI =& get_instance();
-		$CI->load->config('license');
-		return $CI->config->item('license');
+	 
+		return "gold";
+	}
+
+
+	function get_license_values() {
+
+		$data['bronze'] = [
+				'items' => 200,
+				'users' => 2,
+				'customers' => 200,
+			];
+
+		$data['silver'] = [
+				'items' => 2000,
+				'users' => 3,
+				'customers' => 2000
+			];
+			
+
+		$data['gold'] = [
+				'items' => 5000000,
+				'users' => 200,
+				'customers' => 5000000
+			];
+
+
+		return $data;
+
+	 
 	}
 
 	function profile() {
@@ -56,7 +105,7 @@
 
 	function noStocks() {
 		$CI =& get_instance();
-		$outOfStocks = $CI->db->select("items.id, items.name,items.description, ordering_level.quantity")
+		$outOfStocks = $CI->db->select("items.barcode, items.id, items.name,items.description, ordering_level.quantity")
 				->from("items")
 				->join("ordering_level", "ordering_level.item_id = items.id", "left")
 				->where('items.status', 1)
@@ -91,32 +140,21 @@
 		$CI->session->set_flashdata('success', $message);
 	}
 
+ 	function showErrorMessage($message) {
+		$CI =& get_instance();
+		$CI->session->set_flashdata('error', $message);
+	}
+
+
 	function license($table) {
 		$CI =& get_instance();
 		 
 
-		$data['bronze'] = [
-				'items' => 200,
-				'users' => 2,
-				'customers' => 200,
-			];
-
-		$data['silver'] = [
-				'items' => 2000,
-				'users' => 2,
-				'customers' => 2000
-			];
-			
-
-		$data['gold'] = [
-				'items' => 5000000,
-				'users' => 200,
-				'customers' => 5000000
-			];
-
-		$license = $CI->config->item('license');
+		$license = get_license();
 
 		$count = $CI->db->get($table)->num_rows();
+
+		$data = get_license_values();
 
 	 
 		if ($count > $data[$license][$table] ) {

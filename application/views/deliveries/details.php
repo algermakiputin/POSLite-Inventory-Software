@@ -9,7 +9,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				Delivery Details
+				<a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-undo"></i> Back</a> &nbsp; Delivery Details
 			</div>
 			<div class="panel-body"> 
 				<div class="row">
@@ -29,6 +29,14 @@
 							<tr>
 								<th>Received By:</th>
 								<td><?php echo $delivery->received_by ?></td>
+							</tr>
+							<tr>
+								<th>Due Date:</th>
+								<td><?php echo $delivery->due_date ?></td>
+							</tr>
+							<tr>
+								<th>Payment Status:</th>
+								<td><?php echo $delivery->payment_status ?></td>
 							</tr>
 						</table>
 					</div>

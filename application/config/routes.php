@@ -54,15 +54,20 @@ $route['backups'] = "BackupController/index";
 
 $route['upgrade'] = "AppController/upgrade";
 
+$route['settings'] = "SettingsController/index";
 
 $route['expenses'] = "ExpensesController/index";
 $route['expenses/new'] = "ExpensesController/new";
 $route['expenses/insert'] = "ExpensesController/insert";
 $route['expenses/reports'] = "ExpensesController/reports";
 
-$route['dashboard'] = "DashboardController/index";
+$route['dashboard'] = "DashboardController/dashboard";
 
 $route['diagnoses'] = "DashboardController/diagnoses";
+
+$route['reports/credits'] = "CreditsController/reports";
+$route['reports/payments'] = "PaymentsController/reports";
+
 
 $route['default_controller'] = 'AuthController/login';
 $route['404_override'] = '';
@@ -84,6 +89,8 @@ $route['items/data'] = "ItemController/data";
 $route['items/edit/(:any)'] = "ItemController/edit/$1";
 $route['items/find'] = "ItemController/find";
 $route['items/delete'] = "ItemController/delete";
+$route['items/expiry'] = "ItemController/expiry_view";
+$route['expired'] = "LicenseController/expired";
 
 $route['categories'] = 'CategoriesController/categories';
 $route['categories/insert'] = 'CategoriesController/insert';
@@ -92,6 +99,8 @@ $route['user/edit/(:any)'] = 'UsersController/edit/$1';
 $route['logout'] = 'AuthController/logout';
 $route['users/history'] = 'UsersController/history';
 $route['pos'] = 'pos_con/pos';
+
+$route['returns'] = "ReturnsController/view";
 
 $route['categories/get'] = 'CategoriesController/get';
 
@@ -102,6 +111,7 @@ $route['customers/open/(:any)'] = "CustomersController/open/$1";
 $route['customers/find'] = "CustomersController/find";
 $route['customers/update'] = "CustomersController/update";
 $route['customers/open-membership'] = "CustomersController/openMembership";
+$route['customer/records/(:any)'] = "CustomersController/records/$1";
 
 $route['suppliers'] = "SuppliersController/index";
 $route['suppliers/insert'] = "SuppliersController/insert";

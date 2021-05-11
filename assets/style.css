@@ -1,25 +1,113 @@
 @import url("fonts/font.css");
 
 .form-control {
-  border-radius: 1px;
+  border-radius: 2.5px;
 }
 
 html, body {
   height: 99%;
-  width: 100%;
+  width: 100%; 
+  color: #141823;
 
 }
 
+#sales_table {
+  display: block;
+  max-height: 550px;
+  overflow-y: scroll;
+}
 
-.navbar-header {
-  width: 250px;
-  background-color: #444;
+#sales_table thead tr th {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#select-wrapper .select2-container--default .select2-selection--single {
+
+      border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px; 
+}
+
+.select2-container--default .select2-selection--single {
+  height: 31px;
+}
+
+#page-wrapper {
+  font-size: 1.1em;
+}
+
+#diagnoses_tab .tab-pane {
+
+  border:solid 1px #ddd;
+  padding: 20px;
+
+}
+
+#expiry_date_table_length,
+#expiry_date_table_filter {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  #widgets .col-md-2 {
+      width: 20% !important;
+  }
+
+}
+
+.widget-box {
+  padding: 20px;
+  border:solid 1px rgba(0,0,0,0.2); 
+  border-top: solid  #337ab7;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  min-height: 103px;
+
+}
+
+.widget-box .currency {
+  color: #999;
+  font-size: 28px;
+}
+
+.widget-box .result {
+  font-size: 23px;
+  color: #000; 
+}
+
+.widget-box h3 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom:4px;
+}
+
+.lighter-bg {
+  background-color: #f9f9f9;
+}
+
+
+@media screen (min-width: 768px) {
+
+  .navbar-header {
+    width: 250px;
+    background-color: #444;
+  } 
 }
 .navbar-static-top {
   margin-bottom: 0;
   background-color: #333;
-  border-bottom: solid #ddd;
-  padding: 2px 0;
+  border-bottom: solid #ddd; 
+}
+
+.navbar-top-links li a {
+  padding: 17px 15px;
+}
+
+.navbar-header {
+  height: 53px;
 }
 
 .navbar-default .navbar-brand {
@@ -30,9 +118,7 @@ html, body {
   padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5;
 }
 
-.sidebar {
-  margin-top: 53px;
-}
+
 
 body {
   overflow-x: hidden;

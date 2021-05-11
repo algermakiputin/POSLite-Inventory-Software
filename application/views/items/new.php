@@ -23,16 +23,16 @@
 					<?php echo form_open_multipart('items/insert', array('data-parsley-validate' => 'true', 'id' => 'item-form', 'method' => 'POST')) ?>
 					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate id="item-form">
 						<div class="col-lg-6 col-md-offset-2 ">
-							<div class="form-group">
+							<div class="row">
+							<div class="form-group col-md-12">
 								<label>Barcode:</label>
 								<input type="text" placeholder="Item Barcode" required="required" class="form-control" name="barcode" value="">
 							</div>
-							<div class="form-group"> 
+							<div class="form-group col-md-12"> 
 								<label>Item Name:</label>					 
 								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
-								
 							</div>
-							<div class="form-group"> 
+							<div class="form-group col-md-12"> 
 								<label>Category:</label> 
 								<select name="category" class="form-control" required="required">
 									<option value="">Select Category</option>
@@ -40,17 +40,36 @@
 										<option value="<?php echo $cat->id ?>"> <?php echo ucwords($cat->name) ?> </option>
 									<?php endforeach; ?>
 								</select>
-							</div> 
-							<div class="form-group">  
-								<label>Base Price:</label>
-								<input type="text" required="required" placeholder="Base Price" name="price" class="form-control" max="500000" id="selling-price">
+							</div>  
+							<div class="form-group col-md-12">  
+									<label>Supplier:</label>
+								<select name="supplier" class="form-control" required="required"> 
+									<option value="">Select Supplier</option>
+									<?php foreach ($suppliers as $supplier): ?>
+										<option value="<?php echo $supplier->id ?>">
+											<?php echo ucwords($supplier->name) ?>
+										</option>
+									<?php endforeach; ?>
+								</select>
 							</div>
+							
+							<div class="form-group col-md-12">  
+								<label>Capital Price:</label>
+								<input type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" id="selling-price">
+							</div>
+							<div class="form-group col-md-12">  
+								<label>Retail Price:</label>
+								<input type="text" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price">
+							</div> 
 
-							<div class="form-group advance-pricing-wrapper">
+							
+							<div class="col-md-12">
+								<div class="form-group advance-pricing-wrapper">
 								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
 							</div>
 							<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="collapse">
-								<legend>Advance Pricing</legend>
+								<legend>Advance Pricing </legend>
+								<p>Enables you to set different prices for a product. Ex wholeslage price or different prices for every group of customers</p>
 								<table class="table table-bordered table-striped" id="advance-pricing-tbl">
 									<thead>
 										<tr>
@@ -70,27 +89,17 @@
 									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD PRICE</button>
 								</div>
 							</fieldset>
-							<div class="form-group">  
-									<label>Supplier:</label>
-								<select name="supplier" class="form-control" required="required"> 
-									<option value="">Select Supplier</option>
-									<?php foreach ($suppliers as $supplier): ?>
-										<option value="<?php echo $supplier->id ?>">
-											<?php echo ucwords($supplier->name) ?>
-										</option>
-									<?php endforeach; ?>
-								</select>
-							</div>
+							</div> 
 
-							<div class="form-group"> 
+							<div class="form-group col-md-12"> 
 								<label>Description:</label> 
 								<textarea rows="5" maxlength="150" placeholder="Description" class="form-control" name="description" required="required"></textarea>
 							</div>
-							<div class="form-group"> 
+							<div class="form-group col-md-6"> 
 								<button class="btn btn-primary">Register Item</button>
 								<button class="btn btn-info" type="reset">Clear</button>
 							</div>
-							
+							</div>
 						</div> 
 						<div class="col-lg-4">
 							<div class="form-group">
@@ -113,10 +122,20 @@
 	<!-- /.col-lg-12 -->
 </div>  
 
-
+<script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function(e) {
+
+		$(document).pos();
+
+		$(document).on('scan.pos.barcode', function(event){
+		  
+				if (event.code.length > 6) { 
+					 
+					 $("#barcode").val(event.code);
+				}
+		}); 
 
 		$("#add-price").click(function(e) {
 

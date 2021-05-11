@@ -4,8 +4,7 @@
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
-<div class="row"> 
-	 
+<div class="row">  
 		<div class="col-md-3">
 			<div class="form-group">
 				<div class="btn-group" id="btn-group-menu" role="group" aria-label="Basic example">
@@ -18,16 +17,16 @@
 			<div class="col-md-6" >
 				<div class="form-group">
 					<div class="input-group input-daterange">
-						<input type="text" id="min-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
+						<input type="text" id="min-date" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="From:">
 						<div class="input-group-addon">to</div>
-						<input type="text" id="max-date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:" data-date-min-date="2019-04-18" >
+						<input type="text" id="max-date" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" data-date-format="yyyy-mm-dd" placeholder="To:" data-date-min-date="2019-04-18" >
 					</div>
 				</div>
 			</div>
 			<div class="col-md-3 text-right">
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<button class="btn btn-default" id="export"><i class="fa fa-file-pdf-o"></i> Export</button>
-				</div>
+				</div> -->
 			</div>
 		</div> 
 
@@ -39,33 +38,43 @@
 
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-				<div id="widgets">
-
-					<div class="col-md-3">
-						<div class="sale-widget text-center">
-							From <i class="fa fa-calendar" data-toggle="tooltip" title="Starting date of sales report" style="font-size: 16px;"></i><br>
-							<b><span id="filter-from"><?php echo date('Y-m-d') ?></span></b>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="sale-widget text-center">
-							To <i class="fa fa-calendar" data-toggle="tooltip" title="Ending date of sales report" style="font-size: 16px;"></i><br>
-							<b><span id="filter-to"><?php echo date('Y-m-d') ?></span></b>
-						</div>
-					</div>
+				<div id="widgets"> 
+					 
 					
-					<div class="col-md-3">
-						<div class="sale-widget text-center">
-							Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
-							<b><span id="total-expense"></span></b>
-						</div>
-					</div>  
+					<div class="row">
+						<div class="col-md-3">
+							<div class="sale-widget text-center">
+								Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
+								<b><span id="total-expense"></span></b>
+							</div>
+						</div>  
 
-					<div class="col-md-3">
-						<div class="sale-widget text-center">
-							Total Sales <i class="fa fa-question-circle" data-toggle="tooltip" title="Total sales is the total amount of sales in a given period of time. Formulated as (Total Number of units sold *(times) price per unit" style="font-size: 16px;"></i><br>
-							<b><span id="total-sales"></span></b>
+						<div class="col-md-3">
+							<div class="sale-widget text-center">
+								Total Sales <i class="fa fa-question-circle" data-toggle="tooltip" title="Total sales is the total amount of sales in a given period of time. Formulated as (Total Number of units sold *(times) price per unit" style="font-size: 16px;"></i><br>
+								<b><span id="total-sales"></span></b>
+							</div>
 						</div>
+
+						<div class="col-md-3">
+							<div class="sale-widget text-center">
+								COGS <i class="fa fa-question-circle" data-toggle="tooltip" title="Cost of Goods Sold(COGS) refers to the cost of producing the goods sold or the capital of product" style="font-size: 16px;"></i><br>
+								<b><span id="total-goods-cost"></span></b>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="sale-widget text-center">
+								Gross Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Gross Profit is the total amount a company makes after deducting the costs associated with making and selling its products." style="font-size: 16px;"></i><br>
+								<b><span id="total-gross"></span></b>
+							</div>
+						</div> 
+					<!-- 	<div class="col-md-3">
+							<div class="sale-widget text-center">
+								Net Income <i class="fa fa-question-circle" data-toggle="tooltip" title="Net Income is equal to total income after deducting the total cost of goods and expenses." style="font-size: 16px;"></i><br>
+								<b><span id="total-net"></span></b>
+							</div>
+						</div>  -->
 					</div>
 					
 				</div>
@@ -90,13 +99,15 @@
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
-								<th >Date</th> 
-								<th >Staff</th>
+								<th >Date Time</th>  
 								<th >Item Name</th> 
 								<th >Quantity</th>
+								<th> Returned</th>
+								<th >Capital</th>
 								<th >Price</th>
-								<th>Discount</th>
+								<th>Discount</th> 
 								<th >Total</th>   
+								<th> Transaction Profit</th>
 							</tr>
 						</thead>
 						<tbody></tbody>

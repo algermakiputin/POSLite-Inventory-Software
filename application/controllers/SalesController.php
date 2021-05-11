@@ -1,6 +1,7 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class SalesController extends CI_Controller {
+require_once(APPPATH."controllers/AppController.php");
+class SalesController extends AppController {
 
 	public function __construct() {
 
@@ -10,7 +11,54 @@ class SalesController extends CI_Controller {
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Login Is Required</div>');
 			redirect(base_url('login'));
 		}
+
 	}
+
+	public function receipt($id) {
+
+ 		$sales = $this->db->where('transaction_number', $id)->get('sales')->row();
+
+
+ 		if (!$sales)
+ 			return redirect('/');
+
+ 		$orderline = $this->db->where('transaction_number', $sales->transaction_number)->get('sales_description')->result();
+
+ 		$sales_person = $this->db->where('id', $sales->user_id)->get('users')->row();
+
+ 		$sales_person = $sales_person ? $sales_person->name : "Not found";
+ 		
+ 		$data['total'] = 0;
+ 		$data['discount'] = 0;
+ 		$data['sale'] = $sales;
+ 		$data['orderline'] = $orderline;
+ 		$data['sales_person'] = $sales_person;
+
+		$this->load->view('sales/receipt', $data);
+	} 
+
+	public function customer_receipt($transaction_number) {
+
+ 		$sales = $this->db->where('transaction_number', $transaction_number)->get('sales')->row();
+
+
+ 		if (!$sales)
+ 			return redirect('/');
+
+ 		$orderline = $this->db->where('transaction_number', $sales->transaction_number)->get('sales_description')->result();
+
+ 		$sales_person = $this->db->where('id', $sales->user_id)->get('users')->row();
+
+ 		$sales_person = $sales_person ? $sales_person->name : "Not found";
+ 		
+ 		$data['total'] = 0;
+ 		$data['discount'] = 0;
+ 		$data['sale'] = $sales;
+ 		$data['orderline'] = $orderline;
+ 		$data['sales_person'] = $sales_person;
+
+		$this->load->view('sales/receipt', $data);
+	} 
  
 
 	public function sales () {
@@ -131,26 +179,18 @@ class SalesController extends CI_Controller {
 
 		foreach($daterange as $date){
 	 	  	
-		 	$sales = $this->db->where('DATE_FORMAT(date_time,"'.$sqlDateFormat.'") =', $date->format($dateFormat)) 
-						->get('sales')
-						->result();
+		 	$sales = $this->db->select('SUM(price * quantity) as total_sales')
+		 						->from('sales_description')
+		 						->where('DATE_FORMAT(created_at,"'.$sqlDateFormat.'") =', $date->format($dateFormat)) 
+								->get()
+								->row();
 			
-		    	if ($sales) {
-		    		foreach ($sales as $sale) {
-			    		$description = $this->getSalesDescription($sale->id);
-			    		
-					foreach ( $description as $descr) {
-						$item = $this->db->where('id', $descr->item_id)->get('items')->row();
-						$total += $descr->price * $descr->quantity;
-					}	
-				}
+		   
+			$total += $sales->total_sales;
+			$datasets[$date->format($format)][] = round($total,2);
+	     
 
-				$datasets[$date->format($format)][] = round($total,2);
-		    	}else {
-		    		$datasets[$date->format($format)][] = 0;
-		    	}
-
-		    	$total = 0;
+	    	$total = 0;
 		} 
 		return $datasets;
 	}
@@ -179,56 +219,94 @@ class SalesController extends CI_Controller {
 		return $sunday = strtotime(date("Y-m-d h:i:s")." -6 days");
 	}
 
-	public function getSalesDescription($id) {
+	public function getSalesDescription($transaction_number) {
 		 
-		return $this->db->where('sales_id', $id)->get('sales_description')->result();
+		return $this->db->where('transaction_number', $transaction_number)->get('sales_description')->result();
  
 	}
 
 	public function insert() {
 		$data = [];
 		$sales = $this->input->post('sales');
+		$payment_type = $this->input->post('payment_type');
+		$customer_name = $this->input->post('customer_name');
+		$customer_id = $this->input->post('customer_id');
+		$total = $this->input->post('total');
+		$due_date = $this->input->post('due_date');
+		$discount = $this->input->post('discount');
+		$amount_due = $this->input->post('amount_due');
+
 		$this->load->model("PriceModel");
 		$this->db->trans_begin();
 
-		$this->db->insert('sales',[
-				'id' => null ,
+		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
+		$transaction_number = "TRN" . sprintf("%04s", ((int)$last_sales_id + 1 )  ); 
+
+		$this->db->insert('sales',[ 
 				'date_time' => get_date_time(),
-				'user_id' => $this->session->userdata('id')
-			]);
-		$sales_id = $this->db->insert_id();
+				'user_id' => $this->session->userdata('id'),
+				'transaction_number' => $transaction_number,
+				'customer_id' => $customer_id,
+				'payment_type' => $payment_type,
+				'customer_name' => $customer_name,
+				'discount' => $discount,
+				'amount_due' => $amount_due,
+				'total' => $total
+ 			]);
+
 		$sales = $this->security->xss_clean($sales);
 
 		foreach ($sales as $sale) {
 			$transactionProfit = 0;
 			$data[] = [ 
-				'item_id' => $sale['id'],
+				'barcode' => $sale['id'],
 				'quantity' => $sale['quantity'],
-				'sales_id' => $sales_id, 
+				'transaction_number' => $transaction_number, 
 				'price' => $sale['price'],
 				'name' => $sale['name'],
 				'discount' => $sale['discount'],
 				'profit' => $transactionProfit,
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(),
+				'capital' => $sale['capital'],
+				'sales_id' => $last_sales_id + 1
+				
 			];
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
 			$this->db->where('item_id', $sale['id']);
 			$this->db->update('ordering_level');
 		}
+
+		if ( $payment_type == "credit") {
+
+			$this->db->insert('credits', array(
+				'transaction_number' => $transaction_number,
+				'name' => $customer_name,
+				'total' => $total,
+				'date' => date('Y-m-d H:i:s'),
+				'customer_id' => $customer_id,
+				'due_date' => date('Y-m-d h:i:s', strtotime($due_date)),
+				'status' => 0
+			));
+		}
  
 
 		$this->db->insert_batch('sales_description', $data);
 
+
+
 		if ($this->db->trans_status() === FALSE)
-		{
+		{	
+
 		        $this->db->trans_rollback();
+
+
 		        return false;
 		}
 		 
 		$this->db->trans_commit(); 
-		echo $sales_id;
+		echo $transaction_number;
 		return;
 	}
 
@@ -241,9 +319,13 @@ class SalesController extends CI_Controller {
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
 		$sales = $this->filterReports($from, $to);
+
+ 
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
+		$gross = 0;
+		$goodsCost = 0;
 		$expenses = $this->db->select("SUM(cost) as total")
 							->where('date >=', $from)
 							->where('date <=', $to)
@@ -253,39 +335,50 @@ class SalesController extends CI_Controller {
 		if ($expenses) {
 			$totalExpenses = $expenses->total;
 		}
-
-		foreach ($sales as $sale) {
-			$sales_description = $this->db->where('sales_id', $sale->id)->get('sales_description')->result();
+ 
+		foreach ($sales as $desc) {
+		 	
 			$sub_total = 0;
-			foreach ($sales_description as $desc) {
-		 		$item = $this->db->where('id', $desc->item_id)->get('items')->row();
-		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
-		 		$staff = $user ? $user->username : 'Not found';
-				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
-				$saleProfit = (($desc->price - $desc->profit) * $desc->quantity) - $desc->discount;
-				$transactionProfit += $saleProfit;
-				$datasets[] = [ 
-					date('Y-m-d', strtotime($sale->date_time)),  
-					$staff,
-					$desc->name,
-					$desc->quantity,
-					'₱' . number_format((float)$desc->price),
-					'₱' . number_format($desc->discount),
-					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount) 
-				];
-			}
-			$totalSales += $sub_total;
+ 
+	 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
+	 		$staff = $user ? $user->username : 'Not found';
+			$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
+			$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity) - $desc->discount;
+			$transactionProfit += $saleProfit;
+			$datasets[] = [ 
+				date('Y-m-d h:i:s A', strtotime($desc->created_at)),   
+				$desc->name,
+				$desc->quantity,
+				$desc->returned,
+				'₱' . number_format($desc->capital,2),
+				'₱' . number_format($desc->price,2),
+				'₱' . number_format($desc->discount,2),
+				'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount, 2),
+				'₱' . number_format($saleProfit, 2)
+			];
+
+			$goodsCost += ($desc->capital * $desc->quantity);
+	 
+			$totalSales += $sub_total; 
+			
 		}
+
+	
+		$gross = $totalSales - $goodsCost;
+
 		echo json_encode([
 				'draw' => $this->input->post('draw'),
 				'recordsTotal' => $count,
 				'recordsFiltered' => $count,
 				'data' => $datasets,
-				'total_sales' => number_format($totalSales),
+				'total_sales' => number_format($totalSales,2),
 				'from' => $from,
 				'to' => $to,
-				'profit' => number_format($transactionProfit), 
-				'expenses' => number_format($totalExpenses)
+				'profit' => number_format($transactionProfit,2), 
+				'expenses' => number_format($totalExpenses,2),
+				'gross' => number_format($gross,2),
+				'goodsCost' => number_format($goodsCost, 2),
+				'net' => number_format($gross - $totalExpenses,2 )
 			]);
 
 	}
@@ -317,11 +410,36 @@ class SalesController extends CI_Controller {
 		$from = $from ? $from : date('Y-m-d');
 		$to = $to ? $to : date('Y-m-d'); 
 
-		return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
-					->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
-					->order_by('id', 'DESC')
-					->get('sales', $this->start, $this->limit)->result();
+		return $this->db->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $to)
+								->order_by('id', 'DESC')
+								->get('sales_description', $this->start, $this->limit)
+								->result();
 		 
+	}
+
+	public function find() {
+
+		$transaction_number = $this->input->post('transaction_number');
+ 
+
+		$sales = $this->db->where('transaction_number', $transaction_number)
+								->get('sales')
+								->row();
+ 
+		if (!$sales) {
+ 			echo 0;
+			return false;
+		}
+
+		$sales_description = $this->db->where('sales_id', $sales->id)
+												->get('sales_description')
+												->result();
+		 
+		echo json_encode([
+			'sales' => $sales,
+			'orderline' => $sales_description
+		]);
 	}
 
 	public function details() {
@@ -342,6 +460,65 @@ class SalesController extends CI_Controller {
 		}
 		echo json_encode($datasets);
 		return;
+	}
+
+
+	/*
+		Get daily transactions for logged in user
+	*/
+	public function get_daily_transactions() {
+
+		$date = date('Y-m-d');
+		$user_id = $this->session->userdata('id');
+
+		$datasets = [];
+
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]'); 
+
+		$sales = $this->db->select("sales.*, SUM(sales_description.price * sales_description.quantity) as sub")
+								->from('sales')
+								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number')
+								->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") =', $date)
+								->where('sales.user_id', $user_id)
+								->like("sales.transaction_number", $search, "BOTH")
+								->group_by('sales.id')
+								->order_by('id', 'DESC')
+								->limit($limit,$start)
+								->get();
+
+		
+		$count = $sales->num_rows();
+
+		$sales = $sales->result();
+
+
+		foreach ($sales as $sale) {
+
+			$datasets[] = [
+					date('Y-m-d h:i:s A', strtotime($sale->date_time)),
+					$sale->transaction_number, 
+					$this->session->userdata('username'),
+					currency() . number_format($sale->sub, 2),
+					'<a 
+						class="btn btn-primary btn-sm" 
+						target="popup" 
+						onclick="window.open(\''.base_url('SalesController/receipt/' . $sale->transaction_number).' \', \'popup\', \'width=800,height=800\' )">
+					 	View Receipt
+						</a>'
+				];
+		}
+
+
+
+		echo json_encode([
+				'draw' => $this->input->post('draw'),
+				'recordsTotal' => $count,
+				'recordsFiltered' => $count,
+				'data' => $datasets, 
+			]);
+
 	}
 }
 ?>

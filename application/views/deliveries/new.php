@@ -28,29 +28,43 @@
 							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
 							<div class="row">
 								<div class="col-md-3">
-									<div class="form-group">
-										<label>Select Supplier</label>
-										<select class="form-control" name="supplier_id" required="required">
-											<option value="">Select Supplier</option>
-											<?php foreach ( $suppliers as $supplier ): ?>
-												<option value="<?php echo $supplier->id ?>"><?php echo $supplier->name ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-									<div class="form-group">
-										<label>Delivery Date</label>
-										<input type="date" name="delivery_date" class="form-control">
-									</div> 
+									<fieldset>
+										<legend>Delivery Details</legend>
+											<div class="form-group">
+											<label>Select Supplier</label>
+											<select class="form-control" name="supplier_id" required="required">
+												<option value="">Select Supplier</option>
+												<?php foreach ( $suppliers as $supplier ): ?>
+													<option value="<?php echo $supplier->id ?>"><?php echo $supplier->name ?></option>
+												<?php endforeach; ?>
+											</select>
+										</div>
+										<div class="form-group">
+											<label>Delivery Date</label>
+											<input type="text" autocomplete="off" required  placeholder="Delivery Date" name="delivery_date" class="form-control date-range-filter" id="delivery_date" autocomplete="off" data-date-format="yyyy-mm-dd">
+										</div> 
+										<div class="form-group">
+											<label>Due Date</label>
+											<input type="text" autocomplete="off" required autocomplete="off" placeholder="Due Date" name="due_date" class="form-control date-range-filter" id="due_date" autocomplete="off" data-date-format="yyyy-mm-dd">
+										</div> 
+										<div class="form-group">
+											<label>Payment Status</label>
+											<select name="payment_status" required class="form-control">
+												<option value="Pending">Pending</option>
+												<option value="Paid">Paid</option>
+											</select>
+										</div> 
+									</fieldset>
 								</div>
 								<div class="col-md-9">
 									<fieldset>
-								<legend>Delivery Details</legend>
+								<legend>Order Details</legend>
 								<table class="table table-bordered" id="deliveryDetailsTable">
 									<thead>
 										<tr>
-											<th>Enter Product</th>
+											<th>Enter Product</th> 
 											<th>Expiry Date</th>
-											<th>Price/unit</th>
+											<th>Price/unit</th> 
 											<th>QTY</th>
 											<th>Defective</th>
 											<th>Remarks</th>
@@ -59,26 +73,25 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td> 
-												<input type="text" name="product[]" class="form-control product" placeholder="Type Product Name">
+											<td width="35%"> 
+												<input type="text" required name="product[]" class="form-control product" placeholder="Type Product Name">
 												<input type="hidden" name="product_id[]" >
+											</td> 
+											<td width="15%">
+											 	<input type="text" name="expiry_date[]" autocomplete="off" data-date-format="yyyy-mm-dd" placeholder="Expiry Date" class="form-control date-range-filter" required="required">
 											</td>
-											<td> 
-
-												<input type="date"  name="expiry_date[]" class="form-control" required="required"> 
+											<td width="12%">
+												<input type="text" autocomplete="off" name="price[]" placeholder="Price Per Unit" class="form-control" required="required">
 											</td>
 											
-											<td>
-												<input type="text" name="price[]" placeholder="Price Per Unit" class="form-control" required="required">
+											<td width="10%">
+											 	<input type="number" name="quantity[]" autocomplete="off" min="0" value="0" placeholder="QTY" class="form-control" required="required">
 											</td>
-											<td>
-											 	<input type="text" name="quantity[]" placeholder="QTY" class="form-control" required="required">
+											<td width="10%">
+												<input type="number" name="defective[]" autocomplete="off" min="0" value="0" placeholder="Defectives" class="form-control" required="required"> 
 											</td>
-											<td>
-												<input type="text" name="defective[]" placeholder="Defectives" class="form-control" required="required"> 
-											</td>
-											<td> 
-												<input type="text" class="form-control" placeholder="Additional Info" name="remarks[]"> 
+											<td width="16%"> 
+												<input type="text" autocomplete="off" class="form-control" placeholder="Additional Info" name="remarks[]"> 
 											</td>
 											<td></td>
 										</tr>
@@ -90,7 +103,7 @@
 							</fieldset>
 								</div>
 							</div>
-							
+							<hr>
 							<div class="form-group text-right">
 									 
 								<button type="reset" class="btn btn-info">Clear</button>
@@ -130,6 +143,8 @@
 		$(".product").autocomplete({
 			lookup: products,
 			onSelect: function(suggestion) { 
+
+				console.log(suggestion);
 				$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
 				$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
 			}
@@ -149,6 +164,13 @@
 			})
 			rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
 			index++;
+
+			$('.date-range-filter').datepicker({
+					useCurrent : false,
+					todayHighlight: true,
+    				toggleActive: true,
+    				autoclose: true,
+				});
 
 		});
 

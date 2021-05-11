@@ -1,77 +1,340 @@
-	$(document).ready(function() {
+$(document).ready(function() {
 	var base_url = $("meta[name='base_url']").attr('content');
 	var csrfName = $("meta[name='csrfName']").attr('content');
 	var csrfHash = $("meta[name='csrfHash']").attr('content');
 	var license = $("meta[name='license']").attr('content');
+	var subTotal = 0;
 	var totalAmountDue = 0;
 	var totalDiscount = 0;
 	var transactionComplete = false;
-	var currency = '₱';
+	var discountAmount = 0;
+	var currency = '₱'; 
+ 	var data = {};
+ 	var item_table;
+ 	var orders_table;
+	data[csrfName] = csrfHash;
+
+	(function() {
+
+		var cart = {
+
+			init: function() {
+				this.loadProducts();
+				this.selectProduct();
+				this.orders();
+			},
+
+			loadProducts: function() {
+
+				item_table = $("#item-table").DataTable({
+					processing : true, 
+					serverSide : true,
+					 "bPaginate": true,
+					pagin:true,
+					pagingType: "full",
+					ajax : {
+						url : base_url + 'items/data',
+						data : data,
+						type : 'POST'
+					},
+				});
+			},
+			selectProduct: function() {
+
+				$("#item-table").on('click', 'tbody tr', function(event) {
 
 
-	var dHeight = parseInt($(document).height());
- 	
-	dHeight = dHeight - 60;
-	$(".header .box").css('height', dHeight + 'px');
-	$(".header .box").css('overflow-y', 'auto');
-	$("#cart-tbl").css('min-height', (dHeight - (80 + 231 + 25)) + 'px');
-	$("#cart-tbl").css('max-height', (dHeight - (80 + 150 + 231)) + 'px');
+					var id = $(this).find('input[name="item-id"]').val();
+					var name = $(this).find('td').eq(0).text(); 
+					var price = $(this).find('td').eq(3).text();
+					var description = $(this).find('td').eq(1).text();
+					var pricing = $(this).find('input[name="advance_pricing"]').val();
+					var capital = $(this).find('input[name="capital"]').val();
+					var item_unit = $(this).find('td').eq(3).text();
+					var stocks = $(this).find('td').eq(2).text();
 
+					if ( parseInt(stocks) <= 0) {
 
-	$("body").on('click', '#advance_pricing_options tbody tr', function() {
-  
-  		$(this).find("input[type='radio']").prop('checked', true);
-  	});
-
-	window.addEventListener('selectstart', function(e){ e.preventDefault(); });
-	$(document).pos();
-	$(document).on('scan.pos.barcode', function(event){
-		if (license === "silver" || license === "gold") {
-			if (event.code.length > 5) {
-				data = {};
-				data[csrfName] = csrfHash;
-				data['code'] = event.code;
-			
-				$.ajax({
-					type : 'POST',
-					url : base_url + 'items/find',
-					data : data,
-					success : function(data) {
-						if (data) {
-							var result = JSON.parse(data);
-							var quantity = 1;
-						 	var subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-						 	totalAmountDue += parseFloat(subtotal);
- 
-				  	 		var quantity = 1;
-						 	var subtotal = parseInt(result.quantity) * parseFloat($("#price").text().substring(1));
-						 	totalAmountDue += parseFloat(result.subtotal);
-							$("#cart tbody").append(
-									'<tr>' +
-										'<input name="id" type="hidden" value="'+ result.id +'">' +
-										'<td>'+ result.name +'</td>' +
-										'<td><input data-stocks="'+result.quantity+'" data-remaining="'+result.quantity+'" data-id="'+result.id+'" name="qty" type="text" value="'+quantity+'" class="quantity-box"></td>' +
-										'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
-										'<td>'+ result.price +'</td>' +
-							 			
-										'<td><span class="remove" style="font-size:12px;"><i class="fa fa-trash" title="Remove"></i></span></td>' +
-									'</tr>'
-								);
-							recount();
-							$("payment").val('');
-							$("change").val(''); 
-
-							recount();
-							$("payment").val('');
-							$("change").val('');
-						}else 
-							alert('No item found in the database');
-					 
+						return alert("Not enough stocks");
 					}
-				})
+				 	 
+			 		if (itemExist(id) == false) {
+				 		
+			 			var advance_pricing = JSON.parse(pricing);
+						var enable_ap = Object.keys(advance_pricing).length;
+
+						$("input[name='quantity-enter']").focus();
+						$("#product-name").text(name);
+						$("#item_id").val(id);
+						$("#capital").val(capital);
+						$("#item_unit").val(item_unit);
+						$("#stocks").val(stocks);
+
+						$("#advance_pricing_options tbody").empty(); 
+						$("#advance_pricing_options tbody").append("<tr>" +
+									"<td>Retail Price</td>" +
+									"<td>"+price+"</td>" +
+									'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
+								"</tr>"
+								);
+
+						$.each(advance_pricing, function(key, value) {
+
+							$("#advance_pricing_options tbody").append("<tr>" +
+									"<td>"+value.label+"</td>" +
+									"<td>"+ currency + number_format(value.price) +"</td>" +
+									'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
+								"</tr>"
+								);			
+						});
+			 	
+						
+						// var price_options = JSON.parse(pricing);
+						// console.log(price_options);
+						$("#advance_pricing_modal").modal('toggle'); 
+						$("#quantity").focus();
+						$("payment").val('');
+						$("change").val('');
+				 	} 
+
+				 	recount();
+				});
+			},
+			orders: function() {
+
+				orders_table = $("#transaction-history-tbl").DataTable({
+					processing : true,
+					serverSide : true,
+					ajax: {
+						url: base_url + "SalesController/get_daily_transactions",
+						data: data,
+						type: 'POST'
+					},
+					pagingType: 'full'
+
+				});
+
 			}
-		} else {
-			alert("Your license does not support Barcode Feature, Upgrade Now!");
+		}
+
+		var general = {
+
+			init: function() {
+
+				var dHeight = parseInt($(document).height());
+ 	
+				dHeight = dHeight - 60;
+				$(".header .box").css('height', dHeight + 'px');
+				$(".header .box").css('overflow-y', 'auto');
+				$("#cart-tbl").css('min-height', (dHeight - ( 225 )) + 'px');
+				$("#cart-tbl").css('max-height', (dHeight - (   261)) + 'px');
+
+
+				$("body").on('click', '#advance_pricing_options tbody tr', function() {
+			  
+			  		$(this).find("input[type='radio']").prop('checked', true);
+			  	});
+
+
+				$("#return").click(function(e) {
+
+					$("#return-modal").modal("toggle");
+				});
+ 
+			 
+
+			}
+		}
+
+		var scanner = {
+
+			init: function() {
+
+				$("#btn").click(function(e) {
+ 					var row = $("#cart tbody tr").length; 
+								var payment = $("#payment").val(); 
+						 	 
+						 		if (row) { 
+						 			
+									$("#payment-modal").modal("toggle");
+
+										$("#payment-label").html(currency + number_format(totalAmountDue));
+			 
+ 
+								}else {
+
+									alert("Please add some items");
+								}
+ 								
+ 								return false;
+ 
+				  				$("#process-form").submit();
+				})
+			 	
+			 	$("body").keydown(function( e ) {
+
+
+				 		if (e.keyCode === 13) {
+	 						 
+				  			if ($("#advance_pricing_modal").hasClass("in")) {
+
+				  				$("#add-product").click();
+				  				
+				  			}  else { 
+				  			 
+								var row = $("#cart tbody tr").length; 
+								var payment = $("#payment").val(); 
+						 	 
+						 		if (row) { 
+						 			
+									$("#payment-modal").modal("toggle");
+
+										$("#payment-label").html(currency + number_format(totalAmountDue));
+			 
+ 
+								}else {
+
+									alert("Please add some items");
+								}
+ 								
+ 								return false;
+ 
+				  				$("#process-form").submit();
+				  			}
+				  		 	
+				  		} 
+  
+
+				  		if (e.keyCode === 112) { 
+				  		 
+				  			$("#payment").focus();
+				  			return false; 
+				  			 
+				  		}
+
+				  		if (e.keyCode == 119) { 
+				  			
+				  			$("#open-transactions").click();  
+				  		} 
+
+				  		if (e.keyCode == 118) { 
+				  			
+				  			$("#return-modal").modal("toggle"); 
+				  		}
+				 	});
+
+			 	$("#payment-button").click(function(e) {
+
+			 		e.preventDefault();
+
+			 		var customer = $("#customer").val();
+			 		var payment_type = $("#payment-type").val();
+			 		var customer_id = $("#customer").val();
+			 		var customer_name = $("#customer option:selected").text();
+			 		var due_date = $("#due_date").val();
+
+			 		if ( payment_type == "credit" && customer == "")
+			 			return alert("Customer is required when payment type is credit");
+
+
+			 		if ( payment_type == "credit" && due_date == "")
+			 			return alert("Due date is required");
+
+			 		$("#customer").val("");
+			 		$("#payment-type").val("cash");   
+					$("#payment-modal").modal({backdrop: 'static', keyboard: false, "show": true,});
+
+				 	 
+
+					if ( customer_id == "") {
+						customer_name = "";
+					}
+
+					process_transaction(customer, customer_name, payment_type, due_date);
+
+			 	});
+
+				$(document).pos();
+				$(document).on('scan.pos.barcode', function(event){
+ 			 
+					if (license === "silver" || license === "gold") {
+						if (event.code.length > 6) {
+							data = {};
+							data[csrfName] = csrfHash;
+							data['code'] = event.code;
+						 
+							$.ajax({
+								type : 'POST',
+								url : base_url + 'items/find',
+								data : data,
+								success : function(data) {
+									if (data) {
+
+										let result = JSON.parse(data);
+										if ( itemExist(result.id))
+											return false;
+
+										let id = result.id;
+										let name  = result.name
+										let quantity = 1;
+										let capital = result.capital;
+										let price = result.price;
+									 	let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+									 	totalAmountDue += parseFloat(subtotal);
+			 
+							  	 	 	
+							  	 	 	let advance_pricing = result.advance_pricing;
+										let enable_ap = Object.keys(advance_pricing).length;
+
+										$("#product-name").text(name);
+										$("#item_id").val(id);
+										$("#capital").val(capital);
+
+
+										$("#advance_pricing_options tbody").empty(); 
+										$("#advance_pricing_options tbody").append("<tr>" +
+													"<td>Retail Price</td>" +
+													"<td>"+price+"</td>" +
+													'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
+												"</tr>"
+												);
+
+										$.each(advance_pricing, function(key, value) {
+
+											$("#advance_pricing_options tbody").append("<tr>" +
+													"<td>"+value.label+"</td>" +
+													"<td>"+ currency + (value.price) +"</td>" +
+													'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
+												"</tr>"
+												);			
+										});
+							 	 
+										// var price_options = JSON.parse(pricing);
+										// console.log(price_options);
+
+										$("#advance_pricing_modal").modal('toggle'); 
+										$("#quantity").focus();
+										recount();
+										$("payment").val('');
+										$("change").val(''); 
+
+										recount();
+										$("payment").val('');
+										$("change").val('');
+									}else 
+										alert('No item found in the database');
+								 
+								}
+							})
+						}
+					} else {
+						alert("Your license does not support Barcode Feature, Upgrade Now!");
+					}
+				}); 
+
+
+				 	
+			}
 		}
 	}); 
 	
@@ -90,51 +353,63 @@
 		},
 	});
 
-	$("#item-table").on('click', 'tbody tr', function(event) {
-		var id = $(this).find('input[name="item-id"]').val();
-		var name = $(this).find('td').eq(0).text(); 
-		var price = $(this).find('td').eq(2).text();
-		var description = $(this).find('td').eq(1).text();
-		var pricing = $(this).find('input[name="advance_pricing"]').val();
-	 	 
- 		if (itemExist(id) == false) {
-	 		
- 			var advance_pricing = JSON.parse(pricing);
-			var enable_ap = Object.keys(advance_pricing).length;
+	// Discount Calculator
 
-			$("#product-name").text(name);
-			$("#item_id").val(id);
+	$("#discount_type").change(function(e) {
 
+		$("#discount").val("");
 
-			$("#advance_pricing_options tbody").empty(); 
-			$("#advance_pricing_options tbody").append("<tr>" +
-						"<td>Base Price</td>" +
-						"<td>"+price+"</td>" +
-						'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
-					"</tr>"
-					);
+		totalAmountDue = totalAmountDue + discountAmount;
+		discountAmount = 0;
+		$("#payment-label").text( currency + number_format(totalAmountDue));
 
-			$.each(advance_pricing, function(key, value) {
-
-				$("#advance_pricing_options tbody").append("<tr>" +
-						"<td>"+value.label+"</td>" +
-						"<td>"+ currency + number_format(value.price) +".00</td>" +
-						'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'.00" class="radio"></td>' +
-					"</tr>"
-					);			
-			});
- 	
-			
-			// var price_options = JSON.parse(pricing);
-			// console.log(price_options);
-			$("#advance_pricing_modal").modal('toggle'); 
-			
-			$("payment").val('');
-			$("change").val('');
-	 	} 
-
-	 	recount();
 	});
+
+	$("body").on("input", "#discount" , function() {
+ 		
+		if ( $(this).val() == "") {
+
+			totalAmountDue = subTotal;
+		}else {
+
+			var discount_type = $("#discount_type").val();
+			var discount = parseInt($(this).val());
+
+			if ( discount_type == "percentage" ) {
+
+				if ( discount > 100)
+				return alert("Discount must not greather than 100"); 
+
+				discountAmount = ( discount / 100 ) * subTotal; 
+	 
+				totalAmountDue = subTotal - discountAmount;
+
+			}else if ( discount_type == "fixed") {
+ 
+ 				
+ 				if ( discount > totalAmountDue)
+ 					alert("Discount must not be greather than the total amount due");
+
+ 				discountAmount = discount;
+				totalAmountDue = subTotal - discount;
+
+			}
+
+		}
+ 
+
+		$("#payment-label").text( currency + number_format(totalAmountDue));
+ 
+	})
+
+
+	$("#open-transactions").click(function(e) {
+
+
+		$("#transactions-modal").modal("toggle");
+		orders_table.draw();
+	});
+
 
 	$('#advance_pricing_modal').on('hidden.bs.modal', function () {
 	  	$("#quantity").val(1);
@@ -142,31 +417,40 @@
 
 	$("#add-product").click(function(e) {
 
+		e.preventDefault();
 		var item_id = $("#item_id").val();
 		var name = $("#product-name").text();
 		var quantity = $("#quantity").val();
 		var price = $("input[name='pricing']:checked").val(); 
+		let capital = $("#capital").val();
+		let unit = $("#item_unit").val();
+		var stocks = $("#stocks").val();
+		
+		if (parseFloat(quantity) > parseFloat(stocks)) {
 
-
+			alert("Not enough stocks");
+			return  $("#quantity").val(1);
+		}
 		if (!quantity)
 			return alert("Quantity is required");
 
 		$("#advance_pricing_modal").modal('toggle');  
-		insert_product(item_id, name, price, quantity);
+		$("#payment").val('');
+		$("#change").val('');
+		insert_product(item_id, name, price, quantity, capital, unit, stocks);
 
 	})
-
-
-
-	function insert_product(id, name, price, quantity) {
- 	
+	function insert_product(id, name, price, quantity, capital, unit, stocks) {
+ 		 
  		var sub = remove_comma(price.substring(1)) * quantity;
 
 		$("#cart tbody").append(
 				'<tr>' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
+					'<input name="capital" type="hidden" value="'+ capital +'">' +
+					'<input name="item_unit" type="hidden" value="'+ unit +'">' + 
 					'<td>'+ name +'</td>' +
-					'<td><input  data-id="'+id+'" name="qty" type="text" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
+					'<td><input  data-id="'+id+'" name="qty" type="text" data-stocks="'+stocks+'" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
 					'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
 					'<td>'+ price +'</td>' + 
 					'<td>'+ currency + number_format(sub)  +'.00</td>' + 
@@ -177,19 +461,25 @@
 		recount();
 	}
 
-	function remove_comma(str) {
-
-		return str.replace(/,/g, '')
-	}
-
 	function itemExist(itemID) {
 		var table = $("#cart-tbl tbody tr");
 	 	var exist = false;
+
 		$.each(table, function(index) {
 			id = ($(this).find('[name="id"]').val());
+
 			if (id == itemID) {
-				qtyCol = $(this).find('[name="qty"]');
-				qty = parseInt(qtyCol.val());
+				let qtyCol = $(this).find('[name="qty"]');
+				let current_stocks = qtyCol.data('stocks');
+
+				let qty = parseInt(qtyCol.val());
+
+				if ( parseFloat(qty) >= parseFloat(current_stocks) ) {
+					alert("Not enough stocks");
+					qtyCol.val(current_stocks);
+					exist = true;
+					return recount();
+				}
 
 				qtyCol.val(qty + 1);
 		 		recount();
@@ -202,110 +492,172 @@
 
 		return exist;
 	}
+ 
 
-	$("#process-form").submit(function(e) {
-		e.preventDefault();
+	function process_transaction(customer_id, customer_name, payment_type, due_date) {
+
 		var row = $("#cart tbody tr").length;
 		var sales = [];
-		var customer_id = $("#customer-id").val();
 		var total_amount = 0;
 		// var discount = $("#amount-discount").text();
-		var payment = $("#payment").val();
+		var payment = $("#payment").val() == "" ? 0 : $("#payment").val();
 		var change = $("#change").val();
+
+		var discount_percentage = $("#discount").val();
+ 		
+
+ 		if (row) { 
  	 
- 		if (row) {
+ 			if ( payment_type == "cash") {
+ 
 
- 			var totalAmountDue = parseFloat($("#amount-total").text().substring(1).replace(',',''));
-	 
-			if (parseFloat(payment) >= parseFloat(totalAmountDue)) {
-		 		
-	 			for (i = 0; i < row; i++) {
-					var r = $("#cart tbody tr").eq(i).find('td');
-					var quantity = r.eq(1).find('input').val();
-					var price = r.eq(3).text().substring(1).replace(',','');
-					var arr = {
-							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
-							quantity : quantity, 
-							price : price,
-							name : r.eq(0).text(),
-							subtotal : parseFloat(price) * parseInt(quantity),
-							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val()
-						};
-					total_amount += parseFloat(price) * parseInt(quantity);
-					sales.push(arr);
+ 				if (  parseFloat(payment) < parseFloat(totalAmountDue) ) { 
+
+ 
+					$("#payment").focus();
+					return alert("Insufficient Amount");
+					  
 				}
+ 			}
 
-				total_amount -= totalDiscount;
-				// Receipt Items
-				$("#r-items-table tbody").empty();
-				$.each(sales, function(key, value) {
-			 	 
-					$("#r-items-table tbody").append(
-							'<tr>' + 
-								'<td>'+value.name +'</td>' +
-								'<td>'+currency+ number_format(value.price) +'</td>' +
-								'<td>'+value.quantity+'</td>' +
-								'<td>'+currency+ number_format(value.subtotal)+'</td>' +
-							'</tr>'
-						);
-				});
+			
+		 		
+ 			for (i = 0; i < row; i++) {
+				var r = $("#cart tbody tr").eq(i).find('td');
+				var quantity = r.eq(1).find('input').val();
+				var price = remove_comma(r.eq(3).text().substring(1));
+				var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val();
+				var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
+				var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
+
+				var arr = {
+						id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
+						quantity : quantity, 
+						price : price,
+						name : r.eq(0).text(),
+						subtotal : parseFloat(price) * parseInt(quantity) - parseFloat(discount),
+						discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
+						capital : capital,
+						unit: main_unit
+
+					};
+				total_amount += parseFloat(price) * parseInt(quantity);
+				sales.push(arr);
+			}
+
+			total_amount -= totalDiscount;
+			// Receipt Items
+			$("#r-items-table tbody").empty();
+			$.each(sales, function(key, value) {
+		 	 
+				$("#r-items-table tbody").append(
+						'<tr>' + 
+							'<td>'+value.name +'</td>' + 
+							'<td>'+currency+ number_format(value.price) +'</td>' +
+							'<td>'+value.quantity+'</td>' +
+							'<td>'+currency+ number_format(value.subtotal)+'</td>' +
+						'</tr>'
+					);
+			});
 
 
-				var data = {};
-				data['sales'] = sales;
-				data[csrfName] = csrfHash;
-				$.ajax({
-					type : 'POST',
-					data : data,
-					url : base_url + 'SalesController/insert',
-					beforeSend : function() {
-						$("#btn").button('loading');
-					},
-					success : function(data) { 
-		 				transactionComplete = true;
-		 				var total = parseFloat(total_amount);
-		 			 	var d = new Date();
-		 				$("#payment-modal").modal('toggle');
-						$("#loader").hide();
-						//Transaction Summary 
-		
+			var data = {};
+			data['sales'] = sales;
+			data['customer_id'] = customer_id;
+			data['payment_type'] = payment_type;
+			data['customer_name'] = customer_name; 
+			data['total'] = subTotal;
+			data['amount_due'] = totalAmountDue;
+			data['due_date'] = due_date;
+			data['discount'] = discountAmount;
+
+			data[csrfName] = csrfHash;
+			
+			$.ajax({
+				type : 'POST',
+				data : data,
+				url : base_url + 'SalesController/insert',
+				beforeSend : function() {
+					$("#btn").button('loading');
+				},
+				success : function(data) { 
+	 				transactionComplete = true;
+	 				var total = parseFloat(total_amount);
+	 			 	var d = new Date();
+	 				$("#receipt-modal").modal('toggle');
+					$("#loader").hide();
+					//Transaction Summary 
+	
+					
+				 	$("#summary-discount").text(currency + number_format(discountAmount));
+					$("#summary-total").text( currency + number_format(totalAmountDue) )
+					
+					//Fill In Receipt 
+					
+					if ( payment_type == "cash") {
+
+						$("#r-payment").text( currency + number_format(payment));
+						$("#r-change").text( currency + change);
+
 						$("#summary-payment").text( currency + number_format(payment));
 						$("#summary-change").text( currency + number_format(change));
-					 	$("#summary-discount").text(currency + number_format(totalDiscount));
-						$("#summary-total").text( currency + number_format(total_amount) )
-						
-						//Fill In Receipt 
-						$("#r-payment").text( currency + number_format(payment));
-						$("#r-change").text( currency + number_format(change));
-						$("#r-cashier").text($("#user").text()); 
-						$("#r-total-amount").text( currency + number_format(total_amount) )
-						$("#r-discount").text(currency + number_format(totalDiscount));
-						$("#r-id").text(data);
-						$("#r-time").text(d.toLocaleTimeString());
-
-					 	$("#cart tbody").empty();
-					 	$("#payment").val('');
-					 	$("#change").val('');
-					 	$("#amount-due").text(''); 
-					 	$("#amount-total").text('');
-					 	$("#amount-discount").text('');
-
-					 	item_table.clear().draw();
-					 	$("#btn").button('reset');
-					 	totalAmountDue = 0;  
-						totalDiscount = 0
-					 	
 					}
-				})
-				return;
-			}  
+
+					$("#r-customer-name").text(customer_name );
+					$("#r-payment-type").text(payment_type );
+					$("#r-cashier").text($("#user").text()); 
+					$("#r-total-amount").text( currency + number_format(totalAmountDue) )
+					$("#r-discount").text(currency + number_format(discountAmount));
+					$("#r-id").text(data);
+					$("#r-time").text(d.toLocaleTimeString());
+
+				 
+
+				 	$("#cart tbody").empty();
+				 	$("#payment").val('');
+				 	$("#change").val('');
+				 	$("#amount-due").text(''); 
+				 	$("#amount-total").text('');
+				 	$("#amount-discount").text('');
+				 	$("#due-date-wrapper").hide();
+				 	item_table.clear().draw();
+				 	$("#btn").button('reset');
+				 	totalAmountDue = 0;  
+					totalDiscount = 0
+
+					$("#payment-input-wrapper").show();
+
+					$("#due-date-wrapper").hide();
+					$("#discount").val('');
+				 	
+				}
+			})
+
+			$("#payment-modal").modal("toggle");
+			return;
+			  
+
 			
-			return alert("Insufficient Amount");
  		}
  		
  		return alert('Please add some items');
- 		
-		
+	}
+
+	$("#payment-type").change(function(e) {
+ 
+		if ( $(this).val() == "credit") {
+
+			$("#due-date-wrapper").show();
+			$("#payment-input-wrapper").hide();
+
+		} 
+		else {
+
+			$("#payment-input-wrapper").show();
+
+			$("#due-date-wrapper").hide();
+		}
+
 	})
 
 	$("#payment").keyup(function() {
@@ -314,11 +666,11 @@
 
 		var cart = $("#cart tbody tr").length;
 		if (cart) {
-			var totalAmountDue = parseFloat($("#amount-total").text().substring(1).replace(',',''));
+ 
 
 			if (payment >= totalAmountDue) {
 		 	
-				return $("#change").val((payment - totalAmountDue).toFixed(2));
+				return $("#change").val(number_format(payment - totalAmountDue));
 			} 
 
 			return $("#change").val('Insufficient Amount');
@@ -367,12 +719,16 @@
 
 	$("#cart").on('focusout','.quantity-box',function(e) {
 		var quantity = parseFloat($(this).val()); 
+		var current_stocks = $(this).data('stocks');
+
 		if (isNaN(quantity) || quantity < 0 || quantity == "") {
 			$(this).val(1);
 		 
 			calculateRemainingStocks($(this).data('stocks') - 1, $(this).data('id'))
 			return quantity = 1; 
 		}
+
+
 	})
 
  	$("#cart").on('input', '.quantity-box', function(e) {
@@ -386,8 +742,14 @@
 		var currentStocks = $(this).data('stocks');
 		var itemID = $(this).data('id');
 		var remaining = $(this).data('stocks') - quantity;
+ 		
+ 		if ( remaining < 0) {
+ 			alert("Not enough stocks");
+ 			return $(this).val(1);
+ 		}
 
 		$(this).data('remaining', remaining);
+
 		if (isNaN(quantity) || quantity < 0) {
 			return quantity = 1; 
 		}
@@ -395,15 +757,12 @@
 		if (!isNaN(quantity) && quantity != 0 || $(this).val() == "") {
 			var row = $("#item-table").find('td').text() == itemID;
 
-			 
 			var row = $(this).parents("tr");
 			var priceCol = row.find('td').eq(2);
 			var price = priceCol.text().substring(1);
 			var subtotal = parseInt(quantity) * parseFloat(price);
 			calculateRemainingStocks(remaining,itemID);
 			return recount();
-		 
-			
 		 
 		}
 
@@ -451,25 +810,26 @@
 	*/
 	function recount() {
 		var row = $("#cart tbody tr").length;
-		var total = 0;
-		var discountAmount = 0;
+		var total = 0; 
 
 		for (i = 0; i < row; i++) {
 			var r = $("#cart tbody tr").eq(i).find('td');
 			var quantity = parseFloat(r.eq(1).find('input').val());
-			var price = r.eq(3).text().substring(1).replace(',','');
+			var price = remove_comma(r.eq(3).text().substring(1));
 			var discount = parseInt(r.eq(2).find('input').val());
 			total += parseFloat(price) * quantity;
 
-			r.eq(4).text(currency + number_format(price * quantity) + '.00');
+			r.eq(4).text(currency + number_format(price * quantity - discount));
+
 			discountAmount += isNaN(discount) == true ? 0 : discount ;
 			
 		}
-		totalDiscount = discountAmount;
-		totalAmountDue = total - discountAmount;
+
+		totalAmountDue = total;
+		subTotal = total;
+
 		
-		$("#amount-discount").text(currency + totalDiscount.toFixed(2));
-		$("#amount-total").text("₱" + number_format(totalAmountDue.toFixed(2)));
+		$("#amount-total").text("₱" + number_format(totalAmountDue));
 	}
 
  
@@ -485,7 +845,7 @@
 	        	prepend: null,
 	        	manuallyCopyFormValues: true,
 	        	deferred: $.Deferred(),
-	        	timeout: 500,
+	        	timeout: 400,
 	        	title: 'Receipt',
 	        	doctype: '<!doctype html>'
 		});
@@ -497,6 +857,8 @@
  
 
 function number_format(number, decimals, dec_point, thousands_point) {
+ 	
+ 	toFixed = "";
 
     if (number == null || !isFinite(number)) {
         throw new TypeError("number is not valid");
@@ -515,6 +877,9 @@ function number_format(number, decimals, dec_point, thousands_point) {
         thousands_point = ',';
     }
 
+    if (number % 1 === 0)
+    	toFixed = ".00";
+
     number = parseFloat(number).toFixed(decimals);
 
     number = number.replace(".", dec_point);
@@ -523,5 +888,13 @@ function number_format(number, decimals, dec_point, thousands_point) {
     splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_point);
     number = splitNum.join(dec_point);
 
-    return number;
+
+
+
+    return number + toFixed;
+}
+
+function remove_comma(str) {
+
+	return str.replace(/,/g, '')
 }

@@ -26,9 +26,11 @@
 						 		<?php echo validation_errors(); ?>
 						 	</div>
 						 	<div class="form-group">  
+						 		<label>Date</label>
 								<input type="text" required="required" placeholder="Date" name="date" class="form-control date-range-filter" data-date-format="yyyy-mm-dd">
 							</div>
 						 	<div class="form-group">  
+						 		<label>Type</label>
 								<select name="type" class="form-control">
 									<option value="">Select Type</option>
 									<option value="Operating">Operating</option>
@@ -38,10 +40,12 @@
 								</select>
 							</div>
 							<div class="form-group">  
+								<label>Expenses Name</label>
 								<input type="text" required="required" placeholder="Expense Name" name="name" class="form-control">
 							</div>
 						 
-							<div class="form-group">  
+							<div class="form-group">
+								<label>Cost</label>  
 								<input type="number" required="required" placeholder="Cost" name="cost" class="form-control">
 							</div>
 							<div class="form-group">

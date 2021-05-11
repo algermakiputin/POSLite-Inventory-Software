@@ -3,8 +3,9 @@
 body {
 	margin:0;
 	overflow: hidden; 
-	font-size: 1.54em;
+	font-size: 1.71em;
 	font-family: "Roboto", Arial, serif, sans-serif !important;
+	color: #141823; 
 }
 
 #item-table_length {
@@ -23,6 +24,13 @@ body {
 .navbar .navbar-text {
 	color: #ddd;
 	margin-left: 0;
+	margin-top: 13px;
+	margin-bottom: 13px;
+}
+
+#advance_pricing_options tbody tr:hover {
+	background-color: #eee;
+	cursor: pointer;
 }
 
 .remove {
@@ -53,7 +61,7 @@ header {
 }
 
 .r-header {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	
 }
 
@@ -65,7 +73,7 @@ header {
 }
 
 .r-header h3 {
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 
 #left .btn {
@@ -75,12 +83,16 @@ header {
 
 .header h3 {
 	margin: 0;
-	padding: 15px;
+	padding: 15px 20px;
 	text-align: center;
 	background: #337ab7;
 	/*background-color: #b1cfe9;*/
 	color: #ffffff;
-	/*color: #000000;*/
+	/*color: #000000;*/ 
+}
+
+.header h3.text-left {
+	text-align: left;
 }
 
 .header .box {
@@ -95,6 +107,10 @@ header {
 
 .header .box.rightnone {
 	border-right: none;
+}
+
+#item-table {
+	border-radius: 5px;
 }
 
 #item-table tr:hover {
@@ -133,6 +149,9 @@ header {
     background-color: #f4f4f5;
     border: solid 1px #eee;
 	overflow: auto;
+	position: relative;
+	border-radius: 5px; 
+box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
 }
 
 #cart {
@@ -190,6 +209,7 @@ header {
 #process-form input {
 	border-radius: 0;
 	min-height: 35px;
+	border-radius: 5px;
 }
 
 .form-control[readonly] {

@@ -60,13 +60,13 @@ class AuthController extends AppController {
 			
 			if ($verifyPassword) {
 				$userdata = array( 
-					'id' => "$verify_login->id",
-					'username' => "$verify_login->username",
+					'id' => $verify_login->id,
+					'username' => $verify_login->username,
 					'log_in' => true,
-					'account_type' => "$verify_login->account_type"
+					'account_type' => $verify_login->account_type
 					);
 				$this->db->insert('history', [
-						'user_id' => $userdata['id'],
+						'user_id' => $verify_login->id,
 						'action' => 'Log in',
 					]);
 				$this->session->set_userdata($userdata);
@@ -76,28 +76,28 @@ class AuthController extends AppController {
 			}
 			
 			$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Incorrects Login Name Or Password</div>');
-			return redirect(base_url('login'));
+			return redirect( 'login' );
 			
 		} 
 		
 		$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">Incorrect Login Name Or Password</div>');
-		return redirect(base_url('login'));
+		return redirect( 'login' );
 		 
 		 
 	}
 
 	public function redirectUser() {
 		if ($this->session->userdata('account_type') == "Cashier")  
-			return redirect(base_url('pos'));
+			return redirect( 'pos' );
 	 
 
-		if ($this->session->userdata('account_type') == "Admin") 
-			return redirect(base_url('dashboard'));
-	 
+		if ( $this->session->userdata('account_type') == "Admin") 
+			return redirect( 'dashboard' );
 
-		if ($this->session->userdata('account_type') == "Clerk") 
-			return redirect(base_url('dashboard'));
+		if ( $this->session->userdata('account_type') == "Receiver" )
+			return redirect( 'deliveries' );
 	 
+ 
 	}
 
 	public function logout() {

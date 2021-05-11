@@ -1,0 +1,158 @@
+body, html {
+	height: 100%;
+	width: 100%;
+} 
+
+header {
+	background: #fff;
+	box-shadow: 0 0 1px rgba(0,0,0,0.1);
+}
+.wrapper {
+	padding-top: 75%;
+}
+
+.form-signin {
+	margin-top: 13%;
+}
+
+.form-signin .body {
+	max-width: 400px;
+	padding: 25px 40px 55px;
+	background-color: #fff;
+	margin: auto;
+	border-bottom: 6px solid #eee;
+
+}
+.form-signin {
+	  			
+
+	.checkbox {
+		font-weight: normal;
+	}
+
+	.form-control {
+		position: relative;
+		font-size: 16px;
+		height: auto;
+		padding: 10px;
+		@include box-sizing(border-box);
+
+		&:focus {
+			z-index: 2;
+		}
+	}
+
+	input[type="text"] {
+		margin-bottom: -1px;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	input[type="password"] {
+		margin-bottom: 20px;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	.form-signin-heading {
+		margin-bottom: 30px !important;
+	}
+}
+
+/*.site-branding {
+
+	display: block;
+	margin-left: auto;
+	width: 55px;
+}*/
+.col2 {
+	float: left;
+	width: 60%;
+	height: 100%;
+	position: relative;
+
+}
+
+.col1 {
+	background-image: url('../images/login.jpeg');
+	background-position: center;
+	height: 100%;
+	width: 40%;
+	float: left;
+	position: relative;
+}
+
+.col1 .quote-wrapper {
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+}
+
+.col2 .form-signin {
+	position: absolute;
+	top: 45%;
+	transform: translate(0, -50%);
+	margin-left: 20px;
+}
+
+blockquote{
+	font-size: 2.1em;
+	width:80%;
+	margin:50px auto;
+	font-family:Open Sans;
+	font-style:italic;
+	color: #fff; 
+	padding:1.2em 30px 1.2em 75px;
+	border-left:8px solid #204d74 ;
+	line-height:1.6;
+	position: relative;
+	/*background:#EDEDED;*/
+	text-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+blockquote::before{
+	font-family:Arial;
+	content: "\201C";
+	color:#333;
+	font-size:4em;
+	position: absolute;
+	left: 10px;
+	top:-10px;
+}
+
+blockquote::after{
+	content: '';
+}
+
+blockquote span{
+	display:block;
+	color:#fff;
+	font-style: normal;
+	font-weight: bold;
+	margin-top:1em;
+	text-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+@media only screen and (max-width: 768px) {
+
+	.col1 {
+		display: none;
+	}
+
+	.col2 {
+		display: block;
+		float: none;
+		margin: auto; 
+		width: 100%;
+		padding: 20px;
+		max-width: 480px;
+	}
+
+	.col2 .form-signin {
+		margin-left: 0; 
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%); 
+		width: 90%;
+	}
+}
