@@ -11,8 +11,10 @@ body {
     margin-bottom: -20px;
     border-collapse: collapse;
     font-family: "Lato", Arial, serif, sans-serif !important;
-    display: none;
+    display: none;  
 }
+
+ 
 
 #diagnoses_tab .tab-pane {
     border: solid 1px #ddd;
@@ -346,7 +348,7 @@ legend {
 }
 
 .sales-widget .amount {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .sales-widget .caption { 
