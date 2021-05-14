@@ -15,9 +15,8 @@ class ObfuscatorController extends CI_Controller {
 		
 		require APPPATH . 'classes/Obfuscator.php';
  		$folder = APPPATH . 'controllers';
-		$files = scandir($folder);
-
-
+		$files = scandir($folder); 
+		
 		foreach ($files as $file) {
 
 			$split_name = explode('.', $file);

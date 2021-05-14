@@ -15,15 +15,19 @@
         </ul> 
         <div class="tab-content" id="sales-tabs-content">
             <div id="home" class="tab-pane fade in active">
-                 <div style="height:300px;">
+                 <div style="height:320px;">
                     <canvas id="dailyChart" height="400"></canvas>
                 </div>
             </div>
             <div id="menu1" class="tab-pane fade">
+                <div style="height:320px">
                 <canvas id="weeklyChart" height="400"></canvas>
+                </div>
             </div>
             <div id="menu2" class="tab-pane fade">
-            <canvas id="monthlyChart" height="400"></canvas>
+                <div style="height:320px">
+                <canvas id="monthlyChart" height="400"></canvas>
+                </div>
             </div>
         </div>
         
@@ -69,6 +73,7 @@
  
     $(document).ready(function() {
         
+        const currency = '₱'
         const dailySales = <?php echo json_encode(array_values($daily['sales'])) ?>;
         const dailyProfit = <?php echo json_encode(array_values($daily['profit'])) ?>;
         const dailyChart = $("#dailyChart")[0].getContext("2d");
@@ -104,7 +109,22 @@
                         minRotation: 0,
                         beginAtZero: true
                     }
+                }],
+                yAxes: [{
+                    ticks: {
+                        callback: function(tick, index, array) {
+                            return currency + number_format(tick); 
+                        },
+                        beginAtZero: true
+                    }
                 }]
+            },
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        return currency + number_format(tooltipItem.yLabel); 
+                    }
+                }
             }
         }
 
@@ -153,8 +173,23 @@
                                 autoSkip: false,
                                 maxRotation: 0,
                                 minRotation: 0
+                            },
+                            beginAtZero: true
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                callback: function(tick, index, array) {
+                                    return currency + number_format(tick); 
+                                }
                             }
                         }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return currency + number_format(tooltipItem.yLabel); 
+                            }
+                        }
                     }
                 }
                 var dailyBarChart = new Chart(weeklyChart, { 
@@ -170,8 +205,9 @@
             $.get(url, function(data, status) {
                 
                 var result = JSON.parse(data);
+                console.log(result)
                 var weeklyChart = $("#monthlyChart")[0].getContext('2d');
-           
+                weeklyChart.height = 500;
                 var monthlyChartData = {
                     labels: result.labels,
                     datasets: [
@@ -190,8 +226,7 @@
                     ]
                     
                 } 
-                var monthlyChartOptions = { 
-                    responsive: true,
+                var monthlyChartOptions = {  
                     maintainAspectRatio:false,
                     scales: {
                         xAxes: [{
@@ -203,7 +238,22 @@
                                 maxRotation: 0,
                                 minRotation: 0
                             }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                callback: function(tick, index, array) {
+                                    return currency + number_format(tick); 
+                                }
+                            },
+                            beginAtZero: true
                         }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return currency + number_format(tooltipItem.yLabel); 
+                            }
+                        }
                     }
                 }
                 var dailyBarChart = new Chart(weeklyChart, { 
@@ -214,5 +264,42 @@
             })
            
         })
+
+        function number_format(number, decimals, dec_point, thousands_point) {
+ 	
+            toFixed = "";
+
+            if (number == null || !isFinite(number)) {
+                throw new TypeError("number is not valid");
+            }
+
+            if (!decimals) {
+                var len = number.toString().split('.').length;
+                decimals = len > 1 ? len : 0;
+            }
+
+            if (!dec_point) {
+                dec_point = '.';
+            }
+
+            if (!thousands_point) {
+                thousands_point = ',';
+            }
+
+            if (number % 1 === 0)
+                toFixed = ".00";
+
+            number = parseFloat(number).toFixed(decimals);
+
+            number = number.replace(".", dec_point);
+
+            var splitNum = number.split(dec_point);
+            splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_point);
+            number = splitNum.join(dec_point);
+
+ 
+
+            return number + toFixed;
+        }
     })
 </script>

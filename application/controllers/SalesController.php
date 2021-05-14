@@ -39,8 +39,10 @@ class SalesController extends AppController {
 	
 		foreach ( $sales as $sale) {
 
-			$data['sales'][date("Y M", strtotime($sale->created_at))] += $sale->price * $sale->quantity;
-			$data['profit'][date("Y M", strtotime($sale->created_at))] += ($sale->price - $sale->capital) * $sale->quantity;
+			$totalSales = $sale->price * $sale->quantity;
+			$totalProfit = ($sale->price - $sale->capital) * $sale->quantity;
+			$data['sales'][date("Y M", strtotime($sale->created_at))] += $totalSales >= 0 ? $totalSales : 0;
+			$data['profit'][date("Y M", strtotime($sale->created_at))] += $totalProfit >= 0 ? $totalProfit : 0;
 		}
 
 		$data['labels'] = array_keys($data['sales']);
@@ -73,9 +75,11 @@ class SalesController extends AppController {
 				$saleDate = strtotime($sale->created_at);
 
 				if ( $saleDate >= strtotime($start) && $saleDate <= strtotime($end) ) {
-					 
-					$data['sales'][$key] += $sale->quantity * $sale->price ;	
-					$data['profit'][$key] += ($sale->price - $sale->capital) * $sale->quantity;
+					
+					$totalSales = $sale->quantity * $sale->price;
+					$totalProfit = ($sale->price - $sale->capital) * $sale->quantity;
+					$data['sales'][$key] += $totalSale >= 0 ? $totalSales : 0;	
+					$data['profit'][$key] += $totalProfit >0 ? $totalProfit : 0;
 				}	
 			
 			}
