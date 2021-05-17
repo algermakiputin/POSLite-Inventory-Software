@@ -8,10 +8,10 @@ class AppController extends CI_Controller {
 
       $this->user_restrictions();
  	 
-    //   if ( renewal()[0] === "expired" ) {
+      if ( renewal()[0] === "expired" ) {
       
-    //   	return redirect('/expired');
-    //   }
+      	return redirect('/expired');
+      }
     }
 
     public function __destruct() {
@@ -35,8 +35,8 @@ class AppController extends CI_Controller {
   
     }
 
-    public function licenseControl () { 
-		
+    public function licenseControl () {
+    	  
     	if (!SITE_LIVE) {
     		if (!file_exists(homeDir() . '/profile.txt')) {
 	    		return redirect('activate');
