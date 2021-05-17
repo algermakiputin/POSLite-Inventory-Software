@@ -15,14 +15,13 @@ class DashboardController extends AppController {
  	}
 
 	public function dashboard() {
- 
- 		
+  
  		$this->load->model('SalesModel');
 		$this->load->model('ExpensesModel');
 		$this->load->model('ItemModel');
 
  		$yesterday = date('Y-m-d', strtotime("-1 day"));
- 		$lastweek = date('Y-m-d', strtotime('-7 days'));
+ 		$lastweek = date('Y-m-d', strtotime('-30 days'));
  		$today = date('Y-m-d');
 
 		$data['content'] = 'dashboard/dashboard';
@@ -41,16 +40,15 @@ class DashboardController extends AppController {
 		$data['sales'] = number_format($this->SalesModel->get_sales(date('Y-m-d'))->total,2);
 		$data['expenses'] =  number_format($daily_expenses, 2);
 		$data['inventory_value'] = number_format( $this->ItemModel->inventory_value(), 2);
-		 
+		$data['categories'] = array_column($this->inventoryAllocation(),'name');
+		$data['total'] = array_column($this->inventoryAllocation(), 'total');
+  
 		$this->load->view('master', $data);
 	}
- 	
-
- 
-
+ 	 
 	public function diagnoses() {
 
-		$lastweek = date('Y-m-d', strtotime('-7 days'));
+		$lastweek = date('Y-m-d', strtotime('-30 days'));
 		$data['content'] = "dashboard/diagnoses";
 		$data['not_selling'] = $this->not_selling_products($lastweek)->result();
 		$data['out_of_stocks'] = noStocks();
@@ -63,11 +61,12 @@ class DashboardController extends AppController {
 
 		$date = date('Y-m');
 
-		$sales = $this->db->select('SUM(quantity) as qty, name, SUM(quantity * price) as revenue')
+		$sales = $this->db->select('SUM(sales_description.quantity) as qty, sales_description.name, ordering_level.quantity as quantity')
 								->from('sales_description')
-								->group_by('barcode')
-								->where('DATE_FORMAT(created_at, "%Y-%m") =', $date)
-								->where('quantity >=', 1)
+								->join('ordering_level', 'ordering_level.item_id = sales_description.barcode', 'left')
+								->group_by('sales_description.barcode')
+								->where('DATE_FORMAT(sales_description.created_at, "%Y-%m") =', $date)
+								->where('sales_description.quantity >=', 1)
 								->order_by('qty', "DESC")
 								->limit(10)
 								->get()
@@ -98,6 +97,18 @@ class DashboardController extends AppController {
 
 		return  currency() . number_format($total / 30 ,2);
    
+	}
+
+	public function inventoryAllocation() {
+
+		$categories = $this->db->select("DISTINCT SUM(items.capital *  ordering_level.quantity) as total, categories.name")
+								->from('items')
+								->join('ordering_level', 'ordering_level.item_id = items.id')
+								->join('categories', 'categories.id = items.category_id')
+								->group_by('category_id')
+								->get()
+								->result();
+		return $categories;
 	}
 
 	public function not_selling_products($lastweek) {
@@ -180,11 +191,9 @@ class DashboardController extends AppController {
 				if ($time >= $time_slots[$i - 1] && $time <= $time_slots[$i] && array_key_exists($i, $dataset)) {
 
 					$dataset[$i] += $row->total_sales;
- 					
  					 
 				} 
-			}  
-
+			}   
 		}  
 
 

@@ -5,7 +5,7 @@
                 <a href="<?php echo base_url('dashboard') ?>"><i class="fa fa-table fa-fw"></i> Dashboard</a>
             </li>
             <li data-step="1" data-intro="In this menu you can select view products and register new product." data-hintPosition="middle-right">
-            <a href="#"><i class="glyphicon glyphicon-folder-close fa-fw"></i> Products<span class="fa arrow"></span></a>
+            <a href="javascript:void(0)"><i class="glyphicon glyphicon-folder-close fa-fw"></i> Products<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="<?php echo base_url('items') ?>"><i class="fa fa-circle-o"></i> View Products</a>
@@ -27,7 +27,7 @@
             </li> 
             <?php if ($this->session->userdata('account_type') == "Admin" || $this->session->userdata('account_type') == "Receiver" ): ?>
                 <li data-step="4" data-intro="If you have products delivered, you can save it here.">
-                    <a href="#"><i class="fa fa-industry fa-fw"></i> Supplier<span class="fa arrow"></span></a>
+                    <a href="javascript:void(0)"><i class="fa fa-industry fa-fw"></i> Supplier<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-circle-o"></i> Suppliers</a>
@@ -39,7 +39,7 @@
             <?php endif; ?>
 
             <li>
-                <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Purchase Order<span class="fa arrow"></span></a>
+                <a href="javascript:void(0)"><i class="fa fa-shopping-cart fa-fw"></i> Purchase Order<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                    
                     <li>
@@ -53,7 +53,7 @@
             </li>
 
             <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
-                <a href="#"><i class="fa fa-money fa-fw"></i> Expenses<span class="fa arrow"></span></a>
+                <a href="javascript:void(0)"><i class="fa fa-money fa-fw"></i> Expenses<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="<?php echo base_url('expenses') ?>"><i class="fa fa-circle-o"></i> View Expenses</a>
@@ -69,13 +69,19 @@
                         $this->session->userdata('account_type') == "Cashier"
                 ): ?>
                 <li data-step="6" data-intro="In this menu you can view your sales reports, total profit and expenses.">
-                   <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
+                   <a href="javascript:void(0)"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
+                            <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales Summary</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('sales/logs') ?>"><i class="fa fa-circle-o"></i> Sales Logs</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url('returns') ?>"><i class="fa fa-circle-o"></i> Returns</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('diagnoses') ?>"><i class="fa fa-circle-o"></i> Diagnoses</a>
                         </li>
                     </ul>
                 </li>
@@ -86,7 +92,7 @@
 
             <?php if ($this->session->userdata('account_type') == "Admin"): ?>
             <li data-step="8" data-intro="Here you can add users like cashier">
-                <a href="#"><i class="fa fa-users fa-fw"></i> Users<span class="fa arrow"></span></a>
+                <a href="javascript:void(0)"><i class="fa fa-users fa-fw"></i> Users<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="<?php echo base_url('users') ?>"><i class="fa fa-circle-o"></i> View Users</a>
@@ -99,7 +105,7 @@
             <?php endif; ?>
 
             <li data-step="8" data-intro="Here you can add users like cashier">
-                <a href="#"><i class="fa fa-cog fa-fw"></i> System <span class="fa arrow"></span></a>
+                <a href="javascript:void(0)"><i class="fa fa-cog fa-fw"></i> System <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="<?php echo base_url('settings') ?>"><i class="fa fa-circle-o"></i> Settings</a>
