@@ -10,7 +10,7 @@
 		<div class="container">
 			<h1 class="display-4">Oh no! Your subscription has expired</h1>
 			<hr>
-			<p class="lead">Unfortionately your 1 year subscription for POSLite web hosting is expired.</p>
+			<p class="lead">Unfortunately your 1 year subscription for POSLite web hosting is expired.</p>
 			<p class="lead">Renew your hosting subscription to keep using POSLite without interruption. Please contact us using the details below to reactivate</p>
 			
 			<div class="lead">Contact Number: 09560887535</div>
