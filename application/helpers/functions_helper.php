@@ -18,8 +18,7 @@
 		$today_date = new DateTime(date('Y-m-d'));
 
 		$intervalDays = $renewal_date->diff($today_date)->days; 
-
-
+ 
 	 	if ($renewal_date > $today_date && $intervalDays > 30) {
 	 		return [0];
 
