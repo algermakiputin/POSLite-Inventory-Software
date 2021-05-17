@@ -14,12 +14,11 @@
 
 	function renewal() {
 
-		$renewal_date = new DateTime(date('2022-04-1')); 
+		$renewal_date = new DateTime(date('2050-04-1')); 
 		$today_date = new DateTime(date('Y-m-d'));
 
 		$intervalDays = $renewal_date->diff($today_date)->days; 
-
-
+ 
 	 	if ($renewal_date > $today_date && $intervalDays > 30) {
 	 		return [0];
 

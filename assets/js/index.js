@@ -16,16 +16,7 @@ $(document).ready(function() {
 			e.preventDefault();
 			return false;
 		}
-	});
-
-	// $("#side-menu a").click(function() {
-
-	// 	if ($(this).attr('href') != "#") {
-	// 		$(".spinner-wrapper").show();
-	// 	}
-	// })
-	 
-
+	});  
 	$("body").show();
 	$("form").parsley();	
 	
@@ -797,6 +788,108 @@ $(document).ready(function() {
 		ordering : false
 	});
 
+	$("#notSellingTable").DataTable({ 
+		dom : "lfrtBp", 
+		buttons: [
+			{
+				extend: 'copyHtml5',
+				filename : 'diagnoses',
+				title : 'Not Selling Products for the last 30 days', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1,2,3 ]
+				},
+			},
+			{
+				extend: 'excelHtml5',
+				filename : 'diagnoses',
+				title : 'Not Selling Products for the last 30 days', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1,2,3 ]
+				},
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'diagnoses',
+				title : 'Not Selling Products for the last 30 days', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1,2,3 ]
+				},
+
+			}
+		]
+	});
+
+	$("#shortStocksTable").DataTable({ 
+		dom : "lfrtBp", 
+		buttons: [
+			{
+				extend: 'copyHtml5',
+				filename : 'diagnoses',
+				title : 'Short Stocks Products', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1,2]
+				},
+			},
+			{
+				extend: 'excelHtml5',
+				filename : 'Inventory',
+				title : 'Short Stocks Products', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1,2 ]
+				},
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'Short Stocks Products', 
+				title : 'Inventory', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1,2 ]
+				},
+
+			}
+		]
+	});
+	
+	$("#outOfStocksTable").DataTable({ 
+		dom : "lfrtBp", 
+		buttons: [
+			{
+				extend: 'copyHtml5',
+				filename : 'diagnoses',
+				title : 'Out of Stocks Products', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1,2]
+				},
+			},
+			{
+				extend: 'excelHtml5',
+				filename : 'Inventory',
+				title : 'Out of Stocks Products', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1,2 ]
+				},
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'Out of Stocks Products', 
+				title : 'Inventory', 
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1,2 ]
+				},
+
+			}
+		]
+	});
+
 	var data = {};
 	data[csrfName] = csrfHash;
 	$("#deliveries_table").DataTable({
@@ -827,6 +920,7 @@ $(document).ready(function() {
 	        searchPlaceholder: "Search by receiver"
 	    }
 	});
+	
 
 	var expiry_date_table = $("#expiry_date_table").DataTable({
 		processing : true, 
