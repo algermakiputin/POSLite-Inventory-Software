@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600&display=swap');
+
+@font-face {
+    font-family: 'Lato';
+    src:url("fonts//Lato/Lato-Regular.ttf"); 
+    text-rendering: optimizeLegibility;
+}
 .form-control {
     border-radius: 2.5px;
 }
