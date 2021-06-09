@@ -28,6 +28,9 @@ $(document).ready(function() {
                 }
             }
         }, 
+        legend: {
+            display: false
+         },
         maintainAspectRatio:false,
         reponsive:true
     }
