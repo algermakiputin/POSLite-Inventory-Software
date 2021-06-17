@@ -32,7 +32,8 @@ $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip();
 	$(".datatable").DataTable({
 		dom: "ltrp",
-		order: [[0, 'DESC']]
+		order: [[0, 'DESC']],
+		responsive: true
 	});
 
  	if (site_live == 1) {
@@ -103,6 +104,7 @@ $(document).ready(function() {
 				itemTable = $("#item_tbl").DataTable({
 					processing : true,
 					serverSide : true,
+
 					lengthMenu : [[10, 25, 50, 0], [10, 25, 50, "Show All"]],
 					ajax : {
 						url : base_url + 'ItemController/dataTable',
@@ -161,7 +163,8 @@ $(document).ready(function() {
 						   'border': '2px solid black', 
 						   }
 						});
-					} 
+					},
+					responsive: true,
 				})
 			},
 			dataTableFilter : function() {
@@ -235,6 +238,7 @@ $(document).ready(function() {
 					bLengthChange :false,
 					serverSide : true,
 					info : false,
+					responsive: true,
 					processing : true,
 					bsearchable : true,
 					paging : false,
@@ -432,6 +436,7 @@ $(document).ready(function() {
 				var customer_table = $("#customer_table").DataTable({
 					ordering : false,
 					dom : "lfrtBp",
+					responsive: true,
 					buttons: [
 					{
 						extend: 'copyHtml5',
@@ -531,6 +536,7 @@ $(document).ready(function() {
 					ordering : false, 
 					serverSide : true,
 					info : false,
+					responsive: true,
 					processing : true,
 					bsearchable : true,
 					paging : false,
@@ -617,6 +623,7 @@ $(document).ready(function() {
 					info : false,
 					processing : true,
 					bsearchable : true, 
+					responsive: true,
 					dom : 'lfrtBp',
 					ajax : {
 						url : base_url + 'ReturnsController/datatable',
@@ -732,6 +739,7 @@ $(document).ready(function() {
 		paging : false,
 		serverSide : true,
 		dom : 'r',
+		responsive: true,
 		ajax : {
 			type : "POST",
 			url : base_url + "AccountingController/data"
@@ -857,6 +865,7 @@ $(document).ready(function() {
 	$("#deliveries_table").DataTable({
 		processing : true, 
 		serverSide : true, 
+		responsive: true,
 		ajax : {
 			type : "POST",
 			url : base_url + "DeliveriesController/datatable",

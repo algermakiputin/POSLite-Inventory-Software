@@ -18,6 +18,7 @@ class DashboardController extends AppController {
  		
  		$this->load->model('SalesModel');
 		$this->load->model('ExpensesModel');
+		$this->load->model('ItemModel');
 
  		$yesterday = date('Y-m-d', strtotime("-1 day"));
  		$lastweek = date('Y-m-d', strtotime('-7 days'));
@@ -32,71 +33,19 @@ class DashboardController extends AppController {
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
 		$data['no_stocks'] = count(noStocks());
 
-		$annual_expenses = $this->ExpensesModel->annual_expenses()->total;
-		$annual_sales = $this->SalesModel->get_annual_sales(date('Y'))->total;
+		$daily_expenses = $this->ExpensesModel->daily_expenses()->total;
+		$daily_sales = $this->SalesModel->daily_sales(date('d'))->total;
 
 		$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
 		$data['sales'] = number_format($this->SalesModel->get_sales(date('Y-m-d'))->total,2);
-		$data['expenses'] =  number_format($annual_expenses, 2);
-		$data['revenue'] = number_format( $annual_sales - $annual_expenses, 2);
+		$data['expenses'] =  number_format($daily_expenses, 2);
+		$data['inventory_value'] = number_format( $this->ItemModel->inventory_value(), 2);
 		 
 		$this->load->view('master', $data);
 	}
-	// public function index() {
- 		
- // 		$this->load->model('sales_model');
- // 		$this->load->model('ExpensesModel');
+ 	
 
-
- // 		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
-	// 	$data['content'] = 'dashboard/dashboard';
-	// 	$data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
-	// 	$data['yesterday'] = json_encode($this->line_chart($yesterday));
-	// 	$data['top_products'] = $this->top10_product();
-	// 	$data['not_selling'] = $this->not_selling_products()->num_rows();
-	// 	$data['low_stocks'] = count(low_stocks());
-	// 	$data['no_stocks'] = count(noStocks());
-	// 	$data['average_sales_per_day'] = $this->average_sales_per_day();
-	// 	$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
-	// 	$data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
-	// 	$data['expenses'] =  number_format($this->ExpensesModel->annual_expenses()->total, 2);
  
-	// 	$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
-
-	// 	$lastweek = date('Y-m-d', strtotime('-7 days'));
-	// 	$today = date('Y-m-d');
- 
-
-	// 	$this->load->view('master', $data);
-	// }
-
-	// public function dashboard() {
-
-	// 	$this->load->model('sales_model');
- // 		$this->load->model('ExpensesModel');
-
-
- // 		$yesterday = $date = date('Y-m-d', strtotime("-1 day"));
-	// 	$data['content'] = 'dashboard/dashboard';
-	// 	$data['dataset'] = json_encode($this->line_chart(date('Y-m-d'))); 
-	// 	$data['yesterday'] = json_encode($this->line_chart($yesterday));
-	// 	$data['top_products'] = $this->top10_product();
-	// 	$data['not_selling'] = $this->not_selling_products()->num_rows();
-	// 	$data['low_stocks'] = count(low_stocks());
-	// 	$data['no_stocks'] = count(noStocks());
-	// 	$data['average_sales_per_day'] = $this->average_sales_per_day();
-	// 	$data['orders'] = $this->db->where('date_format(date_time, "%Y-%m-%d") =', date('Y-m-d'))->get('sales')->num_rows();
-	// 	$data['sales'] = number_format($this->sales_model->get_sales(date('Y-m-d'))->total,2);
-	// 	$data['expenses'] =  number_format($this->ExpensesModel->annual_expenses()->total, 2);
- 
-	// 	$data['revenue'] = number_format( $this->sales_model->get_annual_sales(date('Y'))->total );
-
-	// 	$lastweek = date('Y-m-d', strtotime('-7 days'));
-	// 	$today = date('Y-m-d');
- 
-
-	// 	$this->load->view('master', $data);
-	// }
 
 	public function diagnoses() {
 
@@ -110,12 +59,12 @@ class DashboardController extends AppController {
 
 	private function top10_product() {
 
-		$date = date('Y-m-d');
+		$date = date('Y-m');
 
 		$sales = $this->db->select('SUM(quantity) as qty, name, SUM(quantity * price) as revenue')
 								->from('sales_description')
 								->group_by('item_id')
-								->where('DATE_FORMAT(created_at, "%Y-%m-%d") =', $date)
+								->where('DATE_FORMAT(created_at, "%Y-%m") =', $date)
 								->where('quantity >=', 1)
 								->order_by('qty', "DESC")
 								->limit(10)

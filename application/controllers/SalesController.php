@@ -352,11 +352,10 @@ class SalesController extends AppController {
 		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
 		 		$staff = $user ? $user->username : 'Not found';
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
-				$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity);
+				$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity) - $desc->discount;
 				$transactionProfit += $saleProfit;
 				$datasets[] = [ 
-					date('Y-m-d', strtotime($sale->date_time)),  
-					$staff,
+					date('Y-m-d h:i:s A', strtotime($sale->date_time)),   
 					$desc->name,
 					$desc->quantity,
 					$desc->returned,

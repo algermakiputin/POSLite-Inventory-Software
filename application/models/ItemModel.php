@@ -12,6 +12,16 @@ class ItemModel extends CI_Model {
 					->get()
 					->result(); 
 	}
+
+	public function inventory_value() {
+
+		return $this->db->select("SUM(items.capital * ordering_level.quantity) as total")
+												->from('items')
+												->join('ordering_level', 'ordering_level.item_id = items.id')
+												->get()
+												->row()
+												->total;
+	}
  
 	public function deleteItem($id) {
 
@@ -52,9 +62,7 @@ class ItemModel extends CI_Model {
 			$supplier_id, 
 			$barcode, 
 			$price, 
-			$capital, 
-			$unit,
-			$location
+			$capital 
 		) {
 		
 		$item = $this->db->where('id',$id)->get('items')->row(); 
@@ -66,9 +74,7 @@ class ItemModel extends CI_Model {
 			'supplier_id' => $supplier_id,
 			'barcode' => $barcode,
 			'price'	=> $price,
-			'capital' => $capital,
-			'main_unit'	=> $unit,
-			'location'	=> $location
+			'capital' => $capital
 			);
 
 		$data = $this->security->xss_clean($data);

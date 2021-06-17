@@ -41,6 +41,15 @@ class SalesModel extends CI_Model {
 					->row();
 	}
 
+	public function daily_sales($day) {
+
+		return $this->db->select("SUM((sales_description.price * sales_description.quantity) - sales_description.discount) as total")
+					->from('sales_description')
+					->where('DATE_FORMAT(created_at, "%d") = ', $day)
+					->get()
+					->row();
+	}
+
 	public function get_sales( $date ) {
  
 		return $this->db->select("SUM((sales_description.price * sales_description.quantity) - sales_description.discount) as total")

@@ -42,39 +42,41 @@
 				<div id="widgets"> 
 					 
 					
-					<div class="col-md-2">
-						<div class="sale-widget text-center">
-							Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
-							<b><span id="total-expense"></span></b>
-						</div>
-					</div>  
+					<div class="row">
+						<div class="col-md-3">
+							<div class="sale-widget text-center">
+								Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
+								<b><span id="total-expense"></span></b>
+							</div>
+						</div>  
 
-					<div class="col-md-2">
-						<div class="sale-widget text-center">
-							Total Sales <i class="fa fa-question-circle" data-toggle="tooltip" title="Total sales is the total amount of sales in a given period of time. Formulated as (Total Number of units sold *(times) price per unit" style="font-size: 16px;"></i><br>
-							<b><span id="total-sales"></span></b>
+						<div class="col-md-3">
+							<div class="sale-widget text-center">
+								Total Sales <i class="fa fa-question-circle" data-toggle="tooltip" title="Total sales is the total amount of sales in a given period of time. Formulated as (Total Number of units sold *(times) price per unit" style="font-size: 16px;"></i><br>
+								<b><span id="total-sales"></span></b>
+							</div>
 						</div>
+
+						<div class="col-md-3">
+							<div class="sale-widget text-center">
+								COGS <i class="fa fa-question-circle" data-toggle="tooltip" title="Cost of Goods Sold(COGS) refers to the cost of producing the goods sold or the capital of product" style="font-size: 16px;"></i><br>
+								<b><span id="total-goods-cost"></span></b>
+							</div>
+						</div>
+
+						<div class="col-md-3">
+							<div class="sale-widget text-center">
+								Gross Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Gross Profit is the total amount a company makes after deducting the costs associated with making and selling its products." style="font-size: 16px;"></i><br>
+								<b><span id="total-gross"></span></b>
+							</div>
+						</div> 
+					<!-- 	<div class="col-md-3">
+							<div class="sale-widget text-center">
+								Net Income <i class="fa fa-question-circle" data-toggle="tooltip" title="Net Income is equal to total income after deducting the total cost of goods and expenses." style="font-size: 16px;"></i><br>
+								<b><span id="total-net"></span></b>
+							</div>
+						</div>  -->
 					</div>
-
-					<div class="col-md-2">
-						<div class="sale-widget text-center">
-							Cost of Goods Sold <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
-							<b><span id="total-goods-cost"></span></b>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<div class="sale-widget text-center">
-							Gross Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Gross Profit is the total amount a company makes after deducting the costs associated with making and selling its products." style="font-size: 16px;"></i><br>
-							<b><span id="total-gross"></span></b>
-						</div>
-					</div> 
-					<div class="col-md-2">
-						<div class="sale-widget text-center">
-							Net Income <i class="fa fa-question-circle" data-toggle="tooltip" title="Net Income is equal to total revenue after expenses." style="font-size: 16px;"></i><br>
-							<b><span id="total-net"></span></b>
-						</div>
-					</div> 
 					
 				</div>
 
@@ -98,8 +100,7 @@
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
-								<th >Date</th> 
-								<th >Staff</th>
+								<th >Date Time</th>  
 								<th >Item Name</th> 
 								<th >Quantity</th>
 								<th> Returned</th>

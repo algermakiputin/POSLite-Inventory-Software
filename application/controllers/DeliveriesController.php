@@ -52,7 +52,7 @@ class DeliveriesController extends CI_Controller
 		$quantity = $this->input->post("quantity");
 		$defectives = $this->input->post("defective");
 		$remarks = $this->input->post("remarks");
-
+  
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
 			'date_time' => $this->input->post('delivery_date'),
@@ -73,10 +73,10 @@ class DeliveriesController extends CI_Controller
 				'item_id'	=> $products_id[$key],
 				'quantities' => $quantity[$key],
 				'delivery_id' => $delivery_id,
-				'price'	=>	$price[$key],
-				'expiry_date' => $expiry_date[$key],
+				'price'	=>	$price[$key], 
 				'defectives' => $defectives[$key],
-				'remarks'	=> $remarks[$key]
+				'remarks'	=> $remarks[$key],
+				'name' => $products[$key]
 			);
  			//Update Product Quantities
 			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
@@ -142,10 +142,23 @@ class DeliveriesController extends CI_Controller
 							->result();
 		  
 		$datasets = array_map(function($delivery) {
-			 
+			
+			$admin = "";
+
+			if ( is_admin() )
+				$admin = '
+						<li>
+                      <a class="" href="' . base_url('DeliveriesController/edit/' . $delivery->id ) .'">
+                          <i class="fa fa-edit"></i> Edit</a>
+                  </li>
+						<li>
+                      <a class="delete-data" href="' . base_url('DeliveriesController/destroy/' . $delivery->id ) .'">
+                          <i class="fa fa-trash"></i> Delete</a>
+                  </li>';
+
 			return [
 				$delivery->id,
-				$delivery->date_time,
+				date('Y-m-d', strtotime($delivery->date_time)),
 				$delivery->received_by,
 				$delivery->name,
 				currency() . number_format($delivery->total),
@@ -158,10 +171,7 @@ class DeliveriesController extends CI_Controller
                   <li>
                   	<a href="'. base_url("deliveries/details/" . $delivery->id) .'"><i class="fa fa-eye"></i> View Details</a> 
                   </li> 
-                  <li>
-                      <a class="delete-data" href="' . base_url('DeliveriesController/destroy/' . $delivery->id ) .'">
-                          <i class="fa fa-trash"></i> Delete</a>
-                  </li>
+                  '. $admin .'
               	</ul>
             </div> 
 				',
@@ -175,6 +185,101 @@ class DeliveriesController extends CI_Controller
 			'recordsFiltered' => $count,
 			'data' => $datasets
 		]);
+	}
+
+	public function edit( $id ) {
+
+		$data['content'] = "deliveries/edit";
+		$data['delivery'] = $this->db->where('id', $id)->get('delivery')->row();
+		$data['suppliers'] = $this->db->get('supplier')->result();
+		$data['details'] = $this->db->where('delivery_id', $data['delivery']->id)->get('delivery_details')->result();
+		$data['products'] = json_encode(
+									$this->db->select('items.id as data, items.name as value, items.capital') 
+												->get('items')
+												->result());
+
+		$this->load->view('master', $data);
+
+	}
+
+
+	public function update() {
+
+		$id = $this->input->post('delivery_id');
+ 
+		$products = $this->input->post("product");
+		$products_id = $this->input->post("product_id");
+		$expiry_date = $this->input->post("expiry_date");
+		$price = $this->input->post("price");
+		$quantity = $this->input->post("quantity");
+		$defectives = $this->input->post("defective");
+		$remarks = $this->input->post("remarks");
+  
+		$this->rollback_delivery($id);
+ 
+		$this->db->trans_begin(); 		
+
+		$delivery_id = $id;
+		$orderDetails = array();
+
+	
+
+		foreach ($products as $key => $product) {
+			if (!$products_id[$key])
+				continue;
+			
+			$orderDetails[] = array(
+				'item_id'	=> $products_id[$key],
+				'quantities' => $quantity[$key],
+				'delivery_id' => $delivery_id,
+				'price'	=>	$price[$key], 
+				'defectives' => $defectives[$key],
+				'remarks'	=> $remarks[$key],
+				'name' => $products[$key]
+			);
+ 			//Update Product Quantities
+			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
+			$this->db->where('item_id', $products_id[$key]);
+			$this->db->update('ordering_level'); 
+		}
+  
+		$this->db->insert_batch('delivery_details', $orderDetails);
+	 	
+	 	if ( $this->db->trans_status() === FALSE ) {
+			 
+	        $this->db->trans_rollback();
+	        $this->session->set_flashdata('error', 'Opps! something went wrong please try again');
+				return redirect('deliveries');
+		} 
+
+		$this->db->trans_commit();  
+		$this->session->set_flashdata('success', 'Delivery Updated Successfully');
+		return redirect('deliveries'); 
+
+	}
+ 
+
+	public function rollback_delivery( $id ) {
+
+		$delivery_details = $this->db->where('delivery_id', $id)
+											->get('delivery_details')
+											->result();
+
+ 
+
+		foreach ($delivery_details as $delivery) {
+ 
+
+			$this->db->set('quantity', 'quantity-' . $delivery->quantities, FALSE);
+			$this->db->where('item_id', $delivery->item_id);
+			$this->db->update('ordering_level');
+
+
+			$this->db->where('id', $delivery->id)->delete('delivery_details');
+		}
+ 
+		return;
+
 	}
 
 }

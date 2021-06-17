@@ -11,4 +11,14 @@ class ExpensesModel extends CI_Model {
 					->row();
 
 	}
+
+	public function daily_expenses() {
+
+		return $this->db->select("SUM(cost) as total")
+					->from('expenses')
+					->where("DATE_FORMAT(date, '%d') =", date('d'))
+					->get()
+					->row();
+
+	}
 }

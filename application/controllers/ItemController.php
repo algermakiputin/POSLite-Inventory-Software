@@ -158,12 +158,9 @@ class ItemController extends AppController {
 		
 		$datasets = [];
 
-		$inventory__total = $this->db->select("SUM(items.capital * ordering_level.quantity) as total")
-								->from('items')
-								->join('ordering_level', 'ordering_level.item_id = items.id')
-								->get()
-								->row()
-								->total;
+		$this->load->model('ItemModel');
+
+		$inventory__total = $this->ItemModel->inventory_value();
 
 
 		foreach ($items as $item) {
@@ -210,9 +207,7 @@ class ItemController extends AppController {
 				$item->barcode,
 				$item->name,
 				$item->supplier,
-				$this->categories_model->getName($item->category_id), 
-				$item->location,
-				$item->main_unit,
+				$this->categories_model->getName($item->category_id),
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining,
@@ -328,9 +323,7 @@ class ItemController extends AppController {
 				'status' => 1,
 				'barcode' => $barcode,
 				'price'	=> $price,
-				'capital' => $capital,
-				'main_unit' => $unit,
-				'location' => $location
+				'capital' => $capital
 			);
 		
 		if ($productImage) {
@@ -353,8 +346,7 @@ class ItemController extends AppController {
 	}
 
 	public function delete(){
-		$id = $this->input->post('id');
-		$this->demoRestriction();
+		$id = $this->input->post('id'); 
 		$this->load->model('ItemModel');
 		$this->load->model('HistoryModel');
 		$item = $this->ItemModel->item_info($id);
@@ -444,7 +436,7 @@ class ItemController extends AppController {
 	}
 
 	public function update() {
-		$this->demoRestriction();
+		
 		//validation Form
 		$this->updateFormValidation();
 		$this->load->model('HistoryModel');
@@ -488,9 +480,7 @@ class ItemController extends AppController {
 						$upload['upload_data']['file_name'], 
 						$supplier_id, $this->input->post('barcode'),
 						$updated_price,
-						$capital,
-						$unit,
-						$location
+						$capital
 					);
 
 		$this->PriceModel->insert($price_label, $advance_price, $id);
