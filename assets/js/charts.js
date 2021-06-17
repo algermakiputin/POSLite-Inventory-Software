@@ -2,7 +2,8 @@ $(document).ready(function() {
 
     var ctx = document.getElementById('performance').getContext('2d'); 
     var pie = document.getElementById('allocation').getContext('2d');
-      
+    var pie2 = $('#allocation')[0];
+    pie2.height = 220;
     const pieData = {
         labels: categories,
         datasets:[{
@@ -24,15 +25,16 @@ $(document).ready(function() {
         tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
-                    return '₱' + number_format(amount[tooltipItem.index])
+                     
+                    return categories[tooltipItem.index] +   ': ₱' + number_format(amount[tooltipItem.index])
                 }
             }
         }, 
         legend: {
-            display: false
+            display: true
          },
-        maintainAspectRatio:false,
-        reponsive:true
+        // maintainAspectRatio:false,
+        // reponsive:true
     }
 
     var pieChart = new Chart( pie, {
