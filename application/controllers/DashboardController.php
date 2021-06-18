@@ -54,6 +54,7 @@ class DashboardController extends AppController {
 		$data['not_selling'] = $this->not_selling_products($lastweek)->result();
 		$data['out_of_stocks'] = noStocks();
 		$data['low_stocks'] = low_stocks();
+		$data['active'] = $this->input->get('active');
 		$this->load->view('master', $data);
 	}
 
@@ -63,15 +64,14 @@ class DashboardController extends AppController {
 
 		$sales = $this->db->select('SUM(quantity) as qty, name, SUM(quantity * price) as revenue')
 								->from('sales_description')
-								->group_by('item_id')
+								->group_by('barcode')
 								->where('DATE_FORMAT(created_at, "%Y-%m") =', $date)
 								->where('quantity >=', 1)
 								->order_by('qty', "DESC")
 								->limit(10)
 								->get()
 								->result();
- 
-		
+
 		return $sales;
 
 	} 
@@ -82,65 +82,76 @@ class DashboardController extends AppController {
 		$average_sales_per_day = 0;
 		$last_month = date('Y-m-d', strtotime('-30 days'));
 
-		$sales = $this->db->select('sales.id, SUM(sales_description.price * sales_description.quantity) as total')
-								->from('sales')
-								->join('sales_description', 'sales_description.sales_id = sales.id')
-								->group_by('sales.id')
-								->where('DATE_FORMAT(date_time, "%Y-%m-%d") >', $last_month)
-								->get()
-								->result();
 
-		$count = count($sales);
-
-		if ($count < 10) {
-
+		$total = $this->db->select("SUM(sales_description.price * sales_description.quantity) as total")
+					->from('sales_description')
+					->where('DATE_FORMAT(created_at, "%Y-%m-%d") >', $last_month)
+					->get()
+					->row()
+					->total;
+	 
+		
+		if ( !$total ) 
 			return "Not enough data";
-		}
- 
+  
 
-		foreach ($sales as $row) {
-
-			$total += $row->total;
-		} 
-
-		return  currency() . number_format($total / $count,2);
- 
-		 
+		return  currency() . number_format($total / 30 ,2);
+   
 	}
 
 	public function not_selling_products($lastweek) {
 
-		$query = "SELECT items.id, items.barcode, items.name, prices.price, ordering_level.quantity
-						FROM items
-						INNER JOIN prices ON prices.item_id = items.id
-						INNER JOIN ordering_level ON ordering_level.item_id = items.id 
-						WHERE items.id
-						NOT IN
-						(
-							SELECT item_id
-							FROM sales_description 
-							WHERE DATE_FORMAT(sales_description.created_at, '%Y-%m-%d') >= '$lastweek'
-						)
-						LIMIT 450
-					";
+		/*
+			1. Query Sold products last month
+			2. Select All products that are not in the selling products
+			3. Return the Query
 
-		return $this->db->query($query); 
+		*/
+		$selling_products = $this->db->select('barcode')
+												->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $lastweek)
+												->get('sales_description')
+												->result();
+
+
+		if ( $selling_products )  {
+
+			$selling_products = array_column($selling_products, 'barcode');
+
+			$not_selling_products = $this->db->select("items.*, ordering_level.quantity")
+													->from('items')
+													->join('ordering_level', 'ordering_level.item_id = items.id')
+													->where_not_in('items.id', $selling_products)
+													->get();
+		}else {
+
+			$not_selling_products = $this->db->select("items.*, ordering_level.quantity")
+													->from('items')
+													->join('ordering_level', 'ordering_level.item_id = items.id') 
+													->get();
+		}
+		
+		
+		return $not_selling_products;
+
+	 
 	}
 
-	private function line_chart($date) {
+	public function line_chart($date = null) {
 
+		$date = $date ? $date : date('Y-m-d');
 
 		$sales = $this->db->select("date_format(sales.date_time, '%H.%i') as time, sales.id,sales.id, SUM(sales_description.price * sales_description.quantity) as total_sales")
 								->from('sales')
-								->join('sales_description', 'sales_description.sales_id = sales.id', 'LEFT')
+								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number', 'LEFT')
 								->where('date_format(sales.date_time, "%Y-%m-%d") =', $date)
 								->group_by('sales.id')
+								->order_by('time', 'ASC')
 								->get()
 								->result(); 
 	 
 		$total_sales = 0;
 
-		$points = 24;
+		$points = 26;
 		$current_time = date('H') + 1.99;
 		if ($date == date('Y-m-d'))
 			$points = $current_time;
@@ -154,30 +165,33 @@ class DashboardController extends AppController {
 		}
 
  	
- 		$time_slots = [0.0, 0.59, 1.59, 2.59, 3.59, 4.59, 5.59, 6.59, 7.59, 8.59, 9.59, 10.59, 11.59, 12.59, 13.59, 14.59, 15.59, 16.59, 17.59, 18.59, 19.59, 20.59, 21.59, 22.59, 23.59 ];
+ 		$time_slots = [0.0, 0.59, 1.59, 2.59, 3.59, 4.59, 5.59, 6.59, 7.59, 8.59, 9.59, 10.59, 11.59, 12.59, 13.59, 14.59, 15.59, 16.59, 17.59, 18.59, 19.59, 20.59, 21.59, 22.59, 24.59 ];
 
 		foreach ($sales as $row) {
 			
  		
-			for ($i = 1; $i < count($time_slots); $i++) {
+			for ($i = 0; $i < count($time_slots); $i++) {
+
+
 
 				$time = $row->time;
-
-				if ($time > $time_slots[$i - 1] && $time < $time_slots[$i] && array_key_exists($i, $dataset)) {
+ 
+				if ($time >= $time_slots[$i - 1] && $time <= $time_slots[$i] && array_key_exists($i, $dataset)) {
 
 					$dataset[$i] += $row->total_sales;
-					continue;
-				}
-
+ 					
+ 					 
+				} 
 			}  
 
-		} 
+		}  
 
 
 		for ($x = 1; $x < count($dataset); $x++) {
 
 			$dataset[$x] = $dataset[$x - 1] + $dataset[$x];
 		}
+ 
 
 		return $dataset;
 	}

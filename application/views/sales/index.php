@@ -4,8 +4,7 @@
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
-<div class="row"> 
-	 
+<div class="row">  
 		<div class="col-md-3">
 			<div class="form-group">
 				<div class="btn-group" id="btn-group-menu" role="group" aria-label="Basic example">

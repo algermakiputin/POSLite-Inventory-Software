@@ -24,15 +24,15 @@
 					<form method="POST" action="<?php echo base_url('items/insert') ?>" data-parsley-validate id="item-form">
 						<div class="col-lg-6 col-md-offset-2 ">
 							<div class="row">
-							<div class="form-group col-md-6">
+							<div class="form-group col-md-12">
 								<label>Barcode:</label>
 								<input type="text" placeholder="Item Barcode" required="required" class="form-control" name="barcode" value="">
 							</div>
-							<div class="form-group col-md-6"> 
+							<div class="form-group col-md-12"> 
 								<label>Item Name:</label>					 
 								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
 							</div>
-							<div class="form-group col-md-6"> 
+							<div class="form-group col-md-12"> 
 								<label>Category:</label> 
 								<select name="category" class="form-control" required="required">
 									<option value="">Select Category</option>
@@ -41,7 +41,7 @@
 									<?php endforeach; ?>
 								</select>
 							</div>  
-							<div class="form-group col-md-6">  
+							<div class="form-group col-md-12">  
 									<label>Supplier:</label>
 								<select name="supplier" class="form-control" required="required"> 
 									<option value="">Select Supplier</option>
@@ -53,11 +53,11 @@
 								</select>
 							</div>
 							
-							<div class="form-group col-md-6">  
+							<div class="form-group col-md-12">  
 								<label>Capital Price:</label>
 								<input type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" id="selling-price">
 							</div>
-							<div class="form-group col-md-6">  
+							<div class="form-group col-md-12">  
 								<label>Retail Price:</label>
 								<input type="text" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price">
 							</div> 

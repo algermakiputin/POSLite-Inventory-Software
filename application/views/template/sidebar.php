@@ -15,13 +15,29 @@
                         <a href="<?php echo base_url('items/new') ?>"><i class="fa fa-circle-o"></i> Register Product</a>
                     </li>
                     <?php endif; ?>
+                 <!--    <li>
+                        <a href="<?php echo base_url('items/expiry') ?>"><i class="fa fa-circle-o"></i> Product Expiry</a>
+                    </li> -->
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
 
-            <li data-step="2" data-intro="This menu takes you to the customer page where you can manage your customers.">
-                <a href="<?php echo base_url('customers') ?>"><i class="fa fa-table fa-fw"></i> Customers</a>
-            </li> 
+            <li  >
+                <a href="#"><i class="fa fa-user fa-fw"></i> Customers<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('customers') ?>"><i class="fa fa-circle-o"></i> View Customers</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('reports/credits') ?>"><i class="fa fa-circle-o"></i> Credits</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('reports/payments') ?>"><i class="fa fa-circle-o"></i> Payments</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
             <?php if ($this->session->userdata('account_type') == "Admin" || $this->session->userdata('account_type') == "Receiver" ): ?>
                 <li data-step="4" data-intro="If you have products delivered, you can save it here.">
                     <a href="#"><i class="fa fa-industry fa-fw"></i> Supplier<span class="fa arrow"></span></a>
@@ -29,16 +45,25 @@
                         <li>
                             <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-circle-o"></i> Suppliers</a>
                         </li>
-                        <li>
-                            <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Supplier Deliveries</a>
-                        </li> 
-                        <li>
-                            <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Supplier Delivery</a>
-                        </li>  
+                        
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
             <?php endif; ?>
+
+            <li>
+                <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Purchase Order<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                   
+                    <li>
+                        <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Supplier Deliveries</a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Supplier Delivery</a>
+                    </li>  
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
 
             <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
                 <a href="#"><i class="fa fa-money fa-fw"></i> Expenses<span class="fa arrow"></span></a>
@@ -64,7 +89,7 @@
                         </li>
                         <li>
                             <a href="<?php echo base_url('returns') ?>"><i class="fa fa-circle-o"></i> Returns</a>
-                        </li>
+                        </li> 
                     </ul>
                 </li>
             <?php endif; ?>
@@ -89,6 +114,9 @@
             <li data-step="8" data-intro="Here you can add users like cashier">
                 <a href="#"><i class="fa fa-cog fa-fw"></i> System <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('settings') ?>"><i class="fa fa-circle-o"></i> Settings</a>
+                    </li> 
                     <li>
                         <a href="<?php echo base_url('backups') ?>"><i class="fa fa-circle-o"></i> Backups</a>
                     </li> 

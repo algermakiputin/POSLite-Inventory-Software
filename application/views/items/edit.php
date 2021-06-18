@@ -16,17 +16,17 @@
 					<?php echo form_open_multipart('items/update', array('method' => 'post', 'id' => 'item-form')) ?>
 						<div class="col-lg-6 col-md-offset-2">
 							<div class="row">
-								<div class="form-group col-md-6"> 
+								<div class="form-group col-md-12"> 
 									<label>Barcode:</label>
 									<input type="text"  value="<?php echo $item->barcode; ?>" name="barcode" class="form-control" required="required"> 
 								</div>
-								<div class="form-group col-md-6"> 
+								<div class="form-group col-md-12"> 
 									<label>Item Name:</label>
 									<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control" required="required">
 									<input type="hidden" name="id" value="<?php echo $item->id ?>">
 								</div>
 								
-								<div class="form-group col-md-6"> 
+								<div class="form-group col-md-12"> 
 									<label>Category:</label>
 									<select name="category" class="form-control" required="required">
 										<option value="">Select Category</option>
@@ -37,7 +37,7 @@
 										<?php endforeach; ?>
 									</select>
 								</div>  
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-12">
 									<label>Supplier:</label>
 									<select name="supplier" class="form-control">
 										<?php foreach ($suppliers as $supplier): ?>
@@ -47,11 +47,11 @@
 										<?php endforeach; ?>
 									</select>
 								</div>
-								<div class="form-group col-md-6"> 
+								<div class="form-group col-md-12"> 
 									<label>Capital Price:</label>
 									<input value="<?php echo $item->capital ?>" type="text" name="capital" class="form-control" required="required" id="capital-price">
 								</div> 
-								<div class="form-group col-md-6"> 
+								<div class="form-group col-md-12"> 
 									<label>Retail Price:</label>
 									<input value="<?php echo $item->price ?>" type="text" name="price" class="form-control" required="required" id="selling-price">
 								</div>   

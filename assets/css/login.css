@@ -2,15 +2,29 @@ body, html {
 	height: 100%;
 	width: 100%;
 } 
+
+header {
+	background: #fff;
+	box-shadow: 0 0 1px rgba(0,0,0,0.1);
+}
 .wrapper {
 	padding-top: 75%;
 }
+
 .form-signin {
-	max-width: 420px;
-	padding: 15px 35px 45px;
-	background-color: #fff;  			
+	margin-top: 13%;
+}
 
+.form-signin .body {
+	max-width: 400px;
+	padding: 25px 40px 55px;
+	background-color: #fff;
+	margin: auto;
+	border-bottom: 6px solid #eee;
 
+}
+.form-signin {
+	  			
 
 	.checkbox {
 		font-weight: normal;
@@ -45,9 +59,15 @@ body, html {
 	}
 }
 
+/*.site-branding {
+
+	display: block;
+	margin-left: auto;
+	width: 55px;
+}*/
 .col2 {
 	float: left;
-	width: 50%;
+	width: 60%;
 	height: 100%;
 	position: relative;
 
@@ -70,7 +90,7 @@ body, html {
 
 .col2 .form-signin {
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	transform: translate(0, -50%);
 	margin-left: 20px;
 }
@@ -130,9 +150,9 @@ blockquote span{
 
 	.col2 .form-signin {
 		margin-left: 0; 
-	    top: 50%;
-	    left: 50%;
-	    transform: translate(-50%, -50%); 
-	    width: 90%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%); 
+		width: 90%;
 	}
 }

@@ -5,8 +5,13 @@ body {
 	overflow: hidden; 
 	font-size: 1.71em;
 	font-family: "Roboto", Arial, serif, sans-serif !important;
-	color: #141823 ;
+	color: #141823; 
 }
+
+#due-date-wrapper {
+	display: none;
+}
+ 
 
 #cart th {
 	background-color: #f4f4f5;
@@ -15,6 +20,12 @@ body {
 	left: 0; 
 	z-index: 100;
 
+}
+
+#business-info {
+	max-width: 250px;
+   margin: auto;
+   margin-bottom: 20px;
 }
 
 
@@ -87,7 +98,7 @@ header {
 }
 
 .r-header {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	
 }
 
@@ -99,7 +110,7 @@ header {
 }
 
 .r-header h3 {
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 
 #left .btn {

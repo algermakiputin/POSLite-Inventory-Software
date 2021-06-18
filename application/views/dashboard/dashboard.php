@@ -87,7 +87,7 @@ echo $this->session->flashdata('successMessage');
         <div class="col-md-12">
            <div class="panel panel-default">
                <div class="panel-heading">
-                   Diagnoses
+                   <i class="fa fa-question-circle" title="Identify products status"></i> Diagnoses
                </div> 
                <div class="panel-body"> 
                    
@@ -108,12 +108,12 @@ echo $this->session->flashdata('successMessage');
                                 </a>
                             </td>
                             <td style="font-size: 24px;padding: 15px">
-                                <a href="<?php echo base_url('diagnoses') ?>">
+                                <a href="<?php echo base_url('diagnoses?active=2') ?>">
                                 <span style="color: #333" title="Number of products that stocks are below 15" data-toggle="tooltip"><?php echo $low_stocks ?></span> 
                                 </a>       
                             </td>
                             <td style="font-size: 24px;padding: 15px">
-                                <a href="<?php echo base_url('diagnoses') ?>">
+                                <a href="<?php echo base_url('diagnoses?active=3') ?>">
                                 <span style="color: #333" title="Run out of stocks" data-toggle="tooltip"><?php echo $no_stocks ?></span> 
                                 </a>       
                             </td>
@@ -124,7 +124,7 @@ echo $this->session->flashdata('successMessage');
                    
                         <thead>
                             <tr>
-                                <td>Average Sales Per Day</td> 
+                                <td><i class="fa fa-question-circle" title="Average sales per day for the last 30 days"></i> Average Sales Per Day</td> 
                             </tr>
                         </thead>
                         <tr>

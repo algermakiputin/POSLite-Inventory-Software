@@ -12,20 +12,20 @@
         <div class="panel-body">  
             <div id="exTab1" class="container"> 
                 <ul  class="nav nav-pills">
-                    <li class="active">
+                    <li class="<?php echo $active == "" ? 'active' : '' ?>">
                         <a  href="#not_selling" data-toggle="tab">Not Selling</a>
                     </li>
-                    <li><a href="#short_stocks" data-toggle="tab">Short Stocks</a>
+                    <li class="<?php echo $active == "2" ? 'active' : '' ?>"><a href="#short_stocks" data-toggle="tab">Short Stocks</a>
                     </li> 
-                    <li><a href="#out_of_stocks" data-toggle="tab">Out of Stocks</a>
+                    <li class="<?php echo $active == "3" ? 'active' : '' ?>"><a href="#out_of_stocks" data-toggle="tab">Out of Stocks</a>
                     </li> 
                 </ul>
 
                 <div class="tab-content clearfix" id="diagnoses_tab">
-                  <div class="tab-pane active" id="not_selling">
+                  <div class="tab-pane <?php echo $active == "" ? 'active' : '' ?>" id="not_selling">
                       <h4>These products are not selling well in the last 7 days</h4>
                       <hr>
-                      <table class="table table-bordered table-hover table-striped datatable"> 
+                      <table class="table table-bordered table-hover table-striped datatable" width="100%"> 
                           <thead>
                               <tr>
                                     <th width="15%">Barcode</th>
@@ -46,10 +46,10 @@
                           </tbody>
                       </table>
                   </div>
-                  <div class="tab-pane" id="short_stocks">
+                  <div class="tab-pane <?php echo $active == "2" ? 'active' : '' ?>" id="short_stocks">
                       <h4>Time to restock</h4>
                       <hr>
-                      <table class="table table-bordered table-hover table-striped datatable"> 
+                      <table class="table table-bordered table-hover table-striped datatable" width="100%"> 
                           <thead>
                               <tr>
                                     <th>Barcode</th>
@@ -68,10 +68,10 @@
                           </tbody>
                       </table>
                   </div> 
-                  <div class="tab-pane" id="out_of_stocks">
+                  <div class="tab-pane <?php echo $active == "3" ? 'active' : '' ?>" id="out_of_stocks">
                       <h4>Run out of stocks</h4>
                       <hr>
-                      <table class="table table-bordered table-hover table-striped datatable"> 
+                      <table class="table table-bordered table-hover table-striped datatable" width="100%"> 
                           <thead>
                               <tr>
                                     <th>Barcode</th>
