@@ -89,11 +89,13 @@ class UsersController extends AppController {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$history_count = $this->db->get('history')->num_rows();
-
+		$search = $this->input->post('search[value]'); 
+		
 		$history = $this->db->order_by('id','DESC')
 						->select('users.account_type, users.username, history.*')
 						->from('history')
 						->join('users', 'users.id = history.user_id')
+						->like('users.username', $search, 'both')
 						->limit($limit, $start)
 						->get()->result();
 

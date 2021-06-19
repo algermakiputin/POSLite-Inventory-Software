@@ -972,6 +972,9 @@ $(document).ready(function() {
 		processing : true, 
 		ordering : false, 
 		serverSide : true, 
+		language: {
+			searchPlaceholder: "Search username..."
+		},
 		ajax : {
 			type : "POST",
 			data: data,

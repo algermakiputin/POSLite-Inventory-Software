@@ -237,6 +237,7 @@ class SalesController extends AppController {
 		$amount_due = $this->input->post('amount_due');
 
 		$this->load->model("PriceModel");
+		$this->load->model('HistoryModel');
 		$this->db->trans_begin();
 
 		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
@@ -271,11 +272,13 @@ class SalesController extends AppController {
 				'capital' => $sale['capital'],
 				'sales_id' => $last_sales_id + 1
 				
-			];
+			]; 
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
 			$this->db->where('item_id', $sale['id']);
 			$this->db->update('ordering_level');
+			$this->HistoryModel->insert('Sold ' . $sale['quantity'] . ' quantity of ' . $sale['name']);
+
 		}
 
 		if ( $payment_type == "credit") {

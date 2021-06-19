@@ -110,7 +110,7 @@ class PaymentsController extends CI_Controller {
 
 		return $this->db->select('payments.*, credits.total, credits.transaction_number')
  									->from('payments') 
- 									->where('payments.customer_id', $customer_id)
+ 									->like('payments.customer_id', $customer_id, 'BOTH')
  									->where('payments.date >=', $from)
  									->where('payments.date <=', $to)
  									->join('credits', 'credits.id = payments.credit_id')

@@ -22,7 +22,7 @@ class CreditsController extends CI_Controller {
 		$from = $from == "" ? date('Y-m-1') : $from;
 		$to = $to == "" ? date('Y-m-t') : $to; 
 
-		$credits = $this->db->where('customer_id', $customer_id)
+		$credits = $this->db->like('customer_id', $customer_id, 'BOTH')
 									->where('date >=', $from)
 									->where('date <=', $to)
 									->order_by('id', 'DESC')
