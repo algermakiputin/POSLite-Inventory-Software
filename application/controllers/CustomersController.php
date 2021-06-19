@@ -5,8 +5,6 @@ class CustomersController Extends AppController {
 
 	public function __construct() {
 		parent::__construct();
-		
-		$this->load->model('CustomersModel');
 		$this->load->config('license');
 		
 	}
@@ -17,24 +15,8 @@ class CustomersController Extends AppController {
 		$data['customers'] = $this->db->order_by('id','DESC')->get('customers')->result();
  		$data['content'] = "customers/index";
  		$data['controller'] = $this;
-		$this->load->view('master',$data);
-
-
-	}
-
-	public function select() {
-
-		$q = $this->input->post('q');
-
-		$customers = $this->db->select('id, name as text')
-									->from('customers')
-									->like('name', $q, 'BOTH')
-									->get()
-									->result();
-
-		echo json_encode($customers);
-		die();
-
+		$this->load->view('master',$data); 
+		
 	}
 
 	public function insert() { 
@@ -46,6 +28,7 @@ class CustomersController Extends AppController {
 				'outlet_location' => strip_tags($this->input->post('outlet_location')),
 				'outlet_address' => strip_tags($this->input->post('outlet_address')), 
 				'contact_number' => strip_tags($this->input->post('mobileNumber')),
+				'note' => $this->input->post('note'),
 				'membership' => ''
  
 			);
@@ -118,6 +101,7 @@ class CustomersController Extends AppController {
 				'outlet_location' => strip_tags($this->input->post('outlet_location')),
 				'outlet_address' => strip_tags($this->input->post('outlet_address')), 
 				'contact_number' => strip_tags($this->input->post('contact_number')),
+				'note' => $this->input->post('note')
 			);
 
 		$data = $this->security->xss_clean($data);
@@ -137,6 +121,54 @@ class CustomersController Extends AppController {
 		echo json_encode($customer);
 	}
 
+	public function select() {
 
+		$q = $this->input->get('search');
+
+		$customer = $this->db->select('id as id, name as text')
+									->from('customers')
+									->like('name', $q,'BOTH')
+									->get()
+									->result_array();
+ 
+		echo json_encode($customer);
+
+	 
+	}
+
+	public function records($customer_id) {
+
+		$date_filter = $this->input->get('q');
+
+		$past_days = 90;
+
+		if ($date_filter == 1) {
+
+			$past_days = 180;
+
+		}else if ( $date_filter == 2) {
+
+			$past_days = 365;
+
+		} 
+
+ 
+
+		$credits = $this->db->where('customer_id', $customer_id) 
+									->where('date_format(date, "%Y-%m-%d") >=',  date('Y-m-d', strtotime("today - $past_days days")))
+									->order_by('date', 'DESC')
+									->get('credits')
+									->result();
+
+		$data['customer'] = $this->db->where('id', $customer_id)->get('customers')->row();
+		$data['credits'] = $credits;
+ 		$data['total'] = 0;
+ 		$data['past_days'] = $past_days;
+ 		$data['url'] = base_url('customer/records/' . $customer_id);
+
+
+		$this->load->view('customers/records', $data);
+
+	}
 
 }

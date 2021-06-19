@@ -11,32 +11,43 @@ html, body {
 
 }
 
-.navbar {
-  z-index: 1;
+#sales_table {
+  display: block;
+  max-height: 550px;
+  overflow-y: scroll;
+}
+
+#sales_table thead tr th {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#select-wrapper .select2-container--default .select2-selection--single {
+
+      border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px; 
+}
+
+.select2-container--default .select2-selection--single {
+  height: 31px;
 }
 
 #page-wrapper {
   font-size: 1.1em;
 }
 
-.select2-selection__rendered {
-    line-height: 34px;
-}
-.select2-container .select2-selection--single {
-    height: 34px;
-}
-.select2-selection__arrow {
-    height: 34px;
-}
-
-.select2-container--default .select2-selection--single {
-  border-color: #ddd;
-}
 #diagnoses_tab .tab-pane {
 
   border:solid 1px #ddd;
   padding: 20px;
 
+}
+
+#expiry_date_table_length,
+#expiry_date_table_filter {
+  display: none;
 }
 
 @media (min-width: 992px) {
@@ -318,4 +329,3 @@ legend {
 
 
  
-
