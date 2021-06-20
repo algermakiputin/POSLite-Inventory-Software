@@ -198,8 +198,8 @@
 
 					</div>
 				</div> 
-				<div id="credit-wrapper">
-					<div class="form-group" id="due-date-wrapper">
+				<div id="credit-wrapper" style="display:none">
+					<div class="form-group">
 						<label>Due Date</label>
 						<input type="date"  name="due_date" id="due_date" class="form-control">
 					</div>

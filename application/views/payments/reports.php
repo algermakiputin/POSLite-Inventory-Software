@@ -56,6 +56,7 @@
                     <th>Customer</th> 
                     <th>Total</th> 
                     <th>Amount Paid</th> 
+                    <th>Remarks</th>
                     <th>Action</th>
                 </tr>
             </thead>

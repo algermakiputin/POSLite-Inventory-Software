@@ -38,6 +38,10 @@
 								<label>Payment</label>  
 								<input type="number" data-parsley-lte-message="Payment must not be greather than the balance" data-parsley-lte="#total" id="payment" required="required"  name="payment" class="form-control">
 							</div>
+							<div class="form-group">
+								<label>Remarks</label>
+								<textarea class="form-control" rows="3" name="remarks"></textarea>
+							</div>
 
 							<div class="form-group">
 								<input type="submit" name="" value="Submit" class="btn btn-primary"> 

@@ -22,13 +22,15 @@ class PaymentsController extends CI_Controller {
 		$date = $this->input->post('date');
 		$status = $payment >= $total ? 1 : 0;
 		$paid = $this->input->post('paid');
+		$remarks = $this->input->post('remarks');
 
 		$data = array(
 			'customer_id' => $customer_id,
 			'customer_name' => $customer_name,
 			'date' => $date,
 			'payment' => $payment,
-			'credit_id' => $credit_id
+			'credit_id' => $credit_id,
+			'remarks' => $remarks
 		);
 
 		$this->db->trans_begin();
@@ -94,7 +96,8 @@ class PaymentsController extends CI_Controller {
  				$payment->customer_name, 
  				currency() . number_format($payment->total,2),
  				currency() . number_format($payment->payment,2),
- 				'<a target="__blank" href="'. base_url('/PaymentsController/destroy/' . $payment->id). '" class="btn btn-danger delete-data btn-sm">Delete</a>'
+				$payment->remarks,
+ 				'<a href="'. base_url('/PaymentsController/destroy/' . $payment->id). '" class="btn btn-danger delete-data btn-sm">Delete</a>'
  			];
  		}
 
@@ -121,9 +124,11 @@ class PaymentsController extends CI_Controller {
 
 	public function destroy($id) {
 
-		$payment = $this->db->where('id', $id)->get('payments')->row();
-
-		$this->db->set('paid', "paid - $payment->payment")->where('id', $payment->credit_id)->update('credits');
+		$payment = $this->db->where('id', $id)->get('payments')->row(); 
+		$this->db->set('paid', "paid - $payment->payment")
+				->set('status', 0)
+				->where('id', $payment->credit_id)
+				->update('credits');
 		$this->db->where('id', $id)->delete('payments');
 
 		showErrorMessage("Payment deleted successfully");
