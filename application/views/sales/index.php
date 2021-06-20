@@ -38,31 +38,26 @@
 
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-				<div id="widgets"> 
-					 
-					
+				<div id="widgets">  
 					<div class="row">
 						<div class="col-md-3">
 							<div class="sale-widget text-center">
 								Total Expenses <i class="fa fa-question-circle" data-toggle="tooltip" title="Total expenses is sum of total amount of expenses in a given period of time" style="font-size: 16px;"></i><br>
 								<b><span id="total-expense"></span></b>
 							</div>
-						</div>  
-
+						</div>   
 						<div class="col-md-3">
 							<div class="sale-widget text-center">
 								Total Sales <i class="fa fa-question-circle" data-toggle="tooltip" title="Total sales is the total amount of sales in a given period of time. Formulated as (Total Number of units sold *(times) price per unit" style="font-size: 16px;"></i><br>
 								<b><span id="total-sales"></span></b>
 							</div>
-						</div>
-
+						</div> 
 						<div class="col-md-3">
 							<div class="sale-widget text-center">
 								COGS <i class="fa fa-question-circle" data-toggle="tooltip" title="Cost of Goods Sold(COGS) refers to the cost of producing the goods sold or the capital of product" style="font-size: 16px;"></i><br>
 								<b><span id="total-goods-cost"></span></b>
 							</div>
-						</div>
-
+						</div> 
 						<div class="col-md-3">
 							<div class="sale-widget text-center">
 								Gross Profit <i class="fa fa-question-circle" data-toggle="tooltip" title="Gross Profit is the total amount a company makes after deducting the costs associated with making and selling its products." style="font-size: 16px;"></i><br>
@@ -90,7 +85,7 @@
 
 					<canvas id="myChart" width="400" height="150"></canvas>
 				</div>
-				<div class="col-lg-12"  id="table_view">
+				<div class=""  id="table_view">
 					<?php if ($this->session->flashdata('success')): ?>
 						<div class="alert alert-success">
 							<?php echo $this->session->flashdata('success') ?>
@@ -107,7 +102,7 @@
 								<th >Price</th>
 								<th>Discount</th> 
 								<th >Total</th>   
-								<th> Transaction Profit</th>
+								<th> Profit</th>
 							</tr>
 						</thead>
 						<tbody></tbody>

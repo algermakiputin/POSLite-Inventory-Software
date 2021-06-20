@@ -652,6 +652,7 @@ $(document).ready(function() {
 		var change = $("#change").val();
 		var remarks = $("#remarks").val();
 		var discount_percentage = $("#discount").val();
+		var partial_payment = $("#partial_payment").val();
 
  		if (row) { 
  			if ( payment_type == "cash") {
@@ -699,8 +700,7 @@ $(document).ready(function() {
 						'</tr>'
 					);
 			});
-
-
+ 
 			var data = {};
 			data['sales'] = sales;
 			data['customer_id'] = customer_id;
@@ -711,6 +711,7 @@ $(document).ready(function() {
 			data['due_date'] = due_date;
 			data['discount'] = discountAmount;
 			data['remarks'] = remarks;
+			data['partial_payment'] = partial_payment;
 			data[csrfName] = csrfHash;
 			
 			$.ajax({
@@ -774,9 +775,7 @@ $(document).ready(function() {
 			})
 
 			$("#payment-modal").modal("toggle");
-			return;
-			  
-
+			return; 
 			
  		}
  		

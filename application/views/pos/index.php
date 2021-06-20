@@ -203,6 +203,10 @@
 						<label>Due Date</label>
 						<input type="date"  name="due_date" id="due_date" class="form-control">
 					</div>
+					<div class="form-group">
+						<label>Partial Payment (Optional)</label>
+						<input type="number"  name="partial_payment" id="partial_payment" class="form-control">
+					</div>
 				</div> 
 				<div class="form-group">
 					<label>Remarks</label>

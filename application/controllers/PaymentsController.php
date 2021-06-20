@@ -35,13 +35,11 @@ class PaymentsController extends CI_Controller {
 
 		$this->db->trans_begin();
 
-		if ( $status ) {
-
+		if ( $status ) { 
 			$this->db->where('id', $credit_id)
 						->update('credits', array(
 							'status' => 1, 
-						));
-
+						)); 
 		}
 
 		$this->db->where('id', $credit_id)
@@ -50,16 +48,12 @@ class PaymentsController extends CI_Controller {
 					]);
 
 		$this->db->insert('payments', $data);
- 
-
+  
 		if ($this->db->trans_status() === FALSE)
-		{	
-
-		        $this->db->trans_rollback();
-
-
-		        showErrorMessage("Opps something went wrong. Please try again latter");
-		        return redirect('reports/credits');
+		{	 
+			$this->db->trans_rollback(); 
+			showErrorMessage("Opps something went wrong. Please try again latter");
+			return redirect('reports/credits');
 		}
 		 
 		$this->db->trans_commit(); 

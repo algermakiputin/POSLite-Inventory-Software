@@ -236,6 +236,7 @@ class SalesController extends AppController {
 		$discount = $this->input->post('discount');
 		$amount_due = $this->input->post('amount_due');
 		$remarks = $this->input->post('remarks');
+		$partial_payment = $this->input->post('partial_payment');
 
 		$this->load->model("PriceModel");
 		$this->load->model('HistoryModel');
@@ -284,7 +285,7 @@ class SalesController extends AppController {
 		}
 
 		if ( $payment_type == "credit") {
-
+ 
 			$this->db->insert('credits', array(
 				'transaction_number' => $transaction_number,
 				'name' => $customer_name,
@@ -294,20 +295,34 @@ class SalesController extends AppController {
 				'due_date' => date('Y-m-d h:i:s', strtotime($due_date)),
 				'status' => 0
 			));
-		}
  
+			if ($partial_payment) {
+				$credit_id = $this->db->insert_id();
+				$this->db->insert('payments', [
+					'customer_id' => $customer_id,
+					'customer_name' => $customer_name,
+					'date' => date('Y-m-d'),
+					'payment' => $partial_payment,
+					'credit_id' => $credit_id,
+					'remarks' => 'Partial Payment'
+				]);
 
+				$this->db->where('id', $credit_id)
+							->update('credits', [
+								'paid' =>  $partial_payment
+							]);
+			}
+		}
+  
 		$this->db->insert_batch('sales_description', $data);
-
-
-
+ 
 		if ($this->db->trans_status() === FALSE)
 		{	
 			
 			dd($this->db->error());
-		        $this->db->trans_rollback(); 
+			$this->db->trans_rollback(); 
 
-		        return false;
+			return false;
 		}
 		 
 		$this->db->trans_commit(); 
