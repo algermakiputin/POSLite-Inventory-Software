@@ -67,7 +67,7 @@ $route['diagnoses'] = "DashboardController/diagnoses";
 
 $route['reports/credits'] = "CreditsController/reports";
 $route['reports/payments'] = "PaymentsController/reports";
-
+$route['transactions'] = "SalesController/transactions";
 
 $route['default_controller'] = 'AuthController/login';
 $route['404_override'] = '';

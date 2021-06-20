@@ -157,13 +157,11 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group" id="note-wrapper" >
-							<label>Note:</label>
+							<label>Customer Note:</label>
 							<input type="text" readonly class="form-control" id="note" name="note">
 						</div>
 					</div>
-				</div>
-				
-				
+				</div> 
 				<div class="form-group">
 					<label>Payment Type</label>
 					<select class="form-control form-control-lg" id="payment-type">
@@ -199,14 +197,18 @@
 						<input readonly="readonly" type="text" class="form-control  form-control-lg" name="" placeholder="Change:" id="change" autocomplete="off">
 
 					</div>
+				</div> 
+				<div id="credit-wrapper">
+					<div class="form-group" id="due-date-wrapper">
+						<label>Due Date</label>
+						<input type="date"  name="due_date" id="due_date" class="form-control">
+					</div>
+				</div> 
+				<div class="form-group">
+					<label>Remarks</label>
+					<textarea class="form-control" rows="3" id="remarks" name="remarks"></textarea>
 				</div>
-				
-				<div class="form-group" id="due-date-wrapper">
-					<label>Due Date</label>
-					<input type="date"  name="due_date" id="due_date" class="form-control">
-				</div>
-			 
-			</div>
+			</div> 
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
 				<button id="payment-button" type="button" class="btn btn-primary" >Complete Transaction</button> 

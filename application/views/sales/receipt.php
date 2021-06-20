@@ -9,6 +9,7 @@
 		#receipt {
 			width: 480px;
 			padding: 10px;
+			font-size:1em;
 		}
 
 	</style>

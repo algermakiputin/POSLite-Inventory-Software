@@ -21,7 +21,7 @@
     <div class="col-md-12" style="margin-bottom: 10px;">
         <form class="form-inline" autocomplete="off">
             <div class="form-group">
-                <label>Filter Customer: &nbsp;</label> 
+                <label>Filters: &nbsp;</label> 
             </div> 
             <div class="input-group" id="select-wrapper">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
@@ -29,10 +29,7 @@
                     <option value="">Search...</option>
                 </select>
             </div>
-             &nbsp;
-            <div class="form-group">
-                <label>Filter Date: &nbsp;</label> 
-            </div> 
+             &nbsp; 
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                 <input id="credit_from" autocomplete="off" type="text" class="form-control date-range-filter" name="credit_from" placeholder="From Date" data-date-format="yyyy-mm-dd">

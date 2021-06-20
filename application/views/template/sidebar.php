@@ -85,11 +85,11 @@
                    <a href="#"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
+                            <a href="<?php echo base_url('transactions') ?>"><i class="fa fa-circle-o"></i> Transactions</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url('sales/customer') ?>"><i class="fa fa-circle-o"></i> Customer</a>
-                        </li>
+                            <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales</a>
+                        </li> 
                         <li>
                             <a href="<?php echo base_url('returns') ?>"><i class="fa fa-circle-o"></i> Returns</a>
                         </li> 

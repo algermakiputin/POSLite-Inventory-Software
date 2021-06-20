@@ -650,25 +650,17 @@ $(document).ready(function() {
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val() == "" ? 0 : $("#payment").val();
 		var change = $("#change").val();
-
+		var remarks = $("#remarks").val();
 		var discount_percentage = $("#discount").val();
- 		
 
  		if (row) { 
- 	 
  			if ( payment_type == "cash") {
- 
-
- 				if (  parseFloat(payment) < parseFloat(totalAmountDue) ) { 
-
- 
+ 				if (  parseFloat(payment) < parseFloat(totalAmountDue) ) {  
 					$("#payment").focus();
 					return alert("Insufficient Amount");
 					  
 				}
- 			}
-
-			
+ 			} 
 		 		
  			for (i = 0; i < row; i++) {
 				var r = $("#cart tbody tr").eq(i).find('td');
@@ -718,7 +710,7 @@ $(document).ready(function() {
 			data['amount_due'] = totalAmountDue;
 			data['due_date'] = due_date;
 			data['discount'] = discountAmount;
-
+			data['remarks'] = remarks;
 			data[csrfName] = csrfHash;
 			
 			$.ajax({
@@ -767,7 +759,7 @@ $(document).ready(function() {
 				 	$("#amount-due").text(''); 
 				 	$("#amount-total").text('');
 				 	$("#amount-discount").text('');
-				 	$("#due-date-wrapper").hide();
+				 	$("#credit-wrapper").hide();
 				 	item_table.clear().draw();
 				 	$("#btn").button('reset');
 				 	totalAmountDue = 0;  
@@ -775,7 +767,7 @@ $(document).ready(function() {
 
 					$("#payment-input-wrapper").show();
 
-					$("#due-date-wrapper").hide();
+					$("#credit-wrapper").hide();
 					$("#discount").val('');
 				 	
 				}
@@ -795,7 +787,7 @@ $(document).ready(function() {
  
 		if ( $(this).val() == "credit") {
 
-			$("#due-date-wrapper").show();
+			$("#credit-wrapper").show();
 			$("#payment-input-wrapper").hide();
 
 		} 
@@ -803,7 +795,7 @@ $(document).ready(function() {
 
 			$("#payment-input-wrapper").show();
 
-			$("#due-date-wrapper").hide();
+			$("#credit-wrapper").hide();
 		}
 
 	})

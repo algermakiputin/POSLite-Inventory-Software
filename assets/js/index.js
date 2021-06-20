@@ -724,21 +724,16 @@ $(document).ready(function() {
 						data : data
 					}
 				});
-
-
-				$("#customer-select").on("change.select2", function(e) {
-
-					var id = $(this).val();
-
+ 
+				$("#customer-select").on("change.select2", function(e) { 
+					var id = $(this).val(); 
 					credits_datatable.columns(0).search(id).draw();
 
 				});
 
-				$("#credit_to").change(function(){
-
+				$("#credit_to").change(function(){ 
 					var credit_to = $(this).val();
-					var credit_from = $("#credit_from").val();
-
+					var credit_from = $("#credit_from").val(); 
 					credits_datatable.columns(1).search(credit_from)
 					.column(2).search(credit_to)
 					.draw();
@@ -746,6 +741,41 @@ $(document).ready(function() {
 				});
 			}
 
+		}
+
+		var transactions = {
+			init: function() {
+				this.datatable()
+			},
+			datatable: function() {
+				var transactions_datatable = $("#transactions_datatable").DataTable({
+					searching : true,
+					ordering : false, 
+					serverSide : true, 
+					processing : true,
+					bsearchable : true, 
+					responsive: true, 
+					ajax : {
+						url : base_url + 'SalesController/transactionsDatatable',
+						type : 'POST',
+						data : data
+					}
+				});
+
+				$("#staff-select").change(function(e) {
+					var id = $(this).val();
+					transactions_datatable.columns(0).search(id).draw();
+				})
+
+				$("#transactions_to").change(function(){ 
+					var transactions_to = $(this).val();
+					var transactions_from = $("#transactions_from").val(); 
+					transactions_datatable.columns(1).search(transactions_from)
+											.column(2).search(transactions_to)
+											.draw();
+
+				});
+			}
 		}
 
 
@@ -835,6 +865,7 @@ $(document).ready(function() {
 		returns.init();
 		credits.init();
 		payments.init();
+		transactions.init();
 
 	})();
 
@@ -1130,8 +1161,7 @@ $(document).ready(function() {
 	   	contentType: "application/json; charset=utf-8"
 	   },
 	   processResults: function(response) {
-
-
+ 
 		   	return {
 		   		results: (response)
 		   	};

@@ -235,6 +235,7 @@ class SalesController extends AppController {
 		$due_date = $this->input->post('due_date');
 		$discount = $this->input->post('discount');
 		$amount_due = $this->input->post('amount_due');
+		$remarks = $this->input->post('remarks');
 
 		$this->load->model("PriceModel");
 		$this->load->model('HistoryModel');
@@ -252,7 +253,8 @@ class SalesController extends AppController {
 				'customer_name' => $customer_name,
 				'discount' => $discount,
 				'amount_due' => $amount_due,
-				'total' => $total
+				'total' => $total,
+				'note' => $remarks
  			]);
 
 		$sales = $this->security->xss_clean($sales);
@@ -313,6 +315,56 @@ class SalesController extends AppController {
 		return;
 	}
 
+	public function transactionsDatatable() {
+
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$staff_id = $this->input->post('columns[0][search][value]');  
+		$from = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-1') : $this->input->post('columns[1][search][value]');
+		$to = $this->input->post('columns[2][search][value]') == "" ? date('Y-m-t') : $this->input->post('columns[2][search][value]');
+		$data = [];
+	 
+		$totalRecords = $this->db->select('sales.*,users.name as staff')
+								->join('users', 'users.id = sales.user_id')
+								->like('sales.user_id', $staff_id, 'BOTH')
+								->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") <=', $to) 
+								->get('sales')
+								->num_rows();
+								
+		$transactions = $this->db->select('sales.*,users.name as staff')
+								->join('users', 'users.id = sales.user_id')
+								->like('sales.user_id', $staff_id, 'BOTH')
+								->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") <=', $to)
+								->order_by('sales.id', 'DESC')
+								->limit($limit, $start)
+								->get('sales')
+								->result();
+	 
+		foreach ($transactions as $transaction) {
+
+			$data[] = [
+				date('Y-m-d', strtotime($transaction->date_time)),
+				"<a target='__blank' href='".base_url('SalesController/customer_receipt/' . $transaction->transaction_number )."'>$transaction->transaction_number</a>",
+				$transaction->staff,
+				$transaction->customer_name,
+				$transaction->payment_type,
+				$transaction->discount,
+				$transaction->total,
+				$transaction->note,
+			];
+		}
+
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => $totalRecords,
+			'recordsFiltered' => $totalRecords,
+			'data' => $data, 
+		]);
+		
+	}
+
 	public function reports() {
 
 		$this->start = $this->input->post('start');
@@ -321,9 +373,7 @@ class SalesController extends AppController {
 		$totalSales = 0;
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
-		$sales = $this->filterReports($from, $to);
-
- 
+		$sales = $this->filterReports($from, $to); 
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
@@ -465,6 +515,13 @@ class SalesController extends AppController {
 		return;
 	}
 
+	public function transactions() {
+
+		$data['content'] = "sales/transactions";
+		$data['title'] = "Transactions";
+		$data['users'] = $this->db->get('users')->result();
+		$this->load->view('master', $data);
+	}
 
 	/*
 		Get daily transactions for logged in user

@@ -94,7 +94,7 @@ header {
 	padding: 20px 50px;
 	max-height: 400px;
 	overflow: auto;
-	font-size: 12px;
+	font-size: 0.78em;
 }
 
 .r-header {
