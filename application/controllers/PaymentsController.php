@@ -111,7 +111,7 @@ class PaymentsController extends CI_Controller {
  									->where('payments.date >=', $from)
  									->where('payments.date <=', $to)
  									->join('credits', 'credits.id = payments.credit_id')
- 									->order_by('date', 'DESC')
+ 									->order_by('id', 'DESC')
  									->limit($limit, $start)
  									->get();
 	}

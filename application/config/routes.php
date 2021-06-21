@@ -129,5 +129,6 @@ $route['license'] = "LicenseController/index";
 
 $route['activate'] = 'LicenseController/activate';
 $route['users'] = "UsersController/users";
+$route['database/update'] = 'DatabaseController/update';
 
 $route['login'] = 'AuthController/login';
