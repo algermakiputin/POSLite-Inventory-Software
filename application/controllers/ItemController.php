@@ -534,13 +534,13 @@ class ItemController extends AppController {
 
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
-		$currentPrice = $this->PriceModel->getPrice($id);
+		$currentPrice = $item->price;
+		$currentStocks = $this->db->where('item_id', $id)->get('ordering_level')->row()->quantity; 
 		$reorder = $this->input->post('reorder');
 		$productImage = $_FILES['productImage'];
 		$supplier_id = $this->input->post('supplier');
 		$unit = $this->input->post('unit');
-		$location = $this->input->post('location');
-
+		$location = $this->input->post('location'); 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
 			$currentImagePath = './uploads/' . $fileName;
@@ -548,8 +548,7 @@ class ItemController extends AppController {
 			if ($fileName) 
 				unlink($currentImagePath);
 			//Then Upload and save the image filename to database
-			$upload = $this->do_upload('productImage');
-			 
+			$upload = $this->do_upload('productImage'); 
 		}
 
 		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
@@ -572,13 +571,15 @@ class ItemController extends AppController {
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-success">Item Updated</div>');
 			if ($item->name != $updated_name)
 				$this->HistoryModel->insert('Change Item Name: ' . $item->name . ' to ' . $updated_name);
-			 
+			
+			if ($currentStocks != $stocks)
+				$this->HistoryModel->insert('Modified ' . $item->name . ' Stocks: from ' . $currentStocks . ' to ' . $stocks);
 			if ($item->description != $updated_desc)
 				$this->HistoryModel->insert('Change '.$item->name.' Description: ' . $item->description . ' to ' . $updated_desc);
 			if ($currentPrice != $updated_price) 
 					$this->HistoryModel->insert('Change '.$item->name.' Price: ' . $currentPrice . ' to ' . $updated_price);
-				if ($item->category_id != $updated_category) 
-					$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
+			if ($item->category_id != $updated_category) 
+				$this->HistoryModel->insert('Change '.$item->name.' Category: ' . $this->categories_model->getName($item->category_id) . ' to ' . $this->categories_model->getName($updated_category));
 			return redirect(base_url('items'));
 		}
 	 		
