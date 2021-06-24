@@ -94,15 +94,20 @@
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
-								<th >Date Time</th>  
-								<th >Item Name</th> 
-								<th >Quantity</th>
-								<th> Returned</th>
-								<th >Capital</th>
-								<th >Price</th>
-								<th>Discount</th> 
-								<th >Total</th>   
-								<th> Profit</th>
+								<th >Date</th>  
+								<th >Terms</th>  
+								<th>Account Name</th>
+								<th >Invoice No.</th>
+								<th >QTY.</th>
+								<th>Product Name</th> 
+								<th >UNIT PRICE</th>   
+								<th>TOTAL COST</th>
+								<th>PRICE</th>
+								<th>Total Amount</th>
+								<th>Payment</th>
+								<th>STATUS</th>
+								<th>Remarks</th>
+								<th>Balance</th>
 							</tr>
 						</thead>
 						<tbody></tbody>

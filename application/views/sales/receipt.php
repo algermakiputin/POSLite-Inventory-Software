@@ -76,6 +76,8 @@
 				<div>Sub Total:  <span id="r-total-amount"><?php echo currency() . number_format( $total, 2 ) ?> </span></div> 
 				
 				<div>Grand Total:  <span id="r-total-amount"><?php echo currency() . number_format( $sale->amount_due, 2 ) ?> </span></div> 
+				<div>Partial Payment:  <span id="r-total-amount"><?php echo currency() . number_format( $partial_payment, 2 ) ?> </span></div> 
+				<div>Balance:  <span id="r-total-amount"><?php echo currency() . number_format( $balance, 2 ) ?> </span></div> 
 			</div>
 
 			<div class="r-footer text-center">

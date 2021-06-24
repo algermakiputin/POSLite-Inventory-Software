@@ -14,13 +14,32 @@ class SalesController extends AppController {
 
 	}
 
-	public function receipt($id) {
+	public function customer_receipt($id) {
 
  		$sales = $this->db->where('transaction_number', $id)->get('sales')->row();
-
-
+ 		$partial_payment = 0;
+ 		$balance = 0;
  		if (!$sales)
  			return redirect('/');
+
+
+ 		if ($sales->payment_type == 'credit') {
+
+
+ 			$credit = $this->db->where('transaction_number', $sales->transaction_number)  
+ 								->order_by('id', 'ASC')
+ 								->get('credits')
+ 								->row();
+
+ 			$payment = $this->db->where('credit_id', $credit->id)
+ 								->where('remarks', 'Partial Payment')
+ 								->order_by('id', 'ASC')
+ 								->get('payments')
+ 								->row();
+ 			$partial_payment = $payment->payment;
+ 			$balance = $credit->total - $partial_payment;
+
+ 		}
 
  		$orderline = $this->db->where('transaction_number', $sales->transaction_number)->get('sales_description')->result();
 
@@ -33,32 +52,12 @@ class SalesController extends AppController {
  		$data['sale'] = $sales;
  		$data['orderline'] = $orderline;
  		$data['sales_person'] = $sales_person;
+ 		$data['partial_payment'] = $partial_payment;
+ 		$data['balance'] = $balance;
 
 		$this->load->view('sales/receipt', $data);
 	} 
-
-	public function customer_receipt($transaction_number) {
-
- 		$sales = $this->db->where('transaction_number', $transaction_number)->get('sales')->row();
-
-
- 		if (!$sales)
- 			return redirect('/');
-
- 		$orderline = $this->db->where('transaction_number', $sales->transaction_number)->get('sales_description')->result();
-
- 		$sales_person = $this->db->where('id', $sales->user_id)->get('users')->row();
-
- 		$sales_person = $sales_person ? $sales_person->name : "Not found";
- 		
- 		$data['total'] = 0;
- 		$data['discount'] = 0;
- 		$data['sale'] = $sales;
- 		$data['orderline'] = $orderline;
- 		$data['sales_person'] = $sales_person;
-
-		$this->load->view('sales/receipt', $data);
-	} 
+ 
  
 
 	public function sales () {
@@ -389,6 +388,7 @@ class SalesController extends AppController {
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
 		$sales = $this->filterReports($from, $to); 
+ 
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
@@ -413,16 +413,39 @@ class SalesController extends AppController {
 			$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
 			$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity) - $desc->discount;
 			$transactionProfit += $saleProfit;
+			$totalCost = $desc->quantity * $desc->price;
+			$status = 'paid';
+			$payment = $desc->total;
+			$balance = 0;
+
+			if ( $desc->payment_type == 'credit') {
+				$credit = $this->db->where('transaction_number', $desc->transaction_number )
+									->get('credits')
+									->row();
+
+				if ($credit->status == 0) { 
+					$balance = $credit->total - $credit->paid;
+					$payment = $credit->paid;
+					$status = 'pending';
+				}
+
+			}
+
 			$datasets[] = [ 
-				date('Y-m-d h:i:s A', strtotime($desc->created_at)),   
-				$desc->name,
+				date('Y-m-d', strtotime($desc->date_time)),   
+				$desc->payment_type,
+				$desc->customer_name,
+				$desc->transaction_number,
 				$desc->quantity,
-				$desc->returned,
-				'₱' . number_format($desc->capital,2),
-				'₱' . number_format($desc->price,2),
-				'₱' . number_format($desc->discount,2),
-				'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount, 2),
-				'₱' . number_format($saleProfit, 2)
+				$desc->name,
+				 number_format($desc->price,2),
+				 number_format($totalCost,2), 
+				number_format($desc->capital,2), 
+				 number_format($desc->total,2),//total Amount 
+				 number_format($payment,2),
+				$status, //
+				$desc->note,
+				number_format($balance,2)
 			];
 
 			$goodsCost += ($desc->capital * $desc->quantity);
@@ -475,14 +498,17 @@ class SalesController extends AppController {
 	}
 
 	public function filterReports($from, $to) {
-		$from = $from ? $from : date('Y-m-d');
-		$to = $to ? $to : date('Y-m-d'); 
+		$from = $from ? $from : date('Y-m-1');
+		$to = $to ? $to : date('Y-m-t'); 
 
-		return $this->db->where('DATE_FORMAT(created_at, "%Y-%m-%d") >=', $from)
-								->where('DATE_FORMAT(created_at, "%Y-%m-%d") <=', $to)
-								->order_by('id', 'DESC')
-								->get('sales_description', $this->start, $this->limit)
-								->result();
+		return $this->db->select('sales.*, sales_description.quantity, sales_description.price,sales_description.name, sales_description.capital')
+						->from('sales')
+						->join('sales_description', 'sales_description.sales_id = sales.id', 'LEFT')
+						->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") >=', $from)
+						->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") <=', $to)
+						->order_by('sales.id', 'DESC') 
+						->get()
+						->result();
 		 
 	}
 
@@ -579,7 +605,7 @@ class SalesController extends AppController {
 					'<a 
 						class="btn btn-primary btn-sm" 
 						target="popup" 
-						onclick="window.open(\''.base_url('SalesController/receipt/' . $sale->transaction_number).' \', \'popup\', \'width=800,height=800\' )">
+						onclick="window.open(\''.base_url('SalesController/customer_receipt/' . $sale->transaction_number).' \', \'popup\', \'width=800,height=800\' )">
 					 	View Receipt
 						</a>'
 				];

@@ -641,7 +641,15 @@ $(document).ready(function() {
 		return exist;
 	}
  
+	$("body").on('keyup', '#partial_payment',function() {
 
+		var partial_payment = $(this).val();
+
+		if (parseFloat(partial_payment) > parseFloat(totalAmountDue)) {
+			alert('Partial payment cannot be greather than the total amount');
+			return $(this).val(0);
+		}
+	})
 	function process_transaction(customer_id, customer_name, payment_type, due_date) {
 
 		var row = $("#cart tbody tr").length;
@@ -653,6 +661,7 @@ $(document).ready(function() {
 		var remarks = $("#remarks").val();
 		var discount_percentage = $("#discount").val();
 		var partial_payment = $("#partial_payment").val();
+		var balance = parseFloat(totalAmountDue) - parseFloat(partial_payment)
 
  		if (row) { 
  			if ( payment_type == "cash") {
@@ -749,11 +758,12 @@ $(document).ready(function() {
 					$("#r-cashier").text($("#user").text()); 
 					$("#r-total-amount").text( currency + number_format(totalAmountDue) )
 					$("#r-discount").text(currency + number_format(discountAmount));
+					$("#r-partial-payment").text(currency + number_format(partial_payment));
+					$("#r-balance").text(currency + number_format(balance));
 					$("#r-id").text(data);
+					$("#r-due").text(due_date);
 					$("#r-time").text(d.toLocaleTimeString());
-
-				 
-
+ 
 				 	$("#cart tbody").empty();
 				 	$("#payment").val('');
 				 	$("#change").val('');

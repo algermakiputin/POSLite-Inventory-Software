@@ -14,7 +14,7 @@ html, body {
 #sales_table {
   display: block;
   max-height: 550px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #sales_table thead tr th {
