@@ -660,9 +660,25 @@ $(document).ready(function() {
 		var change = $("#change").val();
 		var remarks = $("#remarks").val();
 		var discount_percentage = $("#discount").val();
-		var partial_payment = $("#partial_payment").val();
+		var partial_payment = parseFloat($("#partial_payment").val());
+		partial_payment = isNaN(partial_payment) ? 0 : partial_payment;
 		var balance = parseFloat(totalAmountDue) - parseFloat(partial_payment)
+		balance = isNaN(balance) ? 0 : balance;
 
+		if (payment_type == 'cash') {
+			$("#r-partial-wrapper").hide();
+			$("#r-balance-wrapper").hide();
+			$("#summary-partial-wrapper").hide();
+			$("#summary-balance-wrapper").hide();
+			$("#r-due-date-wrapper").hide();
+		}else {
+			$("#r-partial-wrapper").show();
+			$("#r-balance-wrapper").show();
+			$("#summary-partial-wrapper").show();
+			$("#summary-balance-wrapper").show();
+			$("#r-due-date-wrapper").show();
+		}
+		 
  		if (row) { 
  			if ( payment_type == "cash") {
  				if (  parseFloat(payment) < parseFloat(totalAmountDue) ) {  
@@ -758,11 +774,11 @@ $(document).ready(function() {
 					$("#r-cashier").text($("#user").text()); 
 					$("#r-total-amount").text( currency + number_format(totalAmountDue) )
 					$("#r-discount").text(currency + number_format(discountAmount));
-					$("#r-partial-payment").text(currency + number_format(partial_payment));
-					$("#r-balance").text(currency + number_format(balance));
-					$("#summary-partial-payment").text(currency + number_format(partial_payment));
-					$("#summary-balance").text(currency + number_format(balance));
-					$("#r-id").text(data);
+					$("#r-partial-payment").text(currency + (partial_payment));
+					$("#r-balance").text(currency + (balance));
+					$("#summary-partial-payment").text(currency + (partial_payment));
+					$("#summary-balance").text(currency + (balance));
+					$("#r-id").html(data);
 					$("#r-due").text(due_date);
 					$("#r-time").text(d.toLocaleTimeString());
  
@@ -775,6 +791,7 @@ $(document).ready(function() {
 				 	$("#credit-wrapper").hide();
 				 	item_table.clear().draw();
 				 	$("#btn").button('reset');
+				 	$("#note").val('');
 				 	totalAmountDue = 0;  
 					totalDiscount = 0
 
