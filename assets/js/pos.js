@@ -760,6 +760,8 @@ $(document).ready(function() {
 					$("#r-discount").text(currency + number_format(discountAmount));
 					$("#r-partial-payment").text(currency + number_format(partial_payment));
 					$("#r-balance").text(currency + number_format(balance));
+					$("#summary-partial-payment").text(currency + number_format(partial_payment));
+					$("#summary-balance").text(currency + number_format(balance));
 					$("#r-id").text(data);
 					$("#r-due").text(due_date);
 					$("#r-time").text(d.toLocaleTimeString());
