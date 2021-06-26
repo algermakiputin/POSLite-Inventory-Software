@@ -417,11 +417,13 @@ class SalesController extends AppController {
 			$status = 'paid';
 			$payment = $desc->total;
 			$balance = 0;
+			$due_date = null;
 
 			if ( $desc->payment_type == 'credit') {
 				$credit = $this->db->where('transaction_number', $desc->transaction_number )
 									->get('credits')
 									->row();
+				$due_date = date('Y-m-d',strtotime($credit->due_date));
 
 				if ($credit->status == 0) { 
 					$balance = $credit->total - $credit->paid;
@@ -433,7 +435,8 @@ class SalesController extends AppController {
 
 			$datasets[] = [ 
 				date('Y-m-d', strtotime($desc->date_time)),   
-				$desc->payment_type,
+				$desc->payment_type, 
+				$due_date,
 				$desc->customer_name,
 				$desc->transaction_number,
 				$desc->quantity,

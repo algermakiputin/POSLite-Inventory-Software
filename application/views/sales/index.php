@@ -96,6 +96,7 @@
 							<tr>
 								<th >Date</th>  
 								<th >Terms</th>  
+								<th>Due Date</th>
 								<th>Account Name</th>
 								<th >Invoice No.</th>
 								<th >QTY.</th>

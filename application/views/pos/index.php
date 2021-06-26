@@ -288,9 +288,9 @@
 							<div class="text-right">  
 								<div>Discount Amount: <span id="r-discount"></span></div>
 								<div>Grand Total <span id="r-total-amount"></span></div>
-								<div>Partial Payment: <span id="r-partial-payment"></span></div>
-								<div>Balance: <span id="r-balance"></span></div>
-								<div>Due Date: <span id="r-due"></span></div>
+								<div id="r-partial-wrapper">Partial Payment: <span id="r-partial-payment"></span></div>
+								<div id="r-balance-wrapper">Balance: <span id="r-balance"></span></div>
+								<div id="r-due-date-wrapper">Due Date: <span id="r-due"></span></div>
 								<div>Payment: <span id="r-payment"></span></div>
 								<div>Change: <span id="r-change"></span></div>
 							</div>
@@ -313,11 +313,11 @@
 								<td>Grand Amount:</td>
 								<td id="summary-total"></td>
 							</tr>
-							<tr>
+							<tr id="summary-partial-wrapper">
 								<td>Partial Payment:</td>
 								<td id="summary-partial-payment"></td>
 							</tr>
-							<tr>
+							<tr id="summary-balance-wrapper">
 								<td>Balance:</td>
 								<td id="summary-balance"></td>
 							</tr>
