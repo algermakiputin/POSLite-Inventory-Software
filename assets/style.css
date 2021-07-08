@@ -1,7 +1,7 @@
 
 @font-face {
-    font-family: 'Lato';
-    src:url("fonts//Lato/Lato-Regular.ttf"); 
+    font-family: 'Roboto';
+    src:url("fonts/Roboto/Roboto-Regular.ttf"); 
     text-rendering: optimizeLegibility;
 }
 .form-control {
@@ -15,7 +15,7 @@ body {
     overflow-x: hidden;
     margin-bottom: -20px;
     border-collapse: collapse;
-    font-family: "Lato", Arial, serif, sans-serif !important;
+    font-family: "Roboto", Arial, serif, sans-serif !important;
     display: none;  
 }
 
