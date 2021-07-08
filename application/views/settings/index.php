@@ -24,7 +24,11 @@
 								<p><?php echo $this->session->flashdata('error') ?></p>
 							</div>
 						<?php endif; ?> 
-						<?php echo form_open("SettingsController/update") ?>
+						<?php echo form_open_multipart("SettingsController/update") ?>
+						<div class="form-group">
+								<label>Logo (max 400 * 400)</label>
+								<input type="file" name="logo">
+							</div>
 							<div class="form-group">
 								<label>Business Name</label>
 								<input type="text" value="<?php echo $settings->business_name ?>" autocomplete="off" name="business_name" class="form-control" id="color">
