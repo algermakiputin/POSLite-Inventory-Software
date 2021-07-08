@@ -13,38 +13,51 @@ class SettingsController extends CI_Controller {
         $config['upload_path']          = './assets/logo';
         $config['allowed_types']        = 'jpg|png|jpeg|JPEG';
         $config['max_size']             = 100;
-        $config['max_width']            = 300;
-        $config['max_height']           = 300;
+        $config['max_width']            = 500;
+        $config['max_height']           = 500;
 
         $this->load->library('upload', $config);
-
+       
         if ( ! $this->upload->do_upload('logo'))
         {
-                $error = array('error' => $this->upload->display_errors());
-                return false;
+           
+            error($this->upload->display_errors());
+            redirect('settings');
         }
         else
         {
-                $data = array('upload_data' => $this->upload->data());
+            $data = array('upload_data' => $this->upload->data());
 
-                return $this->upload->data('file_name');
+            return $this->upload->data('file_name');
         }
     }
 
      public function update() {
 
+        $settings = $this->db->get('settings')->num_rows();
         $business_name = $this->input->post('business_name');
         $business_address = $this->input->post('business_address');
         $contact = $this->input->post('contact');
         $email = $this->input->post('email');
+        
+        $data = [
+            'business_name' => $business_name,
+            'business_address' => $business_address,
+            'contact' => $contact,
+            'email' => $email
+        ];
+        
+        if ( $_FILES['logo']) {
 
-        $update = $this->db->where('id', 1)
-                            ->update('settings', [
-                            'business_name' => $business_name,
-                            'business_address' => $business_address,
-                            'contact' => $contact,
-                            'email' => $email
-                        ]);
+            $data['logo'] = $this->do_upload();
+        }
+
+        if ($settings) {
+            $update = $this->db->where('id', 1)
+                            ->update('settings', $data);
+        }else {
+            $update = $this->db->insert('settings', $data);
+        }
 
         if ( $update ) {
 
@@ -56,5 +69,6 @@ class SettingsController extends CI_Controller {
         return redirect('settings');
 
     }
+ 
 
 }

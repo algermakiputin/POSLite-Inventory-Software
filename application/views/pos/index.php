@@ -152,6 +152,9 @@
 				<div class="col-md-7">
 					<div id="receipt">
 						<div class="r-header text-center">
+							<div>
+								<img width="80" src="<?php echo base_url('/assets/logo/' . $settings->logo) ?>">
+							</div>
 							<h3><?php echo $settings->business_name ?></h3>
 							<div id="business-info" class="text-center">
 								<div><?php echo $settings->business_address ?></div> 
