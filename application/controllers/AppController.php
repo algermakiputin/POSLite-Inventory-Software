@@ -36,7 +36,7 @@ class AppController extends CI_Controller {
     }
 
     public function licenseControl () {
-     
+		return;
     	if (!SITE_LIVE) {
     		if (!file_exists(homeDir() . '/profile.txt')) {
 	    		return redirect('activate');
@@ -53,6 +53,18 @@ class AppController extends CI_Controller {
     	}
     	
     }
+
+	public function test() {
+		// dd(drush_server_home());
+		//dd(drush_server_home());
+		// mkdir('./test/hello');
+		// $file = file_get_contents('./test/index.php');
+		// print_r($file);
+		
+		$test = shell_exec("system_profiler SPHardwareDataType | awk '/Serial/ {print $4}'");
+		echo $test;
+		die();
+	}
 
     public function userAccess($page) {
 
