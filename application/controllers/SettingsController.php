@@ -47,7 +47,7 @@ class SettingsController extends CI_Controller {
             'email' => $email
         ];
         
-        if ( $_FILES['logo']) {
+        if ( $_FILES['logo']['tmp_name']) {
 
             $data['logo'] = $this->do_upload();
         }

@@ -39,9 +39,7 @@
 			},
 			selectProduct: function() {
 
-				$("#item-table").on('click', 'tbody tr', function(event) {
-
-
+				$("#item-table").on('click', 'tbody tr', function(event) { 
 					var id = $(this).find('input[name="item-id"]').val();
 					var name = $(this).find('td').eq(0).text(); 
 					var price = $(this).find('td').eq(3).text();
@@ -144,125 +142,141 @@
 			}
 		}
 
+
+
 		var scanner = {
 
-			init: function() {
-			 	
-			 	$("body").keydown(function( e ) {
-
-
-				 		if (e.keyCode === 13) {
-	 						
-
-
-				  			if ($("#advance_pricing_modal").hasClass("in")) {
-
-				  				$("#add-product").click();
-				  				
-				  			}  else {
- 
-				  				$("#process-form").submit();
-				  			}
-				  		 	
-				  		} 
- 
- 
-
-				  		if (e.keyCode === 112) { 
-				  		 
-				  			$("#payment").focus();
-				  			return false; 
-				  			 
-				  		}
-
-				  		if (e.keyCode == 119) { 
-				  			
-				  			$("#open-transactions").click();  
-				  		} 
-
-				  		if (e.keyCode == 118) { 
-				  			
-				  			$("#return-modal").modal("toggle"); 
-				  		}
-				 	});
+			init: function() { 
 
 				$(document).pos();
-				$(document).on('scan.pos.barcode', function(event){
- 			 
-					if (license === "silver" || license === "gold") {
-						if (event.code.length > 6) {
-							data = {};
-							data[csrfName] = csrfHash;
-							data['code'] = event.code;
-						 
-							$.ajax({
-								type : 'POST',
-								url : base_url + 'items/find',
-								data : data,
-								success : function(data) {
-									if (data) {
-
-										let result = JSON.parse(data);
-										if ( itemExist(result.id))
-											return false;
-
-										let id = result.id;
-										let name  = result.name
-										let quantity = 1;
-										let capital = result.capital;
-										let price = result.price;
-									 	let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-									 	totalAmountDue += parseFloat(subtotal);
-			 
-							  	 	 	
-							  	 	 	let advance_pricing = result.advance_pricing;
-										let enable_ap = Object.keys(advance_pricing).length;
-
-										$("#product-name").text(name);
-										$("#item_id").val(id);
-										$("#capital").val(capital);
-
-
-										$("#advance_pricing_options tbody").empty(); 
-										$("#advance_pricing_options tbody").append("<tr>" +
-													"<td>Retail Price</td>" +
-													"<td>"+price+"</td>" +
-													'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
-												"</tr>"
-												);
-
-										$.each(advance_pricing, function(key, value) {
-
-											$("#advance_pricing_options tbody").append("<tr>" +
-													"<td>"+value.label+"</td>" +
-													"<td>"+ currency + (value.price) +"</td>" +
-													'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
-												"</tr>"
-												);			
-										});
-							 	 
-										// var price_options = JSON.parse(pricing);
-										// console.log(price_options);
-
-										$("#advance_pricing_modal").modal('toggle'); 
-										$("#quantity").focus();
-										recount();
-										$("payment").val('');
-										$("change").val(''); 
-
-										recount();
-										$("payment").val('');
-										$("change").val('');
-									}else 
-										alert('No item found in the database');
-								 
-								}
-							})
+				$(document).on('scan.pos.barcode', function(event){ 
+					event.preventDefault();
+					event.stopPropagation(); 
+					if (license === "silver" || license === "gold") { 
+						if ($("#payment").is(':focus') || $("#quantity").is(":focus"))  {
+							return false;
 						}
+						if ($("#advance_pricing_modal").hasClass("in")) {
+							return false;
+						}
+
+						data = {};
+						data[csrfName] = csrfHash;
+						data['code'] = event.code; 
+						$.ajax({
+							type : 'POST',
+							url : base_url + 'items/find',
+							data : data,
+							success : function(data) {
+								if (data) { 
+									let result = JSON.parse(data);
+									if ( itemExist(result.id))
+										return false;
+
+									let id = result.id;
+									let name  = result.name
+									let quantity = 1;
+									let capital = result.capital;
+									let price = result.price;
+									let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+									totalAmountDue += parseFloat(subtotal);
+									console.log(data)
+									
+									let advance_pricing = result.advance_pricing;
+									let enable_ap = Object.keys(advance_pricing).length;
+
+									$("#product-name").text(name);
+									$("#item_id").val(id);
+									$("#capital").val(capital);
+									$("#stocks").val(result.quantity)
+
+									$("#advance_pricing_options tbody").empty(); 
+									$("#advance_pricing_options tbody").append("<tr>" +
+												"<td>Retail Price</td>" +
+												"<td>"+price+"</td>" +
+												'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
+											"</tr>"
+											);
+
+									$.each(advance_pricing, function(key, value) {
+
+										$("#advance_pricing_options tbody").append("<tr>" +
+												"<td>"+value.label+"</td>" +
+												"<td>"+ currency + (value.price) +"</td>" +
+												'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
+											"</tr>"
+											);			
+									});
+								
+									// var price_options = JSON.parse(pricing);
+									// console.log(price_options);
+
+									$("#advance_pricing_modal").modal('toggle'); 
+									$("#quantity").focus();
+									recount();
+									$("payment").val('');
+									$("change").val(''); 
+
+									recount();
+									$("payment").val('');
+									$("change").val('');
+								}else 
+									alert('No item found in the database');
+								
+							}
+						})
+					 
 					} else {
 						alert("Your license does not support Barcode Feature, Upgrade Now!");
 					}
+
+					return false;
 				}); 
+			 	$("body").keyup(function( e ) { 
+
+					e.stopPropagation();
+					e.preventDefault();
+					
+					if (e.keyCode === 13 && $("#quantity").is(":focus")) { 
+						
+						if ($("#advance_pricing_modal").hasClass("in")) { 
+							$("#add-product").click(); 
+						}  
+					}  
+
+					if (e.keyCode === 13 && $("#payment").is(":focus")) {
+					 
+						$("#process-form").submit();
+						 
+					}
+
+					if (e.keyCode === 112) { 
+						
+						$("#payment").focus();
+						return false; 
+							
+					}
+
+					if (e.keyCode == 119) { 
+						
+						$("#open-transactions").click();  
+					} 
+
+					if (e.keyCode == 118) { 
+						
+						$("#return-modal").modal("toggle"); 
+					}
+				});
+
+				$("#payment").focus(function(e) {
+
+					$("#btn").val("Process (Enter)");
+				})
+
+				$("#payment").focusout(function(e) {
+
+					$("#btn").val("Process");
+				})
 
 
 				 	
@@ -444,12 +458,12 @@
 		e.preventDefault();
 		var item_id = $("#item_id").val();
 		var name = $("#product-name").text();
-		var quantity = $("#quantity").val();
+		var quantity = $("#quantity").val(); 
 		var price = $("input[name='pricing']:checked").val(); 
 		let capital = $("#capital").val();
 		let unit = $("#item_unit").val();
 		var stocks = $("#stocks").val();
-		
+	 
 		if (parseFloat(quantity) > parseFloat(stocks)) {
 
 			alert("Not enough stocks");
@@ -518,6 +532,7 @@
 	}
 
 	$("#process-form").submit(function(e) {
+	 
 		e.preventDefault();
 		var row = $("#cart tbody tr").length;
 		var sales = [];
