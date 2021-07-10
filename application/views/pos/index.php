@@ -113,7 +113,7 @@
 
 						</div>
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process (Enter)" id="btn" >
+							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process" id="btn" >
 						</div>
 					</form>
 				</div>
@@ -153,7 +153,9 @@
 					<div id="receipt">
 						<div class="r-header text-center">
 							<div>
-								<img width="80" src="<?php echo base_url('/assets/logo/' . $settings->logo) ?>">
+								<?php if ($settings->logo): ?>
+									<img width="80" src="<?php echo base_url('/assets/logo/' . $settings->logo) ?>">
+								<?php endif; ?>
 							</div>
 							<h3><?php echo $settings->business_name ?></h3>
 							<div id="business-info" class="text-center">
