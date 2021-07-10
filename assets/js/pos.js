@@ -278,6 +278,16 @@
 					$("#btn").val("Process");
 				})
 
+				$("#quantity").focus(function(e) {
+
+					$("#add-product").text("Add Product (Enter)");
+				})
+
+				$("#quantity").focusout(function(e) {
+
+					$("#add-product").text("Add Product");
+				})
+
 
 				 	
 			}
