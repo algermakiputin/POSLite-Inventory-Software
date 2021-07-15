@@ -180,7 +180,7 @@
 									let price = result.price;
 									let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
 									totalAmountDue += parseFloat(subtotal);
-									console.log(data)
+									
 									
 									let advance_pricing = result.advance_pricing;
 									let enable_ap = Object.keys(advance_pricing).length;
