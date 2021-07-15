@@ -17,12 +17,8 @@ class ReturnsController extends CI_Controller {
     	$data = $this->input->post('data'); 
 
       
-    	$this->db->trans_begin();
-
-    	
-        $this->ReturnsModel->insert($data, $this->OrderingLevelModel);
-
-
+    	$this->db->trans_begin(); 
+        $this->ReturnsModel->insert($data, $this->OrderingLevelModel); 
     	if ($this->db->trans_status() === FALSE) {
 		
 	        $this->db->trans_rollback();

@@ -431,6 +431,7 @@ class SalesController extends AppController {
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(),
 				'capital' => $sale['capital'],
+				'item_id' => $sale['id']
 			);
 			
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
