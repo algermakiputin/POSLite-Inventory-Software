@@ -965,7 +965,6 @@ $(document).ready(function() {
 		}
 	})
 
-
 	$("#activation-form").submit(function(e) {
 		e.preventDefault();
 		var key = $(this).find('[name=key]').val();
@@ -1014,6 +1013,8 @@ $(document).ready(function() {
 	})
 
 	$("#short_stocks_table").DataTable();
+
+	
 })
 
 
