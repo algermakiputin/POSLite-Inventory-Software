@@ -58,10 +58,10 @@
 					<table style="width: 100%" class="table table-bordered table-hover table-striped" id="item-table">
 						<thead>
 							<tr> 
-								<td width="40%">Item Name</td>
-								<td width="20%">Description</td> 
-								<td width="15%">Quantity</td> 
-								<td width="15%">Price</td>
+								<td >Item Name</td>
+								<td >Description</td> 
+								<td>Quantity</td> 
+								<td >Price</td>
 							</tr>
 						</thead>
 						<tbody> 
