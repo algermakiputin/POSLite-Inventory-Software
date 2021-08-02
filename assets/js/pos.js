@@ -587,7 +587,7 @@
 					$("#r-items-table tbody").append(
 							'<tr>' + 
 								'<td>'+value.name +'</td>' + 
-								'<td>'+currency+ number_format(value.price) +'</td>' +
+								'<td>'+currency+ value.price +'</td>' +
 								'<td>'+value.quantity+'</td>' +
 								'<td>'+currency+ number_format(value.subtotal)+'</td>' +
 							'</tr>'
