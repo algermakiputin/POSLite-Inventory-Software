@@ -560,11 +560,12 @@
 	 			for (i = 0; i < row; i++) {
 					var r = $("#cart tbody tr").eq(i).find('td');
 					var quantity = r.eq(1).find('input').val();
+					var current_stocks = r.eq(1).find('input').data('stocks');
 					var price = remove_comma(r.eq(3).text().substring(1));
 					var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val();
 					var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
 					var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
- 
+					
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
@@ -573,7 +574,8 @@
 							subtotal : parseFloat(price) * parseInt(quantity) - parseFloat(discount),
 							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
 							capital : capital,
-							unit: main_unit
+							unit: main_unit,
+							currentStocks: current_stocks
 						};
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);

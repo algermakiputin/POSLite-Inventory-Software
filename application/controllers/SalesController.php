@@ -409,7 +409,7 @@ class SalesController extends AppController {
 
 		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
 		$transaction_number = "TRN" . sprintf("%04s", ((int)$last_sales_id + 1 )  ); 
-
+		$this->load->model('InventoryModel');
 		$this->db->insert('sales',array(
 			'date_time' => get_date_time(),
 			'user_id' => $this->session->userdata('id'),
@@ -417,7 +417,7 @@ class SalesController extends AppController {
 		));
 
 		$sales = $this->security->xss_clean($sales);
-
+	 
 		foreach ($sales as $sale) {
 			$transactionProfit = 0;
 			$data[] = array(
@@ -432,8 +432,8 @@ class SalesController extends AppController {
 				'created_at' => get_date_time(),
 				'capital' => $sale['capital'],
 				'item_id' => $sale['id']
-			);
-			
+			); 
+			$this->InventoryModel->insert( $sale['id'], $sale['quantity'], $sale['name'], $sale['currentStocks'], 'sell', $sale['price'], $sale['capital'] );
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
 			$this->db->where('item_id', $sale['id']);
 			$this->db->update('ordering_level');

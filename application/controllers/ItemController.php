@@ -471,10 +471,11 @@ class ItemController extends AppController {
 	}
 
 	public function add_stocks() {
-	
+		$this->load->model('InventoryModel');
 		$itemID = $this->input->post('item_id');
 		$itemName = $this->input->post('item_name');
 		$stocks = $this->input->post('stocks');
+		$current_stocks = $this->input->post('current_stocks');
 
 		if (SITE_LIVE) {
 
@@ -491,6 +492,7 @@ class ItemController extends AppController {
 		$update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
 		$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
 		if ($update) {
+			$this->InventoryModel->insert( $itemID, $stocks, $itemName, $current_stocks, 'stockin');
 			$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
 			return redirect(base_url('items'));
 		}

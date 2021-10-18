@@ -12,10 +12,13 @@ class DeliveriesController extends CI_Controller
 		$this->load->model('PriceModel');
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
-		$data['products'] = json_encode(
-									$this->db->select('items.id as data, items.name as value, items.capital') 
-												->get('items')
-												->result());
+		$products = $this->db->select('items.id as data, items.name as value, items.capital, ordering_level.quantity')
+							->from('items')
+							->join('ordering_level', 'ordering_level.item_id = items.id') 
+							->get()
+							->result();
+		 
+		$data['products'] = json_encode($products);
 		 
  		$data['content'] = "deliveries/new";
 		$this->load->view('master',$data);
@@ -44,8 +47,10 @@ class DeliveriesController extends CI_Controller
 
 
 	public function insert() {
-	 
+		$this->load->model('InventoryModel');
+		
 		$products = $this->input->post("product");
+		$current_stocks = $this->input->post("stocks");
 		$products_id = $this->input->post("product_id");
 		$expiry_date = $this->input->post("expiry_date");
 		$price = $this->input->post("price");
@@ -54,9 +59,7 @@ class DeliveriesController extends CI_Controller
 		$remarks = $this->input->post("remarks");
 		$due_date = $this->input->post('due_date');
 		$payment_status = $this->input->post('payment_status'); 
-
-
-  
+ 
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
 			'date_time' => $this->input->post('delivery_date'),
@@ -76,6 +79,7 @@ class DeliveriesController extends CI_Controller
 			if (!$products_id[$key])
 				continue;
 			
+			$this->InventoryModel->insert( $products_id[$key], $quantity[$key], $product, $current_stocks[$key], "stockin");
 			$orderDetails[] = array(
 				'item_id'	=> $products_id[$key],
 				'quantities' => $quantity[$key],
@@ -220,9 +224,9 @@ class DeliveriesController extends CI_Controller
 
 
 	public function update() {
-
+		
 		$id = $this->input->post('delivery_id');
- 
+		$this->load->model('InventoryModel');
 		$products = $this->input->post("product");
 		$products_id = $this->input->post("product_id");
 		$expiry_date = $this->input->post("expiry_date");
@@ -233,20 +237,25 @@ class DeliveriesController extends CI_Controller
 		$due_date = $this->input->post('due_date');
 		$payment_status = $this->input->post('payment_status') == "Paid" ? 1 : 0;
 		$supplier = $this->input->post('supplier_id'); 
-  
+		$deliveryDetails = $this->db->where('delivery_id', $id)->get('delivery_details')->result();
+		// dd($deliveryDetails);
+		foreach ($deliveryDetails as $details) {
+			$current_stocks = $this->db->where('item_id', $details->item_id)->get('ordering_level')->row()->quantity;
+		
+			$this->InventoryModel->insert( $details->item_id, $details->quantities * -1, $details->name, $current_stocks, 'stockin', 0, 0 );
+		}
+		$this->db->trans_begin(); 
 		$this->rollback_delivery($id);
- 
-		$this->db->trans_begin(); 		
-
+		
 		$delivery_id = $id;
 		$orderDetails = array();
-
+		
 		$this->db->where('id', $id)->update('delivery', [
 				'supplier_id' => $supplier,
 				'payment_status' => $payment_status,
 				'due_date' => $due_date
 			]);
-
+		
 
 		foreach ($products as $key => $product) {
 			if (!$products_id[$key])
@@ -262,7 +271,10 @@ class DeliveriesController extends CI_Controller
 				'name' => $products[$key],
 				'expiry_date' => $expiry_date[$key]
 			);
+			
+			$current_stocks = $this->db->where('item_id', $products_id[$key])->get('ordering_level')->row()->quantity;
  			//Update Product Quantities
+			$this->InventoryModel->insert( $products_id[$key], $quantity[$key], $products[$key], $current_stocks, 'stockin', 0, 0 );
 			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
 			$this->db->where('item_id', $products_id[$key]);
 			$this->db->update('ordering_level'); 
