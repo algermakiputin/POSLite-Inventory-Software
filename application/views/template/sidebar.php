@@ -78,6 +78,9 @@
                             <a href="<?php echo base_url('sales/logs') ?>"><i class="fa fa-circle-o"></i> Sales Logs</a>
                         </li>
                         <li>
+                            <a href="<?php echo base_url('inventory/reports') ?>"><i class="fa fa-circle-o"></i> Inventory Reports</a>
+                        </li> 
+                        <li>
                             <a href="<?php echo base_url('returns') ?>"><i class="fa fa-circle-o"></i> Returns</a>
                         </li>
                         <li>

@@ -855,6 +855,59 @@ $(document).ready(function() {
 			}
 		]
 	});
+
+	var inventory_table = $("#inventory_reports_table").DataTable({
+		searching : true,
+		ordering : false, 
+		serverSide : true,
+		info : false,
+		processing : true,
+		bsearchable : true, 
+		dom : 'lrtBp',
+		ajax : {
+			url : base_url + 'InventoryController/reports_datatable',
+			type : 'POST',
+			data : data
+		},
+		lengthMenu : [[10, 25, 50, 0], [10, 25, 50, "Show All"]],
+		buttons: [ 
+			{
+				extend: 'excelHtml5',
+				filename : 'Inventory Reports',
+				title : "Inventory Reports",
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0,1, 2, 3,4,5,6,7 ]
+				}, 
+			},
+			{
+				extend: 'pdfHtml5',
+				filename : 'Inventory Reports',
+				title : "Inventory Reports",
+				className : "btn btn-default btn-sm",
+				exportOptions: {
+					columns: [ 0, 1, 2, 3,4,5,6, 7]
+				}, 
+			},
+		],  
+	});
+
+	var inventory_from = $("#inventory_from");
+	var inventory_to = $("#inventory_to");
+
+	inventory_to.change(function(e) {
+
+		$("#start-date").text(inventory_from.val());
+		$("#end-date").text(inventory_to.val());
+		inventory_table.columns(0).search(inventory_from.val())
+									.columns(1).search(inventory_to.val())
+									.draw();
+	});
+
+	$("#inventory_search").keyup(function(e) {
+
+		inventory_table.search($(this).val()).draw();
+	});
 	
 	$("#outOfStocksTable").DataTable({ 
 		dom : "lfrtBp", 
