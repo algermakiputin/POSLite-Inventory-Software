@@ -122,7 +122,7 @@ $route['deliveries/details/(:any)'] = "DeliveriesController/details/$1";
 $route['new-delivery'] = "DeliveriesController/new";
 $route['delivery/insert'] = "DeliveriesController/insert";
 $route['license'] = "LicenseController/index";
-
+$route['inventory/reports'] = "InventoryController/inventory_reports";
 $route['activate'] = 'LicenseController/activate';
 $route['users'] = "UsersController/users";
 

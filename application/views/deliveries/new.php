@@ -85,6 +85,7 @@
 											</td>
 											
 											<td width="10%">
+												<input type="hidden" name="stocks[]" value="" />
 											 	<input type="number" name="quantity[]" autocomplete="off" min="0" value="0" placeholder="QTY" class="form-control" required="required">
 											</td>
 											<td width="10%">
@@ -142,11 +143,10 @@
 		var products = <?php echo $products ?>;
 		$(".product").autocomplete({
 			lookup: products,
-			onSelect: function(suggestion) { 
-
-				console.log(suggestion);
+			onSelect: function(suggestion) {   
 				$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
-				$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
+				$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);  
+				$(this).parents("tr").find("input[name='stocks[]']").val(suggestion.quantity);
 			}
 		});
 
@@ -160,6 +160,7 @@
 				onSelect: function(suggestion) {
 					$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
 					$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
+					$(this).parents("tr").find("input[name='stocks[]']").val(suggestion.quantity);
 				}
 			})
 			rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
