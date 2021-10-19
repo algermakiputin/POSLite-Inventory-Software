@@ -9,11 +9,11 @@
 		<form class="form-inline" action="/action_page.php">
 			<div class="form-group">
 				<label for="email">Filter Reports:</label>
-				<input id="min-date" type="text" placeholder="Starting Date" class="form-control date-range-filter" id="min-date" data-date-format="yyyy-mm-dd">
+				<input id="min-date" style="border-radius:25px;" type="text" placeholder="Starting Date" class="form-control date-range-filter" id="min-date" data-date-format="yyyy-mm-dd">
 			</div>
 			<div class="form-group">
 				&nbsp;
-				<input id="max-date" type="text" placeholder="Ending Date" class="form-control date-range-filter" id="max-date" data-date-format="yyyy-mm-dd">
+				<input id="max-date" style="border-radius:25px;" type="text" placeholder="Ending Date" class="form-control date-range-filter" id="max-date" data-date-format="yyyy-mm-dd">
 			</div> 
 		</form>
 		<br/>
