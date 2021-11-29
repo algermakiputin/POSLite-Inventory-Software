@@ -136,8 +136,8 @@ $(document).ready(function() {
 	var item_table = $("#item-table").DataTable({
 		processing : true, 
 		serverSide : true,
-		 "bPaginate": true,
-		pagin:true,
+		 bPaginate: true,
+		pagin:true, 
 		"targets": 'no-sort',
 		"bSort": false,
 		ajax : {
@@ -145,7 +145,11 @@ $(document).ready(function() {
 			data : data,
 			type : 'POST'
 		},
-	});
+		initComplete: function() {
+
+			$("#item-table_length").append("&nbsp;&nbsp;<select class='form-control input-sm'><option>test</option></select>")
+		}
+	}); 
  
 
 	$("#item-table").on('click', 'tbody tr', function(event) {

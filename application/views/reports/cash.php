@@ -6,15 +6,32 @@
 </div>
 <div class="row">  
 	<div class="col-lg-12">
-		<div style="background-color: #eee;padding: 10px;margin-bottom: 20px;">
+		<div style="background-color: #eee;padding: 15px;margin-bottom: 20px;border-radius:5px;">
 			<label>Select Store:</label>
 			<?php 
                 echo store_selector_component(['form-control', 'limit'], "cash-store-filter");
             ?>
 		</div>
 	</div>
-	<div class="col-lg-9">
-
+	
+	<div class="col-md-3">
+ 		<div style="border:solid 1px #ddd;padding: 20px;border-radius:5px;">
+ 			<h4>Filter Report</h4>
+ 			<div class="form-group">
+ 				<label>From</label>
+ 				<input type="text" name="from" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" autocomplete="off" id="from" data-date-format="yyyy-mm-dd">
+ 			</div>
+ 			<div class="form-group">
+ 				<label>To</label>
+ 				<input type="text" name="from" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" autocomplete="off" id="to" data-date-format="yyyy-mm-dd">
+ 			</div>
+ 			<div> 
+ 				<hr>
+ 				<h3><span class="small">total sales:</span> <span id="total-sales"></span></h3>
+ 			</div>
+ 		</div> 
+ 	</div>
+	 <div class="col-lg-9"> 
 		<ul class="nav nav-tabs">
 			<li role="presentation"><a href="<?php echo base_url('reports/cash') ?>">Cash</a></li>
 		  <li role="presentation" class="active"><a href="#">Cash</a></li>
@@ -37,25 +54,6 @@
 			</table>
 		</div>
 	</div>
-	<div class="col-md-3">
- 		<div style="border:solid 1px #ddd;padding: 20px;">
- 			<h4>Filter Report</h4>
- 			<div class="form-group">
- 				<label>From</label>
- 				<input type="text" name="from" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" autocomplete="off" id="from" data-date-format="yyyy-mm-dd">
- 			</div>
- 			<div class="form-group">
- 				<label>To</label>
- 				<input type="text" name="from" value="<?php echo date('Y-m-d') ?>" class="form-control date-range-filter" autocomplete="off" id="to" data-date-format="yyyy-mm-dd">
- 			</div>
- 			<div> 
- 				<hr>
- 				<h3><span class="small">total sales:</span> <span id="total-sales"></span></h3>
- 			</div>
- 		</div>
-
- 	</div>
- 
 </div>
 
 <style type="text/css">
