@@ -344,7 +344,7 @@ $(document).ready(function() {
 							messageTop : 'Inventory Report',
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6 ]
+								columns: [ 0,1,2,3,4 ]
 							},
 						},
 						{
@@ -354,7 +354,7 @@ $(document).ready(function() {
 							messageTop : 'Inventory Report',
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6 ]
+								columns: [ 0,1,2,3,4 ]
 							},
 						},
 						{
@@ -364,7 +364,7 @@ $(document).ready(function() {
 							messageTop : 'Inventory Report',
 							className : "btn btn-default btn-sm",
 							exportOptions: {
-								columns: [ 1, 2, 3,4,5,6 ]
+								columns: [ 0,1,2,3,4 ]
 							},
 
 						},
