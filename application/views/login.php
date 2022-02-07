@@ -1,58 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/logo/poslite.png') ?>" />
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/logo/poslite.png') ?>" />
 	<title>Login - POSLite Inventory Mangement Software</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<?php $this->load->view('template/header'); ?>
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/login.css')?>">
 </head>
-<body>
-  <main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
-    <div class="container">
-      <div class="card login-card">
-        <div class="row no-gutters">
-          <div class="col-md-5">
-            <img  src="<?php echo base_url('assets/images/login.jpg') ?>" alt="login" class="login-card-img">
-          </div>
-          <div class="col-md-7">
-            <div class="card-body">
-              <div class="brand-wrapper">
-                <img height="35px" src="<?php echo base_url('assets/logo/logo.png') ?>" alt="logo" class="logo">
-              </div>
-              <p class="login-card-description">Sign in</p>
-              <?php if($this->session->flashdata('errorMessage')): ?>
-            <div class="form-group">
-                <?php echo ($this->session->flashdata('errorMessage'))?>
-            </div>
-            <?php endif; ?>
-            <?php if($this->session->flashdata('successMessage')): ?>
-            <div class="form-group">
-                <?php echo ($this->session->flashdata('successMessage'))?>
-            </div>
-            <?php endif; ?>
-              <?php echo form_open('AuthController/login_validation' )?> 
-                  <div class="form-group">
-                    <label for="username" class="sr-only">Username</label>
-                    <input type="text" name="username" class="form-control" autocomplete="off" required placeholder="Username">
-                  </div>
-                  <div class="form-group mb-4">
-                    <label for="password" class="sr-only">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" required placeholder="***********">
-                  </div>
-                  <input name="login" id="login" class="btn btn-block login-btn mb-4" type="submit" value="Login">
-              <?php echo form_close(); ?>
-                <nav class="login-card-footer-nav">
-                  <a href="https://www.poslitesoftware.com/terms-conditions">Terms of use</a> |
-                  &copy;2021 Developed By:<a href="https://algermakiputin.dev"> Alger Makiputin</a>
-                </nav>
-            </div>
-          </div>
-        </div>
-      </div> 
-    </div>
-  </main>  
+<body > 
+<div class="col1">
+	<div class="quote-wrapper"> 
+   
+	<blockquote>
+  There are no secrets to success. It is the result of preparation, hard work and learning from failure. 
+  <span>– Colin Powell</span>
+  </blockquote>
+   
+	</div>
+</div>
+<div class="col2">
+	<?php
+	$attributes = array( 
+	'class' => 'form-signin'
+	);
+	?>
+
+	<?php echo form_open('AuthController/login_validation',$attributes )?> 
+
+	<h2 class="text-center">Sign In</h2>
+	<br>
+	<?php if($this->session->flashdata('errorMessage')): ?>
+	<div class="form-group">
+		<?php echo ($this->session->flashdata('errorMessage'))?>
+	</div>
+	<?php endif; ?>
+	<?php if($this->session->flashdata('successMessage')): ?>
+	<div class="form-group">
+		<?php echo ($this->session->flashdata('successMessage'))?>
+	</div>
+	<?php endif; ?>
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon"><i class="fa fa-user " aria-hidden="true"></i></span>
+			<input autocomplete="off" id="username" type="text" class="form-control input-md" name="username" placeholder="Username" required="required" data-parsley-errors-container="#username-error">
+			<div class="clearfix"></div>
+
+		</div>
+		<span id="username-error"></span>
+	</div>
+	<div class="form-group">
+		<div class="input-group ">
+			<span class="input-group-addon"><i class="fa fa-key " aria-hidden="true"></i></span>
+			<input autocomplete="off" id="password" type="password" class="form-control input-md" name="password" placeholder="Password" required="required" data-parsley-errors-container="#password-error">
+		</div>      
+		<span id="password-error"></span>
+	</div>
+	<div></div>
+	
+	
+	<div class="form-group">
+		<button class="btn btn-md btn-primary btn-block" type="submit" style="border-radius: 1em;">Login</button>  
+	</div> 
+	<?php if (SITE_LIVE): ?> 
+		<div class="">
+			<h4 class="text-center">Login Credentials </h4>
+			<ul>
+				<li><b>Username:</b> admin <b>Password:</b> admin123</li>
+				<li><b>Username:</b> cashier <b>Password:</b> cashier123</li>
+			</ul>
+		</div> 
+	 	<h5></h5>
+	<?php endif; ?>
+	<p class="text-center" style="color: #777">&copy; <?php echo date('Y-m-d') ?> All Rights Reserved <br> Developed by: <a href="https://algermakiputin.dev">Alger Makiputin</a></p>
+	<?php echo form_close() ?>
+</div> 
+	
+
+<?php $this->load->view('template/footer'); ?>
 </body>
 </html>
