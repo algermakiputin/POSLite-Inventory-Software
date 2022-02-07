@@ -60,7 +60,7 @@
 	<div class="form-group">
 		<button class="btn btn-md btn-primary btn-block" type="submit" style="border-radius: 1em;">Login</button>  
 	</div> 
-	<?php if (SITE_LIVE): ?> 
+	<!-- <?php if (SITE_LIVE): ?> 
 		<div class="">
 			<h4 class="text-center">Login Credentials </h4>
 			<ul>
@@ -69,7 +69,7 @@
 			</ul>
 		</div> 
 	 	<h5></h5>
-	<?php endif; ?>
+	<?php endif; ?> -->
 	<p class="text-center" style="color: #777">&copy; <?php echo date('Y-m-d') ?> All Rights Reserved <br> Developed by: <a href="https://algermakiputin.dev">Alger Makiputin</a></p>
 	<?php echo form_close() ?>
 </div> 
