@@ -98,12 +98,12 @@ class AuthController extends AppController {
 	}
 
 	public function logout() {
-
+		$this->inserLoginHistory();
 		$data = array('id','username','log_in','account_type');
 		
 		$this->session->unset_userdata($data);
 		$this->session->sess_destroy();
-		$this->inserLoginHistory();
+		
  
 		$this->session->set_flashdata('successMessage','<div class="alert alert-success">Lagout Successfully</div>');
 		redirect(base_url('login'));
