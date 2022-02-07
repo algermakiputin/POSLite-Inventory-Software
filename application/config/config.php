@@ -27,7 +27,7 @@ date_default_timezone_set('Asia/Manila');
 if (SITE_LIVE)
 	$config['base_url'] = getenv('base_url');
 else 
-	$config['base_url'] = 'http://localhost/poslite';
+	$config['base_url'] = 'http://localhost:8888/poslite';
 
 
 $config['api_key'] = 'svGej7aKEgBqSEVdXQoDi20JSr5i0O4u';
