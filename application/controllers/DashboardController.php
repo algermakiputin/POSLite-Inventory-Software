@@ -105,7 +105,9 @@ class DashboardController extends AppController {
 								->from('items')
 								->join('ordering_level', 'ordering_level.item_id = items.id')
 								->join('categories', 'categories.id = items.category_id')
+								->order_by('total')
 								->group_by('category_id')
+								->limit(5)
 								->get()
 								->result();
 		return $categories;
