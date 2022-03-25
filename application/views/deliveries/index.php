@@ -23,7 +23,7 @@
  					<?php echo $this->session->flashdata('error') ?>
  				</div>
  			<?php endif; ?>
-             <table class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
+             <table width="100%" class="table table-striped table-bordered table-hover table-responsive" id="deliveries_table">
 				<thead>
 					<tr> 
 						<th>Date</th>
