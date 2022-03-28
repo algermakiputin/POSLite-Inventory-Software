@@ -534,17 +534,18 @@ class SalesController extends AppController {
 		$this->OrderingLevelModel->addStocks($sale->item_id, $sale->quantity);
 		$this->db->where('id', $id)->delete('sales_description');
 
-		if ($this->db->trans_status() === FALSE)
-		{
-	        $this->db->trans_rollback();
-	        echo "0";
-	        return;
-		}
-		else
-		{
-			echo "1";
-	        return $this->db->trans_commit();
-		}
+		if ($this->db->trans_status() === FALSE) {
+
+			$this->db->session->setFlashdata($errors);
+			return $this->db->trans_rollback();
+		} 
+		
+		//Do more stuff
+		$this->db->session->setFlashdata($success);
+		$this->db->trans_commit();
+		
+	          
+		
 
  
 	}
