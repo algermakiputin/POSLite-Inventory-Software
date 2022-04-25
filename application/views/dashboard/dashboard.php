@@ -89,7 +89,7 @@ echo $this->session->flashdata('successMessage');
                     <div class="panel-heading">
                         <i class="fa fa-pie-chart"></i> Top 5 Categories Inventory Allocation
                     </div>
-                    <div class="panel-body" style="height:250px;">
+                    <div class="panel-body" style="min-height:270px;padding-bottom:10">
                         <canvas id="allocation" ></canvas> 
                     </div>
                 </div>
