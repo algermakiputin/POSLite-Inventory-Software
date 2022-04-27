@@ -651,10 +651,7 @@ class SalesController extends AppController {
 					 	View Receipt
 						</a>'
 				];
-		}
-
-
-
+		} 
 		echo json_encode(array(
 			'draw' => $this->input->post('draw'),
 			'recordsTotal' => $count,
@@ -662,6 +659,24 @@ class SalesController extends AppController {
 			'data' => $datasets,
 		));
 
+	}
+
+	public function wholeReceipt($transactionNumber) {
+		$sales = $this->db->select('sales.*, customers.name, customers.home_address, customers.contact_number')
+							->from('sales')
+							->join('customers', 'customers.id = sales.customer_id')
+							->where('sales.transaction_number', $transaction_number)
+							->get('sales')
+							->row();
+		$orderline = $this->db->where('transaction_number', $transaction_number)
+							->get('sales_description')
+							->result();
+		
+		$data = array(
+			'sales' => $sale,
+			'orderline' => $orderline
+		)
+		$this->load->view('sales/whole_receipt');
 	}
 }
 ?>
