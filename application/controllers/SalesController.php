@@ -404,16 +404,17 @@ class SalesController extends AppController {
 	public function insert() {
 		$data = [];
 		$sales = $this->input->post('sales');
+		$customerId = $this->input->post('customer_id');
 		$this->load->model("PriceModel");
 		$this->db->trans_begin();
-
 		$last_sales_id = $this->db->select_max('id')->get('sales')->row()->id;
 		$transaction_number = "TRN" . sprintf("%04s", ((int)$last_sales_id + 1 )  ); 
 		$this->load->model('InventoryModel');
 		$this->db->insert('sales',array(
 			'date_time' => get_date_time(),
 			'user_id' => $this->session->userdata('id'),
-			'transaction_number' => $transaction_number
+			'transaction_number' => $transaction_number,
+			'customer_id' => $customerId
 		));
 
 		$sales = $this->security->xss_clean($sales);
@@ -665,18 +666,18 @@ class SalesController extends AppController {
 		$sales = $this->db->select('sales.*, customers.name, customers.home_address, customers.contact_number')
 							->from('sales')
 							->join('customers', 'customers.id = sales.customer_id')
-							->where('sales.transaction_number', $transaction_number)
-							->get('sales')
+							->where('sales.transaction_number', $transactionNumber)
+							->get()
 							->row();
-		$orderline = $this->db->where('transaction_number', $transaction_number)
+		$orderline = $this->db->where('transaction_number', $transactionNumber)
 							->get('sales_description')
-							->result();
-		
+							->result();   
 		$data = array(
-			'sales' => $sale,
-			'orderline' => $orderline
-		)
-		$this->load->view('sales/whole_receipt');
+			'sales' => $sales,
+			'orderline' => $orderline,
+			'total' => 0
+		); 
+		$this->load->view('sales/whole_receipt', $data);
 	}
 }
 ?>
