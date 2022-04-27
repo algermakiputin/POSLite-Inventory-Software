@@ -29,15 +29,15 @@
         <table style="font-size:14px">
           <tr> 
             <td><strong>Sold To</strong></td>
-            <td>Alger Makiputin</td>
+            <td><?php echo $sales->name ?></td>
           </tr>
           <tr> 
             <td><strong>Address</strong></td>
-            <td>Purok 19 San Gabriel Mintal Davao Cit</td>
+            <td><?php echo $sales->home_address  ?></td>
           </tr>
           <tr> 
             <td><strong>Contact No:</strong></td>
-            <td>09560887535</td>
+            <td><?php echo $sales->contact_number ?></td>
           </tr>
         </table>
       </td>
@@ -45,14 +45,11 @@
         <table style="font-size:14px"> 
             <tr>
                 <td><strong>Order No.</strong></td>
-                <td> TRN-1005990
-                </td>
+                <td><?php echo $sales->transaction_number ?></td>
             </tr>
             <tr>  
                 <td><strong>Date</strong></td>
-                <td>
-                     APRIL 26 2022
-                </td>
+                <td><?php echo date('Y-m-d', strtotime($sales->date_time)) ?> </td>
             </tr>
         </table>
       </td>
@@ -65,85 +62,24 @@
       <td width="20%" class="column-header">QTY.</td>
       <td width="20%" class="column-header">PRICE/UNIT</td>
       <td width="20%" class="column-header">AMOUNT</td>
-    </tr>
+    </tr> 
+    <?php foreach ($orderline as $item): ?>
+      <?php 
+        $subTotal = $item->price * $item->quantity;
+        $total+= $subTotal;
+      ?>
+      <tr>
+        <td class="row"><?php echo $item->name ?></td>
+        <td class="row"><?php echo $item->quantity ?></td>
+        <td class="row"><?php echo number_format($item->price,2) ?></td>
+        <td class="row"><?php echo number_format($subTotal,2) ?></td>
+      </tr>  
+    <?php endforeach; ?>
     <tr>
-      <td class="row">
-        Softstyle Lady Fit
-      </td>
-      <td class="row">Black | Large</td>
-      <td class="row">4 <span style="color:#777">X</span> 25 SEK </td>
-      <td class="row">100 SEK</td>
+      <td class="row" colspan="3" style="text-align:right"><strong>Total</strong></td>
+      <td class="row"><?php echo number_format($total,2) ?></td>
     </tr>
-    <tr>
-      <td class="row"> 
-          Softstyle Lady Fit
-      </td>
-      <td class="row">Black | Large</td>
-      <td class="row">4 <span style="color:#777">X</span> 25 SEK </td>
-      <td class="row">100 SEK</td>
-    </tr>
-    <tr>
-      <td class="row"> 
-          Softstyle Lady Fit
-      </td>
-      <td class="row">Black | Large</td>
-      <td class="row">4 <span style="color:#777">X</span> 25 SEK </td>
-      <td class="row">100 SEK</td>
-    </tr>
-    <tr>
-      <td class="row"> 
-          Softstyle Lady Fit
-      </td>
-      <td class="row">Black | Large</td>
-      <td class="row">4 <span style="color:#777">X</span> 25 SEK </td>
-      <td class="row">100 SEK</td>
-    </tr>
-    <tr>
-      <td class="row"> 
-          Softstyle Lady Fit
-      </td>
-      <td class="row">Black | Large</td>
-      <td class="row">4 <span style="color:#777">X</span> 25 SEK </td>
-      <td class="row">100 SEK</td>
-    </tr>
-    <tr>
-      <td class="row"> 
-          Softstyle Lady Fit
-      </td>
-      <td class="row">Black | Large</td>
-      <td class="row">4 <span style="color:#777">X</span> 25 SEK </td>
-      <td class="row">100 SEK</td>
-    </tr>
-    <tr>
-      <td class="row"> 
-          Softstyle Lady Fit
-      </td>
-      <td class="row">Black | Large</td>
-      <td class="row">4 <span style="color:#777">X</span> 25 SEK </td>
-      <td class="row">100 SEK</td>
-    </tr>
-    <tr>
-      <td class="row"> 
-          Softstyle Lady Fit
-      </td>
-      <td class="row">Black | Large</td>
-      <td class="row">4 <span style="color:#777">X</span> 25 SEK </td>
-      <td class="row">100 SEK</td>
-    </tr>
-    <tr>
-      <td class="row">
-        Softstyle Lady Fit
-      </td>
-      <td class="row">Black | Large</td>
-      <td class="row">4 <span style="color:#777">X</span> 25 SEK </td>
-      <td class="row">100 SEK</td>
-    </tr>
-    <tr>
-        <td colspan="3" class="row" style="text-align:right"><strong>Total</strong></td>
-        <td class="row">100</td>
-    </tr>
-
-  </table>
+  </table> 
   <br>
   <table width="100%">
     <tr>
