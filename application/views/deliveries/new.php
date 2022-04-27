@@ -140,7 +140,7 @@
 	$(document).ready(function() {
 		var row = $("#deliveryDetailsTable tbody tr:first-child").html();
 		var index = 1;
-		var products = <?php echo $products ?>;
+		var products = <?php echo $products ?>; 
 		$(".product").autocomplete({
 			lookup: products,
 			onSelect: function(suggestion) {   

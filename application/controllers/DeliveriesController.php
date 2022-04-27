@@ -18,8 +18,7 @@ class DeliveriesController extends CI_Controller
 							->get()
 							->result();
 		 
-		$data['products'] = json_encode($products);
-		 
+		$data['products'] = json_encode($products); 
  		$data['content'] = "deliveries/new";
 		$this->load->view('master',$data);
 		 
