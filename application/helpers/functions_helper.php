@@ -58,7 +58,7 @@
 
 	function get_license() {
 	 
-		return "gold";
+		return "silver";
 	}
 
 

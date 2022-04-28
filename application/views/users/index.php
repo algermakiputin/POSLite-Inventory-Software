@@ -20,10 +20,9 @@
 					        ?>
 					    </div>
 					</div>
-					<div class="col-lg-3">
-						 
+					<div class="col-lg-4"> 
 						<?php echo form_open('UsersController/register_account'); ?> 
-						<fieldset <?php echo SITE_LIVE ? 'disabled' : '' ?>>
+						<fieldset style="padding-top:10px" <?php echo SITE_LIVE ? 'disabled' : '' ?>>
 							<div class="form-group">
 								<label for='Username'>Full Name</label>
 								<input required="required" type="text" name="full_name" class="form-control">
@@ -56,7 +55,7 @@
 						</fieldset>
 						<?php echo form_close(); ?>
 					</div>
-					<div class="col-lg-9"> 
+					<div class="col-lg-8"> 
 						<table class="table table-striped table-hover table-bordered" id="users_table">
 							<thead>
 								<tr>
