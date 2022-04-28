@@ -88,6 +88,7 @@
 						<thead>
 							<tr>
 								<th >Date Time</th>  
+								<th>Customer</th>
 								<th >Item Name</th> 
 								<th >Quantity</th>
 								<th> Returned</th>
