@@ -168,6 +168,7 @@
 								<td>Change:</td>
 								<td id="summary-change"></td>
 							</tr>
+							<input type="hidden" name="transaction-number" id="transaction-number"/>
 						</table>
 						<button class="btn btn-default btn-sm" id="print">Print Receipt</button>
 					</div>
