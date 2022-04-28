@@ -188,6 +188,11 @@
         display: inline-block
     }
 </style>
+<script>
+  window.onload = function() {
+    window.print();
+  }
+</script>
 <!-- container -->
 </body>
 </html>

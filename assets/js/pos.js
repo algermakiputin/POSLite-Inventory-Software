@@ -761,16 +761,15 @@
 				$("#btn").button('loading');
 			},
 			success : function(data) { 
-				 transactionComplete = true;
-				 var total = parseFloat(total_amount);
-				  var d = new Date();
-				 $("#payment-modal").modal('toggle');
+				transactionComplete = true;
+				var total = parseFloat(total_amount);
+				var d = new Date();
+				$("#payment-modal").modal('toggle');
 				$("#loader").hide();
-				//Transaction Summary 
-
+				//Transaction Summary  
 				$("#summary-payment").text( currency + number_format(payment));
 				$("#summary-change").text( currency + number_format(change));
-				 $("#summary-discount").text(currency + number_format(totalDiscount));
+				$("#summary-discount").text(currency + number_format(totalDiscount));
 				$("#summary-total").text( currency + number_format(total_amount) )
 				
 				//Fill In Receipt 
@@ -780,8 +779,8 @@
 				$("#r-total-amount").text( currency + number_format(total_amount) )
 				$("#r-discount").text(currency + number_format(totalDiscount));
 				$("#r-id").text(data);
+				$("#transaction-number").val(data);
 				$("#r-time").text(d.toLocaleTimeString());
-
 				$("#cart tbody").empty();
 				$("#payment").val('');
 				$("#change").val('');
@@ -792,12 +791,12 @@
 				item_table.clear().draw();
 				$("#btn").button('reset');
 				totalAmountDue = 0;  
-				totalDiscount = 0
-				 
+				totalDiscount = 0 
 			}
 		})
 		return;
 	}
+	
 
 	/*
 		Function Loop through the cart table
@@ -833,20 +832,23 @@
  
 
 	$("#print").click(function(){
-		$("#receipt").print({
-	        	globalStyles: true,
-	        	mediaPrint: false,
-	        	stylesheet: base_url + 'assets/receipt.css',
-	        	noPrintSelector: ".no-print",
-	        	iframe: true,
-	        	append: null,
-	        	prepend: null,
-	        	manuallyCopyFormValues: true,
-	        	deferred: $.Deferred(),
-	        	timeout: 400,
-	        	title: 'Receipt',
-	        	doctype: '<!doctype html>'
-		});
+		var transactionNumber = $("#transaction-number").val();
+		window.open(base_url + '/SalesController/wholeReceipt/' + transactionNumber);
+		
+		// $("#receipt").print({
+	    //     	globalStyles: true,
+	    //     	mediaPrint: false,
+	    //     	stylesheet: base_url + 'assets/receipt.css',
+	    //     	noPrintSelector: ".no-print",
+	    //     	iframe: true,
+	    //     	append: null,
+	    //     	prepend: null,
+	    //     	manuallyCopyFormValues: true,
+	    //     	deferred: $.Deferred(),
+	    //     	timeout: 400,
+	    //     	title: 'Receipt',
+	    //     	doctype: '<!doctype html>'
+		// });
 	})
 
 
