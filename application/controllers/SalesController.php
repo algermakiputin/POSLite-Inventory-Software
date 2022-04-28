@@ -648,7 +648,7 @@ class SalesController extends AppController {
 					'<a 
 						class="btn btn-primary btn-sm" 
 						target="popup" 
-						onclick="window.open(\''.base_url('SalesController/receipt/' . $sale->id).' \', \'popup\', \'width=800,height=800\' )">
+						onclick="window.open(\''.base_url('SalesController/wholeReceipt/' . $sale->transaction_number).' \', \'popup\', \'width=800,height=800\' )">
 					 	View Receipt
 						</a>'
 				];
