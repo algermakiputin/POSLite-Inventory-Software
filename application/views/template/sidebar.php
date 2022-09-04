@@ -32,25 +32,16 @@
                         <li>
                             <a href="<?php echo base_url('suppliers') ?>"><i class="fa fa-circle-o"></i> Suppliers</a>
                         </li>
-                        
+                        <li>
+                            <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Supplier Deliveries</a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Supplier Delivery</a>
+                        </li>  
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-            <?php endif; ?>
-
-            <li>
-                <a href="javascript:void(0)"><i class="fa fa-shopping-cart fa-fw"></i> Purchase Order<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                   
-                    <li>
-                        <a href="<?php echo base_url('deliveries') ?>"><i class="fa fa-circle-o"></i> View Supplier Deliveries</a>
-                    </li> 
-                    <li>
-                        <a href="<?php echo base_url('new-delivery') ?>"><i class="fa fa-circle-o"></i> New Supplier Delivery</a>
-                    </li>  
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
+            <?php endif; ?> 
 
             <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
                 <a href="javascript:void(0)"><i class="fa fa-money fa-fw"></i> Expenses<span class="fa arrow"></span></a>
