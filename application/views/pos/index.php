@@ -4,11 +4,12 @@
 	<title>POS - Sales And Inventory Management System</title>
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/logo/poslite.png') ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/bootstrap/css/bootstrap.css'); ?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/pos_style.css') ?>"> 
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/pos_style.css') ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/jquery-ui/jquery-ui.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/jquery-autocomplete.css')?>">
+
 	<meta name="license" content="<?php echo get_license(); ?>">
 	<meta name="base_url" content="<?php echo base_url() ?>">
 	<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
@@ -140,18 +141,83 @@
 			</div>
 		</div>
 	</div>
-</div> 
-
+</div>
 <div class="modal" tabindex="-1" role="dialog" id="payment-modal">
-	<div class="modal-dialog modal-md" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title">Transaction Complete</h3>
+				<h5 class="modal-title">Transaction Complete</h5>
 			</div>
 			<div class="modal-body">
-				<div class="col-md-12">
+				<div class="col-md-7">
+					<div id="receipt">
+						<div class="r-header text-center">
+							<div>
+								<?php if ($settings->logo): ?>
+									<img width="80" src="<?php echo base_url('/assets/logo/' . $settings->logo) ?>">
+								<?php endif; ?>
+							</div>
+							<h3><?php echo $settings->business_name ?></h3>
+							<div id="business-info" class="text-center">
+								<div><?php echo $settings->business_address ?></div> 
+								<div><?php echo $settings->contact ?></div>
+								<div><?php echo $settings->email ?></div>
+							</div>
+							<table class="text-left">
+								<tr>
+									<th colspan="2">RECEIPT</th> 
+								</tr>
+								<tr>
+									<td>Transaction Number: &nbsp;&nbsp;</td>
+									<td><div id="r-id">005250</div></td>
+								</tr>
+								<tr>
+									<td>Date: &nbsp;&nbsp;</td>
+									<td><div id="r-date"><?php echo date('m/d/Y') ?></div></td>
+								</tr>
+								<tr>
+									<td>Cashier: &nbsp;&nbsp;</td>
+									<td><div id="r-cashier">Cashier</div></td>
+								</tr>
+								<tr>
+									<td>Time: &nbsp;&nbsp;</td>
+									<td><div id="r-time"><?php echo date('h:i a') ?></div> </td>
+								</tr>
+							</table> 
+							<div class="clearfix"></div>
+						</div>
+						<div class="r-body">
+							<table class="table table-striped" id="r-items-table">
+								<thead>
+									<tr> 
+										<th>Item </th> 
+										<th>Price</th>
+										<th>Qty</th>
+										<th>Sub</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+							<hr>
+							<div class="text-right"> 
+								<div>Discount: <span id="r-discount"></span></div>
+								<div>Grand Total <span id="r-total-amount"></span></div>
+								<div>Payment: <span id="r-payment"></span></div>
+								<div>Change: <span id="r-change"></span></div>
+							</div>
+
+							<div class="r-footer">
+								<p>Thank you for shopping at our store</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-md-5">
 					<h4 class="">Transaction Summary</h3> 
-						<table class="table table-bordered table-hover table-striped dataTable no-footer"> 
+						<table class="table"> 
 							<tr>
 								<td>Discount Amount:</td>
 								<td id="summary-discount"></td>
@@ -168,7 +234,6 @@
 								<td>Change:</td>
 								<td id="summary-change"></td>
 							</tr>
-							<input type="hidden" name="transaction-number" id="transaction-number"/>
 						</table>
 						<button class="btn btn-default btn-sm" id="print">Print Receipt</button>
 					</div>
@@ -212,27 +277,24 @@
 	</div>
 </div>
 
-<div class="modal fade" id="customer-modal" tabindex="-1" aria-labelledby="customerModal" aria-hidden="true">
-	<div class="modal-dialog modal-md" role="document">
+<div class="modal " id="customer-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Finalize Order</h4> 
+				<h4 class="modal-title">Select Customer</h4> 
 			</div>
 			<div class="modal-body">
-			 	<form style="position:relative"> 
-					<div class="form-group">
-						<label>Total Amount Due</label>
-						<input type="text" style="background:#f4f4f5" class="form-control" readonly id="final-totalAmount" />
-					</div>
-					<div class="form-group">
-						<label>Select Customer</label>
-						<input placeholder="Enter customer name..." type="text" class="form-control" style="position:relative" id="customer-select" /> 
-						<input type="hidden" id="customer-id" />
-					</div>
+			 	<form>
+			 		<div class="form-group">
+			 			<label>Customer</label>
+			 			<select>
+			 				
+			 			</select>
+			 		</div>
 			 	</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="complete-transaction" class="btn btn-primary" data-dismiss="modal">Complete Transaction</button> 
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
 			</div>
 		</div>
 	</div>
@@ -349,9 +411,11 @@
 							<th></th>
 						</tr>
 					</thead>
-					<tbody>   
+					<tbody>  
+
 					</tbody>
-				</table> 
+				</table>
+
 				<form class="form-inline" id="add-to-cart-form">
 					<div class="form-group">
 						<input type="hidden" name="item_unit" id="item_unit">
@@ -377,7 +441,7 @@
 
 </script>
 <script type="text/javascript" src="<?php echo base_url('assets/jquery.js') ?>"></script>
-<!-- <script type="text/javascript" src="<?php echo base_url('assets/jquery-ui/jquery-ui.js') ?>"></script> -->
+<script type="text/javascript" src="<?php echo base_url('assets/jquery-ui/jquery-ui.js') ?>"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script> -->
 <script type="text/javascript" src="<?php echo base_url('assets/vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/vendor/datatables/js/jquery.dataTables.min.js'); ?>"></script>
@@ -385,32 +449,6 @@
 <script src="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/print.js') ?>"></script>
-<script src="<?php echo base_url('assets/js/jquery-autocomplete.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/pos.js') ?>"></script>
-<script>
-	$(document).ready(function() {
-		var customers = JSON.parse(`<?php echo $customers ?>`)
-		$("#customer-modal").on("shown.bs.modal", function() {
-			$("#customer-select").focus();
-			$("#customer-select").autocomplete({
-				lookup: customers,
-				onSelect: function(suggestion) {
-					$("#customer-id").val(suggestion.data);
-				},
-				forceFixPosition:true,
-				zIndex:200000,
-				width:280,
-				orientation:'bottom',
-				showNoSuggestionNotice:true,
-				noSuggestionNotice: '<p>No results <a target="__blank" href="<?php echo base_url('/customers') ?>">Add customer</a> (reload after adding)</p>'
-			})
-		}) 
-	})
-</script>
-<style> 
-	.autocomplete-suggestions {
-		top:242px!important
-	}
-	</style>
 </body>
 </html>
