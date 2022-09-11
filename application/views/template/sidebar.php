@@ -42,7 +42,19 @@
                     <!-- /.nav-second-level -->
                 </li>
             <?php endif; ?> 
-
+            <li>
+                <a href="javascript:void(0)"><i class="fa fa-refresh fa-fw"></i> Orders<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="<?php echo base_url('orders') ?>"><i class="fa fa-circle-o"></i> Orders</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url('orders/new') ?>"><i class="fa fa-circle-o"></i> New Order</a>
+                    </li>
+                     
+                </ul>
+                <!-- /.nav-second-level -->
+            </li> 
             <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
                 <a href="javascript:void(0)"><i class="fa fa-money fa-fw"></i> Expenses<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">

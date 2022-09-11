@@ -9,15 +9,12 @@ class CustomersController Extends AppController {
 		
 	}
 	
-	public function index() {
-
+	public function index() {  
 		$data['page'] = "Suppliers";
 		$data['customers'] = $this->db->order_by('id','DESC')->get('customers')->result();
  		$data['content'] = "customers/index";
  		$data['controller'] = $this;
-		$this->load->view('master',$data);
-
-
+		$this->load->view('master', $data); 
 	}
 
 	public function insert() { 

@@ -360,3 +360,7 @@ legend {
 .sales-widget .caption { 
     font-size: 12px;
 }
+
+#order-details tr td {
+    padding-bottom: 10px;
+}

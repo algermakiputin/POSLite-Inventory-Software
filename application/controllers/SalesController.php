@@ -532,20 +532,14 @@ class SalesController extends AppController {
 		$this->OrderingLevelModel->addStocks($sale->item_id, $sale->quantity);
 		$this->db->where('id', $id)->delete('sales_description');
 
-		if ($this->db->trans_status() === FALSE) {
-
+		if ($this->db->trans_status() === FALSE) { 
 			$this->db->session->setFlashdata($errors);
 			return $this->db->trans_rollback();
 		} 
 		
 		//Do more stuff
 		$this->db->session->setFlashdata($success);
-		$this->db->trans_commit();
-		
-	          
-		
-
- 
+		$this->db->trans_commit(); 
 	}
 
 	public function filterReports($from, $to) {
@@ -651,6 +645,12 @@ class SalesController extends AppController {
 			'data' => $datasets,
 		));
 
+	}
+
+	public function newOrder() {
+		$data['title'] = "New Order";
+		$data['content'] = 'orders/new';
+		$this->load->view('master',$data);
 	}
 }
 ?>

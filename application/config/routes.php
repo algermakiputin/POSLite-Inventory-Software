@@ -77,6 +77,7 @@ $route['sales'] = 'SalesController/index';
 $route['sales/report'] ='SalesController/reports';
 $route['sales/logs'] ='SalesController/sales';
 $route['sales/graph-filter'] = 'SalesController/graphFilter';
+$route['orders/new'] = "SalesController/newOrder";
 
 $route['items'] = 'ItemController/items';
 $route['items/new'] = 'ItemController/new';
