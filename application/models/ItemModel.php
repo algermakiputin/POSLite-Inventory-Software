@@ -61,7 +61,8 @@ class ItemModel extends CI_Model {
 			$supplier_id, 
 			$barcode, 
 			$price, 
-			$capital 
+			$capital,
+			$reorderingLevel
 		) {
 		
 		$item = $this->db->where('id',$id)->get('items')->row(); 
@@ -73,7 +74,8 @@ class ItemModel extends CI_Model {
 			'supplier_id' => $supplier_id,
 			'barcode' => $barcode,
 			'price'	=> $price,
-			'capital' => $capital
+			'capital' => $capital,
+			'reorderingLevel' => $reorderingLevel
 			);
 
 		$data = $this->security->xss_clean($data);

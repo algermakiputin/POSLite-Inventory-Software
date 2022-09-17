@@ -52,10 +52,13 @@
 									<?php endforeach; ?>
 								</select>
 							</div>
-							
+							<div class="form-group col-md-12">  
+								<label>Reordering Level:</label>
+								<input type="text" required="required" placeholder="Reordering Level" name="reorderingLevel" class="form-control" max="500000" id="reorderingLevel">
+							</div>
 							<div class="form-group col-md-12">  
 								<label>Capital Price:</label>
-								<input type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" id="selling-price">
+								<input type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" id="capital">
 							</div>
 							<div class="form-group col-md-12">  
 								<label>Retail Price:</label>

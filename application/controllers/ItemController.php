@@ -257,6 +257,7 @@ class ItemController extends AppController {
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
 				$stocksRemaining,
+				$item->reorderingLevel,
 				currency() . number_format($item->capital * $stocksRemaining,2), 
 				$actions
 			];
@@ -383,6 +384,7 @@ class ItemController extends AppController {
 		$advance_price = $this->input->post('advance_price[]');
 		$unit = $this->input->post('unit');
 		$location = $this->input->post('location');
+		$reorderingLevel = $this->input->post('reorderingLevel');
 	 
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
@@ -405,7 +407,8 @@ class ItemController extends AppController {
 				'status' => 1,
 				'barcode' => $barcode,
 				'price'	=> $price,
-				'capital' => $capital
+				'capital' => $capital,
+				'reorderingLevel' => $reorderingLevel
 			);
 		
 		if ($productImage) {
@@ -529,6 +532,7 @@ class ItemController extends AppController {
 		$updated_desc = strip_tags($this->input->post('description'));
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
+		$reorderingLevel = $this->input->post('reorderingLevel');
 		$id = strip_tags($this->input->post('id'));
 
 		$price_label = $this->input->post('price_label[]');
@@ -536,8 +540,7 @@ class ItemController extends AppController {
 
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
-		$currentPrice = $this->PriceModel->getPrice($id);
-		$reorder = $this->input->post('reorder');
+		$currentPrice = $this->PriceModel->getPrice($id); 
 		$productImage = $_FILES['productImage'];
 		$supplier_id = $this->input->post('supplier');
 		$unit = $this->input->post('unit');
@@ -564,7 +567,8 @@ class ItemController extends AppController {
 						$upload['upload_data']['file_name'], 
 						$supplier_id, $this->input->post('barcode'),
 						$updated_price,
-						$capital
+						$capital,
+						$reorderingLevel,
 					);
 
 		$this->PriceModel->insert($price_label, $advance_price, $id);

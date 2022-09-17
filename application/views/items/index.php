@@ -61,6 +61,7 @@
                     <th>Capital</th> 
                     <th>Price</th>
                     <th>Stocks</th>
+                    <th>Reordering Level</th>
                     <th>Total</th> 
                     <th>Action</th>
                 </tr>

@@ -47,6 +47,10 @@
 										<?php endforeach; ?>
 									</select>
 								</div>
+								<div class="form-group col-md-12">  
+									<label>Reordering Level:</label>
+									<input type="text" value="<?php echo $item->reorderingLevel ?>" required="required" placeholder="Reordering Level" name="reorderingLevel" class="form-control" max="500000" id="reorderingLevel">
+								</div>
 								<div class="form-group col-md-12"> 
 									<label>Capital Price:</label>
 									<input value="<?php echo $item->capital ?>" type="text" name="capital" class="form-control" required="required" id="capital-price">
