@@ -172,8 +172,6 @@ class ItemController extends AppController {
     }
 
 	public function items () { 
- 
-		 
 		$data['total'] = number_format($this->ItemModel->total()->total,2);
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'inventory';
@@ -183,7 +181,6 @@ class ItemController extends AppController {
 		$data['orderingLevel'] = $this->OrderingLevelModel;
 		$data['content'] = "items/index";
 		$this->load->view('master', $data);
-
 	}
 
 	public function dataTable() {
@@ -261,7 +258,6 @@ class ItemController extends AppController {
 				currency() . number_format($item->capital * $stocksRemaining,2), 
 				$actions
 			];
-
 		} 
 
 		echo json_encode([

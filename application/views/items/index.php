@@ -71,8 +71,8 @@
 
                 </tbody>
             </table>
-        </div>
-
+        </div> 
+ 
     <!-- /.col-lg-12 -->
     </div>
     </div> 
