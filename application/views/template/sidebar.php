@@ -75,6 +75,9 @@
                    <a href="javascript:void(0)"><i class="fa fa-line-chart fa-fw"></i> Reports<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
+                            <a href="<?php echo base_url('inventory/stocks') ?>"><i class="fa fa-circle-o"></i> Stocks</a>
+                        </li>
+                        <li>
                             <a href="<?php echo base_url('sales') ?>"><i class="fa fa-circle-o"></i> Sales Summary</a>
                         </li>
                         <li>

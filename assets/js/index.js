@@ -990,6 +990,26 @@ $(document).ready(function() {
 	    ordering:false
 	});
 
+	var stocksDatatable = $("#stocks_reports_table").DataTable({
+		processing : true, 
+		serverSide : true, 
+		responsive: true,
+		ajax : {
+			type : "POST",
+			url : base_url + "InventoryController/stocksDatatable",
+			data: data
+		},   
+	    ordering:false
+	});
+
+	$("#stocks_to").change(function() {
+		const startDate = $("stocks_from").val();
+		const endDate = $(this).val();
+		stocksDatatable.columns(0).search(startDate)
+						.columns(1).search(endDate)
+						.draw();
+	})
+
 	$("#filter_expiry").change(function() {
  
 		expiry_date_table.columns(0).search($(this).val()).draw();

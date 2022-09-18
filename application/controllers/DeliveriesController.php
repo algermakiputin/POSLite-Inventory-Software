@@ -89,6 +89,14 @@ class DeliveriesController extends CI_Controller
 				'name' => $products[$key],
 				'expiry_date' => $expiry_date[$key]
 			);
+			$this->db->insert('stocks', array(
+				'product' => $products[$key],
+				'quantity' => $quantity[$key],
+				'price' => $price[$key],
+				'action' => 'IN',
+				'user' => $this->session->userdata('username'),
+				'date' => get_date_time()
+			));
  			//Update Product Quantities
 			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
 			$this->db->where('item_id', $products_id[$key]);

@@ -24,6 +24,7 @@
 							<input type="hidden" name="item_name" value="<?php echo $item_info->name; ?>">
 							<input type="number" autocomplete="off" <?php if(SITE_LIVE) echo 'max="500"'; ?> name="stocks" class="form-control" placeholder="Enter Stocks To Add">
 							<input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
+							<input type="hidden" name="price" value="<?php echo $item_info->price; ?>">
 							<input type="hidden" name="current_stocks" value="<?php echo $orderingLevel->getQuantity($item_info->id)->quantity ?>" />
 						</div>
 						 
@@ -59,7 +60,7 @@
 
 							<tr>
 								<td>Price:</td>
-								<td><?php echo $price->getPrice($item_info->id) ?></td>
+								<td><?php echo $item_info->price ?></td>
 							</tr>
 						</table>
 						</div>

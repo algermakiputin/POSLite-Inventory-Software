@@ -36,6 +36,11 @@ class InventoryController extends CI_Controller {
 		$this->load->view('master', $data);
 	}
 
+	public function stocks() {
+		$data['content'] = 'inventory/stocks';
+		$this->load->view('master', $data);
+	}
+
 	public function inventory_reports() {
 
 		$data['content'] = "inventory/inventory_reports";
@@ -86,14 +91,45 @@ class InventoryController extends CI_Controller {
 
 	public function reports_datatable() {
 
-		$inventory = $this->InventoryModel->get_reports_datatable();
-	
-	 	 
+		$inventory = $this->InventoryModel->get_reports_datatable(); 
 		echo json_encode([
 			'draw' => $this->input->post('draw'),
 			'recordsTotal' => $total_records,
 			'recordsFiltered' => $inventory[1],
 			'data' => $inventory[0]
+		]);
+	}
+
+	public function stocksDatatable() {
+		$start = $this->input->post('start');
+		$limit = $this->input->post('length');
+		$search = $this->input->post('search[value]');    
+		$startDate = $this->input->post('columns[0][search][value]');
+		$endDate = $this->input->post('columns[1][search][value]');  
+		$startDate = $startDate ? $startDate : date('Y-m-d');
+		$endDate = $endDate ? $endDate : date('Y-m-d');   
+		$baseQuery = $this->db->where('DATE_FORMAT(date, "%Y-%m-%d") >=', $startDate)
+							->where('DATE_FORMAT(date, "%Y-%m-%d") <=', $endDate)
+							->like('product', $search, 'BOTH') 
+							->order_by('date', 'DESC')
+							->get('stocks', $limit, $start);
+		$records = $baseQuery->result(); 
+		$numRows = $baseQuery->num_rows(); 
+		$datasets = [];   
+		foreach ($records as $record) { 
+			$datasets[] = [
+				$record->date,
+				$record->product,
+				$record->quantity,
+				$record->price, 
+				$record->user
+			];
+		}  
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => $numRows,
+			'recordsFiltered' => $numRows,
+			'data' => $datasets, 
 		]);
 	}
 	

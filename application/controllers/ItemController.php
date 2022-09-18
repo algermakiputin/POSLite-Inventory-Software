@@ -59,8 +59,7 @@ class ItemController extends AppController {
 		// 3 - Expiring in 6 Months
 		// 4 - Expired (Past 3 Months)
 		$filter = $this->input->post('columns[0][search][value]');
-		$filter = $filter ? $filter : 1;
- 
+		$filter = $filter ? $filter : 1;  
 		$row_count = $this->db->select('delivery_details.*, ordering_level.quantity')
 									->from('delivery_details')
 									->join('ordering_level', 'ordering_level.item_id = delivery_details.item_id') 
@@ -69,12 +68,8 @@ class ItemController extends AppController {
  		 
 		// Option 1
 
-		$deliveries = $this->product_expiry_query($filter, $limit, $start, $search)->result();
-
-
-		$num_rows = $this->product_expiry_query($filter, null, null, $search)->num_rows();
-
-		 
+		$deliveries = $this->product_expiry_query($filter, $limit, $start, $search)->result(); 
+		$num_rows = $this->product_expiry_query($filter, null, null, $search)->num_rows(); 
 		foreach ($deliveries as $delivery) {
 
 
@@ -460,9 +455,8 @@ class ItemController extends AppController {
 		$this->load->model('PriceModel');
 		$this->load->model('OrderingLevelModel');
 		$this->load->model('categories_model');
-		$data['item_info'] = $this->ItemModel->item_info(urldecode($id));
-		$data['item_id'] = $id;
-		$data['price'] = $this->PriceModel;
+		$data['item_info'] = $this->ItemModel->item_info(urldecode($id)); 
+		$data['item_id'] = $id; 
 		$data['orderingLevel'] = $this->OrderingLevelModel;
 		$data['categoryModel'] = $this->categories_model;
 		$data['content'] = "items/stockin";
@@ -474,10 +468,10 @@ class ItemController extends AppController {
 		$itemID = $this->input->post('item_id');
 		$itemName = $this->input->post('item_name');
 		$stocks = $this->input->post('stocks');
+		$price = $this->input->post('price');
 		$current_stocks = $this->input->post('current_stocks');
 
-		if (SITE_LIVE) {
-
+		if (SITE_LIVE) { 
 			$this->form_validation->set_rules('stocks','Stocks','required|integer|max_length[500]');
 			if($this->form_validation->run() === FALSE) {
 				$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' .validation_errors() . '</div>');
@@ -486,9 +480,16 @@ class ItemController extends AppController {
 		}
 
 		$this->load->model('HistoryModel'); 
-		$this->load->model('OrderingLevelModel');
-
+		$this->load->model('OrderingLevelModel'); 
 		$update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
+		$this->db->insert('stocks', array(
+			'product' => $itemName,
+			'quantity' => $stocks,
+			'price' => $price,
+			'action' => 'IN',
+			'user' => $this->session->userdata('username'),
+			'date' => get_date_time(),
+		));
 		$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
 		if ($update) {
 			$this->InventoryModel->insert( $itemID, $stocks, $itemName, $current_stocks, 'stockin');
