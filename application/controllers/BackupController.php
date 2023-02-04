@@ -50,61 +50,47 @@ class BackupController extends AppController {
 	public function import() {
 
 		$file = $_FILES['file'];
-
 		$sql = file_get_contents($file['tmp_name']);
  
-		if (!$sql)
-			return redirect('/');
+		if (!$sql) return redirect('/');
 
-		$sql = $this->encryption->decrypt($sql); 
-     
-     
-		$rows = explode(";", $sql);
-
-
+		$sql = $this->encryption->decrypt($sql);  
+		$rows = explode(");", $sql); 
+		$queries = array_filter($rows, function ($row) {
+			return strpos($row, "# ") ? false : true;
+		}); 
+		 
 		$this->db->trans_start();
- 
  		$this->empty_all(); 
-
-		foreach ($rows as $key => $query) {
- 		
-			if ( strpos($query, "INSERT INTO") ) {
- 				
-
-				$this->db->query(trim($query));
+		
+		foreach ($queries as $key => $query) { 
+			if ( strpos($query, "INSERT INTO") ) { 
+				$this->db->query(trim($query) . ")");
 			}
-		} 
- 	
- 		
-
+		}  
 		$this->db->trans_complete();
 		
 		if ($this->db->trans_status() === FALSE) {
 			$this->session->set_flashdata('error', "Error restoring backup");
- 
 			return redirect('backups');
 		}
 
 		$this->session->set_flashdata('success', "Backup restored successfully");
- 
 		return redirect('backups');
- 	 
-
 	}
 
 	function empty_all()
 	{
 	  $query = $this->db->query("SHOW TABLES");
-	  $name = $this->db->database;
-
+	  $name = $this->db->database; 
 
 	  foreach ($query->result_array() as $row)
 	  {
-
 	    $table = $row['Tables_in_' . $name];
 	    $this->db->query("TRUNCATE " . $table);
 	    $this->db->query("ALTER TABLE ".$table." AUTO_INCREMENT = 1");
 	  }
+
 	  $this->output->set_output("Database emptyed");
 	}
 }
