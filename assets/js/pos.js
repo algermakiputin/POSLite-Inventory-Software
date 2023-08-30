@@ -122,7 +122,7 @@ $(document).ready(function() {
 				dHeight = dHeight - 60;
 				$(".header .box").css('height', dHeight + 'px');
 				$(".header .box").css('overflow-y', 'auto');
-				$("#cart-tbl").css('min-height', (dHeight - ( 231 + 95)) + 'px');
+				$("#cart-tbl").css('min-height', '51vh');
 				$("#cart-tbl").css('max-height', (dHeight - ( 150 + 261)) + 'px');
 
 

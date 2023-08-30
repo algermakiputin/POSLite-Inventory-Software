@@ -7,6 +7,10 @@ body {
     color: #141823;
 }
 
+.mb-2 {
+    margin-bottom: 10px;
+}
+
 #cart th {
     background-color: #f4f4f5;
     position: sticky;

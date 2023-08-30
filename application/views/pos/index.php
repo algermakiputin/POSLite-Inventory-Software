@@ -18,8 +18,7 @@
 <body>
 
 	<div style=" ">
-		<div class="">
-
+		<div class=""> 
 			<div class="col-md-12" style="padding: 0">
 				<nav class="navbar">
 					<span class="navbar-text">Current User:  <span id="user"><?php echo $this->session->userdata['username'] ?></span>
@@ -49,10 +48,8 @@
 <div class="">
 	<div class="">
 		<div class=" header">
-			<div class="col-sm-7 box rightnone">
-
-				<h3>List of Items</h3>
-
+			<div class="col-sm-7 box rightnone"> 
+				<h3>List of Items</h3> 
 				<div class="content">
 					<label>Select Item</label>
 					<table style="width: 100%" class="table table-bordered table-hover table-striped" id="item-table">
@@ -67,17 +64,13 @@
 						<tbody> 
 						</tbody>
 					</table>
-				</div>
-
+				</div> 
 			</div>
-			<div class="col-sm-5 box">
-
+			<div class="col-sm-5 box"> 
 				<h3 > Order Details
 					<!-- <span  class="">Grand Total: <span id="amount-total">00.00</span></span>
-
 					<span  class="pull-right" style="display: none;">Discount: <span id="amount-discount">00.00</span></span> -->
-				</h3>
-
+				</h3> 
 				<div class="content" style="padding-bottom: 10px">
 					<div id="cart-tbl">
 						<table class="table" id="cart">
@@ -91,34 +84,29 @@
 									<th width="5%"></th>	
 								</tr>
 							</thead>
-							<tbody >
-
+							<tbody > 
 							</tbody>
 						</table>
 					</div>
-				</div>
-
+				</div> 
 				<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 5px 25px 15px 25px;"> 
-					<div style="">Grand Total:<span id="amount-total" class="pull-right">00.00</span></div>
-
+					<div class="mb-2">Subtotal:<span id="amount-total" class="pull-right">00.00</span></div> 
+					<div class="mb-2">Discounted Sales:<span id="amount-total" class="pull-right">00.00</span></div> 
+					<div class="mb-2">Total Sales Tax:<span id="amount-total" class="pull-right">00.00</span></div> 
 				</div>
 				<div class="col-md-12" style="padding: 15px 25px;">
 					<form id="process-form">
-						<div class="form-group">
-							<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment (F1)" id="payment" autocomplete="off">
+						<!-- <div class="form-group">
+							<input type="text" class="form-control input-lg" name="" placeholder="Sub Total: 3000" id="payment" autocomplete="off">
 						</div>
-						<div class="form-group">
-
-							<input readonly="readonly" type="text" class="form-control input-lg" name="" placeholder="Change:" id="change" autocomplete="off">
-
-						</div>
+						<div class="form-group"> 
+							<input readonly="readonly" type="text" class="form-control input-lg" name="" placeholder="Total: 5400" id="change" autocomplete="off">
+						</div> -->
 						<div class="form-group">
 							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process" id="btn" >
 						</div>
 					</form>
-				</div>
-
-
+				</div> 
 			</div>
 		</div>
 	</div>
@@ -138,6 +126,44 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
 				<button id="discount-enter" type="button" class="btn btn-primary" >Enter Discount</button> 
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" id="discount-modal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-md center" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title">Process Order</h3> 
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label>Order Total</label>
+					<input type="text" disabled class="form-control" />
+				</div> 
+				<div class="form-group">
+					<label>Payment Type</label>
+					<select class="form-control">
+						<option valuu="cash">Cash</option>
+						<option value="credit">Credit</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Customer</label>
+					<select class="form-control">
+						<option>Select Customer</option>
+					</select>
+				</div>
+				<div>
+					<label>Discount</label>
+					<select class="form-control">
+						<option>Select Discount</option>
+					</select>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> 
+				<button id="discount-enter" type="button" class="btn btn-primary" >Complete Order</button> 
 			</div>
 		</div>
 	</div>
