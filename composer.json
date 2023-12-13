@@ -20,5 +20,10 @@
             "email": "hello@algermakiputin.dev"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
 }

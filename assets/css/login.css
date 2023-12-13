@@ -6,10 +6,9 @@ body, html {
     padding-top: 75%;
 }
 .form-signin {
-    max-width: 420px;
+    max-width: 520px;
      padding: 15px 35px 45px;
-    background-color: #fff;  			
-
+    background-color: #fff;  		 
     .checkbox {
         font-weight: normal;
     }
@@ -128,3 +127,7 @@ text-shadow: 0 0 15px rgba(0,0,0,0.2);
     padding:20px;
   }
 }  
+
+.form-control {
+    margin-bottom: 0!important;
+}

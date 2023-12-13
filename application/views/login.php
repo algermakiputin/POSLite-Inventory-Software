@@ -39,18 +39,16 @@
 	</div>
 	<?php endif; ?>
 	<div class="form-group">
-		<div class="input-group">
-			<span class="input-group-addon"><i class="fa fa-user " aria-hidden="true"></i></span>
-			<input autocomplete="off" id="username" type="text" class="form-control input-md" name="username" placeholder="Username" required="required" data-parsley-errors-container="#username-error">
-			<div class="clearfix"></div>
-
-		</div>
+		<div class="input-group ">
+			<span    class="input-group-addon"><i class="fa fa-user " aria-hidden="true"></i></span>
+			<input   autocomplete="off" id="username" type="text" class="form-control input-md" name="username" placeholder="Username" required="required" data-parsley-errors-container="#username-error">
+		</div>      
 		<span id="username-error"></span>
-	</div>
+	</div> 
 	<div class="form-group">
 		<div class="input-group ">
-			<span class="input-group-addon"><i class="fa fa-key " aria-hidden="true"></i></span>
-			<input autocomplete="off" id="password" type="password" class="form-control input-md" name="password" placeholder="Password" required="required" data-parsley-errors-container="#password-error">
+			<span   class="input-group-addon"><i class="fa fa-key " aria-hidden="true"></i></span>
+			<input  autocomplete="off" id="password" type="password" class="form-control input-md" name="password" placeholder="Password" required="required" data-parsley-errors-container="#password-error">
 		</div>      
 		<span id="password-error"></span>
 	</div>
