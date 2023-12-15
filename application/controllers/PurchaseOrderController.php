@@ -65,13 +65,14 @@ class PurchaseOrderController extends CI_Controller {
         $this->db->insert_batch('purchase_order_line_item', $purchaseLineItems);
     }
 
-    public function datatable() {
+    public function datatable() { 
         $start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
         $draw = $this->input->post('draw');
-        $count = $this->datatableQuery()->num_rows();
-        $result = $this->datatableQuery()->result();
+        $status = $this->input->post('columns[0][search][value]');
+        $count = $this->dataTableQuery($status)->num_rows();
+        $result = $this->dataTableQuery($status)->result();
         $dataset = [];
         $badges = [
             'Pending' => 'warning',
@@ -114,12 +115,13 @@ class PurchaseOrderController extends CI_Controller {
     }
 
 
-    public function datatableQuery() {
+    public function dataTableQuery($status) { 
         return $this->db->select('purchase.*, SUM(purchase_order_line_item.quantity * purchase_order_line_item.price) as total, supplier.name as supplier_name')
                     ->from('purchase')
                     ->join('purchase_order_line_item', 'purchase_order_line_item.purchase_id = purchase.id', 'BOTH')
                     ->join('supplier', 'supplier.id = purchase.supplier_id')
-                    ->group_by('purchase.id')
+                    ->like('purchase.status', $status)
+                    ->group_by('purchase.id', 'DESC')
                     ->order_by('id', 'DESC')
                     ->get();
      

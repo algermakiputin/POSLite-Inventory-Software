@@ -974,17 +974,31 @@ $(document).ready(function() {
 	    }
 	});
 	
-	$("#purchases_table").DataTable({
+	const purchaseTable = $("#purchases_table").DataTable({
 		processing : true, 
 		serverSide : true, 
 		responsive: true,
 		ajax : {
-			type : "GET",
+			type : "POST",
 			url : base_url + "PurchaseOrderController/datatable",
 			data: data
+		},
+		initComplete: function() {
+			$("#purchases_table_length").append(`
+				<select class="form-control" id="purchase-status-filter">
+					<option value="">Select Status</option>
+					<option value="Pending">Pending</option>
+					<option value="Open Order">Open Order</option>
+					<option value="Completed">Completed</option>
+				</select>
+			`);
 		}
-
 	});
+
+	$("body").on('change', '#purchase-status-filter', function() {
+		const status = $(this).val();
+		purchaseTable.columns(0).search(status).draw();
+	});	
 
 	$("body").on('click', '.purchase-order-view, .print_label', function(e) {
 		e.preventDefault();

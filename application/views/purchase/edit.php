@@ -9,7 +9,7 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				New Purchase Order
+				Edit Purchase Order <?php echo $purchase->po_number; ?>
 			</div>
 			<div class="panel-body">
 				<div class="row">
@@ -49,7 +49,6 @@
 											<select name="status" required class="form-control" id="status">
 												<option <?php echo $purchase->status === "Pending" ? "selected" : "" ?> value="Pending">Pending</option>
 												<option <?php echo $purchase->status === "Open Order" ? "selected" : "" ?> value="Open Order">Open Order</option>
-                                                <option <?php echo $purchase->status === "Received" ? "selected" : "" ?> value="Received">Received</option>
                                                 <option <?php echo $purchase->status === "Completed" ? "selected" : "" ?> value="Completed">Completed</option>
 											</select>
 										</div> 
@@ -97,7 +96,7 @@
 								</div>
 							</div> 
 							<div class="form-group text-right"> 
-								<input type="submit" name="" value="Save Purchase Order" class="btn btn-primary" required="required">
+								<input type="submit" name="" value="Update Purchase" class="btn btn-primary" required="required">
 							</div> 
 						</form>
 					</div> 
