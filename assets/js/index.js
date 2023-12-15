@@ -974,7 +974,39 @@ $(document).ready(function() {
 	    }
 	});
 	
+	const purchaseTable = $("#purchases_table").DataTable({
+		processing : true, 
+		serverSide : true, 
+		responsive: true,
+		ajax : {
+			type : "POST",
+			url : base_url + "PurchaseOrderController/datatable",
+			data: data
+		},
+		initComplete: function() {
+			$("#purchases_table_length").append(`
+				<select class="form-control" id="purchase-status-filter">
+					<option value="">Select Status</option>
+					<option value="Pending">Pending</option>
+					<option value="Open Order">Open Order</option>
+					<option value="Completed">Completed</option>
+				</select>
+			`);
+		}
+	});
 
+	$("body").on('change', '#purchase-status-filter', function() {
+		const status = $(this).val();
+		purchaseTable.columns(0).search(status).draw();
+	});	
+
+	$("body").on('click', '.purchase-order-view, .print_label', function(e) {
+		e.preventDefault();
+		window.open($(this).attr('href'), '_blank', 'location=yes,height=900,width=800,scrollbars=yes,status=yes');
+
+	})
+
+	
 	var expiry_date_table = $("#expiry_date_table").DataTable({
 		processing : true, 
 		serverSide : true, 

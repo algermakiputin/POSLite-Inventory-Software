@@ -220,6 +220,9 @@ class ItemController extends AppController {
 
 				$deleteAction = '
 						<li>
+							<a class="print_label" href="'.base_url("ItemController/print_label/$item->id").'"><i class="fa fa-print"></i> Print Label</a> 
+						</li>
+						<li>
                         	<a href="'.base_url("items/edit/$item->id").'"><i class="fa fa-edit"></i> Edit</a> 
                         </li>
 						<li>
@@ -600,4 +603,8 @@ class ItemController extends AppController {
 		} 
 	}
 
+	public function print_label($id) { 
+		$data['item'] = $this->db->where('id', $id)->get('items')->row();
+		$this->load->view('label/index', $data);
+	} 
 }

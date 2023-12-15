@@ -47,6 +47,7 @@
                         <th>Barcode</th>
                         <th>Name</th>
                         <th>Stocks</th>
+                        <th>Action</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -55,6 +56,7 @@
                         <td><?php echo $item->barcode ?></td>
                         <td><?php echo $item->name ?></td>
                         <td><?php echo $item->quantity ?> Remaining</td>
+                        <td><a class="btn btn-sm btn-primary" href="<?php echo base_url('/purchase/new?supplier_id='. $item->supplier_id) ?>">reorder</a></td>
                      </tr>
                      <?php endforeach; ?>
                   </tbody>
@@ -68,6 +70,7 @@
                         <th>Barcode</th>
                         <th>Name</th>
                         <th>Stocks</th>
+                        <th>Action</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -76,6 +79,7 @@
                         <td><?php echo $item->barcode ?></td>
                         <td><?php echo $item->name ?></td>
                         <td><?php echo $item->quantity ?> Remaining</td>
+                        <td><a class="btn btn-sm btn-primary" href="<?php echo base_url('/purchase/new?supplier_id='. $item->supplier_id) ?>">reorder</a></td>
                      </tr>
                      <?php endforeach; ?>
                   </tbody>

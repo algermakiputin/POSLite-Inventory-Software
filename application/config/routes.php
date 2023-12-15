@@ -126,4 +126,7 @@ $route['inventory/reports'] = "InventoryController/inventory_reports";
 $route['activate'] = 'LicenseController/activate';
 $route['users'] = "UsersController/users";
 
+$route['purchase'] = "PurchaseOrderController/index";
+$route['purchase/new'] = "PurchaseOrderController/new";
+
 $route['login'] = 'AuthController/login';
