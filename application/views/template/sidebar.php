@@ -42,7 +42,18 @@
                     <!-- /.nav-second-level -->
                 </li>
             <?php endif; ?> 
-
+            <li data-step="4" data-intro="If you have products delivered, you can save it here.">
+                    <a href="javascript:void(0)"><i class="fa fa-shopping-cart fa-fw"></i> Purchase<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?php echo base_url('purchase') ?>"><i class="fa fa-circle-o"></i> View Purchase</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('purchase/new') ?>"><i class="fa fa-circle-o"></i> New Purchase</a>
+                        </li>   
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
             <li data-step="5" data-intro="Here you can record your expenses like rent, travel cost, repair to a equipment, etc.">
                 <a href="javascript:void(0)"><i class="fa fa-money fa-fw"></i> Expenses<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
