@@ -986,11 +986,13 @@ $(document).ready(function() {
 
 	});
 
-	$("body").on('click', '.purchase-order-view', function(e) {
+	$("body").on('click', '.purchase-order-view, .print_label', function(e) {
 		e.preventDefault();
-		window.open($(this).attr('href'), '_blank', 'location=yes,height=1000,width=800,scrollbars=yes,status=yes');
+		window.open($(this).attr('href'), '_blank', 'location=yes,height=900,width=800,scrollbars=yes,status=yes');
 
 	})
+
+	
 	var expiry_date_table = $("#expiry_date_table").DataTable({
 		processing : true, 
 		serverSide : true, 

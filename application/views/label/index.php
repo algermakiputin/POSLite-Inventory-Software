@@ -66,12 +66,12 @@
 <div class="page-break"></div>
 
 <script>
-// function printFunction() {
-//   var r = confirm("Do you want to open the print dialouge now?");
-//   if (r == true) {
-//     window.print();;
-//   } else {
-//     // closes alert
-//   }
-// }
+function printFunction() {
+  var r = confirm("Do you want to open the print dialouge now?");
+  if (r == true) {
+    window.print();;
+  } else {
+    // closes alert
+  }
+}
 </script>
