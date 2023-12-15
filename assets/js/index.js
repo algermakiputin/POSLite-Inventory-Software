@@ -974,7 +974,17 @@ $(document).ready(function() {
 	    }
 	});
 	
+	$("#purchases_table").DataTable({
+		processing : true, 
+		serverSide : true, 
+		responsive: true,
+		ajax : {
+			type : "GET",
+			url : base_url + "PurchaseOrderController/datatable",
+			data: data
+		}
 
+	});
 	var expiry_date_table = $("#expiry_date_table").DataTable({
 		processing : true, 
 		serverSide : true, 

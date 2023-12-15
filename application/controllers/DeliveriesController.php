@@ -139,9 +139,7 @@ class DeliveriesController extends CI_Controller
 								->join('delivery_details', 'delivery_details.delivery_id = delivery.id')
 								->get()
 								->num_rows();
-
-
-
+ 
 		$columns = ['date_time', 'received_by', 'due_date', 'name', 'total', 'defectives', 'payment_status', 'defectives', '', 'id'];
 	 	$order_column = $this->input->post('order[0][column]');
 	 	$order = $this->input->post('order[0][dir]');

@@ -47,7 +47,7 @@
 											<label>Status</label>
 											<select name="status" required class="form-control">
 												<option value="Pending">Pending</option>
-												<option value="OpenOrder">Open Order</option>
+												<option value="Open Order">Open Order</option>
                                                 <option value="Received">Received</option>
                                                 <option value="Completed">Completed</option>
 											</select>
@@ -75,12 +75,12 @@
                                                     <input type="hidden" name="product_id[]" value="<?php echo $item->id ?>" >
                                                 </td>  
                                                 <td >
-                                                    <input type="text" autocomplete="off" name="price[]" placeholder="Price Per Unit" class="form-control">
+                                                    <input type="text" autocomplete="off" name="price[]" value="<?php echo $item->capital ?>" placeholder="Price Per Unit" class="form-control">
                                                 </td>
                                                 
                                                 <td >
                                                     <input type="hidden" name="stocks[]"  value="" />
-                                                    <input type="number" name="quantity[]" autocomplete="off" min="0" value="0" placeholder="QTY" class="form-control" required="required">
+                                                    <input type="number" name="quantity[]" autocomplete="off" min="0" value="" placeholder="QTY" class="form-control" required="required">
                                                 </td> 
                                                 <td width="16%"> 
                                                     <input type="text" autocomplete="off" class="form-control" placeholder="Additional Info" name="remarks[]"> 
