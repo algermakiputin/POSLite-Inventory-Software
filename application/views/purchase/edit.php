@@ -46,7 +46,7 @@
 										</div> 
 										<div class="form-group">
 											<label>Status</label>
-											<select name="status" required class="form-control">
+											<select name="status" required class="form-control" id="status">
 												<option <?php echo $purchase->status === "Pending" ? "selected" : "" ?> value="Pending">Pending</option>
 												<option <?php echo $purchase->status === "Open Order" ? "selected" : "" ?> value="Open Order">Open Order</option>
                                                 <option <?php echo $purchase->status === "Received" ? "selected" : "" ?> value="Received">Received</option>
@@ -64,6 +64,7 @@
 											<th>Enter Product</th>  
 											<th>Price/unit</th> 
 											<th>QTY</th> 
+											<th>Received QTY</th>
 											<th>Remarks</th>
 											<th></th>
 										</tr>
@@ -77,11 +78,12 @@
                                                 </td>  
                                                 <td >
                                                     <input type="text" autocomplete="off" name="price[]" value="<?php echo $item->price ?>" placeholder="Price Per Unit" class="form-control">
-                                                </td>
-                                                
-                                                <td >
-                                                    <input type="hidden" name="stocks[]"  value="" />
+                                                </td> 
+                                                <td > 
                                                     <input type="number" name="quantity[]" autocomplete="off" min="0" value="<?php echo $item->quantity ?>" placeholder="QTY" class="form-control" required="required">
+                                                </td> 
+												<td > 
+                                                    <input type="number" name="received[]" autocomplete="off" min="0" disabled value="" placeholder="Received QTY" class="form-control received-qty" required="required">
                                                 </td> 
                                                 <td width="16%"> 
                                                     <input type="text" autocomplete="off" class="form-control" value="<?php echo $item->remarks ?>" placeholder="Additional Info" name="remarks[]"> 
@@ -156,5 +158,12 @@
 
 			$(this).parents("tr").remove();
 		}); 
+
+		$("#status").change(function() {
+			const status = $(this).val();
+			const isCompleted = status === "Completed";
+			$('.received-qty').prop('disabled', !isCompleted);
+			$('.received-qty').prop('required', isCompleted);  
+		})
 	}) 
 </script>

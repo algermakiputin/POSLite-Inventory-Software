@@ -600,4 +600,8 @@ class ItemController extends AppController {
 		} 
 	}
 
+	public function print_label($id) { 
+		$data['item'] = $this->db->where('id', $id)->get('items')->row();
+		$this->load->view('label/index', $data);
+	} 
 }

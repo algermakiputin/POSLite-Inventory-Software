@@ -75,13 +75,15 @@ class PurchaseOrderController extends CI_Controller {
         $dataset = [];
         $badges = [
             'Pending' => 'warning',
-            'Open Order' => 'primary',
-            'Received' => 'info',
+            'Open Order' => 'info', 
             'Completed' => 'success'
-        ];
+        ]; 
 
         foreach ($result as $row) { 
             $badgeClass = $badges[$row->status];
+            $editable = $row->status !== "Completed" ? '<li>
+                <a href="'. base_url("PurchaseOrderController/edit/" . $row->id) .'"><i class="fa fa-edit"></i> Edit</a> 
+            </li>' : null;
             $dataset[] = [
                 $row->po_number,
                 substr($row->created_date, 0, 10),
@@ -94,12 +96,9 @@ class PurchaseOrderController extends CI_Controller {
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu"> 
                         <li>
-                            <a href="'. base_url("PurchaseOrderController/print/" . $row->id) .'"><i class="fa fa-eye"></i> View</a> 
+                            <a class="purchase-order-view" target="__blank" href="'. base_url("PurchaseOrderController/print/" . $row->id) .'"><i class="fa fa-eye"></i> View</a> 
                         </li> 
-                        <li>
-                            <a href="'. base_url("PurchaseOrderController/edit/" . $row->id) .'"><i class="fa fa-edit"></i> Edit</a> 
-                        </li> 
-                    '. $admin .'
+                        '.$editable.' 
                     </ul>
                 </div> 
 				'
@@ -153,12 +152,14 @@ class PurchaseOrderController extends CI_Controller {
                         ->result();
     }
 
-    public function update() { 
+    public function update() {  
         $purchase_id = $this->input->post('purchase_id');
         $product_id = $this->input->post('product_id');
         $price = $this->input->post('price');
         $quantity = $this->input->post('quantity');
-        $remarks = $this->input->post('remarks');  
+        $remarks = $this->input->post('remarks'); 
+        $received = $this->input->post('received'); 
+        $status = $this->input->post('status'); 
         $purchase = array(
             'eta' => $this->input->post('eta'),
             'supplier_id' => $this->input->post('supplier_id'),
@@ -167,13 +168,20 @@ class PurchaseOrderController extends CI_Controller {
         $this->db->where('id', $purchase_id)->update('purchase', $purchase); 
         $this->db->where('purchase_id', $purchase_id)->delete('purchase_order_line_item');
         $this->storePurchaseLineItems($purchase_id, $product_id, $price, $quantity, $remarks);
+
+        if ($status === "Completed") {
+            $this->load->model('OrderingLevelModel');
+            foreach ($product_id as $index => $id) { 
+                $this->OrderingLevelModel->addStocks($id, $received[$index]);
+            }
+        }
         return redirect('purchase');
     }
 
     public function print($id) {
 
 		$purchase = $this->getPurchaseById($id);  
-		$data['invoice']	= $purchase['data'];
+		$data['purchase']	= $purchase['data'];
 		$data['orderline'] = $purchase['line_item'];   
 		$this->load->view('receipt/purchase_order', $data);
 	}

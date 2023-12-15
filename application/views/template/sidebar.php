@@ -47,9 +47,6 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="<?php echo base_url('purchase') ?>"><i class="fa fa-circle-o"></i> View Purchase</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo base_url('purchase/new') ?>"><i class="fa fa-circle-o"></i> New Purchase</a>
                         </li>   
                     </ul>
                     <!-- /.nav-second-level -->
