@@ -26,6 +26,7 @@
              <table width="100%" class="table table-striped table-bordered table-hover table-responsive" id="purchases_table">
 				<thead>
 					<tr> 
+						<th>PO Number</th>
 						<th>Date</th>
 						<th>Supplier</th>
 						<th>ETA</th>

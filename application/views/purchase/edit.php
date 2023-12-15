@@ -24,8 +24,9 @@
 								<p><?php echo $this->session->flashdata('error') ?></p>
 							</div>
 						<?php endif; ?> 
-						<form action="<?php echo base_url('PurchaseOrderController/store') ?>" method="POST">
+						<form action="<?php echo base_url('PurchaseOrderController/update') ?>" method="POST">
 							<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
+                            <input type="hidden" name="purchase_id" value="<?php echo $purchase->id; ?>" />
 							<div class="row">
 								<div class="col-md-3">
 									<fieldset>
@@ -35,21 +36,21 @@
 											<select class="form-control" name="supplier_id" required="required">
 												<option value="">Select Supplier</option>
 												<?php foreach ( $suppliers as $supplier ): ?>
-													<option value="<?php echo $supplier->id ?>" <?php echo $supplier->id === $supplier_id ? 'selected' : '' ?>><?php echo $supplier->name ?></option>
+													<option value="<?php echo $supplier->id ?>" <?php echo $supplier->id === $purchase->supplier_id ? 'selected' : '' ?>><?php echo $supplier->name ?></option>
 												<?php endforeach; ?>
 											</select>
 										</div> 
 										<div class="form-group">
 											<label>ETA</label>
-											<input type="text" autocomplete="off" required autocomplete="off" placeholder="ETA(Estimated Time Arrival)" name="eta" class="form-control date-range-filter" id="eta" autocomplete="off" data-date-format="yyyy-mm-dd">
+											<input type="text" autocomplete="off" value="<?php echo $purchase->eta ?>" required autocomplete="off" placeholder="ETA(Estimated Time Arrival)" name="eta" class="form-control date-range-filter" id="eta" autocomplete="off" data-date-format="yyyy-mm-dd">
 										</div> 
 										<div class="form-group">
 											<label>Status</label>
 											<select name="status" required class="form-control">
-												<option value="Pending">Pending</option>
-												<option value="Open Order">Open Order</option>
-                                                <option value="Received">Received</option>
-                                                <option value="Completed">Completed</option>
+												<option <?php echo $purchase->status === "Pending" ? "selected" : "" ?> value="Pending">Pending</option>
+												<option <?php echo $purchase->status === "Open Order" ? "selected" : "" ?> value="Open Order">Open Order</option>
+                                                <option <?php echo $purchase->status === "Received" ? "selected" : "" ?> value="Received">Received</option>
+                                                <option <?php echo $purchase->status === "Completed" ? "selected" : "" ?> value="Completed">Completed</option>
 											</select>
 										</div> 
 									</fieldset>
@@ -68,22 +69,22 @@
 										</tr>
 									</thead>
 									<tbody>
-                                        <?php foreach($itemsToReOrder as $index=>$item): ?>
+                                        <?php foreach($purchase_line_item as $index=>$item): ?>
                                             <tr>
                                                 <td width="35%"> 
-                                                    <input type="text" required name="product[]" value="<?php echo $item->name ?>" class="form-control product" placeholder="Type Product Name">
-                                                    <input type="hidden" name="product_id[]" value="<?php echo $item->id ?>" >
+                                                    <input type="text" required name="product[]" value="<?php echo $item->item_name ?>" class="form-control product" placeholder="Type Product Name">
+                                                    <input type="hidden" name="product_id[]" value="<?php echo $item->item_id ?>" >
                                                 </td>  
                                                 <td >
-                                                    <input type="text" autocomplete="off" name="price[]" value="<?php echo $item->capital ?>" placeholder="Price Per Unit" class="form-control">
+                                                    <input type="text" autocomplete="off" name="price[]" value="<?php echo $item->price ?>" placeholder="Price Per Unit" class="form-control">
                                                 </td>
                                                 
                                                 <td >
                                                     <input type="hidden" name="stocks[]"  value="" />
-                                                    <input type="number" name="quantity[]" autocomplete="off" min="0" value="" placeholder="QTY" class="form-control" required="required">
+                                                    <input type="number" name="quantity[]" autocomplete="off" min="0" value="<?php echo $item->quantity ?>" placeholder="QTY" class="form-control" required="required">
                                                 </td> 
                                                 <td width="16%"> 
-                                                    <input type="text" autocomplete="off" class="form-control" placeholder="Additional Info" name="remarks[]"> 
+                                                    <input type="text" autocomplete="off" class="form-control" value="<?php echo $item->remarks ?>" placeholder="Additional Info" name="remarks[]"> 
                                                 </td>
                                                 <td><span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span></td>
                                             </tr>
@@ -142,8 +143,7 @@
 				}
 			})
 			rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
-			index++;
-
+			index++; 
 			$('.date-range-filter').datepicker({
 					useCurrent : false,
 					todayHighlight: true,
@@ -151,18 +151,10 @@
     				autoclose: true,
 				});
 
-		});
-
-		/*
-			Remove button event handler
-			Remove the row when clicked
-		*/
+		}); 
 		$("body").on("click", ".remove", function() {
 
 			$(this).parents("tr").remove();
-		});
-
-		
-	})
-
+		}); 
+	}) 
 </script>

@@ -30,10 +30,13 @@ class PurchaseOrderController extends CI_Controller {
     }
 
     public function store() {  
+        $max_id = $this->db->select_max('id', 'max_id')->get('purchase')->row();
+        $poNumber = "PO" . sprintf('%08d', (int)$max_id->max_id + 1);
         $purchase = array(
             'supplier_id' => $this->input->post('supplier_id'),
             'status' => $this->input->post('status'),
             'eta' => $this->input->post('eta'),
+            'po_number' => $poNumber
         );
 
         $this->db->insert('purchase', $purchase);
@@ -41,7 +44,13 @@ class PurchaseOrderController extends CI_Controller {
         $product_id = $this->input->post('product_id');
         $price = $this->input->post('price');
         $quantity = $this->input->post('quantity');
-        $remarks = $this->input->post('remarks'); 
+        $remarks = $this->input->post('remarks');  
+        $this->storePurchaseLineItems($purchase_id, $product_id, $price, $quantity, $remarks);
+        redirect('/purchase');
+    }
+
+    private function storePurchaseLineItems($purchase_id, $product_id, $price, $quantity, $remarks) {
+       
         $purchaseLineItems = [];
         foreach( $product_id as $key => $id ) {
             $purchaseLineItems[] = array(
@@ -52,7 +61,7 @@ class PurchaseOrderController extends CI_Controller {
                 'purchase_id' => $purchase_id,
                 'received' => 0
             );
-        } 
+        }  
         $this->db->insert_batch('purchase_order_line_item', $purchaseLineItems);
     }
 
@@ -68,12 +77,13 @@ class PurchaseOrderController extends CI_Controller {
             'Pending' => 'warning',
             'Open Order' => 'primary',
             'Received' => 'info',
-            'Complete' => 'success'
+            'Completed' => 'success'
         ];
 
         foreach ($result as $row) { 
             $badgeClass = $badges[$row->status];
             $dataset[] = [
+                $row->po_number,
                 substr($row->created_date, 0, 10),
                 $row->supplier_name,
                 $row->eta,
@@ -111,11 +121,45 @@ class PurchaseOrderController extends CI_Controller {
                     ->join('purchase_order_line_item', 'purchase_order_line_item.purchase_id = purchase.id', 'BOTH')
                     ->join('supplier', 'supplier.id = purchase.supplier_id')
                     ->group_by('purchase.id')
+                    ->order_by('id', 'DESC')
                     ->get();
      
     }
 
     public function edit($id) {
-        return '';
+        $data['page'] = "Purchase Order"; 
+		$data['content'] = "purchase/edit"; 
+        $data['suppliers'] = $this->db->get('supplier')->result();
+        $data['purchase'] = $this->db->where('id', $id)->get('purchase')->row();
+        $data['purchase_line_item'] = $this->getPurchaseLineItems($id);
+        $data['supplier_id'] = $id; 
+        
+		$this->load->view('master',$data);
+    }
+
+    private function getPurchaseLineItems($id) {
+        return $this->db->select('purchase_order_line_item.*, items.name as item_name')
+                        ->from('purchase_order_line_item')
+                        ->join('items', 'items.id = purchase_order_line_item.item_id')
+                        ->where('purchase_id', $id)
+                        ->get()
+                        ->result();
+    }
+
+    public function update() { 
+        $purchase_id = $this->input->post('purchase_id');
+        $product_id = $this->input->post('product_id');
+        $price = $this->input->post('price');
+        $quantity = $this->input->post('quantity');
+        $remarks = $this->input->post('remarks');  
+        $purchase = array(
+            'eta' => $this->input->post('eta'),
+            'supplier_id' => $this->input->post('supplier_id'),
+            'status' => $this->input->post('status'), 
+        ); 
+        $this->db->where('id', $purchase_id)->update('purchase', $purchase); 
+        $this->db->where('purchase_id', $purchase_id)->delete('purchase_order_line_item');
+        $this->storePurchaseLineItems($purchase_id, $product_id, $price, $quantity, $remarks);
+        return redirect('purchase');
     }
 }
