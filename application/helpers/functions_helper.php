@@ -122,7 +122,7 @@
 
 	function noStocks() {
 		$CI =& get_instance();
-		$outOfStocks = $CI->db->select("items.barcode, items.id, items.name,items.description, ordering_level.quantity")
+		$outOfStocks = $CI->db->select("items.barcode, items.id, items.supplier_id, items.name,items.description, ordering_level.quantity")
 				->from("items")
 				->join("ordering_level", "ordering_level.item_id = items.id", "left")
 				->where('items.status', 1)

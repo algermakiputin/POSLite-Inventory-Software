@@ -1,0 +1,36 @@
+@media print { 
+    body {
+     font-family: Arial, verdana, sans-serif; 
+    }
+
+  .text-center {
+  	text-align: center;
+  }
+
+  .text-right {
+  	text-align: right;
+  }
+
+  .col-6 {
+  	float: left;
+  	width: 50%;
+  }
+}
+
+
+body {
+    font-family: Arial, verdana, sans-serif; 
+   }
+
+ .text-center {
+     text-align: center;
+ }
+
+ .text-right {
+     text-align: right;
+ }
+
+ .col-6 {
+     float: left;
+     width: 50%;
+ }

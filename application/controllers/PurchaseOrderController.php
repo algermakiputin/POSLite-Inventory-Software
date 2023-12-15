@@ -94,7 +94,7 @@ class PurchaseOrderController extends CI_Controller {
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle btn btn-primary btn-sm">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu"> 
                         <li>
-                            <a href="'. base_url("PurchaseOrderController/view/" . $row->id) .'"><i class="fa fa-eye"></i> View</a> 
+                            <a href="'. base_url("PurchaseOrderController/print/" . $row->id) .'"><i class="fa fa-eye"></i> View</a> 
                         </li> 
                         <li>
                             <a href="'. base_url("PurchaseOrderController/edit/" . $row->id) .'"><i class="fa fa-edit"></i> Edit</a> 
@@ -127,14 +127,21 @@ class PurchaseOrderController extends CI_Controller {
     }
 
     public function edit($id) {
+        $purchase = $this->getPurchaseById($id); 
         $data['page'] = "Purchase Order"; 
 		$data['content'] = "purchase/edit"; 
         $data['suppliers'] = $this->db->get('supplier')->result();
-        $data['purchase'] = $this->db->where('id', $id)->get('purchase')->row();
-        $data['purchase_line_item'] = $this->getPurchaseLineItems($id);
-        $data['supplier_id'] = $id; 
-        
+        $data['purchase'] = $purchase['data'];
+        $data['purchase_line_item'] = $purchase['line_item'];
+        $data['supplier_id'] = $id;  
 		$this->load->view('master',$data);
+    }
+
+    private function getPurchaseById($id) {
+        return array(
+            'data' => $this->db->where('id', $id)->get('purchase')->row(),
+            'line_item' => $this->getPurchaseLineItems($id)
+        );
     }
 
     private function getPurchaseLineItems($id) {
@@ -162,4 +169,12 @@ class PurchaseOrderController extends CI_Controller {
         $this->storePurchaseLineItems($purchase_id, $product_id, $price, $quantity, $remarks);
         return redirect('purchase');
     }
+
+    public function print($id) {
+
+		$purchase = $this->getPurchaseById($id);  
+		$data['invoice']	= $purchase['data'];
+		$data['orderline'] = $purchase['line_item'];   
+		$this->load->view('receipt/purchase_order', $data);
+	}
 }

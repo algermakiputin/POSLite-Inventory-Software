@@ -10,7 +10,7 @@ class PriceModel extends CI_Model {
  		foreach ($price_label as $key => $label) {
 
 
- 			if (!price_label || !$advance_price[$key])
+ 			if (!$price_label || !$advance_price[$key])
  				continue;
  			 
 
