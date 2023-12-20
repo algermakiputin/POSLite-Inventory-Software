@@ -359,4 +359,26 @@ legend {
 
 .sales-widget .caption { 
     font-size: 12px;
+} 
+  
+#input-tags {
+    width: 100%;
+    padding: 15px;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+}
+  
+  .label-info {
+    background-color: #5bc0de;
+    padding: 3px;
+  }
+
+.bootstrap-tagsinput input {
+    border: solid 1px #ccc !important;
+    border-radius: 5px !important;
+    min-width: 100px;
+    line-height: 1.75em;
 }

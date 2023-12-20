@@ -13,7 +13,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             <select class="form-control filter-items " data-column="7" name="test">
                 <option value="">Filter By Supplier</option>
@@ -23,7 +23,7 @@
             </select>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             <select class="form-control filter-items" data-column="2" name="test">
                 <option value="">Filter By Category</option>
@@ -33,7 +33,17 @@
             </select>
         </div>
     </div> 
-    <div class="col-md-6">
+    <div class="col-md-2">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search by Part Number" name="partNumber" id="partNumberSearch" />
+        </div>
+    </div> 
+    <div class="col-md-2">
+    <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search by OEM" name="oem" id="oemSearch" />
+        </div>
+    </div> 
+    <div class="col-md-4">
         <span class="pull-right" style="font-size: 22px;">Inventory Value: ₱<span id="total"><?php echo $total; ?></span></span>
     </div>
 </div>
@@ -56,6 +66,8 @@
                     <th>&nbsp;</th>
                     <th>Barcode</th>
                     <th>Item Name</th>
+                    <th>Part Number</th>
+                    <th>OEM</th>
                     <th>Supplier</th>
                     <th>Category</th>  
                     <th>Capital</th> 

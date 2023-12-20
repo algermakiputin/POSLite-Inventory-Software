@@ -25,7 +25,14 @@
 									<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control" required="required">
 									<input type="hidden" name="id" value="<?php echo $item->id ?>">
 								</div>
-								
+								<div class="form-group col-md-12"> 
+									<label>Part Number:</label>
+									<input type="text" value="<?php echo $item->partNumber; ?>" name="partNumber" class="form-control" required="required"> 
+								</div>
+								<div class="form-group col-md-12"> 
+									<label>OEM:</label>
+									<input type="text" value="<?php echo $item->oem; ?>" name="oem" class="form-control" required="required"> 
+								</div>
 								<div class="form-group col-md-12"> 
 									<label>Category:</label>
 									<select name="category" class="form-control" required="required">
@@ -54,9 +61,7 @@
 								<div class="form-group col-md-12"> 
 									<label>Retail Price:</label>
 									<input value="<?php echo $item->price ?>" type="text" name="price" class="form-control" required="required" id="selling-price">
-								</div>   
-
-								
+								</div>    
 								<div class="form-group col-md-12"> 
 									<label>Stocks:</label>
 									<input type="text" value="<?php echo $stocks->quantity; ?>" name="stocks" class="form-control" required="required">
@@ -67,9 +72,7 @@
 								<div class="form-group" style="padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5">
 									<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
 								</div>
-							 	<?php endif; ?>
-
-								
+							 	<?php endif; ?> 
 								<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="<?php echo $class ?>">
 									<legend>Advance Pricing</legend>
 									<table class="table table-bordered table-striped" id="advance-pricing-tbl">
@@ -107,6 +110,12 @@
 									<label>Description:</label>
 									<textarea required="required" rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
 								</div>
+								<div class="form-group col-md-12">   
+									<label>Tags:</label>
+									<div class="input-tags-container">
+										<input name="tags" class="input-tags form-control" id="input-tags" type="text" data-role="tagsinput">
+									</div>
+								</div>
 								<div class="form-group col-md-12"> 
 									<button class="btn btn-primary">Update</button>
 								</div>
@@ -142,6 +151,7 @@
 </div>  
 
 <script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
+
 <script type="text/javascript">
 	
 	$(document).ready(function(e) {

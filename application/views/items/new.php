@@ -33,6 +33,14 @@
 								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
 							</div>
 							<div class="form-group col-md-12"> 
+									<label>Part Number:</label>
+									<input type="text" value="<?php echo $item->partNumber; ?>" name="partNumber" class="form-control" required="required"> 
+								</div>
+								<div class="form-group col-md-12"> 
+									<label>OEM:</label>
+									<input type="text" value="<?php echo $item->oem; ?>" name="oem" class="form-control" required="required"> 
+								</div>
+							<div class="form-group col-md-12"> 
 								<label>Category:</label> 
 								<select name="category" class="form-control" required="required">
 									<option value="">Select Category</option>
