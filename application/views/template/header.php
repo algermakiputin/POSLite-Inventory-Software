@@ -21,6 +21,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/style.css')?>">
 
 <script src="<?php echo base_url('assets/vendor/jquery/jquery.min.js'); ?>"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/jquery-autocomplete.css')?>">
 
 

@@ -131,14 +131,23 @@ $(document).ready(function() {
 						});
 					},
 					responsive: true,
-				})
+				});
+
+
 			},
 			dataTableFilter : function() {
 				$(".filter-items").change(function() {
 					let column = $(this).data('column'); 
-					itemTable.columns(column).search(this.value).draw();
+					itemTable.columns(column).search(this.value).draw(); 
+				});
 
-						
+				$("#partNumberSearch").keyup(function(e) {
+					const val = $(this).val();
+					itemTable.columns(0).search(val).draw();
+				});
+
+				$("#oemSearch").keyup(function(e) {
+					itemTable.columns(1).search(this.value).draw(); 
 				});
 			},
 			clearDataTableFilter : function() {

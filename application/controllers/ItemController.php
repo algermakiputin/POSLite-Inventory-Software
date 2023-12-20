@@ -191,16 +191,19 @@ class ItemController extends AppController {
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
+		$partNumber = $this->input->post('columns[0][search][value]');
+		$oem = $this->input->post('columns[1][search][value]');
 		$filterCategory = $this->input->post('columns[2][search][value]');
 		$filterSupplier = $this->input->post('columns[7][search][value]');  
-	 
-
-		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
+	  
+		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $partNumber, $oem)
 												->limit($limit, $start)
 												->get()
 												->result();
  
-		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)->get()->num_rows(); 
+		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $partNumber, $oem)
+							->get()
+							->num_rows(); 
 		
 		$datasets = [];
 
@@ -248,13 +251,13 @@ class ItemController extends AppController {
                         '.$deleteAction.'
                     </ul>
                 </div>'; 
-
-
-         
+				
 			$datasets[] = [
 				$this->disPlayItemImage($item->image),
 				$item->barcode,
 				$item->name,
+				$item->partNumber,
+				$item->oem,
 				$item->supplier,
 				$this->categories_model->getName($item->category_id),
 				'₱' . number_format($item->capital,2),
@@ -275,17 +278,23 @@ class ItemController extends AppController {
 		]);
 	}
 
-	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks) {
+	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $partNumber, $oem) {
 
 		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier')
 					->from('items')
 					->join('categories', 'categories.id = items.category_id', 'BOTH')
 					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
 					->join('ordering_level', 'ordering_level.item_id = items.id')
-					->order_by('items.id', 'DESC')
-					->like('categories.name', $filterCategory, "BOTH") 
-					->like('items.name', $search, "BOTH")
-					->like('supplier.name', $filterSupplier, "BOTH");
+					->order_by('items.id', 'DESC') 
+					->group_start()
+						->like('items.name', $search, "BOTH")
+						->or_like('items.tags', $search, "BOTH")
+					->group_end()
+					->like('categories.name', $filterCategory, "BOTH")  
+					->like('supplier.name', $filterSupplier, "BOTH")
+					->like('items.partNumber', $partNumber, "BOTH")
+					->like('items.oem', $oem, "BOTH") 
+					;
 
 		return $query;
 	}
@@ -381,12 +390,15 @@ class ItemController extends AppController {
 		$barcode = $this->input->post('barcode');
 		$price = $this->input->post('price'); 
 		$capital = $this->input->post('capital');
+		$partNumber = $this->input->post('partNumber');
+		$oem = $this->input->post('oem');
 		$productImage = $_FILES['productImage'];
 		$price_label = $this->input->post('price_label[]');
 		$advance_price = $this->input->post('advance_price[]');
 		$unit = $this->input->post('unit');
 		$location = $this->input->post('location');
-	 
+		$tags = $this->input->post('tags');
+
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
 		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]|trim|strip_tags');
@@ -408,7 +420,10 @@ class ItemController extends AppController {
 				'status' => 1,
 				'barcode' => $barcode,
 				'price'	=> $price,
-				'capital' => $capital
+				'capital' => $capital,
+				'partNumber' => $partNumber,
+				'oem' => $oem,
+				'tags' => $tags
 			);
 		
 		if ($productImage) {
@@ -426,8 +441,7 @@ class ItemController extends AppController {
 
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
-
-
+ 
 	}
 
 	public function delete(){
@@ -522,9 +536,8 @@ class ItemController extends AppController {
 		$this->load->view('master', $data);
 	}
 
-	public function update() {
-		
-		//validation Form
+	public function update() { 
+		//validation Form 
 		$this->updateFormValidation();
 		$this->load->model('HistoryModel');
  		$updated_name = strip_tags($this->input->post('name'));
@@ -532,6 +545,8 @@ class ItemController extends AppController {
 		$updated_desc = strip_tags($this->input->post('description'));
 		$updated_price = strip_tags($this->input->post('price')); 
 		$capital = strip_tags($this->input->post('capital'));
+		$partNumber = strip_tags($this->input->post('partNumber'));
+		$oem = strip_tags($this->input->post('oem'));
 		$id = strip_tags($this->input->post('id'));
 
 		$price_label = $this->input->post('price_label[]');
@@ -545,6 +560,7 @@ class ItemController extends AppController {
 		$supplier_id = $this->input->post('supplier');
 		$unit = $this->input->post('unit');
 		$location = $this->input->post('location');
+		$tags = $this->input->post('tags');
 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;
@@ -553,12 +569,10 @@ class ItemController extends AppController {
 			if ($fileName) 
 				unlink($currentImagePath);
 			//Then Upload and save the image filename to database
-			$upload = $this->do_upload('productImage');
-			 
+			$upload = $this->do_upload('productImage'); 
 		}
 
-		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]);
-	 
+		$this->db->where('item_id', $id)->update('ordering_level', ['quantity' => $stocks]); 
 		$update = $this->ItemModel->update_item(
 						$id,$updated_name,
 						$updated_category,
@@ -567,7 +581,10 @@ class ItemController extends AppController {
 						$upload['upload_data']['file_name'], 
 						$supplier_id, $this->input->post('barcode'),
 						$updated_price,
-						$capital
+						$capital,
+						$partNumber,
+						$oem,
+						$tags
 					);
 
 		$this->PriceModel->insert($price_label, $advance_price, $id);
