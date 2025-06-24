@@ -429,7 +429,8 @@ class SalesController extends AppController {
 				'user_id' => $this->session->userdata('id'),
 				'created_at' => get_date_time(),
 				'capital' => $sale['capital'],
-				'item_id' => $sale['id']
+				'item_id' => $sale['id'],
+				'unit' => $sale['unit']
 			); 
 			$this->InventoryModel->insert( $sale['id'], $sale['quantity'], $sale['name'], $sale['currentStocks'], 'sell', $sale['price'], $sale['capital'] );
 			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
@@ -488,7 +489,7 @@ class SalesController extends AppController {
 				$transactionProfit += $saleProfit;
 				$datasets[] = array(
 					date('Y-m-d h:i:s A', strtotime($sale->date_time)),
-					$desc->name,
+					$desc->name . ($desc->unit ? "($desc->unit)" : ""),
 					$desc->quantity,
 					$desc->returned,
 					'₱' . number_format($desc->capital,2),

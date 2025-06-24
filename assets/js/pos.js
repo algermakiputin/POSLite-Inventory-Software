@@ -42,7 +42,8 @@ $(document).ready(function() {
 				$("#item-table").on('click', 'tbody tr', function(event) { 
 					var id = $(this).find('input[name="item-id"]').val();
 					var name = $(this).find('td').eq(0).text(); 
-					var price = $(this).find('td').eq(3).text();
+					var price = $(this).find('td').eq(4).text();
+					var unit = $(this).find("td").eq(1).text();
 					var description = $(this).find('td').eq(1).text();
 					var pricing = $(this).find('input[name="advance_pricing"]').val();
 					var capital = $(this).find('input[name="capital"]').val();
@@ -55,15 +56,13 @@ $(document).ready(function() {
 					}
 				 	 
 			 		if (itemExist(id) == false) {
-				 		
 			 			var advance_pricing = JSON.parse(pricing);
 						var enable_ap = Object.keys(advance_pricing).length;
-
 						$("input[name='quantity-enter']").focus();
 						$("#product-name").text(name);
 						$("#item_id").val(id);
 						$("#capital").val(capital);
-						$("#item_unit").val(item_unit);
+						$("#item_unit").val(unit);
 						$("#stocks").val(stocks);
 
 						$("#advance_pricing_options tbody").empty(); 
@@ -437,8 +436,6 @@ $(document).ready(function() {
  						}
  					})
 				});
-				
-
 			}
 		} 
 
@@ -452,8 +449,6 @@ $(document).ready(function() {
 
 
 	$("#open-transactions").click(function(e) {
-
-
 		$("#transactions-modal").modal("toggle");
 		orders_table.draw();
 	});
@@ -464,7 +459,6 @@ $(document).ready(function() {
 	});
 
 	$("#add-product").click(function(e) {
-
 		e.preventDefault();
 		var item_id = $("#item_id").val();
 		var name = $("#product-name").text();
@@ -497,7 +491,7 @@ $(document).ready(function() {
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<input name="capital" type="hidden" value="'+ capital +'">' +
 					'<input name="item_unit" type="hidden" value="'+ unit +'">' + 
-					'<td>'+ name +'</td>' +
+					'<td>'+ name + (unit ? `(${unit})` : '') +'</td>' +
 					'<td><input  data-id="'+id+'" name="qty" type="text" data-stocks="'+stocks+'" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
 					'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
 					'<td>'+ price +'</td>' + 
@@ -531,10 +525,7 @@ $(document).ready(function() {
 
 				qtyCol.val(qty + 1);
 		 		recount();
-				 
-				
 				exist = true;
-
 			}
 		})
 
@@ -542,7 +533,6 @@ $(document).ready(function() {
 	}
 
 	$("#process-form").submit(function(e) {
-	 
 		e.preventDefault();
 		var row = $("#cart tbody tr").length;
 		var sales = [];
@@ -551,12 +541,8 @@ $(document).ready(function() {
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val();
 		var change = $("#change").val();
- 	 
- 		if (row) {
- 
-	 
+ 		if (row) {	 
 			if (parseFloat(payment) >= parseFloat(totalAmountDue)) {
-		 		
 	 			for (i = 0; i < row; i++) {
 					var r = $("#cart tbody tr").eq(i).find('td');
 					var quantity = r.eq(1).find('input').val();

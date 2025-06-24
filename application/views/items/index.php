@@ -58,9 +58,10 @@
                     <th>Item Name</th>
                     <th>Supplier</th>
                     <th>Category</th>  
-                    <th>Capital</th> 
-                    <th>Price</th>
-                    <th>Stocks</th>
+                    <th>Wholesale</th> 
+                    <th>Retail</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
                     <th>Total</th> 
                     <th>Action</th>
                 </tr>

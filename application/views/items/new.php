@@ -54,15 +54,22 @@
 							</div>
 							
 							<div class="form-group col-md-12">  
-								<label>Capital Price:</label>
-								<input type="text" required="required" placeholder="Capital Price" name="capital" class="form-control" max="500000" id="selling-price">
+								<label>Wholesale Price:</label>
+								<input type="text" required="required" placeholder="Wholesale Price" name="capital" class="form-control" max="500000" id="selling-price">
 							</div>
 							<div class="form-group col-md-12">  
 								<label>Retail Price:</label>
 								<input type="text" required="required" placeholder="Retail Price" name="price" class="form-control" max="500000" id="selling-price">
+							</div>
+							<div class="form-group col-md-12">  
+								<label>Unit:</label>
+								<select class="form-control" name="unit" require="required">
+									<option value="">Select Unit</option>
+									<option value="Box">Box</option>
+									<option value="Case">Case</option>
+									<option value="Pcs">Pcs</option>
+								</select>
 							</div> 
-
-							
 							<div class="col-md-12">
 								<div class="form-group advance-pricing-wrapper">
 								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>

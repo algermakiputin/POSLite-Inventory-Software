@@ -70,6 +70,7 @@ body, html {
     top: 50%;
     transform: translate(0, -50%);
     margin-left: 20px;
+    max-width: 450px;
 }
 
 blockquote{

@@ -48,14 +48,22 @@
 									</select>
 								</div>
 								<div class="form-group col-md-12"> 
-									<label>Capital Price:</label>
+									<label>Wholesale Price:</label>
 									<input value="<?php echo $item->capital ?>" type="text" name="capital" class="form-control" required="required" id="capital-price">
 								</div> 
 								<div class="form-group col-md-12"> 
 									<label>Retail Price:</label>
 									<input value="<?php echo $item->price ?>" type="text" name="price" class="form-control" required="required" id="selling-price">
 								</div>   
-
+								<div class="form-group col-md-12">  
+									<label>Unit:</label>
+									<select class="form-control" name="unit" require="required">
+										<option value="">Select Unit</option>
+										<option value="Box" <?php echo $item->unit === "Box" ? "selected" : null ?>>Box</option>
+										<option value="Case" <?php echo $item->unit === "Case" ? "selected" : null ?>>Case</option>
+										<option value="Pcs" <?php echo $item->unit === "Pcs" ? "selected" : null ?>>Pcs</option>
+									</select>
+								</div>
 								
 								<div class="form-group col-md-12"> 
 									<label>Stocks:</label>

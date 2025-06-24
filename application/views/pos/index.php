@@ -16,10 +16,8 @@
 	<meta name="csrfHash" content="<?php echo $this->security->get_csrf_hash(); ?>">
 </head>
 <body>
-
 	<div style=" ">
 		<div class="">
-
 			<div class="col-md-12" style="padding: 0">
 				<nav class="navbar">
 					<span class="navbar-text">Current User:  <span id="user"><?php echo $this->session->userdata['username'] ?></span>
@@ -59,8 +57,9 @@
 						<thead>
 							<tr> 
 								<td >Item Name</td>
-								<td >Description</td> 
-								<td>Quantity</td> 
+								<td >Unit</td> 
+								<td>Category</td>
+								<td>Stocks</td> 
 								<td >Price</td>
 							</tr>
 						</thead>
@@ -424,7 +423,6 @@
 						<input type="hidden" name="stocks" id="stocks">
 						<label for="quantity-enter">Enter Quantity &nbsp;</label>
 						<input style="border-radius: 3px;" name="quantity-enter" onfocus="this.value=''" type="number" min="1" value="1" type="number" id="quantity" class="form-control mx-sm-3" aria-describedby="quantity">
-
 					</div>
 				</form>
 			</div>

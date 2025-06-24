@@ -190,11 +190,8 @@ class ItemController extends AppController {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
-		$items = $this->dataFilter($search, $start, $limit);
 		$filterCategory = $this->input->post('columns[2][search][value]');
 		$filterSupplier = $this->input->post('columns[7][search][value]');  
-	 
-
 		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
 												->limit($limit, $start)
 												->get()
@@ -259,6 +256,7 @@ class ItemController extends AppController {
 				$this->categories_model->getName($item->category_id),
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
+				$item->unit,
 				$stocksRemaining,
 				currency() . number_format($item->capital * $stocksRemaining,2), 
 				$actions
@@ -276,7 +274,6 @@ class ItemController extends AppController {
 	}
 
 	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks) {
-
 		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier')
 					->from('items')
 					->join('categories', 'categories.id = items.category_id', 'BOTH')
@@ -311,9 +308,7 @@ class ItemController extends AppController {
 		$search = $this->input->post('search[value]'); 
 		$items = $this->dataFilter($search, $start, $limit);
 		$itemCount = $this->db->get('items')->num_rows();
-
 		$datasets = array_map(function($item) use ($orderingLevel){
-		  
 			$advance_price = json_encode(
 								$this->db->select('price, label')
 											->where('item_id', $item->id)
@@ -325,7 +320,8 @@ class ItemController extends AppController {
 			return [ 
 				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'"> ' . 
 				'<input type="hidden" name="capital" value="'.$item->capital.'">',
-				ucfirst($item->description), 
+				ucfirst($item->unit),
+				$item->categoryName,
 				$quantity, 
 				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'>"
 			];
@@ -342,12 +338,15 @@ class ItemController extends AppController {
 	}
 
 	public function dataFilter($search, $start, $limit) {
-	 
-		return $this->db->where('status', 1)
-							->order_by('id', "DESC")
-							->like('name',$search, 'BOTH')
-							->get('items', $limit, $start) 
-							->result();
+		return $this->db->select('items.*, categories.name as categoryName')
+					->from('items')
+					->join('categories', 'categories.id = items.category_id')
+					->where('items.status', 1)
+					->order_by('items.id', "DESC")
+					->like('items.name',$search, 'BOTH')
+					->limit($limit, $start)
+					->get() 
+					->result();
 	 
 	}
 
@@ -408,7 +407,8 @@ class ItemController extends AppController {
 				'status' => 1,
 				'barcode' => $barcode,
 				'price'	=> $price,
-				'capital' => $capital
+				'capital' => $capital,
+				'unit' => $unit
 			);
 		
 		if ($productImage) {
@@ -567,7 +567,8 @@ class ItemController extends AppController {
 						$upload['upload_data']['file_name'], 
 						$supplier_id, $this->input->post('barcode'),
 						$updated_price,
-						$capital
+						$capital,
+						$unit
 					);
 
 		$this->PriceModel->insert($price_label, $advance_price, $id);
