@@ -7,6 +7,16 @@ body {
     color: #141823;
 }
 
+input[type='search'] {
+    font-size: 18px;
+    height: 32px;
+}
+
+.dataTables_length select {
+    font-size: 18px;
+    height: 32px;
+}
+
 #cart th {
     background-color: #f4f4f5;
     position: sticky;

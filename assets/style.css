@@ -360,3 +360,13 @@ legend {
 .sales-widget .caption { 
     font-size: 12px;
 }
+
+input[type='search'] {
+    font-size: 18px;
+    height: 32px;
+}
+
+.dataTables_length select {
+    font-size: 18px;
+    height: 32px;
+}
