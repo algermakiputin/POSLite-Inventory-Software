@@ -28,8 +28,12 @@ $(document).ready(function() {
 					processing : true, 
 					serverSide : true,
 					 "bPaginate": true,
-					pagin:true,
+					paging:true,
 					pagingType: "full",
+					orderable: true,
+					columnDefs: [
+						{ orderable: false, targets: [1,2,3,4] }
+					],
 					ajax : {
 						url : base_url + 'items/data',
 						data : data,

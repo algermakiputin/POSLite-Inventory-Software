@@ -69,8 +69,7 @@ $(document).ready(function() {
 				data[csrfName] = csrfHash;
 				itemTable = $("#item_tbl").DataTable({
 					processing : true,
-					serverSide : true,
-
+					serverSide : true, 
 					lengthMenu : [[10, 25, 50, 0], [10, 25, 50, "Show All"]],
 					ajax : {
 						url : base_url + 'ItemController/dataTable',
@@ -79,13 +78,13 @@ $(document).ready(function() {
 					},
 					dom : "lfrtBp",
 					"targets": 'no-sort',
-					"bSort": false,
 					columnDefs: [
 						{ 
 							targets: [3,6], 
 							visible: hide,
 							searchable: hide
 						},
+						{ orderable: false, targets: [0,1,3,4,5,6,7,8,9,10] }
 					],
 					buttons: [
 						{

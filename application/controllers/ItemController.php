@@ -191,13 +191,15 @@ class ItemController extends AppController {
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]'); 
 		$filterCategory = $this->input->post('columns[2][search][value]');
-		$filterSupplier = $this->input->post('columns[7][search][value]');  
-		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)
+		$filterSupplier = $this->input->post('columns[7][search][value]'); 
+		$orderByItemName = $this->input->post('order[0][column]') == 2 ? "true" : "";
+		$orderDirection = $this->input->post('order[0][dir]');
+		$items = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $orderByItemName, $orderDirection)
 												->limit($limit, $start)
 												->get()
 												->result();
  
-		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks)->get()->num_rows(); 
+		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $orderByItemName, $orderDirection)->get()->num_rows(); 
 		
 		$datasets = [];
 
@@ -273,13 +275,15 @@ class ItemController extends AppController {
 		]);
 	}
 
-	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks) {
+	private function items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $orderByItemName = null, $orderDirection = null) {
+		$orderByColumn = $orderByItemName ? 'items.name' : 'items.id';
+		$direction = $orderByItemName ? $orderDirection : 'DESC';
 		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier')
 					->from('items')
 					->join('categories', 'categories.id = items.category_id', 'BOTH')
 					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
 					->join('ordering_level', 'ordering_level.item_id = items.id')
-					->order_by('items.id', 'DESC')
+					->order_by($orderByColumn, $direction)
 					->like('categories.name', $filterCategory, "BOTH") 
 					->like('items.name', $search, "BOTH")
 					->like('supplier.name', $filterSupplier, "BOTH");
@@ -305,8 +309,9 @@ class ItemController extends AppController {
 		$price = $this->PriceModel;
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
+		$orderDirection = $this->input->post('order[0][dir]');
 		$search = $this->input->post('search[value]'); 
-		$items = $this->dataFilter($search, $start, $limit);
+		$items = $this->dataFilter($search, $start, $limit, $orderDirection);
 		$itemCount = $this->db->get('items')->num_rows();
 		$datasets = array_map(function($item) use ($orderingLevel){
 			$advance_price = json_encode(
@@ -337,12 +342,12 @@ class ItemController extends AppController {
 			]);
 	}
 
-	public function dataFilter($search, $start, $limit) {
+	public function dataFilter($search, $start, $limit, $direction = "DESC") {
 		return $this->db->select('items.*, categories.name as categoryName')
 					->from('items')
 					->join('categories', 'categories.id = items.category_id')
 					->where('items.status', 1)
-					->order_by('items.id', "DESC")
+					->order_by('items.id', $direction)
 					->like('items.name',$search, 'BOTH')
 					->limit($limit, $start)
 					->get() 
