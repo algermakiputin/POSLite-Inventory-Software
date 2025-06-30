@@ -254,6 +254,7 @@ class ItemController extends AppController {
 				$this->disPlayItemImage($item->image),
 				$item->barcode,
 				$item->name,
+				$item->reorderingLevel,
 				$item->supplier,
 				$this->categories_model->getName($item->category_id),
 				'₱' . number_format($item->capital,2),
@@ -357,11 +358,15 @@ class ItemController extends AppController {
 
 	public function new() {
 		$this->userAccess('new');
-		$this->load->model('categories_model'); 
+		$this->load->model('categories_model');
+		$id = $this->db->select('max(id) as maxId')->from('items')->get()->row();
+		$prefix = 11;
+		$barcode = $prefix . sprintf('%06d', $id->maxId + 1);
 		$data['category'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['page'] = 'new_item';
-		$data['content'] = "items/new";  
+		$data['content'] = "items/new"; 
+		$data['barcode'] = $barcode; 
 		$this->load->view('master', $data);
 	}
 
@@ -388,6 +393,7 @@ class ItemController extends AppController {
 		$productImage = $_FILES['productImage'];
 		$price_label = $this->input->post('price_label[]');
 		$advance_price = $this->input->post('advance_price[]');
+		$orderingLevel = $this->input->post('reorderingLevel');
 		$unit = $this->input->post('unit');
 		$location = $this->input->post('location');
 	 
@@ -413,7 +419,8 @@ class ItemController extends AppController {
 				'barcode' => $barcode,
 				'price'	=> $price,
 				'capital' => $capital,
-				'unit' => $unit
+				'unit' => $unit,
+				'reorderingLevel' => $orderingLevel
 			);
 		
 		if ($productImage) {
@@ -541,7 +548,7 @@ class ItemController extends AppController {
 
 		$price_label = $this->input->post('price_label[]');
 		$advance_price = $this->input->post('advance_price[]');
-
+		$orderingLevel = $this->input->post('reorderingLevel');
 		$stocks = $this->input->post('stocks');
 		$item = $this->db->where('id', $id)->get('items')->row();
 		$currentPrice = $this->PriceModel->getPrice($id);
@@ -573,7 +580,8 @@ class ItemController extends AppController {
 						$supplier_id, $this->input->post('barcode'),
 						$updated_price,
 						$capital,
-						$unit
+						$unit,
+						$orderingLevel
 					);
 
 		$this->PriceModel->insert($price_label, $advance_price, $id);

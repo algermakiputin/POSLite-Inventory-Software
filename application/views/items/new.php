@@ -26,11 +26,15 @@
 							<div class="row">
 							<div class="form-group col-md-12">
 								<label>Barcode:</label>
-								<input type="text" placeholder="Item Barcode" required="required" class="form-control" name="barcode" value="">
+								<input type="text" value="<?php echo $barcode ?>" placeholder="Item Barcode" required="required" class="form-control" name="barcode" value="">
 							</div>
 							<div class="form-group col-md-12"> 
 								<label>Item Name:</label>					 
 								<input required="required" type="text" placeholder="Item Name" name="name" class="form-control">
+							</div>
+							<div class="form-group col-md-12"> 
+								<label>Reordering Level:</label>					 
+								<input required="required" type="number" placeholder="Re-Ordering Level" name="reorderingLevel" class="form-control">
 							</div>
 							<div class="form-group col-md-12"> 
 								<label>Category:</label> 

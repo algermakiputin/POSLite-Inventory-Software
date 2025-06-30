@@ -25,7 +25,10 @@
 									<input type="text" value="<?php echo $item->name; ?>" name="name" class="form-control" required="required">
 									<input type="hidden" name="id" value="<?php echo $item->id ?>">
 								</div>
-								
+								<div class="form-group col-md-12"> 
+									<label>Reordering Level:</label>					 
+									<input required="required" value="<?php echo $item->reorderingLevel ?>" type="number" placeholder="Re-Ordering Level" name="reorderingLevel" class="form-control">
+								</div>
 								<div class="form-group col-md-12"> 
 									<label>Category:</label>
 									<select name="category" class="form-control" required="required">
