@@ -76,28 +76,30 @@
 							</div> 
 							<div class="col-md-12">
 								<div class="form-group advance-pricing-wrapper">
-								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
+								<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Product Variance</button>
 							</div>
 							<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="collapse">
-								<legend>Advance Pricing </legend>
-								<p>Enables you to set different prices for a product. Ex wholeslage price or different prices for every group of customers</p>
+								<legend>Product Variance </legend>
+								<p>Enables you to add different item variations, set price and stocks</p>
 								<table class="table table-bordered table-striped" id="advance-pricing-tbl">
 									<thead>
 										<tr>
-											<th>Label</th>
+											<th>Name</th>
 											<th>Price</th>
+											<th>Stocks</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td><input type="text" placeholder="Price Label" class="form-control" name="price_label[]"></td>
-											<td><input type="text" placeholder="Price" class="form-control" name="advance_price[]"></td>
+											<td><input type="text" placeholder="Variance Name" class="form-control" name="variance_name[]"></td>
+											<td><input type="text" placeholder="Price" class="form-control" name="variance_price[]"></td>
+											<td><input type="text" placeholder="Quantity" class="form-control" name="variance_quantity[]"></td>
 											<td width="30px"><i class="fa fa-trash remove-row"></i></td>
 										</tr>
 									</tbody>
 								</table>
 								<div class="text-right">
-									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD PRICE</button>
+									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD Variance</button>
 								</div>
 							</fieldset>
 							</div> 
@@ -151,8 +153,9 @@
 		$("#add-price").click(function(e) {
 
 			$("#advance-pricing-tbl tbody").append("<tr>" + 
-					'<td><input type="text" placeholder="Price Label" class="form-control" name="price_label[]"></td>' +
-					'<td><input type="text" placeholder="Price" class="form-control" name="advance_price[]"></td>' + 
+					'<td><input type="text" placeholder="Price Label" class="form-control" name="variance_name[]"></td>' +
+					'<td><input type="text" placeholder="Price" class="form-control" name="variance_price[]"></td>' + 
+					'<td><input type="text" placeholder="Price" class="form-control" name="variance_quantity[]"></td>' + 
 					'<td width="30px"><i class="fa fa-trash remove-row"></i></td>' +
 				"</tr>");
 		});

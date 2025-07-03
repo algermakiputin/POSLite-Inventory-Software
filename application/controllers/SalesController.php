@@ -433,9 +433,9 @@ class SalesController extends AppController {
 				'unit' => $sale['unit']
 			); 
 			$this->InventoryModel->insert( $sale['id'], $sale['quantity'], $sale['name'], $sale['currentStocks'], 'sell', $sale['price'], $sale['capital'] );
-			$this->db->set('quantity', "quantity - $sale[quantity]" , false);
-			$this->db->where('item_id', $sale['id']);
-			$this->db->update('ordering_level');
+			$this->db->set('stocks', "stocks - $sale[quantity]" , false);
+			$this->db->where('id', $sale['variant_id']);
+			$this->db->update('variations');
 		}
  
 
@@ -542,11 +542,6 @@ class SalesController extends AppController {
 		//Do more stuff
 		$this->db->session->setFlashdata($success);
 		$this->db->trans_commit();
-		
-	          
-		
-
- 
 	}
 
 	public function filterReports($from, $to) {

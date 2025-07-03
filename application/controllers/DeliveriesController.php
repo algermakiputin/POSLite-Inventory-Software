@@ -12,9 +12,10 @@ class DeliveriesController extends CI_Controller
 		$this->load->model('PriceModel');
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
-		$products = $this->db->select('items.id as data, items.name as value, items.capital, ordering_level.quantity')
-							->from('items')
-							->join('ordering_level', 'ordering_level.item_id = items.id') 
+		$products = $this->db
+							->select('variations.id as data, CONCAT(items.name, " - ", variations.name) as value, items.capital, variations.stocks as quantity')
+							->from('variations')
+							->join('items', 'items.id = variations.item_id') 
 							->get()
 							->result();
 		 
@@ -58,7 +59,7 @@ class DeliveriesController extends CI_Controller
 		$remarks = $this->input->post("remarks");
 		$due_date = $this->input->post('due_date');
 		$payment_status = $this->input->post('payment_status'); 
- 
+		
 		$data = array(
 			'supplier_id' => $this->input->post('supplier_id'),
 			'date_time' => $this->input->post('delivery_date'),
@@ -68,7 +69,7 @@ class DeliveriesController extends CI_Controller
 			);
 
 		$data = $this->security->xss_clean($data);
-
+		// dd($this->input->post());
 		$this->db->trans_begin();
 		$this->db->insert('delivery',$data);
 		$delivery_id = $this->db->insert_id();
@@ -90,9 +91,9 @@ class DeliveriesController extends CI_Controller
 				'expiry_date' => $expiry_date[$key]
 			);
  			//Update Product Quantities
-			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
-			$this->db->where('item_id', $products_id[$key]);
-			$this->db->update('ordering_level'); 
+			$this->db->set('stocks', 'stocks+' . $quantity[$key], FALSE);
+			$this->db->where('id', $products_id[$key]);
+			$this->db->update('variations'); 
 		}
   
 		$this->db->insert_batch('delivery_details', $orderDetails);
@@ -123,7 +124,7 @@ class DeliveriesController extends CI_Controller
 		$this->db->where('delivery_id', $id)->delete('delivery_details');
 		$this->db->where('id', $id)->delete('delivery');
 		$this->session->set_flashdata('success', "Delivery deleted successfully");
-		return redirect(deliveries);
+		return redirect('/deliveries');
 	}
 
 	public function datatable() {
@@ -242,6 +243,7 @@ class DeliveriesController extends CI_Controller
 			$this->InventoryModel->insert( $details->item_id, $details->quantities * -1, $details->name, $current_stocks, 'stockin', 0, 0 );
 		}
 		$this->db->trans_begin(); 
+	 
 		$this->rollback_delivery($id);
 		
 		$delivery_id = $id;
@@ -268,21 +270,18 @@ class DeliveriesController extends CI_Controller
 				'name' => $products[$key],
 				'expiry_date' => $expiry_date[$key]
 			);
-			
 			$current_stocks = $this->db->where('item_id', $products_id[$key])->get('ordering_level')->row()->quantity;
  			//Update Product Quantities
 			$this->InventoryModel->insert( $products_id[$key], $quantity[$key], $products[$key], $current_stocks, 'stockin', 0, 0 );
-			$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
-			$this->db->where('item_id', $products_id[$key]);
-			$this->db->update('ordering_level'); 
+			$this->db->set('stocks', 'stocks+' . $quantity[$key], FALSE);
+			$this->db->where('id', $products_id[$key]);
+			$this->db->update('variations'); 
 		}
   
 		$this->db->insert_batch('delivery_details', $orderDetails);
 	 	
 	 	if ( $this->db->trans_status() === FALSE ) {
-			 
 	        $this->db->trans_rollback();
-	        
 	        $this->session->set_flashdata('error', 'Opps! something went wrong please try again');
 				return redirect('deliveries');
 		} 
@@ -295,21 +294,13 @@ class DeliveriesController extends CI_Controller
  
 
 	public function rollback_delivery( $id ) {
-
 		$delivery_details = $this->db->where('delivery_id', $id)
 											->get('delivery_details')
 											->result();
-
- 
-
 		foreach ($delivery_details as $delivery) {
- 
-
-			$this->db->set('quantity', 'quantity-' . $delivery->quantities, FALSE);
-			$this->db->where('item_id', $delivery->item_id);
-			$this->db->update('ordering_level');
-
-
+			$this->db->set('stocks', 'stocks-' . $delivery->quantities, FALSE);
+			$this->db->where('id', $delivery->item_id);
+			$this->db->update('variations');
 			$this->db->where('id', $delivery->id)->delete('delivery_details');
 		}
  

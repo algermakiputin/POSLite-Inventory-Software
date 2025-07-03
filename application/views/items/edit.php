@@ -74,34 +74,32 @@
 									<input type="hidden" name="id" value="<?php echo $item->id ?>">
 								</div>
 							 	<div class="col-md-12">
-							 		<?php if (!$advance_pricing): ?>
-								<div class="form-group" style="padding: 10px;border:solid 1px #ddd;background-color: #f4f4f5">
-									<button class="form-control btn btn-default" type="button" data-toggle="collapse" data-target="#advance-pricing-field">Enable Advance Pricing</button>
-								</div>
-							 	<?php endif; ?>
 
 								
 								<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="<?php echo $class ?>">
-									<legend>Advance Pricing</legend>
+									<legend>Product Variation</legend>
 									<table class="table table-bordered table-striped" id="advance-pricing-tbl">
 										<thead>
 											<tr>
-												<th>Label</th>
+												<th>Name</th>
 												<th>Price</th>
+												<th>Stocks</th>
 											</tr>
 										</thead>
 										<tbody>
-											<?php if (!$advance_pricing): ?>
+											<?php if (!$variations): ?>
 												<tr>
-													<td><input type="text" value="<?php echo $price->label ?>" placeholder="Price Label" class="form-control" name="price_label[]"></td>
-													<td><input type="text" value="<?php echo $price->price ?>" placeholder="Price" class="form-control" name="advance_price[]"></td>
+													<td><input type="text" placeholder="Variance Name" class="form-control" name="variance_name[]"></td>
+													<td><input type="text" placeholder="Price" class="form-control" name="variance_price[]"></td>
+													<td><input type="text" placeholder="Quantity" class="form-control" name="variance_quantity[]"></td>
 													<td width="30px"><i class="fa fa-trash remove-row"></i></td>
 												</tr>
 											<?php endif; ?>
-											<?php foreach ($advance_pricing as $price): ?>
+											<?php foreach ($variations as $variant): ?>
 												<tr>
-													<td><input type="text" value="<?php echo $price->label ?>" placeholder="Price Label" class="form-control" name="price_label[]"></td>
-													<td><input type="text" value="<?php echo $price->price ?>" placeholder="Price" class="form-control" name="advance_price[]"></td>
+													<td><input value="<?php echo $variant->name ?>" type="text" placeholder="Variance Name" class="form-control" name="variance_name[]"></td>
+													<td><input value="<?php echo $variant->price ?>" type="text" placeholder="Price" class="form-control" name="variance_price[]"></td>
+													<td><input value="<?php echo $variant->stocks ?>" type="text" placeholder="Quantity" class="form-control" name="variance_quantity[]"></td>
 													<td width="30px"><i class="fa fa-trash remove-row"></i></td>
 												</tr>
 											<?php endforeach; ?>
@@ -171,8 +169,9 @@
 		$("#add-price").click(function(e) {
 
 			$("#advance-pricing-tbl tbody").append("<tr>" + 
-					'<td><input type="text" placeholder="Price Label" class="form-control" name="price_label[]"></td>' +
-					'<td><input type="number" placeholder="Price" class="form-control" name="advance_price[]"></td>' + 
+					'<td><input type="text" placeholder="Price Label" class="form-control" name="variance_name[]"></td>' +
+					'<td><input type="text" placeholder="Price" class="form-control" name="variance_price[]"></td>' + 
+					'<td><input type="text" placeholder="Price" class="form-control" name="variance_quantity[]"></td>' + 
 					'<td width="30px"><i class="fa fa-trash remove-row"></i></td>' +
 				"</tr>");
 		});

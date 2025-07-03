@@ -27,7 +27,7 @@ class ItemController extends AppController {
 		$item = $this->db->where('barcode', $barcode)->get('items')->row();
 		if ($item) {
 			$quantity = (int)$this->OrderingLevelModel->getQuantity($item->id)->quantity; 
-			$advance_pricing = $this->db->where('item_id', $item->id)->get('prices')->result();
+			$variations = $this->db->where('item_id', $item->id)->get('variations')->result();
 
 			echo json_encode([
 					'name' => $item->name,
@@ -35,7 +35,7 @@ class ItemController extends AppController {
 					'quantity' => $quantity,
 					'id' => $item->id,
 					'capital' => $item->capital,
-					'advance_pricing' => $advance_pricing
+					'variations' => $variations
 				]) ;
 		} 
 		return;
@@ -200,19 +200,16 @@ class ItemController extends AppController {
 												->result();
  
 		$itemCount = $this->items_datatable_query($filterCategory, $search, $filterSupplier, $sortPrice, $sortStocks, $orderByItemName, $orderDirection)->get()->num_rows(); 
-		
 		$datasets = [];
-
 		$this->load->model('ItemModel');
-
 		$inventory__total = $this->ItemModel->inventory_value();
-
 
 		foreach ($items as $item) {
 
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
-			$stocksRemaining = $this->OrderingLevelModel->getQuantity($item->id)->quantity ?? 0;
+			$stocksRemaining = $this->db->select("SUM(stocks) as stocks")->from('variations')->where('item_id', $item->id)->get()->row()->stocks;
+			$variation = $this->db->where('item_id', $item->id)->get('variations')->result();
 			$deleteAction = ""; 
 
 			if ($this->session->userdata('account_type') == "Admin") {
@@ -259,8 +256,8 @@ class ItemController extends AppController {
 				$this->categories_model->getName($item->category_id),
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
+				"<span class='stocksRemaining' data-variance='".json_encode($variation)."'>".$stocksRemaining."</span>",
 				$item->unit,
-				$stocksRemaining,
 				currency() . number_format($item->capital * $stocksRemaining,2), 
 				$actions
 			];
@@ -320,8 +317,12 @@ class ItemController extends AppController {
 											->where('item_id', $item->id)
 											->get('prices')
 											->result());
-
-			$quantity = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
+			$variance = $this->db->where('item_id', $item->id)->get('variations')->result();
+			$jsonEncodeVariance = json_encode($variance);
+			$quantity = 0;
+			foreach($variance as $variant) {
+				$quantity += $variant->stocks;
+			}
 
 			return [ 
 				ucwords($item->name) . '<input type="hidden" name="item-id" value="'.$item->id.'"> ' . 
@@ -329,7 +330,7 @@ class ItemController extends AppController {
 				ucfirst($item->unit),
 				$item->categoryName,
 				$quantity, 
-				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'>"
+				'₱'. number_format($item->price,2) . "<input type='hidden' name='advance_pricing' value='$advance_price'><input type='hidden' name='variation' value='$jsonEncodeVariance'>"
 			];
 		}, $items);
 
@@ -350,6 +351,7 @@ class ItemController extends AppController {
 					->where('items.status', 1)
 					->order_by('items.id', $direction)
 					->like('items.name',$search, 'BOTH')
+					->or_like('items.barcode',$search, 'BOTH')
 					->limit($limit, $start)
 					->get() 
 					->result();
@@ -382,7 +384,6 @@ class ItemController extends AppController {
 
 	public function insert() {
 		license('items');
-	
 		$name = $this->input->post('name');
 		$category = $this->input->post('category');
 		$description = $this->input->post('description');
@@ -396,7 +397,9 @@ class ItemController extends AppController {
 		$orderingLevel = $this->input->post('reorderingLevel');
 		$unit = $this->input->post('unit');
 		$location = $this->input->post('location');
-	 
+		$variance_name = $this->input->post('variance_name[]');
+		$variance_price = $this->input->post('variance_price[]');
+		$variance_quantity = $this->input->post('variance_quantity[]');
 		$this->form_validation->set_rules('name', 'Item Name', 'required|max_length[100]|trim|strip_tags');
 		$this->form_validation->set_rules('category', 'Category', 'required|trim');
 		$this->form_validation->set_rules('description', 'Description', 'required|max_length[150]|trim|strip_tags');
@@ -408,7 +411,7 @@ class ItemController extends AppController {
 			$this->session->set_flashdata('errorMessage', 
 					'<div class="alert alert-danger">'.validation_errors().'</div>'); 
 			return redirect(base_url('items/new'));
-		}
+		} 
 
 		$data = array(
 				'name' => $name,
@@ -435,6 +438,18 @@ class ItemController extends AppController {
 		$this->HistoryModel->insert('Register new item: ' . $name); 
 		$this->OrderingLevelModel->insert($item_id);
 		$this->PriceModel->insert($price_label, $advance_price, $item_id);
+		if (count($variance_name)) {
+			$variance = [];
+			foreach ($variance_name as $key => $vname) {
+				$variance[] = [
+					'name' => $vname,
+					'stocks' => $variance_quantity[$key],
+					'price' => $variance_price[$key],
+					'item_id' => $item_id
+				];
+			}
+			$this->db->insert_batch('variations', $variance);
+		}
 
 		$this->session->set_flashdata('successMessage', '<div class="alert alert-success">New Item Has Been Added</div>'); 
 		return redirect(base_url('items'));
@@ -481,19 +496,23 @@ class ItemController extends AppController {
 		$data['price'] = $this->PriceModel;
 		$data['orderingLevel'] = $this->OrderingLevelModel;
 		$data['categoryModel'] = $this->categories_model;
+		$data['variance'] = $this->db->where('item_id', $id)->get('variations')->result();
 		$data['content'] = "items/stockin";
 		$this->load->view('master', $data);
 	}
 
 	public function add_stocks() {
+		 
 		$this->load->model('InventoryModel');
 		$itemID = $this->input->post('item_id');
 		$itemName = $this->input->post('item_name');
 		$stocks = $this->input->post('stocks');
+		$quantity = $this->input->post('quantity[]');
 		$current_stocks = $this->input->post('current_stocks');
-
+		$variant_ids = $this->input->post('variant_id[]');
+		$variant_names = $this->input->post('variant_name[]');
+		
 		if (SITE_LIVE) {
-
 			$this->form_validation->set_rules('stocks','Stocks','required|integer|max_length[500]');
 			if($this->form_validation->run() === FALSE) {
 				$this->session->set_flashdata('errorMessage','<div class="alert alert-danger">' .validation_errors() . '</div>');
@@ -503,19 +522,26 @@ class ItemController extends AppController {
 
 		$this->load->model('HistoryModel'); 
 		$this->load->model('OrderingLevelModel');
-
-		$update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
-		$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
-		if ($update) {
-			$this->InventoryModel->insert( $itemID, $stocks, $itemName, $current_stocks, 'stockin');
-			$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
-			return redirect(base_url('items'));
+		$this->db->trans_begin();
+		foreach ($variant_ids as $key => $variant_id) {
+			if ($quantity[$key]) {
+				$this->db->set('stocks', 'stocks+' . $quantity[$key], FALSE);
+				$this->db->where('id', $variant_id);
+				$this->db->update('variations'); 
+			}
 		}
 
-		$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
-		return redirect(base_url('items'));
-		
+		// $update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
+		$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
+		if ($this->db->trans_status() === FALSE){
+			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
+			$this->db->trans_rollback();
+			return redirect(base_url('items'));
+		}
 		 
+		$this->db->trans_commit(); 
+		$this->session->set_flashdata('successMessage', '<div class="alert alert-info">Stocks Added</div> ');
+		return redirect(base_url('items'));
 	}	
 
 	public function edit($id) {
@@ -524,12 +550,14 @@ class ItemController extends AppController {
  
 		$data['advance_pricing'] = $this->db->where('item_id', $id)->get('prices')->result();
 
-		$data['class'] = $data['advance_pricing'] ? '' : 'collapse';
+		$data['class'] = '';
 		
 		$data['item'] = $this->db->where('id', $id)->get('items')->row(); 
 		$data['categories'] = $this->db->where('active',1)->get('categories')->result();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['stocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row();
+		$data['variations'] = $this->db->where('item_id', $id)->get('variations')->result();
+
 		$data['content'] = "items/edit";
 		$this->load->view('master', $data);
 	}
@@ -557,6 +585,22 @@ class ItemController extends AppController {
 		$supplier_id = $this->input->post('supplier');
 		$unit = $this->input->post('unit');
 		$location = $this->input->post('location');
+		$variance_name = $this->input->post('variance_name[]');
+		$variance_price = $this->input->post('variance_price[]');
+		$variance_quantity = $this->input->post('variance_quantity[]');
+		$this->db->where('item_id', $id)->delete('variations');
+		if (count($variance_name)) {
+			$variance = [];
+			foreach ($variance_name as $key => $vname) {
+				$variance[] = [
+					'name' => $vname,
+					'stocks' => $variance_quantity[$key],
+					'price' => $variance_price[$key],
+					'item_id' => $id
+				];
+			}
+			$this->db->insert_batch('variations', $variance);
+		}
 
 		if ($productImage['name']) {
 			$fileName = $this->db->where('id', $id)->get('items')->row()->image;

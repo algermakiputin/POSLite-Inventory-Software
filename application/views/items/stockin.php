@@ -19,14 +19,16 @@
 						echo $this->session->flashdata('errorMessage');
 						echo $this->session->flashdata('successMessage');
 						?>
-						<div class="form-group"> 
-							<label>Add Stocks:</label>
-							<input type="hidden" name="item_name" value="<?php echo $item_info->name; ?>">
-							<input type="number" autocomplete="off" <?php if(SITE_LIVE) echo 'max="500"'; ?> name="stocks" class="form-control" placeholder="Enter Stocks To Add">
-							<input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
-							<input type="hidden" name="current_stocks" value="<?php echo $orderingLevel->getQuantity($item_info->id)->quantity ?>" />
-						</div>
-						 
+						<?php foreach($variance as $variant): ?>
+							<div class="form-group"> 
+								<label>Variant: <?php echo $variant->name ?></label>	
+								<input type="hidden" name="variant_id[]" value="<?php echo $variant->id ?>">
+								<input type="hidden" name="variant_name[]" value="<?php echo $item_info->name; ?>">
+								<input type="number" autocomplete="off" <?php if(SITE_LIVE) echo 'max="500"'; ?> name="quantity[]" class="form-control" placeholder="Enter Stocks To Add">
+								<input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
+								<input type="hidden" name="current_stocks" value="<?php echo $orderingLevel->getQuantity($item_info->id)->quantity ?>" />
+							</div>
+						<?php endforeach; ?>
 						<div class="form-group"> 
 							<button class="btn btn-primary">Stock In</button>
 						</div>

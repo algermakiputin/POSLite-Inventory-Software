@@ -130,7 +130,36 @@ $(document).ready(function() {
 						});
 					},
 					responsive: true,
-				})
+				});
+
+				const format = (variance) => {
+					return variance?.map((variant) => (
+						`
+							<dl>
+								<dt>Variant: ${variant?.name}</dt>
+								<dt>Stocks: ${variant?.stocks}</dt>
+								<dt>Price: ${variant?.price}</dt>
+							</dl>
+						`
+					));
+				}
+
+				itemTable.on('click', '.stocksRemaining', function(e) {
+					let tr = e.target.closest('tr');
+					let row = itemTable.row(tr);
+					var data = row.data();
+					const quantityElement = $(data[8]);
+					const variance = quantityElement.data("variance");
+					console.log(`variance: `, quantityElement.data("variance")[0]);
+					if (row.child.isShown()) {
+						// This row is already open - close it
+						row.child.hide();
+					}
+					
+					else {
+						row.child(format(variance)).show();
+					}
+				});
 			},
 			dataTableFilter : function() {
 				$(".filter-items").change(function() {

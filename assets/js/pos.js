@@ -50,6 +50,7 @@ $(document).ready(function() {
 					var unit = $(this).find("td").eq(1).text();
 					var description = $(this).find('td').eq(1).text();
 					var pricing = $(this).find('input[name="advance_pricing"]').val();
+					var variance = $(this).find('input[name="variation"]').val();
 					var capital = $(this).find('input[name="capital"]').val();
 					var item_unit = $(this).find('td').eq(3).text();
 					var stocks = $(this).find('td').eq(2).text();
@@ -59,8 +60,9 @@ $(document).ready(function() {
 						return alert("Not enough stocks");
 					}
 				 	 
-			 		if (itemExist(id) == false) {
+			 		if (true) {
 			 			var advance_pricing = JSON.parse(pricing);
+						var variation = JSON.parse(variance);
 						var enable_ap = Object.keys(advance_pricing).length;
 						$("input[name='quantity-enter']").focus();
 						$("#product-name").text(name);
@@ -70,24 +72,32 @@ $(document).ready(function() {
 						$("#stocks").val(stocks);
 
 						$("#advance_pricing_options tbody").empty(); 
-						$("#advance_pricing_options tbody").append("<tr>" +
-									"<td>Retail Price</td>" +
-									"<td>"+price+"</td>" +
-									'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
-								"</tr>"
-								);
-
-						$.each(advance_pricing, function(key, value) {
-
+						if (!variation.length) {
 							$("#advance_pricing_options tbody").append("<tr>" +
-									"<td>"+value.label+"</td>" +
+								"<td colspan='3'>No variations set for this product</td>" + 
+							"</tr>"
+							);
+						}
+
+						// $.each(advance_pricing, function(key, value) {
+
+						// 	$("#advance_pricing_options tbody").append("<tr>" +
+						// 			"<td>"+value.label+"</td>" +
+						// 			"<td>"+ currency + number_format(value.price) +"</td>" +
+						// 			'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
+						// 		"</tr>"
+						// 		);			
+						// });
+
+						$.each(variation, function(key, value) {
+							const checked = key === 0 ? "checked" : "";
+							$("#advance_pricing_options tbody").append("<tr>" +
+									"<td>"+value.name+"</td>" +
 									"<td>"+ currency + number_format(value.price) +"</td>" +
-									'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
+									'<td><input data-name="'+value.name+'" data-id="'+value.id+'" type="radio" name="pricing" '+checked+' value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
 								"</tr>"
-								);			
+							);			
 						});
-			 	
-						
 						// var price_options = JSON.parse(pricing);
 						// console.log(price_options);
 						$("#advance_pricing_modal").modal('toggle'); 
@@ -127,114 +137,95 @@ $(document).ready(function() {
 				$(".header .box").css('overflow-y', 'auto');
 				$("#cart-tbl").css('min-height', (dHeight - ( 231 + 95)) + 'px');
 				$("#cart-tbl").css('max-height', (dHeight - ( 150 + 261)) + 'px');
-
-
 				$("body").on('click', '#advance_pricing_options tbody tr', function() {
-			  
 			  		$(this).find("input[type='radio']").prop('checked', true);
 			  	});
-
 
 				$("#return").click(function(e) {
 
 					$("#return-modal").modal("toggle");
 				});
- 
-			 
-
 			}
 		}
 
+		function barcodeScan(event){
+			event?.preventDefault();
+			event?.stopPropagation();
+			if (license === "silver" || license === "gold") { 
+				if ($("#payment").is(':focus') || $("#quantity").is(":focus"))  {
+					return false;
+				}
+				if ($("#advance_pricing_modal").hasClass("in")) {
+					return false;
+				}
 
+				data = {};
+				data[csrfName] = csrfHash;
+				data['code'] = event.code; 
+				$.ajax({
+					type : 'POST',
+					url : base_url + 'items/find',
+					data : data,
+					success : function(data) {
+						if (data) { 
+							let result = JSON.parse(data);
+							if ( itemExist(result.id))
+								return false;
 
+							let id = result.id;
+							let name  = result.name
+							let quantity = 1;
+							let capital = result.capital;
+							let price = result.price;
+							let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
+							totalAmountDue += parseFloat(subtotal);
+							let variations = result.variations;
+							$("#product-name").text(name);
+							$("#item_id").val(id);
+							$("#capital").val(capital);
+							$("#stocks").val(result.quantity)
+
+							$("#advance_pricing_options tbody").empty(); 
+							$.each(variations, function(key, value) {
+								const checked = key === 0 ? "checked" : "";
+								$("#advance_pricing_options tbody").append("<tr>" +
+									"<td>"+value.name+"</td>" +
+									"<td>"+ currency + number_format(value.price) +"</td>" +
+									'<td><input data-name="'+value.name+'" data-id="'+value.id+'" type="radio" name="pricing" '+checked+' value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
+								"</tr>"
+							);		
+							}); 
+						
+							// var price_options = JSON.parse(pricing);
+							// console.log(price_options);
+
+							$("#advance_pricing_modal").modal('toggle'); 
+							$("#quantity").focus();
+							recount();
+							$("payment").val('');
+							$("change").val(''); 
+
+							recount();
+							$("payment").val('');
+							$("change").val('');
+						}else 
+							alert('No item found in the database');
+						
+					}
+				})
+				
+			} else {
+				alert("Your license does not support Barcode Feature, Upgrade Now!");
+			}
+
+			return false;
+		}
+		
 		var scanner = {
 
 			init: function() { 
-
 				$(document).pos();
-				$(document).on('scan.pos.barcode', function(event){ 
-					event.preventDefault();
-					event.stopPropagation(); 
-					if (license === "silver" || license === "gold") { 
-						if ($("#payment").is(':focus') || $("#quantity").is(":focus"))  {
-							return false;
-						}
-						if ($("#advance_pricing_modal").hasClass("in")) {
-							return false;
-						}
-
-						data = {};
-						data[csrfName] = csrfHash;
-						data['code'] = event.code; 
-						$.ajax({
-							type : 'POST',
-							url : base_url + 'items/find',
-							data : data,
-							success : function(data) {
-								if (data) { 
-									let result = JSON.parse(data);
-									if ( itemExist(result.id))
-										return false;
-
-									let id = result.id;
-									let name  = result.name
-									let quantity = 1;
-									let capital = result.capital;
-									let price = result.price;
-									let subtotal = parseInt(quantity) * parseFloat($("#price").text().substring(1));
-									totalAmountDue += parseFloat(subtotal);
-									
-									
-									let advance_pricing = result.advance_pricing;
-									let enable_ap = Object.keys(advance_pricing).length;
-
-									$("#product-name").text(name);
-									$("#item_id").val(id);
-									$("#capital").val(capital);
-									$("#stocks").val(result.quantity)
-
-									$("#advance_pricing_options tbody").empty(); 
-									$("#advance_pricing_options tbody").append("<tr>" +
-												"<td>Retail Price</td>" +
-												"<td>"+price+"</td>" +
-												'<td><input type="radio" checked  name="pricing" value="'+price+'" class="radio"></td>' +
-											"</tr>"
-											);
-
-									$.each(advance_pricing, function(key, value) {
-
-										$("#advance_pricing_options tbody").append("<tr>" +
-												"<td>"+value.label+"</td>" +
-												"<td>"+ currency + (value.price) +"</td>" +
-												'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
-											"</tr>"
-											);			
-									});
-								
-									// var price_options = JSON.parse(pricing);
-									// console.log(price_options);
-
-									$("#advance_pricing_modal").modal('toggle'); 
-									$("#quantity").focus();
-									recount();
-									$("payment").val('');
-									$("change").val(''); 
-
-									recount();
-									$("payment").val('');
-									$("change").val('');
-								}else 
-									alert('No item found in the database');
-								
-							}
-						})
-					 
-					} else {
-						alert("Your license does not support Barcode Feature, Upgrade Now!");
-					}
-
-					return false;
-				}); 
+				$(document).on('scan.pos.barcode', barcodeScan); 
 			 	$("body").keyup(function( e ) { 
 
 					e.stopPropagation();
@@ -415,8 +406,6 @@ $(document).ready(function() {
 
  					});
 
- 					 
-
  					if ( !Object.keys(dataset['data']).length )
  						return alert("Return quantity is empty");
 
@@ -467,35 +456,39 @@ $(document).ready(function() {
 		var item_id = $("#item_id").val();
 		var name = $("#product-name").text();
 		var quantity = $("#quantity").val(); 
-		var price = $("input[name='pricing']:checked").val(); 
+		var priceElement = $("input[name='pricing']:checked"); 
+		var price = priceElement.val();
+		var variant_name = priceElement.data('name');
+		var variant_id = priceElement.data('id');
 		let capital = $("#capital").val();
 		let unit = $("#item_unit").val();
 		var stocks = $("#stocks").val();
 	 
-		if (parseFloat(quantity) > parseFloat(stocks)) {
+		// if (parseFloat(quantity) > parseFloat(stocks)) {
 
-			alert("Not enough stocks");
-			return  $("#quantity").val(1);
-		}
+		// 	alert("Not enough stocks");
+		// 	return  $("#quantity").val(1);
+		// }
 		if (!quantity)
 			return alert("Quantity is required");
 
 		$("#advance_pricing_modal").modal('toggle');  
 		$("#payment").val('');
 		$("#change").val('');
-		insert_product(item_id, name, price, quantity, capital, unit, stocks);
+		insert_product(item_id, name, price, quantity, capital, unit, stocks, variant_id, variant_name);
 
 	})
-	function insert_product(id, name, price, quantity, capital, unit, stocks) {
+	function insert_product(id, name, price, quantity, capital, unit, stocks, variant_id, variant_name) {
  		 
  		var sub = remove_comma(price.substring(1)) * quantity;
 
 		$("#cart tbody").prepend(
 				'<tr>' +
+					'<input name="variant_id" type="hidden" value="'+ variant_id +'">' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<input name="capital" type="hidden" value="'+ capital +'">' +
 					'<input name="item_unit" type="hidden" value="'+ unit +'">' + 
-					'<td>'+ name + (unit ? `(${unit})` : '') +'</td>' +
+					'<td>'+ name + ' - ' + variant_name + (unit ? `(${unit})` : '') +'</td>' +
 					'<td><input  data-id="'+id+'" name="qty" type="text" data-stocks="'+stocks+'" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
 					'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
 					'<td>'+ price +'</td>' + 
@@ -555,7 +548,7 @@ $(document).ready(function() {
 					var capital = $("#cart tbody tr").eq(i).find('input[name="capital"]').val();
 					var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
 					var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
-					
+					var variant_id = $("#cart tbody tr").eq(i).find('input[name="variant_id"]').val();
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
@@ -565,7 +558,8 @@ $(document).ready(function() {
 							discount : $("#cart tbody tr").eq(i).find('input[name="discount"]').val(),
 							capital : capital,
 							unit: main_unit,
-							currentStocks: current_stocks
+							currentStocks: current_stocks,
+							variant_id
 						};
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);
