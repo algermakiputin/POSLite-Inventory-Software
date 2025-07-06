@@ -56,9 +56,9 @@
                     <th>&nbsp;</th>
                     <th>Barcode</th>
                     <th>Item Name</th>
-                    <th>Reordering Level</th>
+                    <!-- <th>Reordering Level</th> -->
                     <th>Supplier</th>
-                    <th>Category</th>  
+                    <!-- <th>Category</th>   -->
                     <th>Wholesale</th> 
                     <th>Retail</th>
                     <th>Quantity</th>

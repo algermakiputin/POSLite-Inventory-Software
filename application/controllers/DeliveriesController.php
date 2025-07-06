@@ -12,14 +12,24 @@ class DeliveriesController extends CI_Controller
 		$this->load->model('PriceModel');
 		$data['page'] = "New Delivery";
 		$data['suppliers'] = $this->db->get('supplier')->result();
-		$products = $this->db
+		$products = [];
+
+		$items = $this->db->select('items.id as data, items.name as value, items.capital, ordering_level.quantity, items.barcode')
+							->from('items')
+							->join('ordering_level', 'ordering_level.item_id = items.id')
+							->get()
+							->result();
+	
+							
+		$variations = $this->db
 							->select('variations.id as data, CONCAT(items.name, " - ", variations.name) as value, items.capital, variations.stocks as quantity')
 							->from('variations')
 							->join('items', 'items.id = variations.item_id') 
 							->get()
 							->result();
-		 
-		$data['products'] = json_encode($products); 
+	 
+	 
+		$data['products'] = json_encode(array_merge($products, $variations, $items)); 
  		$data['content'] = "deliveries/new";
 		$this->load->view('master',$data);
 		 
@@ -48,7 +58,6 @@ class DeliveriesController extends CI_Controller
 
 	public function insert() {
 		$this->load->model('InventoryModel');
-		
 		$products = $this->input->post("product");
 		$current_stocks = $this->input->post("stocks");
 		$products_id = $this->input->post("product_id");
@@ -58,6 +67,7 @@ class DeliveriesController extends CI_Controller
 		$defectives = $this->input->post("defective");
 		$remarks = $this->input->post("remarks");
 		$due_date = $this->input->post('due_date');
+		$isProduct = $this->input->post('is_product');
 		$payment_status = $this->input->post('payment_status'); 
 		
 		$data = array(
@@ -88,12 +98,19 @@ class DeliveriesController extends CI_Controller
 				'defectives' => $defectives[$key],
 				'remarks'	=> $remarks[$key],
 				'name' => $products[$key],
-				'expiry_date' => $expiry_date[$key]
+				'expiry_date' => $expiry_date[$key],
+				'is_product' => $isProduct[$key] ? 1 : 0
 			);
  			//Update Product Quantities
-			$this->db->set('stocks', 'stocks+' . $quantity[$key], FALSE);
-			$this->db->where('id', $products_id[$key]);
-			$this->db->update('variations'); 
+			if ($isProduct[$key]) {
+				$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
+				$this->db->where('item_id', $products_id[$key]);
+				$this->db->update('ordering_level'); 
+			} else {
+				$this->db->set('stocks', 'stocks+' . $quantity[$key], FALSE);
+				$this->db->where('id', $products_id[$key]);
+				$this->db->update('variations'); 
+			}
 		}
   
 		$this->db->insert_batch('delivery_details', $orderDetails);
@@ -121,6 +138,7 @@ class DeliveriesController extends CI_Controller
 
 	public function destroy($id) {
 		$id = $this->security->xss_clean($id);
+		$this->rollback_delivery($id);
 		$this->db->where('delivery_id', $id)->delete('delivery_details');
 		$this->db->where('id', $id)->delete('delivery');
 		$this->session->set_flashdata('success', "Delivery deleted successfully");
@@ -207,14 +225,26 @@ class DeliveriesController extends CI_Controller
 
 	public function edit( $id ) {
 
+		$items = $this->db->select('items.id as data, items.name as value, items.capital, ordering_level.quantity, items.barcode')
+							->from('items')
+							->join('ordering_level', 'ordering_level.item_id = items.id')
+							->get()
+							->result();
+	
+							
+		$variations = $this->db
+							->select('variations.id as data, CONCAT(items.name, " - ", variations.name) as value, items.capital, variations.stocks as quantity')
+							->from('variations')
+							->join('items', 'items.id = variations.item_id') 
+							->get()
+							->result();
+
+
 		$data['content'] = "deliveries/edit";
 		$data['delivery'] = $this->db->where('id', $id)->get('delivery')->row();
 		$data['suppliers'] = $this->db->get('supplier')->result();
 		$data['details'] = $this->db->where('delivery_id', $data['delivery']->id)->get('delivery_details')->result();
-		$data['products'] = json_encode(
-									$this->db->select('items.id as data, items.name as value, items.capital') 
-												->get('items')
-												->result());
+		$data['products'] = json_encode(array_merge($items, $variations));
 
 		$this->load->view('master', $data);
 
@@ -222,63 +252,66 @@ class DeliveriesController extends CI_Controller
 
 
 	public function update() {
-		
 		$id = $this->input->post('delivery_id');
 		$this->load->model('InventoryModel');
 		$products = $this->input->post("product");
 		$products_id = $this->input->post("product_id");
 		$expiry_date = $this->input->post("expiry_date");
+		$isProduct = $this->input->post('is_product');
 		$price = $this->input->post("price");
 		$quantity = $this->input->post("quantity");
 		$defectives = $this->input->post("defective");
 		$remarks = $this->input->post("remarks");
 		$due_date = $this->input->post('due_date');
 		$payment_status = $this->input->post('payment_status') == "Paid" ? 1 : 0;
-		$supplier = $this->input->post('supplier_id'); 
-		$deliveryDetails = $this->db->where('delivery_id', $id)->get('delivery_details')->result();
-		// dd($deliveryDetails);
-		foreach ($deliveryDetails as $details) {
-			$current_stocks = $this->db->where('item_id', $details->item_id)->get('ordering_level')->row()->quantity;
-		
-			$this->InventoryModel->insert( $details->item_id, $details->quantities * -1, $details->name, $current_stocks, 'stockin', 0, 0 );
-		}
+		$supplier = $this->input->post('supplier_id');
+		$current_quantity  = $this->input->post('current_quantity');
 		$this->db->trans_begin(); 
-	 
-		$this->rollback_delivery($id);
-		
+		//rollback transactions
+		$this->db->where('delivery_id', $id)->delete('delivery_details');
+		 
+		foreach ($products as $key => $product) {
+			if (!$products_id[$key])
+				continue;
+			$orderDetails[] = array(
+				'item_id'	=> $products_id[$key],
+				'quantities' => $quantity[$key],
+				'delivery_id' => $id,
+				'price'	=>	$price[$key], 
+				'defectives' => $defectives[$key],
+				'remarks'	=> $remarks[$key],
+				'name' => $products[$key],
+				'expiry_date' => $expiry_date[$key],
+				'is_product' => $isProduct[$key] ? 1 : 0
+			);
+ 			//Update Product Quantities
+			if ($isProduct[$key]) {
+				$this->db->set('quantity', 'quantity-' . $current_quantity[$key], FALSE);
+				$this->db->where('item_id', $products_id[$key]);
+				$this->db->update('ordering_level'); 
+
+				$this->db->set('quantity', 'quantity+' . $quantity[$key], FALSE);
+				$this->db->where('item_id', $products_id[$key]);
+				$this->db->update('ordering_level'); 
+			} else {
+				$this->db->set('stocks', 'stocks-' . $current_quantity[$key], FALSE);
+				$this->db->where('id', $products_id[$key]);
+				$this->db->update('variations'); 
+
+				$this->db->set('stocks', 'stocks+' . $quantity[$key], FALSE);
+				$this->db->where('id', $products_id[$key]);
+				$this->db->update('variations'); 
+			}
+		}
+  
+		$this->db->insert_batch('delivery_details', $orderDetails);
 		$delivery_id = $id;
-		$orderDetails = array();
 		
 		$this->db->where('id', $id)->update('delivery', [
 				'supplier_id' => $supplier,
 				'payment_status' => $payment_status,
 				'due_date' => $due_date
-			]);
-		
-
-		foreach ($products as $key => $product) {
-			if (!$products_id[$key])
-				continue;
-			
-			$orderDetails[] = array(
-				'item_id'	=> $products_id[$key],
-				'quantities' => $quantity[$key],
-				'delivery_id' => $delivery_id,
-				'price'	=>	$price[$key], 
-				'defectives' => $defectives[$key],
-				'remarks'	=> $remarks[$key],
-				'name' => $products[$key],
-				'expiry_date' => $expiry_date[$key]
-			);
-			$current_stocks = $this->db->where('item_id', $products_id[$key])->get('ordering_level')->row()->quantity;
- 			//Update Product Quantities
-			$this->InventoryModel->insert( $products_id[$key], $quantity[$key], $products[$key], $current_stocks, 'stockin', 0, 0 );
-			$this->db->set('stocks', 'stocks+' . $quantity[$key], FALSE);
-			$this->db->where('id', $products_id[$key]);
-			$this->db->update('variations'); 
-		}
-  
-		$this->db->insert_batch('delivery_details', $orderDetails);
+			]); 
 	 	
 	 	if ( $this->db->trans_status() === FALSE ) {
 	        $this->db->trans_rollback();
@@ -298,9 +331,15 @@ class DeliveriesController extends CI_Controller
 											->get('delivery_details')
 											->result();
 		foreach ($delivery_details as $delivery) {
-			$this->db->set('stocks', 'stocks-' . $delivery->quantities, FALSE);
-			$this->db->where('id', $delivery->item_id);
-			$this->db->update('variations');
+			if ($delivery->is_product) {
+				$this->db->set('quantity', 'quantity-' . $delivery->quantities, FALSE);
+				$this->db->where('id', $delivery->item_id);
+				$this->db->update('ordering_level');
+			} else {
+				$this->db->set('stocks', 'stocks-' . $delivery->quantities, FALSE);
+				$this->db->where('id', $delivery->item_id);
+				$this->db->update('variations');
+			}
 			$this->db->where('id', $delivery->id)->delete('delivery_details');
 		}
  

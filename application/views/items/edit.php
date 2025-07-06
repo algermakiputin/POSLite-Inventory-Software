@@ -74,8 +74,6 @@
 									<input type="hidden" name="id" value="<?php echo $item->id ?>">
 								</div>
 							 	<div class="col-md-12">
-
-								
 								<fieldset style="background-color: #f4f4f5;" id="advance-pricing-field" class="<?php echo $class ?>">
 									<legend>Product Variation</legend>
 									<table class="table table-bordered table-striped" id="advance-pricing-tbl">

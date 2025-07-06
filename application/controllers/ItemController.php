@@ -208,7 +208,9 @@ class ItemController extends AppController {
 
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
-			$stocksRemaining = $this->db->select("SUM(stocks) as stocks")->from('variations')->where('item_id', $item->id)->get()->row()->stocks;
+			$orderingLevelStocks = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity ?? 0;
+		 
+			$stocksRemaining = $this->db->select("SUM(stocks) as stocks")->from('variations')->where('item_id', $item->id)->get()->row()->stocks + (int)$orderingLevelStocks;
 			$variation = $this->db->where('item_id', $item->id)->get('variations')->result();
 			$deleteAction = ""; 
 
@@ -251,12 +253,12 @@ class ItemController extends AppController {
 				$this->disPlayItemImage($item->image),
 				$item->barcode,
 				$item->name,
-				$item->reorderingLevel,
+				// $item->reorderingLevel,
 				$item->supplier,
-				$this->categories_model->getName($item->category_id),
+				// $this->categories_model->getName($item->category_id),
 				'₱' . number_format($item->capital,2),
 				'₱' . number_format($itemPrice,2),
-				"<span class='stocksRemaining' data-variance='".json_encode($variation)."'>".$stocksRemaining."</span>",
+				"<span class='stocksRemaining' data-price='". number_format($itemPrice,2)."' data-variance='".json_encode($variation)."' data-stocks='".$orderingLevelQuantity."'>".$stocksRemaining."</span>",
 				$item->unit,
 				currency() . number_format($item->capital * $stocksRemaining,2), 
 				$actions
@@ -319,7 +321,9 @@ class ItemController extends AppController {
 											->result());
 			$variance = $this->db->where('item_id', $item->id)->get('variations')->result();
 			$jsonEncodeVariance = json_encode($variance);
-			$quantity = 0;
+			$orderingLevelQuantity = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity;
+			$quantity = $orderingLevelQuantity;
+
 			foreach($variance as $variant) {
 				$quantity += $variant->stocks;
 			}
@@ -494,7 +498,8 @@ class ItemController extends AppController {
 		$data['item_info'] = $this->ItemModel->item_info(urldecode($id));
 		$data['item_id'] = $id;
 		$data['price'] = $this->PriceModel;
-		$data['orderingLevel'] = $this->OrderingLevelModel;
+		$data['orderingLevelStocks'] = $this->db->where('item_id', $id)->get('ordering_level')->row()->quantity;
+		$data['varianceStocks'] = $stocksRemaining = $this->db->select("SUM(stocks) as stocks")->from('variations')->where('item_id', $id)->get()->row()->stocks;
 		$data['categoryModel'] = $this->categories_model;
 		$data['variance'] = $this->db->where('item_id', $id)->get('variations')->result();
 		$data['content'] = "items/stockin";
@@ -511,7 +516,8 @@ class ItemController extends AppController {
 		$current_stocks = $this->input->post('current_stocks');
 		$variant_ids = $this->input->post('variant_id[]');
 		$variant_names = $this->input->post('variant_name[]');
-		
+		$orderingLevelQuantity = $this->input->post('orderingLevelQuantity');
+
 		if (SITE_LIVE) {
 			$this->form_validation->set_rules('stocks','Stocks','required|integer|max_length[500]');
 			if($this->form_validation->run() === FALSE) {
@@ -531,8 +537,12 @@ class ItemController extends AppController {
 			}
 		}
 
-		// $update = $this->OrderingLevelModel->addStocks($itemID,$stocks);
-		$this->HistoryModel->insert('Stock In: ' . $stocks . ' - ' . $itemName);
+		if ($orderingLevelQuantity) {
+			$this->db->set('quantity', 'quantity+' . $orderingLevelQuantity, FALSE);
+			$this->db->where('item_id', $itemID);
+			$this->db->update('ordering_level'); 
+		}
+
 		if ($this->db->trans_status() === FALSE){
 			$this->session->set_flashdata('errorMessage', '<div class="alert alert-danger">Opps Something Went Wrong Please Try Again</div> ');
 			$this->db->trans_rollback();

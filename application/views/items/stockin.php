@@ -19,6 +19,11 @@
 						echo $this->session->flashdata('errorMessage');
 						echo $this->session->flashdata('successMessage');
 						?>
+						<div class="form-group"> 
+							<label>Default Stocks: <?php echo $variant->name ?></label>
+							<input type="number" autocomplete="off" <?php if(SITE_LIVE) echo 'max="500"'; ?> name="orderingLevelQuantity" class="form-control" placeholder="Enter Stocks To Add">
+							<input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
+						</div>
 						<?php foreach($variance as $variant): ?>
 							<div class="form-group"> 
 								<label>Variant: <?php echo $variant->name ?></label>	
@@ -26,7 +31,7 @@
 								<input type="hidden" name="variant_name[]" value="<?php echo $item_info->name; ?>">
 								<input type="number" autocomplete="off" <?php if(SITE_LIVE) echo 'max="500"'; ?> name="quantity[]" class="form-control" placeholder="Enter Stocks To Add">
 								<input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
-								<input type="hidden" name="current_stocks" value="<?php echo $orderingLevel->getQuantity($item_info->id)->quantity ?>" />
+								<input type="hidden" name="current_stocks" value="<?php echo $orderingLevelStocks ?>" />
 							</div>
 						<?php endforeach; ?>
 						<div class="form-group"> 
@@ -51,7 +56,7 @@
 							</tr>
 							<tr>
 								<td>Quantities:</td>
-								<td><?php echo $orderingLevel->getQuantity($item_info->id)->quantity ?></td>
+								<td><?php echo $orderingLevelStocks + $varianceStocks ?></td>
 
 							</tr>
 							<tr>
@@ -61,7 +66,7 @@
 
 							<tr>
 								<td>Price:</td>
-								<td><?php echo $price->getPrice($item_info->id) ?></td>
+								<td><?php echo $item_info->price ?></td>
 							</tr>
 						</table>
 						</div>

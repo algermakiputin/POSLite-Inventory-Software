@@ -74,6 +74,7 @@
 									<tbody>
 										<tr>
 											<td width="35%"> 
+												<input type="hidden" name="is_product[]" />
 												<input type="text" required name="product[]" class="form-control product" placeholder="Type Product Name">
 												<input type="hidden" name="product_id[]" >
 											</td> 
@@ -140,10 +141,12 @@
 	$(document).ready(function() {
 		var row = $("#deliveryDetailsTable tbody tr:first-child").html();
 		var index = 1;
-		var products = <?php echo $products ?>; 
+		var products = <?php echo $products ?>;
+		
 		$(".product").autocomplete({
 			lookup: products,
-			onSelect: function(suggestion) {   
+			onSelect: function(suggestion) {  
+				$(this).parents("tr").find("input[name='is_product[]']").val(suggestion?.barcode ? true : false);
 				$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
 				$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);  
 				$(this).parents("tr").find("input[name='stocks[]']").val(suggestion.quantity);
@@ -154,10 +157,10 @@
 			var tbody = $("#deliveryDetailsTable tbody");
 			tbody.append("<tr id='row"+index+"'>"+ row +"</tr>");
 			var rowIndex =  $("#row" + index);
-			
 			rowIndex.find(".product").autocomplete({
 				lookup: products,
 				onSelect: function(suggestion) {
+					$(this).parents("tr").find("input[name='is_product[]']").val(suggestion?.barcode ? true : false);
 					$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
 					$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
 					$(this).parents("tr").find("input[name='stocks[]']").val(suggestion.quantity);

@@ -433,9 +433,15 @@ class SalesController extends AppController {
 				'unit' => $sale['unit']
 			); 
 			$this->InventoryModel->insert( $sale['id'], $sale['quantity'], $sale['name'], $sale['currentStocks'], 'sell', $sale['price'], $sale['capital'] );
-			$this->db->set('stocks', "stocks - $sale[quantity]" , false);
-			$this->db->where('id', $sale['variant_id']);
-			$this->db->update('variations');
+			if ($sale['is_retail']) {
+				$this->db->set('quantity', "quantity - $sale[quantity]" , false);
+				$this->db->where('id', $sale['id']);
+				$this->db->update('ordering_level');
+			} else {
+				$this->db->set('stocks', "stocks - $sale[quantity]" , false);
+				$this->db->where('id', $sale['variant_id']);
+				$this->db->update('variations');
+			}
 		}
  
 

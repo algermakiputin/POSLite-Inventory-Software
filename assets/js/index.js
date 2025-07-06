@@ -84,7 +84,7 @@ $(document).ready(function() {
 							visible: hide,
 							searchable: hide
 						},
-						{ orderable: false, targets: [0,1,3,4,5,6,7,8,9,10] }
+						{ orderable: false, targets: [0,1,3,4,5,6,7,8] }
 					],
 					buttons: [
 						{
@@ -130,34 +130,42 @@ $(document).ready(function() {
 						});
 					},
 					responsive: true,
-				});
-
-				const format = (variance) => {
-					return variance?.map((variant) => (
+				}); 
+				const format = (variance, stocks, price) => {
+					const varianceStocks = variance?.map((variant) => (
 						`
 							<dl>
-								<dt>Variant: ${variant?.name}</dt>
+								<dt>Default: ${variant?.name}</dt>
 								<dt>Stocks: ${variant?.stocks}</dt>
 								<dt>Price: ${variant?.price}</dt>
 							</dl>
 						`
 					));
+					const defaulStocks = `
+						<dl>
+							<dt>Default Stocks</dt>
+							<dt>Stocks: ${stocks ? stocks : '0'}</dt>
+							<dt>Price: ${price}</dt>
+						</dl>
+					`;
+					return defaulStocks.concat(varianceStocks);
 				}
 
 				itemTable.on('click', '.stocksRemaining', function(e) {
 					let tr = e.target.closest('tr');
 					let row = itemTable.row(tr);
 					var data = row.data();
-					const quantityElement = $(data[8]);
+					const quantityElement = $(data[6]); 
+					const price = quantityElement.data('price');
 					const variance = quantityElement.data("variance");
-					console.log(`variance: `, quantityElement.data("variance")[0]);
+					const stocks = quantityElement.data('stocks');
 					if (row.child.isShown()) {
 						// This row is already open - close it
 						row.child.hide();
 					}
 					
 					else {
-						row.child(format(variance)).show();
+						row.child(format(variance, stocks, price))?.show();
 					}
 				});
 			},

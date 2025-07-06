@@ -76,7 +76,8 @@
 										<?php foreach ($details as $order): ?>
 										<tr>
 											<td width="35%"> 
-												<input type="text" name="product[]" autocomplete="off" value="<?php echo $order->name ?>" class="form-control product" placeholder="Type Product Name">
+												<input type="hidden" name="is_product[]" value="<?php echo $order->is_product ?>" />
+												<input type="text" readonly name="product[]" autocomplete="off" value="<?php echo $order->name ?>" class="form-control product" placeholder="Type Product Name">
 												<input type="hidden" autocomplete="off" value="<?php echo $order->item_id ?>" name="product_id[]">
 											</td> 
 											<td width="15%">
@@ -86,6 +87,7 @@
 												<input type="text" name="price[]" autocomplete="off" value="<?php echo $order->price ?>" readonly placeholder="Price Per Unit" class="form-control" required="required">
 											</td>
 											<td width="15%">
+												<input type="hidden" name="current_quantity[]" value="<?php echo $order->quantities; ?>" />
 											 	<input type="text" name="quantity[]" autocomplete="off" value="<?php echo $order->quantities ?>" placeholder="QTY" class="form-control" required="required">
 											</td>
 											<td width="15%">
@@ -99,9 +101,9 @@
 										<?php endforeach; ?>
 									</tbody>
 								</table>
-								<div class="text-right">
+								<!-- <div class="text-right">
 									<button id="add" class="btn btn-default" type="button">Add</button>
-								</div>
+								</div> -->
 							</fieldset>
 								</div>
 							</div>
@@ -141,45 +143,45 @@
 		var row = $("#deliveryDetailsTable tbody tr:first-child").html();
 		var index = 1;
 		var products = <?php echo $products ?>;
-		$(".product").autocomplete({
-			lookup: products,
-			onSelect: function(suggestion) { 
-				$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
-				$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
-			}
-		});
+		// $(".product").autocomplete({
+		// 	lookup: products,
+		// 	onSelect: function(suggestion) { 
+		// 		$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
+		// 		$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
+		// 	}
+		// });
 
-		$("#add").click(function(e) {
-			var tbody = $("#deliveryDetailsTable tbody");
-			tbody.append("<tr id='row"+index+"'>"+ row +"</tr>");
-			var rowIndex =  $("#row" + index);
+		// $("#add").click(function(e) {
+		// 	var tbody = $("#deliveryDetailsTable tbody");
+		// 	tbody.append("<tr id='row"+index+"'>"+ row +"</tr>");
+		// 	var rowIndex =  $("#row" + index);
 			
-			rowIndex.find(".product").autocomplete({
-				lookup: products,
-				onSelect: function(suggestion) {
-					$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
-					$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
-				}
-			})
+		// 	rowIndex.find(".product").autocomplete({
+		// 		lookup: products,
+		// 		onSelect: function(suggestion) {
+		// 			$(this).parents("tr").find("input[name='price[]']").val(suggestion.capital)
+		// 			$(this).parents("td").find("input[name='product_id[]']").val(suggestion.data);
+		// 		}
+		// 	})
 
-			rowIndex.find(".product").val('');
-			rowIndex.find("input[name='price']").val('');
-			rowIndex.find("input[name='product_id']").val('');
-			rowIndex.find("input[name='remarks']").val('');
-			rowIndex.find("input[name='defective']").val('');
-			rowIndex.find("input[name='quantity[]']").val('');
-			rowIndex.find("input[name='expiry_date[]']").val('');
-			rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
-			index++;
+		// 	rowIndex.find(".product").val('');
+		// 	rowIndex.find("input[name='price']").val('');
+		// 	rowIndex.find("input[name='product_id']").val('');
+		// 	rowIndex.find("input[name='remarks']").val('');
+		// 	rowIndex.find("input[name='defective']").val('');
+		// 	rowIndex.find("input[name='quantity[]']").val('');
+		// 	rowIndex.find("input[name='expiry_date[]']").val('');
+		// 	rowIndex.find("td:last-child").append("<span class='remove' style='color:red;margin-top:5px;display:block;font-weight:bold;font-size:14px;' title='remove'>X</span>")
+		// 	index++;
 
-			$('.date-range-filter').datepicker({
-					useCurrent : false,
-					todayHighlight: true,
-    				toggleActive: true,
-    				autoclose: true,
-				});
+		// 	$('.date-range-filter').datepicker({
+		// 			useCurrent : false,
+		// 			todayHighlight: true,
+    	// 			toggleActive: true,
+    	// 			autoclose: true,
+		// 		});
 
-		});
+		// });
 
 		/*
 			Remove button event handler

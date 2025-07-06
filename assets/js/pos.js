@@ -79,22 +79,18 @@ $(document).ready(function() {
 							);
 						}
 
-						// $.each(advance_pricing, function(key, value) {
-
-						// 	$("#advance_pricing_options tbody").append("<tr>" +
-						// 			"<td>"+value.label+"</td>" +
-						// 			"<td>"+ currency + number_format(value.price) +"</td>" +
-						// 			'<td><input type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
-						// 		"</tr>"
-						// 		);			
-						// });
+						$("#advance_pricing_options tbody").append("<tr>" +
+								"<td>Retail</td>" +
+								"<td>"+ (price) +"</td>" +
+								'<td><input data-retail="true" data-name="'+name+'" data-id="'+id+'" type="radio" name="pricing" checked value="'+ (price) +'" class="radio"></td>' +
+							"</tr>"
+						);	
 
 						$.each(variation, function(key, value) {
-							const checked = key === 0 ? "checked" : "";
 							$("#advance_pricing_options tbody").append("<tr>" +
 									"<td>"+value.name+"</td>" +
 									"<td>"+ currency + number_format(value.price) +"</td>" +
-									'<td><input data-name="'+value.name+'" data-id="'+value.id+'" type="radio" name="pricing" '+checked+' value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
+									'<td><input data-retail="false" data-name="'+value.name+'" data-id="'+value.id+'" type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
 								"</tr>"
 							);			
 						});
@@ -460,6 +456,8 @@ $(document).ready(function() {
 		var price = priceElement.val();
 		var variant_name = priceElement.data('name');
 		var variant_id = priceElement.data('id');
+		let isRetail = priceElement.data('retail');
+	 
 		let capital = $("#capital").val();
 		let unit = $("#item_unit").val();
 		var stocks = $("#stocks").val();
@@ -475,20 +473,21 @@ $(document).ready(function() {
 		$("#advance_pricing_modal").modal('toggle');  
 		$("#payment").val('');
 		$("#change").val('');
-		insert_product(item_id, name, price, quantity, capital, unit, stocks, variant_id, variant_name);
+		insert_product(item_id, name, price, quantity, capital, unit, stocks, variant_id, variant_name, isRetail);
 
 	})
-	function insert_product(id, name, price, quantity, capital, unit, stocks, variant_id, variant_name) {
+	function insert_product(id, name, price, quantity, capital, unit, stocks, variant_id, variant_name, isRetail) {
  		 
  		var sub = remove_comma(price.substring(1)) * quantity;
 
 		$("#cart tbody").prepend(
 				'<tr>' +
 					'<input name="variant_id" type="hidden" value="'+ variant_id +'">' +
+					'<input name="is_retail" type="hidden" value="'+ isRetail +'">' +
 					'<input name="id" type="hidden" value="'+ id +'">' +
 					'<input name="capital" type="hidden" value="'+ capital +'">' +
 					'<input name="item_unit" type="hidden" value="'+ unit +'">' + 
-					'<td>'+ name + ' - ' + variant_name + (unit ? `(${unit})` : '') +'</td>' +
+					'<td>'+ name +  (isRetail ? "" : ' - ' + variant_name) + (unit ? `(${unit})` : '') +'</td>' +
 					'<td><input  data-id="'+id+'" name="qty" type="text" data-stocks="'+stocks+'" value="'+quantity+'" autocomplete="off" class="quantity-box"></td>' +
 					'<td> <input type="text" value="0" placeholder="Discount" name="discount" class="discount-input"></td>' +
 					'<td>'+ price +'</td>' + 
@@ -549,6 +548,7 @@ $(document).ready(function() {
 					var main_unit = $("#cart tbody tr").eq(i).find('input[name="item_unit"]').val();
 					var discount = $("#cart tbody tr").eq(i).find('input[name="discount"]').val();
 					var variant_id = $("#cart tbody tr").eq(i).find('input[name="variant_id"]').val();
+					let is_retail = $("#cart tbody tr").eq(i).find('input[name="is_retail"]').val();
 					var arr = {
 							id : $("#cart tbody tr").eq(i).find('input[name="id"]').val(), 
 							quantity : quantity, 
@@ -559,7 +559,8 @@ $(document).ready(function() {
 							capital : capital,
 							unit: main_unit,
 							currentStocks: current_stocks,
-							variant_id
+							variant_id,
+							is_retail
 						};
 					total_amount += parseFloat(price) * parseInt(quantity);
 					sales.push(arr);
