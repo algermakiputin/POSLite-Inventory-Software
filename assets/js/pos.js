@@ -71,13 +71,7 @@ $(document).ready(function() {
 						$("#item_unit").val(unit);
 						$("#stocks").val(stocks);
 
-						$("#advance_pricing_options tbody").empty(); 
-						if (!variation.length) {
-							$("#advance_pricing_options tbody").append("<tr>" +
-								"<td colspan='3'>No variations set for this product</td>" + 
-							"</tr>"
-							);
-						}
+						$("#advance_pricing_options tbody").empty();
 
 						$("#advance_pricing_options tbody").append("<tr>" +
 								"<td>Retail</td>" +
@@ -144,9 +138,8 @@ $(document).ready(function() {
 			}
 		}
 
-		function barcodeScan(event){
-			event?.preventDefault();
-			event?.stopPropagation();
+		function barcodeScan(barcode){
+	 
 			if (license === "silver" || license === "gold") { 
 				if ($("#payment").is(':focus') || $("#quantity").is(":focus"))  {
 					return false;
@@ -157,7 +150,7 @@ $(document).ready(function() {
 
 				data = {};
 				data[csrfName] = csrfHash;
-				data['code'] = event.code; 
+				data['code'] = barcode; 
 				$.ajax({
 					type : 'POST',
 					url : base_url + 'items/find',
@@ -219,9 +212,38 @@ $(document).ready(function() {
 		
 		var scanner = {
 
-			init: function() { 
-				$(document).pos();
-				$(document).on('scan.pos.barcode', barcodeScan); 
+			init: function() {
+
+				let barcode = '';
+				let interval;
+				const scanDelay = 20; // milliseconds between keypresses (tweak as needed)
+
+				$(document).on('keydown', function (e) {
+					
+					// If scan is very fast, assume it's a barcode
+					clearTimeout(interval);
+
+					// If Enter is pressed, trigger barcode logic
+					if (e.key === 'Enter') {
+						e.preventDefault();
+						if (barcode.length > 3) { // minimum barcode length
+							console.log('Barcode scanned:', barcode);
+							barcodeScan(barcode);
+						}
+						barcode = '';
+						return;
+					}
+
+					// Append character to barcode string
+					if (e.key.length === 1) {
+						barcode += e.key;
+					}
+
+					// Reset if delay is too long
+					interval = setTimeout(() => {
+						barcode = '';
+					}, scanDelay);
+				});
 			 	$("body").keyup(function( e ) { 
 
 					e.stopPropagation();
@@ -570,15 +592,14 @@ $(document).ready(function() {
 				// Receipt Items
 				$("#r-items-table tbody").empty();
 				$.each(sales, function(key, value) {
-			 	 
 					$("#r-items-table tbody").append(
-							'<tr>' + 
-								'<td>'+value.name +'</td>' + 
-								'<td>'+currency+ value.price +'</td>' +
-								'<td>'+value.quantity+'</td>' +
-								'<td>'+currency+ number_format(value.subtotal)+'</td>' +
-							'</tr>'
-						);
+						'<tr>' + 
+							'<td>'+value.name +'</td>' + 
+							'<td>'+currency+ value.price +'</td>' +
+							'<td>'+value.quantity+'</td>' +
+							'<td>'+currency+ number_format(value.subtotal)+'</td>' +
+						'</tr>'
+					);
 				});
 
 
@@ -598,8 +619,7 @@ $(document).ready(function() {
 		 			 	var d = new Date();
 		 				$("#payment-modal").modal('toggle');
 						$("#loader").hide();
-						//Transaction Summary 
-		
+						//Transaction Summary
 						$("#summary-payment").text( currency + number_format(payment));
 						$("#summary-change").text( currency + number_format(change));
 					 	$("#summary-discount").text(currency + number_format(totalDiscount));
