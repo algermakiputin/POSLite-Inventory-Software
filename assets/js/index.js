@@ -132,15 +132,21 @@ $(document).ready(function() {
 					responsive: true,
 				}); 
 				const format = (variance, stocks, price) => {
-					const varianceStocks = variance?.map((variant) => (
-						`
-							<dl>
-								<dt>Default: ${variant?.name}</dt>
-								<dt>Stocks: ${variant?.stocks}</dt>
-								<dt>Price: ${variant?.price}</dt>
-							</dl>
-						`
-					));
+					const varianceStocks = variance?.map((variant) => {
+						if (variant?.name) {
+							return (
+								`
+									<dl>
+										<dt>Default: ${variant?.name}</dt>
+										<dt>Stocks: ${variant?.stocks}</dt>
+										<dt>Price: ${variant?.price}</dt>
+									</dl>
+								`
+							);
+						} else {
+							return null;
+						}
+					});
 					const defaulStocks = `
 						<dl>
 							<dt>Default Stocks</dt>

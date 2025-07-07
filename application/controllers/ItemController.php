@@ -209,7 +209,6 @@ class ItemController extends AppController {
 			$itemPrice = $item->price;
 			$itemCapital = $this->PriceModel->getCapital($item->id);
 			$orderingLevelStocks = $this->db->where('item_id', $item->id)->get('ordering_level')->row()->quantity ?? 0;
-		 
 			$stocksRemaining = $this->db->select("SUM(stocks) as stocks")->from('variations')->where('item_id', $item->id)->get()->row()->stocks + (int)$orderingLevelStocks;
 			$variation = $this->db->where('item_id', $item->id)->get('variations')->result();
 			$deleteAction = ""; 

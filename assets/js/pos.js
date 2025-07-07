@@ -137,7 +137,7 @@ $(document).ready(function() {
 				});
 			}
 		}
-
+		
 		function barcodeScan(barcode){
 	 
 			if (license === "silver" || license === "gold") { 
@@ -173,16 +173,20 @@ $(document).ready(function() {
 							$("#item_id").val(id);
 							$("#capital").val(capital);
 							$("#stocks").val(result.quantity)
-
 							$("#advance_pricing_options tbody").empty(); 
+							$("#advance_pricing_options tbody").append("<tr>" +
+								"<td>"+name+"</td>" +
+								"<td>"+ (price) +"</td>" +
+								'<td><input data-retail="true" data-name="'+name+'" data-id="'+id+'" type="radio" name="pricing" checked value="'+ (price) +'" class="radio"></td>' +
+								"</tr>"
+							);
 							$.each(variations, function(key, value) {
-								const checked = key === 0 ? "checked" : "";
 								$("#advance_pricing_options tbody").append("<tr>" +
 									"<td>"+value.name+"</td>" +
 									"<td>"+ currency + number_format(value.price) +"</td>" +
-									'<td><input data-name="'+value.name+'" data-id="'+value.id+'" type="radio" name="pricing" '+checked+' value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
-								"</tr>"
-							);		
+									'<td><input data-retail="false" data-name="'+value.name+'" data-id="'+value.id+'" type="radio" name="pricing" value="'+ currency + number_format(value.price) +'" class="radio"></td>' +
+									"</tr>"
+								);		
 							}); 
 						
 							// var price_options = JSON.parse(pricing);

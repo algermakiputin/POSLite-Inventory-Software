@@ -20,16 +20,19 @@ class DeliveriesController extends CI_Controller
 							->get()
 							->result();
 	
-							
+		$variationsData = [];			
 		$variations = $this->db
-							->select('variations.id as data, CONCAT(items.name, " - ", variations.name) as value, items.capital, variations.stocks as quantity')
+							->select('variations.id as data, variations.name, CONCAT(items.name, " - ", variations.name) as value, items.capital, variations.stocks as quantity')
 							->from('variations')
 							->join('items', 'items.id = variations.item_id') 
 							->get()
 							->result();
-	 
-	 
-		$data['products'] = json_encode(array_merge($products, $variations, $items)); 
+		foreach ($variations as $variation) {
+			if ($variation->name) {
+				array_push($variationsData, $variation);
+			}
+		}
+		$data['products'] = json_encode(array_merge($products, $variationsData, $items)); 
  		$data['content'] = "deliveries/new";
 		$this->load->view('master',$data);
 		 
