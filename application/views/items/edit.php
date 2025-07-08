@@ -62,9 +62,15 @@
 									<label>Unit:</label>
 									<select class="form-control" name="unit" require="required">
 										<option value="">Select Unit</option>
-										<option value="Box" <?php echo $item->unit === "Box" ? "selected" : null ?>>Box</option>
 										<option value="Case" <?php echo $item->unit === "Case" ? "selected" : null ?>>Case</option>
 										<option value="Pcs" <?php echo $item->unit === "Pcs" ? "selected" : null ?>>Pcs</option>
+										<option value="Bottle" <?php echo $item->unit === "Bottle" ? "selected" : null ?>>Bottle</option>
+										<option value="Tube" <?php echo $item->unit === "Tube" ? "selected" : null ?>>Tube</option>
+										<option value="Pack" <?php echo $item->unit === "Pack" ? "selected" : null ?>>Pack</option>
+										<option value="Set" <?php echo $item->unit === "Set" ? "selected" : null ?>>Set</option>
+										<option value="Unit" <?php echo $item->unit === "Unit" ? "selected" : null ?>>Unit</option>
+										<option value="Jar" <?php echo $item->unit === "Jar" ? "selected" : null ?>>Jar</option>
+										<option value="Sachet" <?php echo $item->unit === "Sachet" ? "selected" : null ?>>Sachet</option> 
 									</select>
 								</div>
 								
@@ -112,7 +118,7 @@
 								
 								<div class="form-group col-md-12"> 
 									<label>Description:</label>
-									<textarea required="required" rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
+									<textarea rows="5" class="form-control" name="description"><?php echo $item->description ?></textarea>
 								</div>
 								<div class="form-group col-md-12"> 
 									<button class="btn btn-primary">Update</button>

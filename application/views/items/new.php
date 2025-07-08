@@ -69,9 +69,15 @@
 								<label>Unit:</label>
 								<select class="form-control" name="unit" require="required">
 									<option value="">Select Unit</option>
-									<option value="Box">Box</option>
 									<option value="Case">Case</option>
 									<option value="Pcs">Pcs</option>
+									<option value="Bottle">Bottle</option>
+									<option value="Tube">Tube</option>
+									<option value="Pack">Pack</option>
+									<option value="Set">Set</option>
+									<option value="Unit">Unit</option>
+									<option value="Jar">Jar</option>
+									<option value="Sachet">Sachet</option>  
 								</select>
 							</div> 
 							<div class="col-md-12">
@@ -106,7 +112,7 @@
 
 							<div class="form-group col-md-12"> 
 								<label>Description:</label> 
-								<textarea rows="5" maxlength="150" placeholder="Description" class="form-control" name="description" required="required"></textarea>
+								<textarea rows="5" maxlength="150" placeholder="Description" class="form-control" name="description"></textarea>
 							</div>
 							<div class="form-group col-md-6"> 
 								<button class="btn btn-primary">Register Item</button>
