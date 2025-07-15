@@ -56,7 +56,6 @@ class CategoriesController Extends AppController {
 		$this->load->model('HistoryModel');
 		$categoryName = $this->categories_model->getName($id);
 		$this->db->where('id', $id)->delete('categories');
- 
 	 	if ($this->db->error()['code'] === 1451) {
 	 		$this->session->set_flashdata('error', 'Cannot Delete Category Associated with Item');
 			return redirect(base_url('categories')); 

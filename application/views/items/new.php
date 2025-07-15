@@ -69,6 +69,7 @@
 								<label>Unit:</label>
 								<select class="form-control" name="unit" require="required">
 									<option value="">Select Unit</option>
+									<option value="Box">Box</option>
 									<option value="Case">Case</option>
 									<option value="Pcs">Pcs</option>
 									<option value="Bottle">Bottle</option>
@@ -105,7 +106,7 @@
 									</tbody>
 								</table>
 								<div class="text-right">
-									<button class="btn btn-default btn-sm" type="button" id="add-price">ADD Variance</button>
+									<button class="btn btn-default btn-sm" type="button" id="add-price">Add Variance</button>
 								</div>
 							</fieldset>
 							</div> 

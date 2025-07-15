@@ -279,14 +279,13 @@ class ItemController extends AppController {
 		$direction = $orderByItemName ? $orderDirection : 'DESC';
 		$query = $this->db->select('items.*,categories.id as cat_id,supplier.id as cat_id, supplier.name as supplier')
 					->from('items')
-					->join('categories', 'categories.id = items.category_id', 'BOTH')
-					->join('supplier', 'supplier.id = items.supplier_id', 'BOTH') 
-					->join('ordering_level', 'ordering_level.item_id = items.id')
+					->join('categories', 'categories.id = items.category_id', 'INNER')
+					->join('supplier', 'supplier.id = items.supplier_id', 'INNER') 
+					->join('ordering_level', 'ordering_level.item_id = items.id', 'INNER')
 					->order_by($orderByColumn, $direction)
-					->like('categories.name', $filterCategory, "BOTH") 
-					->like('items.name', $search, "BOTH")
-					->like('supplier.name', $filterSupplier, "BOTH");
-
+					->like('categories.name', $filterCategory, "INNER") 
+					->like('items.name', $search, "INNER")
+					->like('supplier.name', $filterSupplier, "INNER");
 		return $query;
 	}
 

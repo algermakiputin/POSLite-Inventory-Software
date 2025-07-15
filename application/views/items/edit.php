@@ -62,6 +62,7 @@
 									<label>Unit:</label>
 									<select class="form-control" name="unit" require="required">
 										<option value="">Select Unit</option>
+										<option value="Box" <?php echo $item->unit === "Box" ? "selected" : null ?>>Box</option>
 										<option value="Case" <?php echo $item->unit === "Case" ? "selected" : null ?>>Case</option>
 										<option value="Pcs" <?php echo $item->unit === "Pcs" ? "selected" : null ?>>Pcs</option>
 										<option value="Bottle" <?php echo $item->unit === "Bottle" ? "selected" : null ?>>Bottle</option>
@@ -111,7 +112,7 @@
 										</tbody>
 									</table>
 									<div class="text-right">
-										<button class="btn btn-default btn-sm" type="button" id="add-price">ADD PRICE</button>
+										<button class="btn btn-default btn-sm" type="button" id="add-price">Add Variance</button>
 									</div>
 								</fieldset> 
 							 	</div>
