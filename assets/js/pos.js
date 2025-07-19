@@ -12,6 +12,8 @@ $(document).ready(function() {
  	var orders_table;
 	data[csrfName] = csrfHash;
 
+	$("#customer-select").select2();
+
 	(function() {
 
 		var cart = {
@@ -558,7 +560,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var row = $("#cart tbody tr").length;
 		var sales = [];
-		var customer_id = $("#customer-id").val();
+		var customer_id = $("#customer-select").val();
 		var total_amount = 0;
 		// var discount = $("#amount-discount").text();
 		var payment = $("#payment").val();
@@ -609,6 +611,7 @@ $(document).ready(function() {
 
 				var data = {};
 				data['sales'] = sales;
+				data['customer_id'] = customer_id;
 				data[csrfName] = csrfHash;
 				$.ajax({
 					type : 'POST',
@@ -644,7 +647,7 @@ $(document).ready(function() {
 					 	$("#amount-due").text(''); 
 					 	$("#amount-total").text('');
 					 	$("#amount-discount").text('');
-
+						$("#customer-select").val(null).trigger('change');
 					 	item_table.clear().draw();
 					 	$("#btn").button('reset');
 					 	totalAmountDue = 0;  

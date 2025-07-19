@@ -209,6 +209,7 @@ class SalesController extends AppController {
 	public function sales () {
 		$data['widget_column'] = is_admin() ? 4 : 6; 
 		$data['content'] = "sales/index";
+		$data['customers'] = $this->db->get('customers')->result();
 		$this->load->view('master',$data);
 		 
 	}
@@ -411,7 +412,8 @@ class SalesController extends AppController {
 		$this->db->insert('sales',array(
 			'date_time' => get_date_time(),
 			'user_id' => $this->session->userdata('id'),
-			'transaction_number' => $transaction_number
+			'transaction_number' => $transaction_number,
+			'customer_id' => $this->input->post('customer_id')
 		));
 
 		$sales = $this->security->xss_clean($sales);
@@ -464,9 +466,10 @@ class SalesController extends AppController {
 		$this->limit = $this->input->post('length');
 		$datasets = [];
 		$totalSales = 0;
+		$customerId = $this->input->post('columns[2][search][value]');
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
-		$sales = $this->filterReports($from, $to);
+		$sales = $this->filterReports($from, $to, $customerId);
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
@@ -485,9 +488,11 @@ class SalesController extends AppController {
 		foreach ($sales as $sale) {
 			$sales_description = $this->db->where('transaction_number', $sale->transaction_number)->get('sales_description')->result();
 			$sub_total = 0;
-
+			$customer = "";
+			if ($sale->customer_id) {
+				$customer = $this->db->where('id', $sale->customer_id)->get('customers')->row()->name;
+			}
 			foreach ($sales_description as $desc) {
-		 	 
 		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
 		 		$staff = $user ? $user->username : 'Not found';
 				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
@@ -495,6 +500,7 @@ class SalesController extends AppController {
 				$transactionProfit += $saleProfit;
 				$datasets[] = array(
 					date('Y-m-d h:i:s A', strtotime($sale->date_time)),
+					$customer,
 					$desc->name . ($desc->unit ? "($desc->unit)" : ""),
 					$desc->quantity,
 					$desc->returned,
@@ -550,12 +556,13 @@ class SalesController extends AppController {
 		$this->db->trans_commit();
 	}
 
-	public function filterReports($from, $to) {
+	public function filterReports($from, $to, $customerId) {
 		$from = $from ? $from : date('Y-m-d');
 		$to = $to ? $to : date('Y-m-d'); 
 
 		return $this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from)
 					->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to)
+					->like('customer_id', $customerId)
 					->order_by('id', 'DESC')
 					->get('sales', $this->start, $this->limit)->result();
 		 
@@ -616,9 +623,10 @@ class SalesController extends AppController {
 		$start = $this->input->post('start');
 		$limit = $this->input->post('length');
 		$search = $this->input->post('search[value]');  
-		$sales = $this->db->select("sales.*, SUM(sales_description.price * sales_description.quantity) as sub")
+		$sales = $this->db->select("sales.*, SUM(sales_description.price * sales_description.quantity) as sub, customers.name as customerName")
 								->from('sales')
-								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number')
+								->join('sales_description', 'sales_description.transaction_number = sales.transaction_number', 'LEFT')
+								->join('customers', 'customers.id = sales.customer_id', 'LEFT')
 								->where('DATE_FORMAT(sales.date_time, "%Y-%m-%d") =', $date)
 								->where('sales.user_id', $user_id)
 								->like("sales.transaction_number", $search, "BOTH")
@@ -632,7 +640,8 @@ class SalesController extends AppController {
 
 			$datasets[] = [
 					date('Y-m-d h:i:s A', strtotime($sale->date_time)),
-					$sale->transaction_number, 
+					$sale->transaction_number,
+					$sale->customerName,
 					$this->session->userdata('username'),
 					currency() . number_format($sale->sub, 2),
 					'<a 

@@ -343,6 +343,11 @@ $(document).ready(function() {
 						$("#total-net").text('₱' + data.net);
 					}
 				});
+
+				$("#select-customer-reports").change(function() {
+					var customerId = $(this).val();
+					sales_table.columns(2).search(customerId).draw();
+				})
 			}
 		}
 

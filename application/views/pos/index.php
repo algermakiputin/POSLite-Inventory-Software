@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>POS - Sales And Inventory Management System</title>
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/select2.mins.css'); ?>">
 	<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/logo/poslite.png') ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/bootstrap/css/bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/pos_style.css') ?>">
@@ -9,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/font-awesome/css/font-awesome.min.css') ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.css'); ?>">
-
+	
 	<meta name="license" content="<?php echo get_license(); ?>">
 	<meta name="base_url" content="<?php echo base_url() ?>">
 	<meta name="csrfName" content="<?php echo $this->security->get_csrf_token_name(); ?>">
@@ -99,17 +100,28 @@
 
 				<div class="col-md-12" style="border-bottom: solid 1px #ddd;padding: 5px 25px 15px 25px;"> 
 					<div style="">Grand Total:<span id="amount-total" class="pull-right">00.00</span></div>
-
 				</div>
 				<div class="col-md-12" style="padding: 15px 25px;">
 					<form id="process-form">
-						<div class="form-group">
-							<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment (F1)" id="payment" autocomplete="off">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<input type="text" class="form-control input-lg" name="" placeholder="Enter Payment (F1)" id="payment" autocomplete="off">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<select class="form-control input-lg" name="customer" id="customer-select">
+										<option value="">Select Customer</option>
+										<?php foreach($customers as $customer): ?>
+											<option value="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
+										<?php endforeach; ?>
+									</select>
+								</div>
+							</div>
 						</div>
-						<div class="form-group">
-
+						<div class="form-group"> 
 							<input readonly="readonly" type="text" class="form-control input-lg" name="" placeholder="Change:" id="change" autocomplete="off">
-
 						</div>
 						<div class="form-group">
 							<input type="submit" class="btn btn-primary btn-block btn-lg" name="" value="Process" id="btn" >
@@ -206,12 +218,10 @@
 								<div>Payment: <span id="r-payment"></span></div>
 								<div>Change: <span id="r-change"></span></div>
 							</div>
-
 							<div class="r-footer">
 								<p>Thank you for shopping at our store</p>
 							</div>
 						</div>
-
 					</div>
 				</div>
 				<div class="col-md-5">
@@ -236,16 +246,12 @@
 						</table>
 						<button class="btn btn-default btn-sm" id="print">Print Receipt</button>
 					</div>
-
 					<div class="clearfix"></div>
-
 				</div>
 				<div class="modal-footer"> 
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 </div>
@@ -262,6 +268,7 @@
 						<tr>
 							<th>Date Time</th>
 							<th>Transaction Number</th> 
+							<th>Customer</th> 
 							<th>Staff</th>
 							<th>Total</th> 
 							<th>Receipt</th>
@@ -445,6 +452,7 @@
 <script src="<?php echo base_url('assets/vendor/datatables/js/jquery.dataTables.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/vendor/datatables-plugins/dataTables.bootstrap.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/vendor/datatables-responsive/dataTables.responsive.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/select2.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/jquery-pos.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/print.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/pos.js') ?>"></script>

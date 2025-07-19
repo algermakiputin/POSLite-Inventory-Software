@@ -9,11 +9,20 @@
 		<form class="form-inline" action="/action_page.php">
 			<div class="form-group">
 				<label for="email">Filter Reports:</label>
-				<input id="min-date" style="border-radius:25px;" type="text" placeholder="Starting Date" class="form-control date-range-filter" id="min-date" data-date-format="yyyy-mm-dd">
+				<input id="min-date" style="border-radius:25px;" type="text" placeholder="Starting Date" class="form-control date-range-filter input-md" id="min-date" data-date-format="yyyy-mm-dd">
 			</div>
 			<div class="form-group">
 				&nbsp;
-				<input id="max-date" style="border-radius:25px;" type="text" placeholder="Ending Date" class="form-control date-range-filter" id="max-date" data-date-format="yyyy-mm-dd">
+				<input id="max-date" style="border-radius:25px;" type="text" placeholder="Ending Date" class="form-control date-range-filter input-md" id="max-date" data-date-format="yyyy-mm-dd">
+			</div> 
+			<div class="form-group">
+				&nbsp;
+				<select class="form-control input-md" style="border-radius:25px;" id="select-customer-reports">
+					<option>Filter by customer</option>
+					<?php foreach ($customers as $customer): ?>
+						<option value="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
+					<?php endforeach; ?>
+				</select>
 			</div> 
 		</form>
 		<br/>
@@ -87,7 +96,8 @@
 					<table class="table table-bordered table-stripped" id="sales_table" style="width: 100%">
 						<thead>
 							<tr>
-								<th >Date Time</th>   
+								<th >Date Time</th>
+								<th>Customer</th>
 								<th >Item Name</th> 
 								<th >Quantity</th>
 								<th> Returned</th>
