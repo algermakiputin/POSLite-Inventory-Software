@@ -27,7 +27,7 @@ class DashboardController extends AppController {
 		$data['content'] = 'dashboard/dashboard';
 		$data['dataset'] = json_encode( $this->line_chart( $today ) ); 
 		$data['yesterday'] = json_encode( $this->line_chart( $yesterday ) );
-		$data['top_products'] = $this->top10_product();
+		// $data['top_products'] = $this->top10_product();
 		$data['not_selling'] = $this->not_selling_products( $lastweek )->num_rows();
 		$data['low_stocks'] = count(low_stocks());
 		$data['average_sales_per_day'] = $this->average_sales_per_day();
@@ -57,24 +57,43 @@ class DashboardController extends AppController {
 		$this->load->view('master', $data);
 	}
 
-	private function top10_product() {
-
-		$date = date('Y-m');
-
-		$sales = $this->db->select('SUM(sales_description.quantity) as qty, sales_description.name, ordering_level.quantity as quantity')
+	private function top10_product($from = null, $to = null) {
+		$from = $from ? $from : date('Y-m-01');
+		$to = $to ? $to : date('Y-m-t');
+	 
+		$sales = $this->db->select('SUM(sales_description.quantity) as qty, sales_description.name')
 								->from('sales_description')
-								->join('ordering_level', 'ordering_level.item_id = sales_description.barcode', 'left')
-								->group_by('sales_description.barcode')
-								->where('DATE_FORMAT(sales_description.created_at, "%Y-%m") =', $date)
+								->group_by('sales_description.item_id')
+								->where('DATE_FORMAT(sales_description.created_at, "%Y-%m-%d") >=', $from)
+								->where('DATE_FORMAT(sales_description.created_at, "%Y-%m-%d") <=', $to)
 								->where('sales_description.quantity >=', 1)
 								->order_by('qty', "DESC")
-								->limit(10)
+								->limit(20)
 								->get()
 								->result();
-
 		return $sales;
-
 	} 
+
+	public function top10Datatable() {
+		$from = $this->input->post('columns[0][search][value]');
+		$to = $this->input->post('columns[1][search][value]'); 
+		$results = $this->top10_product($from, $to);
+		$datasets = [];
+		foreach ($results as $key => $result) {
+			$datasets[] = [
+				$key + 1,
+				$result->qty,
+				$result->name
+			];
+		}
+
+		echo json_encode([
+			'draw' => $this->input->post('draw'),
+			'recordsTotal' => count($datasets),
+			'recordsFiltered' => count($datasets),
+			'data' => $datasets
+		]);
+	}
 
 	public function average_sales_per_day() {
 

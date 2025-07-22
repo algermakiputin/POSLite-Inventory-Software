@@ -34,6 +34,8 @@ $(document).ready(function() {
 							.onexit(endDemo);
 	 	}
  	}
+
+	
 	function endDemo() {
 		sessionStorage.setItem("demo", false);
 	}
@@ -740,6 +742,8 @@ $(document).ready(function() {
 	});
 	 
 
+	
+
 	$("#mail").click(function() {
 		var button = $(this);
 		$.ajax({
@@ -955,6 +959,44 @@ $(document).ready(function() {
 
 		inventory_table.search($(this).val()).draw();
 	});
+
+	const topSellingTable = $("#top-selling-table").DataTable({
+		processing : true,
+		serverSide : true, 
+		dom: '',
+		columnDefs: [
+			{ targets: 'no-sort', orderable: false },
+			{ targets: 'no-sort', orderable: false },
+			{ targets: 'no-sort', orderable: false }
+		],
+		ajax : {
+			url : base_url + 'DashboardController/top10Datatable',
+			type : 'POST',
+			data : data
+		},
+	});
+
+	$("#min-date").change(function() {
+		var minDate = $(this).val();
+		var maxDate = $("#max-date").val();
+	 
+		if (minDate && maxDate) {
+			topSellingTable.columns(0).search(minDate)
+							.columns(1).search(maxDate)
+							.draw();
+		}
+	});
+
+	$("#max-date").change(function() {
+		var maxDate = $(this).val();
+		var minDate = $("#min-date").val();
+		if (maxDate && minDate) {
+			topSellingTable.columns(0).search(minDate)
+							.columns(1).search(maxDate)
+							.draw();
+		}
+	});
+	
 	
 	$("#outOfStocksTable").DataTable({ 
 		dom : "lfrtBp", 

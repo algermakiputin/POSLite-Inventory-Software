@@ -51,32 +51,25 @@ echo $this->session->flashdata('successMessage');
                 <i class="fa fa-trophy"></i> Overview of best selling products
             </div> 
             <div class="panel-body"> 
-             
-             <table class="table table-hover table-striped">
+                <form class="form-inline" action="/action_page.php" style="margin-bottom: 10px">
+                    <div class="form-group">
+                        <label for="email">Filter Reports:</label>
+                        <input id="min-date" style="border-radius:25px;" type="text" placeholder="Starting Date" class="form-control date-range-filter input-md" id="min-date" data-date-format="yyyy-mm-dd">
+                    </div>
+                    <div class="form-group">
+                        &nbsp;
+                        <input id="max-date" style="border-radius:25px;" type="text" placeholder="Ending Date" class="form-control date-range-filter input-md" id="max-date" data-date-format="yyyy-mm-dd">
+                    </div> 
+                </form>
+             <table class="table table-hover table-striped" id="top-selling-table">
                  <thead>
                      <tr>
-                         <th colspan="">#</th>
-                         <th>Product Name</th>
-                         <th>Sold</th>
-                         <th>Qty. Remaining</th>
+                         <th colspan="" class="no-sort">#</th>
+                         <th class="no-sort">Product Name</th>
+                         <th class="no-sort">Sold</th>
                      </tr>
                  </thead>
                  <tbody>
-                     <?php if ($top_products): ?>
-                         <?php foreach ($top_products as $key => $row): ?>
-                             <tr>
-                                 <td><?php echo $key + 1 ?></td>
-                                 <td><?php echo $row->name ?></td>
-                                 <td><?php echo $row->qty ?></td>
-                                 <td><?php echo $row->quantity ?? 0 ?></td>
-                             </tr> 
-                         <?php endforeach; ?>
-                         <?php else: ?>
-                             <tr>
-                                 <td colspan="3">Not enough data</td>
-                             </tr>
-                         <?php endif; ?>
-                     </tbody>
                  </table> 
              </div> 
          </div> 

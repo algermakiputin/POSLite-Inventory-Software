@@ -267,6 +267,11 @@ header {
     border: 1px solid #ccc;
 }
 
+.select2-selection__rendered {
+    color: rgb(153,153,153)!important;
+    font-size: 18px!important;
+}
+
 /* .select2-container--default .select2-selection--single .select2-selection__arrow {
     background-image: -khtml-gradient(linear, left top, left bottom, from(#424242), to(#030303));
     background-image: -moz-linear-gradient(top, #424242, #030303);
