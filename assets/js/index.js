@@ -349,7 +349,32 @@ $(document).ready(function() {
 				$("#select-customer-reports").change(function() {
 					var customerId = $(this).val();
 					sales_table.columns(2).search(customerId).draw();
-				})
+				});
+
+				const format = (orderline) => {
+					return orderline?.map(order => (
+						`
+							<dl class='collapse-row'>
+								<dt class='collapse-row'>Item: ${order?.name}</dt>
+								<dt class='collapse-row'>Quantity: ${order?.quantity}</dt>
+								<dt class='collapse-row'>Price: ${order?.price}</dt>
+								<dt class='collapse-row'>Sub Total: ${order?.price * order?.quantity}</dt>
+							</dl>
+						`
+					));
+				}
+
+				sales_table.on('click', '.collapse-order', function(e) {
+					let tr = e.target.closest('tr');
+					let row = sales_table.row(tr);
+					var orderline = $(this).data('orderline');
+					console.log(orderline);
+					if (row.child.isShown()) {
+						row.child.hide();
+					} else {
+						row.child(format(orderline))?.show();
+					}
+				});
 			}
 		}
 

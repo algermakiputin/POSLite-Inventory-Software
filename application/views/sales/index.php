@@ -18,7 +18,7 @@
 			<div class="form-group">
 				&nbsp;
 				<select class="form-control input-md" style="border-radius:25px;" id="select-customer-reports">
-					<option>Filter by customer</option>
+					<option value="">Filter by customer</option>
 					<?php foreach ($customers as $customer): ?>
 						<option value="<?php echo $customer->id ?>"><?php echo $customer->name ?></option>
 					<?php endforeach; ?>
@@ -97,15 +97,10 @@
 						<thead>
 							<tr>
 								<th >Date Time</th>
-								<th>Customer</th>
-								<th >Item Name</th> 
-								<th >Quantity</th>
-								<th> Returned</th>
-								<th >Capital</th>
-								<th >Price</th>
-								<th>Discount</th> 
-								<th >Total</th>   
-								<th> Transaction Profit</th>
+								<th>Transaction Number</th>
+								<th >Customer</th> 
+								<th >Staff</th>
+								<th> Total</th>
 							</tr>
 						</thead>
 						<tbody></tbody>

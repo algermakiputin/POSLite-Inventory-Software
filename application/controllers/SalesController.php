@@ -460,8 +460,15 @@ class SalesController extends AppController {
 		return;
 	}
 
-	public function reports() {
+	private function getSalesByDateRange($from, $to, $customerId) {
+		$this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") >=', $from);
+		$this->db->where('DATE_FORMAT(date_time, "%Y-%m-%d") <=', $to);
+		if ($customerId) $this->db->like('customer_id', $customerId, 'BOTH');
+		$this->db->order_by('id', 'DESC');
+		return $this->db->get('sales');
+	}
 
+	public function reports() {
 		$this->start = $this->input->post('start');
 		$this->limit = $this->input->post('length');
 		$datasets = [];
@@ -469,7 +476,13 @@ class SalesController extends AppController {
 		$customerId = $this->input->post('columns[2][search][value]');
 		$from = $this->input->post('columns[0][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[0][search][value]');
 		$to = $this->input->post('columns[1][search][value]') == "" ? date('Y-m-d') : $this->input->post('columns[1][search][value]');
-		$sales = $this->filterReports($from, $to, $customerId);
+		$sales = $this->getSalesByDateRange($from, $to, $customerId)->result();
+		foreach ($sales as $key => $sale) {
+			$orderline = $this->db->where('transaction_number', $sale->transaction_number)
+								->get('sales_description')
+								->result();
+			$sale->orderline = $orderline;
+		}
 		$count = count($sales);
 		$totalExpenses = 0;
 		$transactionProfit = 0;
@@ -486,37 +499,61 @@ class SalesController extends AppController {
 		}
 
 		foreach ($sales as $sale) {
-			$sales_description = $this->db->where('transaction_number', $sale->transaction_number)->get('sales_description')->result();
-			$sub_total = 0;
+			$total = 0;
+			$user = $this->db->where('id', $sale->user_id)->get('users')->row();
+		 	$staff = $user ? $user->username : 'Not found';
 			$customer = "";
 			if ($sale->customer_id) {
 				$customer = $this->db->where('id', $sale->customer_id)->get('customers')->row()->name;
 			}
-			foreach ($sales_description as $desc) {
-		 		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
-		 		$staff = $user ? $user->username : 'Not found';
-				$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
-				$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity) - $desc->discount;
+			foreach ($sale->orderline as $orderline) {
+				$goodsCost += ($orderline->capital * $orderline->quantity);
+				$total += ((float)$orderline->quantity * (float) $orderline->price) - $orderline->discount;
+				$saleProfit = ($orderline->price - $orderline->capital) * ($orderline->quantity) - $orderline->discount;
 				$transactionProfit += $saleProfit;
-				$datasets[] = array(
-					date('Y-m-d h:i:s A', strtotime($sale->date_time)),
-					$customer,
-					$desc->name . ($desc->unit ? "($desc->unit)" : ""),
-					$desc->quantity,
-					$desc->returned,
-					'₱' . number_format($desc->capital,2),
-					'₱' . number_format($desc->price,2),
-					'₱' . number_format($desc->discount,2),
-					'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount, 2),
-					'₱' . number_format($saleProfit, 2)
-				);
-
-				$goodsCost += ($desc->capital * $desc->quantity);
 			}
-
-			$totalSales += $sub_total; 
-			
+			$datasets[] = [
+				$sale->date_time,
+				"<span class='collapse-order' data-orderline='".json_encode($sale->orderline)."'>".$sale->transaction_number."<span>",
+				$customer,
+				$staff,
+				'₱' . number_format($total, 2)
+			];
+			$totalSales += $total;
 		}
+
+		// foreach ($sales as $sale) {
+		// 	$sales_description = $this->db->where('transaction_number', $sale->transaction_number)->get('sales_description')->result();
+		// 	$sub_total = 0;
+		// 	$customer = "";
+		// 	if ($sale->customer_id) {
+		// 		$customer = $this->db->where('id', $sale->customer_id)->get('customers')->row()->name;
+		// 	}
+		// 	foreach ($sales_description as $desc) {
+		//  		$user = $this->db->where('id', $desc->user_id)->get('users')->row();
+		//  		$staff = $user ? $user->username : 'Not found';
+		// 		$sub_total += ((float)$desc->quantity * (float) $desc->price) - $desc->discount;
+		// 		$saleProfit = ($desc->price - $desc->capital) * ($desc->quantity) - $desc->discount;
+		// 		$transactionProfit += $saleProfit;
+		// 		$datasets[] = array(
+		// 			date('Y-m-d h:i:s A', strtotime($sale->date_time)),
+		// 			$customer,
+		// 			$desc->name . ($desc->unit ? "($desc->unit)" : ""),
+		// 			$desc->quantity,
+		// 			$desc->returned,
+		// 			'₱' . number_format($desc->capital,2),
+		// 			'₱' . number_format($desc->price,2),
+		// 			'₱' . number_format($desc->discount,2),
+		// 			'₱'. number_format(((float)$desc->quantity * (float)$desc->price) - $desc->discount, 2),
+		// 			'₱' . number_format($saleProfit, 2)
+		// 		);
+
+		// 		$goodsCost += ($desc->capital * $desc->quantity);
+		// 	}
+
+		// 	$totalSales += $sub_total; 
+			
+		// }
 
 		$gross = $totalSales - $goodsCost;
 

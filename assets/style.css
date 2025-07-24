@@ -375,3 +375,12 @@ input[type='search'] {
     cursor: pointer;
     color: royalblue;
 }
+
+.collapse-order {
+    cursor: pointer;
+    color: royalblue;
+}
+
+.collapse-row {
+    line-height: 24px;
+}

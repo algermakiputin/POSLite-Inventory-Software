@@ -82,8 +82,8 @@ class DashboardController extends AppController {
 		foreach ($results as $key => $result) {
 			$datasets[] = [
 				$key + 1,
-				$result->qty,
-				$result->name
+				$result->name,
+				$result->qty
 			];
 		}
 

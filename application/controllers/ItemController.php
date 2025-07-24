@@ -212,7 +212,6 @@ class ItemController extends AppController {
 			$stocksRemaining = $this->db->select("SUM(stocks) as stocks")->from('variations')->where('item_id', $item->id)->get()->row()->stocks + (int)$orderingLevelStocks;
 			$variation = $this->db->where('item_id', $item->id)->get('variations')->result();
 			$deleteAction = ""; 
-
 			if ($this->session->userdata('account_type') == "Admin") {
 
 				$deleteAction = '
